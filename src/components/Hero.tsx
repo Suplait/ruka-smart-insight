@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const valueMessages = [
-  "Automatiza tu back office sin contratar más personas",
-  "Elimina la digitación manual para siempre",
-  "Toma el control de tus operaciones",
-  "Reduce costos y errores operativos",
-  "Accede a tus datos en tiempo real",
+  "Controla tu margen al día, no al mes",
+  "Descubre alzas de precio en tiempo real",
+  "Toda tu información a la mano sin haber digitado nada",
+  "Gestiona simple el pago a proveedores",
+  "Automatiza tareas y ahorra horas",
 ];
 
 export default function Hero() {
@@ -66,7 +66,7 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              Automatización Inteligente
+              Te devolvemos el control
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
@@ -76,7 +76,7 @@ export default function Hero() {
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-xl">
-              Agentes con IA que procesan tus documentos automáticamente, eliminando la digitación manual y los errores humanos en tu back office
+              Agentes con IA que procesan, agrupan y monitorean tus compras para que tengas control absoluto de tu negocio, sin esfuerzo.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
