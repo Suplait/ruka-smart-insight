@@ -1,43 +1,44 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { FileText, Brain, Zap, Users, LineChart, AlertCircle } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Bot, Brain, FileText, LineChart, AlertCircle, Zap } from "lucide-react";
 
 const values = [
   {
-    id: 'integration',
-    title: 'Rápida integración',
-    description: 'Conectamos directamente con tus sistemas actuales. En minutos estarás operando con Ruka, sin cambiar tu forma de trabajar.',
-    icon: Zap,
-    image: '/integration.svg'
+    id: 'automation',
+    title: 'Automatización Total',
+    description: 'Digitaliza y procesa automáticamente todos tus documentos, eliminando la digitación manual para siempre.',
+    icon: Bot,
+    color: 'bg-purple-100 text-purple-600'
   },
   {
     id: 'intelligence',
-    title: 'Clasificación Inteligente',
-    description: 'Ruka agrupa y clasifica automáticamente tus insumos, manteniendo tu información ordenada y accesible en todo momento.',
+    title: 'IA que Aprende',
+    description: 'Nuestros agentes se adaptan a tus procesos y mejoran con cada interacción.',
     icon: Brain,
-    image: '/intelligence.svg'
+    color: 'bg-blue-100 text-blue-600'
   },
   {
-    id: 'providers',
-    title: 'Conexión con Proveedores',
-    description: 'Si falta algún dato, Ruka irá a conseguir la información con el proveedor y la actualizará en la plataforma',
-    icon: Users,
-    image: '/providers.svg'
-  },
-  {
-    id: 'reports',
-    title: 'Reportes en Tiempo Real',
-    description: 'Genera reportes personalizados en segundos para tomar decisiones informadas al instante.',
-    icon: LineChart,
-    image: '/reports.svg'
+    id: 'documents',
+    title: 'Procesamiento Inteligente',
+    description: 'Extrae, clasifica y organiza la información de tus documentos automáticamente.',
+    icon: FileText,
+    color: 'bg-green-100 text-green-600'
   },
   {
     id: 'monitoring',
     title: 'Monitoreo 24/7',
-    description: 'Ruka monitoreará los patrones de compra y alertará en tiempo real de anomalías que puedan afectar al margen.',
+    description: 'Detecta anomalías y patrones que afecten tu margen operativo en tiempo real.',
     icon: AlertCircle,
-    image: '/monitoring.svg'
+    color: 'bg-yellow-100 text-yellow-600'
+  },
+  {
+    id: 'insights',
+    title: 'Insights Inmediatos',
+    description: 'Visualiza tus KPIs y genera reportes personalizados al instante.',
+    icon: LineChart,
+    color: 'bg-red-100 text-red-600'
   }
 ];
 
@@ -53,7 +54,7 @@ export default function ValueShowcase() {
   }, []);
 
   return (
-    <section id="value-showcase" className="py-24 bg-white relative overflow-hidden">
+    <section className="py-24 bg-white relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-white via-purple-50/30 to-white" />
       
       <div className="container relative max-w-7xl mx-auto px-4">
@@ -105,13 +106,26 @@ export default function ValueShowcase() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
-              className="relative aspect-square rounded-xl overflow-hidden shadow-xl"
+              className="grid grid-cols-2 gap-6"
             >
-              <img
-                src={values[activeValue].image}
-                alt={values[activeValue].title}
-                className="w-full h-full object-cover"
-              />
+              {values.map((value, index) => (
+                <Card
+                  key={value.id}
+                  className={cn(
+                    "p-6 transition-all duration-300",
+                    activeValue === index ? "scale-110 shadow-lg" : "opacity-50"
+                  )}
+                >
+                  <div className={cn(
+                    "w-12 h-12 rounded-lg flex items-center justify-center mb-4",
+                    value.color
+                  )}>
+                    <value.icon className="w-6 h-6" />
+                  </div>
+                  <h4 className="font-semibold mb-2">{value.title}</h4>
+                  <p className="text-sm text-muted-foreground">{value.description}</p>
+                </Card>
+              ))}
             </motion.div>
           </AnimatePresence>
         </div>
