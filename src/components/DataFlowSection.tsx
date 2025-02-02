@@ -22,54 +22,158 @@ const DataFlowSection = () => {
         <div className="relative mt-20">
           {/* Líneas de conexión SVG con gradiente - Desktop */}
           <div className="hidden md:block">
-            <svg className="absolute top-1/2 left-0 w-full h-1 -translate-y-1/2" preserveAspectRatio="none">
+            <svg className="absolute top-1/2 left-0 w-full h-24 -translate-y-1/2" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="gradient-line" x1="0" y1="0" x2="100%" y2="0">
                   <stop offset="0%" stopColor="#4D68EB" />
                   <stop offset="100%" stopColor="#8B5CF6" />
                 </linearGradient>
-                {/* Definición del patrón de flecha */}
-                <pattern id="arrow-pattern" x="0" y="0" width="20" height="2" patternUnits="userSpaceOnUse">
-                  <path d="M0 0 L10 1 L0 2 Z" fill="url(#gradient-line)">
-                    <animateTransform
-                      attributeName="transform"
-                      type="translate"
-                      from="-20"
-                      to="0"
-                      dur="1s"
+                {/* Patrón de línea punteada animada */}
+                <pattern id="dotted-pattern" x="0" y="0" width="20" height="4" patternUnits="userSpaceOnUse">
+                  <circle cx="2" cy="2" r="2" fill="url(#gradient-line)">
+                    <animate
+                      attributeName="opacity"
+                      values="0;1;0"
+                      dur="1.5s"
                       repeatCount="indefinite"
                     />
-                  </path>
+                  </circle>
                 </pattern>
+                {/* Flecha grande al final */}
+                <marker
+                  id="arrowhead"
+                  markerWidth="12"
+                  markerHeight="12"
+                  refX="9"
+                  refY="6"
+                  orient="auto"
+                >
+                  <path
+                    d="M0,0 L12,6 L0,12 L3,6 Z"
+                    fill="url(#gradient-line)"
+                  />
+                </marker>
               </defs>
-              <rect width="100%" height="2" fill="url(#arrow-pattern)" />
+              
+              {/* Línea izquierda a centro */}
+              <path
+                d="M0,12 H45%"
+                stroke="url(#pattern-references)"
+                strokeWidth="4"
+                fill="none"
+                markerEnd="url(#arrowhead)"
+                style={{
+                  stroke: "url(#dotted-pattern)",
+                  strokeDasharray: "1 4",
+                  animation: "movePattern 1s linear infinite",
+                }}
+              />
+              
+              {/* Línea derecha a centro */}
+              <path
+                d="M100%,12 H55%"
+                stroke="url(#pattern-references)"
+                strokeWidth="4"
+                fill="none"
+                markerEnd="url(#arrowhead)"
+                style={{
+                  stroke: "url(#dotted-pattern)",
+                  strokeDasharray: "1 4",
+                  animation: "movePattern 1s linear infinite",
+                }}
+              />
             </svg>
+            
+            <style>
+              {`
+                @keyframes movePattern {
+                  from {
+                    stroke-dashoffset: 5;
+                  }
+                  to {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              `}
+            </style>
           </div>
 
           {/* Líneas de conexión SVG con gradiente - Mobile */}
-          <div className="md:hidden absolute left-1/2 transform -translate-x-1/2 w-1 h-full">
+          <div className="md:hidden absolute left-1/2 transform -translate-x-1/2 w-4 h-full">
             <svg className="h-full w-full" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="gradient-line-vertical" x1="0" y1="0" x2="0" y2="100%">
                   <stop offset="0%" stopColor="#4D68EB" />
                   <stop offset="100%" stopColor="#8B5CF6" />
                 </linearGradient>
-                {/* Definición del patrón de flecha vertical */}
-                <pattern id="arrow-pattern-vertical" x="0" y="0" width="2" height="20" patternUnits="userSpaceOnUse">
-                  <path d="M0 0 L1 10 L2 0 Z" fill="url(#gradient-line-vertical)">
-                    <animateTransform
-                      attributeName="transform"
-                      type="translate"
-                      from="0 -20"
-                      to="0 0"
-                      dur="1s"
+                {/* Patrón de línea punteada vertical animada */}
+                <pattern id="dotted-pattern-vertical" x="0" y="0" width="4" height="20" patternUnits="userSpaceOnUse">
+                  <circle cx="2" cy="2" r="2" fill="url(#gradient-line-vertical)">
+                    <animate
+                      attributeName="opacity"
+                      values="0;1;0"
+                      dur="1.5s"
                       repeatCount="indefinite"
                     />
-                  </path>
+                  </circle>
                 </pattern>
+                {/* Flecha grande vertical */}
+                <marker
+                  id="arrowhead-vertical"
+                  markerWidth="12"
+                  markerHeight="12"
+                  refX="6"
+                  refY="9"
+                  orient="auto"
+                >
+                  <path
+                    d="M0,0 L12,6 L0,12 L3,6 Z"
+                    fill="url(#gradient-line-vertical)"
+                    transform="rotate(90, 6, 6)"
+                  />
+                </marker>
               </defs>
-              <rect width="2" height="100%" fill="url(#arrow-pattern-vertical)" />
+              
+              {/* Líneas verticales */}
+              <path
+                d="M2,0 V45%"
+                stroke="url(#pattern-references-vertical)"
+                strokeWidth="4"
+                fill="none"
+                markerEnd="url(#arrowhead-vertical)"
+                style={{
+                  stroke: "url(#dotted-pattern-vertical)",
+                  strokeDasharray: "1 4",
+                  animation: "movePatternVertical 1s linear infinite",
+                }}
+              />
+              
+              <path
+                d="M2,100% V55%"
+                stroke="url(#pattern-references-vertical)"
+                strokeWidth="4"
+                fill="none"
+                markerEnd="url(#arrowhead-vertical)"
+                style={{
+                  stroke: "url(#dotted-pattern-vertical)",
+                  strokeDasharray: "1 4",
+                  animation: "movePatternVertical 1s linear infinite",
+                }}
+              />
             </svg>
+            
+            <style>
+              {`
+                @keyframes movePatternVertical {
+                  from {
+                    stroke-dashoffset: 5;
+                  }
+                  to {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              `}
+            </style>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
