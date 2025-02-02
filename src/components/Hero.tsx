@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const valueProps = [
-  "Control total de tus operaciones en segundos",
-  "Automatización inteligente sin digitación manual",
-  "Reportes instantáneos que impulsan decisiones",
-  "Datos precisos y actualizados en tiempo real",
+  "Control total en segundos",
+  "Cero digitación manual",
+  "Reportes instantáneos",
+  "Datos precisos en tiempo real",
 ];
 
 export default function Hero() {
@@ -58,20 +58,20 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              Automatización inteligente para tu empresa
+              Solución inteligente para tu empresa
             </div>
             
             <h1 className="text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
               <span className={cn(
-                "bg-gradient-to-r from-gray-900 via-gray-800 to-primary bg-clip-text text-transparent",
-                "after:content-['|'] after:ml-1 after:animate-blink"
+                "bg-gradient-to-r from-gray-900 to-gray-800 bg-clip-text text-transparent",
+                "after:content-['|'] after:ml-1 after:animate-blink after:text-primary"
               )}>
                 {displayText}
               </span>
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-xl">
-              Ruka.ai automatiza tu back office sin complicaciones. Obtén control total de tus operaciones con reportes instantáneos y datos precisos, sin necesidad de digitación manual.
+              Automatiza tu back office sin complicaciones. Obtén control total de tus compras y ventas con reportes instantáneos y datos precisos, sin necesidad de digitación manual.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
