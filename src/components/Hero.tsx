@@ -4,14 +4,12 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const valueMessages = [
-  "Elimina la digitación manual de una vez por todas",
-  "Automatiza tu back office sin complicaciones",
-  "Deja que la IA haga el trabajo pesado por ti",
-  "Olvídate de los errores humanos para siempre",
-  "Recupera el tiempo perdido en tareas manuales",
+  "Las empresas medianas eliminan la digitación manual",
+  "Los equipos contables recuperan 15 horas semanales",
+  "Las áreas financieras detectan errores al instante",
+  "Los controllers previenen pérdidas operativas",
+  "Los gerentes toman decisiones informadas",
 ];
-
-// ... keep existing code (useEffect and animation logic)
 
 export default function Hero() {
   const [currentMessage, setCurrentMessage] = useState(0);
@@ -78,20 +76,11 @@ export default function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
-                className="gap-2 group hover:scale-105 transition-all duration-300"
-                onClick={() => window.open("https://calendly.com/suplait_lorenzo/30min", "_blank")}
-              >
+              <Button size="lg" className="gap-2 group hover:scale-105 transition-all duration-300">
                 Solicitar Demo
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="hover:scale-105 transition-all duration-300"
-                onClick={() => document.getElementById('guarantee')?.scrollIntoView({ behavior: 'smooth' })}
-              >
+              <Button size="lg" variant="outline" className="hover:scale-105 transition-all duration-300">
                 Ver Garantía de 30 Días
               </Button>
             </div>
@@ -118,7 +107,7 @@ export default function Hero() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <img 
                   src="/placeholder.svg" 
-                  alt="Robot en centro de mando Ruka.ai" 
+                  alt="Dashboard Ruka.ai" 
                   className="w-full h-[720px] object-cover rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-500"
                 />
               </div>

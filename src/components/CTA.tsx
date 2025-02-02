@@ -31,20 +31,11 @@ export default function CTA() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="gap-2 group hover:scale-105 transition-all duration-300"
-              onClick={() => window.open("https://calendly.com/suplait_lorenzo/30min", "_blank")}
-            >
+            <Button size="lg" className="gap-2 group hover:scale-105 transition-all duration-300">
               Solicitar Demo
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="hover:scale-105 transition-all duration-300"
-              onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-            >
+            <Button size="lg" variant="outline" className="hover:scale-105 transition-all duration-300">
               Ver Cómo Funciona
             </Button>
           </div>
