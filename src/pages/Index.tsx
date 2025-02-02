@@ -8,7 +8,6 @@ import BeforeAfter from "@/components/BeforeAfter";
 import Features from "@/components/Features";
 import ProductShowcase from "@/components/ProductShowcase";
 import ValueShowcase from "@/components/ValueShowcase";
-import ValueProposition from "@/components/ValueProposition";
 import Stats from "@/components/Stats";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
@@ -40,7 +39,6 @@ export default function Index() {
       <Features />
       <ProductShowcase />
       <ValueShowcase />
-      <ValueProposition />
       <Stats />
       <Testimonials />
       <FAQ />
