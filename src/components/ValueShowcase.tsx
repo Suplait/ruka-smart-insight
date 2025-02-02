@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Bot, Brain, FileText, LineChart, AlertCircle, Zap } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const values = [
   {
