@@ -1,23 +1,47 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 const valueProps = [
-  "Controla tu margen operativo en tiempo real",
-  "Automatiza tu back office sin complicaciones",
-  "Reduce costos operativos hasta en un 30%",
-  "Obtén insights de tus datos en minutos",
+  "Control total de tus operaciones en segundos",
+  "Automatización inteligente sin digitación manual",
+  "Reportes instantáneos que impulsan decisiones",
+  "Datos precisos y actualizados en tiempo real",
 ];
 
 export default function Hero() {
   const [currentValue, setCurrentValue] = useState(0);
-
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentValue((prev) => (prev + 1) % valueProps.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+    let timeout: NodeJS.Timeout;
+    const current = valueProps[currentValue];
+    
+    if (isDeleting) {
+      if (displayText === "") {
+        setIsDeleting(false);
+        setCurrentValue((prev) => (prev + 1) % valueProps.length);
+      } else {
+        timeout = setTimeout(() => {
+          setDisplayText(current.substring(0, displayText.length - 1));
+        }, 50);
+      }
+    } else {
+      if (displayText === current) {
+        timeout = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2000);
+      } else {
+        timeout = setTimeout(() => {
+          setDisplayText(current.substring(0, displayText.length + 1));
+        }, 50);
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [currentValue, displayText, isDeleting]);
 
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
@@ -34,17 +58,20 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              Solución simple para empresas medianas
+              Automatización inteligente para tu empresa
             </div>
             
-            <h1 className="text-5xl lg:text-6xl font-bold leading-tight min-h-[144px] transition-all duration-500">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
-                {valueProps[currentValue]}
+            <h1 className="text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
+              <span className={cn(
+                "bg-gradient-to-r from-gray-900 via-gray-800 to-primary bg-clip-text text-transparent",
+                "after:content-['|'] after:ml-1 after:animate-blink"
+              )}>
+                {displayText}
               </span>
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-xl">
-              Ruka.ai es la solución que tu empresa necesita para tener el control total de sus operaciones, sin la complejidad de un gran sistema.
+              Ruka.ai automatiza tu back office sin complicaciones. Obtén control total de tus operaciones con reportes instantáneos y datos precisos, sin necesidad de digitación manual.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -57,11 +84,20 @@ export default function Hero() {
               </Button>
             </div>
 
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <div className="flex items-center gap-4">
-                <span className="font-semibold text-primary">+700K</span> facturas procesadas
-                <span className="font-semibold text-primary">+US$220M</span> en datos analizados
+            <div className="flex items-center gap-6 text-sm">
+              <div className="flex -space-x-4">
+                {[...Array(4)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-10 h-10 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-xs font-semibold"
+                  >
+                    {i < 3 ? "C" : "+97"}
+                  </div>
+                ))}
               </div>
+              <p className="text-muted-foreground">
+                <span className="font-semibold text-primary">+100</span> empresas confían en nosotros
+              </p>
             </div>
           </div>
 

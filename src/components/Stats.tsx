@@ -1,4 +1,4 @@
-import { Users, Building2, TrendingUp, Clock } from "lucide-react";
+import { Users, FileText, TrendingUp, Clock } from "lucide-react";
 
 const stats = [
   {
@@ -9,15 +9,15 @@ const stats = [
   },
   {
     label: "Facturas Procesadas",
-    value: "600K+",
-    icon: Building2,
+    value: "700K+",
+    icon: FileText,
     description: "documentos automatizados",
   },
   {
-    label: "Ahorro Promedio",
-    value: "30%",
+    label: "Datos Procesados",
+    value: "US$220M+",
     icon: TrendingUp,
-    description: "en costos operativos",
+    description: "en transacciones analizadas",
   },
   {
     label: "Tiempo Ahorrado",
