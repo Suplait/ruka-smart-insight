@@ -16,7 +16,7 @@ export default function Partners() {
             viewport={{ once: true }}
             className="h-12"
           >
-            <img src="/microsoft-logo.svg" alt="Microsoft" className="h-full object-contain opacity-60 hover:opacity-100 transition-opacity" />
+            <img src="/microsoft2.png" alt="Microsoft" className="h-full object-contain opacity-60 hover:opacity-100 transition-opacity" />
           </motion.div>
           
           <motion.div
@@ -26,7 +26,7 @@ export default function Partners() {
             viewport={{ once: true }}
             className="h-12"
           >
-            <img src="/openai-logo.svg" alt="OpenAI" className="h-full object-contain opacity-60 hover:opacity-100 transition-opacity" />
+            <img src="/openai2.png" alt="OpenAI" className="h-full object-contain opacity-60 hover:opacity-100 transition-opacity" />
           </motion.div>
           
           <motion.div
@@ -36,7 +36,7 @@ export default function Partners() {
             viewport={{ once: true }}
             className="h-12"
           >
-            <img src="/500global-logo.svg" alt="500 Global" className="h-full object-contain opacity-60 hover:opacity-100 transition-opacity" />
+            <img src="/500logo.png" alt="500 Global" className="h-full object-contain opacity-60 hover:opacity-100 transition-opacity" />
           </motion.div>
         </div>
       </div>
