@@ -39,10 +39,10 @@ export default function Index() {
       <Features />
       <ProductShowcase />
       <ValueShowcase />
+      <MoneyBackGuarantee />
       <Stats />
       <Testimonials />
       <FAQ />
-      <MoneyBackGuarantee />
       <CTA />
       <Footer />
     </main>
