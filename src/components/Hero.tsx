@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const valueMessages = [
-  "Las empresas medianas eliminan la digitación manual",
-  "Los equipos contables recuperan 15 horas semanales",
-  "Las áreas financieras detectan errores al instante",
-  "Los controllers previenen pérdidas operativas",
-  "Los gerentes toman decisiones informadas",
+  "Automatiza tu back office sin contratar más personas",
+  "Elimina la digitación manual para siempre",
+  "Detecta errores antes que te cuesten dinero",
+  "Toma decisiones con datos actualizados al instante",
+  "Recupera el control de tus operaciones",
 ];
 
 export default function Hero() {
@@ -44,6 +44,13 @@ export default function Hero() {
     return () => clearTimeout(timeout);
   }, [currentMessage, displayText, isDeleting]);
 
+  const scrollToGuarantee = () => {
+    const element = document.getElementById('guarantee');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -76,11 +83,20 @@ export default function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="gap-2 group hover:scale-105 transition-all duration-300">
+              <Button 
+                size="lg" 
+                className="gap-2 group hover:scale-105 transition-all duration-300"
+                onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}
+              >
                 Solicitar Demo
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button size="lg" variant="outline" className="hover:scale-105 transition-all duration-300">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="hover:scale-105 transition-all duration-300"
+                onClick={scrollToGuarantee}
+              >
                 Ver Garantía de 30 Días
               </Button>
             </div>
