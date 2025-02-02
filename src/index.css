@@ -37,6 +37,58 @@
   }
 }
 
+@keyframes flowRight {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes flowLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes flowDown {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes flowUp {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.animate-flow-right {
+  animation: flowRight 2s linear infinite;
+}
+
+.animate-flow-left {
+  animation: flowLeft 2s linear infinite;
+}
+
+.animate-flow-down {
+  animation: flowDown 2s linear infinite;
+}
+
+.animate-flow-up {
+  animation: flowUp 2s linear infinite;
+}
+
 .gradient-blur {
   background: radial-gradient(circle at center, rgba(77, 104, 235, 0.15) 0%, rgba(77, 104, 235, 0) 70%);
 }

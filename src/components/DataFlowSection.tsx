@@ -20,56 +20,102 @@ const DataFlowSection = () => {
         </h2>
 
         <div className="relative mt-20">
-          {/* Líneas de conexión SVG con gradiente - Desktop */}
+          {/* Desktop Flow Lines */}
           <div className="hidden md:block">
-            <svg className="absolute top-1/2 left-0 w-full h-1 -translate-y-1/2" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="gradient-line" x1="0" y1="0" x2="100%" y2="0">
-                  <stop offset="0%" stopColor="#4D68EB" />
-                  <stop offset="100%" stopColor="#8B5CF6" />
-                </linearGradient>
-                {/* Definición del patrón de flecha */}
-                <pattern id="arrow-pattern" x="0" y="0" width="20" height="2" patternUnits="userSpaceOnUse">
-                  <path d="M0 0 L10 1 L0 2 Z" fill="url(#gradient-line)">
-                    <animateTransform
-                      attributeName="transform"
-                      type="translate"
-                      from="-20"
-                      to="0"
-                      dur="1s"
-                      repeatCount="indefinite"
+            {/* Left Flow Line */}
+            <div className="absolute top-1/2 left-0 w-[calc(33%-2rem)] h-2 -translate-y-1/2">
+              <div className="relative w-full h-full">
+                {/* Base dashed line */}
+                <div className="absolute inset-0 border-t-4 border-dashed border-primary/30" />
+                
+                {/* Animated dots */}
+                <div className="absolute inset-0 flex gap-8 animate-flow-right overflow-hidden">
+                  {[...Array(6)].map((_, i) => (
+                    <div 
+                      key={i} 
+                      className="h-4 w-4 rounded-full bg-gradient-to-r from-primary to-purple-600 -translate-y-1 shadow-lg shadow-primary/20"
                     />
-                  </path>
-                </pattern>
-              </defs>
-              <rect width="100%" height="2" fill="url(#arrow-pattern)" />
-            </svg>
+                  ))}
+                </div>
+                
+                {/* Arrow head */}
+                <div className="absolute right-0 -translate-y-1/2 top-1/2">
+                  <div className="w-4 h-4 rotate-45 border-t-4 border-r-4 border-primary transform translate-x-1/2" />
+                </div>
+              </div>
+            </div>
+
+            {/* Right Flow Line */}
+            <div className="absolute top-1/2 right-0 w-[calc(33%-2rem)] h-2 -translate-y-1/2">
+              <div className="relative w-full h-full">
+                {/* Base dashed line */}
+                <div className="absolute inset-0 border-t-4 border-dashed border-primary/30" />
+                
+                {/* Animated dots */}
+                <div className="absolute inset-0 flex gap-8 animate-flow-left overflow-hidden">
+                  {[...Array(6)].map((_, i) => (
+                    <div 
+                      key={i} 
+                      className="h-4 w-4 rounded-full bg-gradient-to-r from-primary to-purple-600 -translate-y-1 shadow-lg shadow-primary/20"
+                    />
+                  ))}
+                </div>
+                
+                {/* Arrow head */}
+                <div className="absolute left-0 -translate-y-1/2 top-1/2">
+                  <div className="w-4 h-4 rotate-45 border-b-4 border-l-4 border-primary transform -translate-x-1/2" />
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Líneas de conexión SVG con gradiente - Mobile */}
-          <div className="md:hidden absolute left-1/2 transform -translate-x-1/2 w-1 h-full">
-            <svg className="h-full w-full" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="gradient-line-vertical" x1="0" y1="0" x2="0" y2="100%">
-                  <stop offset="0%" stopColor="#4D68EB" />
-                  <stop offset="100%" stopColor="#8B5CF6" />
-                </linearGradient>
-                {/* Definición del patrón de flecha vertical */}
-                <pattern id="arrow-pattern-vertical" x="0" y="0" width="2" height="20" patternUnits="userSpaceOnUse">
-                  <path d="M0 0 L1 10 L2 0 Z" fill="url(#gradient-line-vertical)">
-                    <animateTransform
-                      attributeName="transform"
-                      type="translate"
-                      from="0 -20"
-                      to="0 0"
-                      dur="1s"
-                      repeatCount="indefinite"
+          {/* Mobile Flow Lines */}
+          <div className="md:hidden absolute left-1/2 h-full -translate-x-[2px]">
+            {/* Top Flow Line */}
+            <div className="absolute top-0 h-[calc(33%-2rem)] w-2">
+              <div className="relative w-full h-full">
+                {/* Base dashed line */}
+                <div className="absolute inset-0 border-l-4 border-dashed border-primary/30" />
+                
+                {/* Animated dots */}
+                <div className="absolute inset-0 flex flex-col gap-8 animate-flow-down overflow-hidden">
+                  {[...Array(6)].map((_, i) => (
+                    <div 
+                      key={i} 
+                      className="w-4 h-4 rounded-full bg-gradient-to-b from-primary to-purple-600 -translate-x-1 shadow-lg shadow-primary/20"
                     />
-                  </path>
-                </pattern>
-              </defs>
-              <rect width="2" height="100%" fill="url(#arrow-pattern-vertical)" />
-            </svg>
+                  ))}
+                </div>
+                
+                {/* Arrow head */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+                  <div className="w-4 h-4 rotate-45 border-r-4 border-b-4 border-primary transform translate-y-1/2" />
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Flow Line */}
+            <div className="absolute bottom-0 h-[calc(33%-2rem)] w-2">
+              <div className="relative w-full h-full">
+                {/* Base dashed line */}
+                <div className="absolute inset-0 border-l-4 border-dashed border-primary/30" />
+                
+                {/* Animated dots */}
+                <div className="absolute inset-0 flex flex-col gap-8 animate-flow-up overflow-hidden">
+                  {[...Array(6)].map((_, i) => (
+                    <div 
+                      key={i} 
+                      className="w-4 h-4 rounded-full bg-gradient-to-b from-primary to-purple-600 -translate-x-1 shadow-lg shadow-primary/20"
+                    />
+                  ))}
+                </div>
+                
+                {/* Arrow head */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2">
+                  <div className="w-4 h-4 rotate-45 border-l-4 border-t-4 border-primary transform -translate-y-1/2" />
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
