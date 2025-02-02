@@ -32,7 +32,7 @@ export default function ProductShowcase() {
               Una plataforma diseñada para darte el control total
             </h2>
             <p className="text-xl text-muted-foreground">
-              Toma mejores decisiones con datos actualizados y reportes en tiempo real. Simple, pero poderoso.
+              Te brindamos una plataforma moderna y simple para que encuentres rápido lo que necesitas y puedas tomar mejores decisiones.
             </p>
             <div className="grid gap-6">
               {benefits.map((benefit, index) => (
