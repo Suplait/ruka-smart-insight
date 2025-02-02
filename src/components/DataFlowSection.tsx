@@ -23,7 +23,7 @@ const DataFlowSection = () => {
           {/* Desktop Flow Lines */}
           <div className="hidden md:block">
             {/* Left Flow Line */}
-            <div className="absolute top-1/2 left-0 w-[calc(33%-2rem)] h-2 -translate-y-1/2">
+            <div className="absolute top-1/2 left-[calc(33%+2rem)] w-[calc(33%-4rem)] h-2 -translate-y-1/2">
               <div className="relative w-full h-full">
                 {/* Base dashed line */}
                 <div className="absolute inset-0 border-t-4 border-dashed border-primary/30" />
@@ -46,7 +46,7 @@ const DataFlowSection = () => {
             </div>
 
             {/* Right Flow Line */}
-            <div className="absolute top-1/2 right-0 w-[calc(33%-2rem)] h-2 -translate-y-1/2">
+            <div className="absolute top-1/2 right-[calc(33%+2rem)] w-[calc(33%-4rem)] h-2 -translate-y-1/2">
               <div className="relative w-full h-full">
                 {/* Base dashed line */}
                 <div className="absolute inset-0 border-t-4 border-dashed border-primary/30" />
@@ -72,7 +72,7 @@ const DataFlowSection = () => {
           {/* Mobile Flow Lines */}
           <div className="md:hidden absolute left-1/2 h-full -translate-x-[2px]">
             {/* Top Flow Line */}
-            <div className="absolute top-0 h-[calc(33%-2rem)] w-2">
+            <div className="absolute top-[calc(33%+2rem)] h-[calc(33%-4rem)] w-2">
               <div className="relative w-full h-full">
                 {/* Base dashed line */}
                 <div className="absolute inset-0 border-l-4 border-dashed border-primary/30" />
@@ -95,7 +95,7 @@ const DataFlowSection = () => {
             </div>
 
             {/* Bottom Flow Line */}
-            <div className="absolute bottom-0 h-[calc(33%-2rem)] w-2">
+            <div className="absolute bottom-[calc(33%+2rem)] h-[calc(33%-4rem)] w-2">
               <div className="relative w-full h-full">
                 {/* Base dashed line */}
                 <div className="absolute inset-0 border-l-4 border-dashed border-primary/30" />
@@ -144,11 +144,11 @@ const DataFlowSection = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="bg-gradient-to-br from-primary/90 to-purple-600/90 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-shadow transform hover:-translate-y-1 relative"
             >
-              <div className="flex items-center justify-center w-20 h-20 mb-6 mx-auto">
+              <div className="flex items-center justify-center w-20 h-20 mb-6 mx-auto bg-white rounded-full p-2">
                 <img 
                   src="/ruka-logo.png" 
                   alt="Ruka.ai Logo" 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain rounded-full"
                 />
               </div>
               <h3 className="text-2xl font-bold text-center text-white mb-4">Ruka.ai</h3>
