@@ -20,9 +20,9 @@ const Index = () => {
       <BeforeAfter />
       <Features />
       <ProductShowcase />
+      <MoneyBackGuarantee />
       <ValueShowcase />
       <Stats />
-      <MoneyBackGuarantee />
       <Testimonials />
       <CTA />
       <Footer />

@@ -13,9 +13,9 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <img 
-              src="/ruka-logo.svg" 
+              src="/logo.png" 
               alt="Ruka.ai" 
-              className="h-6 sm:h-8"
+              className="h-5 sm:h-7"
             />
           </div>
           

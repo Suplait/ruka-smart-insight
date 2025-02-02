@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <img 
-              src="/ruka-logo.svg" 
+              src="/logo.png" 
               alt="Ruka.ai" 
               className="h-8"
             />
