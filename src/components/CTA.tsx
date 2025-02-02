@@ -3,10 +3,10 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 export default function CTA() {
   const benefits = [
-    "Automatización total sin digitación manual",
-    "Reportes instantáneos y personalizados",
-    "Integración con proveedores y sistemas",
-    "Visibilidad completa de operaciones"
+    "Elimina por completo la digitación manual de documentos",
+    "Detecta variaciones de precios en tiempo real",
+    "Automatiza la conciliación de documentos comerciales",
+    "Mantén el control total de tu margen operativo"
   ];
 
   return (
@@ -15,10 +15,10 @@ export default function CTA() {
       <div className="container relative">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-primary bg-clip-text text-transparent">
-            ¿Listo para transformar tus operaciones?
+            ¿Listo para tomar el control de tu margen operativo?
           </h2>
           <p className="text-xl text-muted-foreground">
-            Únete a más de 100 empresas que ya están ahorrando tiempo y recursos con Ruka.ai
+            Únete a las empresas que ya eliminaron la digitación manual y tienen visibilidad total de sus operaciones con Ruka.ai
           </p>
           
           <div className="grid sm:grid-cols-2 gap-4 text-left max-w-2xl mx-auto mb-8">
