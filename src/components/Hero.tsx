@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const valueProps = [
-  "¿Cansado de digitar facturas manualmente?",
-  "¿Frustrado por no tener datos en tiempo real?",
-  "¿Necesitas más control de tus operaciones?",
-  "¿Te toma semanas cerrar el mes?",
+  "¿Te frustra perder tiempo digitando facturas?",
+  "¿Necesitas datos precisos en tiempo real?",
+  "¿Quieres automatizar tus operaciones?",
+  "¿Buscas tener el control total de tu negocio?",
 ];
 
 export default function Hero() {
@@ -58,7 +58,7 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              Automatización inteligente que entiende tu negocio
+              Automatización que entiende tu negocio
             </div>
             
             <h1 className="text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
@@ -71,7 +71,7 @@ export default function Hero() {
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-xl">
-              Olvídate de la digitación manual. Obtén control total de tus compras y ventas con reportes instantáneos y datos precisos en tiempo real.
+              Automatiza tus procesos de compras y ventas. Obtén reportes instantáneos y control total de tu operación en tiempo real.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -101,13 +101,13 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="relative lg:h-[600px] animate-float">
+          <div className="relative lg:h-[720px] animate-float">
             <div className="absolute inset-0 bg-gradient-to-b from-white/0 to-white/80 backdrop-blur-sm rounded-2xl overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
                 <img 
                   src="/placeholder.svg" 
                   alt="Dashboard Ruka.ai" 
-                  className="w-full h-auto rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-500"
+                  className="w-full h-[720px] object-cover rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-500"
                 />
               </div>
             </div>
