@@ -73,8 +73,14 @@ export default function BeforeAfter() {
   return (
     <section className="py-24 bg-white">
       <div className="container px-4 sm:px-6">
-        <h2 className="text-3xl font-bold text-center mb-16">
-          La diferencia con <span className="text-primary">Ruka.ai</span>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+          <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+            Automatización que Transforma
+          </span>
+          <br />
+          <span className="text-2xl md:text-3xl text-gray-700 mt-2 block">
+            De procesos manuales a control total
+          </span>
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
