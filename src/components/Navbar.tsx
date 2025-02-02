@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { LogIn } from "lucide-react";
+import { LogIn, ArrowRight } from "lucide-react";
 
 export default function Navbar() {
   const scrollToSection = (id: string) => {
@@ -21,22 +21,22 @@ export default function Navbar() {
           
           <div className="hidden md:flex items-center space-x-6">
             <button 
-              onClick={() => scrollToSection('product')}
+              onClick={() => scrollToSection('before-after')}
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              Demo
-            </button>
-            <button 
-              onClick={() => scrollToSection('value-showcase')}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
-              Características
+              Valor
             </button>
             <button 
               onClick={() => scrollToSection('features')}
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              Agentes
+              Features
+            </button>
+            <button 
+              onClick={() => scrollToSection('product')}
+              className="text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              Producto
             </button>
             <button 
               onClick={() => scrollToSection('guarantee')}
@@ -44,13 +44,22 @@ export default function Navbar() {
             >
               Garantía
             </button>
+            <button 
+              onClick={() => scrollToSection('testimonials')}
+              className="text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              Testimonios
+            </button>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
             <Button asChild variant="outline" size="sm" className="gap-2">
               <a href="https://demo.ruka.ai/users/sign_in" target="_blank" rel="noopener noreferrer">
                 Iniciar Sesión <LogIn className="w-4 h-4" />
               </a>
+            </Button>
+            <Button size="sm" className="gap-2" onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}>
+              Solicitar Demo <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
         </div>
