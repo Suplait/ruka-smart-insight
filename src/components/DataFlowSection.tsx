@@ -118,13 +118,13 @@ const DataFlowSection = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             {/* SII */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-shadow relative"
+              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-shadow relative z-10"
             >
               <div className="flex items-center justify-center w-16 h-16 mb-6 mx-auto">
                 <img 
@@ -142,7 +142,7 @@ const DataFlowSection = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-gradient-to-br from-primary/90 to-purple-600/90 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-shadow transform hover:-translate-y-1 relative"
+              className="bg-gradient-to-br from-primary to-purple-600 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-shadow transform hover:-translate-y-1 relative z-20"
             >
               <div className="flex items-center justify-center w-20 h-20 mb-6 mx-auto bg-white rounded-full p-2">
                 <img 
@@ -152,12 +152,7 @@ const DataFlowSection = () => {
                 />
               </div>
               <h3 className="text-2xl font-bold text-center text-white mb-4">Ruka.ai</h3>
-              <p className="text-white/90 text-center">Procesamiento inteligente y automatizado de todos tus compras y ventas</p>
-              
-              {/* Efecto de pulso */}
-              <div className="absolute inset-0 rounded-xl">
-                <div className="absolute inset-0 rounded-xl bg-primary animate-ping opacity-20" />
-              </div>
+              <p className="text-white text-center">Procesamiento inteligente y automatizado de todos tus compras y ventas</p>
             </motion.div>
 
             {/* Facturador */}
@@ -165,7 +160,7 @@ const DataFlowSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-shadow relative"
+              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-shadow relative z-10"
             >
               <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6 mx-auto">
                 <FileText className="w-8 h-8 text-primary" />
@@ -176,7 +171,6 @@ const DataFlowSection = () => {
           </div>
         </div>
 
-        {/* Indicadores de beneficios */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
