@@ -1,43 +1,43 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { FileText, Brain, Zap, Users, LineChart, Clock } from "lucide-react";
+import { FileText, Brain, Zap, Users, LineChart, AlertCircle } from "lucide-react";
 
 const values = [
   {
-    id: 'automation',
-    title: 'Automatización Total',
-    description: 'Olvídate de la digitación manual. Nuestros agentes procesan automáticamente tus documentos 24/7, eliminando errores y ahorrando tiempo valioso.',
-    icon: FileText,
-    image: '/automation.svg'
-  },
-  {
-    id: 'intelligence',
-    title: 'Clasificación Inteligente',
-    description: 'La IA agrupa y clasifica automáticamente tus documentos, manteniendo tu información ordenada y accesible en todo momento.',
-    icon: Brain,
-    image: '/intelligence.svg'
-  },
-  {
     id: 'integration',
-    title: 'Integración Instantánea',
+    title: 'Rápida integración',
     description: 'Conectamos directamente con tus sistemas actuales. En minutos estarás operando con Ruka, sin cambiar tu forma de trabajar.',
     icon: Zap,
     image: '/integration.svg'
   },
   {
+    id: 'intelligence',
+    title: 'Clasificación Inteligente',
+    description: 'Ruka agrupa y clasifica automáticamente tus insumos, manteniendo tu información ordenada y accesible en todo momento.',
+    icon: Brain,
+    image: '/intelligence.svg'
+  },
+  {
     id: 'providers',
     title: 'Conexión con Proveedores',
-    description: 'Obtén datos actualizados automáticamente de tus proveedores, mejorando la precisión y velocidad de tu operación.',
+    description: 'Si falta algún dato, Ruka irá a conseguir la información con el proveedor y la actualizará en la plataforma',
     icon: Users,
     image: '/providers.svg'
   },
   {
     id: 'reports',
     title: 'Reportes en Tiempo Real',
-    description: 'Genera reportes personalizados en segundos. Visualiza tendencias y toma decisiones informadas al instante.',
+    description: 'Genera reportes personalizados en segundos para tomar decisiones informadas al instante.',
     icon: LineChart,
     image: '/reports.svg'
+  },
+  {
+    id: 'monitoring',
+    title: 'Monitoreo 24/7',
+    description: 'Ruka monitoreará los patrones de compra y alertará en tiempo real de anomalías que puedan afectar al margen.',
+    icon: AlertCircle,
+    image: '/monitoring.svg'
   }
 ];
 
