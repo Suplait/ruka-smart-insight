@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Target, Zap, Brain, ChartBar, Users, Shield, Rocket } from "lucide-react";
+import { ArrowRight, Target, Zap, Brain, ChartBar, Users, Shield, Rocket, Heart } from "lucide-react";
 
 export default function AboutUs() {
   return (
