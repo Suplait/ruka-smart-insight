@@ -6,17 +6,17 @@ export default function ProductShowcase() {
     {
       icon: Zap,
       title: "Integración Ultra Rápida",
-      description: "Conectamos tus datos en minutos, sin importar tu facturador"
+      description: "Conecta tus sistemas en minutos, sin cambiar tu forma de trabajar"
     },
     {
       icon: Shield,
       title: "Datos 100% Seguros",
-      description: "Máxima seguridad y encriptación de tu información"
+      description: "Tu información protegida con los más altos estándares de seguridad"
     },
     {
       icon: LineChart,
-      title: "Margen en Tiempo Real",
-      description: "Visualiza tus compras, ventas y márgenes al instante"
+      title: "Visibilidad Total",
+      description: "Monitorea tus operaciones en tiempo real desde cualquier lugar"
     }
   ];
 

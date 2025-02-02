@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils";
 const valueMessages = [
   "Automatiza tu back office sin contratar más personas",
   "Elimina la digitación manual para siempre",
-  "Detecta errores antes que te cuesten dinero",
-  "Toma decisiones con datos actualizados al instante",
-  "Recupera el control de tus operaciones",
+  "Toma el control de tus operaciones",
+  "Reduce costos y errores operativos",
+  "Accede a tus datos en tiempo real",
 ];
 
 export default function Hero() {
@@ -66,20 +66,17 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              Agentes con IA que trabajan por ti
+              Automatización Inteligente
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
-              <span className={cn(
-                "bg-gradient-to-r from-gray-900 to-gray-800 bg-clip-text text-transparent",
-                "after:content-['|'] after:ml-1 after:animate-blink after:text-primary"
-              )}>
+              <span className="bg-gradient-to-r from-gray-900 to-gray-800 bg-clip-text text-transparent after:content-['|'] after:ml-1 after:animate-blink after:text-primary">
                 {displayText}
               </span>
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-xl">
-              Agentes con IA que procesan tus facturas y documentos automáticamente, eliminando la digitación manual y los errores humanos en tu back office
+              Agentes con IA que procesan tus documentos automáticamente, eliminando la digitación manual y los errores humanos en tu back office
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">

@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Partners from "@/components/Partners";
 import BeforeAfter from "@/components/BeforeAfter";
 import Features from "@/components/Features";
 import Stats from "@/components/Stats";
@@ -8,7 +7,7 @@ import ProductShowcase from "@/components/ProductShowcase";
 import ValueShowcase from "@/components/ValueShowcase";
 import MoneyBackGuarantee from "@/components/MoneyBackGuarantee";
 import Testimonials from "@/components/Testimonials";
-import FAQ from "@/components/FAQ";
+import Partners from "@/components/Partners";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
@@ -18,14 +17,13 @@ const Index = () => {
       <Navbar />
       <Hero />
       <Partners />
-      <Features />
       <BeforeAfter />
-      <Stats />
+      <Features />
       <ProductShowcase />
       <ValueShowcase />
+      <Stats />
       <MoneyBackGuarantee />
       <Testimonials />
-      <FAQ />
       <CTA />
       <Footer />
     </main>

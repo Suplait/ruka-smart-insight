@@ -6,7 +6,7 @@ export default function Features() {
     {
       icon: Bot,
       title: "Agentes Autónomos 24/7",
-      description: "Automatiza tareas repetitivas mientras tu equipo se enfoca en decisiones estratégicas"
+      description: "Automatiza tareas repetitivas mientras reduces costos operativos y errores humanos"
     },
     {
       icon: Brain,
@@ -16,7 +16,7 @@ export default function Features() {
     {
       icon: Clock,
       title: "Información al Instante",
-      description: "Olvídate de esperar días por reportes. Accede a tus datos cuando los necesites"
+      description: "Accede a tus datos en tiempo real para tomar decisiones informadas cuando las necesites"
     },
     {
       icon: LineChart,
