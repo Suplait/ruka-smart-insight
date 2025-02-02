@@ -24,7 +24,11 @@ export default function MoneyBackGuarantee() {
             Si no estás 100% satisfecho con Ruka.ai en los primeros 30 días, te devolvemos tu dinero sin hacer preguntas. Así de seguros estamos de que te encantará.
           </p>
           
-          <Button size="lg" className="gap-2 group">
+          <Button 
+            size="lg" 
+            className="gap-2 group"
+            onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}
+          >
             Prueba Sin Riesgo
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Button>
