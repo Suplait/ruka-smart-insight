@@ -1,119 +1,86 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { FileText, Brain, Zap, Users, LineChart, Clock } from "lucide-react";
+import { ArrowRight, FileText, BarChart2, Zap, Users, Shield, Clock } from "lucide-react";
+import { motion } from "framer-motion";
 
-const values = [
+const features = [
   {
-    id: 'automation',
-    title: 'Automatización Total',
-    description: 'Olvídate de la digitación manual. Nuestros agentes procesan automáticamente tus documentos 24/7, eliminando errores y ahorrando tiempo valioso.',
+    title: "Cero Digitación Manual",
+    description: "Olvídate de ingresar datos manualmente. Nuestros agentes procesan automáticamente tus documentos 24/7.",
     icon: FileText,
-    image: '/automation.svg'
+    color: "bg-purple-100 text-purple-600"
   },
   {
-    id: 'intelligence',
-    title: 'Clasificación Inteligente',
-    description: 'La IA agrupa y clasifica automáticamente tus documentos, manteniendo tu información ordenada y accesible en todo momento.',
-    icon: Brain,
-    image: '/intelligence.svg'
+    title: "Clasificación Automática",
+    description: "Documentos agrupados y clasificados automáticamente, manteniendo tu información ordenada y accesible.",
+    icon: BarChart2,
+    color: "bg-blue-100 text-blue-600"
   },
   {
-    id: 'integration',
-    title: 'Integración Instantánea',
-    description: 'Conectamos directamente con tus sistemas actuales. En minutos estarás operando con Ruka, sin cambiar tu forma de trabajar.',
+    title: "Integración Ultra Rápida",
+    description: "La integración más rápida del mercado. En minutos estarás operando con Ruka.",
     icon: Zap,
-    image: '/integration.svg'
+    color: "bg-yellow-100 text-yellow-600"
   },
   {
-    id: 'providers',
-    title: 'Conexión con Proveedores',
-    description: 'Obtén datos actualizados automáticamente de tus proveedores, mejorando la precisión y velocidad de tu operación.',
+    title: "Conexión con Proveedores",
+    description: "Si faltan datos o hay dudas, nuestros agentes se comunican directamente con tus proveedores por correo, entablando conversaciones para obtener la información necesaria.",
     icon: Users,
-    image: '/providers.svg'
+    color: "bg-green-100 text-green-600"
   },
   {
-    id: 'reports',
-    title: 'Reportes en Tiempo Real',
-    description: 'Genera reportes personalizados en segundos. Visualiza tendencias y toma decisiones informadas al instante.',
-    icon: LineChart,
-    image: '/reports.svg'
+    title: "Datos Seguros",
+    description: "Tu información protegida con los más altos estándares de seguridad y encriptación.",
+    icon: Shield,
+    color: "bg-red-100 text-red-600"
+  },
+  {
+    title: "Reportes Instantáneos",
+    description: "Genera reportes personalizados en segundos. Lo que antes tomaba días, ahora toma segundos.",
+    icon: Clock,
+    color: "bg-indigo-100 text-indigo-600"
   }
 ];
 
-export default function ValueShowcase() {
-  const [activeValue, setActiveValue] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveValue((current) => (current + 1) % values.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
-
+export default function ValueHighlights() {
   return (
-    <section id="value-showcase" className="py-24 bg-white relative overflow-hidden">
+    <section className="py-24 bg-white relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-white via-purple-50/30 to-white" />
       
-      <div className="container relative max-w-7xl mx-auto px-4">
+      <div className="container relative">
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-4xl font-bold">
             Automatización Inteligente que
             <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> Entiende tu Negocio</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Soluciones diseñadas específicamente para los desafíos de tu empresa
+            Diseñado específicamente para resolver los desafíos diarios de empresas como la tuya
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <div className="flex flex-wrap gap-3">
-              {values.map((value, index) => (
-                <Button
-                  key={value.id}
-                  variant={activeValue === index ? "default" : "outline"}
-                  onClick={() => setActiveValue(index)}
-                  className="gap-2"
-                >
-                  <value.icon className="w-4 h-4" />
-                  {value.title}
-                </Button>
-              ))}
-            </div>
-            
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeValue}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white/50 backdrop-blur-sm rounded-xl p-6 shadow-lg"
-              >
-                <h3 className="text-2xl font-semibold mb-4">{values[activeValue].title}</h3>
-                <p className="text-lg text-muted-foreground">{values[activeValue].description}</p>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          <AnimatePresence mode="wait">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feature, index) => (
             <motion.div
-              key={activeValue}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3 }}
-              className="relative aspect-square rounded-xl overflow-hidden shadow-xl"
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="relative group"
             >
-              <img
-                src={values[activeValue].image}
-                alt={values[activeValue].title}
-                className="w-full h-full object-cover"
-              />
+              <div className="absolute inset-0 bg-white rounded-2xl shadow-lg transform transition-transform group-hover:scale-105 duration-300" />
+              <div className="relative p-8 space-y-4">
+                <div className={`w-12 h-12 rounded-lg ${feature.color} flex items-center justify-center`}>
+                  <feature.icon className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-semibold">{feature.title}</h3>
+                <p className="text-muted-foreground">{feature.description}</p>
+                <Button variant="ghost" className="group/button">
+                  Saber más
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover/button:translate-x-1 transition-transform" />
+                </Button>
+              </div>
             </motion.div>
-          </AnimatePresence>
+          ))}
         </div>
       </div>
     </section>

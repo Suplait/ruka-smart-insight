@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const valueMessages = [
-  "Las empresas medianas eliminan la digitación manual",
-  "Los equipos contables recuperan 15 horas semanales",
-  "Las áreas financieras detectan errores al instante",
-  "Los controllers previenen pérdidas operativas",
-  "Los gerentes toman decisiones informadas",
+  "Elimina la digitación manual de una vez por todas",
+  "Automatiza tu back office sin complicaciones",
+  "Deja que la IA haga el trabajo pesado por ti",
+  "Olvídate de los errores humanos para siempre",
+  "Recupera el tiempo perdido en tareas manuales",
 ];
+
+// ... keep existing code (useEffect and animation logic)
 
 export default function Hero() {
   const [currentMessage, setCurrentMessage] = useState(0);
@@ -107,7 +109,7 @@ export default function Hero() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <img 
                   src="/placeholder.svg" 
-                  alt="Dashboard Ruka.ai" 
+                  alt="Robot en centro de mando Ruka.ai" 
                   className="w-full h-[720px] object-cover rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-500"
                 />
               </div>

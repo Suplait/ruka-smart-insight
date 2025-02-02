@@ -1,8 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Partners from "@/components/Partners";
-import BeforeAfter from "@/components/BeforeAfter";
 import Features from "@/components/Features";
+import BeforeAfter from "@/components/BeforeAfter";
 import Stats from "@/components/Stats";
 import ProductShowcase from "@/components/ProductShowcase";
 import ValueShowcase from "@/components/ValueShowcase";
@@ -18,8 +18,8 @@ const Index = () => {
       <Navbar />
       <Hero />
       <Partners />
-      <BeforeAfter />
       <Features />
+      <BeforeAfter />
       <Stats />
       <ProductShowcase />
       <ValueShowcase />
