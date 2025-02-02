@@ -2,19 +2,19 @@ import { motion } from "framer-motion";
 import { Clock, CheckCircle, X } from "lucide-react";
 
 const beforePoints = [
-  "Proceso manual que toma 1 mes",
+  "Monitoreo mensual del margen (desfasado)",
+  "Sin tiempo de reacción",
   "Alto costo en personal de back office",
   "Errores humanos frecuentes",
-  "Sin tiempo para reaccionar a problemas",
   "Datos desactualizados",
   "Sin visibilidad del negocio"
 ];
 
 const afterPoints = [
   "Actualización en tiempo real",
-  "Reducción de costos operativos",
-  "Agentes con IA sin errores",
   "Alertas preventivas inmediatas",
+  "Reducción de costos operativos",
+  "Sin error humano",
   "Datos precisos y al día",
   "Control total del negocio"
 ];
