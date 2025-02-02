@@ -50,18 +50,25 @@ export default function Features() {
           ))}
         </div>
 
-        <div className="mt-16 flex justify-center">
-          <div className="relative w-full max-w-4xl h-64 bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="grid grid-cols-3 gap-8 animate-float">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="w-16 h-16 bg-white rounded-lg shadow-lg flex items-center justify-center">
-                    <Bot className="w-8 h-8 text-primary" />
-                  </div>
-                ))}
+        {/* Agents Showcase */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="relative rounded-xl overflow-hidden bg-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="aspect-video">
+                <img 
+                  src="/placeholder.svg" 
+                  alt={`Agente Ruka ${i + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                <div className="p-6 text-white">
+                  <h4 className="text-lg font-semibold mb-2">Agente {i + 1}</h4>
+                  <p className="text-sm opacity-90">Descripción de la tarea que realiza este agente</p>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
