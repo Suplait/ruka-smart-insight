@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Database, Server, FileText, ArrowRight } from "lucide-react";
+import { FileText } from "lucide-react";
 
 const DataFlowSection = () => {
   return (
@@ -20,7 +20,7 @@ const DataFlowSection = () => {
         </h2>
 
         <div className="relative mt-20">
-          {/* Línea de conexión SVG */}
+          {/* Líneas de conexión SVG con gradiente */}
           <svg className="absolute top-1/2 left-0 w-full h-1 -translate-y-1/2" preserveAspectRatio="none">
             <motion.path
               d="M0,0 C200,0 800,0 1000,0"
@@ -45,13 +45,43 @@ const DataFlowSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-shadow"
+              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-shadow relative"
             >
-              <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6 mx-auto">
-                <Database className="w-8 h-8 text-primary" />
+              <div className="flex items-center justify-center w-16 h-16 mb-6 mx-auto">
+                <img 
+                  src="/sii-logo.png" 
+                  alt="SII Logo" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <h3 className="text-xl font-semibold text-center mb-4">Impuestos Internos</h3>
-              <p className="text-gray-600 text-center">Conexión directa con el SII para obtener los en tiempo real</p>
+              <p className="text-gray-600 text-center">Conexión directa con el SII para obtener los datos en tiempo real</p>
+
+              {/* Flecha animada hacia Ruka */}
+              <motion.div
+                initial={{ x: 0, opacity: 0 }}
+                animate={{ x: 20, opacity: 1 }}
+                transition={{
+                  x: {
+                    duration: 1,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut"
+                  },
+                  opacity: { duration: 0.5 }
+                }}
+                className="absolute -right-4 top-1/2 transform -translate-y-1/2 hidden md:block"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M5 12H19M19 12L12 5M19 12L12 19"
+                    stroke="#4D68EB"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </motion.div>
             </motion.div>
 
             {/* Ruka.ai */}
@@ -59,15 +89,19 @@ const DataFlowSection = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-gradient-to-br from-primary/90 to-purple-600/90 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-shadow transform hover:-translate-y-1"
+              className="bg-gradient-to-br from-primary/90 to-purple-600/90 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-shadow transform hover:-translate-y-1 relative"
             >
-              <div className="flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur rounded-full mb-6 mx-auto">
-                <Server className="w-10 h-10 text-white" />
+              <div className="flex items-center justify-center w-20 h-20 mb-6 mx-auto">
+                <img 
+                  src="/ruka-logo.png" 
+                  alt="Ruka.ai Logo" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <h3 className="text-2xl font-bold text-center text-white mb-4">Ruka.ai</h3>
               <p className="text-white/90 text-center">Procesamiento inteligente y automatizado de todos tus compras y ventas</p>
               
-              {/* Animación de pulso */}
+              {/* Efecto de pulso */}
               <div className="absolute inset-0 rounded-xl">
                 <div className="absolute inset-0 rounded-xl bg-primary animate-ping opacity-20" />
               </div>
@@ -78,33 +112,39 @@ const DataFlowSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-shadow"
+              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-shadow relative"
             >
               <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6 mx-auto">
                 <FileText className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-xl font-semibold text-center mb-4">Tu Facturador</h3>
               <p className="text-gray-600 text-center">Integración perfecta con tu sistema de facturación actual</p>
-            </motion.div>
-          </div>
 
-          {/* Flechas de flujo de datos */}
-          <div className="hidden md:block">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="absolute top-1/2 left-[28%] transform -translate-y-1/2"
-            >
-              <ArrowRight className="w-8 h-8 text-primary" />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="absolute top-1/2 right-[28%] transform -translate-y-1/2"
-            >
-              <ArrowRight className="w-8 h-8 text-primary" />
+              {/* Flecha animada hacia Ruka */}
+              <motion.div
+                initial={{ x: 0, opacity: 0 }}
+                animate={{ x: -20, opacity: 1 }}
+                transition={{
+                  x: {
+                    duration: 1,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut"
+                  },
+                  opacity: { duration: 0.5 }
+                }}
+                className="absolute -left-4 top-1/2 transform -translate-y-1/2 hidden md:block"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M19 12H5M5 12L12 5M5 12L12 19"
+                    stroke="#4D68EB"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </motion.div>
             </motion.div>
           </div>
         </div>
