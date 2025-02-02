@@ -5,7 +5,6 @@ import Hero from "@/components/Hero";
 import Partners from "@/components/Partners";
 import DataFlowSection from "@/components/DataFlowSection";
 import BeforeAfter from "@/components/BeforeAfter";
-import ValueHighlights from "@/components/ValueHighlights";
 import Features from "@/components/Features";
 import ProductShowcase from "@/components/ProductShowcase";
 import ValueShowcase from "@/components/ValueShowcase";
@@ -38,7 +37,6 @@ export default function Index() {
       <Partners />
       <DataFlowSection />
       <BeforeAfter />
-      <ValueHighlights />
       <Features />
       <ProductShowcase />
       <ValueShowcase />

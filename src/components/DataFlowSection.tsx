@@ -11,11 +11,11 @@ const DataFlowSection = () => {
       <div className="container relative">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
           <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-            Integración Inteligente de Datos
+            Conexión Ultra Rápida
           </span>
           <br />
           <span className="text-xl md:text-2xl text-gray-600 mt-4 block">
-            Conectamos todas tus fuentes de información en un solo lugar
+            Tus datos sincronizados en minutos, no en semanas
           </span>
         </h2>
 
