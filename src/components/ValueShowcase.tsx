@@ -1,47 +1,41 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, FileText, BarChart2, Zap, Users, Shield, Clock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-const features = [
-  {
-    title: "Cero Digitación Manual",
-    description: "Olvídate de ingresar datos manualmente. Nuestros agentes procesan automáticamente tus documentos 24/7.",
-    icon: FileText,
-    color: "bg-purple-100 text-purple-600"
-  },
-  {
-    title: "Clasificación Automática",
-    description: "Documentos agrupados y clasificados automáticamente, manteniendo tu información ordenada y accesible.",
-    icon: BarChart2,
-    color: "bg-blue-100 text-blue-600"
-  },
-  {
-    title: "Integración Ultra Rápida",
-    description: "La integración más rápida del mercado. En minutos estarás operando con Ruka.",
-    icon: Zap,
-    color: "bg-yellow-100 text-yellow-600"
-  },
-  {
-    title: "Conexión con Proveedores",
-    description: "Si faltan datos o hay dudas, nuestros agentes se comunican directamente con tus proveedores por correo, entablando conversaciones para obtener la información necesaria.",
-    icon: Users,
-    color: "bg-green-100 text-green-600"
-  },
-  {
-    title: "Datos Seguros",
-    description: "Tu información protegida con los más altos estándares de seguridad y encriptación.",
-    icon: Shield,
-    color: "bg-red-100 text-red-600"
-  },
-  {
-    title: "Reportes Instantáneos",
-    description: "Genera reportes personalizados en segundos. Lo que antes tomaba días, ahora toma segundos.",
-    icon: Clock,
-    color: "bg-indigo-100 text-indigo-600"
-  }
-];
+export default function ValueShowcase() {
+  const features = [
+    {
+      title: "Cero Digitación Manual",
+      description: "Olvídate de ingresar datos manualmente. Nuestros agentes procesan automáticamente tus documentos 24/7.",
+      link: "https://calendly.com/suplait_lorenzo/30min"
+    },
+    {
+      title: "Clasificación Automática",
+      description: "Documentos agrupados y clasificados automáticamente, manteniendo tu información ordenada y accesible.",
+      link: "https://calendly.com/suplait_lorenzo/30min"
+    },
+    {
+      title: "Integración Ultra Rápida",
+      description: "La integración más rápida del mercado. En minutos estarás operando con Ruka.",
+      link: "https://calendly.com/suplait_lorenzo/30min"
+    },
+    {
+      title: "Conexión con Proveedores",
+      description: "Si faltan datos o hay dudas, nuestros agentes se comunican directamente con tus proveedores por correo, entablando conversaciones para obtener la información necesaria.",
+      link: "https://calendly.com/suplait_lorenzo/30min"
+    },
+    {
+      title: "Datos Seguros",
+      description: "Tu información protegida con los más altos estándares de seguridad y encriptación.",
+      link: "https://calendly.com/suplait_lorenzo/30min"
+    },
+    {
+      title: "Reportes Instantáneos",
+      description: "Genera reportes personalizados en segundos. Lo que antes tomaba días, ahora toma segundos.",
+      link: "https://calendly.com/suplait_lorenzo/30min"
+    }
+  ];
 
-export default function ValueHighlights() {
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-white via-purple-50/30 to-white" />
@@ -57,29 +51,29 @@ export default function ValueHighlights() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {features.map((feature, index) => (
-            <motion.div
+            <motion.a
               key={index}
+              href={feature.link}
+              target="_blank"
+              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="relative group"
+              className="group relative p-6 rounded-2xl bg-white/50 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              <div className="absolute inset-0 bg-white rounded-2xl shadow-lg transform transition-transform group-hover:scale-105 duration-300" />
-              <div className="relative p-8 space-y-4">
-                <div className={`w-12 h-12 rounded-lg ${feature.color} flex items-center justify-center`}>
-                  <feature.icon className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-semibold">{feature.title}</h3>
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">
+                  {feature.title}
+                </h3>
                 <p className="text-muted-foreground">{feature.description}</p>
-                <Button variant="ghost" className="group/button">
-                  Saber más
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover/button:translate-x-1 transition-transform" />
-                </Button>
+                <div className="flex items-center text-primary font-medium">
+                  Agendar Demo
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </div>
       </div>

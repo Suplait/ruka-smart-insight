@@ -78,11 +78,20 @@ export default function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="gap-2 group hover:scale-105 transition-all duration-300">
+              <Button 
+                size="lg" 
+                className="gap-2 group hover:scale-105 transition-all duration-300"
+                onClick={() => window.open("https://calendly.com/suplait_lorenzo/30min", "_blank")}
+              >
                 Solicitar Demo
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button size="lg" variant="outline" className="hover:scale-105 transition-all duration-300">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="hover:scale-105 transition-all duration-300"
+                onClick={() => document.getElementById('guarantee')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 Ver Garantía de 30 Días
               </Button>
             </div>

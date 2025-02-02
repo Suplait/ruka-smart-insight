@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export default function MoneyBackGuarantee() {
   return (
-    <section className="py-16 bg-gradient-to-b from-white via-primary/5 to-white">
+    <section id="guarantee" className="py-16 bg-gradient-to-b from-white via-primary/5 to-white">
       <div className="container px-4 sm:px-6">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
