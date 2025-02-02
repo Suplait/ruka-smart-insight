@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Clock, CheckCircle, X, ArrowRight } from "lucide-react";
+import { Clock, CheckCircle, X } from "lucide-react";
 
 const beforePoints = [
   "Proceso manual que toma 1 mes",
@@ -13,7 +13,7 @@ const beforePoints = [
 const afterPoints = [
   "Actualización en tiempo real",
   "Reducción de costos operativos",
-  "Automatización inteligente sin errores",
+  "Agentes con IA sin errores",
   "Alertas preventivas inmediatas",
   "Datos precisos y al día",
   "Control total del negocio"
@@ -40,6 +40,49 @@ const itemVariants = {
   }
 };
 
+const ArrowAnimation = () => (
+  <motion.svg
+    width="100"
+    height="100"
+    viewBox="0 0 100 100"
+    initial="hidden"
+    animate="visible"
+    className="w-16 h-16"
+  >
+    <motion.path
+      d="M20 50 L80 50 M60 30 L80 50 L60 70"
+      stroke="#4D68EB"
+      strokeWidth="4"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0, opacity: 0 }}
+      animate={{
+        pathLength: 1,
+        opacity: 1,
+        transition: {
+          pathLength: { duration: 1, ease: "easeInOut" },
+          opacity: { duration: 0.2 }
+        }
+      }}
+    />
+    <motion.circle
+      cx="50"
+      cy="50"
+      r="40"
+      stroke="#4D68EB"
+      strokeWidth="2"
+      fill="white"
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{
+        scale: 1,
+        opacity: 1,
+        transition: { duration: 0.5, delay: 0.2 }
+      }}
+    />
+  </motion.svg>
+);
+
 export default function BeforeAfter() {
   return (
     <section className="py-24 bg-white">
@@ -55,9 +98,7 @@ export default function BeforeAfter() {
             transition={{ duration: 0.5 }}
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
           >
-            <div className="bg-white rounded-full p-4 shadow-lg">
-              <ArrowRight className="w-8 h-8 text-primary" />
-            </div>
+            <ArrowAnimation />
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">

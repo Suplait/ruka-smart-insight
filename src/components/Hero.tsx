@@ -5,13 +5,13 @@ import { cn } from "@/lib/utils";
 
 const valueWords = [
   "tiempo",
-  "dinero",
-  "control",
-  "precisión",
-  "eficiencia",
+  "costos",
+  "errores",
+  "retrasos",
+  "problemas",
 ];
 
-const basePhrase = "Las empresas medianas ahorran";
+const basePhrase = "Las empresas medianas eliminan";
 
 export default function Hero() {
   const [currentValue, setCurrentValue] = useState(0);
@@ -61,7 +61,7 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              Automatización que funciona
+              Agentes con IA que trabajan por ti
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
@@ -74,7 +74,7 @@ export default function Hero() {
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-xl">
-              Automatización de procesos contables y financieros que reduce costos operativos y mejora la precisión de tus datos.
+              Agentes con IA que procesan tus facturas y documentos automáticamente, eliminando la digitación manual y los errores humanos en tu back office
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
