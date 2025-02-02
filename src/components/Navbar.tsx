@@ -2,13 +2,20 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LogIn, ArrowRight } from "lucide-react";
 import SubdomainModal from "./SubdomainModal";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [showSubdomainModal, setShowSubdomainModal] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
   
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: "smooth" });
+    if (location.pathname !== '/') {
+      navigate('/', { state: { scrollTo: id } });
+    } else {
+      const element = document.getElementById(id);
+      element?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -16,11 +23,13 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <img 
-              src="/logo.png" 
-              alt="Ruka.ai" 
-              className="h-5 sm:h-7"
-            />
+            <Link to="/">
+              <img 
+                src="/logo.png" 
+                alt="Ruka.ai" 
+                className="h-5 sm:h-7 hover:opacity-80 transition-opacity"
+              />
+            </Link>
           </div>
           
           <div className="hidden md:flex items-center space-x-6">

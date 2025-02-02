@@ -1,3 +1,4 @@
+import { useEffect, useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import BeforeAfter from "@/components/BeforeAfter";
@@ -12,6 +13,15 @@ import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
 const Index = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      const element = document.getElementById(location.state.scrollTo);
+      element?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [location]);
+
   return (
     <main className="min-h-screen pt-16">
       <Navbar />
