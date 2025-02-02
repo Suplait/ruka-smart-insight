@@ -1,15 +1,15 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Features from "@/components/Features";
-import ValueHighlights from "@/components/ValueHighlights";
 import Partners from "@/components/Partners";
-import ProductShowcase from "@/components/ProductShowcase";
 import BeforeAfter from "@/components/BeforeAfter";
+import ValueShowcase from "@/components/ValueShowcase";
+import Features from "@/components/Features";
+import ProductShowcase from "@/components/ProductShowcase";
 import Testimonials from "@/components/Testimonials";
 import Stats from "@/components/Stats";
+import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
-import FAQ from "@/components/FAQ";
 
 const Index = () => {
   return (
@@ -17,10 +17,10 @@ const Index = () => {
       <Navbar />
       <Hero />
       <Partners />
-      <ValueHighlights />
+      <BeforeAfter />
+      <ValueShowcase />
       <Features />
       <ProductShowcase />
-      <BeforeAfter />
       <Stats />
       <Testimonials />
       <FAQ />
