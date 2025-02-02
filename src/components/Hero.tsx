@@ -3,33 +3,31 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-const valueWords = [
-  "tiempo",
-  "costos",
-  "errores",
-  "retrasos",
-  "problemas",
+const valueMessages = [
+  "Las empresas medianas eliminan la digitación manual",
+  "Los equipos contables recuperan 15 horas semanales",
+  "Las áreas financieras detectan errores al instante",
+  "Los controllers previenen pérdidas operativas",
+  "Los gerentes toman decisiones informadas",
 ];
 
-const basePhrase = "Las empresas medianas eliminan";
-
 export default function Hero() {
-  const [currentValue, setCurrentValue] = useState(0);
+  const [currentMessage, setCurrentMessage] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    const current = `${basePhrase} ${valueWords[currentValue]}`;
+    const current = valueMessages[currentMessage];
     
     if (isDeleting) {
-      if (displayText === basePhrase + " ") {
+      if (displayText === "") {
         setIsDeleting(false);
-        setCurrentValue((prev) => (prev + 1) % valueWords.length);
+        setCurrentMessage((prev) => (prev + 1) % valueMessages.length);
       } else {
         timeout = setTimeout(() => {
           setDisplayText(displayText.substring(0, displayText.length - 1));
-        }, 50);
+        }, 30);
       }
     } else {
       if (displayText === current) {
@@ -39,12 +37,12 @@ export default function Hero() {
       } else {
         timeout = setTimeout(() => {
           setDisplayText(current.substring(0, displayText.length + 1));
-        }, 50);
+        }, 30);
       }
     }
 
     return () => clearTimeout(timeout);
-  }, [currentValue, displayText, isDeleting]);
+  }, [currentMessage, displayText, isDeleting]);
 
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">

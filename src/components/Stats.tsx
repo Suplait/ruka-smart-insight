@@ -21,9 +21,9 @@ const stats = [
   },
   {
     label: "Tiempo Ahorrado",
-    value: "29",
+    value: "15",
     icon: Clock,
-    description: "días al mes por cliente",
+    description: "horas semanales por cliente",
   },
 ];
 

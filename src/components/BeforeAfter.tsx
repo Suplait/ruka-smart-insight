@@ -42,15 +42,15 @@ const itemVariants = {
 
 const ArrowAnimation = () => (
   <motion.svg
-    width="100"
-    height="100"
-    viewBox="0 0 100 100"
+    width="160"
+    height="80"
+    viewBox="0 0 160 80"
     initial="hidden"
     animate="visible"
-    className="w-16 h-16"
+    className="w-24 h-12"
   >
     <motion.path
-      d="M20 50 L80 50 M60 30 L80 50 L60 70"
+      d="M10 40 C 50 40, 110 40, 150 40 M 130 20 C 140 30, 150 40, 130 60"
       stroke="#4D68EB"
       strokeWidth="4"
       fill="none"
@@ -64,20 +64,6 @@ const ArrowAnimation = () => (
           pathLength: { duration: 1, ease: "easeInOut" },
           opacity: { duration: 0.2 }
         }
-      }}
-    />
-    <motion.circle
-      cx="50"
-      cy="50"
-      r="40"
-      stroke="#4D68EB"
-      strokeWidth="2"
-      fill="white"
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{
-        scale: 1,
-        opacity: 1,
-        transition: { duration: 0.5, delay: 0.2 }
       }}
     />
   </motion.svg>
