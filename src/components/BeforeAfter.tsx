@@ -19,81 +19,123 @@ const afterPoints = [
   "Control total del negocio"
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { x: -20, opacity: 0 },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5
+    }
+  }
+};
+
 export default function BeforeAfter() {
   return (
     <section className="py-24 bg-white">
-      <div className="container">
+      <div className="container px-4 sm:px-6">
         <h2 className="text-3xl font-bold text-center mb-16">
           La diferencia con <span className="text-primary">Ruka.ai</span>
         </h2>
         
         <div className="relative">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <ArrowRight className="w-12 h-12 text-primary" />
-          </div>
+          <motion.div 
+            initial={{ scale: 0, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+          >
+            <div className="bg-white rounded-full p-4 shadow-lg">
+              <ArrowRight className="w-8 h-8 text-primary" />
+            </div>
+          </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Antes */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              className="relative"
+              className="relative group"
             >
-              <div className="absolute inset-0 bg-red-50 rounded-2xl transform -rotate-2" />
+              <motion.div 
+                initial={{ rotate: -2 }}
+                whileHover={{ rotate: 0 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 bg-red-50 rounded-2xl"
+              />
               <div className="relative p-8 space-y-6">
                 <div className="flex items-center gap-4 mb-6">
                   <Clock className="w-8 h-8 text-red-500" />
                   <h3 className="text-2xl font-semibold">Antes</h3>
                 </div>
-                <ul className="space-y-4">
+                <motion.ul className="space-y-4" variants={containerVariants}>
                   {beforePoints.map((point, index) => (
                     <motion.li
                       key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                      className="flex items-start gap-3"
+                      variants={itemVariants}
+                      className="flex items-start gap-3 group"
                     >
-                      <X className="w-5 h-5 text-red-500 flex-shrink-0 mt-1" />
-                      <p>{point}</p>
+                      <motion.div
+                        whileHover={{ scale: 1.2 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                      >
+                        <X className="w-5 h-5 text-red-500 flex-shrink-0 mt-1" />
+                      </motion.div>
+                      <p className="group-hover:text-red-700 transition-colors">{point}</p>
                     </motion.li>
                   ))}
-                </ul>
+                </motion.ul>
               </div>
             </motion.div>
 
             {/* Después */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              className="relative"
+              className="relative group"
             >
-              <div className="absolute inset-0 bg-green-50 rounded-2xl transform rotate-2" />
+              <motion.div 
+                initial={{ rotate: 2 }}
+                whileHover={{ rotate: 0 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 bg-green-50 rounded-2xl"
+              />
               <div className="relative p-8 space-y-6">
                 <div className="flex items-center gap-4 mb-6">
                   <CheckCircle className="w-8 h-8 text-green-500" />
                   <h3 className="text-2xl font-semibold">Con Ruka</h3>
                 </div>
-                <ul className="space-y-4">
+                <motion.ul className="space-y-4" variants={containerVariants}>
                   {afterPoints.map((point, index) => (
                     <motion.li
                       key={index}
-                      initial={{ opacity: 0, x: 20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                      className="flex items-start gap-3"
+                      variants={itemVariants}
+                      className="flex items-start gap-3 group"
                     >
-                      <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-1" />
-                      <p>{point}</p>
+                      <motion.div
+                        whileHover={{ scale: 1.2 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                      >
+                        <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-1" />
+                      </motion.div>
+                      <p className="group-hover:text-green-700 transition-colors">{point}</p>
                     </motion.li>
                   ))}
-                </ul>
+                </motion.ul>
               </div>
             </motion.div>
           </div>

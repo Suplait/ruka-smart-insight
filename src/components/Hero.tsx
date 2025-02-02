@@ -3,12 +3,15 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-const valueProps = [
-  "¿Te frustra perder tiempo digitando facturas?",
-  "¿Necesitas datos precisos en tiempo real?",
-  "¿Quieres automatizar tus operaciones?",
-  "¿Buscas tener el control total de tu negocio?",
+const valueWords = [
+  "tiempo",
+  "dinero",
+  "control",
+  "precisión",
+  "eficiencia",
 ];
+
+const basePhrase = "Las empresas medianas ahorran";
 
 export default function Hero() {
   const [currentValue, setCurrentValue] = useState(0);
@@ -17,15 +20,15 @@ export default function Hero() {
   
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    const current = valueProps[currentValue];
+    const current = `${basePhrase} ${valueWords[currentValue]}`;
     
     if (isDeleting) {
-      if (displayText === "") {
+      if (displayText === basePhrase + " ") {
         setIsDeleting(false);
-        setCurrentValue((prev) => (prev + 1) % valueProps.length);
+        setCurrentValue((prev) => (prev + 1) % valueWords.length);
       } else {
         timeout = setTimeout(() => {
-          setDisplayText(current.substring(0, displayText.length - 1));
+          setDisplayText(displayText.substring(0, displayText.length - 1));
         }, 50);
       }
     } else {
@@ -50,7 +53,7 @@ export default function Hero() {
         <div className="absolute inset-0 hero-gradient" />
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 py-24">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8 text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary animate-fade-in">
@@ -58,10 +61,10 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              Automatización que entiende tu negocio
+              Automatización que funciona
             </div>
             
-            <h1 className="text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
               <span className={cn(
                 "bg-gradient-to-r from-gray-900 to-gray-800 bg-clip-text text-transparent",
                 "after:content-['|'] after:ml-1 after:animate-blink after:text-primary"
@@ -71,7 +74,7 @@ export default function Hero() {
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-xl">
-              Automatiza tus procesos de compras y ventas. Obtén reportes instantáneos y control total de tu operación en tiempo real.
+              Automatización de procesos contables y financieros que reduce costos operativos y mejora la precisión de tus datos.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -80,7 +83,7 @@ export default function Hero() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button size="lg" variant="outline" className="hover:scale-105 transition-all duration-300">
-                Ver Cómo Funciona
+                Ver Garantía de 30 Días
               </Button>
             </div>
 
@@ -91,7 +94,7 @@ export default function Hero() {
                     key={i}
                     className="w-10 h-10 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-xs font-semibold"
                   >
-                    {i < 3 ? "C" : "+97"}
+                    {i < 3 ? "C" : "+100"}
                   </div>
                 ))}
               </div>
