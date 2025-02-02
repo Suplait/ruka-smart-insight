@@ -20,24 +20,57 @@ const DataFlowSection = () => {
         </h2>
 
         <div className="relative mt-20">
-          {/* Líneas de conexión SVG con gradiente */}
-          <svg className="absolute top-1/2 left-0 w-full h-1 -translate-y-1/2" preserveAspectRatio="none">
-            <motion.path
-              d="M0,0 C200,0 800,0 1000,0"
-              stroke="url(#gradient-line)"
-              strokeWidth="2"
-              fill="none"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-            />
-            <defs>
-              <linearGradient id="gradient-line" x1="0" y1="0" x2="100%" y2="0">
-                <stop offset="0%" stopColor="#4D68EB" />
-                <stop offset="100%" stopColor="#8B5CF6" />
-              </linearGradient>
-            </defs>
-          </svg>
+          {/* Líneas de conexión SVG con gradiente - Desktop */}
+          <div className="hidden md:block">
+            <svg className="absolute top-1/2 left-0 w-full h-1 -translate-y-1/2" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="gradient-line" x1="0" y1="0" x2="100%" y2="0">
+                  <stop offset="0%" stopColor="#4D68EB" />
+                  <stop offset="100%" stopColor="#8B5CF6" />
+                </linearGradient>
+                {/* Definición del patrón de flecha */}
+                <pattern id="arrow-pattern" x="0" y="0" width="20" height="2" patternUnits="userSpaceOnUse">
+                  <path d="M0 0 L10 1 L0 2 Z" fill="url(#gradient-line)">
+                    <animateTransform
+                      attributeName="transform"
+                      type="translate"
+                      from="-20"
+                      to="0"
+                      dur="1s"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                </pattern>
+              </defs>
+              <rect width="100%" height="2" fill="url(#arrow-pattern)" />
+            </svg>
+          </div>
+
+          {/* Líneas de conexión SVG con gradiente - Mobile */}
+          <div className="md:hidden absolute left-1/2 transform -translate-x-1/2 w-1 h-full">
+            <svg className="h-full w-full" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="gradient-line-vertical" x1="0" y1="0" x2="0" y2="100%">
+                  <stop offset="0%" stopColor="#4D68EB" />
+                  <stop offset="100%" stopColor="#8B5CF6" />
+                </linearGradient>
+                {/* Definición del patrón de flecha vertical */}
+                <pattern id="arrow-pattern-vertical" x="0" y="0" width="2" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M0 0 L1 10 L2 0 Z" fill="url(#gradient-line-vertical)">
+                    <animateTransform
+                      attributeName="transform"
+                      type="translate"
+                      from="0 -20"
+                      to="0 0"
+                      dur="1s"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                </pattern>
+              </defs>
+              <rect width="2" height="100%" fill="url(#arrow-pattern-vertical)" />
+            </svg>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
             {/* SII */}
@@ -56,32 +89,6 @@ const DataFlowSection = () => {
               </div>
               <h3 className="text-xl font-semibold text-center mb-4">Impuestos Internos</h3>
               <p className="text-gray-600 text-center">Conexión directa con el SII para obtener los datos en tiempo real</p>
-
-              {/* Flecha animada hacia Ruka */}
-              <motion.div
-                initial={{ x: 0, opacity: 0 }}
-                animate={{ x: 20, opacity: 1 }}
-                transition={{
-                  x: {
-                    duration: 1,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "easeInOut"
-                  },
-                  opacity: { duration: 0.5 }
-                }}
-                className="absolute -right-4 top-1/2 transform -translate-y-1/2 hidden md:block"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M5 12H19M19 12L12 5M19 12L12 19"
-                    stroke="#4D68EB"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </motion.div>
             </motion.div>
 
             {/* Ruka.ai */}
@@ -119,32 +126,6 @@ const DataFlowSection = () => {
               </div>
               <h3 className="text-xl font-semibold text-center mb-4">Tu Facturador</h3>
               <p className="text-gray-600 text-center">Integración perfecta con tu sistema de facturación actual</p>
-
-              {/* Flecha animada hacia Ruka */}
-              <motion.div
-                initial={{ x: 0, opacity: 0 }}
-                animate={{ x: -20, opacity: 1 }}
-                transition={{
-                  x: {
-                    duration: 1,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "easeInOut"
-                  },
-                  opacity: { duration: 0.5 }
-                }}
-                className="absolute -left-4 top-1/2 transform -translate-y-1/2 hidden md:block"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M19 12H5M5 12L12 5M5 12L12 19"
-                    stroke="#4D68EB"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </motion.div>
             </motion.div>
           </div>
         </div>
