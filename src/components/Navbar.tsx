@@ -1,7 +1,11 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LogIn, ArrowRight } from "lucide-react";
+import SubdomainModal from "./SubdomainModal";
 
 export default function Navbar() {
+  const [showSubdomainModal, setShowSubdomainModal] = useState(false);
+  
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: "smooth" });
@@ -47,17 +51,29 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Button asChild variant="outline" size="sm" className="gap-2">
-              <a href="https://demo.ruka.ai/users/sign_in" target="_blank" rel="noopener noreferrer">
-                Iniciar Sesión <LogIn className="w-4 h-4" />
-              </a>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="gap-2"
+              onClick={() => setShowSubdomainModal(true)}
+            >
+              Iniciar Sesión <LogIn className="w-4 h-4" />
             </Button>
-            <Button size="sm" className="gap-2" onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}>
+            <Button 
+              size="sm" 
+              className="gap-2" 
+              onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}
+            >
               Solicitar Demo <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
         </div>
       </div>
+
+      <SubdomainModal 
+        isOpen={showSubdomainModal} 
+        onClose={() => setShowSubdomainModal(false)} 
+      />
     </nav>
   );
 }
