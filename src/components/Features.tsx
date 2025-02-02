@@ -55,14 +55,14 @@ export default function Features() {
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { title: "Agente Contable", desc: "Procesa y categoriza facturas automáticamente" },
-            { title: "Agente de Control", desc: "Monitorea variaciones y detecta anomalías" },
-            { title: "Agente de Reportes", desc: "Genera informes personalizados en tiempo real" }
+            { title: "Digita y limpia", desc: "Reduce a 0 el tiempo de registrar tus compras", imgSrc: "/value1.png" },
+            { title: "Agrupa y clasifica", desc: "Crea automáticamente un maestro de insumos", imgSrc: "/value2.png" },
+            { title: "Monitorea 24/7", desc: "Alerta en inmediato ante anomalías que afecten tu margen", imgSrc: "/value3.png" }
           ].map((agent, i) => (
             <div key={i} className="relative rounded-xl overflow-hidden bg-white/50 shadow-lg hover:shadow-xl transition-all duration-300 group">
               <div className="aspect-video">
                 <img 
-                  src="/placeholder.svg" 
+                  src={agent.imgSrc} 
                   alt={agent.title}
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                 />
