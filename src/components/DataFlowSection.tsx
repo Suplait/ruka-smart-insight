@@ -11,7 +11,7 @@ const DataFlowSection = () => {
       <div className="container relative">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
           <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-            Conexión Ultra Rápida
+            Conexión Simple y Rápida
           </span>
           <br />
           <span className="text-xl md:text-2xl text-gray-600 mt-4 block">
@@ -51,7 +51,7 @@ const DataFlowSection = () => {
                 <Database className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-xl font-semibold text-center mb-4">Impuestos Internos</h3>
-              <p className="text-gray-600 text-center">Conexión directa con el SII para obtener datos fiscales en tiempo real</p>
+              <p className="text-gray-600 text-center">Conexión directa con el SII para obtener los en tiempo real</p>
             </motion.div>
 
             {/* Ruka.ai */}
@@ -65,7 +65,7 @@ const DataFlowSection = () => {
                 <Server className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-center text-white mb-4">Ruka.ai</h3>
-              <p className="text-white/90 text-center">Procesamiento inteligente y automatizado de todos tus datos comerciales</p>
+              <p className="text-white/90 text-center">Procesamiento inteligente y automatizado de todos tus compras y ventas</p>
               
               {/* Animación de pulso */}
               <div className="absolute inset-0 rounded-xl">
