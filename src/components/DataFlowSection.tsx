@@ -20,160 +20,174 @@ const DataFlowSection = () => {
         </h2>
 
         <div className="relative mt-20">
-          {/* Líneas de conexión SVG con gradiente - Desktop */}
+          {/* Líneas de conexión animadas - Desktop */}
           <div className="hidden md:block">
             <svg className="absolute top-1/2 left-0 w-full h-24 -translate-y-1/2" preserveAspectRatio="none">
               <defs>
-                <linearGradient id="gradient-line" x1="0" y1="0" x2="100%" y2="0">
-                  <stop offset="0%" stopColor="#4D68EB" />
-                  <stop offset="100%" stopColor="#8B5CF6" />
+                <linearGradient id="flow-gradient" x1="0" y1="0" x2="100%" y2="0">
+                  <stop offset="0%" stopColor="#4F46E5" />
+                  <stop offset="100%" stopColor="#7C3AED" />
                 </linearGradient>
-                {/* Patrón de línea punteada animada */}
-                <pattern id="dotted-pattern" x="0" y="0" width="20" height="4" patternUnits="userSpaceOnUse">
-                  <circle cx="2" cy="2" r="2" fill="url(#gradient-line)">
+                
+                {/* Patrón de flujo de datos */}
+                <pattern id="flow-pattern" x="0" y="0" width="20" height="8" patternUnits="userSpaceOnUse">
+                  <circle cx="4" cy="4" r="3" fill="url(#flow-gradient)">
                     <animate
                       attributeName="opacity"
-                      values="0;1;0"
                       dur="1.5s"
+                      values="0;0.2;0.4;0.6;0.8;1;0.8;0.6;0.4;0.2;0"
                       repeatCount="indefinite"
                     />
                   </circle>
                 </pattern>
-                {/* Flecha grande al final */}
+
+                {/* Flecha grande para el final */}
                 <marker
-                  id="arrowhead"
-                  markerWidth="12"
-                  markerHeight="12"
-                  refX="9"
-                  refY="6"
-                  orient="auto"
+                  id="flow-arrow"
+                  viewBox="0 0 20 20"
+                  refX="10"
+                  refY="10"
+                  markerWidth="10"
+                  markerHeight="10"
+                  orient="auto-start-reverse"
                 >
-                  <path
-                    d="M0,0 L12,6 L0,12 L3,6 Z"
-                    fill="url(#gradient-line)"
-                  />
+                  <path d="M 0 0 L 20 10 L 0 20 z" fill="url(#flow-gradient)" />
                 </marker>
               </defs>
-              
-              {/* Línea izquierda a centro */}
+
+              {/* Línea base izquierda */}
               <path
                 d="M0,12 H45%"
-                stroke="url(#pattern-references)"
-                strokeWidth="4"
+                stroke="url(#flow-gradient)"
+                strokeWidth="6"
                 fill="none"
-                markerEnd="url(#arrowhead)"
-                style={{
-                  stroke: "url(#dotted-pattern)",
-                  strokeDasharray: "1 4",
-                  animation: "movePattern 1s linear infinite",
-                }}
+                opacity="0.3"
               />
-              
-              {/* Línea derecha a centro */}
+
+              {/* Línea base derecha */}
               <path
                 d="M100%,12 H55%"
-                stroke="url(#pattern-references)"
-                strokeWidth="4"
+                stroke="url(#flow-gradient)"
+                strokeWidth="6"
                 fill="none"
-                markerEnd="url(#arrowhead)"
-                style={{
-                  stroke: "url(#dotted-pattern)",
-                  strokeDasharray: "1 4",
-                  animation: "movePattern 1s linear infinite",
-                }}
+                opacity="0.3"
               />
+
+              {/* Línea animada izquierda */}
+              <path
+                d="M0,12 H45%"
+                stroke="url(#flow-pattern)"
+                strokeWidth="6"
+                fill="none"
+                markerEnd="url(#flow-arrow)"
+              >
+                <animate
+                  attributeName="stroke-dasharray"
+                  values="0,100%;100%,0"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </path>
+
+              {/* Línea animada derecha */}
+              <path
+                d="M100%,12 H55%"
+                stroke="url(#flow-pattern)"
+                strokeWidth="6"
+                fill="none"
+                markerEnd="url(#flow-arrow)"
+              >
+                <animate
+                  attributeName="stroke-dasharray"
+                  values="0,100%;100%,0"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </path>
             </svg>
-            
-            <style>
-              {`
-                @keyframes movePattern {
-                  from {
-                    stroke-dashoffset: 5;
-                  }
-                  to {
-                    stroke-dashoffset: 0;
-                  }
-                }
-              `}
-            </style>
           </div>
 
-          {/* Líneas de conexión SVG con gradiente - Mobile */}
-          <div className="md:hidden absolute left-1/2 transform -translate-x-1/2 w-4 h-full">
+          {/* Líneas de conexión animadas - Mobile */}
+          <div className="md:hidden absolute left-1/2 transform -translate-x-1/2 w-6 h-full">
             <svg className="h-full w-full" preserveAspectRatio="none">
               <defs>
-                <linearGradient id="gradient-line-vertical" x1="0" y1="0" x2="0" y2="100%">
-                  <stop offset="0%" stopColor="#4D68EB" />
-                  <stop offset="100%" stopColor="#8B5CF6" />
+                <linearGradient id="flow-gradient-vertical" x1="0" y1="0" x2="0" y2="100%">
+                  <stop offset="0%" stopColor="#4F46E5" />
+                  <stop offset="100%" stopColor="#7C3AED" />
                 </linearGradient>
-                {/* Patrón de línea punteada vertical animada */}
-                <pattern id="dotted-pattern-vertical" x="0" y="0" width="4" height="20" patternUnits="userSpaceOnUse">
-                  <circle cx="2" cy="2" r="2" fill="url(#gradient-line-vertical)">
+                
+                {/* Patrón de flujo vertical */}
+                <pattern id="flow-pattern-vertical" x="0" y="0" width="8" height="20" patternUnits="userSpaceOnUse">
+                  <circle cx="4" cy="4" r="3" fill="url(#flow-gradient-vertical)">
                     <animate
                       attributeName="opacity"
-                      values="0;1;0"
                       dur="1.5s"
+                      values="0;0.2;0.4;0.6;0.8;1;0.8;0.6;0.4;0.2;0"
                       repeatCount="indefinite"
                     />
                   </circle>
                 </pattern>
-                {/* Flecha grande vertical */}
+
+                {/* Flecha vertical */}
                 <marker
-                  id="arrowhead-vertical"
-                  markerWidth="12"
-                  markerHeight="12"
-                  refX="6"
-                  refY="9"
+                  id="flow-arrow-vertical"
+                  viewBox="0 0 20 20"
+                  refX="10"
+                  refY="10"
+                  markerWidth="10"
+                  markerHeight="10"
                   orient="auto"
                 >
-                  <path
-                    d="M0,0 L12,6 L0,12 L3,6 Z"
-                    fill="url(#gradient-line-vertical)"
-                    transform="rotate(90, 6, 6)"
-                  />
+                  <path d="M 0 0 L 20 10 L 0 20 z" fill="url(#flow-gradient-vertical)" />
                 </marker>
               </defs>
-              
-              {/* Líneas verticales */}
+
+              {/* Líneas base verticales */}
               <path
-                d="M2,0 V45%"
-                stroke="url(#pattern-references-vertical)"
-                strokeWidth="4"
+                d="M3,0 V45%"
+                stroke="url(#flow-gradient-vertical)"
+                strokeWidth="6"
                 fill="none"
-                markerEnd="url(#arrowhead-vertical)"
-                style={{
-                  stroke: "url(#dotted-pattern-vertical)",
-                  strokeDasharray: "1 4",
-                  animation: "movePatternVertical 1s linear infinite",
-                }}
+                opacity="0.3"
               />
-              
               <path
-                d="M2,100% V55%"
-                stroke="url(#pattern-references-vertical)"
-                strokeWidth="4"
+                d="M3,100% V55%"
+                stroke="url(#flow-gradient-vertical)"
+                strokeWidth="6"
                 fill="none"
-                markerEnd="url(#arrowhead-vertical)"
-                style={{
-                  stroke: "url(#dotted-pattern-vertical)",
-                  strokeDasharray: "1 4",
-                  animation: "movePatternVertical 1s linear infinite",
-                }}
+                opacity="0.3"
               />
+
+              {/* Líneas animadas verticales */}
+              <path
+                d="M3,0 V45%"
+                stroke="url(#flow-pattern-vertical)"
+                strokeWidth="6"
+                fill="none"
+                markerEnd="url(#flow-arrow-vertical)"
+              >
+                <animate
+                  attributeName="stroke-dasharray"
+                  values="0,100%;100%,0"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </path>
+              <path
+                d="M3,100% V55%"
+                stroke="url(#flow-pattern-vertical)"
+                strokeWidth="6"
+                fill="none"
+                markerEnd="url(#flow-arrow-vertical)"
+              >
+                <animate
+                  attributeName="stroke-dasharray"
+                  values="0,100%;100%,0"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </path>
             </svg>
-            
-            <style>
-              {`
-                @keyframes movePatternVertical {
-                  from {
-                    stroke-dashoffset: 5;
-                  }
-                  to {
-                    stroke-dashoffset: 0;
-                  }
-                }
-              `}
-            </style>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
