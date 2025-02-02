@@ -20,173 +20,55 @@ const DataFlowSection = () => {
         </h2>
 
         <div className="relative mt-20">
-          {/* Líneas de conexión animadas - Desktop */}
+          {/* Líneas de conexión SVG con gradiente - Desktop */}
           <div className="hidden md:block">
-            <svg className="absolute top-1/2 left-0 w-full h-24 -translate-y-1/2" preserveAspectRatio="none">
+            <svg className="absolute top-1/2 left-0 w-full h-1 -translate-y-1/2" preserveAspectRatio="none">
               <defs>
-                <linearGradient id="flow-gradient" x1="0" y1="0" x2="100%" y2="0">
-                  <stop offset="0%" stopColor="#4F46E5" />
-                  <stop offset="100%" stopColor="#7C3AED" />
+                <linearGradient id="gradient-line" x1="0" y1="0" x2="100%" y2="0">
+                  <stop offset="0%" stopColor="#4D68EB" />
+                  <stop offset="100%" stopColor="#8B5CF6" />
                 </linearGradient>
-                
-                {/* Patrón de flujo de datos */}
-                <pattern id="flow-pattern" x="0" y="0" width="20" height="8" patternUnits="userSpaceOnUse">
-                  <circle cx="4" cy="4" r="3" fill="url(#flow-gradient)">
-                    <animate
-                      attributeName="opacity"
-                      dur="1.5s"
-                      values="0;0.2;0.4;0.6;0.8;1;0.8;0.6;0.4;0.2;0"
+                {/* Definición del patrón de flecha */}
+                <pattern id="arrow-pattern" x="0" y="0" width="20" height="2" patternUnits="userSpaceOnUse">
+                  <path d="M0 0 L10 1 L0 2 Z" fill="url(#gradient-line)">
+                    <animateTransform
+                      attributeName="transform"
+                      type="translate"
+                      from="-20"
+                      to="0"
+                      dur="1s"
                       repeatCount="indefinite"
                     />
-                  </circle>
+                  </path>
                 </pattern>
-
-                {/* Flecha grande para el final */}
-                <marker
-                  id="flow-arrow"
-                  viewBox="0 0 20 20"
-                  refX="10"
-                  refY="10"
-                  markerWidth="10"
-                  markerHeight="10"
-                  orient="auto-start-reverse"
-                >
-                  <path d="M 0 0 L 20 10 L 0 20 z" fill="url(#flow-gradient)" />
-                </marker>
               </defs>
-
-              {/* Línea base izquierda */}
-              <path
-                d="M0,12 H45%"
-                stroke="url(#flow-gradient)"
-                strokeWidth="6"
-                fill="none"
-                opacity="0.3"
-              />
-
-              {/* Línea base derecha */}
-              <path
-                d="M100%,12 H55%"
-                stroke="url(#flow-gradient)"
-                strokeWidth="6"
-                fill="none"
-                opacity="0.3"
-              />
-
-              {/* Línea animada izquierda */}
-              <path
-                d="M0,12 H45%"
-                stroke="url(#flow-pattern)"
-                strokeWidth="6"
-                fill="none"
-                markerEnd="url(#flow-arrow)"
-              >
-                <animate
-                  attributeName="stroke-dasharray"
-                  values="0,100%;100%,0"
-                  dur="2s"
-                  repeatCount="indefinite"
-                />
-              </path>
-
-              {/* Línea animada derecha */}
-              <path
-                d="M100%,12 H55%"
-                stroke="url(#flow-pattern)"
-                strokeWidth="6"
-                fill="none"
-                markerEnd="url(#flow-arrow)"
-              >
-                <animate
-                  attributeName="stroke-dasharray"
-                  values="0,100%;100%,0"
-                  dur="2s"
-                  repeatCount="indefinite"
-                />
-              </path>
+              <rect width="100%" height="2" fill="url(#arrow-pattern)" />
             </svg>
           </div>
 
-          {/* Líneas de conexión animadas - Mobile */}
-          <div className="md:hidden absolute left-1/2 transform -translate-x-1/2 w-6 h-full">
+          {/* Líneas de conexión SVG con gradiente - Mobile */}
+          <div className="md:hidden absolute left-1/2 transform -translate-x-1/2 w-1 h-full">
             <svg className="h-full w-full" preserveAspectRatio="none">
               <defs>
-                <linearGradient id="flow-gradient-vertical" x1="0" y1="0" x2="0" y2="100%">
-                  <stop offset="0%" stopColor="#4F46E5" />
-                  <stop offset="100%" stopColor="#7C3AED" />
+                <linearGradient id="gradient-line-vertical" x1="0" y1="0" x2="0" y2="100%">
+                  <stop offset="0%" stopColor="#4D68EB" />
+                  <stop offset="100%" stopColor="#8B5CF6" />
                 </linearGradient>
-                
-                {/* Patrón de flujo vertical */}
-                <pattern id="flow-pattern-vertical" x="0" y="0" width="8" height="20" patternUnits="userSpaceOnUse">
-                  <circle cx="4" cy="4" r="3" fill="url(#flow-gradient-vertical)">
-                    <animate
-                      attributeName="opacity"
-                      dur="1.5s"
-                      values="0;0.2;0.4;0.6;0.8;1;0.8;0.6;0.4;0.2;0"
+                {/* Definición del patrón de flecha vertical */}
+                <pattern id="arrow-pattern-vertical" x="0" y="0" width="2" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M0 0 L1 10 L2 0 Z" fill="url(#gradient-line-vertical)">
+                    <animateTransform
+                      attributeName="transform"
+                      type="translate"
+                      from="0 -20"
+                      to="0 0"
+                      dur="1s"
                       repeatCount="indefinite"
                     />
-                  </circle>
+                  </path>
                 </pattern>
-
-                {/* Flecha vertical */}
-                <marker
-                  id="flow-arrow-vertical"
-                  viewBox="0 0 20 20"
-                  refX="10"
-                  refY="10"
-                  markerWidth="10"
-                  markerHeight="10"
-                  orient="auto"
-                >
-                  <path d="M 0 0 L 20 10 L 0 20 z" fill="url(#flow-gradient-vertical)" />
-                </marker>
               </defs>
-
-              {/* Líneas base verticales */}
-              <path
-                d="M3,0 V45%"
-                stroke="url(#flow-gradient-vertical)"
-                strokeWidth="6"
-                fill="none"
-                opacity="0.3"
-              />
-              <path
-                d="M3,100% V55%"
-                stroke="url(#flow-gradient-vertical)"
-                strokeWidth="6"
-                fill="none"
-                opacity="0.3"
-              />
-
-              {/* Líneas animadas verticales */}
-              <path
-                d="M3,0 V45%"
-                stroke="url(#flow-pattern-vertical)"
-                strokeWidth="6"
-                fill="none"
-                markerEnd="url(#flow-arrow-vertical)"
-              >
-                <animate
-                  attributeName="stroke-dasharray"
-                  values="0,100%;100%,0"
-                  dur="2s"
-                  repeatCount="indefinite"
-                />
-              </path>
-              <path
-                d="M3,100% V55%"
-                stroke="url(#flow-pattern-vertical)"
-                strokeWidth="6"
-                fill="none"
-                markerEnd="url(#flow-arrow-vertical)"
-              >
-                <animate
-                  attributeName="stroke-dasharray"
-                  values="0,100%;100%,0"
-                  dur="2s"
-                  repeatCount="indefinite"
-                />
-              </path>
+              <rect width="2" height="100%" fill="url(#arrow-pattern-vertical)" />
             </svg>
           </div>
 
