@@ -1,16 +1,31 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+
+const valueProps = [
+  "Controla tu margen operativo en tiempo real",
+  "Automatiza tu back office sin complicaciones",
+  "Reduce costos operativos hasta en un 30%",
+  "Obtén insights de tus datos en minutos",
+];
 
 export default function Hero() {
+  const [currentValue, setCurrentValue] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentValue((prev) => (prev + 1) % valueProps.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-      {/* Gradient Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] gradient-blur opacity-50" />
         <div className="absolute inset-0 hero-gradient" />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 container mx-auto px-6 py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8 text-left">
@@ -19,18 +34,17 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              Tecnología de punta para tu empresa
+              Solución simple para empresas medianas
             </div>
             
-            <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-              Controla tu margen operativo en{' '}
+            <h1 className="text-5xl lg:text-6xl font-bold leading-tight min-h-[144px] transition-all duration-500">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
-                tiempo real
+                {valueProps[currentValue]}
               </span>
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-xl">
-              Ruka.ai ayuda a empresas medianas a monitorear y optimizar sus costos operativos sin necesidad de un back office.
+              Ruka.ai es la solución que tu empresa necesita para tener el control total de sus operaciones, sin la complejidad de un gran sistema.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -39,19 +53,15 @@ export default function Hero() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button size="lg" variant="outline" className="hover:scale-105 transition-all duration-300">
-                Conoce Más
+                Ver Cómo Funciona
               </Button>
             </div>
 
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <div className="flex -space-x-2">
-                {[...Array(4)].map((_, i) => (
-                  <div key={i} className="w-8 h-8 rounded-full bg-primary/10 border-2 border-white flex items-center justify-center">
-                    <span className="text-xs font-medium text-primary">+1</span>
-                  </div>
-                ))}
+              <div className="flex items-center gap-4">
+                <span className="font-semibold text-primary">+700K</span> facturas procesadas
+                <span className="font-semibold text-primary">+US$220M</span> en datos analizados
               </div>
-              <p>+100 empresas ya confían en Ruka.ai</p>
             </div>
           </div>
 

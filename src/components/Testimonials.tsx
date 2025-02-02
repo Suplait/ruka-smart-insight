@@ -3,9 +3,9 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import { useRef } from "react";
 
 const testimonials = [
   {
@@ -29,20 +29,46 @@ const testimonials = [
     content: "La mejor inversión que hemos hecho. El ROI fue evidente desde el primer mes.",
     rating: 5,
   },
+  // Duplicated for infinite scroll effect
+  {
+    name: "Ana Silva",
+    role: "Gerente General",
+    company: "Importadora Sur",
+    content: "La facilidad de uso y la precisión de los datos nos han ayudado a crecer de manera sostenible.",
+    rating: 5,
+  },
+  {
+    name: "Roberto Muñoz",
+    role: "Director Comercial",
+    company: "Comercial Express",
+    content: "El soporte es excelente y los agentes nos han ahorrado cientos de horas de trabajo manual.",
+    rating: 5,
+  },
 ];
 
 export default function Testimonials() {
+  const plugin = useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: true })
+  );
+
   return (
-    <section className="py-24 bg-secondary/30">
+    <section id="testimonials" className="py-24 bg-secondary/30">
       <div className="container">
-        <h2 className="text-3xl font-bold text-center mb-16 animate-fade-in">
+        <h2 className="text-4xl font-bold text-center mb-16 animate-fade-in">
           Lo que dicen nuestros clientes
         </h2>
-        <Carousel className="w-full max-w-4xl mx-auto">
+        <Carousel 
+          className="w-full max-w-4xl mx-auto"
+          plugins={[plugin.current]}
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+        >
           <CarouselContent>
             {testimonials.map((testimonial, index) => (
-              <CarouselItem key={index}>
-                <div className="p-8 bg-white rounded-xl shadow-lg space-y-6 mx-4">
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                <div className="p-8 bg-white rounded-xl shadow-lg space-y-6 mx-4 h-full hover:scale-105 transition-transform duration-300">
                   <div className="flex gap-1">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
@@ -59,8 +85,6 @@ export default function Testimonials() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
         </Carousel>
       </div>
     </section>
