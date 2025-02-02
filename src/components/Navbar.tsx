@@ -21,10 +21,10 @@ export default function Navbar() {
           
           <div className="hidden md:flex items-center space-x-6">
             <button 
-              onClick={() => scrollToSection('before-after')}
+              onClick={() => scrollToSection('product')}
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              Beneficios
+              Demo
             </button>
             <button 
               onClick={() => scrollToSection('value-showcase')}
@@ -39,10 +39,10 @@ export default function Navbar() {
               Agentes
             </button>
             <button 
-              onClick={() => scrollToSection('testimonials')}
+              onClick={() => scrollToSection('guarantee')}
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              Testimonios
+              Garantía
             </button>
           </div>
 

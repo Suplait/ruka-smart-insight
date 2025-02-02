@@ -6,7 +6,11 @@ export default function Footer() {
       <div className="container py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <h3 className="text-xl font-bold text-primary">Ruka.ai</h3>
+            <img 
+              src="/ruka-logo.svg" 
+              alt="Ruka.ai" 
+              className="h-8"
+            />
             <p className="text-muted-foreground">
               Automatización inteligente para empresas medianas
             </p>
