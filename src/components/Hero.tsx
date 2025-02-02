@@ -118,13 +118,13 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="relative lg:h-[720px] animate-float">
+          <div className="relative lg:h-[640px] animate-float">
             <div className="absolute inset-0 bg-gradient-to-b from-white/0 to-white/80 backdrop-blur-sm rounded-2xl overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
                 <img 
-                  src="/placeholder.svg" 
+                  src="/robotshero2.png" 
                   alt="Dashboard Ruka.ai" 
-                  className="w-full h-[720px] object-cover rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-500"
+                  className="w-full h-[640px] object-contain rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-500"
                 />
               </div>
             </div>
