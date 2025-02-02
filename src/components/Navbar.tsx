@@ -21,12 +21,6 @@ export default function Navbar() {
           
           <div className="hidden md:flex items-center space-x-6">
             <button 
-              onClick={() => scrollToSection('before-after')}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
-              Valor
-            </button>
-            <button 
               onClick={() => scrollToSection('features')}
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
