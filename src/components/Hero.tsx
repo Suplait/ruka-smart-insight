@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const valueProps = [
-  "Control total en segundos",
-  "Cero digitación manual",
-  "Reportes instantáneos",
-  "Datos precisos en tiempo real",
+  "¿Cansado de digitar facturas manualmente?",
+  "¿Frustrado por no tener datos en tiempo real?",
+  "¿Necesitas más control de tus operaciones?",
+  "¿Te toma semanas cerrar el mes?",
 ];
 
 export default function Hero() {
@@ -58,7 +58,7 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              Solución inteligente para tu empresa
+              Automatización inteligente que entiende tu negocio
             </div>
             
             <h1 className="text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
@@ -71,7 +71,7 @@ export default function Hero() {
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-xl">
-              Automatiza tu back office sin complicaciones. Obtén control total de tus compras y ventas con reportes instantáneos y datos precisos, sin necesidad de digitación manual.
+              Olvídate de la digitación manual. Obtén control total de tus compras y ventas con reportes instantáneos y datos precisos en tiempo real.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">

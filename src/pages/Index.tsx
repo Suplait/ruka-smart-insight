@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
+import ValueProposition from "@/components/ValueProposition";
 import ProductShowcase from "@/components/ProductShowcase";
 import BeforeAfter from "@/components/BeforeAfter";
 import Testimonials from "@/components/Testimonials";
@@ -14,6 +15,7 @@ const Index = () => {
     <main className="min-h-screen pt-16">
       <Navbar />
       <Hero />
+      <ValueProposition />
       <Features />
       <ProductShowcase />
       <BeforeAfter />
