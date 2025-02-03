@@ -196,7 +196,7 @@ const DataFlowSection = () => {
             transition={{ duration: 0.5, delay: 1.2 }}
             className="text-center"
           >
-            <div className="text-4xl font-bold text-primary mb-2">-80%</div>
+            <div className="text-4xl font-bold text-primary mb-2">-99%</div>
             <p className="text-gray-600">Reducción de Errores</p>
           </motion.div>
         </div>

@@ -5,7 +5,7 @@ export default function CTA() {
   const benefits = [
     "Elimina por completo la digitación manual de documentos",
     "Detecta variaciones de precios en tiempo real",
-    "Automatiza la conciliación de documentos comerciales",
+    "Monitorea tus precios en modo automático",
     "Mantén el control total de tu margen operativo"
   ];
 
@@ -15,7 +15,7 @@ export default function CTA() {
       <div className="container relative">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-primary bg-clip-text text-transparent">
-            ¿Listo para tomar el control de tu margen operativo?
+            ¿List@ para tomar el control de tu margen operativo?
           </h2>
           <p className="text-xl text-muted-foreground">
             Únete a las empresas que ya eliminaron la digitación manual y tienen visibilidad total de sus operaciones con Ruka.ai

@@ -35,8 +35,8 @@ export default function Index() {
       <Hero />
       <Partners />
       <DataFlowSection />
-      <BeforeAfter />
       <Features />
+      <BeforeAfter />
       <ProductShowcase />
       <ValueShowcase />
       <MoneyBackGuarantee />
