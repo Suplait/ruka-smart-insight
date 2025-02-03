@@ -53,13 +53,13 @@ export default function ProductShowcase() {
               Ver Demo <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
-          <div className="relative rounded-xl overflow-hidden shadow-2xl group">
+          <div className="relative rounded-xl overflow-hidden shadow-2xl group w-full">
             <div 
-              className="cursor-pointer"
+              className="cursor-pointer w-full"
               onClick={() => setIsModalOpen(true)}
             >
               <iframe 
-                width="560" 
+                width="100%" 
                 height="315" 
                 src="https://www.youtube.com/embed/5Mgdczprvlc" 
                 title="Ruka.ai Dashboard"
