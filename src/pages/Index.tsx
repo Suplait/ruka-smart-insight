@@ -38,8 +38,8 @@ export default function Index() {
       <Features />
       <BeforeAfter />
       <ProductShowcase />
-      <ValueShowcase />
       <MoneyBackGuarantee />
+      <ValueShowcase />
       <Stats />
       <Testimonials />
       <FAQ />
