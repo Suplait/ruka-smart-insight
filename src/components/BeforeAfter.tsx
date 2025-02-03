@@ -2,21 +2,21 @@ import { motion } from "framer-motion";
 import { Clock, CheckCircle, X } from "lucide-react";
 
 const beforePoints = [
-  "Monitoreo mensual del margen (desfasado)",
-  "Sin tiempo de reacción",
-  "Alto costo en personal de back office",
-  "Errores humanos frecuentes",
+  "Registro manual de compras",
   "Datos desactualizados",
-  "Sin visibilidad del negocio"
+  "Errores humanos frecuentes",
+  "Alto costo en personal de back office",
+  "Poco tiempo de monitoreo",
+  "Conoce margen desfazado. Sin tiempo de reacción",  
 ];
 
 const afterPoints = [
-  "Actualización en tiempo real",
-  "Alertas preventivas inmediatas",
-  "Reducción de costos operativos",
-  "Sin error humano",
+  "Registro y clasificación automática",
   "Datos precisos y al día",
-  "Control total del negocio"
+  "Sin error humano",
+  "Reducción de costos operativos",
+  "Monitoreo 24/7 en tiempo real",
+  "Margen diario con alertas inmediante ante anomalías"
 ];
 
 const containerVariants = {
