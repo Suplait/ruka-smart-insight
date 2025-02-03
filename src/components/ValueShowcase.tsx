@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 const features = [
   {
     id: 'automation',
-    title: 'Automatización Total',
-    description: 'Digitaliza y procesa automáticamente todos tus documentos comerciales, eliminando la digitación manual.',
+    title: 'Agentes a tu servicio',
+    description: 'Trabajan 24/7 y automatizan trabajos manuales que necesitaban HH para funcionar.',
     Icon: Bot,
     color: 'bg-purple-100 text-purple-600'
   },
@@ -35,7 +35,7 @@ const features = [
   {
     id: 'insights',
     title: 'Insights Inmediatos',
-    description: 'Visualiza tus KPIs y genera reportes personalizados al instante, sin esfuerzo manual.',
+    description: 'Visualiza tus KPIs y genera reportes personalizados en lenguaje natural. No más tablas dinámicas.',
     Icon: LineChart,
     color: 'bg-red-100 text-red-600'
   }
