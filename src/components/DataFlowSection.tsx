@@ -166,7 +166,7 @@ const DataFlowSection = () => {
                 <FileText className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-xl font-semibold text-center mb-4">Tu Facturador</h3>
-              <p className="text-gray-600 text-center">Integración perfecta con tu sistema de facturación actual</p>
+              <p className="text-gray-600 text-center">Integración sencilla con tu sistema de facturación actual</p>
             </motion.div>
           </div>
         </div>

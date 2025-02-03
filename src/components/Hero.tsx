@@ -66,7 +66,7 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              Te devolvemos el control
+              Para todo tipo de empresas
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
@@ -76,7 +76,7 @@ export default function Hero() {
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-xl">
-              Agentes con IA que procesan, agrupan y monitorean tus compras para que tengas control absoluto de tu negocio, sin esfuerzo.
+              Agentes con IA que procesan, agrupan y monitorean tus transacciones para que tengas control absoluto de tu negocio.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">

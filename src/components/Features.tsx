@@ -38,21 +38,6 @@ export default function Features() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
-            <Card 
-              key={index} 
-              className="p-6 bg-white/50 backdrop-blur hover:scale-105 transition-all duration-300 border-primary/10 group"
-            >
-              <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                <feature.icon className="w-12 h-12 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-muted-foreground">{feature.description}</p>
-            </Card>
-          ))}
-        </div>
-
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             { title: "Digita y limpia", desc: "Reduce a 0 el tiempo de registrar tus compras", imgSrc: "/value1.png" },
@@ -74,6 +59,23 @@ export default function Features() {
                 </div>
               </div>
             </div>
+          ))}
+        </div>
+
+        <div className="my-16"></div> {/* Added space between the two sections */}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {features.map((feature, index) => (
+            <Card
+              key={index}
+              className="p-6 bg-white/50 backdrop-blur hover:scale-105 transition-all duration-300 border-primary/10 group"
+            >
+              <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                <feature.icon className="w-12 h-12 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+              <p className="text-muted-foreground">{feature.description}</p>
+            </Card>
           ))}
         </div>
       </div>

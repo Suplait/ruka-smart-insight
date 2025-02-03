@@ -38,6 +38,16 @@ export default function Partners() {
           >
             <img src="/500logo.png" alt="500 Global" className="h-full object-contain opacity-60 hover:opacity-100 transition-opacity" />
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="h-12"
+          >
+            <img src="/logocorfo.png" alt="CORFO" className="h-full object-contain opacity-60 hover:opacity-100 transition-opacity" />
+          </motion.div>
         </div>
       </div>
     </section>
