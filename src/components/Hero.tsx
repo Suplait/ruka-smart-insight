@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const valueMessages = [
+  "Automatiza el registro de compras.",
   "Controla tu margen al día, no al mes.",
   "Descubre alzas de precio de tus insumos en tiempo real.",
-  "Toda tu información a la mano, sin necesidad de digitar nada.",
+  "Genera reportes en segundos usando lenguaje natural.",
   "Gestiona simple el pago a tus proveedores.",
-  "Automatiza tareas y ahorra horas a la semana.",
+  "Ten toda tu información a la mano.",
+  "Libera HH a la semana para que te enfoques en lo que importa.",
 ];
 
 export default function Hero() {

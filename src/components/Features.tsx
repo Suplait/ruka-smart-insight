@@ -40,8 +40,8 @@ export default function Features() {
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { title: "Digita y limpia", desc: "Reduce a 0 el tiempo de registrar tus compras", imgSrc: "/value1.png" },
-            { title: "Agrupa y clasifica", desc: "Crea automáticamente un maestro de insumos", imgSrc: "/value2.png" },
+            { title: "Digita y Limpia", desc: "Reduce a 0 el tiempo de registrar tus compras", imgSrc: "/value1.png" },
+            { title: "Agrupa y Clasifica", desc: "Crea automáticamente un maestro de insumos", imgSrc: "/value2.png" },
             { title: "Monitorea 24/7", desc: "Alerta en inmediato ante anomalías que afecten tu margen", imgSrc: "/value3.png" }
           ].map((agent, i) => (
             <div key={i} className="relative rounded-xl overflow-hidden bg-white/50 shadow-lg hover:shadow-xl transition-all duration-300 group">
