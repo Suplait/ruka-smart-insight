@@ -128,7 +128,7 @@ const DataFlowSection = () => {
             >
               <div className="flex items-center justify-center w-16 h-16 mb-6 mx-auto">
                 <img 
-                  src="/sii-logo.png" 
+                  src="/logosii.png" 
                   alt="SII Logo" 
                   className="w-full h-full object-contain"
                 />
@@ -146,13 +146,13 @@ const DataFlowSection = () => {
             >
               <div className="flex items-center justify-center w-20 h-20 mb-6 mx-auto bg-white rounded-full p-2">
                 <img 
-                  src="/ruka-logo.png" 
+                  src="/0webclip.jpg" 
                   alt="Ruka.ai Logo" 
                   className="w-full h-full object-contain rounded-full"
                 />
               </div>
               <h3 className="text-2xl font-bold text-center text-white mb-4">Ruka.ai</h3>
-              <p className="text-white text-center">Procesamiento inteligente y automatizado de todos tus compras y ventas</p>
+              <p className="text-white text-center">Procesamiento y monitoreo inteligente de tus compras y ventas</p>
             </motion.div>
 
             {/* Facturador */}
