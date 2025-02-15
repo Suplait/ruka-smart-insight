@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { motion } from "framer-motion";
-import { ArrowRight, UtensilsCrossed, Clock, ChartBarIcon, Zap, TrendingUp } from "lucide-react";
+import { ArrowRight, UtensilsCrossed, Clock, ChartBarIcon, Zap, TrendingUp, ShieldCheck, Clock4 } from "lucide-react";
 import DataFlowSection from "@/components/DataFlowSection";
 
 export default function Restaurantes() {
@@ -303,11 +303,22 @@ export default function Restaurantes() {
                     </Button>
                   </form>
 
-                  <div className="flex items-center gap-3">
-                    <UtensilsCrossed className="w-8 h-8 text-primary" />
-                    <p className="text-sm text-muted-foreground">
-                      Únete a los restaurantes que ya automatizaron su control de costos
-                    </p>
+                  {/* Trust Badges */}
+                  <div className="space-y-4 pt-4">
+                    <div className="grid grid-cols-1 gap-3">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <ShieldCheck className="w-5 h-5 text-green-500" />
+                        <span>Datos 100% Seguros</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock4 className="w-5 h-5 text-green-500" />
+                        <span>Soporte 24/7</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <UtensilsCrossed className="w-5 h-5 text-green-500" />
+                        <span>Sin tarjeta de crédito</span>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               </div>
