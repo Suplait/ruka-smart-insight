@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,30 @@ export default function Restaurantes() {
   });
 
   const [highlightForm, setHighlightForm] = useState(false);
+  const [timeLeft, setTimeLeft] = useState("");
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      let target = new Date();
+      target.setHours(12, 0, 0, 0);
+
+      if (now.getHours() >= 12) {
+        target.setDate(target.getDate() + 1);
+      }
+
+      const diff = target.getTime() - now.getTime();
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+      setTimeLeft(`${hours}h ${minutes}m`);
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 60000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -206,8 +230,8 @@ export default function Restaurantes() {
                     },
                     {
                       icon: TrendingUp,
-                      stat: "0.5s",
-                      text: "Reacción en tiempo real",
+                      stat: "15%",
+                      text: "Promedio de ahorro en costos",
                       color: "text-green-500"
                     }
                   ].map((item, index) => (
@@ -262,9 +286,14 @@ export default function Restaurantes() {
                 >
                   <div className="space-y-4">
                     <h2 className="text-2xl font-semibold">Comienza tu Prueba Gratuita</h2>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Clock className="w-4 h-4" />
-                      <span>Setup en menos de 10 minutos</span>
+                    <div className="flex flex-col gap-2">
+                      <div className="text-sm font-medium text-primary">
+                        Si te registras antes de las 12:00pm tendrás a Ruka trabajando el mismo día
+                      </div>
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <Clock className="w-4 h-4" />
+                        <span>Faltan {timeLeft} para el siguiente medio día</span>
+                      </div>
                     </div>
                   </div>
 
@@ -304,20 +333,18 @@ export default function Restaurantes() {
                   </form>
 
                   {/* Trust Badges */}
-                  <div className="space-y-4 pt-4">
-                    <div className="grid grid-cols-1 gap-3">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <ShieldCheck className="w-5 h-5 text-green-500" />
-                        <span>Datos 100% Seguros</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Clock4 className="w-5 h-5 text-green-500" />
-                        <span>Soporte 24/7</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <UtensilsCrossed className="w-5 h-5 text-green-500" />
-                        <span>Sin tarjeta de crédito</span>
-                      </div>
+                  <div className="flex items-center justify-between pt-4 border-t">
+                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                      <ShieldCheck className="w-4 h-4" />
+                      <span>Datos seguros</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                      <Clock4 className="w-4 h-4" />
+                      <span>Soporte 24/7</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                      <UtensilsCrossed className="w-4 h-4" />
+                      <span>Sin tarjeta</span>
                     </div>
                   </div>
                 </motion.div>

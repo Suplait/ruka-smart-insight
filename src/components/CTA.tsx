@@ -1,5 +1,6 @@
+
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, ShieldCheck, Clock4, UtensilsCrossed } from "lucide-react";
 
 export default function CTA() {
   const benefits = [
@@ -7,6 +8,21 @@ export default function CTA() {
     "Detecta variaciones de precios en tiempo real",
     "Monitorea tus precios en modo automático",
     "Mantén el control total de tu margen operativo"
+  ];
+
+  const trustBadges = [
+    {
+      icon: ShieldCheck,
+      text: "Datos seguros"
+    },
+    {
+      icon: Clock4,
+      text: "Soporte 24/7"
+    },
+    {
+      icon: UtensilsCrossed,
+      text: "Sin tarjeta"
+    }
   ];
 
   return (
@@ -30,7 +46,7 @@ export default function CTA() {
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="space-y-6">
             <Button 
               size="lg" 
               className="gap-2 group hover:scale-105 transition-all duration-300"
@@ -39,6 +55,15 @@ export default function CTA() {
               Solicitar Demo
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
+
+            <div className="flex items-center justify-center gap-8 pt-4">
+              {trustBadges.map((badge, index) => (
+                <div key={index} className="flex items-center gap-2 text-gray-500">
+                  <badge.icon className="w-4 h-4" />
+                  <span className="text-sm">{badge.text}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
