@@ -287,7 +287,7 @@ export default function Restaurantes() {
                   <div className="space-y-4">
                     <h2 className="text-2xl font-semibold">Comienza tu Prueba Gratuita</h2>
                     <div className="flex flex-col gap-2">
-                      <div className="text-sm font-medium text-primary">Si te registras antes de las 12:00pm tendrás acceso a la plataforma con todos tus datos durante el mismo día</div>
+                      <div className="text-sm font-medium text-primary">Si te registras antes de las 12:00pm tendrás acceso a la plataforma el mismo día.</div>
                       <div className="flex items-center gap-2 text-muted-foreground">
                         <Clock className="w-4 h-4" />
                         <span>Faltan {timeLeft} para el siguiente medio día</span>
