@@ -7,6 +7,10 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { motion } from "framer-motion";
 import { ArrowRight, UtensilsCrossed, Clock } from "lucide-react";
+import Stats from "@/components/Stats";
+import Testimonials from "@/components/Testimonials";
+import Partners from "@/components/Partners";
+import CTA from "@/components/CTA";
 
 export default function Restaurantes() {
   const [formData, setFormData] = useState({
@@ -117,6 +121,18 @@ export default function Restaurantes() {
                   Olvídate de gastar en más personal para tener mejores datos. Ruka hace el trabajo por ti, 24/7, sin errores y en tiempo real.
                 </p>
               </motion.div>
+
+              {/* Stats Section */}
+              <Stats />
+
+              {/* Social Proof */}
+              <Testimonials />
+
+              {/* Partners Section */}
+              <Partners />
+
+              {/* Final CTA */}
+              <CTA />
             </div>
 
             {/* Form Sticky */}
