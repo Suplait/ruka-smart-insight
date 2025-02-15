@@ -7,7 +7,6 @@ import { toast } from "@/components/ui/use-toast";
 import { motion } from "framer-motion";
 import { ArrowRight, CreditCard, Clock, ChartBarIcon, Zap, TrendingUp, ShieldCheck, Clock4 } from "lucide-react";
 import DataFlowSection from "@/components/DataFlowSection";
-
 export default function Restaurantes() {
   const [formData, setFormData] = useState({
     nombre: "",
@@ -17,7 +16,6 @@ export default function Restaurantes() {
   });
   const [highlightForm, setHighlightForm] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
-
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -35,7 +33,6 @@ export default function Restaurantes() {
     const timer = setInterval(calculateTimeLeft, 60000);
     return () => clearInterval(timer);
   }, []);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
@@ -43,14 +40,12 @@ export default function Restaurantes() {
       description: "Te contactaremos pronto para comenzar tu proceso de onboarding."
     });
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
     }));
   };
-
   const scrollToForm = () => {
     const form = document.querySelector('form');
     if (form) {
@@ -61,9 +56,7 @@ export default function Restaurantes() {
       setTimeout(() => setHighlightForm(false), 2000);
     }
   };
-
-  return (
-    <main className="min-h-screen pt-16">
+  return <main className="min-h-screen pt-16">
       <Navbar />
       
       <div className="relative">
@@ -276,19 +269,17 @@ export default function Restaurantes() {
             {/* Form Sticky */}
             <div className="hidden lg:block">
               <div className="sticky top-24">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className={`bg-white rounded-xl shadow-xl border p-8 space-y-8 transition-all duration-300 ${
-                    highlightForm ? 'ring-4 ring-primary shadow-2xl scale-105' : ''
-                  }`}
-                >
+                <motion.div initial={{
+                opacity: 0,
+                scale: 0.95
+              }} animate={{
+                opacity: 1,
+                scale: 1
+              }} className={`bg-white rounded-xl shadow-xl border p-8 space-y-8 transition-all duration-300 ${highlightForm ? 'ring-4 ring-primary shadow-2xl scale-105' : ''}`}>
                   <div className="space-y-4">
                     <h2 className="text-2xl font-semibold">Comienza tu Prueba Gratuita</h2>
                     <div className="flex flex-col gap-2">
-                      <div className="text-sm font-medium text-primary">
-                        Si te registras antes de las 12:00pm tendrás a Ruka trabajando el mismo día
-                      </div>
+                      <div className="text-sm font-medium text-primary">Si te registras antes de las 12:00pm tendrás acceso el mismo día.</div>
                       <div className="flex items-center gap-2 text-muted-foreground">
                         <Clock className="w-4 h-4" />
                         <span>Faltan {timeLeft} para las 12:00pm</span>
@@ -297,35 +288,10 @@ export default function Restaurantes() {
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    <Input
-                      name="nombreRestaurante"
-                      placeholder="Nombre del Restaurante"
-                      value={formData.nombreRestaurante}
-                      onChange={handleChange}
-                      required
-                    />
-                    <Input
-                      name="nombre"
-                      placeholder="Tu Nombre"
-                      value={formData.nombre}
-                      onChange={handleChange}
-                      required
-                    />
-                    <Input
-                      name="email"
-                      type="email"
-                      placeholder="Email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                    <Input
-                      name="ciudad"
-                      placeholder="Ciudad"
-                      value={formData.ciudad}
-                      onChange={handleChange}
-                      required
-                    />
+                    <Input name="nombreRestaurante" placeholder="Nombre del Restaurante" value={formData.nombreRestaurante} onChange={handleChange} required />
+                    <Input name="nombre" placeholder="Tu Nombre" value={formData.nombre} onChange={handleChange} required />
+                    <Input name="email" type="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+                    <Input name="ciudad" placeholder="Ciudad" value={formData.ciudad} onChange={handleChange} required />
                     <div className="space-y-4">
                       <Button type="submit" className="w-full gap-2 h-12 text-lg">
                         Comenzar Ahora <ArrowRight className="w-5 h-5" />
@@ -355,6 +321,5 @@ export default function Restaurantes() {
       </div>
 
       <Footer />
-    </main>
-  );
+    </main>;
 }
