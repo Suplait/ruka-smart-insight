@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -119,42 +118,12 @@ export default function Restaurantes() {
                 className="space-y-8"
               >
                 <h1 className="text-5xl sm:text-6xl font-bold leading-tight">
-                  ¿Cansado de perder tiempo
+                  ¿Necesitas optimizar el tiempo
                   <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> digitando facturas?</span>
                 </h1>
                 <p className="text-2xl text-muted-foreground leading-relaxed">
-                  Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel o en tu sistema de gestión.
+                  Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel, POS o ERP.
                 </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="relative p-8 rounded-2xl bg-gradient-to-br from-red-50 to-orange-50 border border-red-100 space-y-8"
-              >
-                <div className="absolute -top-6 right-8 w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-red-600" />
-                </div>
-                <h2 className="text-4xl font-bold text-red-900">
-                  Y cuando por fin tienes los datos...
-                </h2>
-                <div className="grid md:grid-cols-2 gap-8 items-center">
-                  <p className="text-2xl text-red-800/80 leading-relaxed">
-                    Ya es demasiado tarde. Te enteras que el precio del aceite subió hace un mes y has estado perdiendo margen en todos tus platos principales.
-                  </p>
-                  <div className="bg-white p-6 rounded-xl shadow-lg">
-                    <div className="space-y-4">
-                      <div className="h-2 bg-red-200 rounded-full w-full" />
-                      <div className="h-2 bg-red-200 rounded-full w-3/4" />
-                      <div className="h-2 bg-red-200 rounded-full w-1/2" />
-                    </div>
-                    <div className="mt-6 text-center text-red-600 font-semibold">
-                      -15% Food Cost
-                    </div>
-                  </div>
-                </div>
               </motion.div>
 
               <motion.div
@@ -178,7 +147,7 @@ export default function Restaurantes() {
                     </p>
                     <p className="flex items-center gap-2">
                       <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                      Agrupa tus insumos por categorías
+                      Agrupa y crea un maestro de insumos
                     </p>
                     <p className="flex items-center gap-2">
                       <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
@@ -190,7 +159,7 @@ export default function Restaurantes() {
                     </p>
                     <p className="flex items-center gap-2">
                       <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                      Se integra con tu POS
+                      Se integra con tu facturador
                     </p>
                   </div>
                   <div className="relative">
@@ -288,7 +257,7 @@ export default function Restaurantes() {
                   Optimiza tu food cost ahora
                 </h2>
                 <p className="text-2xl text-gray-700">
-                  Únete a los restaurantes que ya están ahorrando tiempo y dinero con Ruka
+                  Únete a los +100 restaurantes que ya están ahorrando tiempo y dinero con Ruka
                 </p>
                 <Button
                   size="lg"
@@ -300,7 +269,6 @@ export default function Restaurantes() {
               </motion.div>
             </div>
 
-            {/* Form Sticky */}
             <div className="hidden lg:block">
               <div className="sticky top-24">
                 <motion.div
@@ -314,7 +282,7 @@ export default function Restaurantes() {
                     <h2 className="text-2xl font-semibold">Comienza tu Prueba Gratuita</h2>
                     <div className="flex flex-col gap-2">
                       <div className="text-sm font-medium text-primary">
-                        Si te registras antes de las 12:00pm tendrás a Ruka gestionando tus costos hoy mismo
+                        Si te registras antes de las 12:00pm tendrás acceso el mismo día
                       </div>
                       <div className="flex items-center gap-2 text-muted-foreground">
                         <Clock className="w-4 h-4" />
