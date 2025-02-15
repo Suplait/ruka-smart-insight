@@ -1,3 +1,4 @@
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -49,15 +50,32 @@ export default function AboutUs() {
                 <div className="relative">
                   <div className="flex items-center justify-center mb-8">
                     <div className="bg-white p-2 rounded-full border-2 border-primary z-10">
-                      <span className="text-primary font-bold">2019</span>
+                      <span className="text-primary font-bold">2016</span>
                     </div>
                   </div>
                   <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <h3 className="text-2xl font-bold mb-4 text-primary">Reconocimiento Global: 500 Global</h3>
+                    <h3 className="text-2xl font-bold mb-4 text-primary">Nace Etiner</h3>
                     <p className="text-lg text-gray-700 mb-4">
-                      Fuimos seleccionados por 500 Global, una de las aceleradoras más prestigiosas 
-                      de Silicon Valley que ha impulsado empresas como Canva y Grab. Este respaldo 
-                      nos dio acceso a mentores de clase mundial y una red global de emprendedores.
+                      Cuatro amigos apasionados por la tecnología y los viajes fundamos Etiner, 
+                      una plataforma colaborativa para planificar viajes que revolucionaría 
+                      la forma en que las personas exploran el mundo.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <div className="flex items-center justify-center mb-8">
+                    <div className="bg-white p-2 rounded-full border-2 border-primary z-10">
+                      <span className="text-primary font-bold">2016-2020</span>
+                    </div>
+                  </div>
+                  <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <h3 className="text-2xl font-bold mb-4 text-primary">Expansión Regional</h3>
+                    <p className="text-lg text-gray-700 mb-4">
+                      Logramos escalar Etiner a más de 10.000 clientes, expandiendo nuestras 
+                      operaciones a través de Latinoamérica: Chile, México, Colombia, Perú y Bolivia. 
+                      Esta experiencia nos enseñó la importancia de construir productos escalables 
+                      y adaptables a diferentes mercados.
                     </p>
                   </div>
                 </div>
@@ -69,12 +87,12 @@ export default function AboutUs() {
                     </div>
                   </div>
                   <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <h3 className="text-2xl font-bold mb-4 text-primary">Resiliencia en la Pandemia</h3>
+                    <h3 className="text-2xl font-bold mb-4 text-primary">Pivote y Crecimiento</h3>
                     <p className="text-lg text-gray-700 mb-4">
-                      Durante la pandemia, mientras muchas empresas cerraban, nosotros vimos una 
-                      oportunidad para innovar. Desarrollamos soluciones remotas que ayudaron a 
-                      nuestros clientes a mantener sus operaciones en momentos críticos, 
-                      demostrando que la adversidad puede ser un catalizador para la innovación.
+                      Cuando la pandemia golpeó al turismo, transformamos el desafío en oportunidad. 
+                      Pusimos nuestro expertise en tecnología y growth al servicio de otras empresas, 
+                      colaborando con líderes como Rappi, P&G, Crystal Lagoons y Zofri, 
+                      ayudándoles a potenciar su presencia digital y eficiencia operacional.
                     </p>
                   </div>
                 </div>
@@ -86,12 +104,14 @@ export default function AboutUs() {
                     </div>
                   </div>
                   <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <h3 className="text-2xl font-bold mb-4 text-primary">Nace Ruka.ai</h3>
+                    <h3 className="text-2xl font-bold mb-4 text-primary">El Nacimiento de Ruka.ai</h3>
                     <p className="text-lg text-gray-700 mb-4">
-                      Lanzamos Ruka.ai, consolidando años de experiencia en una plataforma 
-                      de automatización inteligente diseñada específicamente para empresas medianas. 
-                      Nuestra misión es democratizar el acceso a tecnologías avanzadas de 
-                      automatización, permitiendo que más empresas compitan efectivamente en la era digital.
+                      Combinando nuestra experiencia en tecnología, crecimiento y operaciones, 
+                      creamos Ruka.ai con una visión clara: democratizar la inteligencia artificial 
+                      y la automatización. Desarrollamos agentes inteligentes que permiten a empresas 
+                      de cualquier tamaño optimizar sus operaciones, reducir costos y competir 
+                      efectivamente en la era digital. Queremos que toda empresa, sin importar su 
+                      tamaño, tenga acceso a las herramientas del futuro.
                     </p>
                   </div>
                 </div>
