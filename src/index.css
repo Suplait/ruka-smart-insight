@@ -1,131 +1,32 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 231 78% 61%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 98%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 231 78% 61%;
-    --radius: 0.75rem;
+@layer utilities {
+  .highlight-form {
+    @apply ring-4 ring-primary ring-opacity-50;
+  }
+
+  .animate-shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
   }
 }
-
-@layer base {
-  * {
-    @apply border-border;
+ 
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
   }
-  body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
   }
-}
 
-@keyframes flowRight {
-  0% {
-    transform: translateX(-100%);
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
   }
-  100% {
-    transform: translateX(0%);
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
   }
-}
-
-@keyframes flowLeft {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-@keyframes flowDown {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(0%);
-  }
-}
-
-@keyframes flowUp {
-  0% {
-    transform: translateY(100%);
-  }
-  100% {
-    transform: translateY(0%);
-  }
-}
-
-.animate-flow-right {
-  animation: flowRight 2s linear infinite;
-}
-
-.animate-flow-left {
-  animation: flowLeft 2s linear infinite;
-}
-
-.animate-flow-down {
-  animation: flowDown 2s linear infinite;
-}
-
-.animate-flow-up {
-  animation: flowUp 2s linear infinite;
-}
-
-.gradient-blur {
-  background: radial-gradient(circle at center, rgba(77, 104, 235, 0.15) 0%, rgba(77, 104, 235, 0) 70%);
-}
-
-.hero-gradient {
-  background: linear-gradient(to bottom right, rgba(77, 104, 235, 0.1), rgba(243, 243, 251, 0.1));
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-@keyframes blink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-blink {
-  animation: blink 1s step-end infinite;
-}
-
-html {
-  scroll-behavior: smooth;
 }

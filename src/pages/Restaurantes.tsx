@@ -124,12 +124,14 @@ export default function Restaurantes() {
                       Se integra con tu POS o ERP
                     </p>
                   </div>
-                  <div className="relative aspect-square">
-                    <img 
-                      src="/robotshero2.png" 
-                      alt="Robot procesando datos" 
-                      className="w-full h-full object-cover rounded-xl shadow-2xl"
-                    />
+                  <div className="relative">
+                    <div className="aspect-[4/3] overflow-hidden rounded-xl shadow-2xl">
+                      <img 
+                        src="/robotshero2.png" 
+                        alt="Robot procesando datos" 
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -247,7 +249,34 @@ export default function Restaurantes() {
                 </div>
               </motion.div>
 
-              {/* CTA Final */}
+              {/* Nueva sección de Impacto */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                className="space-y-12 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-8 rounded-2xl"
+              >
+                <h2 className="text-4xl font-bold text-center">
+                  El impacto en tu negocio
+                </h2>
+                <div className="grid md:grid-cols-3 gap-8">
+                  <div className="bg-white p-6 rounded-xl shadow-lg space-y-4">
+                    <div className="text-4xl font-bold text-green-600">80%</div>
+                    <p className="text-lg">Reducción en tiempo de procesamiento de facturas</p>
+                  </div>
+                  <div className="bg-white p-6 rounded-xl shadow-lg space-y-4">
+                    <div className="text-4xl font-bold text-blue-600">100%</div>
+                    <p className="text-lg">Visibilidad de cambios en precios de insumos</p>
+                  </div>
+                  <div className="bg-white p-6 rounded-xl shadow-lg space-y-4">
+                    <div className="text-4xl font-bold text-purple-600">15h</div>
+                    <p className="text-lg">Ahorro semanal en tareas administrativas</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* CTA Final con animación */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -263,8 +292,21 @@ export default function Restaurantes() {
                 </p>
                 <Button 
                   size="lg" 
-                  className="text-lg px-8 py-6 h-auto"
-                  onClick={() => document.querySelector('form')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="text-lg px-8 py-6 h-auto animate-pulse hover:animate-none"
+                  onClick={() => {
+                    const form = document.querySelector('form');
+                    if (form) {
+                      form.scrollIntoView({ behavior: 'smooth' });
+                      // Añadir clase de highlight al form
+                      form.classList.add('highlight-form');
+                      // Animación de shake
+                      form.classList.add('animate-shake');
+                      // Remover clases después de la animación
+                      setTimeout(() => {
+                        form.classList.remove('highlight-form', 'animate-shake');
+                      }, 1000);
+                    }
+                  }}
                 >
                   Comienza Tu Prueba Gratuita
                 </Button>
@@ -278,7 +320,8 @@ export default function Restaurantes() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="bg-white rounded-xl shadow-xl border p-8 space-y-8"
+                  className="bg-white rounded-xl shadow-xl border p-8 space-y-8 transition-all duration-300"
+                  whileHover={{ scale: 1.02 }}
                 >
                   <div className="space-y-4">
                     <h2 className="text-2xl font-semibold">Comienza tu Prueba Gratuita</h2>
@@ -335,7 +378,65 @@ export default function Restaurantes() {
 
             {/* Form para móvil */}
             <div className="lg:hidden">
-              {/* ... mismo contenido del form pero sin sticky ... */}
+              <div className="sticky top-24">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="bg-white rounded-xl shadow-xl border p-8 space-y-8 transition-all duration-300"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <div className="space-y-4">
+                    <h2 className="text-2xl font-semibold">Comienza tu Prueba Gratuita</h2>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <Clock className="w-4 h-4" />
+                      <span>Setup en menos de 10 minutos</span>
+                    </div>
+                  </div>
+
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <Input
+                      name="nombreRestaurante"
+                      placeholder="Nombre del Restaurante"
+                      value={formData.nombreRestaurante}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Input
+                      name="nombre"
+                      placeholder="Tu Nombre"
+                      value={formData.nombre}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Input
+                      name="email"
+                      type="email"
+                      placeholder="Email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Input
+                      name="ciudad"
+                      placeholder="Ciudad"
+                      value={formData.ciudad}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Button type="submit" className="w-full gap-2 h-12 text-lg">
+                      Comenzar Ahora <ArrowRight className="w-5 h-5" />
+                    </Button>
+                  </form>
+
+                  <div className="flex items-center gap-3">
+                    <UtensilsCrossed className="w-8 h-8 text-primary" />
+                    <p className="text-sm text-muted-foreground">
+                      Únete a los restaurantes que ya automatizaron su control de costos
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </div>
         </div>
