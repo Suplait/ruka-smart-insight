@@ -15,7 +15,7 @@ const DataFlowSection = () => {
           </span>
           <br />
           <span className="text-xl md:text-2xl text-gray-600 mt-4 block">
-            Tus datos sincronizados en minutos, no en semanas
+            Traemos tus datos de compras y ventas en minutos
           </span>
         </h2>
 
@@ -134,7 +134,7 @@ const DataFlowSection = () => {
                 />
               </div>
               <h3 className="text-xl font-semibold text-center mb-4">Impuestos Internos</h3>
-              <p className="text-gray-600 text-center">Conexión directa con el SII para obtener los datos en tiempo real</p>
+              <p className="text-gray-600 text-center">Desde el SII nos traemos la carátula de todas tus facturas</p>
             </motion.div>
 
             {/* Ruka.ai */}
@@ -152,7 +152,7 @@ const DataFlowSection = () => {
                 />
               </div>
               <h3 className="text-2xl font-bold text-center text-white mb-4">Ruka.ai</h3>
-              <p className="text-white text-center">Procesamiento y monitoreo inteligente de tus compras y ventas</p>
+              <p className="text-white text-center">Le brindamos inteligencia a tu operación</p>
             </motion.div>
 
             {/* Facturador */}
@@ -166,7 +166,7 @@ const DataFlowSection = () => {
                 <FileText className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-xl font-semibold text-center mb-4">Tu Facturador</h3>
-              <p className="text-gray-600 text-center">Integración sencilla con tu sistema de facturación actual</p>
+              <p className="text-gray-600 text-center">Desde tu facturador (cualquiera), traemos el detalle de los items transaccionados</p>
             </motion.div>
           </div>
         </div>
@@ -196,7 +196,7 @@ const DataFlowSection = () => {
             transition={{ duration: 0.5, delay: 1.2 }}
             className="text-center"
           >
-            <div className="text-4xl font-bold text-primary mb-2">99.9%</div>
+            <div className="text-4xl font-bold text-primary mb-2">98%</div>
             <p className="text-gray-600">Reducción de Errores</p>
           </motion.div>
         </div>

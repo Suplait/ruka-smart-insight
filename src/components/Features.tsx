@@ -34,7 +34,7 @@ export default function Features() {
             Agentes Inteligentes que Trabajan por Ti
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Imagina tener un equipo que trabaja 24/7 procesando tus datos, detectando oportunidades y ahorrándote tiempo y dinero
+            Imagina tener un equipo que trabaja 24/7 registrando compras, agrupando insumos maestros, monitoreando precios, alertando anomalías y detectando oportunidades.
           </p>
         </div>
 

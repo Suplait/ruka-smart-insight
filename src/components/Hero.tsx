@@ -96,7 +96,7 @@ export default function Hero() {
                 className="hover:scale-105 transition-all duration-300"
                 onClick={scrollToGuarantee}
               >
-                Ver Garantía de 30 Días
+                Prueba sin riesgo
               </Button>
             </div>
 
