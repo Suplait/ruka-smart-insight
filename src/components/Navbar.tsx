@@ -1,8 +1,18 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { LogIn, ArrowRight } from "lucide-react";
+import { LogIn, ArrowRight, ChevronDown } from "lucide-react";
 import SubdomainModal from "./SubdomainModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
 
 export default function Navbar() {
   const [showSubdomainModal, setShowSubdomainModal] = useState(false);
@@ -57,6 +67,33 @@ export default function Navbar() {
             >
               Testimonios
             </button>
+            
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm text-muted-foreground hover:text-primary bg-transparent">
+                    Industrias
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="w-48 p-3 bg-white rounded-lg shadow-lg border">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/restaurantes"
+                            className={cn(
+                              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                              "text-sm font-medium"
+                            )}
+                          >
+                            Restaurantes
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           </div>
 
           <div className="flex items-center gap-4">
