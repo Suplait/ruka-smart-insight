@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -21,8 +20,8 @@ export default function AboutUs() {
               Nuestra Historia
             </h1>
             <p className="text-xl text-muted-foreground">
-              Un viaje de innovación y perseverancia que comenzó hace casi una década. 
-              Descubre cómo hemos evolucionado hasta convertirnos en líderes en automatización inteligente.
+              Esta es la historia de cómo cuatro amigos encontramos nuestra pasión 
+              por crear tecnología que realmente ayude a las personas y empresas.
             </p>
           </div>
 
@@ -38,11 +37,11 @@ export default function AboutUs() {
                     </div>
                   </div>
                   <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <h3 className="text-2xl font-bold mb-4 text-primary">Los Primeros Pasos con PortSalud</h3>
+                    <h3 className="text-2xl font-bold mb-4 text-primary">Primeros Pasos con PortSalud</h3>
                     <p className="text-lg text-gray-700 mb-4">
-                      Comenzamos desarrollando soluciones tecnológicas para el sector salud, 
-                      aprendiendo valiosas lecciones sobre la importancia de crear tecnología 
-                      que realmente impacte en la eficiencia operativa de las empresas.
+                      Todo comenzó desarrollando soluciones tecnológicas para el sector salud. 
+                      Una experiencia que nos mostró lo gratificante que es crear tecnología 
+                      que realmente ayuda a las personas en su día a día.
                     </p>
                   </div>
                 </div>
@@ -56,9 +55,9 @@ export default function AboutUs() {
                   <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
                     <h3 className="text-2xl font-bold mb-4 text-primary">Nace Etiner</h3>
                     <p className="text-lg text-gray-700 mb-4">
-                      Cuatro amigos apasionados por la tecnología y los viajes fundamos Etiner, 
-                      una plataforma colaborativa para planificar viajes que revolucionaría 
-                      la forma en que las personas exploran el mundo.
+                      Unidos por nuestra pasión por la tecnología y los viajes, creamos Etiner, 
+                      una plataforma para planificar viajes en conjunto. Fue una experiencia increíble 
+                      donde aprendimos muchísimo sobre cómo construir productos que la gente realmente use y ame.
                     </p>
                   </div>
                 </div>
@@ -70,12 +69,11 @@ export default function AboutUs() {
                     </div>
                   </div>
                   <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <h3 className="text-2xl font-bold mb-4 text-primary">Expansión Regional</h3>
+                    <h3 className="text-2xl font-bold mb-4 text-primary">Un Viaje por Latinoamérica</h3>
                     <p className="text-lg text-gray-700 mb-4">
-                      Logramos escalar Etiner a más de 10.000 clientes, expandiendo nuestras 
-                      operaciones a través de Latinoamérica: Chile, México, Colombia, Perú y Bolivia. 
-                      Esta experiencia nos enseñó la importancia de construir productos escalables 
-                      y adaptables a diferentes mercados.
+                      Ver crecer Etiner a más de 10.000 usuarios a través de Chile, México, Colombia, 
+                      Perú y Bolivia fue una locura. Nos enseñó lo importante que es escuchar a tus 
+                      usuarios y adaptar tu producto a diferentes realidades y necesidades.
                     </p>
                   </div>
                 </div>
@@ -87,12 +85,12 @@ export default function AboutUs() {
                     </div>
                   </div>
                   <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <h3 className="text-2xl font-bold mb-4 text-primary">Pivote y Crecimiento</h3>
+                    <h3 className="text-2xl font-bold mb-4 text-primary">Reinventándonos</h3>
                     <p className="text-lg text-gray-700 mb-4">
-                      Cuando la pandemia golpeó al turismo, transformamos el desafío en oportunidad. 
-                      Pusimos nuestro expertise en tecnología y growth al servicio de otras empresas, 
-                      colaborando con líderes como Rappi, P&G, Crystal Lagoons y Zofri, 
-                      ayudándoles a potenciar su presencia digital y eficiencia operacional.
+                      La pandemia golpeó fuerte al turismo, pero decidimos ver el vaso medio lleno. 
+                      Tomamos todo lo que habíamos aprendido sobre tecnología y crecimiento y comenzamos 
+                      a ayudar a otras empresas. Trabajamos con equipos increíbles en Rappi, P&G, 
+                      Crystal Lagoons y Zofri, aprendiendo de cada uno de ellos.
                     </p>
                   </div>
                 </div>
@@ -106,12 +104,11 @@ export default function AboutUs() {
                   <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
                     <h3 className="text-2xl font-bold mb-4 text-primary">El Nacimiento de Ruka.ai</h3>
                     <p className="text-lg text-gray-700 mb-4">
-                      Combinando nuestra experiencia en tecnología, crecimiento y operaciones, 
-                      creamos Ruka.ai con una visión clara: democratizar la inteligencia artificial 
-                      y la automatización. Desarrollamos agentes inteligentes que permiten a empresas 
-                      de cualquier tamaño optimizar sus operaciones, reducir costos y competir 
-                      efectivamente en la era digital. Queremos que toda empresa, sin importar su 
-                      tamaño, tenga acceso a las herramientas del futuro.
+                      Después de años creando tecnología para diferentes industrias, nos dimos cuenta 
+                      de algo importante: la automatización inteligente no debería ser solo para grandes 
+                      empresas. Por eso creamos Ruka.ai, para que cualquier empresa pueda tener su propio 
+                      equipo de agentes inteligentes trabajando 24/7. Queremos que la tecnología que 
+                      hace la diferencia esté al alcance de todos.
                     </p>
                   </div>
                 </div>
