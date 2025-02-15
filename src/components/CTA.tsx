@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ShieldCheck, Clock4, UtensilsCrossed } from "lucide-react";
+import { ArrowRight, ShieldCheck, Clock4, UtensilsCrossed, CheckCircle2 } from "lucide-react";
 
 export default function CTA() {
   const benefits = [
