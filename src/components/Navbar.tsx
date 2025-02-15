@@ -1,70 +1,48 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed } from "lucide-react";
 import SubdomainModal from "./SubdomainModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-
 export default function Navbar() {
   const [showSubdomainModal, setShowSubdomainModal] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  
   const scrollToSection = (id: string) => {
     if (location.pathname !== '/') {
-      navigate('/', { state: { scrollTo: id } });
+      navigate('/', {
+        state: {
+          scrollTo: id
+        }
+      });
     } else {
       const element = document.getElementById(id);
-      element?.scrollIntoView({ behavior: "smooth" });
+      element?.scrollIntoView({
+        behavior: "smooth"
+      });
     }
   };
-
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b">
+  return <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link to="/">
-              <img 
-                src="/logo.png" 
-                alt="Ruka.ai" 
-                className="h-5 sm:h-7 hover:opacity-80 transition-opacity"
-              />
+              <img src="/logo.png" alt="Ruka.ai" className="h-5 sm:h-7 hover:opacity-80 transition-opacity" />
             </Link>
           </div>
           
           <div className="hidden md:flex items-center space-x-6">
-            <button 
-              onClick={() => scrollToSection('features')}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
+            <button onClick={() => scrollToSection('features')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
               Features
             </button>
-            <button 
-              onClick={() => scrollToSection('product')}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
+            <button onClick={() => scrollToSection('product')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
               Producto
             </button>
-            <button 
-              onClick={() => scrollToSection('guarantee')}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
+            <button onClick={() => scrollToSection('guarantee')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
               Garantía
             </button>
-            <button 
-              onClick={() => scrollToSection('testimonials')}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
+            <button onClick={() => scrollToSection('testimonials')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
               Testimonios
             </button>
             
@@ -82,14 +60,7 @@ export default function Navbar() {
                       <ul className="grid gap-2">
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link
-                              to="/restaurantes"
-                              className={cn(
-                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                "bg-card hover:bg-accent hover:text-accent-foreground",
-                                "border border-transparent hover:border-border"
-                              )}
-                            >
+                            <Link to="/restaurantes" className={cn("flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors", "bg-card hover:bg-accent hover:text-accent-foreground", "border border-transparent hover:border-border")}>
                               <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
                                 <UtensilsCrossed className="h-5 w-5 text-primary" />
                               </div>
@@ -97,9 +68,7 @@ export default function Navbar() {
                                 <div className="text-sm font-medium">
                                   Restaurantes
                                 </div>
-                                <div className="line-clamp-2 text-xs text-muted-foreground">
-                                  Automatiza pedidos, reservas y atención al cliente
-                                </div>
+                                <div className="line-clamp-2 text-xs text-muted-foreground">Automatiza el registro, seguimiento de precios y monitoreo de foodcost</div>
                               </div>
                             </Link>
                           </NavigationMenuLink>
@@ -120,29 +89,16 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="gap-2"
-              onClick={() => setShowSubdomainModal(true)}
-            >
+            <Button variant="outline" size="sm" className="gap-2" onClick={() => setShowSubdomainModal(true)}>
               Iniciar Sesión <LogIn className="w-4 h-4" />
             </Button>
-            <Button 
-              size="sm" 
-              className="gap-2" 
-              onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}
-            >
+            <Button size="sm" className="gap-2" onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}>
               Solicitar Demo <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
         </div>
       </div>
 
-      <SubdomainModal 
-        isOpen={showSubdomainModal} 
-        onClose={() => setShowSubdomainModal(false)} 
-      />
-    </nav>
-  );
+      <SubdomainModal isOpen={showSubdomainModal} onClose={() => setShowSubdomainModal(false)} />
+    </nav>;
 }
