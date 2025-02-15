@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { LogIn, ArrowRight, ChevronDown } from "lucide-react";
+import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed } from "lucide-react";
 import SubdomainModal from "./SubdomainModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -75,21 +75,44 @@ export default function Navbar() {
                     Industrias
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="w-48 p-3 bg-white rounded-lg shadow-lg border">
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            to="/restaurantes"
-                            className={cn(
-                              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                              "text-sm font-medium"
-                            )}
-                          >
-                            Restaurantes
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                    </ul>
+                    <div className="w-[300px] p-4 bg-white rounded-lg shadow-lg border">
+                      <p className="text-sm font-medium text-muted-foreground mb-3 px-2">
+                        Soluciones por Industria
+                      </p>
+                      <ul className="grid gap-2">
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              to="/restaurantes"
+                              className={cn(
+                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                "bg-card hover:bg-accent hover:text-accent-foreground",
+                                "border border-transparent hover:border-border"
+                              )}
+                            >
+                              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                <UtensilsCrossed className="h-5 w-5 text-primary" />
+                              </div>
+                              <div className="grid gap-1">
+                                <div className="text-sm font-medium">
+                                  Restaurantes
+                                </div>
+                                <div className="line-clamp-2 text-xs text-muted-foreground">
+                                  Automatiza pedidos, reservas y atención al cliente
+                                </div>
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                        
+                        {/* Placeholder para futuras industrias que mantiene el diseño consistente */}
+                        <li className="px-2 py-1">
+                          <div className="text-xs text-muted-foreground italic">
+                            Más industrias próximamente...
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               </NavigationMenuList>
