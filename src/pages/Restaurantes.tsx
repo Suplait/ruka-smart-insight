@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -243,8 +242,8 @@ export default function Restaurantes() {
                 </p>
                 <Button 
                   size="lg" 
-                  className="text-lg px-8 py-6 h-auto animate-bounce hover:animate-none transition-all duration-300 hover:scale-105"
-                  onClick={scrollToForm}
+                  className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105"
+                  onClick={() => setHighlightForm(true)}
                 >
                   Comienza Tu Prueba Gratuita <ArrowRight className="ml-2" />
                 </Button>

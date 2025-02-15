@@ -37,26 +37,6 @@ const DataFlowSection = () => {
                 </div>
               </div>
             </div>
-
-            {/* Right Flow Line */}
-            <div className="absolute top-1/2 right-[calc(33%+2rem)] w-[calc(33%-4rem)] h-1 -translate-y-1/2">
-              <div className="relative w-full h-full">
-                {/* Base line */}
-                <div className="absolute inset-0 bg-gradient-to-l from-blue-200 to-primary/30 rounded-full" />
-                
-                {/* Animated dots */}
-                <div className="absolute inset-0 flex justify-start animate-flow-left">
-                  <div className="flex gap-16">
-                    {[...Array(6)].map((_, i) => (
-                      <div 
-                        key={i} 
-                        className="h-3 w-3 rounded-full bg-primary shadow-lg shadow-primary/20"
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
