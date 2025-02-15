@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { FileText } from "lucide-react";
 
@@ -13,10 +12,6 @@ const DataFlowSection = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
           <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
             Conexión Simple y Rápida
-          </span>
-          <br />
-          <span className="text-xl md:text-2xl text-gray-600 mt-4 block">
-            Traemos tus datos de compras y ventas en minutos
           </span>
         </h2>
 
@@ -134,8 +129,8 @@ const DataFlowSection = () => {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-center mb-4">Impuestos Internos</h3>
-              <p className="text-gray-600 text-center">Desde el SII nos traemos la carátula de todas tus facturas</p>
+              <h3 className="text-xl font-semibold text-center mb-4">SII</h3>
+              <p className="text-gray-600 text-center">Obtenemos tus facturas automáticamente</p>
             </motion.div>
 
             {/* Ruka.ai */}
@@ -153,7 +148,7 @@ const DataFlowSection = () => {
                 />
               </div>
               <h3 className="text-2xl font-bold text-center text-white mb-4">Ruka.ai</h3>
-              <p className="text-white text-center">Le brindamos inteligencia a tu operación</p>
+              <p className="text-white text-center">Procesamos y analizamos todo automáticamente</p>
             </motion.div>
 
             {/* Facturador */}
@@ -166,8 +161,8 @@ const DataFlowSection = () => {
               <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6 mx-auto">
                 <FileText className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-center mb-4">Tu Facturador</h3>
-              <p className="text-gray-600 text-center">Desde tu facturador (cualquiera), traemos el detalle de los items transaccionados</p>
+              <h3 className="text-xl font-semibold text-center mb-4">Tu Sistema</h3>
+              <p className="text-gray-600 text-center">Integración con tu software actual</p>
             </motion.div>
           </div>
         </div>
