@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -5,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { motion } from "framer-motion";
-import { ArrowRight, UtensilsCrossed, Clock } from "lucide-react";
+import { ArrowRight, UtensilsCrossed, Clock, ChartBarIcon, Zap, TrendingUp } from "lucide-react";
 import DataFlowSection from "@/components/DataFlowSection";
 
 export default function Restaurantes() {
@@ -15,6 +16,8 @@ export default function Restaurantes() {
     nombreRestaurante: "",
     ciudad: ""
   });
+
+  const [highlightForm, setHighlightForm] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +32,15 @@ export default function Restaurantes() {
       ...prev,
       [e.target.name]: e.target.value
     }));
+  };
+
+  const scrollToForm = () => {
+    const form = document.querySelector('form');
+    if (form) {
+      form.scrollIntoView({ behavior: 'smooth' });
+      setHighlightForm(true);
+      setTimeout(() => setHighlightForm(false), 2000);
+    }
   };
 
   return (
@@ -124,11 +136,11 @@ export default function Restaurantes() {
                       Se integra con tu POS o ERP
                     </p>
                   </div>
-                  <div className="relative aspect-square">
+                  <div className="relative">
                     <img 
                       src="/robotshero2.png" 
                       alt="Robot procesando datos" 
-                      className="w-full h-full object-cover rounded-xl shadow-2xl"
+                      className="w-full object-contain transform hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                 </div>
@@ -168,81 +180,49 @@ export default function Restaurantes() {
               {/* Data Flow Section */}
               <DataFlowSection />
 
-              {/* Beneficios Inmediatos */}
+              {/* Métricas de Impacto */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
-                className="space-y-12"
+                className="space-y-12 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-12 rounded-3xl"
               >
                 <h2 className="text-4xl font-bold text-center">
-                  Beneficios desde el primer día
+                  El impacto en tu negocio
                 </h2>
                 <div className="grid md:grid-cols-3 gap-8">
                   {[
                     {
-                      title: "Ahorra Tiempo",
-                      description: "Elimina la digitación manual y libera a tu equipo",
-                      color: "purple"
+                      icon: Zap,
+                      stat: "90%",
+                      text: "Reducción en tiempo de digitación",
+                      color: "text-yellow-500"
                     },
                     {
-                      title: "Control Total",
-                      description: "Monitorea tus costos en tiempo real",
-                      color: "blue"
+                      icon: ChartBarIcon,
+                      stat: "100%",
+                      text: "Visibilidad de tus costos",
+                      color: "text-blue-500"
                     },
                     {
-                      title: "Más Rentabilidad",
-                      description: "Optimiza tus márgenes con datos precisos",
-                      color: "green"
+                      icon: TrendingUp,
+                      stat: "+20%",
+                      text: "Mejora en márgenes",
+                      color: "text-green-500"
                     }
-                  ].map((benefit) => (
-                    <div 
-                      key={benefit.title}
-                      className={`p-6 rounded-xl bg-${benefit.color}-50 border border-${benefit.color}-100 space-y-4`}
+                  ].map((item, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.2 }}
+                      className="bg-white p-8 rounded-xl shadow-lg text-center space-y-4 hover:shadow-xl transition-shadow"
                     >
-                      <h3 className={`text-2xl font-semibold text-${benefit.color}-900`}>
-                        {benefit.title}
-                      </h3>
-                      <p className={`text-${benefit.color}-700`}>
-                        {benefit.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Testimonios Destacados */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="space-y-12"
-              >
-                <h2 className="text-4xl font-bold text-center">
-                  Lo que dicen nuestros clientes
-                </h2>
-                <div className="grid md:grid-cols-2 gap-8">
-                  {[
-                    {
-                      quote: "Ruka nos ayudó a detectar aumentos de precios que no habíamos notado. Recuperamos el margen que estábamos perdiendo.",
-                      author: "Juan Pérez",
-                      role: "Dueño de Restaurant"
-                    },
-                    {
-                      quote: "La automatización nos ahorró más de 20 horas semanales en digitación. Ahora nos enfocamos en atender mejor a nuestros clientes.",
-                      author: "María González",
-                      role: "Administradora"
-                    }
-                  ].map((testimonial, i) => (
-                    <div key={i} className="bg-white p-6 rounded-xl shadow-lg space-y-4">
-                      <p className="text-lg italic text-gray-700">{testimonial.quote}</p>
-                      <div>
-                        <p className="font-semibold">{testimonial.author}</p>
-                        <p className="text-sm text-gray-500">{testimonial.role}</p>
-                      </div>
-                    </div>
+                      <item.icon className={`w-12 h-12 ${item.color} mx-auto`} />
+                      <div className={`text-4xl font-bold ${item.color}`}>{item.stat}</div>
+                      <p className="text-gray-600">{item.text}</p>
+                    </motion.div>
                   ))}
                 </div>
               </motion.div>
@@ -256,17 +236,17 @@ export default function Restaurantes() {
                 className="text-center space-y-8 bg-gradient-to-br from-primary/10 to-purple-100 p-12 rounded-3xl"
               >
                 <h2 className="text-4xl font-bold">
-                  Únete a los restaurantes que ya están optimizando sus costos
+                  Optimiza tus costos ahora
                 </h2>
                 <p className="text-2xl text-gray-700">
-                  Más de 100 restaurantes ya confían en Ruka para automatizar su control de costos
+                  Únete a los restaurantes que ya están ahorrando tiempo y dinero con Ruka
                 </p>
                 <Button 
                   size="lg" 
-                  className="text-lg px-8 py-6 h-auto"
-                  onClick={() => document.querySelector('form')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="text-lg px-8 py-6 h-auto animate-bounce hover:animate-none transition-all duration-300 hover:scale-105"
+                  onClick={scrollToForm}
                 >
-                  Comienza Tu Prueba Gratuita
+                  Comienza Tu Prueba Gratuita <ArrowRight className="ml-2" />
                 </Button>
               </motion.div>
             </div>
@@ -277,8 +257,9 @@ export default function Restaurantes() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="bg-white rounded-xl shadow-xl border p-8 space-y-8"
+                  className={`bg-white rounded-xl shadow-xl border p-8 space-y-8 transition-all duration-300 ${
+                    highlightForm ? 'ring-4 ring-primary shadow-2xl scale-105' : ''
+                  }`}
                 >
                   <div className="space-y-4">
                     <h2 className="text-2xl font-semibold">Comienza tu Prueba Gratuita</h2>
@@ -331,11 +312,6 @@ export default function Restaurantes() {
                   </div>
                 </motion.div>
               </div>
-            </div>
-
-            {/* Form para móvil */}
-            <div className="lg:hidden">
-              {/* ... mismo contenido del form pero sin sticky ... */}
             </div>
           </div>
         </div>

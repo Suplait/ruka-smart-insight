@@ -19,96 +19,41 @@ const DataFlowSection = () => {
           {/* Desktop Flow Lines */}
           <div className="hidden md:block">
             {/* Left Flow Line */}
-            <div className="absolute top-1/2 left-[calc(33%+2rem)] w-[calc(33%-4rem)] h-2 -translate-y-1/2">
+            <div className="absolute top-1/2 left-[calc(33%+2rem)] w-[calc(33%-4rem)] h-1 -translate-y-1/2">
               <div className="relative w-full h-full">
-                {/* Base dashed line */}
-                <div className="absolute inset-0 border-t-4 border-dashed border-primary/30" />
+                {/* Base line */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-primary/30 rounded-full" />
                 
                 {/* Animated dots */}
-                <div className="absolute inset-0 flex gap-8 animate-flow-right overflow-hidden">
-                  {[...Array(6)].map((_, i) => (
-                    <div 
-                      key={i} 
-                      className="h-4 w-4 rounded-full bg-gradient-to-r from-primary to-purple-600 -translate-y-1 shadow-lg shadow-primary/20"
-                    />
-                  ))}
-                </div>
-                
-                {/* Arrow head */}
-                <div className="absolute right-0 -translate-y-1/2 top-1/2">
-                  <div className="w-4 h-4 rotate-45 border-t-4 border-r-4 border-primary transform translate-x-1/2" />
+                <div className="absolute inset-0 flex justify-start animate-flow-right">
+                  <div className="flex gap-16">
+                    {[...Array(6)].map((_, i) => (
+                      <div 
+                        key={i} 
+                        className="h-3 w-3 rounded-full bg-primary shadow-lg shadow-primary/20"
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Right Flow Line */}
-            <div className="absolute top-1/2 right-[calc(33%+2rem)] w-[calc(33%-4rem)] h-2 -translate-y-1/2">
+            <div className="absolute top-1/2 right-[calc(33%+2rem)] w-[calc(33%-4rem)] h-1 -translate-y-1/2">
               <div className="relative w-full h-full">
-                {/* Base dashed line */}
-                <div className="absolute inset-0 border-t-4 border-dashed border-primary/30" />
+                {/* Base line */}
+                <div className="absolute inset-0 bg-gradient-to-l from-blue-200 to-primary/30 rounded-full" />
                 
                 {/* Animated dots */}
-                <div className="absolute inset-0 flex gap-8 animate-flow-left overflow-hidden">
-                  {[...Array(6)].map((_, i) => (
-                    <div 
-                      key={i} 
-                      className="h-4 w-4 rounded-full bg-gradient-to-r from-primary to-purple-600 -translate-y-1 shadow-lg shadow-primary/20"
-                    />
-                  ))}
-                </div>
-                
-                {/* Arrow head */}
-                <div className="absolute left-0 -translate-y-1/2 top-1/2">
-                  <div className="w-4 h-4 rotate-45 border-b-4 border-l-4 border-primary transform -translate-x-1/2" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile Flow Lines */}
-          <div className="md:hidden absolute left-1/2 h-full -translate-x-[2px]">
-            {/* Top Flow Line */}
-            <div className="absolute top-[calc(33%+2rem)] h-[calc(33%-4rem)] w-2">
-              <div className="relative w-full h-full">
-                {/* Base dashed line */}
-                <div className="absolute inset-0 border-l-4 border-dashed border-primary/30" />
-                
-                {/* Animated dots */}
-                <div className="absolute inset-0 flex flex-col gap-8 animate-flow-down overflow-hidden">
-                  {[...Array(6)].map((_, i) => (
-                    <div 
-                      key={i} 
-                      className="w-4 h-4 rounded-full bg-gradient-to-b from-primary to-purple-600 -translate-x-1 shadow-lg shadow-primary/20"
-                    />
-                  ))}
-                </div>
-                
-                {/* Arrow head */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
-                  <div className="w-4 h-4 rotate-45 border-r-4 border-b-4 border-primary transform translate-y-1/2" />
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Flow Line */}
-            <div className="absolute bottom-[calc(33%+2rem)] h-[calc(33%-4rem)] w-2">
-              <div className="relative w-full h-full">
-                {/* Base dashed line */}
-                <div className="absolute inset-0 border-l-4 border-dashed border-primary/30" />
-                
-                {/* Animated dots */}
-                <div className="absolute inset-0 flex flex-col gap-8 animate-flow-up overflow-hidden">
-                  {[...Array(6)].map((_, i) => (
-                    <div 
-                      key={i} 
-                      className="w-4 h-4 rounded-full bg-gradient-to-b from-primary to-purple-600 -translate-x-1 shadow-lg shadow-primary/20"
-                    />
-                  ))}
-                </div>
-                
-                {/* Arrow head */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2">
-                  <div className="w-4 h-4 rotate-45 border-l-4 border-t-4 border-primary transform -translate-y-1/2" />
+                <div className="absolute inset-0 flex justify-start animate-flow-left">
+                  <div className="flex gap-16">
+                    {[...Array(6)].map((_, i) => (
+                      <div 
+                        key={i} 
+                        className="h-3 w-3 rounded-full bg-primary shadow-lg shadow-primary/20"
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -120,7 +65,7 @@ const DataFlowSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-shadow relative z-10"
+              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
             >
               <div className="flex items-center justify-center w-16 h-16 mb-6 mx-auto">
                 <img 
@@ -129,8 +74,8 @@ const DataFlowSection = () => {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-center mb-4">SII</h3>
-              <p className="text-gray-600 text-center">Obtenemos tus facturas automáticamente</p>
+              <h3 className="text-xl font-semibold text-center mb-2">SII</h3>
+              <p className="text-gray-600 text-center">Facturas automáticas</p>
             </motion.div>
 
             {/* Ruka.ai */}
@@ -138,7 +83,7 @@ const DataFlowSection = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-gradient-to-br from-primary to-purple-600 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-shadow transform hover:-translate-y-1 relative z-20"
+              className="bg-gradient-to-br from-primary to-purple-600 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 relative z-20"
             >
               <div className="flex items-center justify-center w-20 h-20 mb-6 mx-auto bg-white rounded-full p-2">
                 <img 
@@ -147,8 +92,8 @@ const DataFlowSection = () => {
                   className="w-full h-full object-contain rounded-full"
                 />
               </div>
-              <h3 className="text-2xl font-bold text-center text-white mb-4">Ruka.ai</h3>
-              <p className="text-white text-center">Procesamos y analizamos todo automáticamente</p>
+              <h3 className="text-2xl font-bold text-center text-white mb-2">Ruka.ai</h3>
+              <p className="text-white text-center">Análisis automático</p>
             </motion.div>
 
             {/* Facturador */}
@@ -156,13 +101,13 @@ const DataFlowSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-shadow relative z-10"
+              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
             >
               <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6 mx-auto">
                 <FileText className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-center mb-4">Tu Sistema</h3>
-              <p className="text-gray-600 text-center">Integración con tu software actual</p>
+              <h3 className="text-xl font-semibold text-center mb-2">Tu Sistema</h3>
+              <p className="text-gray-600 text-center">Integración directa</p>
             </motion.div>
           </div>
         </div>
