@@ -1,6 +1,5 @@
-
 import { motion } from "framer-motion";
-import { FileText, ArrowRight } from "lucide-react";
+import { FileText } from "lucide-react";
 
 const DataFlowSection = () => {
   return (
@@ -17,29 +16,46 @@ const DataFlowSection = () => {
         </h2>
 
         <div className="relative mt-20">
+          {/* Desktop Flow Lines */}
+          <div className="hidden md:block">
+            {/* Left Flow Line */}
+            <div className="absolute top-1/2 left-[calc(33%+2rem)] w-[calc(33%-4rem)] h-1 -translate-y-1/2">
+              <div className="relative w-full h-full">
+                {/* Base line */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-primary/30 rounded-full" />
+                
+                {/* Animated dots */}
+                <div className="absolute inset-0 flex justify-start animate-flow-right">
+                  <div className="flex gap-16">
+                    {[...Array(6)].map((_, i) => (
+                      <div 
+                        key={i} 
+                        className="h-3 w-3 rounded-full bg-primary shadow-lg shadow-primary/20"
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             {/* SII */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="relative"
+              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
             >
-              <div className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
-                <div className="flex items-center justify-center w-16 h-16 mb-6 mx-auto">
-                  <img 
-                    src="/logosii.png" 
-                    alt="SII Logo" 
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <h3 className="text-xl font-semibold text-center mb-2">SII</h3>
-                <p className="text-gray-600 text-center">Facturas automáticas</p>
+              <div className="flex items-center justify-center w-16 h-16 mb-6 mx-auto">
+                <img 
+                  src="/logosii.png" 
+                  alt="SII Logo" 
+                  className="w-full h-full object-contain"
+                />
               </div>
-              {/* Flecha hacia Ruka */}
-              <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 text-primary/60">
-                <ArrowRight className="w-8 h-8" />
-              </div>
+              <h3 className="text-xl font-semibold text-center mb-2">SII</h3>
+              <p className="text-gray-600 text-center">Facturas automáticas</p>
             </motion.div>
 
             {/* Ruka.ai */}
@@ -60,24 +76,18 @@ const DataFlowSection = () => {
               <p className="text-white text-center">Análisis automático</p>
             </motion.div>
 
-            {/* Tu Sistema */}
+            {/* Facturador */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="relative"
+              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
             >
-              <div className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
-                <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6 mx-auto">
-                  <FileText className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold text-center mb-2">Tu Sistema</h3>
-                <p className="text-gray-600 text-center">Integración directa</p>
+              <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6 mx-auto">
+                <FileText className="w-8 h-8 text-primary" />
               </div>
-              {/* Flecha hacia Ruka */}
-              <div className="hidden md:block absolute -left-4 top-1/2 transform -translate-y-1/2 text-primary/60">
-                <ArrowRight className="w-8 h-8 rotate-180" />
-              </div>
+              <h3 className="text-xl font-semibold text-center mb-2">Tu Sistema</h3>
+              <p className="text-gray-600 text-center">Integración directa</p>
             </motion.div>
           </div>
         </div>
@@ -107,8 +117,8 @@ const DataFlowSection = () => {
             transition={{ duration: 0.5, delay: 1.2 }}
             className="text-center"
           >
-            <div className="text-4xl font-bold text-primary mb-2">0.5s</div>
-            <p className="text-gray-600">Reacción en Tiempo Real</p>
+            <div className="text-4xl font-bold text-primary mb-2">98%</div>
+            <p className="text-gray-600">Reducción de Errores</p>
           </motion.div>
         </div>
       </div>
