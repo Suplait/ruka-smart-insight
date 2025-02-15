@@ -119,11 +119,11 @@ export default function Restaurantes() {
                 className="space-y-8"
               >
                 <h1 className="text-5xl sm:text-6xl font-bold leading-tight">
-                  ¿Cansado de perder tiempo
-                  <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> digitando facturas?</span>
+                  ¿Te quita tiempo
+                  <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> digitar facturas?</span>
                 </h1>
                 <p className="text-2xl text-muted-foreground leading-relaxed">
-                  Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel o en tu sistema de gestión.
+                  Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel, POS o ERP.
                 </p>
               </motion.div>
 
@@ -178,7 +178,7 @@ export default function Restaurantes() {
                     </p>
                     <p className="flex items-center gap-2">
                       <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                      Agrupa tus insumos por categorías
+                      Agrupa y crea un maestro de insumos
                     </p>
                     <p className="flex items-center gap-2">
                       <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
@@ -190,7 +190,7 @@ export default function Restaurantes() {
                     </p>
                     <p className="flex items-center gap-2">
                       <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                      Se integra con tu POS
+                      Se integra con tu facturador
                     </p>
                   </div>
                   <div className="relative">
@@ -288,7 +288,7 @@ export default function Restaurantes() {
                   Optimiza tu food cost ahora
                 </h2>
                 <p className="text-2xl text-gray-700">
-                  Únete a los restaurantes que ya están ahorrando tiempo y dinero con Ruka
+                  Únete a los +100 restaurantes que ya están ahorrando tiempo y dinero con Ruka
                 </p>
                 <Button
                   size="lg"
@@ -314,7 +314,7 @@ export default function Restaurantes() {
                     <h2 className="text-2xl font-semibold">Comienza tu Prueba Gratuita</h2>
                     <div className="flex flex-col gap-2">
                       <div className="text-sm font-medium text-primary">
-                        Si te registras antes de las 12:00pm tendrás a Ruka gestionando tus costos hoy mismo
+                        Si te registras antes de las 12:00pm tendrás acceso el mismo día
                       </div>
                       <div className="flex items-center gap-2 text-muted-foreground">
                         <Clock className="w-4 h-4" />
