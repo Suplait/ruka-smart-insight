@@ -206,8 +206,8 @@ export default function Restaurantes() {
                     },
                     {
                       icon: TrendingUp,
-                      stat: "+20%",
-                      text: "Mejora en márgenes",
+                      stat: "0.5s",
+                      text: "Reacción en tiempo real",
                       color: "text-green-500"
                     }
                   ].map((item, index) => (
