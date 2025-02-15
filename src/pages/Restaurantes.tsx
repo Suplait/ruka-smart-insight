@@ -62,7 +62,8 @@ export default function Restaurantes() {
     }
   };
 
-  return <main className="min-h-screen pt-16">
+  return (
+    <main className="min-h-screen pt-16">
       <Navbar />
       
       <div className="relative">
@@ -179,7 +180,7 @@ export default function Restaurantes() {
               once: true
             }} className="relative p-8 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 space-y-8">
                 <div className="absolute -top-6 right-8 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                  <UtensilsCrossed className="w-6 h-6 text-green-600" />
+                  
                 </div>
                 <h2 className="text-4xl font-bold text-green-900">
                   Sin contratar más personal
@@ -272,6 +273,7 @@ export default function Restaurantes() {
               </motion.div>
             </div>
 
+            {/* Form Sticky */}
             <div className="hidden lg:block">
               <div className="sticky top-24">
                 <motion.div
@@ -353,5 +355,6 @@ export default function Restaurantes() {
       </div>
 
       <Footer />
-    </main>;
+    </main>
+  );
 }
