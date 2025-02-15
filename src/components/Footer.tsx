@@ -1,3 +1,4 @@
+
 import { Instagram, Linkedin, Twitter } from "lucide-react";
 
 export default function Footer() {
@@ -19,9 +20,9 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Producto</h4>
             <ul className="space-y-2">
-              <li><a href="#before-after" className="text-muted-foreground hover:text-primary">Valor</a></li>
+              <li><a href="#value-showcase" className="text-muted-foreground hover:text-primary">Valor</a></li>
               <li><a href="#features" className="text-muted-foreground hover:text-primary">Features</a></li>
-              <li><a href="#product" className="text-muted-foreground hover:text-primary">Demo</a></li>
+              <li><a href="#product-showcase" className="text-muted-foreground hover:text-primary">Demo</a></li>
             </ul>
           </div>
           
