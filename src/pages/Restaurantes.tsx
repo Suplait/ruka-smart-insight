@@ -198,10 +198,10 @@ export default function Restaurantes() {
         <link rel="canonical" href="https://ruka.ai/restaurantes" />
       </Helmet>
       
-      <main className="min-h-screen pt-16">
+      <main className="min-h-screen">
         <Navbar />
         
-        <div className="relative overflow-hidden">
+        <div className="w-full">
           <div className="container px-4 sm:px-6">
             <div className="lg:hidden py-8 space-y-6 text-center">
               <motion.div
@@ -222,12 +222,12 @@ export default function Restaurantes() {
               </motion.div>
             </div>
 
-            <div className="lg:hidden w-full sm:px-4">
+            <div className="lg:hidden w-full sm:px-4 mb-8">
               {renderForm()}
             </div>
 
-            <div className="relative lg:flex lg:items-start lg:gap-16">
-              <article className="flex-1 py-12 lg:py-24 space-y-16 lg:space-y-32">
+            <div className="lg:grid lg:grid-cols-[1fr,460px] lg:gap-16">
+              <div className="py-12 lg:py-24 space-y-16 lg:space-y-32">
                 <motion.header
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -414,14 +414,13 @@ export default function Restaurantes() {
                     Comienza Tu Prueba Gratuita <ArrowRight className="ml-2" />
                   </Button>
                 </motion.div>
-              </article>
+              </div>
 
-              {/* Form para Desktop */}
-              <aside className="hidden lg:block lg:w-[400px] xl:w-[460px] shrink-0">
-                <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto">
+              <div className="hidden lg:block">
+                <div className="fixed w-[460px] top-24">
                   {renderForm()}
                 </div>
-              </aside>
+              </div>
             </div>
           </div>
         </div>
