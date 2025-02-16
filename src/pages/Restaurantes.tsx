@@ -226,7 +226,7 @@ export default function Restaurantes() {
               {renderForm()}
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-12">
+            <div className="grid lg:grid-cols-2 gap-12 relative">
               <article className="py-12 lg:py-24 space-y-16 lg:space-y-32 overflow-hidden">
                 <motion.header
                   initial={{ opacity: 0, y: 20 }}
@@ -417,7 +417,7 @@ export default function Restaurantes() {
               </article>
 
               <aside className="hidden lg:block">
-                <div className="sticky top-24 w-full">
+                <div className="fixed w-[calc((100vw-1152px)/2+460px)] max-w-[460px] top-24">
                   {renderForm()}
                 </div>
               </aside>
