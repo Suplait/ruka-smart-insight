@@ -52,7 +52,7 @@ const RestaurantDataFlowSection = () => {
                 <img src="/0webclip.jpg" alt="Ruka.ai Logo" className="w-full h-full object-contain rounded-full" />
               </div>
               <h3 className="text-2xl font-bold text-center text-white mb-2">Ruka.ai</h3>
-              <p className="text-white text-center">Análisis automático</p>
+              <p className="text-white text-center">Inteligencia y Control</p>
             </motion.div>
 
             {/* Tu Sistema */}
