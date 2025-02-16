@@ -5,8 +5,9 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, CreditCard, Clock, ChartBarIcon, Zap, TrendingUp, ShieldCheck, Clock4, ArrowUp } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, CreditCard, Clock, ChartBarIcon, Zap, TrendingUp, ShieldCheck, Clock4 } from "lucide-react";
+import DataFlowSection from "@/components/DataFlowSection";
 import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
 
 const valueMessages = [
@@ -31,17 +32,7 @@ export default function Restaurantes() {
   const [currentMessage, setCurrentMessage] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  const [showScrollToTop, setShowScrollToTop] = useState(false);
   
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollToTop(window.scrollY > 500);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     const current = valueMessages[currentMessage];
@@ -104,7 +95,7 @@ export default function Restaurantes() {
   };
 
   const scrollToForm = () => {
-    const form = document.getElementById('registro-form');
+    const form = document.querySelector('form');
     if (form) {
       form.scrollIntoView({
         behavior: 'smooth'
@@ -122,102 +113,24 @@ export default function Restaurantes() {
         <link rel="canonical" href="https://ruka.ai/restaurantes" />
       </Helmet>
       
-      <main className="min-h-screen pt-16 overflow-x-hidden">
+      <main className="min-h-screen pt-16">
         <Navbar />
         
-        <div className="relative w-full">
-          <div className="container px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            <div className="lg:hidden py-8 sm:py-12">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-xl shadow-xl border-2 border-primary/10 p-6 sm:p-8 mx-auto max-w-md w-full"
-              >
-                <div className="space-y-4">
-                  <div className="text-center space-y-2">
-                    <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                      Comienza Gratis Hoy
-                    </h1>
-                    <p className="text-sm sm:text-base text-gray-600">
-                      Únete a +100 restaurantes que ya optimizan sus costos
-                    </p>
-                  </div>
-                  
-                  <div className="flex items-center justify-center gap-2 text-sm text-primary font-medium bg-primary/5 p-3 rounded-lg">
-                    <Clock className="w-4 h-4" />
-                    <span>Faltan {timeLeft} para las 12:00pm para acceso hoy</span>
-                  </div>
-                </div>
-
-                <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-                  <Input
-                    name="nombreRestaurante"
-                    placeholder="Nombre de tu Restaurante"
-                    value={formData.nombreRestaurante}
-                    onChange={handleChange}
-                    required
-                    className="h-12 text-base"
-                  />
-                  <Input
-                    name="nombre"
-                    placeholder="Tu Nombre"
-                    value={formData.nombre}
-                    onChange={handleChange}
-                    required
-                    className="h-12 text-base"
-                  />
-                  <Input
-                    name="email"
-                    type="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="h-12 text-base"
-                  />
-                  <Input
-                    name="ciudad"
-                    placeholder="Ciudad"
-                    value={formData.ciudad}
-                    onChange={handleChange}
-                    required
-                    className="h-12 text-base"
-                  />
-                  <Button type="submit" className="w-full h-12 text-base font-semibold">
-                    Comenzar Ahora <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
-                  
-                  <div className="flex flex-wrap justify-center gap-4 pt-4">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <ShieldCheck className="w-4 h-4 text-primary" />
-                      <span>Datos seguros</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Clock4 className="w-4 h-4 text-primary" />
-                      <span>Soporte 24/7</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <CreditCard className="w-4 h-4 text-primary" />
-                      <span>Sin tarjeta</span>
-                    </div>
-                  </div>
-                </form>
-              </motion.div>
-            </div>
-
+        <div className="relative">
+          <div className="container">
             <div className="grid lg:grid-cols-2 gap-12">
-              <article className="py-8 lg:py-24 space-y-16 lg:space-y-32">
+              <article className="py-24 space-y-32">
                 <motion.header
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="space-y-6"
+                  className="space-y-8"
                 >
-                  <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+                  <h1 className="text-5xl sm:text-6xl font-bold leading-tight">
                     ¿Te quita tiempo
                     <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> digitar facturas?</span>
-                  </h2>
-                  <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed">
+                  </h1>
+                  <p className="text-2xl text-muted-foreground leading-relaxed">
                     Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel, POS o ERP.
                   </p>
                 </motion.header>
@@ -227,16 +140,16 @@ export default function Restaurantes() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                   viewport={{ once: true }}
-                  className="relative p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-red-50 to-orange-50 border border-red-100 space-y-6 sm:space-y-8"
+                  className="relative p-8 rounded-2xl bg-gradient-to-br from-red-50 to-orange-50 border border-red-100 space-y-8"
                 >
                   <div className="absolute -top-6 right-8 w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
                     <Clock className="w-6 h-6 text-red-600" />
                   </div>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-900">
+                  <h2 className="text-4xl font-bold text-red-900">
                     Y cuando por fin tienes los datos...
                   </h2>
-                  <div className="grid md:grid-cols-2 gap-6 sm:gap-8 items-center">
-                    <p className="text-xl sm:text-2xl text-red-800/80 leading-relaxed">
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <p className="text-2xl text-red-800/80 leading-relaxed">
                       Ya es demasiado tarde. Te enteras que el precio del aceite subió hace un mes y has estado perdiendo margen en todos tus platos principales.
                     </p>
                     <div className="bg-white p-6 rounded-xl shadow-lg">
@@ -257,16 +170,16 @@ export default function Restaurantes() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                   viewport={{ once: true }}
-                  className="relative p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 border border-primary/20 space-y-6 sm:space-y-8"
+                  className="relative p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 border border-primary/20 space-y-8"
                 >
                   <div className="absolute -top-6 right-8 w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
                     <img src="/0webclip.jpg" alt="Ruka Logo" className="w-8 h-8 rounded-full" />
                   </div>
-                  <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                  <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                     Ruka lo hace todo automático
                   </h2>
-                  <div className="grid md:grid-cols-2 gap-6 sm:gap-8 items-center">
-                    <div className="space-y-4 text-lg sm:text-xl text-primary/80 leading-relaxed">
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div className="space-y-6 text-xl text-primary/80 leading-relaxed">
                       <p className="flex items-center gap-2">
                         <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
                         Digitaliza tus facturas automáticamente
@@ -294,6 +207,36 @@ export default function Restaurantes() {
                   </div>
                 </motion.div>
 
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="relative p-8 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 space-y-8"
+                >
+                  <div className="absolute -top-6 right-8 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-green-600" />
+                  </div>
+                  <h2 className="text-4xl font-bold text-green-900">
+                    Sin contratar más personal administrativo
+                  </h2>
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <p className="text-2xl text-green-800/80 leading-relaxed">
+                      Olvídate de gastar en más personal para controlar costos. Ruka hace el trabajo por ti, 24/7, sin errores y en tiempo real.
+                    </p>
+                    <div className="bg-white p-6 rounded-xl shadow-lg">
+                      <div className="space-y-4">
+                        <div className="h-2 bg-green-200 rounded-full w-full" />
+                        <div className="h-2 bg-green-200 rounded-full w-4/5" />
+                        <div className="h-2 bg-green-200 rounded-full w-full" />
+                      </div>
+                      <div className="mt-6 text-center text-green-600 font-semibold">
+                        +25% Eficiencia en Cocina
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
                 <RestaurantDataFlowSection />
 
                 <motion.div
@@ -301,24 +244,71 @@ export default function Restaurantes() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                   viewport={{ once: true }}
-                  className="text-center space-y-8 bg-gradient-to-br from-primary/10 to-purple-100 p-6 sm:p-12 rounded-3xl"
+                  className="space-y-12 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-12 rounded-3xl"
                 >
-                  <h2 className="text-3xl sm:text-4xl font-bold">
+                  <h2 className="text-4xl font-bold text-center">
+                    El impacto en tu restaurante
+                  </h2>
+                  <div className="grid md:grid-cols-3 gap-8">
+                    {[
+                      {
+                        icon: Zap,
+                        stat: "90%",
+                        text: "Menos tiempo en papeleo",
+                        color: "text-yellow-500"
+                      },
+                      {
+                        icon: ChartBarIcon,
+                        stat: "100%",
+                        text: "Control de food cost",
+                        color: "text-blue-500"
+                      },
+                      {
+                        icon: TrendingUp,
+                        stat: "15%",
+                        text: "Ahorro en insumos",
+                        color: "text-green-500"
+                      }
+                    ].map((item, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.2 }}
+                        className="bg-white p-8 rounded-xl shadow-lg text-center space-y-4 hover:shadow-xl transition-shadow"
+                      >
+                        <item.icon className={`w-12 h-12 ${item.color} mx-auto`} />
+                        <div className={`text-4xl font-bold ${item.color}`}>{item.stat}</div>
+                        <p className="text-gray-600">{item.text}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="text-center space-y-8 bg-gradient-to-br from-primary/10 to-purple-100 p-12 rounded-3xl"
+                >
+                  <h2 className="text-4xl font-bold">
                     Optimiza tu food cost ahora
                   </h2>
-                  <p className="text-xl sm:text-2xl text-gray-700">
+                  <p className="text-2xl text-gray-700">
                     Únete a los +100 restaurantes que ya están ahorrando tiempo y dinero con Ruka
                   </p>
                   <Button
                     size="lg"
                     className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105"
-                    onClick={scrollToForm}
+                    onClick={() => setHighlightForm(true)}
                   >
                     Comienza Tu Prueba Gratuita <ArrowRight className="ml-2" />
                   </Button>
                 </motion.div>
               </article>
 
+              {/* Form Sticky */}
               <aside className="hidden lg:block">
                 <div className="sticky top-24">
                   <motion.div
@@ -400,25 +390,6 @@ export default function Restaurantes() {
         </div>
 
         <Footer />
-
-        <AnimatePresence>
-          {showScrollToTop && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="lg:hidden fixed bottom-6 right-6 z-50"
-            >
-              <Button
-                size="lg"
-                className="rounded-full shadow-lg hover:shadow-xl transition-all w-14 h-14 p-0 bg-primary hover:bg-primary/90"
-                onClick={scrollToForm}
-              >
-                <ArrowUp className="h-6 w-6" />
-              </Button>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </main>
     </>
   );
