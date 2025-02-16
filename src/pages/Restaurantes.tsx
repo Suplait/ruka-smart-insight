@@ -199,10 +199,10 @@ export default function Restaurantes() {
         <link rel="canonical" href="https://ruka.ai/restaurantes" />
       </Helmet>
       
-      <main className="min-h-screen">
+      <main className="min-h-screen relative">
         <Navbar />
         
-        <div className="w-full">
+        <div className="w-full pb-24">
           <div className="container px-4 sm:px-6">
             <div className="lg:hidden py-8 space-y-6 text-center">
               <motion.div
@@ -415,10 +415,14 @@ export default function Restaurantes() {
                     Comienza Tu Prueba Gratuita <ArrowRight className="ml-2" />
                   </Button>
                 </motion.div>
+
+                <div className="hidden lg:block">
+                  <FAQ />
+                </div>
               </div>
 
-              <div className="hidden lg:block relative">
-                <div className="fixed w-[460px] top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pb-24">
+              <div className="hidden lg:block">
+                <div className="sticky top-24" style={{ height: 'calc(100vh - 96px)' }}>
                   {renderForm()}
                 </div>
               </div>
@@ -426,7 +430,10 @@ export default function Restaurantes() {
           </div>
         </div>
 
-        <FAQ />
+        <div className="lg:hidden">
+          <FAQ />
+        </div>
+        
         <Footer />
 
         <AnimatePresence>
