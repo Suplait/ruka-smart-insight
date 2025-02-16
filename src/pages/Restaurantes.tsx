@@ -202,7 +202,7 @@ export default function Restaurantes() {
       <main className="min-h-screen relative">
         <Navbar />
         
-        <div className="w-full pb-24">
+        <div className="w-full pb-8">
           <div className="container px-4 sm:px-6">
             <div className="lg:hidden py-8 space-y-6 text-center">
               <motion.div
