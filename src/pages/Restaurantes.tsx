@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import Navbar from "@/components/Navbar";
@@ -5,9 +6,8 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import { motion } from "framer-motion";
-import { ArrowRight, CreditCard, Clock, ChartBarIcon, Zap, TrendingUp, ShieldCheck, Clock4 } from "lucide-react";
-import DataFlowSection from "@/components/DataFlowSection";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, CreditCard, Clock, ChartBarIcon, Zap, TrendingUp, ShieldCheck, Clock4, ArrowUp } from "lucide-react";
 import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
 
 const valueMessages = [
@@ -32,7 +32,17 @@ export default function Restaurantes() {
   const [currentMessage, setCurrentMessage] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
   
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollToTop(window.scrollY > 500);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     const current = valueMessages[currentMessage];
@@ -95,7 +105,7 @@ export default function Restaurantes() {
   };
 
   const scrollToForm = () => {
-    const form = document.querySelector('form');
+    const form = document.getElementById('registro-form');
     if (form) {
       form.scrollIntoView({
         behavior: 'smooth'
@@ -308,7 +318,7 @@ export default function Restaurantes() {
                 </motion.div>
               </article>
 
-              {/* Form Sticky */}
+              {/* Form Sticky - Desktop */}
               <aside className="hidden lg:block">
                 <div className="sticky top-24">
                   <motion.div
@@ -389,7 +399,126 @@ export default function Restaurantes() {
           </div>
         </div>
 
+        {/* Mobile CTA Section */}
+        <section className="lg:hidden bg-gradient-to-br from-primary/10 via-purple-100/20 to-primary/5 py-16">
+          <div className="container">
+            <div className="text-center space-y-6 max-w-2xl mx-auto">
+              <h2 className="text-3xl font-bold">
+                ¿Listo para optimizar tu restaurante?
+              </h2>
+              <p className="text-lg text-gray-700">
+                Únete a los +100 restaurantes que ya están ahorrando tiempo y dinero con Ruka
+              </p>
+              <Button 
+                size="lg"
+                onClick={scrollToForm}
+                className="w-full sm:w-auto px-8 py-6 text-lg h-auto"
+              >
+                Comenzar Prueba Gratuita
+                <ArrowRight className="ml-2" />
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Mobile Form Section */}
+        <section id="registro-form" className="lg:hidden py-16 bg-white">
+          <div className="container">
+            <div className="max-w-lg mx-auto">
+              <div className={`bg-white rounded-xl shadow-xl border p-8 space-y-8 transition-all duration-300 ${
+                highlightForm ? 'ring-4 ring-primary shadow-2xl scale-105' : ''
+              }`}>
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-semibold">Comienza tu Prueba Gratuita</h2>
+                  <div className="flex flex-col gap-2">
+                    <div className="text-sm font-medium text-primary">
+                      Si te registras antes de las 12:00pm tendrás acceso el mismo día
+                    </div>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <Clock className="w-4 h-4" />
+                      <span>Faltan {timeLeft} para las 12:00pm</span>
+                    </div>
+                  </div>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <Input
+                    name="nombreRestaurante"
+                    placeholder="Nombre de tu Restaurante"
+                    value={formData.nombreRestaurante}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Input
+                    name="nombre"
+                    placeholder="Tu Nombre"
+                    value={formData.nombre}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Input
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Input
+                    name="ciudad"
+                    placeholder="Ciudad"
+                    value={formData.ciudad}
+                    onChange={handleChange}
+                    required
+                  />
+                  <div className="space-y-4">
+                    <Button type="submit" className="w-full gap-2 h-12 text-lg">
+                      Comenzar Ahora <ArrowRight className="w-5 h-5" />
+                    </Button>
+                    
+                    <div className="flex items-center justify-center gap-6 flex-wrap">
+                      <div className="flex items-center gap-2 text-sm text-gray-500">
+                        <ShieldCheck className="w-4 h-4" />
+                        <span>Datos seguros</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-500">
+                        <Clock4 className="w-4 h-4" />
+                        <span>Soporte 24/7</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-500">
+                        <CreditCard className="w-4 h-4" />
+                        <span>Sin tarjeta</span>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <Footer />
+
+        {/* Floating Action Button - Mobile */}
+        <AnimatePresence>
+          {showScrollToTop && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              className="lg:hidden fixed bottom-6 right-6 z-50 flex flex-col gap-2"
+            >
+              <Button
+                size="lg"
+                variant="default"
+                className="rounded-full shadow-lg hover:shadow-xl transition-shadow w-14 h-14 p-0"
+                onClick={scrollToForm}
+              >
+                <ArrowUp className="h-6 w-6" />
+              </Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     </>
   );
