@@ -8,6 +8,7 @@ import { toast } from "@/components/ui/use-toast";
 import { motion } from "framer-motion";
 import { ArrowRight, CreditCard, Clock, ChartBarIcon, Zap, TrendingUp, ShieldCheck, Clock4 } from "lucide-react";
 import DataFlowSection from "@/components/DataFlowSection";
+import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
 
 const valueMessages = [
   "Deja que tus chefs se concentren en cocinar, no en Excel.",
@@ -236,7 +237,7 @@ export default function Restaurantes() {
                   </div>
                 </motion.div>
 
-                <DataFlowSection />
+                <RestaurantDataFlowSection />
 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
