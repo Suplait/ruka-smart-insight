@@ -8,6 +8,7 @@ import { toast } from "@/components/ui/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, CreditCard, Clock, ChartBarIcon, Zap, TrendingUp, ShieldCheck, Clock4 } from "lucide-react";
 import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
+import FAQ from "@/components/FAQ";
 
 const valueMessages = [
   "Deja que tus chefs se concentren en cocinar, no en Excel.",
@@ -425,6 +426,7 @@ export default function Restaurantes() {
           </div>
         </div>
 
+        <FAQ />
         <Footer />
 
         <AnimatePresence>
