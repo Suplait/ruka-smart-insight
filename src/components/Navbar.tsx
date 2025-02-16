@@ -1,14 +1,21 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed } from "lucide-react";
+import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X } from "lucide-react";
 import SubdomainModal from "./SubdomainModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+
 export default function Navbar() {
   const [showSubdomainModal, setShowSubdomainModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
+
   const scrollToSection = (id: string) => {
     if (location.pathname !== '/') {
       navigate('/', {
@@ -22,13 +29,60 @@ export default function Navbar() {
         behavior: "smooth"
       });
     }
+    setIsOpen(false);
   };
-  return <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b">
+
+  const MobileMenu = () => (
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild>
+        <Button variant="ghost" size="icon" className="md:hidden">
+          <Menu className="h-6 w-6" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+        <nav className="flex flex-col gap-4">
+          <button onClick={() => scrollToSection('features')} className="flex items-center space-x-2 text-left text-lg font-medium">
+            Features
+          </button>
+          <button onClick={() => scrollToSection('product')} className="flex items-center space-x-2 text-left text-lg font-medium">
+            Producto
+          </button>
+          <button onClick={() => scrollToSection('guarantee')} className="flex items-center space-x-2 text-left text-lg font-medium">
+            Garantía
+          </button>
+          <button onClick={() => scrollToSection('testimonials')} className="flex items-center space-x-2 text-left text-lg font-medium">
+            Testimonios
+          </button>
+          <Link to="/restaurantes" className="flex items-center space-x-2 text-left text-lg font-medium" onClick={() => setIsOpen(false)}>
+            <UtensilsCrossed className="h-5 w-5" />
+            <span>Restaurantes</span>
+          </Link>
+          <div className="flex flex-col gap-2 mt-4">
+            <Button variant="outline" className="w-full justify-start gap-2" onClick={() => {
+              setShowSubdomainModal(true);
+              setIsOpen(false);
+            }}>
+              Iniciar Sesión <LogIn className="w-4 h-4" />
+            </Button>
+            <Button className="w-full justify-start gap-2" onClick={() => {
+              window.open('https://calendly.com/suplait_lorenzo/30min', '_blank');
+              setIsOpen(false);
+            }}>
+              Solicitar Demo <ArrowRight className="w-4 h-4" />
+            </Button>
+          </div>
+        </nav>
+      </SheetContent>
+    </Sheet>
+  );
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link to="/">
-              <img src="/logo.png" alt="Ruka.ai" className="h-5 sm:h-7 hover:opacity-80 transition-opacity" />
+              <img src="/logo.png" alt="Ruka.ai" className="h-8 hover:opacity-80 transition-opacity" />
             </Link>
           </div>
           
@@ -74,7 +128,6 @@ export default function Navbar() {
                           </NavigationMenuLink>
                         </li>
                         
-                        {/* Placeholder para futuras industrias que mantiene el diseño consistente */}
                         <li className="px-2 py-1">
                           <div className="text-xs text-muted-foreground italic">
                             Más industrias próximamente...
@@ -88,17 +141,21 @@ export default function Navbar() {
             </NavigationMenu>
           </div>
 
-          <div className="flex items-center gap-4">
-            <Button variant="outline" size="sm" className="gap-2" onClick={() => setShowSubdomainModal(true)}>
-              Iniciar Sesión <LogIn className="w-4 h-4" />
-            </Button>
-            <Button size="sm" className="gap-2" onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}>
-              Solicitar Demo <ArrowRight className="w-4 h-4" />
-            </Button>
+          <div className="flex items-center gap-2 md:gap-4">
+            <div className="hidden md:flex items-center gap-4">
+              <Button variant="outline" size="sm" className="gap-2" onClick={() => setShowSubdomainModal(true)}>
+                Iniciar Sesión <LogIn className="w-4 h-4" />
+              </Button>
+              <Button size="sm" className="gap-2" onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}>
+                Solicitar Demo <ArrowRight className="w-4 h-4" />
+              </Button>
+            </div>
+            <MobileMenu />
           </div>
         </div>
       </div>
 
       <SubdomainModal isOpen={showSubdomainModal} onClose={() => setShowSubdomainModal(false)} />
-    </nav>;
+    </nav>
+  );
 }
