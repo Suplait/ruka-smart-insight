@@ -30,7 +30,8 @@ const RestaurantDataFlowSection = () => {
                   <img src="/logosii.png" alt="SII Logo" className="w-full h-full object-contain" />
                 </div>
                 <h3 className="text-xl font-semibold text-center mb-2">SII</h3>
-                <p className="text-gray-600 text-center">Facturas automáticas</p>
+                <p className="text-gray-600 text-center">Actualizado en tiempo real
+              </p>
               </motion.div>
               <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 text-primary/60">
                 <ArrowRight className="w-8 h-8" />
