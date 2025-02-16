@@ -417,8 +417,8 @@ export default function Restaurantes() {
                 </motion.div>
               </div>
 
-              <div className="hidden lg:block">
-                <div className="fixed w-[460px] top-24">
+              <div className="hidden lg:block relative">
+                <div className="fixed w-[460px] top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pb-24">
                   {renderForm()}
                 </div>
               </div>
