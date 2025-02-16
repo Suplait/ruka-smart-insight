@@ -398,7 +398,7 @@ export default function Restaurantes() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                   viewport={{ once: true }}
-                  className="text-center space-y-8 bg-gradient-to-br from-primary/10 to-purple-100 p-12 rounded-3xl"
+                  className="text-center space-y-8 bg-gradient-to-br from-primary/10 to-purple-100 p-6 sm:p-12 rounded-3xl mx-auto"
                 >
                   <h2 className="text-4xl font-bold">
                     Optimiza tu food cost ahora
@@ -408,7 +408,7 @@ export default function Restaurantes() {
                   </p>
                   <Button
                     size="lg"
-                    className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105"
+                    className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105 max-w-full"
                     onClick={() => setHighlightForm(true)}
                   >
                     Comienza Tu Prueba Gratuita <ArrowRight className="ml-2" />
