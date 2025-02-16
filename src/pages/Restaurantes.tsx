@@ -226,8 +226,8 @@ export default function Restaurantes() {
               {renderForm()}
             </div>
 
-            <div className="lg:flex lg:items-start lg:gap-16 relative">
-              <article className="flex-1 py-12 lg:py-24 space-y-16 lg:space-y-32 overflow-hidden">
+            <div className="relative lg:flex lg:items-start lg:gap-16">
+              <article className="flex-1 py-12 lg:py-24 space-y-16 lg:space-y-32">
                 <motion.header
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -418,7 +418,7 @@ export default function Restaurantes() {
 
               {/* Form para Desktop */}
               <aside className="hidden lg:block lg:w-[400px] xl:w-[460px] shrink-0">
-                <div className="sticky top-24">
+                <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto">
                   {renderForm()}
                 </div>
               </aside>
