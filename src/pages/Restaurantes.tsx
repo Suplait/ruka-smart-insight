@@ -416,8 +416,8 @@ export default function Restaurantes() {
                 </motion.div>
               </article>
 
-              <aside className="hidden lg:block">
-                <div className="sticky top-24">
+              <aside className="hidden lg:block h-[calc(100vh-6rem)]">
+                <div className="sticky top-24 w-full">
                   {renderForm()}
                 </div>
               </aside>
