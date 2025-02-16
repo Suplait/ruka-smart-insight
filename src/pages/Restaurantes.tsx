@@ -115,7 +115,7 @@ export default function Restaurantes() {
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className={`bg-white rounded-xl shadow-xl border p-8 space-y-8 transition-all duration-300 ${
+      className={`bg-white rounded-xl shadow-xl border p-6 sm:p-8 space-y-6 sm:space-y-8 transition-all duration-300 w-full ${
         highlightForm ? 'ring-4 ring-primary shadow-2xl scale-105' : ''
       }`}
     >
@@ -132,13 +132,14 @@ export default function Restaurantes() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         <Input
           name="nombreRestaurante"
           placeholder="Nombre de tu Restaurante"
           value={formData.nombreRestaurante}
           onChange={handleChange}
           required
+          className="h-12"
         />
         <Input
           name="nombre"
@@ -146,6 +147,7 @@ export default function Restaurantes() {
           value={formData.nombre}
           onChange={handleChange}
           required
+          className="h-12"
         />
         <Input
           name="email"
@@ -154,6 +156,7 @@ export default function Restaurantes() {
           value={formData.email}
           onChange={handleChange}
           required
+          className="h-12"
         />
         <Input
           name="ciudad"
@@ -161,13 +164,14 @@ export default function Restaurantes() {
           value={formData.ciudad}
           onChange={handleChange}
           required
+          className="h-12"
         />
         <div className="space-y-4">
           <Button type="submit" className="w-full gap-2 h-12 text-lg">
             Comenzar Ahora <ArrowRight className="w-5 h-5" />
           </Button>
           
-          <div className="flex items-center justify-center gap-6">
+          <div className="flex items-center justify-center gap-4 flex-wrap">
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <ShieldCheck className="w-4 h-4" />
               <span>Datos seguros</span>
@@ -194,17 +198,36 @@ export default function Restaurantes() {
         <link rel="canonical" href="https://ruka.ai/restaurantes" />
       </Helmet>
       
-      <main className="min-h-screen pt-16 overflow-x-hidden">
+      <main className="min-h-screen pt-16">
         <Navbar />
         
-        <div className="relative">
-          <div className="container">
-            <div className="lg:hidden w-full max-w-xl mx-auto px-4 py-8">
+        <div className="relative overflow-hidden">
+          <div className="container px-4 sm:px-6">
+            <div className="lg:hidden py-8 space-y-6 text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-4"
+              >
+                <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                  Automatiza tus Costos
+                </h1>
+                <p className="text-lg text-muted-foreground max-w-md mx-auto">
+                  Únete a +100 restaurantes que ya optimizan su food cost con inteligencia artificial
+                </p>
+                <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
+                  <Clock className="w-4 h-4" />
+                  <span>Comienza hoy mismo</span>
+                </div>
+              </motion.div>
+            </div>
+
+            <div className="lg:hidden w-full sm:px-4">
               {renderForm()}
             </div>
 
             <div className="grid lg:grid-cols-2 gap-12">
-              <article className="py-24 space-y-32">
+              <article className="py-12 lg:py-24 space-y-16 lg:space-y-32 overflow-hidden">
                 <motion.header
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -415,9 +438,9 @@ export default function Restaurantes() {
               <Button
                 onClick={scrollToForm}
                 size="lg"
-                className="px-6 py-6 h-auto rounded-full shadow-lg bg-primary hover:bg-primary/90 text-white font-semibold transition-all duration-300"
+                className="shadow-lg bg-primary hover:bg-primary/90 text-white font-semibold transition-all duration-300 px-6 py-6 h-auto rounded-full"
               >
-                Comenzar Gratis
+                Comenzar Ahora
               </Button>
             </motion.div>
           )}
