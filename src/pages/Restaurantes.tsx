@@ -237,11 +237,12 @@ export default function Restaurantes() {
                 >
                   <h1 className="text-5xl sm:text-6xl font-bold leading-tight">
                     ¿Te quita tiempo
-                    <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> digitar facturas?</span>
+                    <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> digitar las facturas </span>
+                    de tu Restaurante?
                   </h1>
                   <p className="text-2xl text-muted-foreground leading-relaxed">
                     Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel, POS o ERP.
-                  </p>
+                  </p> 
                 </motion.header>
 
                 <motion.div
@@ -327,7 +328,7 @@ export default function Restaurantes() {
                     <TrendingUp className="w-6 h-6 text-green-600" />
                   </div>
                   <h2 className="text-4xl font-bold text-green-900">
-                    Sin contratar más personal administrativo
+                    Optimiza la gestión de compras sin sobrecargar a tu equipo
                   </h2>
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <p className="text-2xl text-green-800/80 leading-relaxed">

@@ -33,14 +33,14 @@ export default function Index() {
     <main className="min-h-screen">
       <Navbar />
       <Hero />
-      <Partners />
+      <Stats />
       <DataFlowSection />
+      <Partners />
       <Features />
       <BeforeAfter />
       <ProductShowcase />
       <MoneyBackGuarantee />
       <ValueShowcase />
-      <Stats />
       <Testimonials />
       <FAQ />
       <CTA />

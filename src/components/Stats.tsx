@@ -4,19 +4,19 @@ import { Users, FileText, TrendingUp, Clock } from "lucide-react";
 const stats = [
   {
     label: "Clientes Activos",
-    value: "100+",
+    value: "120+",
     icon: Users,
     description: "empresas confían en nosotros",
   },
   {
     label: "Facturas Procesadas",
-    value: "700K+",
+    value: "800K+",
     icon: FileText,
     description: "documentos automatizados",
   },
   {
     label: "Datos Procesados",
-    value: "US$220M+",
+    value: "US$250M+",
     icon: TrendingUp,
     description: "en transacciones analizadas",
   },
