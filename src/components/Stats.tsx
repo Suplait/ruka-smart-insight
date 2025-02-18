@@ -3,7 +3,7 @@ import { Users, FileText, TrendingUp, Clock } from "lucide-react";
 
 const stats = [
   {
-    label: "Clientes Activos",
+    label: "Clientes",
     value: "120+",
     icon: Users,
     description: "empresas confían en nosotros",
