@@ -195,8 +195,56 @@ export default function Restaurantes() {
     <>
       <Helmet>
         <title>Ruka.ai | Control de Food Cost y Gastos para Restaurantes</title>
+        <meta name="title" content="Ruka.ai | Control de Food Cost y Gastos para Restaurantes" />
         <meta name="description" content="Software de gestión de costos para restaurantes. Automatiza el procesamiento de facturas, monitorea precios de insumos y optimiza tu food cost en tiempo real. ¡Prueba gratis!" />
+        <meta name="keywords" content="software restaurantes, control de costos restaurante, food cost, gestión de restaurantes, sistema para restaurantes, facturas restaurante, automatización restaurantes, software cocina, control de insumos restaurante, costos restaurante" />
+        
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://ruka.ai/restaurantes" />
+        <meta property="og:title" content="Ruka.ai | Control de Food Cost y Gastos para Restaurantes" />
+        <meta property="og:description" content="Software de gestión de costos para restaurantes. Automatiza el procesamiento de facturas, monitorea precios de insumos y optimiza tu food cost en tiempo real. ¡Prueba gratis!" />
+        <meta property="og:image" content="/robotshero2.png" />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://ruka.ai/restaurantes" />
+        <meta property="twitter:title" content="Ruka.ai | Control de Food Cost y Gastos para Restaurantes" />
+        <meta property="twitter:description" content="Software de gestión de costos para restaurantes. Automatiza el procesamiento de facturas, monitorea precios de insumos y optimiza tu food cost en tiempo real. ¡Prueba gratis!" />
+        <meta property="twitter:image" content="/robotshero2.png" />
+
         <link rel="canonical" href="https://ruka.ai/restaurantes" />
+
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "Ruka.ai para Restaurantes",
+              "applicationCategory": "BusinessApplication",
+              "operatingSystem": "Web",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock"
+              },
+              "description": "Software de gestión de costos para restaurantes. Automatiza el procesamiento de facturas, monitorea precios de insumos y optimiza tu food cost en tiempo real.",
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "ratingCount": "100"
+              },
+              "category": "Restaurant Management Software",
+              "applicationSubCategory": "Food Cost Management",
+              "featureList": [
+                "Procesamiento automático de facturas",
+                "Control de food cost en tiempo real",
+                "Monitoreo de precios de insumos",
+                "Generación de reportes automáticos",
+                "Gestión de proveedores"
+              ]
+            }
+          `}
+        </script>
       </Helmet>
       
       <main className="min-h-screen relative">
