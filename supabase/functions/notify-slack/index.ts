@@ -31,13 +31,14 @@ Deno.serve(async (req) => {
     // Crear el mensaje para Slack
     const message = {
       channel: SLACK_CHANNEL,
-      text: "💸 *¡Nuevo Lead!*",
+      text: "<!channel> 💸 *¡Nuevo Lead!*",
+      icon_emoji: ":money_with_wings:",
       blocks: [
         {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: "💸 *¡Nuevo Lead!*"
+            text: "<!channel> 💸 *¡Nuevo Lead!*"
           }
         },
         {
