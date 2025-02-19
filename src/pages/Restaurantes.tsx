@@ -106,6 +106,21 @@ export default function Restaurantes() {
 
       if (error) throw error;
 
+      const notifyResponse = await supabase.functions.invoke('notify-slack', {
+        body: {
+          lead: {
+            company_name: formData.nombreRestaurante,
+            name: formData.nombre,
+            email: formData.email,
+            ccity: formData.ciudad
+          }
+        }
+      });
+
+      if (notifyResponse.error) {
+        console.error('Error al notificar a Slack:', notifyResponse.error);
+      }
+
       toast({
         title: "¡Gracias por tu interés!",
         description: "Te contactaremos pronto para comenzar tu proceso de onboarding."
