@@ -187,14 +187,6 @@ export default function Restaurantes() {
 
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         <Input
-          name="nombreRestaurante"
-          placeholder="Nombre de tu Restaurante"
-          value={formData.nombreRestaurante}
-          onChange={handleChange}
-          required
-          className="h-12"
-        />
-        <Input
           name="nombre"
           placeholder="Tu Nombre"
           value={formData.nombre}
@@ -211,14 +203,6 @@ export default function Restaurantes() {
           required
           className="h-12"
         />
-        <Input
-          name="ciudad"
-          placeholder="Ciudad"
-          value={formData.ciudad}
-          onChange={handleChange}
-          required
-          className="h-12"
-        />
         <div className="relative">
           <TooltipProvider>
             <Tooltip>
@@ -229,8 +213,11 @@ export default function Restaurantes() {
                     placeholder="WhatsApp (opcional)"
                     value={formData.whatsapp}
                     onChange={handleChange}
-                    className="h-12 pr-10"
+                    className="h-12 pl-16 pr-10"
                   />
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 font-medium">
+                    🇨🇱 +56
+                  </div>
                   <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 </div>
               </TooltipTrigger>
@@ -240,6 +227,22 @@ export default function Restaurantes() {
             </Tooltip>
           </TooltipProvider>
         </div>
+        <Input
+          name="ciudad"
+          placeholder="Ciudad"
+          value={formData.ciudad}
+          onChange={handleChange}
+          required
+          className="h-12"
+        />
+        <Input
+          name="nombreRestaurante"
+          placeholder="Nombre de tu Restaurante"
+          value={formData.nombreRestaurante}
+          onChange={handleChange}
+          required
+          className="h-12"
+        />
         
         <div className="space-y-4">
           <Button type="submit" className="w-full gap-2 h-12 text-lg">

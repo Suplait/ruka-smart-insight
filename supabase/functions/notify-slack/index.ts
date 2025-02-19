@@ -31,14 +31,24 @@ Deno.serve(async (req) => {
     
     const message = {
       channel: SLACK_CHANNEL,
-      text: "<!channel> 💸 *¡Nuevo Lead!*",
-      icon_emoji: ":money_with_wings:",
+      text: "🎉 ¡Nuevo Lead de Restaurante!",
       blocks: [
+        {
+          type: "header",
+          text: {
+            type: "plain_text",
+            text: "🎉 ¡Tenemos un Nuevo Restaurante Interesado!",
+            emoji: true
+          }
+        },
+        {
+          type: "divider"
+        },
         {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: "<!channel> 💸 *¡Nuevo Lead!*"
+            text: `*¡Hola equipo!* Tenemos un nuevo lead que quiere optimizar sus costos:\n\n🏪 *${lead.company_name}*`
           }
         },
         {
@@ -46,23 +56,33 @@ Deno.serve(async (req) => {
           fields: [
             {
               type: "mrkdwn",
-              text: `*Restaurante:*\n${lead.company_name}`
+              text: `👤 *Contacto:*\n${lead.name}`
             },
             {
               type: "mrkdwn",
-              text: `*Nombre:*\n${lead.name}`
+              text: `📍 *Ciudad:*\n${lead.ccity}`
+            }
+          ]
+        },
+        {
+          type: "section",
+          fields: [
+            {
+              type: "mrkdwn",
+              text: `📧 *Email:*\n${lead.email}`
             },
             {
               type: "mrkdwn",
-              text: `*Email:*\n${lead.email}`
-            },
+              text: `📱 *WhatsApp:*\n${lead.whatsapp ? `🇨🇱 ${lead.whatsapp}` : "No proporcionado"}`
+            }
+          ]
+        },
+        {
+          type: "context",
+          elements: [
             {
               type: "mrkdwn",
-              text: `*Ciudad:*\n${lead.ccity}`
-            },
-            {
-              type: "mrkdwn",
-              text: `*WhatsApp:*\n${lead.whatsapp || 'No proporcionado'}`
+              text: "💡 _Recuerda: mientras más rápido contactemos, más probabilidades de conversión_"
             }
           ]
         }
