@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, CreditCard, Clock, ChartBarIcon, Zap, TrendingUp, ShieldCheck, Clock4 } from "lucide-react";
 import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
 import FAQ from "@/components/FAQ";
+import { supabase } from "@/integrations/supabase/client";
 
 const valueMessages = [
   "Deja que tus chefs se concentren en cocinar, no en Excel.",
@@ -88,12 +89,43 @@ export default function Restaurantes() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "¡Gracias por tu interés!",
-      description: "Te contactaremos pronto para comenzar tu proceso de onboarding."
-    });
+    
+    try {
+      const { error } = await supabase
+        .from('leads')
+        .insert([
+          { 
+            company_name: formData.nombreRestaurante,
+            name: formData.nombre,
+            email: formData.email,
+            ccity: formData.ciudad
+          }
+        ]);
+
+      if (error) throw error;
+
+      toast({
+        title: "¡Gracias por tu interés!",
+        description: "Te contactaremos pronto para comenzar tu proceso de onboarding."
+      });
+
+      setFormData({
+        nombre: "",
+        email: "",
+        nombreRestaurante: "",
+        ciudad: ""
+      });
+
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: "Error",
+        description: "Hubo un problema al enviar tu información. Por favor intenta nuevamente.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
