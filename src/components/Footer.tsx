@@ -1,5 +1,5 @@
 
-import { Instagram, Linkedin, Twitter, Globe, Map, Building2, ChevronRight } from "lucide-react";
+import { Instagram, Linkedin, Twitter, Globe, Map, Building2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
@@ -25,11 +25,16 @@ export default function Footer() {
               <h4 className="font-semibold mb-2 flex items-center gap-2">
                 <Globe className="w-4 h-4" /> Países donde operamos
               </h4>
-              <div className="flex gap-2 items-center">
-                <span className="text-2xl" role="img" aria-label="Chile">
-                  🇨🇱
-                </span>
-                <span className="text-sm text-muted-foreground">Chile</span>
+              <div className="space-y-2">
+                <div className="flex gap-2 items-center">
+                  <span className="text-2xl" role="img" aria-label="Chile">
+                    🇨🇱
+                  </span>
+                  <span className="text-sm text-muted-foreground">Chile</span>
+                </div>
+                <p className="text-sm text-muted-foreground italic">
+                  Próximamente en más países...
+                </p>
               </div>
             </div>
           </div>
@@ -39,19 +44,28 @@ export default function Footer() {
             <h4 className="font-semibold mb-4 text-primary">Producto</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#value-showcase" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1">
-                  <ChevronRight className="w-4 h-4" /> Valor
-                </a>
+                <Link 
+                  to="/#value-showcase" 
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Valor
+                </Link>
               </li>
               <li>
-                <a href="#features" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1">
-                  <ChevronRight className="w-4 h-4" /> Features
-                </a>
+                <Link 
+                  to="/#features" 
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Features
+                </Link>
               </li>
               <li>
-                <a href="#product-showcase" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1">
-                  <ChevronRight className="w-4 h-4" /> Demo
-                </a>
+                <Link 
+                  to="/#product-showcase" 
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Demo
+                </Link>
               </li>
             </ul>
           </div>
@@ -63,9 +77,9 @@ export default function Footer() {
               <li>
                 <Link 
                   to="/restaurantes" 
-                  className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
+                  className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  <ChevronRight className="w-4 h-4" /> Restaurantes
+                  Restaurantes
                 </Link>
               </li>
               <li className="text-sm text-muted-foreground italic">
@@ -105,9 +119,9 @@ export default function Footer() {
                   href="https://calendly.com/suplait_lorenzo/30min" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+                  className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
                 >
-                  <ChevronRight className="w-4 h-4" /> Agendar una demo
+                  Agendar una demo
                 </a>
               </li>
             </ul>
@@ -116,37 +130,37 @@ export default function Footer() {
         
         {/* Redes Sociales y Copyright */}
         <div className="mt-12 pt-8 border-t">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-sm text-muted-foreground order-2 md:order-1">
               &copy; {new Date().getFullYear()} Ruka.ai. Todos los derechos reservados.
             </p>
-            <div className="flex space-x-6 order-1 md:order-2">
+            <div className="flex gap-6 order-1 md:order-2">
               <a 
                 href="https://www.linkedin.com/company/rukaai/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
+                className="p-2 rounded-full hover:bg-secondary transition-colors"
                 aria-label="LinkedIn"
               >
-                <Linkedin className="w-5 h-5" />
+                <Linkedin className="w-5 h-5 text-primary" />
               </a>
               <a 
                 href="https://x.com/ruka__ai" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
+                className="p-2 rounded-full hover:bg-secondary transition-colors"
                 aria-label="Twitter"
               >
-                <Twitter className="w-5 h-5" />
+                <Twitter className="w-5 h-5 text-primary" />
               </a>
               <a 
                 href="https://www.instagram.com/ruka__ai/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
+                className="p-2 rounded-full hover:bg-secondary transition-colors"
                 aria-label="Instagram"
               >
-                <Instagram className="w-5 h-5" />
+                <Instagram className="w-5 h-5 text-primary" />
               </a>
             </div>
           </div>
