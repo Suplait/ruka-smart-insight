@@ -48,7 +48,7 @@ Deno.serve(async (req) => {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: `<!channel>\n\n💸\n\n*¡Nuevo Lead!*\n\n*¡Hola equipo!* Tenemos un nuevo lead que quiere optimizar sus costos:\n\n🏪 *${lead.company_name}*`
+            text: `<!channel>\n\n*¡Nuevo Lead!*\n\n*¡Hola equipo!* Tenemos un nuevo lead que quiere optimizar sus costos:\n\n🏪 *${lead.company_name}*`
           }
         },
         {
