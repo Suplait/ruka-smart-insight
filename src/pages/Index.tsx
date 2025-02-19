@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
@@ -24,7 +25,7 @@ export default function Index() {
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
       }
-    } else {
+    } else if (!location.state?.scrollTo) {
       window.scrollTo(0, 0);
     }
   }, [location]);

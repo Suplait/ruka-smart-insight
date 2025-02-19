@@ -37,6 +37,11 @@ export default function Restaurantes() {
     ciudad: "",
     whatsapp: ""
   });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [highlightForm, setHighlightForm] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
   const [currentMessage, setCurrentMessage] = useState(0);
@@ -224,7 +229,7 @@ export default function Restaurantes() {
                     onChange={handleChange}
                     className="h-12 pl-16 pr-10"
                   />
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 font-medium">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-sm">
                     🇨🇱 +56
                   </div>
                   <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
