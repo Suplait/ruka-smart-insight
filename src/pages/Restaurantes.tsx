@@ -35,7 +35,7 @@ export default function Restaurantes() {
     email: "",
     nombreRestaurante: "",
     ciudad: "",
-    whatsapp: "+56"
+    whatsapp: ""
   });
   const [highlightForm, setHighlightForm] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
@@ -102,6 +102,10 @@ export default function Restaurantes() {
     e.preventDefault();
     
     try {
+      const whatsappNumber = formData.whatsapp 
+        ? `+56${formData.whatsapp.replace(/^\+56/, '')}`
+        : '';
+
       const { error } = await supabase
         .from('leads')
         .insert([
@@ -110,7 +114,7 @@ export default function Restaurantes() {
             name: formData.nombre,
             email: formData.email,
             ccity: formData.ciudad,
-            whatsapp: formData.whatsapp
+            whatsapp: whatsappNumber
           }
         ]);
 
@@ -123,7 +127,7 @@ export default function Restaurantes() {
             name: formData.nombre,
             email: formData.email,
             ccity: formData.ciudad,
-            whatsapp: formData.whatsapp
+            whatsapp: whatsappNumber
           }
         }
       }).catch(error => {
@@ -145,7 +149,12 @@ export default function Restaurantes() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     
-    if (name === 'whatsapp' && value.length < 4) {
+    if (name === 'whatsapp') {
+      const cleanedValue = value.replace(/^\+56/, '').replace(/[^0-9]/g, '');
+      setFormData(prev => ({
+        ...prev,
+        [name]: cleanedValue
+      }));
       return;
     }
 

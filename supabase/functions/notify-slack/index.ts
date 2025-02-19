@@ -1,4 +1,3 @@
-
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
@@ -73,7 +72,7 @@ Deno.serve(async (req) => {
             },
             {
               type: "mrkdwn",
-              text: `📱 *WhatsApp:*\n${lead.whatsapp ? `🇨🇱 ${lead.whatsapp}` : "No proporcionado"}`
+              text: `📱 *WhatsApp:*\n${lead.whatsapp ? lead.whatsapp : "No proporcionado"}`
             }
           ]
         },
