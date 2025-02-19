@@ -13,6 +13,7 @@ interface Lead {
   name: string
   email: string
   ccity: string
+  whatsapp?: string
 }
 
 Deno.serve(async (req) => {
@@ -28,7 +29,6 @@ Deno.serve(async (req) => {
 
     const { lead } = await req.json() as { lead: Lead }
     
-    // Crear el mensaje para Slack
     const message = {
       channel: SLACK_CHANNEL,
       text: "<!channel> 💸 *¡Nuevo Lead!*",
@@ -59,13 +59,16 @@ Deno.serve(async (req) => {
             {
               type: "mrkdwn",
               text: `*Ciudad:*\n${lead.ccity}`
+            },
+            {
+              type: "mrkdwn",
+              text: `*WhatsApp:*\n${lead.whatsapp || 'No proporcionado'}`
             }
           ]
         }
       ]
     }
 
-    // Enviar mensaje a Slack
     const response = await fetch('https://slack.com/api/chat.postMessage', {
       method: 'POST',
       headers: {

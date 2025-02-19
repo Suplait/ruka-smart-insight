@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -6,10 +7,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, CreditCard, Clock, ChartBarIcon, Zap, TrendingUp, ShieldCheck, Clock4 } from "lucide-react";
+import { ArrowRight, CreditCard, Clock, ChartBarIcon, Zap, TrendingUp, ShieldCheck, Clock4, Info } from "lucide-react";
 import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
 import FAQ from "@/components/FAQ";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const valueMessages = [
   "Deja que tus chefs se concentren en cocinar, no en Excel.",
@@ -22,11 +29,13 @@ const valueMessages = [
 ];
 
 export default function Restaurantes() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
     nombreRestaurante: "",
-    ciudad: ""
+    ciudad: "",
+    whatsapp: "+56"
   });
   const [highlightForm, setHighlightForm] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
@@ -100,23 +109,12 @@ export default function Restaurantes() {
             company_name: formData.nombreRestaurante,
             name: formData.nombre,
             email: formData.email,
-            ccity: formData.ciudad
+            ccity: formData.ciudad,
+            whatsapp: formData.whatsapp
           }
         ]);
 
       if (error) throw error;
-
-      toast({
-        title: "¡Gracias por tu interés!",
-        description: "Te contactaremos pronto para comenzar tu proceso de onboarding."
-      });
-
-      setFormData({
-        nombre: "",
-        email: "",
-        nombreRestaurante: "",
-        ciudad: ""
-      });
 
       supabase.functions.invoke('notify-slack', {
         body: {
@@ -124,12 +122,15 @@ export default function Restaurantes() {
             company_name: formData.nombreRestaurante,
             name: formData.nombre,
             email: formData.email,
-            ccity: formData.ciudad
+            ccity: formData.ciudad,
+            whatsapp: formData.whatsapp
           }
         }
       }).catch(error => {
         console.error('Error al notificar a Slack:', error);
       });
+
+      navigate('/onboarding-success');
 
     } catch (error) {
       console.error('Error:', error);
@@ -142,9 +143,15 @@ export default function Restaurantes() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    
+    if (name === 'whatsapp' && value.length < 4) {
+      return;
+    }
+
     setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [name]: value
     }));
   };
 
@@ -212,6 +219,28 @@ export default function Restaurantes() {
           required
           className="h-12"
         />
+        <div className="relative">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="relative">
+                  <Input
+                    name="whatsapp"
+                    placeholder="WhatsApp (opcional)"
+                    value={formData.whatsapp}
+                    onChange={handleChange}
+                    className="h-12 pr-10"
+                  />
+                  <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Déjanos tu WhatsApp para contactarte más rápido</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        
         <div className="space-y-4">
           <Button type="submit" className="w-full gap-2 h-12 text-lg">
             Comenzar Ahora <ArrowRight className="w-5 h-5" />
