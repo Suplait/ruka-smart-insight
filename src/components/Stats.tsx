@@ -4,7 +4,7 @@ import { Users, FileText, TrendingUp, Clock } from "lucide-react";
 const stats = [
   {
     value: "120+",
-    metric: "Clientes Activos",
+    metric: "Clientes Felices",
     icon: Users,
     description: "empresas confían en nosotros",
   },
