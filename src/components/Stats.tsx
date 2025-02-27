@@ -18,7 +18,7 @@ const stats = [
     value: "US$250M+",
     metric: "Transacciones",
     icon: TrendingUp,
-    description: "en datos analizados mensualmente",
+    description: "en datos digitalizados",
   },
   {
     value: "15 hrs",
