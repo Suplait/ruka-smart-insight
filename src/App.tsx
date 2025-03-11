@@ -6,6 +6,7 @@ import Restaurantes from "@/pages/Restaurantes";
 import AboutUs from "@/pages/AboutUs";
 import NotFound from "@/pages/NotFound";
 import OnboardingSuccess from "@/pages/OnboardingSuccess";
+import TermsAndConditions from "@/pages/TermsAndConditions";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/restaurantes" element={<Restaurantes />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/onboarding-success" element={<OnboardingSuccess />} />
+        <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
