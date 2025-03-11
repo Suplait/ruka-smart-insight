@@ -8,9 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import Stats from "@/components/Stats";
-import Partners from "@/components/Partners";
+import OnboardingTestimonials from "@/components/OnboardingTestimonials";
+import FeatureRotator from "@/components/FeatureRotator";
+import ImpactMetrics from "@/components/ImpactMetrics";
 
 type StepProps = {
   currentStep: number;
@@ -126,14 +126,14 @@ const SubdomainInput = ({
 
       <div>
         <div className="relative">
-          <Input value={value} onChange={e => onChange(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))} placeholder="tu-restaurante" className="pr-[120px]" />
+          <Input value={value} onChange={e => onChange(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))} placeholder="tu-empresa" className="pr-[120px]" />
           <div className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
             .ruka.ai
           </div>
         </div>
         
         <div className="mt-2 text-sm text-muted-foreground">
-          Te sugerimos este subdominio basado en el nombre de tu restaurante.
+          Te sugerimos este subdominio basado en el nombre de tu empresa.
         </div>
         
         <div className="mt-2 text-sm">
@@ -301,7 +301,7 @@ export default function OnboardingSuccess() {
               <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
               <div>
                 <h4 className="font-medium text-blue-700 mb-1">Conexión con el SII</h4>
-                <p className="text-sm text-blue-600">Ingresa las credenciales de tu empresa (persona jurídica) importar tus datos.</p>
+                <p className="text-sm text-blue-600">Ingresa las credenciales de tu empresa (persona jurídica) para importar tus datos de compra y venta.</p>
               </div>
             </div>
           </div>
@@ -330,7 +330,7 @@ export default function OnboardingSuccess() {
                   <Loader className="h-4 w-4 animate-spin" />
                   Conectando con el SII...
                 </> : <>
-                  <div className="bg-white rounded p-1 flex items-center justify-center">
+                  <div className="bg-white rounded-md p-1 flex items-center justify-center">
                     <img src="/logosii.png" alt="SII" className="h-4" />
                   </div>
                   Iniciar sesión con el SII
@@ -354,7 +354,7 @@ export default function OnboardingSuccess() {
       </p>
       
       <div className="pt-4">
-        <Button onClick={() => navigate('/dashboard')} className="px-6">
+        <Button onClick={() => navigate('/')} className="px-6">
           Ir al inicio
         </Button>
       </div>
@@ -362,110 +362,102 @@ export default function OnboardingSuccess() {
 
   const currentStepData = steps[currentStep];
 
-  const testimonials = [
-    {
-      quote: "Ruka.ai ha transformado nuestra operación financiera reduciendo el tiempo de procesamiento en un 70%.",
-      author: "María González",
-      company: "Directora Financiera, Global Services",
-    },
-    {
-      quote: "La inteligencia artificial de Ruka me permite tomar decisiones estratégicas basadas en datos reales y actualizados.",
-      author: "Carlos Mendoza",
-      company: "CEO, Importadora Nacional",
-    },
-    {
-      quote: "El valor que obtenemos al automatizar nuestros registros contables con Ruka.ai supera con creces nuestra inversión.",
-      author: "Ana Martínez",
-      company: "CFO, TechSolutions",
-    }
-  ];
-
   return <>
       <Helmet>
         <title>Configura tu cuenta | Ruka.ai</title>
       </Helmet>
       
-      <main className="min-h-screen flex flex-col md:flex-row bg-white">
-        <div className="hidden md:flex md:w-1/2 bg-slate-50 p-8 flex-col justify-between">
-          <div className="max-w-md mx-auto">
-            <div className="mb-8">
+      <main className="min-h-screen flex flex-col md:flex-row">
+        <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col justify-between">
+          <div className="max-w-md mx-auto flex flex-col h-full">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="mb-8"
+            >
               <img src="/logo.png" alt="Ruka.ai" className="h-10" />
-            </div>
+            </motion.div>
             
-            <h1 className="text-2xl font-bold mb-4">Bienvenido a Ruka.ai</h1>
-            <p className="text-muted-foreground mb-8">
-              Automatiza tu gestión financiera y fiscal con la plataforma líder en inteligencia artificial.
-            </p>
-            
-            <div className="mb-12 rounded-xl overflow-hidden shadow-sm border">
-              <iframe 
-                width="100%" 
-                height="215" 
-                src="https://www.youtube.com/embed/1wV-corpO74" 
-                title="CEO de Ruka.ai hablando sobre la plataforma" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen
-                className="w-full"
-              ></iframe>
-            </div>
-            
-            <div className="mb-10">
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {testimonials.map((testimonial, index) => (
-                    <CarouselItem key={index}>
-                      <Card className="border-none shadow-none bg-transparent">
-                        <CardContent className="pt-6 px-2">
-                          <blockquote className="text-sm italic mb-4">
-                            "{testimonial.quote}"
-                          </blockquote>
-                          <footer className="text-xs text-muted-foreground">
-                            <strong>{testimonial.author}</strong><br />
-                            {testimonial.company}
-                          </footer>
-                        </CardContent>
-                      </Card>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <div className="flex justify-center mt-4">
-                  <CarouselPrevious className="relative static mx-1 hover-scale" />
-                  <CarouselNext className="relative static mx-1 hover-scale" />
-                </div>
-              </Carousel>
-            </div>
-            
-            <div className="space-y-4 mb-8">
-              <div className="flex justify-between">
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-primary">120+</p>
-                  <p className="text-xs text-muted-foreground">Clientes activos</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-primary">15 hrs</p>
-                  <p className="text-xs text-muted-foreground">Ahorro semanal</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-primary">800K+</p>
-                  <p className="text-xs text-muted-foreground">Facturas procesadas</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="mt-auto">
-              <p className="text-xs text-center text-muted-foreground mb-4">
-                Respaldados por líderes globales en tecnología
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="mb-6"
+            >
+              <h1 className="text-3xl font-bold mb-3 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                Bienvenido a la era de la automatización financiera
+              </h1>
+              <p className="text-slate-600">
+                Gestión financiera y fiscal impulsada por inteligencia artificial.
               </p>
-              <div className="flex justify-center items-center gap-8">
-                <img src="/microsoft2.png" alt="Microsoft" className="h-8 opacity-75" />
-                <img src="/openai2.png" alt="OpenAI" className="h-8 opacity-75" />
-              </div>
+            </motion.div>
+            
+            <div className="space-y-6 flex-1">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="relative aspect-video rounded-xl overflow-hidden shadow-md border border-white/60 mb-6"
+              >
+                <iframe 
+                  width="100%" 
+                  height="100%" 
+                  src="https://www.youtube.com/embed/1wV-corpO74" 
+                  title="CEO de Ruka.ai hablando sobre la plataforma" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                  className="w-full h-full"
+                ></iframe>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                <OnboardingTestimonials />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="mt-6"
+              >
+                <FeatureRotator />
+              </motion.div>
+            </div>
+            
+            <div className="mt-8 space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+              >
+                <ImpactMetrics />
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.7 }}
+                className="mt-8"
+              >
+                <p className="text-xs text-center text-slate-500 mb-3">
+                  Respaldados por líderes globales en tecnología
+                </p>
+                <div className="flex justify-center items-center gap-6">
+                  <img src="/microsoft2.png" alt="Microsoft" className="h-8 opacity-75 hover:opacity-100 transition-opacity duration-300" />
+                  <img src="/openai2.png" alt="OpenAI" className="h-8 opacity-75 hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
         
-        <div className="flex-1 flex items-center justify-center p-6 md:p-12">
+        <div className="flex-1 flex items-center justify-center p-6 md:p-12 bg-white">
           <div className="w-full max-w-md">
             <div className="md:hidden mb-8 flex justify-center">
               <img src="/logo.png" alt="Ruka.ai" className="h-10" />
