@@ -8,10 +8,15 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import Stats from "@/components/Stats";
+import Partners from "@/components/Partners";
+
 type StepProps = {
   currentStep: number;
   totalSteps: number;
 };
+
 const StepIndicator = ({
   currentStep,
   totalSteps
@@ -22,6 +27,7 @@ const StepIndicator = ({
     }).map((_, index) => <div key={index} className={`h-2.5 rounded-full transition-all duration-300 ${index < currentStep ? "w-8 bg-primary" : index === currentStep ? "w-8 bg-primary" : "w-2.5 bg-gray-200"}`} />)}
     </div>;
 };
+
 const MonthsSelector = ({
   selectedMonths,
   onChange
@@ -52,6 +58,7 @@ const MonthsSelector = ({
       </div>
     </div>;
 };
+
 const BillingSystemSelector = ({
   selectedSystem,
   onChange,
@@ -94,6 +101,7 @@ const BillingSystemSelector = ({
         </div>}
     </div>;
 };
+
 const SubdomainInput = ({
   value,
   onChange,
@@ -136,6 +144,7 @@ const SubdomainInput = ({
       </div>
     </div>;
 };
+
 export default function OnboardingSuccess() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -144,31 +153,25 @@ export default function OnboardingSuccess() {
   const [isComplete, setIsComplete] = useState(false);
   const totalSteps = 4;
 
-  // Get restaurant name from location state or form data
   const restaurantName = location.state?.restaurantName || '';
-
-  // Generate suggested subdomain from restaurant name
   const generateSubdomain = (name: string) => {
     if (!name) return '';
-    return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
-    .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
-    .replace(/\s+/g, '') // Remove spaces
+    return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '')
     .trim();
   };
   const suggestedSubdomain = generateSubdomain(restaurantName);
 
-  // Form state
   const [formData, setFormData] = useState({
     rut: "",
     clave: "",
     meses: 3,
-    // Default to 3 months
     sistema: "sii",
     sistemaCustom: "",
     subdominio: suggestedSubdomain || ""
   });
 
-  // Set the subdomain initially
   useEffect(() => {
     if (suggestedSubdomain && !formData.subdominio) {
       setFormData(prev => ({
@@ -177,33 +180,31 @@ export default function OnboardingSuccess() {
       }));
     }
   }, [suggestedSubdomain]);
+
   const updateFormData = (key: string, value: any) => {
     setFormData(prev => ({
       ...prev,
       [key]: value
     }));
   };
+
   const handleSubdomainChange = (value: string) => {
     updateFormData('subdominio', value);
   };
 
-  // Save form data on each step
   const saveFormData = async () => {
     try {
       const leadId = location.state?.leadId;
       if (leadId) {
-        // Update lead data with additional info
         console.log('Saving form data for step', currentStep, formData);
-        // This is a placeholder for saving to Supabase
       }
     } catch (error) {
       console.error('Error saving form data:', error);
     }
   };
+
   const handleNext = async () => {
-    // Validate current step
     if (currentStep === 0) {
-      // Nothing to validate for months
     } else if (currentStep === 1) {
       if (formData.sistema === "mercado" && !formData.sistemaCustom) {
         toast({
@@ -232,7 +233,6 @@ export default function OnboardingSuccess() {
         return;
       }
 
-      // Validate RUT format (allow both formats: 1234567-8 or 12345678-9)
       const rutRegex = /^\d{1,8}-[\dkK]$/;
       if (!rutRegex.test(formData.rut)) {
         toast({
@@ -243,15 +243,12 @@ export default function OnboardingSuccess() {
         return;
       }
 
-      // Simulate SII login
       try {
         setIsLoading(true);
 
-        // Simulate a delay for the SII login process (reduced to 6 seconds)
         await new Promise(resolve => setTimeout(resolve, 6000));
         await saveFormData();
 
-        // Show completion state instead of navigating away
         setIsComplete(true);
         setIsLoading(false);
         return;
@@ -267,37 +264,38 @@ export default function OnboardingSuccess() {
       }
     }
 
-    // Save data for this step
     await saveFormData();
-
-    // Move to next step
     setCurrentStep(prev => prev + 1);
   };
+
   const handleBack = () => {
     setCurrentStep(prev => prev - 1);
   };
 
-  // Steps array with reordered content
-  const steps = [{
-    title: "Periodo de datos",
-    icon: <Calendar className="w-6 h-6 text-primary" />,
-    description: "¿Cuántos meses de datos quieres cargar?",
-    content: <MonthsSelector selectedMonths={formData.meses} onChange={months => updateFormData('meses', months)} />
-  }, {
-    title: "Sistema de facturación",
-    icon: <Store className="w-6 h-6 text-primary" />,
-    description: "Selecciona tu sistema de facturación",
-    content: <BillingSystemSelector selectedSystem={formData.sistema} onChange={system => updateFormData('sistema', system)} customSystem={formData.sistemaCustom} onCustomChange={value => updateFormData('sistemaCustom', value)} />
-  }, {
-    title: "Tu subdominio",
-    icon: <Globe className="w-6 h-6 text-primary" />,
-    description: "Elige el subdominio para acceder a tu cuenta",
-    content: <SubdomainInput value={formData.subdominio} onChange={handleSubdomainChange} suggestedSubdomain={suggestedSubdomain} />
-  }, {
-    title: "Acceso al SII",
-    icon: <LockKeyhole className="w-6 h-6 text-primary" />,
-    description: "Ingresa tus credenciales del SII para conectar tus datos",
-    content: <div className="space-y-6">
+  const steps = [
+    {
+      title: "Periodo de datos",
+      icon: <Calendar className="w-6 h-6 text-primary" />,
+      description: "¿Cuántos meses de datos quieres cargar?",
+      content: <MonthsSelector selectedMonths={formData.meses} onChange={months => updateFormData('meses', months)} />
+    },
+    {
+      title: "Sistema de facturación",
+      icon: <Store className="w-6 h-6 text-primary" />,
+      description: "Selecciona tu sistema de facturación",
+      content: <BillingSystemSelector selectedSystem={formData.sistema} onChange={system => updateFormData('sistema', system)} customSystem={formData.sistemaCustom} onCustomChange={value => updateFormData('sistemaCustom', value)} />
+    },
+    {
+      title: "Tu subdominio",
+      icon: <Globe className="w-6 h-6 text-primary" />,
+      description: "Elige el subdominio para acceder a tu cuenta",
+      content: <SubdomainInput value={formData.subdominio} onChange={handleSubdomainChange} suggestedSubdomain={suggestedSubdomain} />
+    },
+    {
+      title: "Acceso al SII",
+      icon: <LockKeyhole className="w-6 h-6 text-primary" />,
+      description: "Ingresa tus credenciales del SII para conectar tus datos",
+      content: <div className="space-y-6">
           <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
             <div className="flex gap-3">
               <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
@@ -340,9 +338,9 @@ export default function OnboardingSuccess() {
             </Button>
           </div>
         </div>
-  }];
+    }
+  ];
 
-  // Success screen content (shown after completion)
   const successContent = <div className="text-center space-y-6">
       <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
         <Check className="w-8 h-8 text-green-600" />
@@ -361,67 +359,114 @@ export default function OnboardingSuccess() {
         </Button>
       </div>
     </div>;
+
   const currentStepData = steps[currentStep];
 
-  // Feature illustrations
-  const illustrations = [{
-    title: "Acceso inmediato a tus datos",
-    description: "Conectamos con el SII para importar automáticamente tus facturas y boletas.",
-    icon: <Clock4 className="w-8 h-8 text-primary" />
-  }, {
-    title: "Analítica avanzada",
-    description: "Visualiza indicadores clave para optimizar tu restaurante.",
-    icon: <Database className="w-8 h-8 text-primary" />
-  }, {
-    title: "100% seguro",
-    description: "Tus datos están protegidos con la máxima seguridad.",
-    icon: <ShieldCheck className="w-8 h-8 text-primary" />
-  }];
+  const testimonials = [
+    {
+      quote: "Ruka.ai ha transformado nuestra operación financiera reduciendo el tiempo de procesamiento en un 70%.",
+      author: "María González",
+      company: "Directora Financiera, Global Services",
+    },
+    {
+      quote: "La inteligencia artificial de Ruka me permite tomar decisiones estratégicas basadas en datos reales y actualizados.",
+      author: "Carlos Mendoza",
+      company: "CEO, Importadora Nacional",
+    },
+    {
+      quote: "El valor que obtenemos al automatizar nuestros registros contables con Ruka.ai supera con creces nuestra inversión.",
+      author: "Ana Martínez",
+      company: "CFO, TechSolutions",
+    }
+  ];
+
   return <>
       <Helmet>
         <title>Configura tu cuenta | Ruka.ai</title>
       </Helmet>
       
       <main className="min-h-screen flex flex-col md:flex-row bg-white">
-        {/* Left panel (illustrations and info) */}
-        <div className="hidden md:flex md:w-1/2 bg-slate-50 p-12 flex-col justify-center">
+        <div className="hidden md:flex md:w-1/2 bg-slate-50 p-8 flex-col justify-between">
           <div className="max-w-md mx-auto">
-            <div className="mb-12">
-              <img src="/logo.png" alt="Ruka.ai" className="h-12" />
+            <div className="mb-8">
+              <img src="/logo.png" alt="Ruka.ai" className="h-10" />
             </div>
             
-            <h1 className="text-3xl font-bold mb-6">Configura tu restaurante en Ruka.ai</h1>
-            <p className="text-muted-foreground mb-12">
-              En solo unos minutos estarás aprovechando todo el potencial de 
-              Ruka.ai para optimizar tu negocio.
+            <h1 className="text-2xl font-bold mb-4">Bienvenido a Ruka.ai</h1>
+            <p className="text-muted-foreground mb-8">
+              Automatiza tu gestión financiera y fiscal con la plataforma líder en inteligencia artificial.
             </p>
             
-            <div className="space-y-8">
-              {illustrations.map((item, index) => <motion.div key={index} initial={{
-              opacity: 0,
-              y: 20
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} transition={{
-              delay: 0.2 * index
-            }} className="flex gap-4 items-start">
-                  <div className="rounded-full bg-primary/10 p-3 flex-shrink-0">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <h3 className="font-medium mb-1">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
-                  </div>
-                </motion.div>)}
+            <div className="mb-12 rounded-xl overflow-hidden shadow-sm border">
+              <iframe 
+                width="100%" 
+                height="215" 
+                src="https://www.youtube.com/embed/1wV-corpO74" 
+                title="CEO de Ruka.ai hablando sobre la plataforma" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+                className="w-full"
+              ></iframe>
+            </div>
+            
+            <div className="mb-10">
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {testimonials.map((testimonial, index) => (
+                    <CarouselItem key={index}>
+                      <Card className="border-none shadow-none bg-transparent">
+                        <CardContent className="pt-6 px-2">
+                          <blockquote className="text-sm italic mb-4">
+                            "{testimonial.quote}"
+                          </blockquote>
+                          <footer className="text-xs text-muted-foreground">
+                            <strong>{testimonial.author}</strong><br />
+                            {testimonial.company}
+                          </footer>
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="flex justify-center mt-4">
+                  <CarouselPrevious className="relative static mx-1 hover-scale" />
+                  <CarouselNext className="relative static mx-1 hover-scale" />
+                </div>
+              </Carousel>
+            </div>
+            
+            <div className="space-y-4 mb-8">
+              <div className="flex justify-between">
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-primary">120+</p>
+                  <p className="text-xs text-muted-foreground">Clientes activos</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-primary">15 hrs</p>
+                  <p className="text-xs text-muted-foreground">Ahorro semanal</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-primary">800K+</p>
+                  <p className="text-xs text-muted-foreground">Facturas procesadas</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-auto">
+              <p className="text-xs text-center text-muted-foreground mb-4">
+                Respaldados por líderes globales en tecnología
+              </p>
+              <div className="flex justify-center items-center gap-8">
+                <img src="/microsoft2.png" alt="Microsoft" className="h-8 opacity-75" />
+                <img src="/openai2.png" alt="OpenAI" className="h-8 opacity-75" />
+              </div>
             </div>
           </div>
         </div>
         
-        {/* Right panel (form steps or success message) */}
         <div className="flex-1 flex items-center justify-center p-6 md:p-12">
           <div className="w-full max-w-md">
-            {/* Logo for mobile */}
             <div className="md:hidden mb-8 flex justify-center">
               <img src="/logo.png" alt="Ruka.ai" className="h-10" />
             </div>
@@ -475,7 +520,6 @@ export default function OnboardingSuccess() {
                   </CardContent>
                 </Card>
               </> :
-          // Show success content when complete
           <Card className="border shadow-sm p-8">
                 {successContent}
               </Card>}
