@@ -1,61 +1,35 @@
-
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
-import { 
-  ArrowLeft, 
-  ArrowRight, 
-  Database, 
-  LockKeyhole, 
-  Calendar, 
-  Store, 
-  Check, 
-  Globe, 
-  ShieldCheck,
-  Clock4,
-  Info,
-  Loader
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Database, LockKeyhole, Calendar, Store, Check, Globe, ShieldCheck, Clock4, Info, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-
 type StepProps = {
   currentStep: number;
   totalSteps: number;
-}
-
-const StepIndicator = ({ currentStep, totalSteps }: StepProps) => {
-  return (
-    <div className="flex items-center justify-center gap-2 mb-8">
-      {Array.from({ length: totalSteps }).map((_, index) => (
-        <div 
-          key={index}
-          className={`h-2.5 rounded-full transition-all duration-300 ${
-            index < currentStep 
-              ? "w-8 bg-primary" 
-              : index === currentStep 
-                ? "w-8 bg-primary" 
-                : "w-2.5 bg-gray-200"
-          }`}
-        />
-      ))}
-    </div>
-  );
 };
-
-const MonthsSelector = ({ 
-  selectedMonths, 
-  onChange 
-}: { 
-  selectedMonths: number; 
+const StepIndicator = ({
+  currentStep,
+  totalSteps
+}: StepProps) => {
+  return <div className="flex items-center justify-center gap-2 mb-8">
+      {Array.from({
+      length: totalSteps
+    }).map((_, index) => <div key={index} className={`h-2.5 rounded-full transition-all duration-300 ${index < currentStep ? "w-8 bg-primary" : index === currentStep ? "w-8 bg-primary" : "w-2.5 bg-gray-200"}`} />)}
+    </div>;
+};
+const MonthsSelector = ({
+  selectedMonths,
+  onChange
+}: {
+  selectedMonths: number;
   onChange: (months: number) => void;
 }) => {
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
         <div className="flex gap-3">
           <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
@@ -69,41 +43,27 @@ const MonthsSelector = ({
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        {[1, 2, 3].map((month) => (
-          <button
-            key={month}
-            type="button"
-            onClick={() => onChange(month)}
-            className={`p-4 rounded-lg border-2 transition-all flex flex-col items-center ${
-              selectedMonths === month
-                ? "border-primary bg-primary/5"
-                : "border-gray-200 hover:border-gray-300"
-            }`}
-          >
+        {[1, 2, 3].map(month => <button key={month} type="button" onClick={() => onChange(month)} className={`p-4 rounded-lg border-2 transition-all flex flex-col items-center ${selectedMonths === month ? "border-primary bg-primary/5" : "border-gray-200 hover:border-gray-300"}`}>
             <span className="text-2xl font-semibold">{month}</span>
             <span className="text-sm text-muted-foreground">
               {month === 1 ? "mes" : "meses"}
             </span>
-          </button>
-        ))}
+          </button>)}
       </div>
-    </div>
-  );
+    </div>;
 };
-
-const BillingSystemSelector = ({ 
-  selectedSystem, 
+const BillingSystemSelector = ({
+  selectedSystem,
   onChange,
   customSystem,
   onCustomChange
-}: { 
-  selectedSystem: string; 
+}: {
+  selectedSystem: string;
   onChange: (system: string) => void;
   customSystem: string;
   onCustomChange: (value: string) => void;
 }) => {
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
         <div className="flex gap-3">
           <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
@@ -117,59 +77,33 @@ const BillingSystemSelector = ({
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <button
-          type="button"
-          onClick={() => onChange("sii")}
-          className={`p-4 rounded-lg border-2 transition-all text-left ${
-            selectedSystem === "sii"
-              ? "border-primary bg-primary/5"
-              : "border-gray-200 hover:border-gray-300"
-          }`}
-        >
+        <button type="button" onClick={() => onChange("sii")} className={`p-4 rounded-lg border-2 transition-all text-left ${selectedSystem === "sii" ? "border-primary bg-primary/5" : "border-gray-200 hover:border-gray-300"}`}>
           <div className="font-medium">SII Gratuito</div>
           <div className="text-sm text-muted-foreground">Sistema oficial del SII</div>
         </button>
         
-        <button
-          type="button"
-          onClick={() => onChange("mercado")}
-          className={`p-4 rounded-lg border-2 transition-all text-left ${
-            selectedSystem === "mercado"
-              ? "border-primary bg-primary/5"
-              : "border-gray-200 hover:border-gray-300"
-          }`}
-        >
+        <button type="button" onClick={() => onChange("mercado")} className={`p-4 rounded-lg border-2 transition-all text-left ${selectedSystem === "mercado" ? "border-primary bg-primary/5" : "border-gray-200 hover:border-gray-300"}`}>
           <div className="font-medium">Facturador de Mercado</div>
           <div className="text-sm text-muted-foreground">Sistema de terceros</div>
         </button>
       </div>
       
-      {selectedSystem === "mercado" && (
-        <div className="mt-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
+      {selectedSystem === "mercado" && <div className="mt-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
           <label className="text-sm font-medium mb-2 block">¿Cuál sistema utilizas?</label>
-          <Input 
-            value={customSystem}
-            onChange={(e) => onCustomChange(e.target.value)}
-            placeholder="Nubox, Bsale, Toteat, etc."
-            className="bg-white"
-          />
-        </div>
-      )}
-    </div>
-  );
+          <Input value={customSystem} onChange={e => onCustomChange(e.target.value)} placeholder="Nubox, Bsale, Toteat, etc." className="bg-white" />
+        </div>}
+    </div>;
 };
-
-const SubdomainInput = ({ 
-  value, 
-  onChange, 
+const SubdomainInput = ({
+  value,
+  onChange,
   suggestedSubdomain
-}: { 
-  value: string; 
+}: {
+  value: string;
   onChange: (value: string) => void;
   suggestedSubdomain: string;
 }) => {
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
         <div className="flex gap-3">
           <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
@@ -184,12 +118,7 @@ const SubdomainInput = ({
 
       <div>
         <div className="relative">
-          <Input
-            value={value}
-            onChange={(e) => onChange(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
-            placeholder="tu-restaurante"
-            className="pr-[120px]"
-          />
+          <Input value={value} onChange={e => onChange(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))} placeholder="tu-restaurante" className="pr-[120px]" />
           <div className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
             .ruka.ai
           </div>
@@ -205,10 +134,8 @@ const SubdomainInput = ({
           </span>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default function OnboardingSuccess() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -216,46 +143,46 @@ export default function OnboardingSuccess() {
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const totalSteps = 4;
-  
+
   // Get restaurant name from location state or form data
   const restaurantName = location.state?.restaurantName || '';
-  
+
   // Generate suggested subdomain from restaurant name
   const generateSubdomain = (name: string) => {
     if (!name) return '';
-    
-    return name
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '') // Remove accents
-      .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
-      .replace(/\s+/g, '') // Remove spaces
-      .trim();
+    return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
+    .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+    .replace(/\s+/g, '') // Remove spaces
+    .trim();
   };
-
   const suggestedSubdomain = generateSubdomain(restaurantName);
-  
+
   // Form state
   const [formData, setFormData] = useState({
     rut: "",
     clave: "",
-    meses: 3, // Default to 3 months
+    meses: 3,
+    // Default to 3 months
     sistema: "sii",
     sistemaCustom: "",
-    subdominio: suggestedSubdomain || "",
+    subdominio: suggestedSubdomain || ""
   });
-  
+
   // Set the subdomain initially
   useEffect(() => {
     if (suggestedSubdomain && !formData.subdominio) {
-      setFormData(prev => ({ ...prev, subdominio: suggestedSubdomain }));
+      setFormData(prev => ({
+        ...prev,
+        subdominio: suggestedSubdomain
+      }));
     }
   }, [suggestedSubdomain]);
-  
   const updateFormData = (key: string, value: any) => {
-    setFormData(prev => ({ ...prev, [key]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [key]: value
+    }));
   };
-  
   const handleSubdomainChange = (value: string) => {
     updateFormData('subdominio', value);
   };
@@ -273,7 +200,6 @@ export default function OnboardingSuccess() {
       console.error('Error saving form data:', error);
     }
   };
-  
   const handleNext = async () => {
     // Validate current step
     if (currentStep === 0) {
@@ -305,7 +231,7 @@ export default function OnboardingSuccess() {
         });
         return;
       }
-      
+
       // Validate RUT format (allow both formats: 1234567-8 or 12345678-9)
       const rutRegex = /^\d{1,8}-[\dkK]$/;
       if (!rutRegex.test(formData.rut)) {
@@ -316,20 +242,18 @@ export default function OnboardingSuccess() {
         });
         return;
       }
-      
+
       // Simulate SII login
       try {
         setIsLoading(true);
-        
+
         // Simulate a delay for the SII login process (reduced to 6 seconds)
         await new Promise(resolve => setTimeout(resolve, 6000));
-        
         await saveFormData();
-        
+
         // Show completion state instead of navigating away
         setIsComplete(true);
         setIsLoading(false);
-        
         return;
       } catch (error) {
         console.error('Error submitting form:', error);
@@ -342,71 +266,44 @@ export default function OnboardingSuccess() {
         return;
       }
     }
-    
+
     // Save data for this step
     await saveFormData();
-    
+
     // Move to next step
     setCurrentStep(prev => prev + 1);
   };
-  
   const handleBack = () => {
     setCurrentStep(prev => prev - 1);
   };
-  
+
   // Steps array with reordered content
-  const steps = [
-    {
-      title: "Periodo de datos",
-      icon: <Calendar className="w-6 h-6 text-primary" />,
-      description: "¿Cuántos meses de datos quieres cargar?",
-      content: (
-        <MonthsSelector 
-          selectedMonths={formData.meses} 
-          onChange={(months) => updateFormData('meses', months)} 
-        />
-      )
-    },
-    {
-      title: "Sistema de facturación",
-      icon: <Store className="w-6 h-6 text-primary" />,
-      description: "Selecciona tu sistema de facturación",
-      content: (
-        <BillingSystemSelector 
-          selectedSystem={formData.sistema}
-          onChange={(system) => updateFormData('sistema', system)}
-          customSystem={formData.sistemaCustom}
-          onCustomChange={(value) => updateFormData('sistemaCustom', value)}
-        />
-      )
-    },
-    {
-      title: "Tu subdominio",
-      icon: <Globe className="w-6 h-6 text-primary" />,
-      description: "Elige el subdominio para acceder a tu cuenta",
-      content: (
-        <SubdomainInput 
-          value={formData.subdominio}
-          onChange={handleSubdomainChange}
-          suggestedSubdomain={suggestedSubdomain}
-        />
-      )
-    },
-    {
-      title: "Acceso al SII",
-      icon: <LockKeyhole className="w-6 h-6 text-primary" />,
-      description: "Ingresa tus credenciales del SII para conectar tus datos",
-      content: (
-        <div className="space-y-6">
+  const steps = [{
+    title: "Periodo de datos",
+    icon: <Calendar className="w-6 h-6 text-primary" />,
+    description: "¿Cuántos meses de datos quieres cargar?",
+    content: <MonthsSelector selectedMonths={formData.meses} onChange={months => updateFormData('meses', months)} />
+  }, {
+    title: "Sistema de facturación",
+    icon: <Store className="w-6 h-6 text-primary" />,
+    description: "Selecciona tu sistema de facturación",
+    content: <BillingSystemSelector selectedSystem={formData.sistema} onChange={system => updateFormData('sistema', system)} customSystem={formData.sistemaCustom} onCustomChange={value => updateFormData('sistemaCustom', value)} />
+  }, {
+    title: "Tu subdominio",
+    icon: <Globe className="w-6 h-6 text-primary" />,
+    description: "Elige el subdominio para acceder a tu cuenta",
+    content: <SubdomainInput value={formData.subdominio} onChange={handleSubdomainChange} suggestedSubdomain={suggestedSubdomain} />
+  }, {
+    title: "Acceso al SII",
+    icon: <LockKeyhole className="w-6 h-6 text-primary" />,
+    description: "Ingresa tus credenciales del SII para conectar tus datos",
+    content: <div className="space-y-6">
           <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
             <div className="flex gap-3">
               <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
               <div>
                 <h4 className="font-medium text-blue-700 mb-1">Conexión con el SII</h4>
-                <p className="text-sm text-blue-600">
-                  Ingresa las credenciales de tu empresa (persona jurídica) para importar 
-                  el registro de compra y venta.
-                </p>
+                <p className="text-sm text-blue-600">Ingresa las credenciales de tu empresa (persona jurídica) importar tus datos</p>
               </div>
             </div>
           </div>
@@ -414,57 +311,39 @@ export default function OnboardingSuccess() {
           <div className="space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">RUT</label>
-              <Input 
-                value={formData.rut}
-                onChange={(e) => updateFormData('rut', e.target.value)}
-                placeholder="12345678-9"
-              />
+              <Input value={formData.rut} onChange={e => updateFormData('rut', e.target.value)} placeholder="12345678-9" />
               <p className="text-xs text-muted-foreground">Ingresa el RUT con guión y dígito verificador</p>
             </div>
             
             <div className="space-y-2">
               <label className="text-sm font-medium">Clave del SII</label>
-              <Input 
-                type="password"
-                value={formData.clave}
-                onChange={(e) => updateFormData('clave', e.target.value)}
-                placeholder="••••••••"
-              />
+              <Input type="password" value={formData.clave} onChange={e => updateFormData('clave', e.target.value)} placeholder="••••••••" />
               <div className="flex items-center text-xs text-muted-foreground mt-1">
                 <ShieldCheck className="w-4 h-4 mr-1 text-green-600" />
                 Tus datos están almacenados de forma segura
               </div>
             </div>
             
-            <Button 
-              onClick={handleNext}
-              className="w-full mt-4 gap-2"
-              style={{ backgroundColor: "#DA5C2B", borderColor: "#DA5C2B" }}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
+            <Button onClick={handleNext} className="w-full mt-4 gap-2" style={{
+          backgroundColor: "#DA5C2B",
+          borderColor: "#DA5C2B"
+        }} disabled={isLoading}>
+              {isLoading ? <>
                   <Loader className="h-4 w-4 animate-spin" />
                   Conectando con el SII...
-                </>
-              ) : (
-                <>
+                </> : <>
                   <div className="bg-white rounded p-1 flex items-center justify-center">
                     <img src="/logosii.png" alt="SII" className="h-4" />
                   </div>
                   Iniciar sesión con el SII
-                </>
-              )}
+                </>}
             </Button>
           </div>
         </div>
-      )
-    }
-  ];
-  
+  }];
+
   // Success screen content (shown after completion)
-  const successContent = (
-    <div className="text-center space-y-6">
+  const successContent = <div className="text-center space-y-6">
       <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
         <Check className="w-8 h-8 text-green-600" />
       </div>
@@ -477,39 +356,28 @@ export default function OnboardingSuccess() {
       </p>
       
       <div className="pt-4">
-        <Button 
-          onClick={() => navigate('/dashboard')}
-          className="px-6"
-        >
+        <Button onClick={() => navigate('/dashboard')} className="px-6">
           Ir al inicio
         </Button>
       </div>
-    </div>
-  );
-  
+    </div>;
   const currentStepData = steps[currentStep];
 
   // Feature illustrations
-  const illustrations = [
-    {
-      title: "Acceso inmediato a tus datos",
-      description: "Conectamos con el SII para importar automáticamente tus facturas y boletas.",
-      icon: <Clock4 className="w-8 h-8 text-primary" />
-    },
-    {
-      title: "Analítica avanzada",
-      description: "Visualiza indicadores clave para optimizar tu restaurante.",
-      icon: <Database className="w-8 h-8 text-primary" />
-    },
-    {
-      title: "100% seguro",
-      description: "Tus datos están protegidos con la máxima seguridad.",
-      icon: <ShieldCheck className="w-8 h-8 text-primary" />
-    }
-  ];
-
-  return (
-    <>
+  const illustrations = [{
+    title: "Acceso inmediato a tus datos",
+    description: "Conectamos con el SII para importar automáticamente tus facturas y boletas.",
+    icon: <Clock4 className="w-8 h-8 text-primary" />
+  }, {
+    title: "Analítica avanzada",
+    description: "Visualiza indicadores clave para optimizar tu restaurante.",
+    icon: <Database className="w-8 h-8 text-primary" />
+  }, {
+    title: "100% seguro",
+    description: "Tus datos están protegidos con la máxima seguridad.",
+    icon: <ShieldCheck className="w-8 h-8 text-primary" />
+  }];
+  return <>
       <Helmet>
         <title>Configura tu cuenta | Ruka.ai</title>
       </Helmet>
@@ -529,14 +397,15 @@ export default function OnboardingSuccess() {
             </p>
             
             <div className="space-y-8">
-              {illustrations.map((item, index) => (
-                <motion.div 
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 * index }}
-                  className="flex gap-4 items-start"
-                >
+              {illustrations.map((item, index) => <motion.div key={index} initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: 1,
+              y: 0
+            }} transition={{
+              delay: 0.2 * index
+            }} className="flex gap-4 items-start">
                   <div className="rounded-full bg-primary/10 p-3 flex-shrink-0">
                     {item.icon}
                   </div>
@@ -544,8 +413,7 @@ export default function OnboardingSuccess() {
                     <h3 className="font-medium mb-1">{item.title}</h3>
                     <p className="text-sm text-muted-foreground">{item.description}</p>
                   </div>
-                </motion.div>
-              ))}
+                </motion.div>)}
             </div>
           </div>
         </div>
@@ -558,13 +426,14 @@ export default function OnboardingSuccess() {
               <img src="/logo.png" alt="Ruka.ai" className="h-10" />
             </div>
             
-            {!isComplete ? (
-              <>
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-center mb-8"
-                >
+            {!isComplete ? <>
+                <motion.div initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: 1,
+              y: 0
+            }} className="text-center mb-8">
                   <h1 className="text-2xl md:text-3xl font-bold">Configura tu cuenta</h1>
                   <p className="mt-2 text-muted-foreground">
                     {currentStep + 1} de {totalSteps} pasos para comenzar
@@ -588,46 +457,28 @@ export default function OnboardingSuccess() {
                   <CardContent className="pb-8">
                     {currentStepData.content}
                     
-                    {currentStep < 3 && (
-                      <div className="flex justify-between mt-10">
-                        <Button
-                          variant="outline"
-                          onClick={handleBack}
-                          disabled={currentStep === 0}
-                          className="gap-2"
-                        >
+                    {currentStep < 3 && <div className="flex justify-between mt-10">
+                        <Button variant="outline" onClick={handleBack} disabled={currentStep === 0} className="gap-2">
                           <ArrowLeft className="w-4 h-4" /> Atrás
                         </Button>
                         
-                        <Button 
-                          onClick={handleNext}
-                          className="gap-2"
-                        >
+                        <Button onClick={handleNext} className="gap-2">
                           Siguiente <ArrowRight className="w-4 h-4" />
                         </Button>
-                      </div>
-                    )}
+                      </div>}
                     
-                    {currentStep === 3 && (
-                      <div className="flex justify-start mt-6">
-                        <Button
-                          variant="outline"
-                          onClick={handleBack}
-                          className="gap-2"
-                        >
+                    {currentStep === 3 && <div className="flex justify-start mt-6">
+                        <Button variant="outline" onClick={handleBack} className="gap-2">
                           <ArrowLeft className="w-4 h-4" /> Atrás
                         </Button>
-                      </div>
-                    )}
+                      </div>}
                   </CardContent>
                 </Card>
-              </>
-            ) : (
-              // Show success content when complete
-              <Card className="border shadow-sm p-8">
+              </> :
+          // Show success content when complete
+          <Card className="border shadow-sm p-8">
                 {successContent}
-              </Card>
-            )}
+              </Card>}
             
             <div className="mt-6 text-center text-sm text-muted-foreground">
               <p>¿Necesitas ayuda? <a href="#" className="text-primary hover:underline">Contáctanos</a></p>
@@ -635,6 +486,5 @@ export default function OnboardingSuccess() {
           </div>
         </div>
       </main>
-    </>
-  );
+    </>;
 }
