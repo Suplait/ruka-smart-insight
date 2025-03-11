@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -59,7 +60,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
         ? `+56${formData.whatsapp.replace(/^\+56/, '')}`
         : '';
 
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('leads')
         .insert([
           { 
@@ -71,9 +72,13 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
             ccity: formData.ciudad,
             whatsapp: whatsappNumber
           }
-        ]);
+        ])
+        .select();
 
       if (error) throw error;
+
+      // Get the ID of the inserted lead
+      const leadId = data?.[0]?.id;
 
       supabase.functions.invoke('notify-slack', {
         body: {
@@ -91,7 +96,13 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
         console.error('Error al notificar a Slack:', error);
       });
 
-      navigate('/onboarding-success');
+      // Navigate to onboarding with restaurant name in state
+      navigate('/onboarding-success', {
+        state: {
+          restaurantName: formData.nombreRestaurante,
+          leadId: leadId
+        }
+      });
 
     } catch (error) {
       console.error('Error:', error);

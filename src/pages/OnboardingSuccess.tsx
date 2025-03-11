@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 type StepProps = {
   currentStep: number;
@@ -60,8 +61,7 @@ const MonthsSelector = ({
           <div>
             <h4 className="font-medium text-blue-700 mb-1">¿Por qué necesitamos esto?</h4>
             <p className="text-sm text-blue-600">
-              Importaremos tus datos históricos de compras para darte insights valiosos desde 
-              el primer día. Selecciona cuántos meses quieres cargar inicialmente.
+              Importaremos tus datos históricos de compras para darte insights valiosos desde el primer día.
             </p>
           </div>
         </div>
@@ -109,8 +109,7 @@ const BillingSystemSelector = ({
           <div>
             <h4 className="font-medium text-blue-700 mb-1">¿Por qué es importante?</h4>
             <p className="text-sm text-blue-600">
-              Necesitamos conectarnos a tu sistema de facturación para sincronizar tus datos 
-              y brindarte análisis precisos y actualizados.
+              Necesitamos conectarnos a tu sistema de facturación para sincronizar tus datos de compras.
             </p>
           </div>
         </div>
@@ -162,14 +161,10 @@ const BillingSystemSelector = ({
 const SubdomainInput = ({ 
   value, 
   onChange, 
-  isAvailable, 
-  isChecking,
   suggestedSubdomain
 }: { 
   value: string; 
   onChange: (value: string) => void;
-  isAvailable: boolean | null;
-  isChecking: boolean;
   suggestedSubdomain: string;
 }) => {
   return (
@@ -180,8 +175,7 @@ const SubdomainInput = ({
           <div>
             <h4 className="font-medium text-blue-700 mb-1">Tu portal personalizado</h4>
             <p className="text-sm text-blue-600">
-              Este será el enlace de acceso a tu dashboard personalizado. 
-              Hemos sugerido un subdominio basado en el nombre de tu restaurante.
+              Este será el enlace de acceso a tu dashboard personalizado.
             </p>
           </div>
         </div>
@@ -215,15 +209,9 @@ const SubdomainInput = ({
         
         {value && (
           <div className="mt-2 text-sm">
-            {isChecking ? (
-              <span className="text-muted-foreground">Verificando disponibilidad...</span>
-            ) : isAvailable ? (
-              <span className="text-green-600 flex items-center gap-1">
-                <Check className="w-4 h-4" /> Subdominio disponible
-              </span>
-            ) : (
-              <span className="text-red-500">Este subdominio no está disponible</span>
-            )}
+            <span className="text-green-600 flex items-center gap-1">
+              <Check className="w-4 h-4" /> Subdominio disponible
+            </span>
           </div>
         )}
       </div>
@@ -237,11 +225,13 @@ export default function OnboardingSuccess() {
   const [currentStep, setCurrentStep] = useState(0);
   const totalSteps = 4;
   
-  // Get restaurant name from location state
+  // Get restaurant name from location state or form data
   const restaurantName = location.state?.restaurantName || '';
   
   // Generate suggested subdomain from restaurant name
   const generateSubdomain = (name: string) => {
+    if (!name) return '';
+    
     return name
       .toLowerCase()
       .normalize('NFD')
@@ -260,17 +250,13 @@ export default function OnboardingSuccess() {
     meses: 3, // Default to 3 months
     sistema: "sii",
     sistemaCustom: "",
-    subdominio: suggestedSubdomain,
+    subdominio: suggestedSubdomain || "",
   });
-  
-  const [isSubdomainChecking, setIsSubdomainChecking] = useState(false);
-  const [isSubdomainAvailable, setIsSubdomainAvailable] = useState<boolean | null>(null);
   
   // Set the subdomain initially
   useEffect(() => {
     if (suggestedSubdomain && !formData.subdominio) {
       setFormData(prev => ({ ...prev, subdominio: suggestedSubdomain }));
-      checkSubdomainAvailability(suggestedSubdomain);
     }
   }, [suggestedSubdomain]);
   
@@ -278,41 +264,28 @@ export default function OnboardingSuccess() {
     setFormData(prev => ({ ...prev, [key]: value }));
   };
   
-  const checkSubdomainAvailability = async (subdomain: string) => {
-    if (!subdomain) {
-      setIsSubdomainAvailable(null);
-      return;
-    }
-    
-    setIsSubdomainChecking(true);
-    
-    // Simulated check - in a real implementation, this would call an API
-    try {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      // For demo purposes: consider subdomains with 'test' as unavailable
-      const available = !subdomain.includes('test');
-      setIsSubdomainAvailable(available);
-    } catch (error) {
-      console.error('Error checking subdomain:', error);
-      setIsSubdomainAvailable(null);
-    } finally {
-      setIsSubdomainChecking(false);
-    }
-  };
-  
-  // Check subdomain when it changes
   const handleSubdomainChange = (value: string) => {
     updateFormData('subdominio', value);
-    checkSubdomainAvailability(value);
+  };
+
+  // Save form data on each step
+  const saveFormData = async () => {
+    try {
+      const leadId = location.state?.leadId;
+      if (leadId) {
+        // Update lead data with additional info (in a real app, implement this)
+        console.log('Saving form data for step', currentStep, formData);
+        // This is a placeholder for saving to Supabase
+      }
+    } catch (error) {
+      console.error('Error saving form data:', error);
+    }
   };
   
   const handleNext = async () => {
-    // Validate current step based on the new order
+    // Validate current step
     if (currentStep === 0) {
-      // Validating months
-      // Nothing to validate here, any selection is valid
+      // Nothing to validate for months
     } else if (currentStep === 1) {
       if (formData.sistema === "mercado" && !formData.sistemaCustom) {
         toast({
@@ -327,15 +300,6 @@ export default function OnboardingSuccess() {
         toast({
           title: "Campo requerido",
           description: "Por favor elige un subdominio",
-          variant: "destructive"
-        });
-        return;
-      }
-      
-      if (!isSubdomainAvailable) {
-        toast({
-          title: "Subdominio no disponible",
-          description: "Por favor elige otro subdominio",
           variant: "destructive"
         });
         return;
@@ -363,15 +327,15 @@ export default function OnboardingSuccess() {
       
       // Final step - submit form data
       try {
-        // Here you would save all the data to your database
-        // For demo purposes, we'll just show a success message
+        // For demo purposes, show a success message
+        await saveFormData();
         
         toast({
           title: "¡Configuración completada!",
           description: "Estamos preparando tu cuenta. Te notificaremos cuando esté lista.",
         });
         
-        // Navigate to dashboard or confirmation page
+        // Navigate to dashboard
         setTimeout(() => {
           navigate('/dashboard');
         }, 2000);
@@ -387,6 +351,9 @@ export default function OnboardingSuccess() {
         return;
       }
     }
+    
+    // Save data for this step
+    await saveFormData();
     
     // Move to next step
     setCurrentStep(prev => prev + 1);
@@ -430,8 +397,6 @@ export default function OnboardingSuccess() {
         <SubdomainInput 
           value={formData.subdominio}
           onChange={handleSubdomainChange}
-          isAvailable={isSubdomainAvailable}
-          isChecking={isSubdomainChecking}
           suggestedSubdomain={suggestedSubdomain}
         />
       )
@@ -448,7 +413,7 @@ export default function OnboardingSuccess() {
               <div>
                 <h4 className="font-medium text-blue-700 mb-1">Conexión segura con el SII</h4>
                 <p className="text-sm text-blue-600">
-                  Tus credenciales se utilizan únicamente para sincronizar tus datos de forma segura. 
+                  Tus credenciales se utilizan únicamente para sincronizar tus datos. 
                   Nunca almacenamos tu contraseña.
                 </p>
               </div>
@@ -482,9 +447,10 @@ export default function OnboardingSuccess() {
             
             <Button 
               onClick={handleNext}
-              className="w-full mt-4"
+              className="w-full mt-4 gap-2"
               style={{ backgroundColor: "#DA5C2B", borderColor: "#DA5C2B" }}
             >
+              <img src="/logosii.png" alt="SII" className="h-5" />
               Iniciar sesión con el SII
             </Button>
           </div>
