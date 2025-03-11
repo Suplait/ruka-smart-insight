@@ -17,6 +17,7 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/onboarding-success" element={<OnboardingSuccess />} />
         <Route path="/terms" element={<TermsAndConditions />} />
+        <Route path="/dashboard" element={<Index />} /> {/* Temporarily redirects to index */}
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
