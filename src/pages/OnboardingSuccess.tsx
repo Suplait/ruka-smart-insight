@@ -14,7 +14,8 @@ import {
   Globe, 
   ShieldCheck,
   Clock4,
-  Info
+  Info,
+  Loader
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -61,7 +62,7 @@ const MonthsSelector = ({
           <div>
             <h4 className="font-medium text-blue-700 mb-1">¿Por qué necesitamos esto?</h4>
             <p className="text-sm text-blue-600">
-              Importaremos tus datos históricos de compras para darte insights valiosos desde el primer día.
+              Elige cuántos meses de datos históricos de compras importaremos inicialmente.
             </p>
           </div>
         </div>
@@ -109,7 +110,7 @@ const BillingSystemSelector = ({
           <div>
             <h4 className="font-medium text-blue-700 mb-1">¿Por qué es importante?</h4>
             <p className="text-sm text-blue-600">
-              Necesitamos conectarnos a tu sistema de facturación para sincronizar tus datos de compras.
+              Necesitamos conectarnos a tu sistema para importar tus datos de compras.
             </p>
           </div>
         </div>
@@ -175,26 +176,13 @@ const SubdomainInput = ({
           <div>
             <h4 className="font-medium text-blue-700 mb-1">Tu portal personalizado</h4>
             <p className="text-sm text-blue-600">
-              Este será el enlace de acceso a tu dashboard personalizado.
+              Este será el enlace de acceso a tu plataforma.
             </p>
           </div>
         </div>
       </div>
 
       <div>
-        {suggestedSubdomain && (
-          <div className="mb-4">
-            <Button 
-              variant="outline" 
-              onClick={() => onChange(suggestedSubdomain)}
-              className="w-full justify-start"
-            >
-              <Globe className="mr-2 h-4 w-4" />
-              Usar sugerencia: {suggestedSubdomain}.ruka.ai
-            </Button>
-          </div>
-        )}
-
         <div className="relative">
           <Input
             value={value}
@@ -207,13 +195,15 @@ const SubdomainInput = ({
           </div>
         </div>
         
-        {value && (
-          <div className="mt-2 text-sm">
-            <span className="text-green-600 flex items-center gap-1">
-              <Check className="w-4 h-4" /> Subdominio disponible
-            </span>
-          </div>
-        )}
+        <div className="mt-2 text-sm text-muted-foreground">
+          Te sugerimos este subdominio basado en el nombre de tu restaurante.
+        </div>
+        
+        <div className="mt-2 text-sm">
+          <span className="text-green-600 flex items-center gap-1">
+            <Check className="w-4 h-4" /> Subdominio disponible
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -223,6 +213,7 @@ export default function OnboardingSuccess() {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const totalSteps = 4;
   
   // Get restaurant name from location state or form data
@@ -273,7 +264,7 @@ export default function OnboardingSuccess() {
     try {
       const leadId = location.state?.leadId;
       if (leadId) {
-        // Update lead data with additional info (in a real app, implement this)
+        // Update lead data with additional info
         console.log('Saving form data for step', currentStep, formData);
         // This is a placeholder for saving to Supabase
       }
@@ -314,40 +305,45 @@ export default function OnboardingSuccess() {
         return;
       }
       
-      // Validate RUT format (simplified)
+      // Validate RUT format (allow both formats: 1234567-8 or 12345678-9)
       const rutRegex = /^\d{1,8}-[\dkK]$/;
       if (!rutRegex.test(formData.rut)) {
         toast({
           title: "Formato incorrecto",
-          description: "El RUT debe tener el formato 12345678-9",
+          description: "El RUT debe tener el formato 1234567-8 o 12345678-9",
           variant: "destructive"
         });
         return;
       }
       
-      // Final step - submit form data
+      // Simulate SII login
       try {
-        // For demo purposes, show a success message
+        setIsLoading(true);
+        
+        // Simulate a delay for the SII login process
+        await new Promise(resolve => setTimeout(resolve, 10000));
+        
         await saveFormData();
         
         toast({
           title: "¡Configuración completada!",
-          description: "Estamos preparando tu cuenta. Te notificaremos cuando esté lista.",
+          description: "Estamos preparando tu plataforma, cargando tus datos y te enviaremos las credenciales para ingresar durante los próximos minutos.",
         });
         
-        // Navigate to dashboard
+        // Navigate to dashboard after showing the success message
         setTimeout(() => {
           navigate('/dashboard');
-        }, 2000);
+        }, 3000);
         
         return;
       } catch (error) {
         console.error('Error submitting form:', error);
         toast({
           title: "Error",
-          description: "Ha ocurrido un error al guardar la información. Intenta nuevamente.",
+          description: "Ha ocurrido un error al conectar con el SII. Intenta nuevamente.",
           variant: "destructive"
         });
+        setIsLoading(false);
         return;
       }
     }
@@ -449,9 +445,21 @@ export default function OnboardingSuccess() {
               onClick={handleNext}
               className="w-full mt-4 gap-2"
               style={{ backgroundColor: "#DA5C2B", borderColor: "#DA5C2B" }}
+              disabled={isLoading}
             >
-              <img src="/logosii.png" alt="SII" className="h-5" />
-              Iniciar sesión con el SII
+              {isLoading ? (
+                <>
+                  <Loader className="h-4 w-4 animate-spin" />
+                  Conectando con el SII...
+                </>
+              ) : (
+                <>
+                  <div className="bg-white rounded p-1 flex items-center justify-center">
+                    <img src="/logosii.png" alt="SII" className="h-4" />
+                  </div>
+                  Iniciar sesión con el SII
+                </>
+              )}
             </Button>
           </div>
         </div>
