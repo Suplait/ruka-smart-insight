@@ -12,10 +12,9 @@ import {
   Store, 
   Check, 
   Globe, 
-  ShieldCheck
+  ShieldCheck,
+  Clock4
 } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -230,8 +229,38 @@ export default function OnboardingSuccess() {
   };
   
   const handleNext = async () => {
-    // Validate current step
+    // Validate current step based on the new order
     if (currentStep === 0) {
+      // Validating months
+      // Nothing to validate here, any selection is valid
+    } else if (currentStep === 1) {
+      if (formData.sistema === "mercado" && !formData.sistemaCustom) {
+        toast({
+          title: "Campo requerido",
+          description: "Por favor indica cuál sistema de facturación utilizas",
+          variant: "destructive"
+        });
+        return;
+      }
+    } else if (currentStep === 2) {
+      if (!formData.subdominio) {
+        toast({
+          title: "Campo requerido",
+          description: "Por favor elige un subdominio",
+          variant: "destructive"
+        });
+        return;
+      }
+      
+      if (!isSubdomainAvailable) {
+        toast({
+          title: "Subdominio no disponible",
+          description: "Por favor elige otro subdominio",
+          variant: "destructive"
+        });
+        return;
+      }
+    } else if (currentStep === 3) {
       if (!formData.rut || !formData.clave) {
         toast({
           title: "Campos requeridos",
@@ -247,35 +276,6 @@ export default function OnboardingSuccess() {
         toast({
           title: "Formato incorrecto",
           description: "El RUT debe tener el formato 12345678-9",
-          variant: "destructive"
-        });
-        return;
-      }
-    }
-    
-    if (currentStep === 2 && formData.sistema === "mercado" && !formData.sistemaCustom) {
-      toast({
-        title: "Campo requerido",
-        description: "Por favor indica cuál sistema de facturación utilizas",
-        variant: "destructive"
-      });
-      return;
-    }
-    
-    if (currentStep === 3) {
-      if (!formData.subdominio) {
-        toast({
-          title: "Campo requerido",
-          description: "Por favor elige un subdominio",
-          variant: "destructive"
-        });
-        return;
-      }
-      
-      if (!isSubdomainAvailable) {
-        toast({
-          title: "Subdominio no disponible",
-          description: "Por favor elige otro subdominio",
           variant: "destructive"
         });
         return;
@@ -316,39 +316,8 @@ export default function OnboardingSuccess() {
     setCurrentStep(prev => prev - 1);
   };
   
+  // Reordered steps as requested
   const steps = [
-    {
-      title: "Acceso al SII",
-      icon: <LockKeyhole className="w-6 h-6 text-primary" />,
-      description: "Ingresa tus credenciales del SII para conectar tus datos",
-      content: (
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">RUT</label>
-            <Input 
-              value={formData.rut}
-              onChange={(e) => updateFormData('rut', e.target.value)}
-              placeholder="12345678-9"
-            />
-            <p className="text-xs text-muted-foreground">Ingresa el RUT con guión y dígito verificador</p>
-          </div>
-          
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Clave del SII</label>
-            <Input 
-              type="password"
-              value={formData.clave}
-              onChange={(e) => updateFormData('clave', e.target.value)}
-              placeholder="••••••••"
-            />
-            <div className="flex items-center text-xs text-muted-foreground mt-1">
-              <ShieldCheck className="w-4 h-4 mr-1 text-green-600" />
-              Tus datos están seguros y encriptados
-            </div>
-          </div>
-        </div>
-      )
-    },
     {
       title: "Periodo de datos",
       icon: <Calendar className="w-6 h-6 text-primary" />,
@@ -385,10 +354,61 @@ export default function OnboardingSuccess() {
           isChecking={isSubdomainChecking}
         />
       )
+    },
+    {
+      title: "Acceso al SII",
+      icon: <LockKeyhole className="w-6 h-6 text-primary" />,
+      description: "Ingresa tus credenciales del SII para conectar tus datos",
+      content: (
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">RUT</label>
+            <Input 
+              value={formData.rut}
+              onChange={(e) => updateFormData('rut', e.target.value)}
+              placeholder="12345678-9"
+            />
+            <p className="text-xs text-muted-foreground">Ingresa el RUT con guión y dígito verificador</p>
+          </div>
+          
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Clave del SII</label>
+            <Input 
+              type="password"
+              value={formData.clave}
+              onChange={(e) => updateFormData('clave', e.target.value)}
+              placeholder="••••••••"
+            />
+            <div className="flex items-center text-xs text-muted-foreground mt-1">
+              <ShieldCheck className="w-4 h-4 mr-1 text-green-600" />
+              Tus datos están seguros y encriptados
+            </div>
+          </div>
+        </div>
+      )
     }
   ];
   
   const currentStepData = steps[currentStep];
+
+  // Feature illustrations
+  const illustrations = [
+    {
+      title: "Acceso inmediato a tus datos",
+      description: "Conectamos con el SII para importar automáticamente tus facturas y boletas.",
+      icon: <Clock4 className="w-8 h-8 text-primary" />
+    },
+    {
+      title: "Analítica avanzada",
+      description: "Visualiza indicadores clave para optimizar tu restaurante.",
+      icon: <Database className="w-8 h-8 text-primary" />
+    },
+    {
+      title: "100% seguro",
+      description: "Tus datos están protegidos con la máxima seguridad.",
+      icon: <ShieldCheck className="w-8 h-8 text-primary" />
+    }
+  ];
 
   return (
     <>
@@ -396,25 +416,64 @@ export default function OnboardingSuccess() {
         <title>Configura tu cuenta | Ruka.ai</title>
       </Helmet>
       
-      <main className="min-h-screen flex flex-col">
-        <Navbar />
+      <main className="min-h-screen flex flex-col md:flex-row bg-white">
+        {/* Left panel (illustrations and info) */}
+        <div className="hidden md:flex md:w-1/2 bg-slate-50 p-12 flex-col justify-center">
+          <div className="max-w-md mx-auto">
+            <div className="mb-12">
+              <img src="/logo.png" alt="Ruka.ai" className="h-12" />
+            </div>
+            
+            <h1 className="text-3xl font-bold mb-6">Configura tu restaurante en Ruka.ai</h1>
+            <p className="text-muted-foreground mb-12">
+              En solo unos minutos estarás aprovechando todo el potencial de 
+              Ruka.ai para optimizar tu negocio.
+            </p>
+            
+            <div className="space-y-8">
+              {illustrations.map((item, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 * index }}
+                  className="flex gap-4 items-start"
+                >
+                  <div className="rounded-full bg-primary/10 p-3 flex-shrink-0">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-medium mb-1">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
         
-        <div className="flex-1 container px-4 py-12 sm:py-20">
-          <div className="max-w-3xl mx-auto">
+        {/* Right panel (form steps) */}
+        <div className="flex-1 flex items-center justify-center p-6 md:p-12">
+          <div className="w-full max-w-md">
+            {/* Logo for mobile */}
+            <div className="md:hidden mb-8 flex justify-center">
+              <img src="/logo.png" alt="Ruka.ai" className="h-10" />
+            </div>
+            
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-center mb-12"
+              className="text-center mb-8"
             >
-              <h1 className="text-3xl sm:text-4xl font-bold">Configura tu cuenta</h1>
-              <p className="mt-3 text-muted-foreground max-w-lg mx-auto">
-                Conecta tus datos para comenzar a ahorrar tiempo y dinero con Ruka.ai
+              <h1 className="text-2xl md:text-3xl font-bold">Configura tu cuenta</h1>
+              <p className="mt-2 text-muted-foreground">
+                {currentStep + 1} de {totalSteps} pasos para comenzar
               </p>
             </motion.div>
             
             <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
             
-            <Card className="border shadow-lg">
+            <Card className="border shadow-sm">
               <CardHeader>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
@@ -453,16 +512,11 @@ export default function OnboardingSuccess() {
               </CardContent>
             </Card>
             
-            <div className="mt-8 text-center text-sm text-muted-foreground">
-              <div className="flex items-center justify-center space-x-2">
-                <Database className="w-4 h-4" />
-                <span>Conectando con el SII para optimizar tu restaurante</span>
-              </div>
+            <div className="mt-6 text-center text-sm text-muted-foreground">
+              <p>¿Necesitas ayuda? <a href="#" className="text-primary hover:underline">Contáctanos</a></p>
             </div>
           </div>
         </div>
-        
-        <Footer />
       </main>
     </>
   );
