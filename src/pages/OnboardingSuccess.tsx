@@ -8,9 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import OnboardingTestimonials from "@/components/OnboardingTestimonials";
-import FeatureRotator from "@/components/FeatureRotator";
-import ImpactMetrics from "@/components/ImpactMetrics";
 
 type StepProps = {
   currentStep: number;
@@ -393,56 +390,29 @@ export default function OnboardingSuccess() {
               </p>
             </motion.div>
             
-            <div className="space-y-6 flex-1">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="relative aspect-video rounded-xl overflow-hidden shadow-md border border-white/60 mb-6"
-              >
-                <iframe 
-                  width="100%" 
-                  height="100%" 
-                  src="https://www.youtube.com/embed/1wV-corpO74" 
-                  title="CEO de Ruka.ai hablando sobre la plataforma" 
-                  frameBorder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowFullScreen
-                  className="w-full h-full"
-                ></iframe>
-              </motion.div>
-              
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="relative aspect-video rounded-xl overflow-hidden shadow-md border border-white/60 mb-6 flex-grow-0"
+            >
+              <iframe 
+                width="100%" 
+                height="100%" 
+                src="https://www.youtube.com/embed/1wV-corpO74" 
+                title="CEO de Ruka.ai hablando sobre la plataforma" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+                className="w-full h-full"
+              ></iframe>
+            </motion.div>
+            
+            <div className="mt-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-              >
-                <OnboardingTestimonials />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                className="mt-6"
-              >
-                <FeatureRotator />
-              </motion.div>
-            </div>
-            
-            <div className="mt-8 space-y-6">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-              >
-                <ImpactMetrics />
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.7 }}
                 className="mt-8"
               >
                 <p className="text-xs text-center text-slate-500 mb-3">
