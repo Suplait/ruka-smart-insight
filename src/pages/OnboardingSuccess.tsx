@@ -532,12 +532,6 @@ const OnboardingSuccess = () => {
               className="mb-10"
             >
               <div className="mb-6 relative">
-                <div className="absolute -bottom-4 left-0 w-full h-1 bg-gray-100 rounded overflow-hidden">
-                  <div 
-                    className="h-full bg-primary/50 transition-all duration-200 ease-linear"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent after:content-['|'] after:ml-1 after:animate-blink after:text-primary">
                   <ValueMessageTypewriter messages={valueMessages} />
                 </h1>
