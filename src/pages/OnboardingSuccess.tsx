@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -59,9 +60,8 @@ const MonthsSelector = ({
           <div>
             <h4 className="font-medium text-blue-700 mb-1">¿Por qué necesitamos esto?</h4>
             <p className="text-sm text-blue-600">
-              Para comenzar, importaremos tus datos históricos de ventas. Esto nos permitirá 
-              darte insights valiosos desde el primer día. Elige cuántos meses de histórico 
-              quieres cargar inicialmente.
+              Importaremos tus datos históricos de compras para darte insights valiosos desde 
+              el primer día. Selecciona cuántos meses quieres cargar inicialmente.
             </p>
           </div>
         </div>
@@ -109,9 +109,8 @@ const BillingSystemSelector = ({
           <div>
             <h4 className="font-medium text-blue-700 mb-1">¿Por qué es importante?</h4>
             <p className="text-sm text-blue-600">
-              Necesitamos saber qué sistema de facturación usas para conectarnos 
-              correctamente y asegurar que todos tus datos se sincronicen sin problemas. 
-              Esto nos permite brindarte análisis precisos y actualizados.
+              Necesitamos conectarnos a tu sistema de facturación para sincronizar tus datos 
+              y brindarte análisis precisos y actualizados.
             </p>
           </div>
         </div>
@@ -151,7 +150,7 @@ const BillingSystemSelector = ({
           <Input 
             value={customSystem}
             onChange={(e) => onCustomChange(e.target.value)}
-            placeholder="Ej: Defontana, Bsale, etc."
+            placeholder="Nubox, Bsale, Toteat, etc."
             className="bg-white"
           />
         </div>
@@ -182,8 +181,7 @@ const SubdomainInput = ({
             <h4 className="font-medium text-blue-700 mb-1">Tu portal personalizado</h4>
             <p className="text-sm text-blue-600">
               Este será el enlace de acceso a tu dashboard personalizado. 
-              Hemos sugerido un subdominio basado en el nombre de tu restaurante, 
-              pero puedes personalizarlo si lo prefieres.
+              Hemos sugerido un subdominio basado en el nombre de tu restaurante.
             </p>
           </div>
         </div>
@@ -259,7 +257,7 @@ export default function OnboardingSuccess() {
   const [formData, setFormData] = useState({
     rut: "",
     clave: "",
-    meses: 1,
+    meses: 3, // Default to 3 months
     sistema: "sii",
     sistemaCustom: "",
     subdominio: suggestedSubdomain,
@@ -267,6 +265,14 @@ export default function OnboardingSuccess() {
   
   const [isSubdomainChecking, setIsSubdomainChecking] = useState(false);
   const [isSubdomainAvailable, setIsSubdomainAvailable] = useState<boolean | null>(null);
+  
+  // Set the subdomain initially
+  useEffect(() => {
+    if (suggestedSubdomain && !formData.subdominio) {
+      setFormData(prev => ({ ...prev, subdominio: suggestedSubdomain }));
+      checkSubdomainAvailability(suggestedSubdomain);
+    }
+  }, [suggestedSubdomain]);
   
   const updateFormData = (key: string, value: any) => {
     setFormData(prev => ({ ...prev, [key]: value }));
@@ -281,7 +287,6 @@ export default function OnboardingSuccess() {
     setIsSubdomainChecking(true);
     
     // Simulated check - in a real implementation, this would call an API
-    // You would need to implement an actual check against your database
     try {
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 800));
@@ -444,7 +449,7 @@ export default function OnboardingSuccess() {
                 <h4 className="font-medium text-blue-700 mb-1">Conexión segura con el SII</h4>
                 <p className="text-sm text-blue-600">
                   Tus credenciales se utilizan únicamente para sincronizar tus datos de forma segura. 
-                  Utilizamos encriptación de nivel bancario y nunca almacenamos tu contraseña.
+                  Nunca almacenamos tu contraseña.
                 </p>
               </div>
             </div>
@@ -474,6 +479,14 @@ export default function OnboardingSuccess() {
                 Tus datos están seguros y encriptados
               </div>
             </div>
+            
+            <Button 
+              onClick={handleNext}
+              className="w-full mt-4"
+              style={{ backgroundColor: "#DA5C2B", borderColor: "#DA5C2B" }}
+            >
+              Iniciar sesión con el SII
+            </Button>
           </div>
         </div>
       )
@@ -579,27 +592,37 @@ export default function OnboardingSuccess() {
               <CardContent className="pb-8">
                 {currentStepData.content}
                 
-                <div className="flex justify-between mt-10">
-                  <Button
-                    variant="outline"
-                    onClick={handleBack}
-                    disabled={currentStep === 0}
-                    className="gap-2"
-                  >
-                    <ArrowLeft className="w-4 h-4" /> Atrás
-                  </Button>
-                  
-                  <Button 
-                    onClick={handleNext}
-                    className="gap-2"
-                  >
-                    {currentStep === totalSteps - 1 ? (
-                      <>Finalizar</>
-                    ) : (
-                      <>Siguiente <ArrowRight className="w-4 h-4" /></>
-                    )}
-                  </Button>
-                </div>
+                {currentStep < 3 && (
+                  <div className="flex justify-between mt-10">
+                    <Button
+                      variant="outline"
+                      onClick={handleBack}
+                      disabled={currentStep === 0}
+                      className="gap-2"
+                    >
+                      <ArrowLeft className="w-4 h-4" /> Atrás
+                    </Button>
+                    
+                    <Button 
+                      onClick={handleNext}
+                      className="gap-2"
+                    >
+                      Siguiente <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </div>
+                )}
+                
+                {currentStep === 3 && (
+                  <div className="flex justify-start mt-6">
+                    <Button
+                      variant="outline"
+                      onClick={handleBack}
+                      className="gap-2"
+                    >
+                      <ArrowLeft className="w-4 h-4" /> Atrás
+                    </Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
             
