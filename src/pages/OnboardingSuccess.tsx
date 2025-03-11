@@ -1,8 +1,7 @@
-
 import { Helmet } from "react-helmet";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { 
   ArrowLeft, 
   ArrowRight, 
@@ -13,12 +12,12 @@ import {
   Check, 
   Globe, 
   ShieldCheck,
-  Clock4
+  Clock4,
+  Info
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
 
 type StepProps = {
@@ -53,24 +52,40 @@ const MonthsSelector = ({
   onChange: (months: number) => void;
 }) => {
   return (
-    <div className="grid grid-cols-3 gap-4 mt-2">
-      {[1, 2, 3].map((month) => (
-        <button
-          key={month}
-          type="button"
-          onClick={() => onChange(month)}
-          className={`p-4 rounded-lg border-2 transition-all flex flex-col items-center ${
-            selectedMonths === month
-              ? "border-primary bg-primary/5"
-              : "border-gray-200 hover:border-gray-300"
-          }`}
-        >
-          <span className="text-2xl font-semibold">{month}</span>
-          <span className="text-sm text-muted-foreground">
-            {month === 1 ? "mes" : "meses"}
-          </span>
-        </button>
-      ))}
+    <div className="space-y-6">
+      <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
+        <div className="flex gap-3">
+          <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
+          <div>
+            <h4 className="font-medium text-blue-700 mb-1">¿Por qué necesitamos esto?</h4>
+            <p className="text-sm text-blue-600">
+              Para comenzar, importaremos tus datos históricos de ventas. Esto nos permitirá 
+              darte insights valiosos desde el primer día. Elige cuántos meses de histórico 
+              quieres cargar inicialmente.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-4">
+        {[1, 2, 3].map((month) => (
+          <button
+            key={month}
+            type="button"
+            onClick={() => onChange(month)}
+            className={`p-4 rounded-lg border-2 transition-all flex flex-col items-center ${
+              selectedMonths === month
+                ? "border-primary bg-primary/5"
+                : "border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <span className="text-2xl font-semibold">{month}</span>
+            <span className="text-sm text-muted-foreground">
+              {month === 1 ? "mes" : "meses"}
+            </span>
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
@@ -87,7 +102,21 @@ const BillingSystemSelector = ({
   onCustomChange: (value: string) => void;
 }) => {
   return (
-    <div className="space-y-4 mt-2">
+    <div className="space-y-6">
+      <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
+        <div className="flex gap-3">
+          <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
+          <div>
+            <h4 className="font-medium text-blue-700 mb-1">¿Por qué es importante?</h4>
+            <p className="text-sm text-blue-600">
+              Necesitamos saber qué sistema de facturación usas para conectarnos 
+              correctamente y asegurar que todos tus datos se sincronicen sin problemas. 
+              Esto nos permite brindarte análisis precisos y actualizados.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="grid grid-cols-2 gap-4">
         <button
           type="button"
@@ -135,17 +164,46 @@ const SubdomainInput = ({
   value, 
   onChange, 
   isAvailable, 
-  isChecking 
+  isChecking,
+  suggestedSubdomain
 }: { 
   value: string; 
   onChange: (value: string) => void;
   isAvailable: boolean | null;
   isChecking: boolean;
+  suggestedSubdomain: string;
 }) => {
   return (
-    <div className="mt-2">
-      <div className="flex items-center">
-        <div className="relative flex-1">
+    <div className="space-y-6">
+      <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
+        <div className="flex gap-3">
+          <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
+          <div>
+            <h4 className="font-medium text-blue-700 mb-1">Tu portal personalizado</h4>
+            <p className="text-sm text-blue-600">
+              Este será el enlace de acceso a tu dashboard personalizado. 
+              Hemos sugerido un subdominio basado en el nombre de tu restaurante, 
+              pero puedes personalizarlo si lo prefieres.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        {suggestedSubdomain && (
+          <div className="mb-4">
+            <Button 
+              variant="outline" 
+              onClick={() => onChange(suggestedSubdomain)}
+              className="w-full justify-start"
+            >
+              <Globe className="mr-2 h-4 w-4" />
+              Usar sugerencia: {suggestedSubdomain}.ruka.ai
+            </Button>
+          </div>
+        )}
+
+        <div className="relative">
           <Input
             value={value}
             onChange={(e) => onChange(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
@@ -156,29 +214,46 @@ const SubdomainInput = ({
             .ruka.ai
           </div>
         </div>
+        
+        {value && (
+          <div className="mt-2 text-sm">
+            {isChecking ? (
+              <span className="text-muted-foreground">Verificando disponibilidad...</span>
+            ) : isAvailable ? (
+              <span className="text-green-600 flex items-center gap-1">
+                <Check className="w-4 h-4" /> Subdominio disponible
+              </span>
+            ) : (
+              <span className="text-red-500">Este subdominio no está disponible</span>
+            )}
+          </div>
+        )}
       </div>
-      
-      {value && (
-        <div className="mt-2 text-sm">
-          {isChecking ? (
-            <span className="text-muted-foreground">Verificando disponibilidad...</span>
-          ) : isAvailable ? (
-            <span className="text-green-600 flex items-center gap-1">
-              <Check className="w-4 h-4" /> Subdominio disponible
-            </span>
-          ) : (
-            <span className="text-red-500">Este subdominio no está disponible</span>
-          )}
-        </div>
-      )}
     </div>
   );
 };
 
 export default function OnboardingSuccess() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
   const totalSteps = 4;
+  
+  // Get restaurant name from location state
+  const restaurantName = location.state?.restaurantName || '';
+  
+  // Generate suggested subdomain from restaurant name
+  const generateSubdomain = (name: string) => {
+    return name
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Remove accents
+      .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+      .replace(/\s+/g, '') // Remove spaces
+      .trim();
+  };
+
+  const suggestedSubdomain = generateSubdomain(restaurantName);
   
   // Form state
   const [formData, setFormData] = useState({
@@ -187,7 +262,7 @@ export default function OnboardingSuccess() {
     meses: 1,
     sistema: "sii",
     sistemaCustom: "",
-    subdominio: "",
+    subdominio: suggestedSubdomain,
   });
   
   const [isSubdomainChecking, setIsSubdomainChecking] = useState(false);
@@ -316,7 +391,7 @@ export default function OnboardingSuccess() {
     setCurrentStep(prev => prev - 1);
   };
   
-  // Reordered steps as requested
+  // Steps array with reordered content
   const steps = [
     {
       title: "Periodo de datos",
@@ -352,6 +427,7 @@ export default function OnboardingSuccess() {
           onChange={handleSubdomainChange}
           isAvailable={isSubdomainAvailable}
           isChecking={isSubdomainChecking}
+          suggestedSubdomain={suggestedSubdomain}
         />
       )
     },
@@ -360,28 +436,43 @@ export default function OnboardingSuccess() {
       icon: <LockKeyhole className="w-6 h-6 text-primary" />,
       description: "Ingresa tus credenciales del SII para conectar tus datos",
       content: (
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">RUT</label>
-            <Input 
-              value={formData.rut}
-              onChange={(e) => updateFormData('rut', e.target.value)}
-              placeholder="12345678-9"
-            />
-            <p className="text-xs text-muted-foreground">Ingresa el RUT con guión y dígito verificador</p>
+        <div className="space-y-6">
+          <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
+            <div className="flex gap-3">
+              <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="font-medium text-blue-700 mb-1">Conexión segura con el SII</h4>
+                <p className="text-sm text-blue-600">
+                  Tus credenciales se utilizan únicamente para sincronizar tus datos de forma segura. 
+                  Utilizamos encriptación de nivel bancario y nunca almacenamos tu contraseña.
+                </p>
+              </div>
+            </div>
           </div>
-          
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Clave del SII</label>
-            <Input 
-              type="password"
-              value={formData.clave}
-              onChange={(e) => updateFormData('clave', e.target.value)}
-              placeholder="••••••••"
-            />
-            <div className="flex items-center text-xs text-muted-foreground mt-1">
-              <ShieldCheck className="w-4 h-4 mr-1 text-green-600" />
-              Tus datos están seguros y encriptados
+
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">RUT</label>
+              <Input 
+                value={formData.rut}
+                onChange={(e) => updateFormData('rut', e.target.value)}
+                placeholder="12345678-9"
+              />
+              <p className="text-xs text-muted-foreground">Ingresa el RUT con guión y dígito verificador</p>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Clave del SII</label>
+              <Input 
+                type="password"
+                value={formData.clave}
+                onChange={(e) => updateFormData('clave', e.target.value)}
+                placeholder="••••••••"
+              />
+              <div className="flex items-center text-xs text-muted-foreground mt-1">
+                <ShieldCheck className="w-4 h-4 mr-1 text-green-600" />
+                Tus datos están seguros y encriptados
+              </div>
             </div>
           </div>
         </div>
