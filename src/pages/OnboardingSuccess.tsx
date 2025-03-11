@@ -214,6 +214,7 @@ export default function OnboardingSuccess() {
   const location = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
   const totalSteps = 4;
   
   // Get restaurant name from location state or form data
@@ -320,20 +321,14 @@ export default function OnboardingSuccess() {
       try {
         setIsLoading(true);
         
-        // Simulate a delay for the SII login process
-        await new Promise(resolve => setTimeout(resolve, 10000));
+        // Simulate a delay for the SII login process (reduced to 6 seconds)
+        await new Promise(resolve => setTimeout(resolve, 6000));
         
         await saveFormData();
         
-        toast({
-          title: "¡Configuración completada!",
-          description: "Estamos preparando tu plataforma, cargando tus datos y te enviaremos las credenciales para ingresar durante los próximos minutos.",
-        });
-        
-        // Navigate to dashboard after showing the success message
-        setTimeout(() => {
-          navigate('/dashboard');
-        }, 3000);
+        // Show completion state instead of navigating away
+        setIsComplete(true);
+        setIsLoading(false);
         
         return;
       } catch (error) {
@@ -407,10 +402,10 @@ export default function OnboardingSuccess() {
             <div className="flex gap-3">
               <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
               <div>
-                <h4 className="font-medium text-blue-700 mb-1">Conexión segura con el SII</h4>
+                <h4 className="font-medium text-blue-700 mb-1">Conexión con el SII</h4>
                 <p className="text-sm text-blue-600">
-                  Tus credenciales se utilizan únicamente para sincronizar tus datos. 
-                  Nunca almacenamos tu contraseña.
+                  Ingresa las credenciales de tu empresa (persona jurídica) para importar 
+                  el registro de compra y venta.
                 </p>
               </div>
             </div>
@@ -437,7 +432,7 @@ export default function OnboardingSuccess() {
               />
               <div className="flex items-center text-xs text-muted-foreground mt-1">
                 <ShieldCheck className="w-4 h-4 mr-1 text-green-600" />
-                Tus datos están seguros y encriptados
+                Tus datos están almacenados de forma segura
               </div>
             </div>
             
@@ -466,6 +461,31 @@ export default function OnboardingSuccess() {
       )
     }
   ];
+  
+  // Success screen content (shown after completion)
+  const successContent = (
+    <div className="text-center space-y-6">
+      <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
+        <Check className="w-8 h-8 text-green-600" />
+      </div>
+      
+      <h2 className="text-2xl font-bold">¡Configuración completada!</h2>
+      
+      <p className="text-gray-600">
+        Estamos preparando tu plataforma, cargando tus datos y te 
+        enviaremos las credenciales para ingresar durante los próximos minutos.
+      </p>
+      
+      <div className="pt-4">
+        <Button 
+          onClick={() => navigate('/dashboard')}
+          className="px-6"
+        >
+          Ir al inicio
+        </Button>
+      </div>
+    </div>
+  );
   
   const currentStepData = steps[currentStep];
 
@@ -530,7 +550,7 @@ export default function OnboardingSuccess() {
           </div>
         </div>
         
-        {/* Right panel (form steps) */}
+        {/* Right panel (form steps or success message) */}
         <div className="flex-1 flex items-center justify-center p-6 md:p-12">
           <div className="w-full max-w-md">
             {/* Logo for mobile */}
@@ -538,67 +558,76 @@ export default function OnboardingSuccess() {
               <img src="/logo.png" alt="Ruka.ai" className="h-10" />
             </div>
             
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center mb-8"
-            >
-              <h1 className="text-2xl md:text-3xl font-bold">Configura tu cuenta</h1>
-              <p className="mt-2 text-muted-foreground">
-                {currentStep + 1} de {totalSteps} pasos para comenzar
-              </p>
-            </motion.div>
-            
-            <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
-            
-            <Card className="border shadow-sm">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    {currentStepData.icon}
-                  </div>
-                  <div>
-                    <CardTitle>{currentStepData.title}</CardTitle>
-                    <CardDescription>{currentStepData.description}</CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="pb-8">
-                {currentStepData.content}
+            {!isComplete ? (
+              <>
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-center mb-8"
+                >
+                  <h1 className="text-2xl md:text-3xl font-bold">Configura tu cuenta</h1>
+                  <p className="mt-2 text-muted-foreground">
+                    {currentStep + 1} de {totalSteps} pasos para comenzar
+                  </p>
+                </motion.div>
                 
-                {currentStep < 3 && (
-                  <div className="flex justify-between mt-10">
-                    <Button
-                      variant="outline"
-                      onClick={handleBack}
-                      disabled={currentStep === 0}
-                      className="gap-2"
-                    >
-                      <ArrowLeft className="w-4 h-4" /> Atrás
-                    </Button>
+                <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
+                
+                <Card className="border shadow-sm">
+                  <CardHeader>
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                        {currentStepData.icon}
+                      </div>
+                      <div>
+                        <CardTitle>{currentStepData.title}</CardTitle>
+                        <CardDescription>{currentStepData.description}</CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pb-8">
+                    {currentStepData.content}
                     
-                    <Button 
-                      onClick={handleNext}
-                      className="gap-2"
-                    >
-                      Siguiente <ArrowRight className="w-4 h-4" />
-                    </Button>
-                  </div>
-                )}
-                
-                {currentStep === 3 && (
-                  <div className="flex justify-start mt-6">
-                    <Button
-                      variant="outline"
-                      onClick={handleBack}
-                      className="gap-2"
-                    >
-                      <ArrowLeft className="w-4 h-4" /> Atrás
-                    </Button>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+                    {currentStep < 3 && (
+                      <div className="flex justify-between mt-10">
+                        <Button
+                          variant="outline"
+                          onClick={handleBack}
+                          disabled={currentStep === 0}
+                          className="gap-2"
+                        >
+                          <ArrowLeft className="w-4 h-4" /> Atrás
+                        </Button>
+                        
+                        <Button 
+                          onClick={handleNext}
+                          className="gap-2"
+                        >
+                          Siguiente <ArrowRight className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    )}
+                    
+                    {currentStep === 3 && (
+                      <div className="flex justify-start mt-6">
+                        <Button
+                          variant="outline"
+                          onClick={handleBack}
+                          className="gap-2"
+                        >
+                          <ArrowLeft className="w-4 h-4" /> Atrás
+                        </Button>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </>
+            ) : (
+              // Show success content when complete
+              <Card className="border shadow-sm p-8">
+                {successContent}
+              </Card>
+            )}
             
             <div className="mt-6 text-center text-sm text-muted-foreground">
               <p>¿Necesitas ayuda? <a href="#" className="text-primary hover:underline">Contáctanos</a></p>
