@@ -1,6 +1,5 @@
-
 import { Helmet } from "react-helmet";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Database, LockKeyhole, Calendar, Store, Check, Globe, ShieldCheck, Clock4, Info, Loader, ExternalLink } from "lucide-react";
@@ -17,7 +16,6 @@ import {
   CarouselPrevious
 } from "@/components/ui/carousel";
 
-// Import the value messages from Hero component
 const valueMessages = [
   "Automatiza el registro de compras.",
   "Controla tu margen al día, no al mes.",
@@ -179,7 +177,6 @@ const SubdomainInput = ({
   const [isChecking, setIsChecking] = useState(false);
   const [isAvailable, setIsAvailable] = useState(true);
   
-  // Check subdomain availability with animation effect
   useEffect(() => {
     if (!value) return;
     
@@ -282,7 +279,6 @@ export default function OnboardingSuccess() {
     }
   }, [suggestedSubdomain]);
 
-  // Auto-rotate carousel for value messages
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveSlide(prev => (prev + 1) % valueMessages.length);
@@ -290,6 +286,16 @@ export default function OnboardingSuccess() {
     
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const carousel = document.querySelector('[data-carousel="value-messages"]');
+    if (carousel) {
+      const api = (carousel as any).__embla;
+      if (api) {
+        api.scrollTo(activeSlide);
+      }
+    }
+  }, [activeSlide]);
 
   const updateFormData = (key: string, value: any) => {
     setFormData(prev => ({
@@ -507,7 +513,6 @@ export default function OnboardingSuccess() {
       </Helmet>
       
       <main className="min-h-screen flex flex-col md:flex-row">
-        {/* Left panel */}
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col">
           <div className="max-w-md mx-auto flex flex-col h-full items-center justify-center text-center">
             <motion.div 
@@ -526,7 +531,7 @@ export default function OnboardingSuccess() {
               className="mb-10"
             >
               <div className="mb-6">
-                <Carousel className="w-full max-w-md" activeIndex={activeSlide} setActiveIndex={setActiveSlide}>
+                <Carousel className="w-full max-w-md" data-carousel="value-messages">
                   <CarouselContent>
                     {valueMessages.map((message, index) => (
                       <CarouselItem key={index}>
@@ -586,7 +591,6 @@ export default function OnboardingSuccess() {
           </div>
         </div>
         
-        {/* Right panel */}
         <div className="flex-1 flex items-center justify-center p-6 md:p-12 bg-white">
           <div className="w-full max-w-md">
             <div className="md:hidden mb-8 flex flex-col items-center text-center">
