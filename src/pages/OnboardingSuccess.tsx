@@ -9,6 +9,18 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
+
+// Import the value messages from Hero component
+const valueMessages = [
+  "Automatiza el registro de compras.",
+  "Controla tu margen al día, no al mes.",
+  "Descubre alzas de precio de tus insumos en tiempo real.",
+  "Genera reportes en segundos usando lenguaje natural.",
+  "Gestiona simple el pago a tus proveedores.",
+  "Ten toda tu información a la mano.",
+  "Libera HH a la semana para que te enfoques en lo que importa.",
+];
 
 type StepProps = {
   currentStep: number;
@@ -449,55 +461,52 @@ export default function OnboardingSuccess() {
       <main className="min-h-screen flex flex-col md:flex-row">
         {/* Left panel */}
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col">
-          <div className="max-w-lg mx-auto flex flex-col h-full">
+          <div className="max-w-md mx-auto flex flex-col h-full items-center justify-center text-center">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
               className="mb-8"
             >
-              <img src="/logo.png" alt="Ruka.ai" className="h-10" />
+              <img src="/logo.png" alt="Ruka.ai" className="h-12 mx-auto" />
             </motion.div>
             
-            <div className="flex flex-col items-center justify-center flex-grow text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="mb-10"
-              >
-                <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-                  Automatización contable inteligente
-                </h1>
-                <p className="text-slate-600 text-lg max-w-md mx-auto">
-                  Ruka.ai importa tus facturas, clasifica tus gastos y automatiza tu contabilidad mensual con IA.
-                </p>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl border border-white/80 mb-10"
-              >
-                <iframe 
-                  width="100%" 
-                  height="100%" 
-                  src="https://www.youtube.com/embed/1wV-corpO74" 
-                  title="CEO de Ruka.ai hablando sobre la plataforma" 
-                  frameBorder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowFullScreen
-                  className="w-full h-full"
-                ></iframe>
-              </motion.div>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="mb-10"
+            >
+              <h1 className="text-4xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                <ValueMessageTypewriter messages={valueMessages} />
+              </h1>
+              <p className="text-slate-600 text-xl max-w-md mx-auto">
+                Agentes con IA que procesan, agrupan y monitorean tus transacciones para que tengas control absoluto de tu negocio.
+              </p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl border border-white/80 mb-12"
+            >
+              <iframe 
+                width="100%" 
+                height="100%" 
+                src="https://www.youtube.com/embed/1wV-corpO74" 
+                title="CEO de Ruka.ai hablando sobre la plataforma" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+                className="w-full h-full"
+              ></iframe>
+            </motion.div>
             
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="mt-auto"
             >
               <div className="text-center">
                 <p className="text-sm text-slate-500 mb-4">
@@ -519,7 +528,7 @@ export default function OnboardingSuccess() {
               <img src="/logo.png" alt="Ruka.ai" className="h-10 mb-4" />
               <h1 className="text-2xl font-bold mb-2">Automatización contable inteligente</h1>
               <p className="text-slate-600 text-sm mb-6">
-                Ruka.ai importa tus facturas, clasifica tus gastos y automatiza tu contabilidad.
+                Agentes con IA que procesan, agrupan y monitorean tus transacciones para que tengas control absoluto de tu negocio.
               </p>
             </div>
             
