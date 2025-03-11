@@ -242,7 +242,9 @@ const SubdomainInput = ({
   );
 };
 
-export default function OnboardingSuccess() {
+const SLIDE_INTERVAL = 2500; // 2.5 seconds in milliseconds
+
+const OnboardingSuccess = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
@@ -250,6 +252,7 @@ export default function OnboardingSuccess() {
   const [isComplete, setIsComplete] = useState(false);
   const totalSteps = 4;
   const [activeSlide, setActiveSlide] = useState(0);
+  const [progress, setProgress] = useState(100);
 
   const restaurantName = location.state?.restaurantName || '';
   const generateSubdomain = (name: string) => {
@@ -282,10 +285,26 @@ export default function OnboardingSuccess() {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveSlide(prev => (prev + 1) % valueMessages.length);
-    }, 3000);
+    }, SLIDE_INTERVAL);
     
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const startTime = Date.now();
+    const updateProgress = () => {
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, 100 - (elapsed / SLIDE_INTERVAL) * 100);
+      setProgress(remaining);
+
+      if (remaining > 0) {
+        requestAnimationFrame(updateProgress);
+      }
+    };
+
+    setProgress(100);
+    requestAnimationFrame(updateProgress);
+  }, [activeSlide]);
 
   useEffect(() => {
     const carousel = document.querySelector('[data-carousel="value-messages"]');
@@ -530,7 +549,13 @@ export default function OnboardingSuccess() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mb-10"
             >
-              <div className="mb-6">
+              <div className="mb-6 relative">
+                <div className="absolute -bottom-4 left-0 w-full h-1 bg-gray-100 rounded overflow-hidden">
+                  <div 
+                    className="h-full bg-primary/50 transition-all duration-200 ease-linear"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
                 <Carousel className="w-full max-w-md" data-carousel="value-messages">
                   <CarouselContent>
                     {valueMessages.map((message, index) => (
@@ -672,4 +697,6 @@ export default function OnboardingSuccess() {
       </main>
     </>
   );
-}
+};
+
+export default OnboardingSuccess;
