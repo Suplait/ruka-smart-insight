@@ -3,13 +3,19 @@ import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Database, LockKeyhole, Calendar, Store, Check, Globe, ShieldCheck, Clock4, Info, Loader } from "lucide-react";
+import { ArrowLeft, ArrowRight, Database, LockKeyhole, Calendar, Store, Check, Globe, ShieldCheck, Clock4, Info, Loader, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
+import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from "@/components/ui/carousel";
 
 // Import the value messages from Hero component
 const valueMessages = [
@@ -170,6 +176,24 @@ const SubdomainInput = ({
   onChange: (value: string) => void;
   suggestedSubdomain: string;
 }) => {
+  const [isChecking, setIsChecking] = useState(false);
+  const [isAvailable, setIsAvailable] = useState(true);
+  
+  // Check subdomain availability with animation effect
+  useEffect(() => {
+    if (!value) return;
+    
+    setIsChecking(true);
+    setIsAvailable(false);
+    
+    const timer = setTimeout(() => {
+      setIsChecking(false);
+      setIsAvailable(true);
+    }, 800);
+    
+    return () => clearTimeout(timer);
+  }, [value]);
+
   return (
     <div className="space-y-6">
       <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
@@ -202,9 +226,19 @@ const SubdomainInput = ({
         </div>
         
         <div className="mt-2 text-sm">
-          <span className="text-green-600 flex items-center gap-1">
-            <Check className="w-4 h-4" /> Subdominio disponible
-          </span>
+          {isChecking ? (
+            <span className="text-amber-600 flex items-center gap-1">
+              <Loader className="w-4 h-4 animate-spin" /> Comprobando disponibilidad...
+            </span>
+          ) : isAvailable ? (
+            <span className="text-green-600 flex items-center gap-1">
+              <Check className="w-4 h-4" /> Subdominio disponible
+            </span>
+          ) : (
+            <span className="text-red-600 flex items-center gap-1">
+              <span className="w-4 h-4">✖</span> Subdominio no disponible
+            </span>
+          )}
         </div>
       </div>
     </div>
@@ -218,6 +252,7 @@ export default function OnboardingSuccess() {
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const totalSteps = 4;
+  const [activeSlide, setActiveSlide] = useState(0);
 
   const restaurantName = location.state?.restaurantName || '';
   const generateSubdomain = (name: string) => {
@@ -246,6 +281,15 @@ export default function OnboardingSuccess() {
       }));
     }
   }, [suggestedSubdomain]);
+
+  // Auto-rotate carousel for value messages
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSlide(prev => (prev + 1) % valueMessages.length);
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   const updateFormData = (key: string, value: any) => {
     setFormData(prev => ({
@@ -452,6 +496,10 @@ export default function OnboardingSuccess() {
 
   const currentStepData = steps[currentStep];
 
+  const openYoutubeInNewTab = () => {
+    window.open("https://www.youtube.com/embed/1wV-corpO74", "_blank");
+  };
+
   return (
     <>
       <Helmet>
@@ -477,9 +525,19 @@ export default function OnboardingSuccess() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mb-10"
             >
-              <h1 className="text-4xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-                <ValueMessageTypewriter messages={valueMessages} />
-              </h1>
+              <div className="mb-6">
+                <Carousel className="w-full max-w-md" activeIndex={activeSlide} setActiveIndex={setActiveSlide}>
+                  <CarouselContent>
+                    {valueMessages.map((message, index) => (
+                      <CarouselItem key={index}>
+                        <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                          {message}
+                        </h1>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                </Carousel>
+              </div>
               <p className="text-slate-600 text-xl max-w-md mx-auto">
                 Agentes con IA que procesan, agrupan y monitorean tus transacciones para que tengas control absoluto de tu negocio.
               </p>
@@ -489,7 +547,7 @@ export default function OnboardingSuccess() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl border border-white/80 mb-12"
+              className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl border border-white/80 mb-4"
             >
               <iframe 
                 width="100%" 
@@ -502,6 +560,13 @@ export default function OnboardingSuccess() {
                 className="w-full h-full"
               ></iframe>
             </motion.div>
+            
+            <button 
+              onClick={openYoutubeInNewTab} 
+              className="mb-12 text-sm text-slate-500 flex items-center gap-1 hover:text-primary transition-colors"
+            >
+              Seguir viendo en segundo plano <ExternalLink className="w-3 h-3 ml-1" />
+            </button>
             
             <motion.div
               initial={{ opacity: 0, y: 20 }}
