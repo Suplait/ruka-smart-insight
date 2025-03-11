@@ -31,7 +31,7 @@ export default function SimpleConnection() {
               />
             </div>
             <h3 className="text-sm font-medium">SII</h3>
-            <p className="text-xs text-gray-600">Datos oficiales</p>
+            <p className="text-xs text-gray-600">Compra y venta</p>
           </motion.div>
 
           {/* Ruka.ai */}
@@ -63,11 +63,11 @@ export default function SimpleConnection() {
               <FileText className="w-5 h-5 text-primary" />
             </div>
             <h3 className="text-sm font-medium">Facturador</h3>
-            <p className="text-xs text-gray-600">Tus datos</p>
+            <p className="text-xs text-gray-600">XMLs</p>
           </motion.div>
         </div>
         
-        {/* Flow lines - simplified for this version */}
+        {/* Flow lines */}
         <div className="absolute top-1/2 left-[27%] w-[20%] h-0.5 -translate-y-1/2 bg-primary/30 z-0"></div>
         <div className="absolute top-1/2 right-[27%] w-[20%] h-0.5 -translate-y-1/2 bg-primary/30 z-0"></div>
       </div>
