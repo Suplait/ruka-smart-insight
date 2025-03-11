@@ -1,29 +1,16 @@
-
 import { Helmet } from "react-helmet";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Database, LockKeyhole, Calendar, Store, Check, Globe, ShieldCheck, Clock4, Info, Loader, ExternalLink } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Store, Check, Globe, ShieldCheck, Info, Loader, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
-import ImpactStats from "@/components/restaurant/ImpactStats";
-import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
-import Features from "@/components/Features";
 import Partners from "@/components/Partners";
-
-const valueMessages = [
-  "Automatiza el registro de compras.",
-  "Controla tu margen al día, no al mes.",
-  "Descubre alzas de precio de tus insumos en tiempo real.",
-  "Genera reportes en segundos usando lenguaje natural.",
-  "Gestiona simple el pago a tus proveedores.",
-  "Ten toda tu información a la mano.",
-  "Libera HH a la semana para que te enfoques en lo que importa.",
-];
+import AutomationFeatures from "@/components/restaurant/AutomationFeatures";
+import SimpleConnection from "@/components/restaurant/SimpleConnection";
+import CompactImpactStats from "@/components/restaurant/CompactImpactStats";
 
 type StepProps = {
   currentStep: number;
@@ -391,7 +378,7 @@ const OnboardingSuccess = () => {
     },
     {
       title: "Acceso al SII",
-      icon: <LockKeyhole className="w-6 h-6 text-primary" />,
+      icon: <ShieldCheck className="w-6 h-6 text-primary" />,
       description: "Ingresa tus credenciales para conectar tus datos",
       content: (
         <div className="space-y-6">
@@ -493,42 +480,40 @@ const OnboardingSuccess = () => {
       case 0:
         return (
           <motion.div 
-            key="features"
+            key="automation-features"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col h-full items-center justify-center p-6"
+            className="flex flex-col h-full items-center justify-center"
           >
-            <Features />
+            <AutomationFeatures />
           </motion.div>
         );
       case 1:
         return (
           <motion.div 
-            key="connection"
+            key="simple-connection"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col h-full items-center justify-center p-6"
+            className="flex flex-col h-full items-center justify-center"
           >
-            <div className="py-0">
-              <RestaurantDataFlowSection />
-            </div>
+            <SimpleConnection />
           </motion.div>
         );
       case 2:
         return (
           <motion.div 
-            key="impact"
+            key="impact-stats"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col h-full items-center justify-center p-6"
+            className="flex flex-col h-full items-center justify-center"
           >
-            <ImpactStats />
+            <CompactImpactStats />
           </motion.div>
         );
       case 3:
@@ -546,15 +531,15 @@ const OnboardingSuccess = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                transition={{ duration: 0.5 }}
                 className="mb-10"
               >
-                <div className="mb-6 relative">
-                  <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent after:content-['|'] after:ml-1 after:animate-blink after:text-primary">
-                    <ValueMessageTypewriter messages={valueMessages} />
+                <div className="mb-6">
+                  <h1 className="text-3xl font-bold text-slate-900">
+                    Controla tu margen al día sin esfuerzo
                   </h1>
                 </div>
-                <p className="text-xl text-slate-600 max-w-md mx-auto">
+                <p className="text-lg text-slate-600 max-w-md mx-auto">
                   Agentes con IA que procesan, agrupan y monitorean tus transacciones para que tengas control absoluto de tu negocio.
                 </p>
               </motion.div>
