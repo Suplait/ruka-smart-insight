@@ -310,7 +310,11 @@ export default function Restaurantes() {
         </div>
         
         <div className="space-y-4">
-          <Button type="submit" className="w-full gap-2 h-12 text-lg">
+          <Button 
+            type="submit" 
+            className="w-full gap-2 h-12 text-lg"
+            disabled={!formData.acceptTerms}
+          >
             Comenzar Ahora <ArrowRight className="w-5 h-5" />
           </Button>
           
