@@ -253,6 +253,7 @@ const OnboardingSuccess = () => {
   const totalSteps = 4;
   const [activeSlide, setActiveSlide] = useState(0);
   const [progress, setProgress] = useState(100);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const restaurantName = location.state?.restaurantName || '';
   const generateSubdomain = (name: string) => {
@@ -284,26 +285,38 @@ const OnboardingSuccess = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveSlide(prev => (prev + 1) % valueMessages.length);
+      setActiveSlide((prev) => (prev + 1) % valueMessages.length);
     }, SLIDE_INTERVAL);
     
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    const startTime = Date.now();
+    setProgress(100); // Reset progress to 100% at the start of each slide
+    setIsAnimating(true);
+    
+    let startTime = Date.now();
+    let animationFrame: number;
+    
     const updateProgress = () => {
       const elapsed = Date.now() - startTime;
       const remaining = Math.max(0, 100 - (elapsed / SLIDE_INTERVAL) * 100);
-      setProgress(remaining);
-
-      if (remaining > 0) {
-        requestAnimationFrame(updateProgress);
+      
+      if (remaining <= 0) {
+        setProgress(0);
+        setIsAnimating(false);
+        return;
       }
+      
+      setProgress(remaining);
+      animationFrame = requestAnimationFrame(updateProgress);
     };
-
-    setProgress(100);
-    requestAnimationFrame(updateProgress);
+    
+    animationFrame = requestAnimationFrame(updateProgress);
+    
+    return () => {
+      cancelAnimationFrame(animationFrame);
+    };
   }, [activeSlide]);
 
   useEffect(() => {
@@ -700,3 +713,4 @@ const OnboardingSuccess = () => {
 };
 
 export default OnboardingSuccess;
+
