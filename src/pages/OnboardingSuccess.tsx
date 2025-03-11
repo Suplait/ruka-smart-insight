@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -18,11 +19,22 @@ const StepIndicator = ({
   currentStep,
   totalSteps
 }: StepProps) => {
-  return <div className="flex items-center justify-center gap-2 mb-8">
-      {Array.from({
-      length: totalSteps
-    }).map((_, index) => <div key={index} className={`h-2.5 rounded-full transition-all duration-300 ${index < currentStep ? "w-8 bg-primary" : index === currentStep ? "w-8 bg-primary" : "w-2.5 bg-gray-200"}`} />)}
-    </div>;
+  return (
+    <div className="flex items-center justify-center gap-2 mb-8">
+      {Array.from({ length: totalSteps }).map((_, index) => (
+        <div 
+          key={index} 
+          className={`h-2.5 rounded-full transition-all duration-300 ${
+            index < currentStep 
+              ? "w-8 bg-primary" 
+              : index === currentStep 
+                ? "w-8 bg-primary" 
+                : "w-2.5 bg-gray-200"
+          }`} 
+        />
+      ))}
+    </div>
+  );
 };
 
 const MonthsSelector = ({
@@ -32,28 +44,41 @@ const MonthsSelector = ({
   selectedMonths: number;
   onChange: (months: number) => void;
 }) => {
-  return <div className="space-y-6">
+  return (
+    <div className="space-y-6">
       <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
         <div className="flex gap-3">
           <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
           <div>
             <h4 className="font-medium text-blue-700 mb-1">¿Por qué necesitamos esto?</h4>
             <p className="text-sm text-blue-600">
-              Elige cuántos meses de datos históricos de compras importaremos inicialmente.
+              Selecciona el período de datos históricos que importaremos para análisis.
             </p>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        {[1, 2, 3].map(month => <button key={month} type="button" onClick={() => onChange(month)} className={`p-4 rounded-lg border-2 transition-all flex flex-col items-center ${selectedMonths === month ? "border-primary bg-primary/5" : "border-gray-200 hover:border-gray-300"}`}>
+        {[1, 2, 3].map(month => (
+          <button 
+            key={month} 
+            type="button" 
+            onClick={() => onChange(month)} 
+            className={`p-4 rounded-lg border-2 transition-all flex flex-col items-center ${
+              selectedMonths === month 
+                ? "border-primary bg-primary/5" 
+                : "border-gray-200 hover:border-gray-300"
+            }`}
+          >
             <span className="text-2xl font-semibold">{month}</span>
             <span className="text-sm text-muted-foreground">
               {month === 1 ? "mes" : "meses"}
             </span>
-          </button>)}
+          </button>
+        ))}
       </div>
-    </div>;
+    </div>
+  );
 };
 
 const BillingSystemSelector = ({
@@ -67,36 +92,61 @@ const BillingSystemSelector = ({
   customSystem: string;
   onCustomChange: (value: string) => void;
 }) => {
-  return <div className="space-y-6">
+  return (
+    <div className="space-y-6">
       <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
         <div className="flex gap-3">
           <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
           <div>
             <h4 className="font-medium text-blue-700 mb-1">¿Por qué es importante?</h4>
             <p className="text-sm text-blue-600">
-              Necesitamos conectarnos a tu sistema para importar tus datos de compras.
+              Conectaremos tu sistema de facturación para automatizar tu contabilidad.
             </p>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <button type="button" onClick={() => onChange("sii")} className={`p-4 rounded-lg border-2 transition-all text-left ${selectedSystem === "sii" ? "border-primary bg-primary/5" : "border-gray-200 hover:border-gray-300"}`}>
+        <button 
+          type="button" 
+          onClick={() => onChange("sii")} 
+          className={`p-4 rounded-lg border-2 transition-all text-left ${
+            selectedSystem === "sii" 
+              ? "border-primary bg-primary/5" 
+              : "border-gray-200 hover:border-gray-300"
+          }`}
+        >
           <div className="font-medium">SII Gratuito</div>
           <div className="text-sm text-muted-foreground">Sistema oficial del SII</div>
         </button>
         
-        <button type="button" onClick={() => onChange("mercado")} className={`p-4 rounded-lg border-2 transition-all text-left ${selectedSystem === "mercado" ? "border-primary bg-primary/5" : "border-gray-200 hover:border-gray-300"}`}>
+        <button 
+          type="button" 
+          onClick={() => onChange("mercado")} 
+          className={`p-4 rounded-lg border-2 transition-all text-left ${
+            selectedSystem === "mercado" 
+              ? "border-primary bg-primary/5" 
+              : "border-gray-200 hover:border-gray-300"
+          }`}
+        >
           <div className="font-medium">Facturador de Mercado</div>
           <div className="text-sm text-muted-foreground">Sistema de terceros</div>
         </button>
       </div>
       
-      {selectedSystem === "mercado" && <div className="mt-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
+      {selectedSystem === "mercado" && (
+        <div className="mt-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
           <label className="text-sm font-medium mb-2 block">¿Cuál sistema utilizas?</label>
-          <Input value={customSystem} onChange={e => onCustomChange(e.target.value)} placeholder="Nubox, Bsale, Toteat, etc." className="bg-white" />
-        </div>}
-    </div>;
+          <Input 
+            value={customSystem} 
+            onChange={e => onCustomChange(e.target.value)} 
+            placeholder="Nubox, Bsale, Toteat, etc." 
+            className="bg-white" 
+          />
+        </div>
+      )}
+    </div>
+  );
 };
 
 const SubdomainInput = ({
@@ -108,14 +158,15 @@ const SubdomainInput = ({
   onChange: (value: string) => void;
   suggestedSubdomain: string;
 }) => {
-  return <div className="space-y-6">
+  return (
+    <div className="space-y-6">
       <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
         <div className="flex gap-3">
           <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
           <div>
             <h4 className="font-medium text-blue-700 mb-1">Tu portal personalizado</h4>
             <p className="text-sm text-blue-600">
-              Este será el enlace de acceso a tu plataforma.
+              Este será el enlace de acceso exclusivo a tu plataforma.
             </p>
           </div>
         </div>
@@ -123,14 +174,19 @@ const SubdomainInput = ({
 
       <div>
         <div className="relative">
-          <Input value={value} onChange={e => onChange(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))} placeholder="tu-empresa" className="pr-[120px]" />
+          <Input 
+            value={value} 
+            onChange={e => onChange(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))} 
+            placeholder="tu-empresa" 
+            className="pr-[120px]" 
+          />
           <div className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
             .ruka.ai
           </div>
         </div>
         
         <div className="mt-2 text-sm text-muted-foreground">
-          Te sugerimos este subdominio basado en el nombre de tu empresa.
+          Sugerencia basada en el nombre de tu empresa.
         </div>
         
         <div className="mt-2 text-sm">
@@ -139,7 +195,8 @@ const SubdomainInput = ({
           </span>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
 
 export default function OnboardingSuccess() {
@@ -273,7 +330,7 @@ export default function OnboardingSuccess() {
     {
       title: "Periodo de datos",
       icon: <Calendar className="w-6 h-6 text-primary" />,
-      description: "¿Cuántos meses de datos quieres cargar?",
+      description: "¿Cuántos meses de datos quieres importar?",
       content: <MonthsSelector selectedMonths={formData.meses} onChange={months => updateFormData('meses', months)} />
     },
     {
@@ -285,20 +342,23 @@ export default function OnboardingSuccess() {
     {
       title: "Tu subdominio",
       icon: <Globe className="w-6 h-6 text-primary" />,
-      description: "Elige el subdominio para acceder a tu cuenta",
+      description: "Elige el subdominio para tu acceso personalizado",
       content: <SubdomainInput value={formData.subdominio} onChange={handleSubdomainChange} suggestedSubdomain={suggestedSubdomain} />
     },
     {
       title: "Acceso al SII",
       icon: <LockKeyhole className="w-6 h-6 text-primary" />,
-      description: "Ingresa tus credenciales del SII para conectar tus datos",
-      content: <div className="space-y-6">
+      description: "Ingresa tus credenciales para conectar tus datos",
+      content: (
+        <div className="space-y-6">
           <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
             <div className="flex gap-3">
               <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
               <div>
                 <h4 className="font-medium text-blue-700 mb-1">Conexión con el SII</h4>
-                <p className="text-sm text-blue-600">Ingresa las credenciales de tu empresa (persona jurídica) para importar tus datos de compra y venta.</p>
+                <p className="text-sm text-blue-600">
+                  Ingresa tus credenciales para importar automáticamente tus facturas de compra y venta.
+                </p>
               </div>
             </div>
           </div>
@@ -306,39 +366,59 @@ export default function OnboardingSuccess() {
           <div className="space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">RUT Empresa</label>
-              <Input value={formData.rut} onChange={e => updateFormData('rut', e.target.value)} placeholder="12345678-9" />
+              <Input 
+                value={formData.rut} 
+                onChange={e => updateFormData('rut', e.target.value)} 
+                placeholder="12345678-9" 
+              />
               <p className="text-xs text-muted-foreground">Ingresa el RUT con guión y dígito verificador</p>
             </div>
             
             <div className="space-y-2">
               <label className="text-sm font-medium">Clave del SII</label>
-              <Input type="password" value={formData.clave} onChange={e => updateFormData('clave', e.target.value)} placeholder="••••••••" />
+              <Input 
+                type="password" 
+                value={formData.clave} 
+                onChange={e => updateFormData('clave', e.target.value)} 
+                placeholder="••••••••" 
+              />
               <div className="flex items-center text-xs text-muted-foreground mt-1">
                 <ShieldCheck className="w-4 h-4 mr-1 text-green-600" />
                 Tus datos están almacenados de forma segura
               </div>
             </div>
             
-            <Button onClick={handleNext} className="w-full mt-4 gap-2" style={{
-          backgroundColor: "#DA5C2B",
-          borderColor: "#DA5C2B"
-        }} disabled={isLoading}>
-              {isLoading ? <>
+            <Button 
+              onClick={handleNext} 
+              className="w-full mt-4 gap-2" 
+              style={{
+                backgroundColor: "#DA5C2B",
+                borderColor: "#DA5C2B"
+              }} 
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
                   <Loader className="h-4 w-4 animate-spin" />
                   Conectando con el SII...
-                </> : <>
+                </>
+              ) : (
+                <>
                   <div className="bg-white rounded-md p-1 flex items-center justify-center">
                     <img src="/logosii.png" alt="SII" className="h-4" />
                   </div>
                   Iniciar sesión con el SII
-                </>}
+                </>
+              )}
             </Button>
           </div>
         </div>
+      )
     }
   ];
 
-  const successContent = <div className="text-center space-y-6">
+  const successContent = (
+    <div className="text-center space-y-6">
       <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
         <Check className="w-8 h-8 text-green-600" />
       </div>
@@ -346,8 +426,8 @@ export default function OnboardingSuccess() {
       <h2 className="text-2xl font-bold">¡Configuración completada!</h2>
       
       <p className="text-gray-600">
-        Estamos preparando tu plataforma, cargando tus datos y te 
-        enviaremos las credenciales para ingresar durante los próximos minutos.
+        Tu plataforma de automatización contable está lista. En breve 
+        recibirás tus credenciales para comenzar a utilizar Ruka.ai.
       </p>
       
       <div className="pt-4">
@@ -355,18 +435,21 @@ export default function OnboardingSuccess() {
           Ir al inicio
         </Button>
       </div>
-    </div>;
+    </div>
+  );
 
   const currentStepData = steps[currentStep];
 
-  return <>
+  return (
+    <>
       <Helmet>
         <title>Configura tu cuenta | Ruka.ai</title>
       </Helmet>
       
       <main className="min-h-screen flex flex-col md:flex-row">
-        <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col justify-between">
-          <div className="max-w-md mx-auto flex flex-col h-full">
+        {/* Left panel */}
+        <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col">
+          <div className="max-w-lg mx-auto flex flex-col h-full">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -376,71 +459,77 @@ export default function OnboardingSuccess() {
               <img src="/logo.png" alt="Ruka.ai" className="h-10" />
             </motion.div>
             
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mb-6"
-            >
-              <h1 className="text-3xl font-bold mb-3 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-                Bienvenido a la era de la automatización financiera
-              </h1>
-              <p className="text-slate-600">
-                Gestión financiera y fiscal impulsada por inteligencia artificial.
-              </p>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="relative aspect-video rounded-xl overflow-hidden shadow-md border border-white/60 mb-6 flex-grow-0"
-            >
-              <iframe 
-                width="100%" 
-                height="100%" 
-                src="https://www.youtube.com/embed/1wV-corpO74" 
-                title="CEO de Ruka.ai hablando sobre la plataforma" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen
-                className="w-full h-full"
-              ></iframe>
-            </motion.div>
-            
-            <div className="mt-auto">
+            <div className="flex flex-col items-center justify-center flex-grow text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="mt-8"
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mb-10"
               >
-                <p className="text-xs text-center text-slate-500 mb-3">
-                  Respaldados por líderes globales en tecnología
+                <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                  Automatización contable inteligente
+                </h1>
+                <p className="text-slate-600 text-lg max-w-md mx-auto">
+                  Ruka.ai importa tus facturas, clasifica tus gastos y automatiza tu contabilidad mensual con IA.
                 </p>
-                <div className="flex justify-center items-center gap-6">
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl border border-white/80 mb-10"
+              >
+                <iframe 
+                  width="100%" 
+                  height="100%" 
+                  src="https://www.youtube.com/embed/1wV-corpO74" 
+                  title="CEO de Ruka.ai hablando sobre la plataforma" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                  className="w-full h-full"
+                ></iframe>
+              </motion.div>
+            </div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="mt-auto"
+            >
+              <div className="text-center">
+                <p className="text-sm text-slate-500 mb-4">
+                  Respaldado por líderes en tecnología
+                </p>
+                <div className="flex justify-center items-center gap-8">
                   <img src="/microsoft2.png" alt="Microsoft" className="h-8 opacity-75 hover:opacity-100 transition-opacity duration-300" />
                   <img src="/openai2.png" alt="OpenAI" className="h-8 opacity-75 hover:opacity-100 transition-opacity duration-300" />
                 </div>
-              </motion.div>
-            </div>
+              </div>
+            </motion.div>
           </div>
         </div>
         
+        {/* Right panel */}
         <div className="flex-1 flex items-center justify-center p-6 md:p-12 bg-white">
           <div className="w-full max-w-md">
-            <div className="md:hidden mb-8 flex justify-center">
-              <img src="/logo.png" alt="Ruka.ai" className="h-10" />
+            <div className="md:hidden mb-8 flex flex-col items-center text-center">
+              <img src="/logo.png" alt="Ruka.ai" className="h-10 mb-4" />
+              <h1 className="text-2xl font-bold mb-2">Automatización contable inteligente</h1>
+              <p className="text-slate-600 text-sm mb-6">
+                Ruka.ai importa tus facturas, clasifica tus gastos y automatiza tu contabilidad.
+              </p>
             </div>
             
-            {!isComplete ? <>
-                <motion.div initial={{
-              opacity: 0,
-              y: 20
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} className="text-center mb-8">
+            {!isComplete ? (
+              <>
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }} 
+                  animate={{ opacity: 1, y: 0 }} 
+                  className="text-center mb-8"
+                >
                   <h1 className="text-2xl md:text-3xl font-bold">Configura tu cuenta</h1>
                   <p className="mt-2 text-muted-foreground">
                     {currentStep + 1} de {totalSteps} pasos para comenzar
@@ -449,7 +538,7 @@ export default function OnboardingSuccess() {
                 
                 <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
                 
-                <Card className="border shadow-sm">
+                <Card className="border shadow-md">
                   <CardHeader>
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
@@ -464,27 +553,38 @@ export default function OnboardingSuccess() {
                   <CardContent className="pb-8">
                     {currentStepData.content}
                     
-                    {currentStep < 3 && <div className="flex justify-between mt-10">
-                        <Button variant="outline" onClick={handleBack} disabled={currentStep === 0} className="gap-2">
+                    {currentStep < 3 && (
+                      <div className="flex justify-between mt-10">
+                        <Button 
+                          variant="outline" 
+                          onClick={handleBack} 
+                          disabled={currentStep === 0} 
+                          className="gap-2"
+                        >
                           <ArrowLeft className="w-4 h-4" /> Atrás
                         </Button>
                         
                         <Button onClick={handleNext} className="gap-2">
                           Siguiente <ArrowRight className="w-4 h-4" />
                         </Button>
-                      </div>}
+                      </div>
+                    )}
                     
-                    {currentStep === 3 && <div className="flex justify-start mt-6">
+                    {currentStep === 3 && (
+                      <div className="flex justify-start mt-6">
                         <Button variant="outline" onClick={handleBack} className="gap-2">
                           <ArrowLeft className="w-4 h-4" /> Atrás
                         </Button>
-                      </div>}
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
-              </> :
-          <Card className="border shadow-sm p-8">
+              </>
+            ) : (
+              <Card className="border shadow-md p-8">
                 {successContent}
-              </Card>}
+              </Card>
+            )}
             
             <div className="mt-6 text-center text-sm text-muted-foreground">
               <p>¿Necesitas ayuda? <a href="#" className="text-primary hover:underline">Contáctanos</a></p>
@@ -492,5 +592,6 @@ export default function OnboardingSuccess() {
           </div>
         </div>
       </main>
-    </>;
+    </>
+  );
 }
