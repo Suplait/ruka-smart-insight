@@ -37,6 +37,9 @@ export default function FeatureRotator() {
     return () => clearInterval(interval);
   }, []);
 
+  // Get the current icon component
+  const CurrentIcon = features[currentIndex].icon;
+
   return (
     <div className="relative h-[120px]">
       <AnimatePresence mode="wait">
@@ -49,7 +52,7 @@ export default function FeatureRotator() {
           className="absolute inset-0 flex items-center"
         >
           <div className="flex items-start gap-4">
-            <features[currentIndex].icon className="w-8 h-8 text-primary flex-shrink-0" />
+            <CurrentIcon className="w-8 h-8 text-primary flex-shrink-0" />
             <div>
               <h3 className="font-medium mb-1">{features[currentIndex].title}</h3>
               <p className="text-sm text-slate-600">{features[currentIndex].description}</p>
