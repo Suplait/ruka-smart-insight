@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Users, FileText, TrendingUp, Clock } from "lucide-react";
 
 const metrics = [
@@ -37,10 +37,27 @@ const metrics = [
 
 export default function ImpactMetrics() {
   const [isVisible, setIsVisible] = useState(false);
+  const [currentValues, setCurrentValues] = useState(metrics.map(() => 0));
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  useEffect(() => {
+    if (isVisible) {
+      const timeouts = metrics.map((metric, index) => {
+        return setTimeout(() => {
+          setCurrentValues(prev => {
+            const newValues = [...prev];
+            newValues[index] = metric.value;
+            return newValues;
+          });
+        }, index * 200);
+      });
+
+      return () => timeouts.forEach(clearTimeout);
+    }
+  }, [isVisible]);
 
   return (
     <div className="grid grid-cols-2 gap-3">
@@ -51,29 +68,16 @@ export default function ImpactMetrics() {
         >
           <metric.icon className={`h-5 w-5 ${metric.color} mb-2`} />
           <div className="text-center">
-            <div className="font-bold">
-              {isVisible ? (
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2 * index }}
-                >
-                  {metric.prefix && metric.prefix}
-                  <motion.span
-                    initial={{ number: 0 }}
-                    animate={{ number: metric.value }}
-                    transition={{ duration: 1.5, delay: 0.2 * index }}
-                  >
-                    {({ number }) => Math.floor(number)}
-                  </motion.span>
-                  {metric.suffix}
-                </motion.span>
-              ) : (
-                <span>
-                  {metric.prefix && metric.prefix}0{metric.suffix}
-                </span>
-              )}
-            </div>
+            <motion.div 
+              className="font-bold"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 * index }}
+            >
+              {metric.prefix && metric.prefix}
+              {currentValues[index]}
+              {metric.suffix}
+            </motion.div>
             <div className="text-xs text-slate-500">{metric.label}</div>
           </div>
         </div>
