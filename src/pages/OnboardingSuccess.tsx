@@ -303,14 +303,14 @@ export default function OnboardingSuccess() {
               <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
               <div>
                 <h4 className="font-medium text-blue-700 mb-1">Conexión con el SII</h4>
-                <p className="text-sm text-blue-600">Ingresa las credenciales de tu empresa (persona jurídica) importar tus datos</p>
+                <p className="text-sm text-blue-600">Ingresa las credenciales de tu empresa (persona jurídica) importar tus datos.</p>
               </div>
             </div>
           </div>
 
           <div className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">RUT</label>
+              <label className="text-sm font-medium">RUT Empresa</label>
               <Input value={formData.rut} onChange={e => updateFormData('rut', e.target.value)} placeholder="12345678-9" />
               <p className="text-xs text-muted-foreground">Ingresa el RUT con guión y dígito verificador</p>
             </div>
