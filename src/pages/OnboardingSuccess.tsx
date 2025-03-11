@@ -1,6 +1,7 @@
+
 import { Helmet } from "react-helmet";
 import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Database, LockKeyhole, Calendar, Store, Check, Globe, ShieldCheck, Clock4, Info, Loader, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,11 +10,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
-import { 
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
+import ImpactStats from "@/components/restaurant/ImpactStats";
+import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
+import Features from "@/components/Features";
+import Partners from "@/components/Partners";
 
 const valueMessages = [
   "Automatiza el registro de compras.",
@@ -250,7 +250,6 @@ const OnboardingSuccess = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const totalSteps = 4;
-  const [progress, setProgress] = useState(100);
 
   const restaurantName = location.state?.restaurantName || '';
   const generateSubdomain = (name: string) => {
@@ -279,24 +278,6 @@ const OnboardingSuccess = () => {
       }));
     }
   }, [suggestedSubdomain]);
-
-  useEffect(() => {
-    let startTime = Date.now();
-    let animationFrame: number;
-    
-    const updateProgress = () => {
-      const elapsed = Date.now() - startTime;
-      const remaining = Math.max(0, 100 - (elapsed / SLIDE_INTERVAL) * 100);
-      setProgress(remaining);
-      
-      if (remaining > 0) {
-        animationFrame = requestAnimationFrame(updateProgress);
-      }
-    };
-    
-    animationFrame = requestAnimationFrame(updateProgress);
-    return () => cancelAnimationFrame(animationFrame);
-  }, []);
 
   const updateFormData = (key: string, value: any) => {
     setFormData(prev => ({
@@ -507,6 +488,102 @@ const OnboardingSuccess = () => {
     window.open("https://www.youtube.com/embed/1wV-corpO74", "_blank");
   };
 
+  const getLeftSideContent = () => {
+    switch(currentStep) {
+      case 0:
+        return (
+          <motion.div 
+            key="features"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col h-full items-center justify-center p-6"
+          >
+            <Features />
+          </motion.div>
+        );
+      case 1:
+        return (
+          <motion.div 
+            key="connection"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col h-full items-center justify-center p-6"
+          >
+            <div className="py-0">
+              <RestaurantDataFlowSection />
+            </div>
+          </motion.div>
+        );
+      case 2:
+        return (
+          <motion.div 
+            key="impact"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col h-full items-center justify-center p-6"
+          >
+            <ImpactStats />
+          </motion.div>
+        );
+      case 3:
+      default:
+        return (
+          <motion.div 
+            key="social-proof"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col h-full justify-center"
+          >
+            <div className="max-w-md mx-auto flex flex-col items-center justify-center text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mb-10"
+              >
+                <div className="mb-6 relative">
+                  <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent after:content-['|'] after:ml-1 after:animate-blink after:text-primary">
+                    <ValueMessageTypewriter messages={valueMessages} />
+                  </h1>
+                </div>
+                <p className="text-xl text-slate-600 max-w-md mx-auto">
+                  Agentes con IA que procesan, agrupan y monitorean tus transacciones para que tengas control absoluto de tu negocio.
+                </p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl border border-white/80 mb-8"
+              >
+                <iframe 
+                  width="100%" 
+                  height="100%" 
+                  src="https://www.youtube.com/embed/1wV-corpO74" 
+                  title="CEO de Ruka.ai hablando sobre la plataforma" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                  className="w-full h-full"
+                ></iframe>
+              </motion.div>
+              
+              <Partners />
+            </div>
+          </motion.div>
+        );
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -514,73 +591,11 @@ const OnboardingSuccess = () => {
       </Helmet>
       
       <main className="min-h-screen flex flex-col md:flex-row">
-        <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col">
-          <div className="max-w-md mx-auto flex flex-col h-full items-center justify-center text-center">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="mb-8"
-            >
-              <img src="/logo.png" alt="Ruka.ai" className="h-12 mx-auto" />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mb-10"
-            >
-              <div className="mb-6 relative">
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent after:content-['|'] after:ml-1 after:animate-blink after:text-primary">
-                  <ValueMessageTypewriter messages={valueMessages} />
-                </h1>
-              </div>
-              <p className="text-xl text-slate-600 max-w-md mx-auto">
-                Agentes con IA que procesan, agrupan y monitorean tus transacciones para que tengas control absoluto de tu negocio.
-              </p>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl border border-white/80 mb-4"
-            >
-              <iframe 
-                width="100%" 
-                height="100%" 
-                src="https://www.youtube.com/embed/1wV-corpO74" 
-                title="CEO de Ruka.ai hablando sobre la plataforma" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen
-                className="w-full h-full"
-              ></iframe>
-            </motion.div>
-            
-            <button 
-              onClick={openYoutubeInNewTab} 
-              className="mb-12 text-sm text-slate-500 flex items-center gap-1 hover:text-primary transition-colors"
-            >
-              Seguir viendo en segundo plano <ExternalLink className="w-3 h-3 ml-1" />
-            </button>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <div className="text-center">
-                <p className="text-sm text-slate-500 mb-4">
-                  Respaldado por líderes en tecnología
-                </p>
-                <div className="flex justify-center items-center gap-8">
-                  <img src="/microsoft2.png" alt="Microsoft" className="h-8 opacity-75 hover:opacity-100 transition-opacity duration-300" />
-                  <img src="/openai2.png" alt="OpenAI" className="h-8 opacity-75 hover:opacity-100 transition-opacity duration-300" />
-                </div>
-              </div>
-            </motion.div>
+        <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col overflow-hidden">
+          <div className="max-w-md mx-auto flex-1">
+            <AnimatePresence mode="wait">
+              {getLeftSideContent()}
+            </AnimatePresence>
           </div>
         </div>
         
@@ -609,47 +624,57 @@ const OnboardingSuccess = () => {
                 
                 <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
                 
-                <Card className="border shadow-md">
-                  <CardHeader>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                        {currentStepData.icon}
-                      </div>
-                      <div>
-                        <CardTitle>{currentStepData.title}</CardTitle>
-                        <CardDescription>{currentStepData.description}</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pb-8">
-                    {currentStepData.content}
-                    
-                    {currentStep < 3 && (
-                      <div className="flex justify-between mt-10">
-                        <Button 
-                          variant="outline" 
-                          onClick={handleBack} 
-                          disabled={currentStep === 0} 
-                          className="gap-2"
-                        >
-                          <ArrowLeft className="w-4 h-4" /> Atrás
-                        </Button>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentStep}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Card className="border shadow-md">
+                      <CardHeader>
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                            {currentStepData.icon}
+                          </div>
+                          <div>
+                            <CardTitle>{currentStepData.title}</CardTitle>
+                            <CardDescription>{currentStepData.description}</CardDescription>
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="pb-8">
+                        {currentStepData.content}
                         
-                        <Button onClick={handleNext} className="gap-2">
-                          Siguiente <ArrowRight className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    )}
-                    
-                    {currentStep === 3 && (
-                      <div className="flex justify-start mt-6">
-                        <Button variant="outline" onClick={handleBack} className="gap-2">
-                          <ArrowLeft className="w-4 h-4" /> Atrás
-                        </Button>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
+                        {currentStep < 3 && (
+                          <div className="flex justify-between mt-10">
+                            <Button 
+                              variant="outline" 
+                              onClick={handleBack} 
+                              disabled={currentStep === 0} 
+                              className="gap-2"
+                            >
+                              <ArrowLeft className="w-4 h-4" /> Atrás
+                            </Button>
+                            
+                            <Button onClick={handleNext} className="gap-2">
+                              Siguiente <ArrowRight className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        )}
+                        
+                        {currentStep === 3 && (
+                          <div className="flex justify-start mt-6">
+                            <Button variant="outline" onClick={handleBack} className="gap-2">
+                              <ArrowLeft className="w-4 h-4" /> Atrás
+                            </Button>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                </AnimatePresence>
               </>
             ) : (
               <Card className="border shadow-md p-8">
