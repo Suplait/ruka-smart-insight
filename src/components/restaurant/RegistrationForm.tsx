@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -137,7 +136,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
             Si te registras antes de las 12:00pm tendrás acceso el mismo día
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
-            <Clock className="w-4 h-4" />
+            <Clock4 className="w-4 h-4" />
             <span>Faltan {timeLeft} para las 12:00pm</span>
           </div>
         </div>
