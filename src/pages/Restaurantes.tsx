@@ -17,6 +17,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Link } from "react-router-dom";
 
 const valueMessages = [
   "Deja que tus chefs se concentren en cocinar, no en Excel.",
@@ -31,11 +33,13 @@ const valueMessages = [
 export default function Restaurantes() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    nombre: "",
+    firstName: "",
+    lastName: "",
     email: "",
     nombreRestaurante: "",
     ciudad: "",
-    whatsapp: ""
+    whatsapp: "",
+    acceptTerms: false
   });
 
   useEffect(() => {
@@ -106,6 +110,15 @@ export default function Restaurantes() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!formData.acceptTerms) {
+      toast({
+        title: "Error",
+        description: "Debes aceptar los términos y condiciones para continuar.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     try {
       const whatsappNumber = formData.whatsapp 
         ? `+56${formData.whatsapp.replace(/^\+56/, '')}`
@@ -116,7 +129,9 @@ export default function Restaurantes() {
         .insert([
           { 
             company_name: formData.nombreRestaurante,
-            name: formData.nombre,
+            name: `${formData.firstName} ${formData.lastName}`,
+            first_name: formData.firstName,
+            last_name: formData.lastName,
             email: formData.email,
             ccity: formData.ciudad,
             whatsapp: whatsappNumber
@@ -129,7 +144,9 @@ export default function Restaurantes() {
         body: {
           lead: {
             company_name: formData.nombreRestaurante,
-            name: formData.nombre,
+            name: `${formData.firstName} ${formData.lastName}`,
+            first_name: formData.firstName,
+            last_name: formData.lastName,
             email: formData.email,
             ccity: formData.ciudad,
             whatsapp: whatsappNumber
@@ -200,14 +217,24 @@ export default function Restaurantes() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-        <Input
-          name="nombre"
-          placeholder="Tu Nombre"
-          value={formData.nombre}
-          onChange={handleChange}
-          required
-          className="h-12"
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Input
+            name="firstName"
+            placeholder="Nombre"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+            className="h-12"
+          />
+          <Input
+            name="lastName"
+            placeholder="Apellido"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+            className="h-12"
+          />
+        </div>
         <Input
           name="email"
           type="email"
@@ -229,8 +256,8 @@ export default function Restaurantes() {
                     onChange={handleChange}
                     className="h-12 pl-16 pr-10"
                   />
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-sm">
-                    🇨🇱 +56
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
+                    +56
                   </div>
                   <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 </div>
@@ -257,6 +284,30 @@ export default function Restaurantes() {
           required
           className="h-12"
         />
+        
+        <div className="flex items-start space-x-2">
+          <Checkbox 
+            id="terms" 
+            checked={formData.acceptTerms}
+            onCheckedChange={(checked) => 
+              setFormData(prev => ({ ...prev, acceptTerms: checked as boolean }))
+            }
+          />
+          <label
+            htmlFor="terms"
+            className="text-sm text-muted-foreground leading-relaxed"
+          >
+            Acepto los{" "}
+            <Link 
+              to="/terms" 
+              className="text-primary hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              términos y condiciones
+            </Link>
+          </label>
+        </div>
         
         <div className="space-y-4">
           <Button type="submit" className="w-full gap-2 h-12 text-lg">

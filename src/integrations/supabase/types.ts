@@ -15,7 +15,9 @@ export type Database = {
           company_name: string
           created_at: string
           email: string
+          first_name: string | null
           id: number
+          last_name: string | null
           name: string
           whatsapp: string | null
         }
@@ -24,7 +26,9 @@ export type Database = {
           company_name: string
           created_at?: string
           email: string
+          first_name?: string | null
           id?: never
+          last_name?: string | null
           name: string
           whatsapp?: string | null
         }
@@ -33,7 +37,9 @@ export type Database = {
           company_name?: string
           created_at?: string
           email?: string
+          first_name?: string | null
           id?: never
+          last_name?: string | null
           name?: string
           whatsapp?: string | null
         }
