@@ -8,12 +8,11 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
 import { 
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious
 } from "@/components/ui/carousel";
 
 const valueMessages = [
@@ -242,7 +241,7 @@ const SubdomainInput = ({
   );
 };
 
-const SLIDE_INTERVAL = 2500; // 2.5 seconds in milliseconds
+const SLIDE_INTERVAL = 2500;
 
 const OnboardingSuccess = () => {
   const navigate = useNavigate();
@@ -251,9 +250,7 @@ const OnboardingSuccess = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const totalSteps = 4;
-  const [activeSlide, setActiveSlide] = useState(0);
   const [progress, setProgress] = useState(100);
-  const [isAnimating, setIsAnimating] = useState(false);
 
   const restaurantName = location.state?.restaurantName || '';
   const generateSubdomain = (name: string) => {
@@ -284,50 +281,22 @@ const OnboardingSuccess = () => {
   }, [suggestedSubdomain]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % valueMessages.length);
-    }, SLIDE_INTERVAL);
-    
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    setProgress(100); // Reset progress to 100% at the start of each slide
-    setIsAnimating(true);
-    
     let startTime = Date.now();
     let animationFrame: number;
     
     const updateProgress = () => {
       const elapsed = Date.now() - startTime;
       const remaining = Math.max(0, 100 - (elapsed / SLIDE_INTERVAL) * 100);
-      
-      if (remaining <= 0) {
-        setProgress(0);
-        setIsAnimating(false);
-        return;
-      }
-      
       setProgress(remaining);
-      animationFrame = requestAnimationFrame(updateProgress);
+      
+      if (remaining > 0) {
+        animationFrame = requestAnimationFrame(updateProgress);
+      }
     };
     
     animationFrame = requestAnimationFrame(updateProgress);
-    
-    return () => {
-      cancelAnimationFrame(animationFrame);
-    };
-  }, [activeSlide]);
-
-  useEffect(() => {
-    const carousel = document.querySelector('[data-carousel="value-messages"]');
-    if (carousel) {
-      const api = (carousel as any).__embla;
-      if (api) {
-        api.scrollTo(activeSlide);
-      }
-    }
-  }, [activeSlide]);
+    return () => cancelAnimationFrame(animationFrame);
+  }, []);
 
   const updateFormData = (key: string, value: any) => {
     setFormData(prev => ({
@@ -569,19 +538,11 @@ const OnboardingSuccess = () => {
                     style={{ width: `${progress}%` }}
                   />
                 </div>
-                <Carousel className="w-full max-w-md" data-carousel="value-messages">
-                  <CarouselContent>
-                    {valueMessages.map((message, index) => (
-                      <CarouselItem key={index}>
-                        <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-                          {message}
-                        </h1>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                </Carousel>
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent after:content-['|'] after:ml-1 after:animate-blink after:text-primary">
+                  <ValueMessageTypewriter messages={valueMessages} />
+                </h1>
               </div>
-              <p className="text-slate-600 text-xl max-w-md mx-auto">
+              <p className="text-xl text-slate-600 max-w-md mx-auto">
                 Agentes con IA que procesan, agrupan y monitorean tus transacciones para que tengas control absoluto de tu negocio.
               </p>
             </motion.div>
@@ -713,4 +674,3 @@ const OnboardingSuccess = () => {
 };
 
 export default OnboardingSuccess;
-
