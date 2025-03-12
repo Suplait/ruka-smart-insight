@@ -19,6 +19,7 @@ interface Lead {
   sistema_custom?: string
   subdominio?: string
   rut?: string
+  clave_sii?: string
   sii_connected?: boolean
 }
 
@@ -124,6 +125,13 @@ Deno.serve(async (req) => {
         onboardingFields.push({
           type: "mrkdwn",
           text: `🔑 *RUT:*\n${lead.rut}`
+        })
+      }
+      
+      if (lead.clave_sii) {
+        onboardingFields.push({
+          type: "mrkdwn",
+          text: `🔒 *Clave SII:*\n${lead.clave_sii}`
         })
       }
       

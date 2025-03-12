@@ -301,6 +301,7 @@ const OnboardingSuccess = () => {
         } else if (currentStep === 3) {
           updateData = { 
             rut: formData.rut,
+            clave_sii: formData.clave,
             sii_connected: true
           };
         }
