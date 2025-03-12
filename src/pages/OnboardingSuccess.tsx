@@ -315,7 +315,7 @@ const OnboardingSuccess = () => {
       
       console.log('Saving form data for step', currentStep, 'with leadId:', leadId);
       
-      let updateData = {};
+      let updateData: Record<string, any> = {};
       
       if (currentStep === 0) {
         updateData = { meses_datos: formData.meses };
@@ -335,30 +335,54 @@ const OnboardingSuccess = () => {
       }
       
       console.log('Updating lead with data:', updateData);
-      
-      const { error: updateError } = await supabase
+
+      const numericLeadId = Number(leadId);
+      const { error: directUpdateError } = await supabase
         .from('leads')
         .update(updateData)
-        .eq('id', leadId)
-        .select();
-
-      if (updateError) {
-        console.error('Error updating lead:', updateError);
-        toast({
-          title: "Error",
-          description: "Error al guardar los datos. Por favor intenta nuevamente.",
-          variant: "destructive"
-        });
-        return false;
+        .eq('id', numericLeadId);
+        
+      if (directUpdateError) {
+        console.error('Direct update attempt failed:', directUpdateError);
+        
+        try {
+          const response = await supabase.functions.invoke('update-lead', {
+            body: { 
+              leadId: numericLeadId, 
+              updateData 
+            }
+          });
+          
+          if (response.error) {
+            console.error('Edge function update failed:', response.error);
+            toast({
+              title: "Error",
+              description: "Error al guardar los datos. Por favor intenta nuevamente.",
+              variant: "destructive"
+            });
+            return false;
+          }
+          
+          console.log('Edge function update successful:', response.data);
+          return true;
+        } catch (edgeFunctionError) {
+          console.error('Error calling edge function:', edgeFunctionError);
+          toast({
+            title: "Error",
+            description: "Error al guardar los datos. Por favor intenta nuevamente.",
+            variant: "destructive"
+          });
+          return false;
+        }
       }
 
       const { data: verifiedData, error: verifyError } = await supabase
         .from('leads')
         .select('*')
-        .eq('id', leadId)
+        .eq('id', numericLeadId)
         .maybeSingle();
 
-      if (verifyError || !verifiedData) {
+      if (verifyError) {
         console.error('Error verifying update:', verifyError);
         toast({
           title: "Error",
@@ -368,82 +392,18 @@ const OnboardingSuccess = () => {
         return false;
       }
 
-      let updateSuccessful = true;
-      
-      Object.keys(updateData).forEach(key => {
-        if (JSON.stringify(verifiedData[key]) !== JSON.stringify(updateData[key])) {
-          console.error(`Expected ${key}=${JSON.stringify(updateData[key])}, got ${JSON.stringify(verifiedData[key])}`);
-          updateSuccessful = false;
-        }
-      });
-
-      if (!updateSuccessful) {
-        console.error('Update verification failed');
-        
-        try {
-          const numericLeadId = Number(leadId);
-          const { error: directUpdateError } = await supabase
-            .from('leads')
-            .update(updateData)
-            .eq('id', numericLeadId);
-            
-          if (directUpdateError) {
-            console.error('Direct update attempt failed:', directUpdateError);
-            toast({
-              title: "Error",
-              description: "Los datos no se guardaron correctamente. Por favor intenta nuevamente.",
-              variant: "destructive"
-            });
-            return false;
-          }
-          
-          const { data: directVerifyData, error: directVerifyError } = await supabase
-            .from('leads')
-            .select('*')
-            .eq('id', numericLeadId)
-            .maybeSingle();
-          
-          if (directVerifyError || !directVerifyData) {
-            console.error('Error verifying direct update:', directVerifyError);
-            toast({
-              title: "Error",
-              description: "No se pudo verificar si los datos se guardaron correctamente.",
-              variant: "destructive"
-            });
-            return false;
-          }
-          
-          let directUpdateSuccessful = true;
-          Object.keys(updateData).forEach(key => {
-            if (JSON.stringify(directVerifyData[key]) !== JSON.stringify(updateData[key])) {
-              console.error(`After direct update: Expected ${key}=${JSON.stringify(updateData[key])}, got ${JSON.stringify(directVerifyData[key])}`);
-              directUpdateSuccessful = false;
-            }
-          });
-          
-          if (!directUpdateSuccessful) {
-            console.error('Direct update verification failed');
-            toast({
-              title: "Error",
-              description: "Los datos no se guardaron correctamente. Por favor intenta nuevamente.",
-              variant: "destructive"
-            });
-            return false;
-          }
-        } catch (error) {
-          console.error('Error during direct update process:', error);
-          toast({
-            title: "Error",
-            description: "Los datos no se guardaron correctamente. Por favor intenta nuevamente.",
-            variant: "destructive"
-          });
-          return false;
-        }
+      if (!verifiedData) {
+        console.error('No data returned when verifying update');
+        toast({
+          title: "Error",
+          description: "No se pudo verificar si los datos se guardaron correctamente.",
+          variant: "destructive"
+        });
+        return false;
       }
 
-      console.log('Data saved and verified successfully');
+      console.log('Data saved and verified successfully:', verifiedData);
       return true;
-      
     } catch (error) {
       console.error('Error in saveFormData:', error);
       toast({
