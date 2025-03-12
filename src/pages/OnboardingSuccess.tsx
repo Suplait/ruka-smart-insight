@@ -241,7 +241,6 @@ const OnboardingSuccess = () => {
   const location = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSavingStep, setIsSavingStep] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const totalSteps = 4;
 
@@ -376,16 +375,11 @@ const OnboardingSuccess = () => {
   };
 
   const handleNext = async () => {
-    if (isSavingStep) return;
-    
-    setIsSavingStep(true);
-    
     if (currentStep === 0) {
       const saved = await saveFormData();
       if (saved) {
         setCurrentStep(prev => prev + 1);
       }
-      setIsSavingStep(false);
       return;
     }
     
@@ -396,14 +390,12 @@ const OnboardingSuccess = () => {
           description: "Por favor indica cuál sistema de facturación utilizas",
           variant: "destructive"
         });
-        setIsSavingStep(false);
         return;
       }
       const saved = await saveFormData();
       if (saved) {
         setCurrentStep(prev => prev + 1);
       }
-      setIsSavingStep(false);
       return;
     }
     
@@ -414,14 +406,12 @@ const OnboardingSuccess = () => {
           description: "Por favor elige un subdominio",
           variant: "destructive"
         });
-        setIsSavingStep(false);
         return;
       }
       const saved = await saveFormData();
       if (saved) {
         setCurrentStep(prev => prev + 1);
       }
-      setIsSavingStep(false);
       return;
     }
     
@@ -432,7 +422,6 @@ const OnboardingSuccess = () => {
           description: "Por favor completa el RUT y clave del SII",
           variant: "destructive"
         });
-        setIsSavingStep(false);
         return;
       }
 
@@ -443,7 +432,6 @@ const OnboardingSuccess = () => {
           description: "El RUT debe tener el formato 1234567-8 o 12345678-9",
           variant: "destructive"
         });
-        setIsSavingStep(false);
         return;
       }
 
@@ -452,13 +440,11 @@ const OnboardingSuccess = () => {
         const saved = await saveFormData();
         if (!saved) {
           setIsLoading(false);
-          setIsSavingStep(false);
           return;
         }
         await new Promise(resolve => setTimeout(resolve, 2000));
         setIsComplete(true);
         setIsLoading(false);
-        setIsSavingStep(false);
         return;
       } catch (error) {
         toast({
@@ -467,7 +453,6 @@ const OnboardingSuccess = () => {
           variant: "destructive"
         });
         setIsLoading(false);
-        setIsSavingStep(false);
         return;
       }
     }
@@ -549,7 +534,7 @@ const OnboardingSuccess = () => {
                 backgroundColor: "#DA5C2B",
                 borderColor: "#DA5C2B"
               }} 
-              disabled={isLoading || isSavingStep}
+              disabled={isLoading}
               isLoading={isLoading}
             >
               {!isLoading && (
@@ -777,7 +762,7 @@ const OnboardingSuccess = () => {
                               id={`back-button-step-${currentStep}`}
                               variant="outline" 
                               onClick={handleBack} 
-                              disabled={currentStep === 0 || isSavingStep} 
+                              disabled={currentStep === 0} 
                               className="gap-2"
                             >
                               <ArrowLeft className="w-4 h-4" /> Atrás
@@ -787,14 +772,8 @@ const OnboardingSuccess = () => {
                               id={`next-button-step-${currentStep}`}
                               onClick={handleNext} 
                               className="gap-2"
-                              isLoading={isSavingStep}
-                              disabled={isSavingStep}
                             >
-                              {!isSavingStep && (
-                                <>
-                                  Siguiente <ArrowRight className="w-4 h-4" />
-                                </>
-                              )}
+                              Siguiente <ArrowRight className="w-4 h-4" />
                             </Button>
                           </div>
                         )}
@@ -805,7 +784,7 @@ const OnboardingSuccess = () => {
                               id="back-button-step-3"
                               variant="outline" 
                               onClick={handleBack}
-                              disabled={isLoading || isSavingStep}
+                              disabled={isLoading}
                               className="gap-2"
                             >
                               <ArrowLeft className="w-4 h-4" /> Atrás
