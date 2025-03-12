@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -336,77 +337,87 @@ const OnboardingSuccess = () => {
       
       console.log('Updating lead with data:', updateData);
       
-      const { data: updateResult, error: updateError } = await supabase
+      // First attempt - Use the direct approach without .select()
+      const { error: directError } = await supabase
         .from('leads')
         .update(updateData)
-        .eq('id', leadId)
-        .select();
+        .eq('id', leadId);
         
-      if (updateError) {
-        console.error('Error updating lead data:', updateError);
+      if (directError) {
+        console.error('Error updating lead data (direct approach):', directError);
         toast({
           title: "Error",
-          description: `Error al guardar: ${updateError.message}`,
+          description: `Error al guardar: ${directError.message}`,
           variant: "destructive"
         });
         return false;
       }
       
-      console.log('Lead data updated successfully:', updateResult);
+      // Verify the update was successful by fetching the record
+      const { data: verifyData, error: verifyError } = await supabase
+        .from('leads')
+        .select('*')
+        .eq('id', leadId)
+        .single();
+        
+      if (verifyError) {
+        console.error('Error verifying lead data:', verifyError);
+        toast({
+          title: "Advertencia",
+          description: "Datos guardados pero no se pudo verificar. Continúe con precaución.",
+          variant: "default"
+        });
+        return true;
+      }
       
-      if (!updateResult || updateResult.length === 0) {
-        const { data: verifyData, error: verifyError } = await supabase
+      console.log('Lead data verified after update:', verifyData);
+      
+      // Check if update was actually applied
+      let updateSuccessful = false;
+      
+      if (currentStep === 0) {
+        updateSuccessful = verifyData.meses_datos === formData.meses;
+      } else if (currentStep === 1) {
+        updateSuccessful = verifyData.sistema_facturacion === formData.sistema && 
+                           (formData.sistema !== 'mercado' || verifyData.sistema_custom === formData.sistemaCustom);
+      } else if (currentStep === 2) {
+        updateSuccessful = verifyData.subdominio === formData.subdominio;
+      } else if (currentStep === 3) {
+        updateSuccessful = verifyData.rut === formData.rut && 
+                           verifyData.clave_sii === formData.clave &&
+                           verifyData.sii_connected === true;
+      }
+      
+      if (!updateSuccessful) {
+        console.warn('Data verification shows update was not applied. Using alternative update method.');
+        
+        // Try alternative method - using upsert instead of update
+        const { error: upsertError } = await supabase
+          .from('leads')
+          .upsert({ 
+            id: leadId,
+            ...updateData 
+          });
+          
+        if (upsertError) {
+          console.error('Error on upsert update:', upsertError);
+          toast({
+            title: "Error",
+            description: "Error al guardar los datos. Intenta nuevamente.",
+            variant: "destructive"
+          });
+          return false;
+        }
+        
+        // Re-verify after upsert
+        const { data: reVerifyData, error: reVerifyError } = await supabase
           .from('leads')
           .select('*')
           .eq('id', leadId)
           .single();
           
-        if (verifyError) {
-          console.error('Error verifying lead data:', verifyError);
-          toast({
-            title: "Advertencia",
-            description: "Datos guardados pero no se pudo verificar. Continúe con precaución.",
-            variant: "default"
-          });
-          return true;
-        }
-        
-        console.log('Lead data verified after update:', verifyData);
-        
-        if (currentStep === 0) {
-          if (verifyData.meses_datos === formData.meses) {
-            return true;
-          }
-          console.log(`Data verification mismatch: expected meses_datos=${formData.meses}, got ${verifyData.meses_datos}`);
-        } else if (currentStep === 1) {
-          if (verifyData.sistema_facturacion === formData.sistema && 
-              (formData.sistema !== 'mercado' || verifyData.sistema_custom === formData.sistemaCustom)) {
-            return true;
-          }
-          console.log(`Data verification mismatch for sistema_facturacion/sistema_custom`);
-        } else if (currentStep === 2) {
-          if (verifyData.subdominio === formData.subdominio) {
-            return true;
-          }
-          console.log(`Data verification mismatch: expected subdominio=${formData.subdominio}, got ${verifyData.subdominio}`);
-        } else if (currentStep === 3) {
-          if (verifyData.rut === formData.rut && 
-              verifyData.clave_sii === formData.clave &&
-              verifyData.sii_connected === true) {
-            return true;
-          }
-          console.log(`Data verification mismatch for rut/clave_sii/sii_connected`);
-        }
-        
-        console.log('First update might have failed silently. Attempting second update with explicit parameters...');
-        
-        const { error: retryError } = await supabase
-          .from('leads')
-          .update(updateData)
-          .eq('id', leadId);
-          
-        if (retryError) {
-          console.error('Error on retry update:', retryError);
+        if (reVerifyError) {
+          console.error('Error re-verifying after upsert:', reVerifyError);
           toast({
             title: "Advertencia",
             description: "Los datos pueden no haberse guardado correctamente. Continúe con precaución.",
@@ -415,16 +426,50 @@ const OnboardingSuccess = () => {
           return false;
         }
         
-        toast({
-          title: "Advertencia",
-          description: "Los datos se han guardado, pero la verificación no ha sido exitosa. Se puede continuar.",
-          variant: "default"
-        });
+        console.log('Lead data after upsert:', reVerifyData);
         
-        return true;
+        // Check if upsert worked
+        if (currentStep === 0 && reVerifyData.meses_datos !== formData.meses) {
+          console.error(`Upsert verification failed: expected meses_datos=${formData.meses}, got ${reVerifyData.meses_datos}`);
+          toast({
+            title: "Error",
+            description: "No se pudieron guardar los meses de datos.",
+            variant: "destructive"
+          });
+          return false;
+        } else if (currentStep === 1 && 
+                 (reVerifyData.sistema_facturacion !== formData.sistema || 
+                  (formData.sistema === 'mercado' && reVerifyData.sistema_custom !== formData.sistemaCustom))) {
+          console.error(`Upsert verification failed for sistema_facturacion/sistema_custom`);
+          toast({
+            title: "Error",
+            description: "No se pudo guardar el sistema de facturación.",
+            variant: "destructive"
+          });
+          return false;
+        } else if (currentStep === 2 && reVerifyData.subdominio !== formData.subdominio) {
+          console.error(`Upsert verification failed: expected subdominio=${formData.subdominio}, got ${reVerifyData.subdominio}`);
+          toast({
+            title: "Error",
+            description: "No se pudo guardar el subdominio.",
+            variant: "destructive"
+          });
+          return false;
+        } else if (currentStep === 3 && 
+                 (reVerifyData.rut !== formData.rut || 
+                  reVerifyData.clave_sii !== formData.clave || 
+                  reVerifyData.sii_connected !== true)) {
+          console.error(`Upsert verification failed for rut/clave_sii/sii_connected`);
+          toast({
+            title: "Error",
+            description: "No se pudieron guardar las credenciales del SII.",
+            variant: "destructive"
+          });
+          return false;
+        }
       }
       
-      console.log('Lead data saved and verified successfully:', updateResult);
+      console.log('Data saved and verified successfully');
       return true;
       
     } catch (error) {
