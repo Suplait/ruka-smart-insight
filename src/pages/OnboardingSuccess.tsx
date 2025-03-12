@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -337,44 +336,38 @@ const OnboardingSuccess = () => {
       
       console.log('Updating lead with data:', updateData);
       
-      // First attempt - Use the direct approach without .select()
-      const { error: directError } = await supabase
+      const { error: updateError } = await supabase
         .from('leads')
         .update(updateData)
         .eq('id', leadId);
-        
-      if (directError) {
-        console.error('Error updating lead data (direct approach):', directError);
+
+      if (updateError) {
+        console.error('Error updating lead:', updateError);
         toast({
           title: "Error",
-          description: `Error al guardar: ${directError.message}`,
+          description: "Error al guardar los datos. Por favor intenta nuevamente.",
           variant: "destructive"
         });
         return false;
       }
-      
-      // Verify the update was successful by fetching the record
+
       const { data: verifyData, error: verifyError } = await supabase
         .from('leads')
         .select('*')
         .eq('id', leadId)
         .single();
-        
+
       if (verifyError) {
-        console.error('Error verifying lead data:', verifyError);
+        console.error('Error verifying update:', verifyError);
         toast({
-          title: "Advertencia",
-          description: "Datos guardados pero no se pudo verificar. Continúe con precaución.",
-          variant: "default"
+          title: "Error",
+          description: "No se pudo verificar si los datos se guardaron correctamente.",
+          variant: "destructive"
         });
-        return true;
+        return false;
       }
-      
-      console.log('Lead data verified after update:', verifyData);
-      
-      // Check if update was actually applied
+
       let updateSuccessful = false;
-      
       if (currentStep === 0) {
         updateSuccessful = verifyData.meses_datos === formData.meses;
       } else if (currentStep === 1) {
@@ -387,96 +380,25 @@ const OnboardingSuccess = () => {
                            verifyData.clave_sii === formData.clave &&
                            verifyData.sii_connected === true;
       }
-      
+
       if (!updateSuccessful) {
-        console.warn('Data verification shows update was not applied. Using alternative update method.');
-        
-        // Try alternative method - using upsert instead of update
-        const { error: upsertError } = await supabase
-          .from('leads')
-          .upsert({ 
-            id: leadId,
-            ...updateData 
-          });
-          
-        if (upsertError) {
-          console.error('Error on upsert update:', upsertError);
-          toast({
-            title: "Error",
-            description: "Error al guardar los datos. Intenta nuevamente.",
-            variant: "destructive"
-          });
-          return false;
-        }
-        
-        // Re-verify after upsert
-        const { data: reVerifyData, error: reVerifyError } = await supabase
-          .from('leads')
-          .select('*')
-          .eq('id', leadId)
-          .single();
-          
-        if (reVerifyError) {
-          console.error('Error re-verifying after upsert:', reVerifyError);
-          toast({
-            title: "Advertencia",
-            description: "Los datos pueden no haberse guardado correctamente. Continúe con precaución.",
-            variant: "default"
-          });
-          return false;
-        }
-        
-        console.log('Lead data after upsert:', reVerifyData);
-        
-        // Check if upsert worked
-        if (currentStep === 0 && reVerifyData.meses_datos !== formData.meses) {
-          console.error(`Upsert verification failed: expected meses_datos=${formData.meses}, got ${reVerifyData.meses_datos}`);
-          toast({
-            title: "Error",
-            description: "No se pudieron guardar los meses de datos.",
-            variant: "destructive"
-          });
-          return false;
-        } else if (currentStep === 1 && 
-                 (reVerifyData.sistema_facturacion !== formData.sistema || 
-                  (formData.sistema === 'mercado' && reVerifyData.sistema_custom !== formData.sistemaCustom))) {
-          console.error(`Upsert verification failed for sistema_facturacion/sistema_custom`);
-          toast({
-            title: "Error",
-            description: "No se pudo guardar el sistema de facturación.",
-            variant: "destructive"
-          });
-          return false;
-        } else if (currentStep === 2 && reVerifyData.subdominio !== formData.subdominio) {
-          console.error(`Upsert verification failed: expected subdominio=${formData.subdominio}, got ${reVerifyData.subdominio}`);
-          toast({
-            title: "Error",
-            description: "No se pudo guardar el subdominio.",
-            variant: "destructive"
-          });
-          return false;
-        } else if (currentStep === 3 && 
-                 (reVerifyData.rut !== formData.rut || 
-                  reVerifyData.clave_sii !== formData.clave || 
-                  reVerifyData.sii_connected !== true)) {
-          console.error(`Upsert verification failed for rut/clave_sii/sii_connected`);
-          toast({
-            title: "Error",
-            description: "No se pudieron guardar las credenciales del SII.",
-            variant: "destructive"
-          });
-          return false;
-        }
+        console.error('Update verification failed');
+        toast({
+          title: "Error",
+          description: "Los datos no se guardaron correctamente. Por favor intenta nuevamente.",
+          variant: "destructive"
+        });
+        return false;
       }
-      
+
       console.log('Data saved and verified successfully');
       return true;
       
     } catch (error) {
-      console.error('Error saving form data:', error);
+      console.error('Error in saveFormData:', error);
       toast({
         title: "Error",
-        description: "Error al guardar los datos. Intenta nuevamente.",
+        description: "Error al guardar los datos. Por favor intenta nuevamente.",
         variant: "destructive"
       });
       return false;
@@ -912,3 +834,4 @@ const OnboardingSuccess = () => {
 };
 
 export default OnboardingSuccess;
+
