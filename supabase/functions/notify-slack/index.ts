@@ -31,6 +31,7 @@ Deno.serve(async (req) => {
   try {
     const SLACK_BOT_TOKEN = Deno.env.get('SLACK_BOT_TOKEN')
     if (!SLACK_BOT_TOKEN) {
+      console.error('SLACK_BOT_TOKEN not found in environment variables');
       throw new Error('SLACK_BOT_TOKEN no encontrado')
     }
 
@@ -113,32 +114,38 @@ Deno.serve(async (req) => {
     
     console.log('Sending Slack message:', JSON.stringify(message, null, 2));
 
-    const response = await fetch('https://slack.com/api/chat.postMessage', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${SLACK_BOT_TOKEN}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(message)
-    })
+    try {
+      const response = await fetch('https://slack.com/api/chat.postMessage', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${SLACK_BOT_TOKEN}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(message)
+      });
 
-    const slackResponse = await response.json()
-    
-    if (!slackResponse.ok) {
-      console.error('Error al enviar mensaje a Slack:', slackResponse)
-      throw new Error('Error al enviar mensaje a Slack')
+      const slackResponse = await response.json();
+      
+      if (!slackResponse.ok) {
+        console.error('Error sending message to Slack:', slackResponse);
+        throw new Error('Error al enviar mensaje a Slack: ' + JSON.stringify(slackResponse));
+      }
+      
+      console.log('Slack message sent successfully:', slackResponse);
+      
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200,
+      });
+    } catch (slackError) {
+      console.error('Error in Slack API request:', slackError);
+      throw new Error('Error in Slack API request: ' + slackError.message);
     }
-
-    return new Response(JSON.stringify({ success: true }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      status: 200,
-    })
-
   } catch (error) {
-    console.error('Error:', error.message)
+    console.error('Error in notify-slack function:', error.message);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 500,
-    })
+    });
   }
 })

@@ -63,6 +63,16 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
         ? `+56${formData.whatsapp.replace(/^\+56/, '')}`
         : '';
 
+      console.log('Creating lead with data:', { 
+        company_name: formData.nombreRestaurante,
+        name: `${formData.firstName} ${formData.lastName}`,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        ccity: formData.ciudad,
+        whatsapp: whatsappNumber
+      });
+
       // First create the lead record
       const { data: leadData, error: leadError } = await supabase
         .from('leads')
@@ -90,19 +100,31 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
       
       console.log('Created lead with ID:', leadId);
 
-      // Send notification to Slack about the new lead (only for initial registration)
-      await supabase.functions.invoke('notify-slack', {
-        body: {
-          lead: {
-            company_name: formData.nombreRestaurante,
-            name: `${formData.firstName} ${formData.lastName}`,
-            email: formData.email,
-            ccity: formData.ciudad,
-            whatsapp: whatsappNumber
-          },
-          isOnboarding: false // Esta es una notificación inicial, no una actualización de onboarding
+      try {
+        // Send notification to Slack about the new lead (only for initial registration)
+        const slackResponse = await supabase.functions.invoke('notify-slack', {
+          body: {
+            lead: {
+              company_name: formData.nombreRestaurante,
+              name: `${formData.firstName} ${formData.lastName}`,
+              email: formData.email,
+              ccity: formData.ciudad,
+              whatsapp: whatsappNumber
+            },
+            isOnboarding: false // Esta es una notificación inicial, no una actualización de onboarding
+          }
+        });
+        
+        console.log('Slack notification response:', slackResponse);
+        
+        if (slackResponse.error) {
+          console.warn('Warning: Slack notification failed, but registration can proceed:', slackResponse.error);
+          // Don't throw error here, just log warning
         }
-      });
+      } catch (slackError) {
+        console.warn('Warning: Slack notification error, but registration can proceed:', slackError);
+        // Don't throw error here, just log warning
+      }
 
       // Navigate to onboarding with restaurant name and leadId in state
       navigate('/onboarding-success', {
