@@ -35,7 +35,6 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
     
     if (!supabaseUrl || !supabaseKey) {
-      console.error('Missing Supabase configuration');
       return new Response(
         JSON.stringify({ error: 'Server configuration error' }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
@@ -43,8 +42,6 @@ serve(async (req) => {
     }
     
     const supabase = createClient(supabaseUrl, supabaseKey);
-
-    console.log(`Updating lead ${leadId} with data:`, updateData);
 
     // Execute update with retries
     let retries = 3;
@@ -63,14 +60,12 @@ serve(async (req) => {
       
       if (!error) break;
       
-      console.log(`Retry attempt ${4 - retries}, error:`, error);
       retries--;
       // Wait a short time before retrying
       await new Promise(resolve => setTimeout(resolve, 500));
     }
 
     if (error) {
-      console.error('Error updating lead after retries:', error);
       return new Response(
         JSON.stringify({ error: error.message }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
@@ -85,7 +80,6 @@ serve(async (req) => {
       .single();
 
     if (verifyError) {
-      console.error('Error verifying update:', verifyError);
       return new Response(
         JSON.stringify({ error: 'Could not verify update' }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
@@ -104,21 +98,17 @@ serve(async (req) => {
     });
 
     if (!updateSuccessful) {
-      console.error('Update verification failed. Expected:', updateData, 'Got:', verifyData);
       return new Response(
         JSON.stringify({ error: 'Update did not persist correctly' }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
       );
     }
 
-    console.log('Lead updated successfully, returning data:', verifyData);
-
     return new Response(
       JSON.stringify({ success: true, data: verifyData }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('Unexpected error:', error);
     return new Response(
       JSON.stringify({ error: 'An unexpected error occurred' }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }

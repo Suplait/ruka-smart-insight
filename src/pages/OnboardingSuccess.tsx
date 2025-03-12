@@ -241,17 +241,15 @@ const OnboardingSuccess = () => {
   const location = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSavingStep, setIsSavingStep] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const totalSteps = 4;
 
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
   
-  console.log('Lead ID from location state:', leadId);
-  
   useEffect(() => {
     if (!leadId) {
-      console.error('No leadId found in location state');
       toast({
         title: "Error",
         description: "Error al cargar los datos. Por favor intenta registrarte nuevamente.",
@@ -304,7 +302,6 @@ const OnboardingSuccess = () => {
   const saveFormData = async () => {
     try {
       if (!leadId) {
-        console.error('No leadId found, cannot save data');
         toast({
           title: "Error",
           description: "No se pudo guardar los datos porque no se encontró el ID del lead",
@@ -312,8 +309,6 @@ const OnboardingSuccess = () => {
         });
         return false;
       }
-      
-      console.log('Saving form data for step', currentStep, 'with leadId:', leadId);
       
       let updateData: Record<string, any> = {};
       
@@ -333,8 +328,6 @@ const OnboardingSuccess = () => {
           sii_connected: true
         };
       }
-      
-      console.log('Updating lead with data:', updateData);
 
       try {
         const numericLeadId = Number(leadId);
@@ -346,7 +339,6 @@ const OnboardingSuccess = () => {
         });
         
         if (response.error) {
-          console.error('Edge function update failed:', response.error);
           toast({
             title: "Error",
             description: "Error al guardar los datos. Por favor intenta nuevamente.",
@@ -356,7 +348,6 @@ const OnboardingSuccess = () => {
         }
         
         if (!response.data?.success) {
-          console.error('Edge function update unsuccessful:', response.data);
           toast({
             title: "Error",
             description: "Error al guardar los datos. Por favor intenta nuevamente.",
@@ -365,45 +356,8 @@ const OnboardingSuccess = () => {
           return false;
         }
         
-        console.log('Edge function update successful:', response.data);
-        
-        const { data: verifiedData, error: verifyError } = await supabase
-          .from('leads')
-          .select('*')
-          .eq('id', numericLeadId)
-          .maybeSingle();
-
-        if (verifyError || !verifiedData) {
-          console.error('Error verifying update or no data returned:', verifyError);
-          toast({
-            title: "Advertencia",
-            description: "Los datos pueden no haberse guardado correctamente. Por favor continúe con precaución.",
-            variant: "destructive"
-          });
-          return true; // Allow to proceed, but with a warning
-        }
-
-        const updateSuccessful = Object.keys(updateData).every(key => {
-          if (typeof updateData[key] === 'boolean' && updateData[key] === true && verifiedData[key] === false) {
-            return false;
-          }
-          return verifiedData[key] === updateData[key] || !(key in verifiedData);
-        });
-
-        if (!updateSuccessful) {
-          console.error('Data verification failed. Expected:', updateData, 'Got:', verifiedData);
-          toast({
-            title: "Advertencia",
-            description: "Algunos datos pueden no haberse guardado correctamente.",
-            variant: "destructive"
-          });
-          return true; // Allow to proceed, but with a warning
-        }
-
-        console.log('Data saved and verified successfully:', verifiedData);
         return true;
       } catch (edgeFunctionError) {
-        console.error('Error calling edge function:', edgeFunctionError);
         toast({
           title: "Error",
           description: "Error al guardar los datos. Por favor intenta nuevamente.",
@@ -412,7 +366,6 @@ const OnboardingSuccess = () => {
         return false;
       }
     } catch (error) {
-      console.error('Error in saveFormData:', error);
       toast({
         title: "Error",
         description: "Error al guardar los datos. Por favor intenta nuevamente.",
@@ -423,6 +376,10 @@ const OnboardingSuccess = () => {
   };
 
   const handleNext = async () => {
+    if (isSavingStep) return;
+    
+    setIsSavingStep(true);
+    
     if (currentStep === 0) {
     } else if (currentStep === 1) {
       if (formData.sistema === "mercado" && !formData.sistemaCustom) {
@@ -431,6 +388,7 @@ const OnboardingSuccess = () => {
           description: "Por favor indica cuál sistema de facturación utilizas",
           variant: "destructive"
         });
+        setIsSavingStep(false);
         return;
       }
     } else if (currentStep === 2) {
@@ -440,6 +398,7 @@ const OnboardingSuccess = () => {
           description: "Por favor elige un subdominio",
           variant: "destructive"
         });
+        setIsSavingStep(false);
         return;
       }
     } else if (currentStep === 3) {
@@ -449,6 +408,7 @@ const OnboardingSuccess = () => {
           description: "Por favor completa el RUT y clave del SII",
           variant: "destructive"
         });
+        setIsSavingStep(false);
         return;
       }
 
@@ -459,6 +419,7 @@ const OnboardingSuccess = () => {
           description: "El RUT debe tener el formato 1234567-8 o 12345678-9",
           variant: "destructive"
         });
+        setIsSavingStep(false);
         return;
       }
 
@@ -468,21 +429,23 @@ const OnboardingSuccess = () => {
         const saved = await saveFormData();
         if (!saved) {
           setIsLoading(false);
+          setIsSavingStep(false);
           return;
         }
 
         await new Promise(resolve => setTimeout(resolve, 2000));
         setIsComplete(true);
         setIsLoading(false);
+        setIsSavingStep(false);
         return;
       } catch (error) {
-        console.error('Error submitting form:', error);
         toast({
           title: "Error",
           description: "Ha ocurrido un error al conectar con el SII. Intenta nuevamente.",
           variant: "destructive"
         });
         setIsLoading(false);
+        setIsSavingStep(false);
         return;
       }
     }
@@ -491,6 +454,7 @@ const OnboardingSuccess = () => {
     if (saved) {
       setCurrentStep(prev => prev + 1);
     }
+    setIsSavingStep(false);
   };
 
   const handleBack = () => {
@@ -569,14 +533,10 @@ const OnboardingSuccess = () => {
                 backgroundColor: "#DA5C2B",
                 borderColor: "#DA5C2B"
               }} 
-              disabled={isLoading}
+              disabled={isLoading || isSavingStep}
+              isLoading={isLoading}
             >
-              {isLoading ? (
-                <>
-                  <Loader className="h-4 w-4 animate-spin" />
-                  Conectando con el SII...
-                </>
-              ) : (
+              {!isLoading && (
                 <>
                   <div className="bg-white rounded-md p-1 flex items-center justify-center">
                     <img src="/logosii.png" alt="SII" className="h-4" />
@@ -801,7 +761,7 @@ const OnboardingSuccess = () => {
                               id={`back-button-step-${currentStep}`}
                               variant="outline" 
                               onClick={handleBack} 
-                              disabled={currentStep === 0} 
+                              disabled={currentStep === 0 || isSavingStep} 
                               className="gap-2"
                             >
                               <ArrowLeft className="w-4 h-4" /> Atrás
@@ -811,8 +771,14 @@ const OnboardingSuccess = () => {
                               id={`next-button-step-${currentStep}`}
                               onClick={handleNext} 
                               className="gap-2"
+                              isLoading={isSavingStep}
+                              disabled={isSavingStep}
                             >
-                              Siguiente <ArrowRight className="w-4 h-4" />
+                              {!isSavingStep && (
+                                <>
+                                  Siguiente <ArrowRight className="w-4 h-4" />
+                                </>
+                              )}
                             </Button>
                           </div>
                         )}
@@ -822,7 +788,8 @@ const OnboardingSuccess = () => {
                             <Button 
                               id="back-button-step-3"
                               variant="outline" 
-                              onClick={handleBack} 
+                              onClick={handleBack}
+                              disabled={isLoading || isSavingStep}
                               className="gap-2"
                             >
                               <ArrowLeft className="w-4 h-4" /> Atrás
