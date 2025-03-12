@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,6 +12,7 @@ import Partners from "@/components/Partners";
 import AutomationFeatures from "@/components/restaurant/AutomationFeatures";
 import SimpleConnection from "@/components/restaurant/SimpleConnection";
 import CompactImpactStats from "@/components/restaurant/CompactImpactStats";
+import { supabase } from "@/integrations/supabase/client";
 
 type StepProps = {
   currentStep: number;
@@ -102,7 +104,7 @@ const BillingSystemSelector = ({
           <div>
             <h4 className="font-medium text-blue-700 mb-1">¿Por qué es importante?</h4>
             <p className="text-sm text-blue-600">
-              Conectaremos tu sistema de facturación para automatizar tu contabilidad.
+              Conectaremos tu sistema de facturación para automatizar tu gestión.
             </p>
           </div>
         </div>
@@ -239,6 +241,8 @@ const OnboardingSuccess = () => {
   const totalSteps = 4;
 
   const restaurantName = location.state?.restaurantName || '';
+  const leadId = location.state?.leadId;
+  
   const generateSubdomain = (name: string) => {
     if (!name) return '';
     return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -279,9 +283,37 @@ const OnboardingSuccess = () => {
 
   const saveFormData = async () => {
     try {
-      const leadId = location.state?.leadId;
       if (leadId) {
         console.log('Saving form data for step', currentStep, formData);
+        
+        // Prepare the data to update based on current step
+        let updateData = {};
+        
+        if (currentStep === 0) {
+          updateData = { meses_datos: formData.meses };
+        } else if (currentStep === 1) {
+          updateData = { 
+            sistema_facturacion: formData.sistema,
+            sistema_custom: formData.sistemaCustom
+          };
+        } else if (currentStep === 2) {
+          updateData = { subdominio: formData.subdominio };
+        } else if (currentStep === 3) {
+          updateData = { 
+            rut: formData.rut,
+            sii_connected: true
+          };
+        }
+        
+        // Update the lead record with the new data
+        const { error } = await supabase
+          .from('leads')
+          .update(updateData)
+          .eq('id', leadId);
+          
+        if (error) {
+          console.error('Error updating lead data:', error);
+        }
       }
     } catch (error) {
       console.error('Error saving form data:', error);
@@ -290,6 +322,7 @@ const OnboardingSuccess = () => {
 
   const handleNext = async () => {
     if (currentStep === 0) {
+      // No validation needed for months selection
     } else if (currentStep === 1) {
       if (formData.sistema === "mercado" && !formData.sistemaCustom) {
         toast({
@@ -386,7 +419,7 @@ const OnboardingSuccess = () => {
             <div className="flex gap-3">
               <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
               <div>
-                <h4 className="font-medium text-blue-700 mb-1">Conexión con el SII</h4>
+                <h4 className="font-medium text-blue-700 mb-1">Conexión Segura con el SII</h4>
                 <p className="text-sm text-blue-600">
                   Ingresa tus credenciales para importar automáticamente tus facturas de compra y venta.
                 </p>
@@ -494,10 +527,6 @@ const OnboardingSuccess = () => {
   );
 
   const currentStepData = steps[currentStep];
-
-  const openYoutubeInNewTab = () => {
-    window.open("https://www.youtube.com/embed/1wV-corpO74", "_blank");
-  };
 
   const getLeftSideContent = () => {
     switch(currentStep) {
@@ -612,7 +641,7 @@ const OnboardingSuccess = () => {
           <div className="w-full max-w-md">
             <div className="md:hidden mb-8 flex flex-col items-center text-center">
               <img src="/logo.png" alt="Ruka.ai" className="h-10 mb-4" />
-              <h1 className="text-2xl font-bold mb-2">Automatización contable inteligente</h1>
+              <h1 className="text-2xl font-bold mb-2">Automatización inteligente</h1>
               <p className="text-slate-600 text-sm mb-6">
                 Agentes con IA que procesan, agrupan y monitorean tus transacciones para que tengas control absoluto de tu negocio.
               </p>

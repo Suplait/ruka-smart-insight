@@ -242,6 +242,15 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
               rel="noopener noreferrer"
             >
               términos y condiciones
+            </Link>{" "}
+            y las{" "}
+            <Link 
+              to="/privacy" 
+              className="text-primary hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              políticas de privacidad
             </Link>
           </label>
         </div>

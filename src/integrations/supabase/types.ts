@@ -18,7 +18,13 @@ export type Database = {
           first_name: string | null
           id: number
           last_name: string | null
+          meses_datos: number | null
           name: string
+          rut: string | null
+          sii_connected: boolean | null
+          sistema_custom: string | null
+          sistema_facturacion: string | null
+          subdominio: string | null
           whatsapp: string | null
         }
         Insert: {
@@ -29,7 +35,13 @@ export type Database = {
           first_name?: string | null
           id?: never
           last_name?: string | null
+          meses_datos?: number | null
           name: string
+          rut?: string | null
+          sii_connected?: boolean | null
+          sistema_custom?: string | null
+          sistema_facturacion?: string | null
+          subdominio?: string | null
           whatsapp?: string | null
         }
         Update: {
@@ -40,7 +52,13 @@ export type Database = {
           first_name?: string | null
           id?: never
           last_name?: string | null
+          meses_datos?: number | null
           name?: string
+          rut?: string | null
+          sii_connected?: boolean | null
+          sistema_custom?: string | null
+          sistema_facturacion?: string | null
+          subdominio?: string | null
           whatsapp?: string | null
         }
         Relationships: []
