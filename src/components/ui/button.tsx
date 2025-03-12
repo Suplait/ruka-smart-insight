@@ -2,7 +2,6 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
@@ -27,7 +26,7 @@ const buttonVariants = cva(
         icon: "h-10 w-10",
       },
       isLoading: {
-        true: "relative text-transparent transition-none hover:text-transparent [&_span]:opacity-0",
+        true: "relative text-transparent transition-none hover:text-transparent [&_span]:opacity-0 cursor-not-allowed",
         false: "",
       }
     },

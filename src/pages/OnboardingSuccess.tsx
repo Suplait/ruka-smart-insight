@@ -381,7 +381,15 @@ const OnboardingSuccess = () => {
     setIsSavingStep(true);
     
     if (currentStep === 0) {
-    } else if (currentStep === 1) {
+      const saved = await saveFormData();
+      if (saved) {
+        setCurrentStep(prev => prev + 1);
+      }
+      setIsSavingStep(false);
+      return;
+    }
+    
+    if (currentStep === 1) {
       if (formData.sistema === "mercado" && !formData.sistemaCustom) {
         toast({
           title: "Campo requerido",
@@ -391,7 +399,15 @@ const OnboardingSuccess = () => {
         setIsSavingStep(false);
         return;
       }
-    } else if (currentStep === 2) {
+      const saved = await saveFormData();
+      if (saved) {
+        setCurrentStep(prev => prev + 1);
+      }
+      setIsSavingStep(false);
+      return;
+    }
+    
+    if (currentStep === 2) {
       if (!formData.subdominio) {
         toast({
           title: "Campo requerido",
@@ -401,7 +417,15 @@ const OnboardingSuccess = () => {
         setIsSavingStep(false);
         return;
       }
-    } else if (currentStep === 3) {
+      const saved = await saveFormData();
+      if (saved) {
+        setCurrentStep(prev => prev + 1);
+      }
+      setIsSavingStep(false);
+      return;
+    }
+    
+    if (currentStep === 3) {
       if (!formData.rut || !formData.clave) {
         toast({
           title: "Campos requeridos",
@@ -425,14 +449,12 @@ const OnboardingSuccess = () => {
 
       try {
         setIsLoading(true);
-
         const saved = await saveFormData();
         if (!saved) {
           setIsLoading(false);
           setIsSavingStep(false);
           return;
         }
-
         await new Promise(resolve => setTimeout(resolve, 2000));
         setIsComplete(true);
         setIsLoading(false);
@@ -449,12 +471,6 @@ const OnboardingSuccess = () => {
         return;
       }
     }
-
-    const saved = await saveFormData();
-    if (saved) {
-      setCurrentStep(prev => prev + 1);
-    }
-    setIsSavingStep(false);
   };
 
   const handleBack = () => {
