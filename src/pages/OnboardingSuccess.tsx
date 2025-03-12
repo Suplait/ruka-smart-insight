@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Calendar, Store, Check, Globe, ShieldCheck, Info, Loader, ExternalLink } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Store, Check, Globe, ShieldCheck, Info, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,6 +12,10 @@ import Partners from "@/components/Partners";
 import AutomationFeatures from "@/components/restaurant/AutomationFeatures";
 import SimpleConnection from "@/components/restaurant/SimpleConnection";
 import CompactImpactStats from "@/components/restaurant/CompactImpactStats";
+import MonthsSelector from "@/components/onboarding/MonthsSelector";
+import BillingSystemSelector from "@/components/onboarding/BillingSystemSelector";
+import SubdomainInput from "@/components/onboarding/SubdomainInput";
+import StepIndicator from "@/components/onboarding/StepIndicator";
 
 const OnboardingSuccess = () => {
   const navigate = useNavigate();
@@ -24,7 +28,33 @@ const OnboardingSuccess = () => {
   const leadId = location.state?.leadId;
   const restaurantName = location.state?.restaurantName || '';
   
-  console.log('Lead ID in onboarding:', leadId);
+  const generateSubdomain = (name: string) => {
+    if (!name) return '';
+    return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '')
+    .trim();
+  };
+  
+  const suggestedSubdomain = generateSubdomain(restaurantName);
+
+  const [formData, setFormData] = useState({
+    rut: "",
+    clave: "",
+    meses: 3,
+    sistema: "sii",
+    sistemaCustom: "",
+    subdominio: suggestedSubdomain
+  });
+
+  const updateFormData = (field: keyof typeof formData, value: string | number) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubdomainChange = (value: string) => {
+    const sanitizedValue = generateSubdomain(value);
+    updateFormData('subdominio', sanitizedValue);
+  };
 
   useEffect(() => {
     if (!leadId) {
@@ -37,25 +67,6 @@ const OnboardingSuccess = () => {
       navigate('/restaurantes');
     }
   }, [leadId, navigate]);
-
-  const [formData, setFormData] = useState({
-    rut: "",
-    clave: "",
-    meses: 3,
-    sistema: "sii",
-    sistemaCustom: "",
-    subdominio: suggestedSubdomain || ""
-  });
-
-  const generateSubdomain = (name: string) => {
-    if (!name) return '';
-    return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '')
-    .trim();
-  };
-  
-  const suggestedSubdomain = generateSubdomain(restaurantName);
 
   const saveFormData = async (stepData: any) => {
     if (!leadId) {
