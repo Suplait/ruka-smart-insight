@@ -535,15 +535,19 @@ const OnboardingSuccess = () => {
                 borderColor: "#DA5C2B"
               }} 
               disabled={isLoading}
-              isLoading={isLoading}
             >
-              {!isLoading && (
+              {!isLoading ? (
                 <>
                   <div className="bg-white rounded-md p-1 flex items-center justify-center">
                     <img src="/logosii.png" alt="SII" className="h-4" />
                   </div>
                   Iniciar sesión con el SII
                 </>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <Loader className="h-4 w-4 animate-spin" />
+                  Conectando...
+                </span>
               )}
             </Button>
           </div>
