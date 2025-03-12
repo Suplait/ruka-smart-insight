@@ -7,234 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import Partners from "@/components/Partners";
 import AutomationFeatures from "@/components/restaurant/AutomationFeatures";
 import SimpleConnection from "@/components/restaurant/SimpleConnection";
 import CompactImpactStats from "@/components/restaurant/CompactImpactStats";
-import { supabase } from "@/integrations/supabase/client";
-
-type StepProps = {
-  currentStep: number;
-  totalSteps: number;
-};
-
-const StepIndicator = ({
-  currentStep,
-  totalSteps
-}: StepProps) => {
-  return (
-    <div className="flex items-center justify-center gap-2 mb-8">
-      {Array.from({ length: totalSteps }).map((_, index) => (
-        <div 
-          key={index} 
-          className={`h-2.5 rounded-full transition-all duration-300 ${
-            index < currentStep 
-              ? "w-8 bg-primary" 
-              : index === currentStep 
-                ? "w-8 bg-primary" 
-                : "w-2.5 bg-gray-200"
-          }`} 
-        />
-      ))}
-    </div>
-  );
-};
-
-const MonthsSelector = ({
-  selectedMonths,
-  onChange
-}: {
-  selectedMonths: number;
-  onChange: (months: number) => void;
-}) => {
-  return (
-    <div className="space-y-6">
-      <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
-        <div className="flex gap-3">
-          <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
-          <div>
-            <h4 className="font-medium text-blue-700 mb-1">¿Por qué necesitamos esto?</h4>
-            <p className="text-sm text-blue-600">
-              Selecciona el período de datos históricos que importaremos para análisis.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-3 gap-4">
-        {[1, 2, 3].map(month => (
-          <button 
-            key={month} 
-            type="button" 
-            id={`months-selector-${month}`}
-            onClick={() => onChange(month)} 
-            className={`p-4 rounded-lg border-2 transition-all flex flex-col items-center ${
-              selectedMonths === month 
-                ? "border-primary bg-primary/5" 
-                : "border-gray-200 hover:border-gray-300"
-            }`}
-          >
-            <span className="text-2xl font-semibold">{month}</span>
-            <span className="text-sm text-muted-foreground">
-              {month === 1 ? "mes" : "meses"}
-            </span>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const BillingSystemSelector = ({
-  selectedSystem,
-  onChange,
-  customSystem,
-  onCustomChange
-}: {
-  selectedSystem: string;
-  onChange: (system: string) => void;
-  customSystem: string;
-  onCustomChange: (value: string) => void;
-}) => {
-  return (
-    <div className="space-y-6">
-      <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
-        <div className="flex gap-3">
-          <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
-          <div>
-            <h4 className="font-medium text-blue-700 mb-1">¿Por qué es importante?</h4>
-            <p className="text-sm text-blue-600">
-              Conectaremos tu sistema de facturación para automatizar tu gestión.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <button 
-          type="button" 
-          id="system-selector-sii"
-          onClick={() => onChange("sii")} 
-          className={`p-4 rounded-lg border-2 transition-all text-left ${
-            selectedSystem === "sii" 
-              ? "border-primary bg-primary/5" 
-              : "border-gray-200 hover:border-gray-300"
-          }`}
-        >
-          <div className="font-medium">SII Gratuito</div>
-          <div className="text-sm text-muted-foreground">Sistema oficial del SII</div>
-        </button>
-        
-        <button 
-          type="button" 
-          id="system-selector-mercado"
-          onClick={() => onChange("mercado")} 
-          className={`p-4 rounded-lg border-2 transition-all text-left ${
-            selectedSystem === "mercado" 
-              ? "border-primary bg-primary/5" 
-              : "border-gray-200 hover:border-gray-300"
-          }`}
-        >
-          <div className="font-medium">Facturador de Mercado</div>
-          <div className="text-sm text-muted-foreground">Sistema de terceros</div>
-        </button>
-      </div>
-      
-      {selectedSystem === "mercado" && (
-        <div className="mt-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
-          <label className="text-sm font-medium mb-2 block">¿Cuál sistema utilizas?</label>
-          <Input 
-            id="custom-system-input"
-            value={customSystem} 
-            onChange={e => onCustomChange(e.target.value)} 
-            placeholder="Nubox, Bsale, Toteat, etc." 
-            className="bg-white" 
-          />
-        </div>
-      )}
-    </div>
-  );
-};
-
-const SubdomainInput = ({
-  value,
-  onChange,
-  suggestedSubdomain
-}: {
-  value: string;
-  onChange: (value: string) => void;
-  suggestedSubdomain: string;
-}) => {
-  const [isChecking, setIsChecking] = useState(false);
-  const [isAvailable, setIsAvailable] = useState(true);
-  
-  useEffect(() => {
-    if (!value) return;
-    
-    setIsChecking(true);
-    setIsAvailable(false);
-    
-    const timer = setTimeout(() => {
-      setIsChecking(false);
-      setIsAvailable(true);
-    }, 800);
-    
-    return () => clearTimeout(timer);
-  }, [value]);
-
-  return (
-    <div className="space-y-6">
-      <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
-        <div className="flex gap-3">
-          <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
-          <div>
-            <h4 className="font-medium text-blue-700 mb-1">Tu portal personalizado</h4>
-            <p className="text-sm text-blue-600">
-              Este será el enlace de acceso exclusivo a tu plataforma.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div className="relative">
-          <Input 
-            id="subdomain-input"
-            value={value} 
-            onChange={e => onChange(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))} 
-            placeholder="tu-empresa" 
-            className="pr-[120px]" 
-          />
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-            .ruka.ai
-          </div>
-        </div>
-        
-        <div className="mt-2 text-sm text-muted-foreground">
-          Sugerencia basada en el nombre de tu empresa.
-        </div>
-        
-        <div className="mt-2 text-sm">
-          {isChecking ? (
-            <span className="text-amber-600 flex items-center gap-1">
-              <Loader className="w-4 h-4 animate-spin" /> Comprobando disponibilidad...
-            </span>
-          ) : isAvailable ? (
-            <span className="text-green-600 flex items-center gap-1">
-              <Check className="w-4 h-4" /> Subdominio disponible
-            </span>
-          ) : (
-            <span className="text-red-600 flex items-center gap-1">
-              <span className="w-4 h-4">✖</span> Subdominio no disponible
-            </span>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const SLIDE_INTERVAL = 2500;
 
 const OnboardingSuccess = () => {
   const navigate = useNavigate();
@@ -244,23 +21,31 @@ const OnboardingSuccess = () => {
   const [isComplete, setIsComplete] = useState(false);
   const totalSteps = 4;
 
-  const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
+  const restaurantName = location.state?.restaurantName || '';
   
-  console.log('Lead ID from location state:', leadId);
-  
+  console.log('Lead ID in onboarding:', leadId);
+
   useEffect(() => {
     if (!leadId) {
-      console.error('No leadId found in location state');
+      console.error('No leadId found in location state, redirecting to registration');
       toast({
         title: "Error",
         description: "Error al cargar los datos. Por favor intenta registrarte nuevamente.",
         variant: "destructive"
       });
       navigate('/restaurantes');
-      return;
     }
   }, [leadId, navigate]);
+
+  const [formData, setFormData] = useState({
+    rut: "",
+    clave: "",
+    meses: 3,
+    sistema: "sii",
+    sistemaCustom: "",
+    subdominio: suggestedSubdomain || ""
+  });
 
   const generateSubdomain = (name: string) => {
     if (!name) return '';
@@ -272,94 +57,38 @@ const OnboardingSuccess = () => {
   
   const suggestedSubdomain = generateSubdomain(restaurantName);
 
-  const [formData, setFormData] = useState({
-    rut: "",
-    clave: "",
-    meses: 3,
-    sistema: "sii",
-    sistemaCustom: "",
-    subdominio: suggestedSubdomain || ""
-  });
-
-  useEffect(() => {
-    if (suggestedSubdomain && !formData.subdominio) {
-      setFormData(prev => ({
-        ...prev,
-        subdominio: suggestedSubdomain
-      }));
+  const saveFormData = async (stepData: any) => {
+    if (!leadId) {
+      console.error('No leadId found, cannot save data');
+      return false;
     }
-  }, [suggestedSubdomain]);
 
-  const updateFormData = (key: string, value: any) => {
-    setFormData(prev => ({
-      ...prev,
-      [key]: value
-    }));
-  };
-
-  const handleSubdomainChange = (value: string) => {
-    updateFormData('subdominio', value);
-  };
-
-  const saveFormData = async () => {
     try {
-      if (!leadId) {
-        console.error('No leadId found, cannot save data');
-        toast({
-          title: "Error",
-          description: "No se pudo guardar los datos porque no se encontró el ID del lead",
-          variant: "destructive"
-        });
-        return false;
-      }
-      
-      console.log('Saving form data for step', currentStep, 'with leadId:', leadId);
-      
-      let updateData = {};
-      
-      if (currentStep === 0) {
-        updateData = { meses_datos: formData.meses };
-      } else if (currentStep === 1) {
-        updateData = { 
-          sistema_facturacion: formData.sistema,
-          sistema_custom: formData.sistemaCustom
-        };
-      } else if (currentStep === 2) {
-        updateData = { subdominio: formData.subdominio };
-      } else if (currentStep === 3) {
-        updateData = { 
-          rut: formData.rut,
-          clave_sii: formData.clave,
-          sii_connected: true
-        };
-      }
-      
-      console.log('Updating lead with data:', updateData);
-      
+      console.log(`Saving data for step ${currentStep} to lead ${leadId}:`, stepData);
+
       const { data, error } = await supabase
         .from('leads')
-        .update(updateData)
+        .update(stepData)
         .eq('id', leadId)
         .select();
-        
+
       if (error) {
-        console.error('Error updating lead data:', error);
+        console.error('Error saving step data:', error);
         toast({
-          title: "Error",
-          description: `Error al guardar: ${error.message}`,
+          title: "Error al guardar",
+          description: `No se pudieron guardar los datos: ${error.message}`,
           variant: "destructive"
         });
         return false;
       }
-      
-      console.log('Lead data updated successfully:', data);
+
+      console.log('Successfully saved step data:', data);
       return true;
-      
     } catch (error) {
-      console.error('Error saving form data:', error);
+      console.error('Error in saveFormData:', error);
       toast({
         title: "Error",
-        description: "Error al guardar los datos. Intenta nuevamente.",
+        description: "Error al guardar los datos. Por favor intenta nuevamente.",
         variant: "destructive"
       });
       return false;
@@ -367,74 +96,75 @@ const OnboardingSuccess = () => {
   };
 
   const handleNext = async () => {
-    if (currentStep === 0) {
-      // No validation needed for months selection
-    } else if (currentStep === 1) {
-      if (formData.sistema === "mercado" && !formData.sistemaCustom) {
-        toast({
-          title: "Campo requerido",
-          description: "Por favor indica cuál sistema de facturación utilizas",
-          variant: "destructive"
-        });
-        return;
+    setIsLoading(true);
+    let stepData = {};
+
+    try {
+      switch (currentStep) {
+        case 0:
+          stepData = { meses_datos: formData.meses };
+          break;
+        case 1:
+          stepData = {
+            sistema_facturacion: formData.sistema,
+            sistema_custom: formData.sistemaCustom
+          };
+          break;
+        case 2:
+          stepData = { subdominio: formData.subdominio };
+          break;
+        case 3:
+          if (!formData.rut || !formData.clave) {
+            toast({
+              title: "Campos requeridos",
+              description: "Por favor completa el RUT y clave del SII",
+              variant: "destructive"
+            });
+            setIsLoading(false);
+            return;
+          }
+
+          const rutRegex = /^\d{1,8}-[\dkK]$/;
+          if (!rutRegex.test(formData.rut)) {
+            toast({
+              title: "Formato incorrecto",
+              description: "El RUT debe tener el formato 1234567-8",
+              variant: "destructive"
+            });
+            setIsLoading(false);
+            return;
+          }
+
+          stepData = {
+            rut: formData.rut,
+            clave_sii: formData.clave,
+            sii_connected: true
+          };
+          break;
       }
-    } else if (currentStep === 2) {
-      if (!formData.subdominio) {
-        toast({
-          title: "Campo requerido",
-          description: "Por favor elige un subdominio",
-          variant: "destructive"
-        });
-        return;
-      }
-    } else if (currentStep === 3) {
-      if (!formData.rut || !formData.clave) {
-        toast({
-          title: "Campos requeridos",
-          description: "Por favor completa el RUT y clave del SII",
-          variant: "destructive"
-        });
+
+      const saved = await saveFormData(stepData);
+      
+      if (!saved) {
+        setIsLoading(false);
         return;
       }
 
-      const rutRegex = /^\d{1,8}-[\dkK]$/;
-      if (!rutRegex.test(formData.rut)) {
-        toast({
-          title: "Formato incorrecto",
-          description: "El RUT debe tener el formato 1234567-8 o 12345678-9",
-          variant: "destructive"
-        });
-        return;
-      }
-
-      try {
-        setIsLoading(true);
-
-        const saved = await saveFormData();
-        if (!saved) {
-          setIsLoading(false);
-          return;
-        }
-
-        await new Promise(resolve => setTimeout(resolve, 2000));
+      if (currentStep === 3) {
         setIsComplete(true);
-        setIsLoading(false);
-        return;
-      } catch (error) {
-        console.error('Error submitting form:', error);
-        toast({
-          title: "Error",
-          description: "Ha ocurrido un error al conectar con el SII. Intenta nuevamente.",
-          variant: "destructive"
-        });
-        setIsLoading(false);
-        return;
+      } else {
+        setCurrentStep(prev => prev + 1);
       }
-    }
 
-    const saved = await saveFormData();
-    if (saved) {
-      setCurrentStep(prev => prev + 1);
+    } catch (error) {
+      console.error('Error in handleNext:', error);
+      toast({
+        title: "Error",
+        description: "Ha ocurrido un error. Por favor intenta nuevamente.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -581,8 +311,6 @@ const OnboardingSuccess = () => {
     </div>
   );
 
-  const currentStepData = steps[currentStep];
-
   const getLeftSideContent = () => {
     switch(currentStep) {
       case 0:
@@ -694,14 +422,6 @@ const OnboardingSuccess = () => {
         
         <div className="flex-1 flex items-center justify-center p-6 md:p-12 bg-white">
           <div className="w-full max-w-md">
-            <div className="md:hidden mb-8 flex flex-col items-center text-center">
-              <img src="/logo.png" alt="Ruka.ai" className="h-10 mb-4" />
-              <h1 className="text-2xl font-bold mb-2">Automatización inteligente</h1>
-              <p className="text-slate-600 text-sm mb-6">
-                Agentes con IA que procesan, agrupan y monitorean tus transacciones para que tengas control absoluto de tu negocio.
-              </p>
-            </div>
-            
             {!isComplete ? (
               <>
                 <motion.div 
@@ -729,16 +449,16 @@ const OnboardingSuccess = () => {
                       <CardHeader>
                         <div className="flex items-center gap-4">
                           <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                            {currentStepData.icon}
+                            {steps[currentStep].icon}
                           </div>
                           <div>
-                            <CardTitle>{currentStepData.title}</CardTitle>
-                            <CardDescription>{currentStepData.description}</CardDescription>
+                            <CardTitle>{steps[currentStep].title}</CardTitle>
+                            <CardDescription>{steps[currentStep].description}</CardDescription>
                           </div>
                         </div>
                       </CardHeader>
                       <CardContent className="pb-8">
-                        {currentStepData.content}
+                        {steps[currentStep].content}
                         
                         {currentStep < 3 && (
                           <div className="flex justify-between mt-10">
