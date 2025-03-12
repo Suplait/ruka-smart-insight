@@ -38,7 +38,7 @@ Deno.serve(async (req) => {
     
     console.log('Received lead data for Slack notification:', lead);
 
-    // Solo notificar lead inicial
+    // Removed isOnboarding check - we only want initial lead notifications for now
     let blocks = [
       {
         type: "header",
