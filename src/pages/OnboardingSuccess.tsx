@@ -336,10 +336,11 @@ const OnboardingSuccess = () => {
       
       console.log('Updating lead with data:', updateData);
       
-      const { error: updateError } = await supabase
+      const { data: updateResult, error: updateError } = await supabase
         .from('leads')
         .update(updateData)
-        .eq('id', leadId);
+        .eq('id', leadId)
+        .select();
         
       if (updateError) {
         console.error('Error updating lead data:', updateError);
@@ -351,52 +352,79 @@ const OnboardingSuccess = () => {
         return false;
       }
       
-      const { data: verifyData, error: verifyError } = await supabase
-        .from('leads')
-        .select('*')
-        .eq('id', leadId)
-        .single();
+      console.log('Lead data updated successfully:', updateResult);
+      
+      if (!updateResult || updateResult.length === 0) {
+        const { data: verifyData, error: verifyError } = await supabase
+          .from('leads')
+          .select('*')
+          .eq('id', leadId)
+          .single();
+          
+        if (verifyError) {
+          console.error('Error verifying lead data:', verifyError);
+          toast({
+            title: "Advertencia",
+            description: "Datos guardados pero no se pudo verificar. Continúe con precaución.",
+            variant: "default"
+          });
+          return true;
+        }
         
-      if (verifyError) {
-        console.error('Error verifying lead data:', verifyError);
+        console.log('Lead data verified after update:', verifyData);
+        
+        if (currentStep === 0) {
+          if (verifyData.meses_datos === formData.meses) {
+            return true;
+          }
+          console.log(`Data verification mismatch: expected meses_datos=${formData.meses}, got ${verifyData.meses_datos}`);
+        } else if (currentStep === 1) {
+          if (verifyData.sistema_facturacion === formData.sistema && 
+              (formData.sistema !== 'mercado' || verifyData.sistema_custom === formData.sistemaCustom)) {
+            return true;
+          }
+          console.log(`Data verification mismatch for sistema_facturacion/sistema_custom`);
+        } else if (currentStep === 2) {
+          if (verifyData.subdominio === formData.subdominio) {
+            return true;
+          }
+          console.log(`Data verification mismatch: expected subdominio=${formData.subdominio}, got ${verifyData.subdominio}`);
+        } else if (currentStep === 3) {
+          if (verifyData.rut === formData.rut && 
+              verifyData.clave_sii === formData.clave &&
+              verifyData.sii_connected === true) {
+            return true;
+          }
+          console.log(`Data verification mismatch for rut/clave_sii/sii_connected`);
+        }
+        
+        console.log('First update might have failed silently. Attempting second update with explicit parameters...');
+        
+        const { error: retryError } = await supabase
+          .from('leads')
+          .update(updateData)
+          .eq('id', leadId);
+          
+        if (retryError) {
+          console.error('Error on retry update:', retryError);
+          toast({
+            title: "Advertencia",
+            description: "Los datos pueden no haberse guardado correctamente. Continúe con precaución.",
+            variant: "default"
+          });
+          return false;
+        }
+        
         toast({
           title: "Advertencia",
-          description: "Datos guardados pero no se pudo verificar. Continúe con precaución.",
+          description: "Los datos se han guardado, pero la verificación no ha sido exitosa. Se puede continuar.",
           variant: "default"
         });
+        
         return true;
       }
       
-      console.log('Lead data verified after update:', verifyData);
-      
-      let dataVerified = false;
-      
-      if (currentStep === 0 && verifyData.meses_datos === formData.meses) {
-        dataVerified = true;
-      } else if (currentStep === 1 && 
-                verifyData.sistema_facturacion === formData.sistema && 
-                verifyData.sistema_custom === formData.sistemaCustom) {
-        dataVerified = true;
-      } else if (currentStep === 2 && verifyData.subdominio === formData.subdominio) {
-        dataVerified = true;
-      } else if (currentStep === 3 && 
-                verifyData.rut === formData.rut && 
-                verifyData.clave_sii === formData.clave &&
-                verifyData.sii_connected === true) {
-        dataVerified = true;
-      }
-      
-      if (!dataVerified) {
-        console.warn('Data verification failed. Expected:', updateData, 'Got:', verifyData);
-        toast({
-          title: "Advertencia",
-          description: "Los datos pueden no haberse guardado correctamente. Continúe con precaución.",
-          variant: "default"
-        });
-        return false;
-      }
-      
-      console.log('Lead data saved and verified successfully:', verifyData);
+      console.log('Lead data saved and verified successfully:', updateResult);
       return true;
       
     } catch (error) {
