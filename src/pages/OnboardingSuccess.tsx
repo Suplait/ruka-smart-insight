@@ -67,6 +67,7 @@ const MonthsSelector = ({
           <button 
             key={month} 
             type="button" 
+            id={`months-selector-${month}`}
             onClick={() => onChange(month)} 
             className={`p-4 rounded-lg border-2 transition-all flex flex-col items-center ${
               selectedMonths === month 
@@ -113,6 +114,7 @@ const BillingSystemSelector = ({
       <div className="grid grid-cols-2 gap-4">
         <button 
           type="button" 
+          id="system-selector-sii"
           onClick={() => onChange("sii")} 
           className={`p-4 rounded-lg border-2 transition-all text-left ${
             selectedSystem === "sii" 
@@ -126,6 +128,7 @@ const BillingSystemSelector = ({
         
         <button 
           type="button" 
+          id="system-selector-mercado"
           onClick={() => onChange("mercado")} 
           className={`p-4 rounded-lg border-2 transition-all text-left ${
             selectedSystem === "mercado" 
@@ -142,6 +145,7 @@ const BillingSystemSelector = ({
         <div className="mt-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
           <label className="text-sm font-medium mb-2 block">¿Cuál sistema utilizas?</label>
           <Input 
+            id="custom-system-input"
             value={customSystem} 
             onChange={e => onCustomChange(e.target.value)} 
             placeholder="Nubox, Bsale, Toteat, etc." 
@@ -196,6 +200,7 @@ const SubdomainInput = ({
       <div>
         <div className="relative">
           <Input 
+            id="subdomain-input"
             value={value} 
             onChange={e => onChange(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))} 
             placeholder="tu-empresa" 
@@ -243,6 +248,9 @@ const OnboardingSuccess = () => {
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
   
+  // Added console log for debugging leadId
+  console.log('Lead ID from location state:', leadId);
+  
   const generateSubdomain = (name: string) => {
     if (!name) return '';
     return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -283,41 +291,86 @@ const OnboardingSuccess = () => {
 
   const saveFormData = async () => {
     try {
-      if (leadId) {
-        console.log('Saving form data for step', currentStep, formData);
-        
-        // Prepare the data to update based on current step
-        let updateData = {};
-        
-        if (currentStep === 0) {
-          updateData = { meses_datos: formData.meses };
-        } else if (currentStep === 1) {
-          updateData = { 
-            sistema_facturacion: formData.sistema,
-            sistema_custom: formData.sistemaCustom
-          };
-        } else if (currentStep === 2) {
-          updateData = { subdominio: formData.subdominio };
-        } else if (currentStep === 3) {
-          updateData = { 
-            rut: formData.rut,
-            clave_sii: formData.clave,
-            sii_connected: true
-          };
-        }
-        
-        // Update the lead record with the new data
-        const { error } = await supabase
-          .from('leads')
-          .update(updateData)
-          .eq('id', leadId);
-          
-        if (error) {
-          console.error('Error updating lead data:', error);
-        }
+      if (!leadId) {
+        console.error('No leadId found, cannot save data');
+        toast({
+          title: "Error",
+          description: "No se pudo guardar los datos porque no se encontró el ID del lead",
+          variant: "destructive"
+        });
+        return false;
       }
+      
+      console.log('Saving form data for step', currentStep, formData);
+      
+      // Prepare the data to update based on current step
+      let updateData = {};
+      
+      if (currentStep === 0) {
+        updateData = { meses_datos: formData.meses };
+      } else if (currentStep === 1) {
+        updateData = { 
+          sistema_facturacion: formData.sistema,
+          sistema_custom: formData.sistemaCustom
+        };
+      } else if (currentStep === 2) {
+        updateData = { subdominio: formData.subdominio };
+      } else if (currentStep === 3) {
+        updateData = { 
+          rut: formData.rut,
+          clave_sii: formData.clave,
+          sii_connected: true
+        };
+      }
+      
+      console.log('Updating lead with data:', updateData);
+      
+      // Update the lead record with the new data
+      const { data, error } = await supabase
+        .from('leads')
+        .update(updateData)
+        .eq('id', leadId)
+        .select();
+        
+      if (error) {
+        console.error('Error updating lead data:', error);
+        toast({
+          title: "Error",
+          description: `Error al guardar: ${error.message}`,
+          variant: "destructive"
+        });
+        return false;
+      }
+      
+      console.log('Lead data updated successfully:', data);
+      
+      // Notify Slack about the onboarding step completion
+      try {
+        const leadData = await supabase
+          .from('leads')
+          .select('*')
+          .eq('id', leadId)
+          .single();
+          
+        if (leadData.data) {
+          await supabase.functions.invoke('notify-slack', {
+            body: { lead: leadData.data }
+          });
+        }
+      } catch (notifyError) {
+        console.error('Error notifying Slack:', notifyError);
+        // Don't block the flow if Slack notification fails
+      }
+      
+      return true;
     } catch (error) {
       console.error('Error saving form data:', error);
+      toast({
+        title: "Error",
+        description: "Error al guardar los datos. Intenta nuevamente.",
+        variant: "destructive"
+      });
+      return false;
     }
   };
 
@@ -365,9 +418,14 @@ const OnboardingSuccess = () => {
       try {
         setIsLoading(true);
 
-        await new Promise(resolve => setTimeout(resolve, 6000));
-        await saveFormData();
+        // Save current step data
+        const saved = await saveFormData();
+        if (!saved) {
+          setIsLoading(false);
+          return;
+        }
 
+        await new Promise(resolve => setTimeout(resolve, 6000));
         setIsComplete(true);
         setIsLoading(false);
         return;
@@ -383,8 +441,11 @@ const OnboardingSuccess = () => {
       }
     }
 
-    await saveFormData();
-    setCurrentStep(prev => prev + 1);
+    // Save current step data before moving to next step
+    const saved = await saveFormData();
+    if (saved) {
+      setCurrentStep(prev => prev + 1);
+    }
   };
 
   const handleBack = () => {
@@ -432,6 +493,7 @@ const OnboardingSuccess = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium">RUT Empresa</label>
               <Input 
+                id="rut-input"
                 value={formData.rut} 
                 onChange={e => updateFormData('rut', e.target.value)} 
                 placeholder="12345678-9" 
@@ -442,6 +504,7 @@ const OnboardingSuccess = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium">Clave del SII</label>
               <Input 
+                id="sii-password-input"
                 type="password" 
                 value={formData.clave} 
                 onChange={e => updateFormData('clave', e.target.value)} 
@@ -454,6 +517,7 @@ const OnboardingSuccess = () => {
             </div>
             
             <Button 
+              id="sii-connect-button"
               onClick={handleNext} 
               className="w-full mt-4 gap-2" 
               style={{
@@ -520,7 +584,7 @@ const OnboardingSuccess = () => {
       </div>
       
       <div className="pt-4">
-        <Button onClick={() => navigate('/')} className="px-6">
+        <Button id="go-home-button" onClick={() => navigate('/')} className="px-6">
           Ir al inicio
         </Button>
       </div>
@@ -689,6 +753,7 @@ const OnboardingSuccess = () => {
                         {currentStep < 3 && (
                           <div className="flex justify-between mt-10">
                             <Button 
+                              id={`back-button-step-${currentStep}`}
                               variant="outline" 
                               onClick={handleBack} 
                               disabled={currentStep === 0} 
@@ -697,7 +762,11 @@ const OnboardingSuccess = () => {
                               <ArrowLeft className="w-4 h-4" /> Atrás
                             </Button>
                             
-                            <Button onClick={handleNext} className="gap-2">
+                            <Button 
+                              id={`next-button-step-${currentStep}`}
+                              onClick={handleNext} 
+                              className="gap-2"
+                            >
                               Siguiente <ArrowRight className="w-4 h-4" />
                             </Button>
                           </div>
@@ -705,7 +774,12 @@ const OnboardingSuccess = () => {
                         
                         {currentStep === 3 && (
                           <div className="flex justify-start mt-6">
-                            <Button variant="outline" onClick={handleBack} className="gap-2">
+                            <Button 
+                              id="back-button-step-3"
+                              variant="outline" 
+                              onClick={handleBack} 
+                              className="gap-2"
+                            >
                               <ArrowLeft className="w-4 h-4" /> Atrás
                             </Button>
                           </div>

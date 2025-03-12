@@ -36,6 +36,8 @@ Deno.serve(async (req) => {
 
     const { lead } = await req.json() as { lead: Lead }
     
+    console.log('Received lead data for Slack notification:', lead);
+    
     const isOnboarding = lead.meses_datos !== undefined || lead.sistema_facturacion !== undefined || 
                          lead.subdominio !== undefined || lead.sii_connected === true
     
@@ -175,6 +177,8 @@ Deno.serve(async (req) => {
       icon_emoji: ":money_with_wings:",
       blocks
     }
+    
+    console.log('Sending Slack message:', JSON.stringify(message, null, 2));
 
     const response = await fetch('https://slack.com/api/chat.postMessage', {
       method: 'POST',

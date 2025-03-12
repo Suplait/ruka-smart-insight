@@ -79,8 +79,11 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
 
       // Get the ID of the inserted lead
       const leadId = data?.[0]?.id;
+      
+      console.log('Created lead with ID:', leadId);
 
-      supabase.functions.invoke('notify-slack', {
+      // Send notification to Slack
+      await supabase.functions.invoke('notify-slack', {
         body: {
           lead: {
             company_name: formData.nombreRestaurante,
@@ -96,7 +99,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
         console.error('Error al notificar a Slack:', error);
       });
 
-      // Navigate to onboarding with restaurant name in state
+      // Navigate to onboarding with restaurant name and leadId in state
       navigate('/onboarding-success', {
         state: {
           restaurantName: formData.nombreRestaurante,
@@ -156,6 +159,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Input
+            id="registration-first-name"
             name="firstName"
             placeholder="Nombre"
             value={formData.firstName}
@@ -164,6 +168,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
             className="h-12"
           />
           <Input
+            id="registration-last-name"
             name="lastName"
             placeholder="Apellido"
             value={formData.lastName}
@@ -173,6 +178,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
           />
         </div>
         <Input
+          id="registration-email"
           name="email"
           type="email"
           placeholder="Email"
@@ -187,6 +193,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
               <TooltipTrigger asChild>
                 <div className="relative">
                   <Input
+                    id="registration-whatsapp"
                     name="whatsapp"
                     placeholder="WhatsApp (opcional)"
                     value={formData.whatsapp}
@@ -206,6 +213,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
           </TooltipProvider>
         </div>
         <Input
+          id="registration-city"
           name="ciudad"
           placeholder="Ciudad"
           value={formData.ciudad}
@@ -214,6 +222,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
           className="h-12"
         />
         <Input
+          id="registration-restaurant-name"
           name="nombreRestaurante"
           placeholder="Nombre de tu Restaurante"
           value={formData.nombreRestaurante}
@@ -224,14 +233,14 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
         
         <div className="flex items-start space-x-2">
           <Checkbox 
-            id="terms" 
+            id="registration-terms" 
             checked={formData.acceptTerms}
             onCheckedChange={(checked) => 
               setFormData(prev => ({ ...prev, acceptTerms: checked as boolean }))
             }
           />
           <label
-            htmlFor="terms"
+            htmlFor="registration-terms"
             className="text-sm text-muted-foreground leading-relaxed"
           >
             Acepto los{" "}
@@ -257,6 +266,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
         
         <div className="space-y-4">
           <Button 
+            id="registration-submit"
             type="submit" 
             className="w-full gap-2 h-12 text-lg"
             disabled={!formData.acceptTerms}
