@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -245,13 +244,11 @@ const OnboardingSuccess = () => {
   const [isComplete, setIsComplete] = useState(false);
   const totalSteps = 4;
 
-  // Extraemos datos y leadId del state de location
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
   
   console.log('Lead ID from location state:', leadId);
   
-  // Si no hay leadId, redireccionar a la página de restaurantes
   useEffect(() => {
     if (!leadId) {
       console.error('No leadId found in location state');
@@ -339,7 +336,6 @@ const OnboardingSuccess = () => {
       
       console.log('Updating lead with data:', updateData);
       
-      // Update the data and then fetch the updated record to verify
       const { error: updateError } = await supabase
         .from('leads')
         .update(updateData)
@@ -355,7 +351,6 @@ const OnboardingSuccess = () => {
         return false;
       }
       
-      // After update, fetch the lead to verify data was saved
       const { data: verifyData, error: verifyError } = await supabase
         .from('leads')
         .select('*')
@@ -367,15 +362,13 @@ const OnboardingSuccess = () => {
         toast({
           title: "Advertencia",
           description: "Datos guardados pero no se pudo verificar. Continúe con precaución.",
-          variant: "warning"
+          variant: "default"
         });
-        // Still return true since the update didn't fail
         return true;
       }
       
       console.log('Lead data verified after update:', verifyData);
       
-      // Check if the data was actually updated as expected
       let dataVerified = false;
       
       if (currentStep === 0 && verifyData.meses_datos === formData.meses) {
@@ -398,7 +391,7 @@ const OnboardingSuccess = () => {
         toast({
           title: "Advertencia",
           description: "Los datos pueden no haberse guardado correctamente. Continúe con precaución.",
-          variant: "warning"
+          variant: "default"
         });
         return false;
       }
@@ -419,7 +412,6 @@ const OnboardingSuccess = () => {
 
   const handleNext = async () => {
     if (currentStep === 0) {
-      // No validation needed for months selection
     } else if (currentStep === 1) {
       if (formData.sistema === "mercado" && !formData.sistemaCustom) {
         toast({
