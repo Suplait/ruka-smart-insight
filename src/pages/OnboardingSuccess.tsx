@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -248,9 +247,21 @@ const OnboardingSuccess = () => {
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
   
-  // Added console log for debugging leadId
   console.log('Lead ID from location state:', leadId);
   
+  useEffect(() => {
+    if (!leadId) {
+      console.error('No leadId found in location state');
+      toast({
+        title: "Error",
+        description: "Error al cargar los datos. Por favor intenta registrarte nuevamente.",
+        variant: "destructive"
+      });
+      navigate('/restaurantes');
+      return;
+    }
+  }, [leadId, navigate]);
+
   const generateSubdomain = (name: string) => {
     if (!name) return '';
     return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -258,6 +269,7 @@ const OnboardingSuccess = () => {
     .replace(/\s+/g, '')
     .trim();
   };
+  
   const suggestedSubdomain = generateSubdomain(restaurantName);
 
   const [formData, setFormData] = useState({
@@ -301,9 +313,8 @@ const OnboardingSuccess = () => {
         return false;
       }
       
-      console.log('Saving form data for step', currentStep, formData);
+      console.log('Saving form data for step', currentStep, 'with leadId:', leadId);
       
-      // Prepare the data to update based on current step
       let updateData = {};
       
       if (currentStep === 0) {
@@ -325,7 +336,6 @@ const OnboardingSuccess = () => {
       
       console.log('Updating lead with data:', updateData);
       
-      // Update the lead record with the new data
       const { data, error } = await supabase
         .from('leads')
         .update(updateData)
@@ -343,26 +353,8 @@ const OnboardingSuccess = () => {
       }
       
       console.log('Lead data updated successfully:', data);
-      
-      // Notify Slack about the onboarding step completion
-      try {
-        const leadData = await supabase
-          .from('leads')
-          .select('*')
-          .eq('id', leadId)
-          .single();
-          
-        if (leadData.data) {
-          await supabase.functions.invoke('notify-slack', {
-            body: { lead: leadData.data }
-          });
-        }
-      } catch (notifyError) {
-        console.error('Error notifying Slack:', notifyError);
-        // Don't block the flow if Slack notification fails
-      }
-      
       return true;
+      
     } catch (error) {
       console.error('Error saving form data:', error);
       toast({
@@ -418,14 +410,13 @@ const OnboardingSuccess = () => {
       try {
         setIsLoading(true);
 
-        // Save current step data
         const saved = await saveFormData();
         if (!saved) {
           setIsLoading(false);
           return;
         }
 
-        await new Promise(resolve => setTimeout(resolve, 6000));
+        await new Promise(resolve => setTimeout(resolve, 2000));
         setIsComplete(true);
         setIsLoading(false);
         return;
@@ -441,7 +432,6 @@ const OnboardingSuccess = () => {
       }
     }
 
-    // Save current step data before moving to next step
     const saved = await saveFormData();
     if (saved) {
       setCurrentStep(prev => prev + 1);

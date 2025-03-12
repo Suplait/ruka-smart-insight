@@ -37,18 +37,14 @@ Deno.serve(async (req) => {
     const { lead } = await req.json() as { lead: Lead }
     
     console.log('Received lead data for Slack notification:', lead);
-    
-    const isOnboarding = lead.meses_datos !== undefined || lead.sistema_facturacion !== undefined || 
-                         lead.subdominio !== undefined || lead.sii_connected === true
-    
+
+    // Removed isOnboarding check - we only want initial lead notifications for now
     let blocks = [
       {
         type: "header",
         text: {
           type: "plain_text",
-          text: isOnboarding 
-            ? "🎉 ¡Onboarding Completado!"
-            : "🎉 ¡Tenemos un Nuevo Restaurante Interesado!",
+          text: "🎉 ¡Tenemos un Nuevo Restaurante Interesado!",
           emoji: true
         }
       },
@@ -59,11 +55,7 @@ Deno.serve(async (req) => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `<!channel>\n\n*${isOnboarding ? '¡Onboarding Completado!' : '¡Nuevo Lead!'}*\n\n*¡Hola equipo!* ${
-            isOnboarding 
-              ? `¡${lead.company_name} ha completado el proceso de onboarding!` 
-              : `Tenemos un nuevo lead que quiere optimizar sus costos:\n\n🏪 *${lead.company_name}*`
-          }`
+          text: `<!channel>\n\n*¡Nuevo Lead!*\n\n*¡Hola equipo!* Tenemos un nuevo lead que quiere optimizar sus costos:\n\n🏪 *${lead.company_name}*`
         }
       },
       {
@@ -91,89 +83,21 @@ Deno.serve(async (req) => {
             text: `📱 *WhatsApp:*\n${lead.whatsapp ? lead.whatsapp : "No proporcionado"}`
           }
         ]
+      },
+      {
+        type: "context",
+        elements: [
+          {
+            type: "mrkdwn",
+            text: "💡 _Recuerda: mientras más rápido contactemos, más probabilidades de conversión_"
+          }
+        ]
       }
-    ]
-    
-    // Add onboarding information if available
-    if (isOnboarding) {
-      const onboardingFields = []
-      
-      if (lead.meses_datos !== undefined) {
-        onboardingFields.push({
-          type: "mrkdwn",
-          text: `📅 *Meses de datos:*\n${lead.meses_datos}`
-        })
-      }
-      
-      if (lead.sistema_facturacion) {
-        onboardingFields.push({
-          type: "mrkdwn",
-          text: `🧾 *Sistema de facturación:*\n${
-            lead.sistema_facturacion === 'sii' 
-              ? 'SII Gratuito' 
-              : `${lead.sistema_custom || 'Facturador de Mercado'}`
-          }`
-        })
-      }
-      
-      if (lead.subdominio) {
-        onboardingFields.push({
-          type: "mrkdwn",
-          text: `🌐 *Subdominio:*\n${lead.subdominio}.ruka.ai`
-        })
-      }
-      
-      if (lead.rut) {
-        onboardingFields.push({
-          type: "mrkdwn",
-          text: `🔑 *RUT:*\n${lead.rut}`
-        })
-      }
-      
-      if (lead.clave_sii) {
-        onboardingFields.push({
-          type: "mrkdwn",
-          text: `🔒 *Clave SII:*\n${lead.clave_sii}`
-        })
-      }
-      
-      if (lead.sii_connected) {
-        onboardingFields.push({
-          type: "mrkdwn",
-          text: `✅ *SII Conectado:*\nSí`
-        })
-      }
-      
-      // Add fields in pairs
-      for (let i = 0; i < onboardingFields.length; i += 2) {
-        const fields = [onboardingFields[i]]
-        if (i + 1 < onboardingFields.length) {
-          fields.push(onboardingFields[i + 1])
-        }
-        
-        blocks.push({
-          type: "section",
-          fields
-        })
-      }
-    }
-    
-    // Add context at the end
-    blocks.push({
-      type: "context",
-      elements: [
-        {
-          type: "mrkdwn",
-          text: isOnboarding
-            ? "💡 _Recuerda: agenda la llamada de capacitación lo antes posible_"
-            : "💡 _Recuerda: mientras más rápido contactemos, más probabilidades de conversión_"
-        }
-      ]
-    })
+    ];
 
     const message = {
       channel: SLACK_CHANNEL,
-      text: isOnboarding ? "🎉 ¡Onboarding Completado!" : "🎉 ¡Nuevo Lead de Restaurante!",
+      text: "🎉 ¡Nuevo Lead de Restaurante!",
       icon_emoji: ":money_with_wings:",
       blocks
     }

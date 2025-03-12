@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -60,7 +59,8 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
         ? `+56${formData.whatsapp.replace(/^\+56/, '')}`
         : '';
 
-      const { data, error } = await supabase
+      // First create the lead record
+      const { data: leadData, error: leadError } = await supabase
         .from('leads')
         .insert([
           { 
@@ -73,30 +73,27 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
             whatsapp: whatsappNumber
           }
         ])
-        .select();
+        .select()
+        .single();
 
-      if (error) throw error;
+      if (leadError) throw leadError;
 
       // Get the ID of the inserted lead
-      const leadId = data?.[0]?.id;
+      const leadId = leadData.id;
       
       console.log('Created lead with ID:', leadId);
 
-      // Send notification to Slack
+      // Send notification to Slack about the new lead
       await supabase.functions.invoke('notify-slack', {
         body: {
           lead: {
             company_name: formData.nombreRestaurante,
             name: `${formData.firstName} ${formData.lastName}`,
-            first_name: formData.firstName,
-            last_name: formData.lastName,
             email: formData.email,
             ccity: formData.ciudad,
             whatsapp: whatsappNumber
           }
         }
-      }).catch(error => {
-        console.error('Error al notificar a Slack:', error);
       });
 
       // Navigate to onboarding with restaurant name and leadId in state
