@@ -32,3 +32,14 @@ export const supabase = createClient<Database>(
     },
   }
 );
+
+// Add type definition for the RPC function that's missing in the generated types
+declare module '@supabase/supabase-js' {
+  interface SupabaseClient<Database> {
+    rpc<T = any>(
+      fn: 'update_lead',
+      params: { p_id: number, p_data: Record<string, any> },
+      options?: { count?: null | 'exact' | 'planned' | 'estimated' }
+    ): Promise<{ data: T; error: null } | { data: null; error: PostgrestError }>;
+  }
+}

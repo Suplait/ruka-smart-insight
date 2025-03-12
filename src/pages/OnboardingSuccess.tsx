@@ -380,47 +380,58 @@ const OnboardingSuccess = () => {
       if (!updateSuccessful) {
         console.error('Update verification failed');
         
-        const { error: secondUpdateError } = await supabase.rpc('update_lead', {
-          p_id: leadId,
-          p_data: updateData
-        });
-        
-        if (secondUpdateError) {
-          console.error('Second update attempt failed:', secondUpdateError);
-          toast({
-            title: "Error", 
-            description: "Los datos no se guardaron correctamente. Por favor intenta nuevamente.",
-            variant: "destructive"
-          });
-          return false;
-        }
-        
-        const { data: secondVerifyData, error: secondVerifyError } = await supabase
-          .from('leads')
-          .select('*')
-          .eq('id', leadId)
-          .maybeSingle();
-        
-        if (secondVerifyError || !secondVerifyData) {
-          console.error('Error verifying second update:', secondVerifyError);
-          toast({
-            title: "Error",
-            description: "No se pudo verificar si los datos se guardaron correctamente.",
-            variant: "destructive"
-          });
-          return false;
-        }
-        
-        let secondUpdateSuccessful = true;
-        Object.keys(updateData).forEach(key => {
-          if (JSON.stringify(secondVerifyData[key]) !== JSON.stringify(updateData[key])) {
-            console.error(`After second attempt: Expected ${key}=${JSON.stringify(updateData[key])}, got ${JSON.stringify(secondVerifyData[key])}`);
-            secondUpdateSuccessful = false;
+        try {
+          const numericLeadId = Number(leadId);
+          const { error: directUpdateError } = await supabase
+            .from('leads')
+            .update(updateData)
+            .eq('id', numericLeadId);
+            
+          if (directUpdateError) {
+            console.error('Direct update attempt failed:', directUpdateError);
+            toast({
+              title: "Error",
+              description: "Los datos no se guardaron correctamente. Por favor intenta nuevamente.",
+              variant: "destructive"
+            });
+            return false;
           }
-        });
-        
-        if (!secondUpdateSuccessful) {
-          console.error('Second update verification failed');
+          
+          const { data: directVerifyData, error: directVerifyError } = await supabase
+            .from('leads')
+            .select('*')
+            .eq('id', numericLeadId)
+            .maybeSingle();
+          
+          if (directVerifyError || !directVerifyData) {
+            console.error('Error verifying direct update:', directVerifyError);
+            toast({
+              title: "Error",
+              description: "No se pudo verificar si los datos se guardaron correctamente.",
+              variant: "destructive"
+            });
+            return false;
+          }
+          
+          let directUpdateSuccessful = true;
+          Object.keys(updateData).forEach(key => {
+            if (JSON.stringify(directVerifyData[key]) !== JSON.stringify(updateData[key])) {
+              console.error(`After direct update: Expected ${key}=${JSON.stringify(updateData[key])}, got ${JSON.stringify(directVerifyData[key])}`);
+              directUpdateSuccessful = false;
+            }
+          });
+          
+          if (!directUpdateSuccessful) {
+            console.error('Direct update verification failed');
+            toast({
+              title: "Error",
+              description: "Los datos no se guardaron correctamente. Por favor intenta nuevamente.",
+              variant: "destructive"
+            });
+            return false;
+          }
+        } catch (error) {
+          console.error('Error during direct update process:', error);
           toast({
             title: "Error",
             description: "Los datos no se guardaron correctamente. Por favor intenta nuevamente.",
