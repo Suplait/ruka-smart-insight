@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -41,6 +42,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
     whatsapp: "",
     acceptTerms: false
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,6 +57,8 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
     }
     
     try {
+      setIsSubmitting(true);
+      
       const whatsappNumber = formData.whatsapp 
         ? `+56${formData.whatsapp.replace(/^\+56/, '')}`
         : '';
@@ -76,14 +80,17 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
         .select()
         .single();
 
-      if (leadError) throw leadError;
+      if (leadError) {
+        console.error('Error creating lead:', leadError);
+        throw leadError;
+      }
 
       // Get the ID of the inserted lead
       const leadId = leadData.id;
       
       console.log('Created lead with ID:', leadId);
 
-      // Send notification to Slack about the new lead
+      // Send notification to Slack about the new lead (only for initial registration)
       await supabase.functions.invoke('notify-slack', {
         body: {
           lead: {
@@ -92,7 +99,8 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
             email: formData.email,
             ccity: formData.ciudad,
             whatsapp: whatsappNumber
-          }
+          },
+          isOnboarding: false // Esta es una notificación inicial, no una actualización de onboarding
         }
       });
 
@@ -105,12 +113,14 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
       });
 
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error during registration:', error);
       toast({
         title: "Error",
         description: "Hubo un problema al enviar tu información. Por favor intenta nuevamente.",
         variant: "destructive"
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -163,6 +173,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
             onChange={handleChange}
             required
             className="h-12"
+            disabled={isSubmitting}
           />
           <Input
             id="registration-last-name"
@@ -172,6 +183,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
             onChange={handleChange}
             required
             className="h-12"
+            disabled={isSubmitting}
           />
         </div>
         <Input
@@ -183,6 +195,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
           onChange={handleChange}
           required
           className="h-12"
+          disabled={isSubmitting}
         />
         <div className="relative">
           <TooltipProvider>
@@ -196,6 +209,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
                     value={formData.whatsapp}
                     onChange={handleChange}
                     className="h-12 pl-16 pr-10"
+                    disabled={isSubmitting}
                   />
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
                     +56
@@ -217,6 +231,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
           onChange={handleChange}
           required
           className="h-12"
+          disabled={isSubmitting}
         />
         <Input
           id="registration-restaurant-name"
@@ -226,6 +241,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
           onChange={handleChange}
           required
           className="h-12"
+          disabled={isSubmitting}
         />
         
         <div className="flex items-start space-x-2">
@@ -235,6 +251,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
             onCheckedChange={(checked) => 
               setFormData(prev => ({ ...prev, acceptTerms: checked as boolean }))
             }
+            disabled={isSubmitting}
           />
           <label
             htmlFor="registration-terms"
@@ -266,9 +283,13 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
             id="registration-submit"
             type="submit" 
             className="w-full gap-2 h-12 text-lg"
-            disabled={!formData.acceptTerms}
+            disabled={!formData.acceptTerms || isSubmitting}
           >
-            Comenzar Ahora <ArrowRight className="w-5 h-5" />
+            {isSubmitting ? (
+              <>Procesando...</>
+            ) : (
+              <>Comenzar Ahora <ArrowRight className="w-5 h-5" /></>
+            )}
           </Button>
           
           <div className="flex items-center justify-center gap-4 flex-wrap">

@@ -34,11 +34,20 @@ Deno.serve(async (req) => {
       throw new Error('SLACK_BOT_TOKEN no encontrado')
     }
 
-    const { lead } = await req.json() as { lead: Lead }
+    const { lead, isOnboarding } = await req.json() as { lead: Lead, isOnboarding?: boolean }
     
     console.log('Received lead data for Slack notification:', lead);
+    console.log('Is onboarding notification?', isOnboarding);
 
-    // Removed isOnboarding check - we only want initial lead notifications for now
+    // Solo enviar notificación inicial (no para actualizaciones de onboarding)
+    if (isOnboarding) {
+      console.log('Skipping Slack notification for onboarding update');
+      return new Response(JSON.stringify({ success: true, skipped: true }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200,
+      });
+    }
+
     let blocks = [
       {
         type: "header",

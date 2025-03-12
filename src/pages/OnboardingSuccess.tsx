@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -244,11 +245,13 @@ const OnboardingSuccess = () => {
   const [isComplete, setIsComplete] = useState(false);
   const totalSteps = 4;
 
+  // Extraemos datos y leadId del state de location
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
   
   console.log('Lead ID from location state:', leadId);
   
+  // Si no hay leadId, redireccionar a la página de restaurantes
   useEffect(() => {
     if (!leadId) {
       console.error('No leadId found in location state');
