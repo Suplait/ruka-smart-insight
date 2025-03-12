@@ -339,7 +339,8 @@ const OnboardingSuccess = () => {
       const { error: updateError } = await supabase
         .from('leads')
         .update(updateData)
-        .eq('id', leadId);
+        .eq('id', leadId)
+        .select();
 
       if (updateError) {
         console.error('Error updating lead:', updateError);
@@ -351,13 +352,13 @@ const OnboardingSuccess = () => {
         return false;
       }
 
-      const { data: verifyData, error: verifyError } = await supabase
+      const { data: verifiedData, error: verifyError } = await supabase
         .from('leads')
         .select('*')
         .eq('id', leadId)
-        .single();
+        .maybeSingle();
 
-      if (verifyError) {
+      if (verifyError || !verifiedData) {
         console.error('Error verifying update:', verifyError);
         toast({
           title: "Error",
@@ -367,28 +368,66 @@ const OnboardingSuccess = () => {
         return false;
       }
 
-      let updateSuccessful = false;
-      if (currentStep === 0) {
-        updateSuccessful = verifyData.meses_datos === formData.meses;
-      } else if (currentStep === 1) {
-        updateSuccessful = verifyData.sistema_facturacion === formData.sistema && 
-                           (formData.sistema !== 'mercado' || verifyData.sistema_custom === formData.sistemaCustom);
-      } else if (currentStep === 2) {
-        updateSuccessful = verifyData.subdominio === formData.subdominio;
-      } else if (currentStep === 3) {
-        updateSuccessful = verifyData.rut === formData.rut && 
-                           verifyData.clave_sii === formData.clave &&
-                           verifyData.sii_connected === true;
-      }
+      let updateSuccessful = true;
+      
+      Object.keys(updateData).forEach(key => {
+        if (JSON.stringify(verifiedData[key]) !== JSON.stringify(updateData[key])) {
+          console.error(`Expected ${key}=${JSON.stringify(updateData[key])}, got ${JSON.stringify(verifiedData[key])}`);
+          updateSuccessful = false;
+        }
+      });
 
       if (!updateSuccessful) {
         console.error('Update verification failed');
-        toast({
-          title: "Error",
-          description: "Los datos no se guardaron correctamente. Por favor intenta nuevamente.",
-          variant: "destructive"
+        
+        const { error: secondUpdateError } = await supabase.rpc('update_lead', {
+          p_id: leadId,
+          p_data: updateData
         });
-        return false;
+        
+        if (secondUpdateError) {
+          console.error('Second update attempt failed:', secondUpdateError);
+          toast({
+            title: "Error", 
+            description: "Los datos no se guardaron correctamente. Por favor intenta nuevamente.",
+            variant: "destructive"
+          });
+          return false;
+        }
+        
+        const { data: secondVerifyData, error: secondVerifyError } = await supabase
+          .from('leads')
+          .select('*')
+          .eq('id', leadId)
+          .maybeSingle();
+        
+        if (secondVerifyError || !secondVerifyData) {
+          console.error('Error verifying second update:', secondVerifyError);
+          toast({
+            title: "Error",
+            description: "No se pudo verificar si los datos se guardaron correctamente.",
+            variant: "destructive"
+          });
+          return false;
+        }
+        
+        let secondUpdateSuccessful = true;
+        Object.keys(updateData).forEach(key => {
+          if (JSON.stringify(secondVerifyData[key]) !== JSON.stringify(updateData[key])) {
+            console.error(`After second attempt: Expected ${key}=${JSON.stringify(updateData[key])}, got ${JSON.stringify(secondVerifyData[key])}`);
+            secondUpdateSuccessful = false;
+          }
+        });
+        
+        if (!secondUpdateSuccessful) {
+          console.error('Second update verification failed');
+          toast({
+            title: "Error",
+            description: "Los datos no se guardaron correctamente. Por favor intenta nuevamente.",
+            variant: "destructive"
+          });
+          return false;
+        }
       }
 
       console.log('Data saved and verified successfully');
@@ -834,4 +873,3 @@ const OnboardingSuccess = () => {
 };
 
 export default OnboardingSuccess;
-
