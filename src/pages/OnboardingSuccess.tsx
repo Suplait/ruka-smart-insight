@@ -375,8 +375,11 @@ const OnboardingSuccess = () => {
   };
 
   const handleNext = async () => {
+    setIsLoading(true);
+    
     if (currentStep === 0) {
       const saved = await saveFormData();
+      setIsLoading(false);
       if (saved) {
         setCurrentStep(prev => prev + 1);
       }
@@ -385,6 +388,7 @@ const OnboardingSuccess = () => {
     
     if (currentStep === 1) {
       if (formData.sistema === "mercado" && !formData.sistemaCustom) {
+        setIsLoading(false);
         toast({
           title: "Campo requerido",
           description: "Por favor indica cuál sistema de facturación utilizas",
@@ -393,6 +397,7 @@ const OnboardingSuccess = () => {
         return;
       }
       const saved = await saveFormData();
+      setIsLoading(false);
       if (saved) {
         setCurrentStep(prev => prev + 1);
       }
@@ -401,6 +406,7 @@ const OnboardingSuccess = () => {
     
     if (currentStep === 2) {
       if (!formData.subdominio) {
+        setIsLoading(false);
         toast({
           title: "Campo requerido",
           description: "Por favor elige un subdominio",
@@ -409,6 +415,7 @@ const OnboardingSuccess = () => {
         return;
       }
       const saved = await saveFormData();
+      setIsLoading(false);
       if (saved) {
         setCurrentStep(prev => prev + 1);
       }
@@ -417,6 +424,7 @@ const OnboardingSuccess = () => {
     
     if (currentStep === 3) {
       if (!formData.rut || !formData.clave) {
+        setIsLoading(false);
         toast({
           title: "Campos requeridos",
           description: "Por favor completa el RUT y clave del SII",
@@ -427,6 +435,7 @@ const OnboardingSuccess = () => {
 
       const rutRegex = /^\d{1,8}-[\dkK]$/;
       if (!rutRegex.test(formData.rut)) {
+        setIsLoading(false);
         toast({
           title: "Formato incorrecto",
           description: "El RUT debe tener el formato 1234567-8 o 12345678-9",
@@ -436,7 +445,6 @@ const OnboardingSuccess = () => {
       }
 
       try {
-        setIsLoading(true);
         const saved = await saveFormData();
         if (!saved) {
           setIsLoading(false);
@@ -766,7 +774,7 @@ const OnboardingSuccess = () => {
                               id={`back-button-step-${currentStep}`}
                               variant="outline" 
                               onClick={handleBack} 
-                              disabled={currentStep === 0} 
+                              disabled={currentStep === 0 || isLoading} 
                               className="gap-2"
                             >
                               <ArrowLeft className="w-4 h-4" /> Atrás
@@ -775,9 +783,19 @@ const OnboardingSuccess = () => {
                             <Button 
                               id={`next-button-step-${currentStep}`}
                               onClick={handleNext} 
+                              disabled={isLoading}
                               className="gap-2"
                             >
-                              Siguiente <ArrowRight className="w-4 h-4" />
+                              {!isLoading ? (
+                                <>
+                                  Siguiente <ArrowRight className="w-4 h-4" />
+                                </>
+                              ) : (
+                                <span className="flex items-center gap-2">
+                                  <Loader className="h-4 w-4 animate-spin" />
+                                  Procesando...
+                                </span>
+                              )}
                             </Button>
                           </div>
                         )}
