@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -119,6 +120,18 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
         if (slackResponse.error) {
           console.warn('Warning: Slack notification failed, but registration can proceed:', slackResponse.error);
           // Don't throw error here, just log warning
+        } else if (slackResponse.data && slackResponse.data.ts) {
+          // Store the Slack message timestamp for future thread replies
+          const { error: updateError } = await supabase
+            .from('leads')
+            .update({ 
+              slack_message_ts: slackResponse.data.ts 
+            })
+            .eq('id', leadId);
+            
+          if (updateError) {
+            console.warn('Warning: Failed to store Slack message ID, but registration can proceed:', updateError);
+          }
         }
       } catch (slackError) {
         console.warn('Warning: Slack notification error, but registration can proceed:', slackError);

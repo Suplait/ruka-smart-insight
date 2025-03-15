@@ -35,20 +35,114 @@ Deno.serve(async (req) => {
       throw new Error('SLACK_BOT_TOKEN no encontrado')
     }
 
-    const { lead, isOnboarding } = await req.json() as { lead: Lead, isOnboarding?: boolean }
+    const { lead, isOnboarding, leadId, step } = await req.json() as { 
+      lead: Lead, 
+      isOnboarding?: boolean,
+      leadId?: number,
+      step?: string 
+    }
     
     console.log('Received lead data for Slack notification:', lead);
     console.log('Is onboarding notification?', isOnboarding);
+    console.log('Lead ID:', leadId);
+    console.log('Step:', step);
 
-    // Solo enviar notificación inicial (no para actualizaciones de onboarding)
-    if (isOnboarding) {
-      console.log('Skipping Slack notification for onboarding update');
-      return new Response(JSON.stringify({ success: true, skipped: true }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200,
-      });
+    // If this is an onboarding update for an existing thread
+    if (isOnboarding && leadId && step) {
+      try {
+        // Get the slack_message_ts for this lead
+        const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
+        const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
+        
+        if (!supabaseUrl || !supabaseServiceKey) {
+          console.error('Supabase credentials not found in environment variables');
+          throw new Error('Supabase credentials missing');
+        }
+        
+        const supabase = createClient(supabaseUrl, supabaseServiceKey);
+        
+        const { data: leadData, error: leadError } = await supabase
+          .from('leads')
+          .select('slack_message_ts')
+          .eq('id', leadId)
+          .single();
+          
+        if (leadError || !leadData?.slack_message_ts) {
+          console.error('Error retrieving slack_message_ts or value not set:', leadError);
+          throw new Error('No thread ID found for this lead');
+        }
+        
+        // Send reply to thread
+        let replyText;
+        switch(step) {
+          case "billing-system-selected":
+            replyText = `🔄 *Actualización de Onboarding:* El restaurante ha seleccionado sistema de facturación *${lead.sistema_facturacion || lead.sistema_custom || "No especificado"}*`;
+            break;
+          case "rut-entered":
+            replyText = `🔄 *Actualización de Onboarding:* El restaurante ha ingresado su RUT: *${lead.rut || "No disponible"}*`;
+            break;
+          case "sii-credentials":
+            replyText = `🔄 *Actualización de Onboarding:* El restaurante ha ingresado sus credenciales del SII`;
+            break;
+          case "subdomain-selected":
+            replyText = `🔄 *Actualización de Onboarding:* El restaurante ha seleccionado su subdominio: *${lead.subdominio || "No disponible"}*`;
+            break;
+          case "data-months-selected":
+            replyText = `🔄 *Actualización de Onboarding:* El restaurante quiere importar *${lead.meses_datos || 0}* meses de datos`;
+            break;
+          case "onboarding-completed":
+            replyText = `✅ *Onboarding Completado:* El restaurante ha finalizado el proceso de onboarding`;
+            break;
+          default:
+            replyText = `🔄 *Actualización de Onboarding:* Paso "${step}"`;
+        }
+        
+        const threadMessage = {
+          channel: SLACK_CHANNEL,
+          text: replyText,
+          thread_ts: leadData.slack_message_ts
+        };
+        
+        console.log('Sending thread reply to Slack:', threadMessage);
+        
+        const threadResponse = await fetch('https://slack.com/api/chat.postMessage', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${SLACK_BOT_TOKEN}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(threadMessage)
+        });
+        
+        const threadResult = await threadResponse.json();
+        
+        if (!threadResult.ok) {
+          console.error('Error sending thread message to Slack:', threadResult);
+          // We don't throw here to avoid interrupting the main flow, just log the error
+          return new Response(JSON.stringify({ success: false, error: 'Error sending thread message' }), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            status: 200, // Still return 200 to not interrupt the main flow
+          });
+        }
+        
+        console.log('Thread message sent successfully:', threadResult);
+        
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        });
+        
+      } catch (threadError) {
+        console.error('Error in thread reply process:', threadError);
+        // Return success anyway to not interrupt the main flow
+        return new Response(JSON.stringify({ success: false, error: threadError.message }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200, // Still return 200 to not interrupt the main flow
+        });
+      }
     }
 
+    // If not an onboarding notification, send an initial message
     let blocks = [
       {
         type: "header",
@@ -128,24 +222,34 @@ Deno.serve(async (req) => {
       
       if (!slackResponse.ok) {
         console.error('Error sending message to Slack:', slackResponse);
-        throw new Error('Error al enviar mensaje a Slack: ' + JSON.stringify(slackResponse));
+        return new Response(JSON.stringify({ success: false, error: 'Error al enviar mensaje a Slack' }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200, // Still return 200 to not interrupt the main flow
+        });
       }
       
       console.log('Slack message sent successfully:', slackResponse);
       
-      return new Response(JSON.stringify({ success: true }), {
+      // Return the message timestamp which will be used as the thread ID
+      return new Response(JSON.stringify({ 
+        success: true, 
+        ts: slackResponse.ts 
+      }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200,
       });
     } catch (slackError) {
       console.error('Error in Slack API request:', slackError);
-      throw new Error('Error in Slack API request: ' + slackError.message);
+      return new Response(JSON.stringify({ success: false, error: 'Error in Slack API request' }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200, // Still return 200 to not interrupt the main flow
+      });
     }
   } catch (error) {
     console.error('Error in notify-slack function:', error.message);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ success: false, error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      status: 500,
+      status: 200, // Still return 200 to not interrupt the main flow
     });
   }
 })
