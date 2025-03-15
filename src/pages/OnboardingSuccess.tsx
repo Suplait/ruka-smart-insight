@@ -12,34 +12,20 @@ import AutomationFeatures from "@/components/restaurant/AutomationFeatures";
 import SimpleConnection from "@/components/restaurant/SimpleConnection";
 import CompactImpactStats from "@/components/restaurant/CompactImpactStats";
 import { supabase } from "@/integrations/supabase/client";
-
 type StepProps = {
   currentStep: number;
   totalSteps: number;
 };
-
 const StepIndicator = ({
   currentStep,
   totalSteps
 }: StepProps) => {
-  return (
-    <div className="flex items-center justify-center gap-2 mb-8">
-      {Array.from({ length: totalSteps }).map((_, index) => (
-        <div 
-          key={index} 
-          className={`h-2.5 rounded-full transition-all duration-300 ${
-            index < currentStep 
-              ? "w-8 bg-primary" 
-              : index === currentStep 
-                ? "w-8 bg-primary" 
-                : "w-2.5 bg-gray-200"
-          }`} 
-        />
-      ))}
-    </div>
-  );
+  return <div className="flex items-center justify-center gap-2 mb-8">
+      {Array.from({
+      length: totalSteps
+    }).map((_, index) => <div key={index} className={`h-2.5 rounded-full transition-all duration-300 ${index < currentStep ? "w-8 bg-primary" : index === currentStep ? "w-8 bg-primary" : "w-2.5 bg-gray-200"}`} />)}
+    </div>;
 };
-
 const MonthsSelector = ({
   selectedMonths,
   onChange
@@ -47,8 +33,7 @@ const MonthsSelector = ({
   selectedMonths: number;
   onChange: (months: number) => void;
 }) => {
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
         <div className="flex gap-3">
           <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
@@ -62,29 +47,15 @@ const MonthsSelector = ({
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        {[1, 2, 3].map(month => (
-          <button 
-            key={month} 
-            type="button" 
-            id={`months-selector-${month}`}
-            onClick={() => onChange(month)} 
-            className={`p-4 rounded-lg border-2 transition-all flex flex-col items-center ${
-              selectedMonths === month 
-                ? "border-primary bg-primary/5" 
-                : "border-gray-200 hover:border-gray-300"
-            }`}
-          >
+        {[1, 2, 3].map(month => <button key={month} type="button" id={`months-selector-${month}`} onClick={() => onChange(month)} className={`p-4 rounded-lg border-2 transition-all flex flex-col items-center ${selectedMonths === month ? "border-primary bg-primary/5" : "border-gray-200 hover:border-gray-300"}`}>
             <span className="text-2xl font-semibold">{month}</span>
             <span className="text-sm text-muted-foreground">
               {month === 1 ? "mes" : "meses"}
             </span>
-          </button>
-        ))}
+          </button>)}
       </div>
-    </div>
-  );
+    </div>;
 };
-
 const BillingSystemSelector = ({
   selectedSystem,
   onChange,
@@ -96,8 +67,7 @@ const BillingSystemSelector = ({
   customSystem: string;
   onCustomChange: (value: string) => void;
 }) => {
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
         <div className="flex gap-3">
           <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
@@ -111,51 +81,23 @@ const BillingSystemSelector = ({
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <button 
-          type="button" 
-          id="system-selector-sii"
-          onClick={() => onChange("sii")} 
-          className={`p-4 rounded-lg border-2 transition-all text-left ${
-            selectedSystem === "sii" 
-              ? "border-primary bg-primary/5" 
-              : "border-gray-200 hover:border-gray-300"
-          }`}
-        >
+        <button type="button" id="system-selector-sii" onClick={() => onChange("sii")} className={`p-4 rounded-lg border-2 transition-all text-left ${selectedSystem === "sii" ? "border-primary bg-primary/5" : "border-gray-200 hover:border-gray-300"}`}>
           <div className="font-medium">SII Gratuito</div>
           <div className="text-sm text-muted-foreground">Sistema oficial del SII</div>
         </button>
         
-        <button 
-          type="button" 
-          id="system-selector-mercado"
-          onClick={() => onChange("mercado")} 
-          className={`p-4 rounded-lg border-2 transition-all text-left ${
-            selectedSystem === "mercado" 
-              ? "border-primary bg-primary/5" 
-              : "border-gray-200 hover:border-gray-300"
-          }`}
-        >
+        <button type="button" id="system-selector-mercado" onClick={() => onChange("mercado")} className={`p-4 rounded-lg border-2 transition-all text-left ${selectedSystem === "mercado" ? "border-primary bg-primary/5" : "border-gray-200 hover:border-gray-300"}`}>
           <div className="font-medium">Facturador de Mercado</div>
           <div className="text-sm text-muted-foreground">Sistema de terceros</div>
         </button>
       </div>
       
-      {selectedSystem === "mercado" && (
-        <div className="mt-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
+      {selectedSystem === "mercado" && <div className="mt-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
           <label className="text-sm font-medium mb-2 block">¿Cuál sistema utilizas?</label>
-          <Input 
-            id="custom-system-input"
-            value={customSystem} 
-            onChange={e => onCustomChange(e.target.value)} 
-            placeholder="Nubox, Bsale, Toteat, etc." 
-            className="bg-white" 
-          />
-        </div>
-      )}
-    </div>
-  );
+          <Input id="custom-system-input" value={customSystem} onChange={e => onCustomChange(e.target.value)} placeholder="Nubox, Bsale, Toteat, etc." className="bg-white" />
+        </div>}
+    </div>;
 };
-
 const SubdomainInput = ({
   value,
   onChange,
@@ -167,23 +109,17 @@ const SubdomainInput = ({
 }) => {
   const [isChecking, setIsChecking] = useState(false);
   const [isAvailable, setIsAvailable] = useState(true);
-  
   useEffect(() => {
     if (!value) return;
-    
     setIsChecking(true);
     setIsAvailable(false);
-    
     const timer = setTimeout(() => {
       setIsChecking(false);
       setIsAvailable(true);
     }, 800);
-    
     return () => clearTimeout(timer);
   }, [value]);
-
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
         <div className="flex gap-3">
           <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
@@ -198,13 +134,7 @@ const SubdomainInput = ({
 
       <div>
         <div className="relative">
-          <Input 
-            id="subdomain-input"
-            value={value} 
-            onChange={e => onChange(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))} 
-            placeholder="tu-empresa" 
-            className="pr-[120px]" 
-          />
+          <Input id="subdomain-input" value={value} onChange={e => onChange(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))} placeholder="tu-empresa" className="pr-[120px]" />
           <div className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
             .ruka.ai
           </div>
@@ -215,27 +145,18 @@ const SubdomainInput = ({
         </div>
         
         <div className="mt-2 text-sm">
-          {isChecking ? (
-            <span className="text-amber-600 flex items-center gap-1">
+          {isChecking ? <span className="text-amber-600 flex items-center gap-1">
               <Loader className="w-4 h-4 animate-spin" /> Comprobando disponibilidad...
-            </span>
-          ) : isAvailable ? (
-            <span className="text-green-600 flex items-center gap-1">
+            </span> : isAvailable ? <span className="text-green-600 flex items-center gap-1">
               <Check className="w-4 h-4" /> Subdominio disponible
-            </span>
-          ) : (
-            <span className="text-red-600 flex items-center gap-1">
+            </span> : <span className="text-red-600 flex items-center gap-1">
               <span className="w-4 h-4">✖</span> Subdominio no disponible
-            </span>
-          )}
+            </span>}
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 const SLIDE_INTERVAL = 2500;
-
 const OnboardingSuccess = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -243,10 +164,8 @@ const OnboardingSuccess = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const totalSteps = 4;
-
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
-  
   useEffect(() => {
     if (!leadId) {
       toast({
@@ -258,17 +177,11 @@ const OnboardingSuccess = () => {
       return;
     }
   }, [leadId, navigate]);
-
   const generateSubdomain = (name: string) => {
     if (!name) return '';
-    return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '')
-    .trim();
+    return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '').trim();
   };
-  
   const suggestedSubdomain = generateSubdomain(restaurantName);
-
   const [formData, setFormData] = useState({
     rut: "",
     clave: "",
@@ -277,7 +190,6 @@ const OnboardingSuccess = () => {
     sistemaCustom: "",
     subdominio: suggestedSubdomain || ""
   });
-
   useEffect(() => {
     if (suggestedSubdomain && !formData.subdominio) {
       setFormData(prev => ({
@@ -286,18 +198,15 @@ const OnboardingSuccess = () => {
       }));
     }
   }, [suggestedSubdomain]);
-
   const updateFormData = (key: string, value: any) => {
     setFormData(prev => ({
       ...prev,
       [key]: value
     }));
   };
-
   const handleSubdomainChange = (value: string) => {
     updateFormData('subdominio', value);
   };
-
   const saveFormData = async () => {
     try {
       if (!leadId) {
@@ -308,35 +217,35 @@ const OnboardingSuccess = () => {
         });
         return false;
       }
-      
       let updateData: Record<string, any> = {};
-      
       if (currentStep === 0) {
-        updateData = { meses_datos: formData.meses };
+        updateData = {
+          meses_datos: formData.meses
+        };
       } else if (currentStep === 1) {
-        updateData = { 
+        updateData = {
           sistema_facturacion: formData.sistema,
           sistema_custom: formData.sistemaCustom
         };
       } else if (currentStep === 2) {
-        updateData = { subdominio: formData.subdominio };
+        updateData = {
+          subdominio: formData.subdominio
+        };
       } else if (currentStep === 3) {
-        updateData = { 
+        updateData = {
           rut: formData.rut,
           clave_sii: formData.clave,
           sii_connected: true
         };
       }
-
       try {
         const numericLeadId = Number(leadId);
         const response = await supabase.functions.invoke('update-lead', {
-          body: { 
-            leadId: numericLeadId, 
-            updateData 
+          body: {
+            leadId: numericLeadId,
+            updateData
           }
         });
-        
         if (response.error) {
           toast({
             title: "Error",
@@ -345,7 +254,6 @@ const OnboardingSuccess = () => {
           });
           return false;
         }
-        
         if (!response.data?.success) {
           toast({
             title: "Error",
@@ -354,7 +262,6 @@ const OnboardingSuccess = () => {
           });
           return false;
         }
-        
         return true;
       } catch (edgeFunctionError) {
         toast({
@@ -373,10 +280,8 @@ const OnboardingSuccess = () => {
       return false;
     }
   };
-
   const handleNext = async () => {
     setIsLoading(true);
-    
     if (currentStep === 0) {
       const saved = await saveFormData();
       setIsLoading(false);
@@ -385,7 +290,6 @@ const OnboardingSuccess = () => {
       }
       return;
     }
-    
     if (currentStep === 1) {
       if (formData.sistema === "mercado" && !formData.sistemaCustom) {
         setIsLoading(false);
@@ -403,7 +307,6 @@ const OnboardingSuccess = () => {
       }
       return;
     }
-    
     if (currentStep === 2) {
       if (!formData.subdominio) {
         setIsLoading(false);
@@ -421,7 +324,6 @@ const OnboardingSuccess = () => {
       }
       return;
     }
-    
     if (currentStep === 3) {
       if (!formData.rut || !formData.clave) {
         setIsLoading(false);
@@ -432,7 +334,6 @@ const OnboardingSuccess = () => {
         });
         return;
       }
-
       const rutRegex = /^\d{1,8}-[\dkK]$/;
       if (!rutRegex.test(formData.rut)) {
         setIsLoading(false);
@@ -443,7 +344,6 @@ const OnboardingSuccess = () => {
         });
         return;
       }
-
       try {
         const saved = await saveFormData();
         if (!saved) {
@@ -465,36 +365,29 @@ const OnboardingSuccess = () => {
       }
     }
   };
-
   const handleBack = () => {
     setCurrentStep(prev => prev - 1);
   };
-
-  const steps = [
-    {
-      title: "Periodo de datos",
-      icon: <Calendar className="w-6 h-6 text-primary" />,
-      description: "¿Cuántos meses de datos quieres importar?",
-      content: <MonthsSelector selectedMonths={formData.meses} onChange={months => updateFormData('meses', months)} />
-    },
-    {
-      title: "Sistema de facturación",
-      icon: <Store className="w-6 h-6 text-primary" />,
-      description: "Selecciona tu sistema de facturación",
-      content: <BillingSystemSelector selectedSystem={formData.sistema} onChange={system => updateFormData('sistema', system)} customSystem={formData.sistemaCustom} onCustomChange={value => updateFormData('sistemaCustom', value)} />
-    },
-    {
-      title: "Tu subdominio",
-      icon: <Globe className="w-6 h-6 text-primary" />,
-      description: "Elige el subdominio para tu acceso personalizado",
-      content: <SubdomainInput value={formData.subdominio} onChange={handleSubdomainChange} suggestedSubdomain={suggestedSubdomain} />
-    },
-    {
-      title: "Acceso al SII",
-      icon: <ShieldCheck className="w-6 h-6 text-primary" />,
-      description: "Ingresa tus credenciales para conectar tus datos",
-      content: (
-        <div className="space-y-6">
+  const steps = [{
+    title: "Periodo de datos",
+    icon: <Calendar className="w-6 h-6 text-primary" />,
+    description: "¿Cuántos meses de datos quieres importar?",
+    content: <MonthsSelector selectedMonths={formData.meses} onChange={months => updateFormData('meses', months)} />
+  }, {
+    title: "Sistema de facturación",
+    icon: <Store className="w-6 h-6 text-primary" />,
+    description: "Selecciona tu sistema de facturación",
+    content: <BillingSystemSelector selectedSystem={formData.sistema} onChange={system => updateFormData('sistema', system)} customSystem={formData.sistemaCustom} onCustomChange={value => updateFormData('sistemaCustom', value)} />
+  }, {
+    title: "Tu subdominio",
+    icon: <Globe className="w-6 h-6 text-primary" />,
+    description: "Elige el subdominio para tu acceso personalizado",
+    content: <SubdomainInput value={formData.subdominio} onChange={handleSubdomainChange} suggestedSubdomain={suggestedSubdomain} />
+  }, {
+    title: "Acceso al SII",
+    icon: <ShieldCheck className="w-6 h-6 text-primary" />,
+    description: "Ingresa tus credenciales para conectar tus datos",
+    content: <div className="space-y-6">
           <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
             <div className="flex gap-3">
               <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
@@ -510,79 +403,53 @@ const OnboardingSuccess = () => {
           <div className="space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">RUT Empresa</label>
-              <Input 
-                id="rut-input"
-                value={formData.rut} 
-                onChange={e => updateFormData('rut', e.target.value)} 
-                placeholder="12345678-9" 
-              />
+              <Input id="rut-input" value={formData.rut} onChange={e => updateFormData('rut', e.target.value)} placeholder="12345678-9" />
               <p className="text-xs text-muted-foreground">Ingresa el RUT con guión y dígito verificador</p>
             </div>
             
             <div className="space-y-2">
               <label className="text-sm font-medium">Clave del SII</label>
-              <Input 
-                id="sii-password-input"
-                type="password" 
-                value={formData.clave} 
-                onChange={e => updateFormData('clave', e.target.value)} 
-                placeholder="••••••••" 
-              />
+              <Input id="sii-password-input" type="password" value={formData.clave} onChange={e => updateFormData('clave', e.target.value)} placeholder="••••••••" />
               <div className="flex items-center text-xs text-muted-foreground mt-1">
                 <ShieldCheck className="w-4 h-4 mr-1 text-green-600" />
                 Tus datos están almacenados de forma segura
               </div>
             </div>
             
-            <Button 
-              id="sii-connect-button"
-              onClick={handleNext} 
-              className="w-full mt-4 gap-2" 
-              style={{
-                backgroundColor: "#DA5C2B",
-                borderColor: "#DA5C2B"
-              }} 
-              disabled={isLoading}
-            >
-              {!isLoading ? (
-                <>
+            <Button id="sii-connect-button" onClick={handleNext} className="w-full mt-4 gap-2" style={{
+          backgroundColor: "#DA5C2B",
+          borderColor: "#DA5C2B"
+        }} disabled={isLoading}>
+              {!isLoading ? <>
                   <div className="bg-white rounded-md p-1 flex items-center justify-center">
                     <img src="/logosii.png" alt="SII" className="h-4" />
                   </div>
                   Iniciar sesión con el SII
-                </>
-              ) : (
-                <span className="flex items-center gap-2">
+                </> : <span className="flex items-center gap-2">
                   <Loader className="h-4 w-4 animate-spin" />
                   Conectando...
-                </span>
-              )}
+                </span>}
             </Button>
           </div>
         </div>
-      )
-    }
-  ];
-
-  const successContent = (
-    <div className="text-center space-y-6">
+  }];
+  const successContent = <div className="text-center space-y-6">
       <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
         <Check className="w-8 h-8 text-green-600" />
       </div>
       
-      <h2 className="text-2xl font-bold">¡Configuración completada!</h2>
+      <h2 className="text-2xl font-bold">¡Todo listo! 🎉</h2>
       
       <div className="space-y-4 text-gray-600">
-        <p>
-          Estamos preparando tu plataforma personalizada. Estos son los siguientes pasos:
-        </p>
+        <p>Ahora levantaremos tu plataforma y cargaremos
+ los datos iniciales para que Ruka los agrupe y clasifique. En breve:</p>
         
         <div className="space-y-3 text-left max-w-sm mx-auto">
           <div className="flex items-start gap-2">
             <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0 mt-0.5">
               <Check className="w-3 h-3" />
             </div>
-            <p className="text-sm">Crearemos un grupo de WhatsApp para mantenerte informado</p>
+            <p className="text-sm">Crearemos un grupo de WhatsApp para asistirte siempre que lo necesites</p>
           </div>
           
           <div className="flex items-start gap-2">
@@ -606,70 +473,67 @@ const OnboardingSuccess = () => {
           Ir al inicio
         </Button>
       </div>
-    </div>
-  );
-
+    </div>;
   const currentStepData = steps[currentStep];
-
   const getLeftSideContent = () => {
-    switch(currentStep) {
+    switch (currentStep) {
       case 0:
-        return (
-          <motion.div 
-            key="automation-features"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col h-full items-center justify-center"
-          >
+        return <motion.div key="automation-features" initial={{
+          opacity: 0
+        }} animate={{
+          opacity: 1
+        }} exit={{
+          opacity: 0
+        }} transition={{
+          duration: 0.5
+        }} className="flex flex-col h-full items-center justify-center">
             <AutomationFeatures />
-          </motion.div>
-        );
+          </motion.div>;
       case 1:
-        return (
-          <motion.div 
-            key="simple-connection"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col h-full items-center justify-center"
-          >
+        return <motion.div key="simple-connection" initial={{
+          opacity: 0
+        }} animate={{
+          opacity: 1
+        }} exit={{
+          opacity: 0
+        }} transition={{
+          duration: 0.5
+        }} className="flex flex-col h-full items-center justify-center">
             <SimpleConnection />
-          </motion.div>
-        );
+          </motion.div>;
       case 2:
-        return (
-          <motion.div 
-            key="impact-stats"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col h-full items-center justify-center"
-          >
+        return <motion.div key="impact-stats" initial={{
+          opacity: 0
+        }} animate={{
+          opacity: 1
+        }} exit={{
+          opacity: 0
+        }} transition={{
+          duration: 0.5
+        }} className="flex flex-col h-full items-center justify-center">
             <CompactImpactStats />
-          </motion.div>
-        );
+          </motion.div>;
       case 3:
       default:
-        return (
-          <motion.div 
-            key="social-proof"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col h-full justify-center"
-          >
+        return <motion.div key="social-proof" initial={{
+          opacity: 0
+        }} animate={{
+          opacity: 1
+        }} exit={{
+          opacity: 0
+        }} transition={{
+          duration: 0.5
+        }} className="flex flex-col h-full justify-center">
             <div className="max-w-md mx-auto flex flex-col items-center justify-center text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="mb-10"
-              >
+              <motion.div initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: 1,
+              y: 0
+            }} transition={{
+              duration: 0.5
+            }} className="mb-10">
                 <div className="mb-6">
                   <h1 className="text-3xl font-bold text-slate-900">
                     Controla tu margen al día sin esfuerzo
@@ -680,33 +544,25 @@ const OnboardingSuccess = () => {
                 </p>
               </motion.div>
               
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl border border-white/80 mb-8"
-              >
-                <iframe 
-                  width="100%" 
-                  height="100%" 
-                  src="https://www.youtube.com/embed/1wV-corpO74" 
-                  title="CEO de Ruka.ai hablando sobre la plataforma" 
-                  frameBorder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowFullScreen
-                  className="w-full h-full"
-                ></iframe>
+              <motion.div initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: 1,
+              y: 0
+            }} transition={{
+              duration: 0.5,
+              delay: 0.3
+            }} className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl border border-white/80 mb-8">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/1wV-corpO74" title="CEO de Ruka.ai hablando sobre la plataforma" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="w-full h-full"></iframe>
               </motion.div>
               
               <Partners />
             </div>
-          </motion.div>
-        );
+          </motion.div>;
     }
   };
-
-  return (
-    <>
+  return <>
       <Helmet>
         <title>Configura tu cuenta | Ruka.ai</title>
       </Helmet>
@@ -730,13 +586,14 @@ const OnboardingSuccess = () => {
               </p>
             </div>
             
-            {!isComplete ? (
-              <>
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }} 
-                  animate={{ opacity: 1, y: 0 }} 
-                  className="text-center mb-8"
-                >
+            {!isComplete ? <>
+                <motion.div initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: 1,
+              y: 0
+            }} className="text-center mb-8">
                   <h1 className="text-2xl md:text-3xl font-bold">Configura tu cuenta</h1>
                   <p className="mt-2 text-muted-foreground">
                     {currentStep + 1} de {totalSteps} pasos para comenzar
@@ -746,13 +603,18 @@ const OnboardingSuccess = () => {
                 <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
                 
                 <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentStep}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
-                  >
+                  <motion.div key={currentStep} initial={{
+                opacity: 0,
+                x: 20
+              }} animate={{
+                opacity: 1,
+                x: 0
+              }} exit={{
+                opacity: 0,
+                x: -20
+              }} transition={{
+                duration: 0.3
+              }}>
                     <Card className="border shadow-md">
                       <CardHeader>
                         <div className="flex items-center gap-4">
@@ -768,61 +630,33 @@ const OnboardingSuccess = () => {
                       <CardContent className="pb-8">
                         {currentStepData.content}
                         
-                        {currentStep < 3 && (
-                          <div className="flex justify-between mt-10">
-                            <Button 
-                              id={`back-button-step-${currentStep}`}
-                              variant="outline" 
-                              onClick={handleBack} 
-                              disabled={currentStep === 0 || isLoading} 
-                              className="gap-2"
-                            >
+                        {currentStep < 3 && <div className="flex justify-between mt-10">
+                            <Button id={`back-button-step-${currentStep}`} variant="outline" onClick={handleBack} disabled={currentStep === 0 || isLoading} className="gap-2">
                               <ArrowLeft className="w-4 h-4" /> Atrás
                             </Button>
                             
-                            <Button 
-                              id={`next-button-step-${currentStep}`}
-                              onClick={handleNext} 
-                              disabled={isLoading}
-                              className="gap-2"
-                            >
-                              {!isLoading ? (
-                                <>
+                            <Button id={`next-button-step-${currentStep}`} onClick={handleNext} disabled={isLoading} className="gap-2">
+                              {!isLoading ? <>
                                   Siguiente <ArrowRight className="w-4 h-4" />
-                                </>
-                              ) : (
-                                <span className="flex items-center gap-2">
+                                </> : <span className="flex items-center gap-2">
                                   <Loader className="h-4 w-4 animate-spin" />
                                   Procesando...
-                                </span>
-                              )}
+                                </span>}
                             </Button>
-                          </div>
-                        )}
+                          </div>}
                         
-                        {currentStep === 3 && (
-                          <div className="flex justify-start mt-6">
-                            <Button 
-                              id="back-button-step-3"
-                              variant="outline" 
-                              onClick={handleBack}
-                              disabled={isLoading}
-                              className="gap-2"
-                            >
+                        {currentStep === 3 && <div className="flex justify-start mt-6">
+                            <Button id="back-button-step-3" variant="outline" onClick={handleBack} disabled={isLoading} className="gap-2">
                               <ArrowLeft className="w-4 h-4" /> Atrás
                             </Button>
-                          </div>
-                        )}
+                          </div>}
                       </CardContent>
                     </Card>
                   </motion.div>
                 </AnimatePresence>
-              </>
-            ) : (
-              <Card className="border shadow-md p-8">
+              </> : <Card className="border shadow-md p-8">
                 {successContent}
-              </Card>
-            )}
+              </Card>}
             
             <div className="mt-6 text-center text-sm text-muted-foreground">
               <p>¿Necesitas ayuda? <a href="#" className="text-primary hover:underline">Contáctanos</a></p>
@@ -830,8 +664,6 @@ const OnboardingSuccess = () => {
           </div>
         </div>
       </main>
-    </>
-  );
+    </>;
 };
-
 export default OnboardingSuccess;
