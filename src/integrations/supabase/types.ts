@@ -25,6 +25,7 @@ export type Database = {
           sii_connected: boolean | null
           sistema_custom: string | null
           sistema_facturacion: string | null
+          slack_message_ts: string | null
           subdominio: string | null
           whatsapp: string | null
         }
@@ -43,6 +44,7 @@ export type Database = {
           sii_connected?: boolean | null
           sistema_custom?: string | null
           sistema_facturacion?: string | null
+          slack_message_ts?: string | null
           subdominio?: string | null
           whatsapp?: string | null
         }
@@ -61,6 +63,7 @@ export type Database = {
           sii_connected?: boolean | null
           sistema_custom?: string | null
           sistema_facturacion?: string | null
+          slack_message_ts?: string | null
           subdominio?: string | null
           whatsapp?: string | null
         }
