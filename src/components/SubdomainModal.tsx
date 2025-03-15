@@ -15,7 +15,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { HelpCircle, LogIn } from "lucide-react";
+import { HelpCircle, ArrowRight } from "lucide-react";
 
 interface SubdomainModalProps {
   isOpen: boolean;
@@ -81,7 +81,7 @@ const SubdomainModal = ({ isOpen, onClose }: SubdomainModalProps) => {
             className="w-full"
             disabled={!subdomain.trim()}
           >
-            <LogIn className="mr-2 h-4 w-4" />
+            <ArrowRight className="mr-2 h-4 w-4" />
             Iniciar Sesión
           </Button>
         </div>
