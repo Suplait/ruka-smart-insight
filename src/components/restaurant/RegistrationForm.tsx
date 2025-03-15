@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -127,7 +126,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
             .from('leads')
             .update({ 
               slack_message_ts: slackResponse.data.ts 
-            } as Partial<Lead>)
+            })
             .eq('id', leadId);
             
           if (updateError) {
