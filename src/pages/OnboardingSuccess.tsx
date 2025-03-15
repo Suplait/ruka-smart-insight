@@ -635,6 +635,7 @@ const OnboardingSuccess = () => {
   };
 
   return (
+    <>
       <Helmet>
         <title>Configura tu cuenta | Ruka.ai</title>
       </Helmet>
@@ -748,7 +749,8 @@ const OnboardingSuccess = () => {
           </div>
         </div>
       </main>
-    );
+    </>
+  );
 };
 
 export default OnboardingSuccess;
