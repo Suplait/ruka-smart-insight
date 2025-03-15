@@ -35,42 +35,59 @@ Deno.serve(async (req) => {
       throw new Error('SLACK_BOT_TOKEN no encontrado')
     }
 
-    const { lead, isOnboarding, leadId, step } = await req.json() as { 
+    const { lead, isOnboarding, leadId, step, threadTs } = await req.json() as { 
       lead: Lead, 
       isOnboarding?: boolean,
       leadId?: number,
-      step?: string 
+      step?: string,
+      threadTs?: string 
     }
     
     console.log('Received lead data for Slack notification:', lead);
     console.log('Is onboarding notification?', isOnboarding);
     console.log('Lead ID:', leadId);
     console.log('Step:', step);
+    console.log('Thread TS:', threadTs);
 
     // If this is an onboarding update for an existing thread
     if (isOnboarding && leadId && step) {
       try {
-        // Get the slack_message_ts for this lead
-        const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
-        const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
+        // Use the passed threadTs or fetch it if not provided
+        let messageTs = threadTs;
         
-        if (!supabaseUrl || !supabaseServiceKey) {
-          console.error('Supabase credentials not found in environment variables');
-          throw new Error('Supabase credentials missing');
-        }
-        
-        const supabase = createClient(supabaseUrl, supabaseServiceKey);
-        
-        const { data: leadData, error: leadError } = await supabase
-          .from('leads')
-          .select('slack_message_ts')
-          .eq('id', leadId)
-          .single();
+        if (!messageTs) {
+          console.log('No threadTs provided, fetching from database');
+          // Get the slack_message_ts for this lead
+          const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
+          const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
           
-        if (leadError || !leadData?.slack_message_ts) {
-          console.error('Error retrieving slack_message_ts or value not set:', leadError);
-          throw new Error('No thread ID found for this lead');
+          if (!supabaseUrl || !supabaseServiceKey) {
+            console.error('Supabase credentials not found in environment variables');
+            throw new Error('Supabase credentials missing');
+          }
+          
+          const supabase = createClient(supabaseUrl, supabaseServiceKey);
+          
+          const { data: leadData, error: leadError } = await supabase
+            .from('leads')
+            .select('slack_message_ts')
+            .eq('id', leadId)
+            .single();
+            
+          if (leadError || !leadData?.slack_message_ts) {
+            console.error('Error retrieving slack_message_ts or value not set:', leadError);
+            throw new Error('No thread ID found for this lead');
+          }
+          
+          messageTs = leadData.slack_message_ts;
         }
+        
+        if (!messageTs) {
+          console.error('No valid thread ID available');
+          throw new Error('No valid thread ID available');
+        }
+        
+        console.log('Using thread ID:', messageTs);
         
         // Send reply to thread
         let replyText;
@@ -100,7 +117,7 @@ Deno.serve(async (req) => {
         const threadMessage = {
           channel: SLACK_CHANNEL,
           text: replyText,
-          thread_ts: leadData.slack_message_ts
+          thread_ts: messageTs
         };
         
         console.log('Sending thread reply to Slack:', threadMessage);

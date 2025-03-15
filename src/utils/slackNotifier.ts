@@ -15,13 +15,28 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
     // Send the notification in a non-blocking way
     setTimeout(async () => {
       try {
+        // First, get the current lead data including the slack_message_ts
+        const { data: leadRecord, error: fetchError } = await supabase
+          .from('leads')
+          .select('slack_message_ts')
+          .eq('id', leadId)
+          .single();
+        
+        if (fetchError || !leadRecord) {
+          console.warn('Failed to fetch lead data for Slack notification:', fetchError);
+          return;
+        }
+        
         console.log(`Sending Slack notification for step ${step} and lead ${leadId}`);
+        console.log('Lead has slack_message_ts:', leadRecord.slack_message_ts);
+        
         const response = await supabase.functions.invoke('notify-slack', {
           body: {
             lead: leadData,
             isOnboarding: true,
             leadId: leadId,
-            step: step
+            step: step,
+            threadTs: leadRecord.slack_message_ts // Pass the existing thread ts
           }
         });
         

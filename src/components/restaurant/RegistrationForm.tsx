@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -124,13 +125,13 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
           // Store the Slack message timestamp for future thread replies
           const { error: updateError } = await supabase
             .from('leads')
-            .update({ 
-              slack_message_ts: slackResponse.data.ts 
-            })
+            .update({ slack_message_ts: slackResponse.data.ts })
             .eq('id', leadId);
             
           if (updateError) {
             console.warn('Warning: Failed to store Slack message ID, but registration can proceed:', updateError);
+          } else {
+            console.log('Successfully stored Slack message ts:', slackResponse.data.ts);
           }
         }
       } catch (slackError) {
