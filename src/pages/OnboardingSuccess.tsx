@@ -92,10 +92,25 @@ const BillingSystemSelector = ({
         </button>
       </div>
       
-      {selectedSystem === "mercado" && <div className="mt-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
+      {selectedSystem === "mercado" && (
+        <div className="mt-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
           <label className="text-sm font-medium mb-2 block">¿Cuál sistema utilizas?</label>
-          <Input id="custom-system-input" value={customSystem} onChange={e => onCustomChange(e.target.value)} placeholder="Nubox, Bsale, Toteat, etc." className="bg-white" />
-        </div>}
+          <Input 
+            id="custom-system-input" 
+            value={customSystem} 
+            onChange={e => onCustomChange(e.target.value)} 
+            placeholder="Nubox, Bsale, Toteat, etc." 
+            className="bg-white" 
+          />
+          <div className="mt-2 flex items-start gap-2">
+            <Info className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-muted-foreground">
+              Si no estás seguro o no sabes el nombre exacto, puedes escribir una descripción o dejarlo en blanco. 
+              Nuestro equipo se pondrá en contacto contigo para ayudarte a identificarlo correctamente.
+            </p>
+          </div>
+        </div>
+      )}
     </div>;
 };
 const SubdomainInput = ({
@@ -291,15 +306,6 @@ const OnboardingSuccess = () => {
       return;
     }
     if (currentStep === 1) {
-      if (formData.sistema === "mercado" && !formData.sistemaCustom) {
-        setIsLoading(false);
-        toast({
-          title: "Campo requerido",
-          description: "Por favor indica cuál sistema de facturación utilizas",
-          variant: "destructive"
-        });
-        return;
-      }
       const saved = await saveFormData();
       setIsLoading(false);
       if (saved) {
@@ -586,14 +592,9 @@ const OnboardingSuccess = () => {
               </p>
             </div>
             
-            {!isComplete ? <>
-                <motion.div initial={{
-              opacity: 0,
-              y: 20
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} className="text-center mb-8">
+            {!isComplete ? (
+              <>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
                   <h1 className="text-2xl md:text-3xl font-bold">Configura tu cuenta</h1>
                   <p className="mt-2 text-muted-foreground">
                     {currentStep + 1} de {totalSteps} pasos para comenzar
@@ -603,18 +604,7 @@ const OnboardingSuccess = () => {
                 <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
                 
                 <AnimatePresence mode="wait">
-                  <motion.div key={currentStep} initial={{
-                opacity: 0,
-                x: 20
-              }} animate={{
-                opacity: 1,
-                x: 0
-              }} exit={{
-                opacity: 0,
-                x: -20
-              }} transition={{
-                duration: 0.3
-              }}>
+                  <motion.div key={currentStep} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
                     <Card className="border shadow-md">
                       <CardHeader>
                         <div className="flex items-center gap-4">
@@ -630,33 +620,61 @@ const OnboardingSuccess = () => {
                       <CardContent className="pb-8">
                         {currentStepData.content}
                         
-                        {currentStep < 3 && <div className="flex justify-between mt-10">
-                            <Button id={`back-button-step-${currentStep}`} variant="outline" onClick={handleBack} disabled={currentStep === 0 || isLoading} className="gap-2">
+                        {currentStep < 3 && (
+                          <div className="flex justify-between mt-10">
+                            <Button 
+                              id={`back-button-step-${currentStep}`} 
+                              variant="outline" 
+                              onClick={handleBack} 
+                              disabled={currentStep === 0 || isLoading} 
+                              className="gap-2"
+                            >
                               <ArrowLeft className="w-4 h-4" /> Atrás
                             </Button>
                             
-                            <Button id={`next-button-step-${currentStep}`} onClick={handleNext} disabled={isLoading} className="gap-2">
-                              {!isLoading ? <>
+                            <Button 
+                              id={`next-button-step-${currentStep}`} 
+                              onClick={handleNext} 
+                              disabled={isLoading} 
+                              className="gap-2"
+                            >
+                              {!isLoading ? (
+                                <>
                                   Siguiente <ArrowRight className="w-4 h-4" />
-                                </> : <span className="flex items-center gap-2">
+                                </>
+                              ) : (
+                                <span className="flex items-center gap-2">
                                   <Loader className="h-4 w-4 animate-spin" />
                                   Procesando...
-                                </span>}
+                                </span>
+                              )}
                             </Button>
-                          </div>}
+                          </div>
+                        )}
                         
-                        {currentStep === 3 && <div className="flex justify-start mt-6">
-                            <Button id="back-button-step-3" variant="outline" onClick={handleBack} disabled={isLoading} className="gap-2">
+                        {currentStep === 3 && (
+                          <div className="flex justify-start mt-6">
+                            <Button 
+                              id="back-button-step-3" 
+                              variant="outline" 
+                              onClick={handleBack} 
+                              disabled={isLoading} 
+                              className="gap-2"
+                            >
                               <ArrowLeft className="w-4 h-4" /> Atrás
                             </Button>
-                          </div>}
+                          </div>
+                        )}
                       </CardContent>
                     </Card>
                   </motion.div>
                 </AnimatePresence>
-              </> : <Card className="border shadow-md p-8">
+              </>
+            ) : (
+              <Card className="border shadow-md p-8">
                 {successContent}
-              </Card>}
+              </Card>
+            )}
             
             <div className="mt-6 text-center text-sm text-muted-foreground">
               <p>¿Necesitas ayuda? <a href="#" className="text-primary hover:underline">Contáctanos</a></p>
@@ -666,4 +684,5 @@ const OnboardingSuccess = () => {
       </main>
     </>;
 };
+
 export default OnboardingSuccess;
