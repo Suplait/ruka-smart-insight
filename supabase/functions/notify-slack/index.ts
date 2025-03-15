@@ -37,6 +37,13 @@ Deno.serve(async (req) => {
       throw new Error('SLACK_BOT_TOKEN no encontrado')
     }
 
+    console.log('[DEBUG] SLACK_BOT_TOKEN exists:', !!SLACK_BOT_TOKEN);
+    
+    // Log first few characters of token for debugging (don't log the full token for security)
+    if (SLACK_BOT_TOKEN) {
+      console.log('[DEBUG] SLACK_BOT_TOKEN starts with:', SLACK_BOT_TOKEN.substring(0, 5) + '...');
+    }
+    
     const requestBody = await req.json();
     console.log('[DEBUG] Request body received:', JSON.stringify(requestBody));
 
@@ -101,11 +108,23 @@ Deno.serve(async (req) => {
         });
         
         console.log('[DEBUG] Slack API response status:', threadResponse.status);
+        console.log('[DEBUG] Slack API response headers:', Object.fromEntries(threadResponse.headers.entries()));
+        
         const threadResult = await threadResponse.json();
         console.log('[DEBUG] Slack API response body:', JSON.stringify(threadResult));
         
         if (!threadResult.ok) {
           console.error('[DEBUG] Error sending thread message to Slack:', threadResult);
+          
+          // Check for specific error types
+          if (threadResult.error === 'invalid_auth') {
+            console.error('[DEBUG] Authentication error - token may be invalid or expired');
+          } else if (threadResult.error === 'channel_not_found') {
+            console.error('[DEBUG] Channel not found error - check channel name:', SLACK_CHANNEL);
+          } else if (threadResult.error === 'thread_not_found') {
+            console.error('[DEBUG] Thread not found error - the threadTs may be invalid');
+          }
+          
           return new Response(JSON.stringify({ success: false, error: 'Error sending thread message', details: threadResult }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
             status: 200, // Still return 200 to not interrupt the main flow
@@ -208,11 +227,39 @@ Deno.serve(async (req) => {
       });
 
       console.log('[DEBUG] Slack API response status for initial message:', response.status);
-      const slackResponse = await response.json();
+      console.log('[DEBUG] Slack API response headers:', Object.fromEntries(response.headers.entries()));
+      
+      const responseText = await response.text();
+      console.log('[DEBUG] Slack API raw response text:', responseText);
+      
+      let slackResponse;
+      try {
+        slackResponse = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('[DEBUG] Error parsing Slack API response:', parseError);
+        console.log('[DEBUG] Raw response that failed to parse:', responseText);
+        return new Response(JSON.stringify({ 
+          success: false, 
+          error: 'Error parsing Slack API response',
+          rawResponse: responseText
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        });
+      }
+      
       console.log('[DEBUG] Slack API response body for initial message:', JSON.stringify(slackResponse));
       
       if (!slackResponse.ok) {
         console.error('[DEBUG] Error sending message to Slack:', slackResponse);
+        
+        // Check for specific error types
+        if (slackResponse.error === 'invalid_auth') {
+          console.error('[DEBUG] Authentication error - token may be invalid or expired');
+        } else if (slackResponse.error === 'channel_not_found') {
+          console.error('[DEBUG] Channel not found error - check channel name:', SLACK_CHANNEL);
+        }
+        
         return new Response(JSON.stringify({ success: false, error: 'Error al enviar mensaje a Slack', details: slackResponse }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 200, // Still return 200 to not interrupt the main flow

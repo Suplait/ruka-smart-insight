@@ -123,15 +123,56 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
           // Don't throw error here, just log warning
         } else if (slackResponse.data?.ts) {
           // Store the Slack message timestamp for future thread replies
+          const slackTs = slackResponse.data.ts;
+          console.log('Received Slack message ts:', slackTs);
+          
           const { error: updateError } = await supabase
             .from('leads')
-            .update({ slack_message_ts: slackResponse.data.ts })
+            .update({ slack_message_ts: slackTs })
             .eq('id', leadId);
             
           if (updateError) {
             console.warn('Warning: Failed to store Slack message ID, but registration can proceed:', updateError);
           } else {
-            console.log('Successfully stored Slack message ts:', slackResponse.data.ts);
+            console.log('Successfully stored Slack message ts:', slackTs);
+            
+            // Verification step - Check if the timestamp was actually stored
+            const { data: verifyData, error: verifyError } = await supabase
+              .from('leads')
+              .select('slack_message_ts')
+              .eq('id', leadId)
+              .single();
+              
+            if (verifyError) {
+              console.error('Error verifying Slack message ts storage:', verifyError);
+            } else if (verifyData.slack_message_ts !== slackTs) {
+              console.error('Verification failed: Slack message ts was not stored correctly', {
+                expected: slackTs,
+                actual: verifyData.slack_message_ts
+              });
+              
+              // Retry the update
+              console.log('Retrying Slack message ts update...');
+              const { error: retryError } = await supabase
+                .from('leads')
+                .update({ slack_message_ts: slackTs })
+                .eq('id', leadId);
+                
+              if (retryError) {
+                console.error('Retry failed:', retryError);
+              } else {
+                // Verify the retry
+                const { data: retryVerifyData } = await supabase
+                  .from('leads')
+                  .select('slack_message_ts')
+                  .eq('id', leadId)
+                  .single();
+                  
+                console.log('After retry, Slack message ts is:', retryVerifyData?.slack_message_ts);
+              }
+            } else {
+              console.log('Verification successful: Slack message ts was stored correctly');
+            }
           }
         } else {
           console.warn('Warning: No ts value in Slack response:', slackResponse);

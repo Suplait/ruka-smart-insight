@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
  */
 export async function notifySlackOnboardingStep(leadId: number, step: string, leadData: any) {
   if (!leadId || !step) {
-    console.error('Missing required parameters for Slack notification');
+    console.error('[DEBUG] Missing required parameters for Slack notification');
     return;
   }
 
@@ -37,6 +37,63 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
       if (!threadTs) {
         console.warn('[DEBUG] No thread_ts found for this lead, cannot send thread reply');
         console.log('[DEBUG] Lead record data:', leadRecord);
+        
+        // Attempt to check if leadRecord exists but just doesn't have the slack_message_ts
+        if (leadRecord) {
+          console.log('[DEBUG] Lead record exists but slack_message_ts is missing or null');
+          
+          // Attempt to send an initial notification since we don't have a thread to reply to
+          console.log('[DEBUG] Attempting to send an initial notification instead');
+          try {
+            const initialResponse = await supabase.functions.invoke('notify-slack', {
+              body: {
+                lead: leadData,
+                isOnboarding: false
+              }
+            });
+            
+            console.log('[DEBUG] Initial notification response:', initialResponse);
+            
+            if (initialResponse.data?.ts) {
+              console.log('[DEBUG] Received new ts, storing it:', initialResponse.data.ts);
+              
+              // Store the new thread ts
+              const { error: updateError } = await supabase
+                .from('leads')
+                .update({ slack_message_ts: initialResponse.data.ts })
+                .eq('id', leadId);
+                
+              if (updateError) {
+                console.error('[DEBUG] Failed to store new Slack thread ts:', updateError);
+              } else {
+                console.log('[DEBUG] Successfully stored new Slack thread ts');
+                
+                // Verification step
+                const { data: verifyData, error: verifyError } = await supabase
+                  .from('leads')
+                  .select('slack_message_ts')
+                  .eq('id', leadId)
+                  .single();
+                  
+                if (verifyError) {
+                  console.error('[DEBUG] Error verifying Slack message ts storage:', verifyError);
+                } else {
+                  console.log('[DEBUG] Verification result, stored ts:', verifyData?.slack_message_ts);
+                  
+                  if (verifyData?.slack_message_ts !== initialResponse.data.ts) {
+                    console.error('[DEBUG] Verification failed: ts was not stored correctly', {
+                      expected: initialResponse.data.ts,
+                      actual: verifyData?.slack_message_ts
+                    });
+                  }
+                }
+              }
+            }
+          } catch (initialError) {
+            console.error('[DEBUG] Error sending initial notification:', initialError);
+          }
+        }
+        
         resolve(false);
         return;
       }
