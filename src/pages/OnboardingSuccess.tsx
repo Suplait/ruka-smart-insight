@@ -12,10 +12,14 @@ import AutomationFeatures from "@/components/restaurant/AutomationFeatures";
 import SimpleConnection from "@/components/restaurant/SimpleConnection";
 import CompactImpactStats from "@/components/restaurant/CompactImpactStats";
 import { supabase } from "@/integrations/supabase/client";
+import { notifySlackOnboardingStep } from "@/utils/slackNotifier";
+import { Lead } from "@/types/supabase";
+
 type StepProps = {
   currentStep: number;
   totalSteps: number;
 };
+
 const StepIndicator = ({
   currentStep,
   totalSteps
@@ -26,6 +30,7 @@ const StepIndicator = ({
     }).map((_, index) => <div key={index} className={`h-2.5 rounded-full transition-all duration-300 ${index < currentStep ? "w-8 bg-primary" : index === currentStep ? "w-8 bg-primary" : "w-2.5 bg-gray-200"}`} />)}
     </div>;
 };
+
 const MonthsSelector = ({
   selectedMonths,
   onChange
@@ -56,6 +61,7 @@ const MonthsSelector = ({
       </div>
     </div>;
 };
+
 const BillingSystemSelector = ({
   selectedSystem,
   onChange,
@@ -113,6 +119,7 @@ const BillingSystemSelector = ({
       )}
     </div>;
 };
+
 const SubdomainInput = ({
   value,
   onChange,
@@ -171,7 +178,9 @@ const SubdomainInput = ({
       </div>
     </div>;
 };
+
 const SLIDE_INTERVAL = 2500;
+
 const OnboardingSuccess = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -181,6 +190,7 @@ const OnboardingSuccess = () => {
   const totalSteps = 4;
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
+
   useEffect(() => {
     if (!leadId) {
       toast({
@@ -192,11 +202,14 @@ const OnboardingSuccess = () => {
       return;
     }
   }, [leadId, navigate]);
+
   const generateSubdomain = (name: string) => {
     if (!name) return '';
     return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '').trim();
   };
+
   const suggestedSubdomain = generateSubdomain(restaurantName);
+
   const [formData, setFormData] = useState({
     rut: "",
     clave: "",
@@ -205,6 +218,7 @@ const OnboardingSuccess = () => {
     sistemaCustom: "",
     subdominio: suggestedSubdomain || ""
   });
+
   useEffect(() => {
     if (suggestedSubdomain && !formData.subdominio) {
       setFormData(prev => ({
@@ -213,15 +227,18 @@ const OnboardingSuccess = () => {
       }));
     }
   }, [suggestedSubdomain]);
+
   const updateFormData = (key: string, value: any) => {
     setFormData(prev => ({
       ...prev,
       [key]: value
     }));
   };
+
   const handleSubdomainChange = (value: string) => {
     updateFormData('subdominio', value);
   };
+
   const saveFormData = async () => {
     try {
       if (!leadId) {
@@ -232,27 +249,35 @@ const OnboardingSuccess = () => {
         });
         return false;
       }
+      
       let updateData: Record<string, any> = {};
+      let stepName = '';
+      
       if (currentStep === 0) {
         updateData = {
           meses_datos: formData.meses
         };
+        stepName = 'data-months-selected';
       } else if (currentStep === 1) {
         updateData = {
           sistema_facturacion: formData.sistema,
           sistema_custom: formData.sistemaCustom
         };
+        stepName = 'billing-system-selected';
       } else if (currentStep === 2) {
         updateData = {
           subdominio: formData.subdominio
         };
+        stepName = 'subdomain-selected';
       } else if (currentStep === 3) {
         updateData = {
           rut: formData.rut,
           clave_sii: formData.clave,
           sii_connected: true
         };
+        stepName = 'sii-credentials';
       }
+      
       try {
         const numericLeadId = Number(leadId);
         const response = await supabase.functions.invoke('update-lead', {
@@ -261,6 +286,7 @@ const OnboardingSuccess = () => {
             updateData
           }
         });
+        
         if (response.error) {
           toast({
             title: "Error",
@@ -269,6 +295,7 @@ const OnboardingSuccess = () => {
           });
           return false;
         }
+        
         if (!response.data?.success) {
           toast({
             title: "Error",
@@ -277,8 +304,23 @@ const OnboardingSuccess = () => {
           });
           return false;
         }
+        
+        if (stepName) {
+          const leadDataForSlack: Partial<Lead> = {
+            ...updateData,
+            sistema_facturacion: formData.sistema,
+            sistema_custom: formData.sistemaCustom,
+            subdominio: formData.subdominio,
+            rut: formData.rut,
+            meses_datos: formData.meses
+          };
+          
+          notifySlackOnboardingStep(numericLeadId, stepName, leadDataForSlack);
+        }
+        
         return true;
       } catch (edgeFunctionError) {
+        console.error('Edge function error:', edgeFunctionError);
         toast({
           title: "Error",
           description: "Error al guardar los datos. Por favor intenta nuevamente.",
@@ -287,6 +329,7 @@ const OnboardingSuccess = () => {
         return false;
       }
     } catch (error) {
+      console.error('General error in saveFormData:', error);
       toast({
         title: "Error",
         description: "Error al guardar los datos. Por favor intenta nuevamente.",
@@ -295,6 +338,7 @@ const OnboardingSuccess = () => {
       return false;
     }
   };
+
   const handleNext = async () => {
     setIsLoading(true);
     if (currentStep === 0) {
@@ -356,7 +400,23 @@ const OnboardingSuccess = () => {
           setIsLoading(false);
           return;
         }
+        
         await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        if (leadId) {
+          const numericLeadId = Number(leadId);
+          const leadDataForSlack: Partial<Lead> = {
+            sistema_facturacion: formData.sistema,
+            sistema_custom: formData.sistemaCustom,
+            subdominio: formData.subdominio,
+            rut: formData.rut,
+            meses_datos: formData.meses,
+            sii_connected: true
+          };
+          
+          notifySlackOnboardingStep(numericLeadId, 'onboarding-completed', leadDataForSlack);
+        }
+        
         setIsComplete(true);
         setIsLoading(false);
         return;
@@ -371,9 +431,11 @@ const OnboardingSuccess = () => {
       }
     }
   };
+
   const handleBack = () => {
     setCurrentStep(prev => prev - 1);
   };
+
   const steps = [{
     title: "Periodo de datos",
     icon: <Calendar className="w-6 h-6 text-primary" />,
@@ -439,6 +501,7 @@ const OnboardingSuccess = () => {
           </div>
         </div>
   }];
+
   const successContent = <div className="text-center space-y-6">
       <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
         <Check className="w-8 h-8 text-green-600" />
@@ -480,7 +543,9 @@ const OnboardingSuccess = () => {
         </Button>
       </div>
     </div>;
+
   const currentStepData = steps[currentStep];
+
   const getLeftSideContent = () => {
     switch (currentStep) {
       case 0:
@@ -568,6 +633,7 @@ const OnboardingSuccess = () => {
           </motion.div>;
     }
   };
+
   return <>
       <Helmet>
         <title>Configura tu cuenta | Ruka.ai</title>
