@@ -15,6 +15,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { supabase } from "@/integrations/supabase/client";
+import { Lead } from "@/types/supabase";
 
 interface FormData {
   firstName: string;
@@ -126,7 +127,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
             .from('leads')
             .update({ 
               slack_message_ts: slackResponse.data.ts 
-            })
+            } as Partial<Lead>)
             .eq('id', leadId);
             
           if (updateError) {
