@@ -126,15 +126,20 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
           const slackTs = slackResponse.data.ts;
           console.log('Received Slack message ts:', slackTs);
           
-          const { error: updateError } = await supabase
-            .from('leads')
-            .update({ slack_message_ts: slackTs })
-            .eq('id', leadId);
-            
-          if (updateError) {
-            console.warn('Warning: Failed to store Slack message ID, but registration can proceed:', updateError);
+          // Use the more reliable Edge Function to update the lead record
+          const updateResponse = await supabase.functions.invoke('update-lead', {
+            body: {
+              leadId: leadId,
+              updateData: { slack_message_ts: slackTs }
+            }
+          });
+          
+          console.log('Update lead response:', updateResponse);
+          
+          if (updateResponse.error) {
+            console.error('Error updating lead with slack_message_ts:', updateResponse.error);
           } else {
-            console.log('Successfully stored Slack message ts:', slackTs);
+            console.log('Successfully stored Slack message ts with edge function');
             
             // Verification step - Check if the timestamp was actually stored
             const { data: verifyData, error: verifyError } = await supabase
@@ -145,33 +150,37 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
               
             if (verifyError) {
               console.error('Error verifying Slack message ts storage:', verifyError);
-            } else if (verifyData.slack_message_ts !== slackTs) {
-              console.error('Verification failed: Slack message ts was not stored correctly', {
-                expected: slackTs,
-                actual: verifyData.slack_message_ts
-              });
-              
-              // Retry the update
-              console.log('Retrying Slack message ts update...');
-              const { error: retryError } = await supabase
-                .from('leads')
-                .update({ slack_message_ts: slackTs })
-                .eq('id', leadId);
-                
-              if (retryError) {
-                console.error('Retry failed:', retryError);
-              } else {
-                // Verify the retry
-                const { data: retryVerifyData } = await supabase
-                  .from('leads')
-                  .select('slack_message_ts')
-                  .eq('id', leadId)
-                  .single();
-                  
-                console.log('After retry, Slack message ts is:', retryVerifyData?.slack_message_ts);
-              }
             } else {
-              console.log('Verification successful: Slack message ts was stored correctly');
+              console.log('Verification result - Slack message ts in database:', verifyData?.slack_message_ts);
+              
+              if (verifyData.slack_message_ts !== slackTs) {
+                console.error('Verification failed: Slack message ts was not stored correctly', {
+                  expected: slackTs,
+                  actual: verifyData?.slack_message_ts
+                });
+                
+                // Try one more direct update as fallback
+                console.log('Attempting direct update as fallback...');
+                const { error: directUpdateError } = await supabase
+                  .from('leads')
+                  .update({ slack_message_ts: slackTs })
+                  .eq('id', leadId);
+                  
+                if (directUpdateError) {
+                  console.error('Direct update failed:', directUpdateError);
+                } else {
+                  // Final verification
+                  const { data: finalVerifyData } = await supabase
+                    .from('leads')
+                    .select('slack_message_ts')
+                    .eq('id', leadId)
+                    .single();
+                    
+                  console.log('After direct update, Slack message ts is:', finalVerifyData?.slack_message_ts);
+                }
+              } else {
+                console.log('Verification successful: Slack message ts was stored correctly');
+              }
             }
           }
         } else {

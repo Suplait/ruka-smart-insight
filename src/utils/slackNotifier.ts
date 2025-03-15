@@ -57,14 +57,18 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
             if (initialResponse.data?.ts) {
               console.log('[DEBUG] Received new ts, storing it:', initialResponse.data.ts);
               
-              // Store the new thread ts
-              const { error: updateError } = await supabase
-                .from('leads')
-                .update({ slack_message_ts: initialResponse.data.ts })
-                .eq('id', leadId);
-                
-              if (updateError) {
-                console.error('[DEBUG] Failed to store new Slack thread ts:', updateError);
+              // Use edge function to store the new thread ts
+              const updateResponse = await supabase.functions.invoke('update-lead', {
+                body: {
+                  leadId: leadId,
+                  updateData: { slack_message_ts: initialResponse.data.ts }
+                }
+              });
+              
+              console.log('[DEBUG] Update response:', updateResponse);
+              
+              if (updateResponse.error) {
+                console.error('[DEBUG] Failed to store new Slack thread ts:', updateResponse.error);
               } else {
                 console.log('[DEBUG] Successfully stored new Slack thread ts');
                 

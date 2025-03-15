@@ -126,7 +126,7 @@ serve(async (req) => {
       }
       
       // For all other cases, check if the values match or if the updateData key exists in verifyData
-      if (!(verifyData[key] === updateData[key] || !(key in verifyData))) {
+      if (!(key in verifyData) || verifyData[key] !== updateData[key]) {
         updateSuccessful = false;
         failures.push({key, expected: updateData[key], actual: verifyData[key]});
       }
