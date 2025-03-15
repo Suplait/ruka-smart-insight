@@ -307,12 +307,12 @@ const OnboardingSuccess = () => {
         
         if (stepName) {
           const leadDataForSlack: Partial<Lead> = {
-            ...updateData,
             sistema_facturacion: formData.sistema,
             sistema_custom: formData.sistemaCustom,
             subdominio: formData.subdominio,
             rut: formData.rut,
-            meses_datos: formData.meses
+            meses_datos: formData.meses,
+            sii_connected: formData.sistema === 'sii' ? true : undefined
           };
           
           notifySlackOnboardingStep(numericLeadId, stepName, leadDataForSlack);
@@ -634,7 +634,7 @@ const OnboardingSuccess = () => {
     }
   };
 
-  return <>
+  return (
       <Helmet>
         <title>Configura tu cuenta | Ruka.ai</title>
       </Helmet>
@@ -748,7 +748,7 @@ const OnboardingSuccess = () => {
           </div>
         </div>
       </main>
-    </>;
+    );
 };
 
 export default OnboardingSuccess;

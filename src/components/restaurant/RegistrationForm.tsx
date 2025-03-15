@@ -101,8 +101,8 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
       
       console.log('Created lead with ID:', leadId);
 
+      // Send notification to Slack about the new lead (only for initial registration)
       try {
-        // Send notification to Slack about the new lead (only for initial registration)
         const slackResponse = await supabase.functions.invoke('notify-slack', {
           body: {
             lead: {
@@ -121,7 +121,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
         if (slackResponse.error) {
           console.warn('Warning: Slack notification failed, but registration can proceed:', slackResponse.error);
           // Don't throw error here, just log warning
-        } else if (slackResponse.data && slackResponse.data.ts) {
+        } else if (slackResponse.data?.ts) {
           // Store the Slack message timestamp for future thread replies
           const { error: updateError } = await supabase
             .from('leads')
@@ -133,6 +133,8 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
           } else {
             console.log('Successfully stored Slack message ts:', slackResponse.data.ts);
           }
+        } else {
+          console.warn('Warning: No ts value in Slack response:', slackResponse);
         }
       } catch (slackError) {
         console.warn('Warning: Slack notification error, but registration can proceed:', slackError);

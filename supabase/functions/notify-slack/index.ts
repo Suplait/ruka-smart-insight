@@ -50,46 +50,9 @@ Deno.serve(async (req) => {
     console.log('Thread TS:', threadTs);
 
     // If this is an onboarding update for an existing thread
-    if (isOnboarding && leadId && step) {
+    if (isOnboarding && leadId && step && threadTs) {
       try {
-        // Use the passed threadTs or fetch it if not provided
-        let messageTs = threadTs;
-        
-        if (!messageTs) {
-          console.log('No threadTs provided, fetching from database');
-          // Get the slack_message_ts for this lead
-          const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
-          const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
-          
-          if (!supabaseUrl || !supabaseServiceKey) {
-            console.error('Supabase credentials not found in environment variables');
-            throw new Error('Supabase credentials missing');
-          }
-          
-          const supabase = createClient(supabaseUrl, supabaseServiceKey);
-          
-          const { data: leadData, error: leadError } = await supabase
-            .from('leads')
-            .select('slack_message_ts')
-            .eq('id', leadId)
-            .single();
-            
-          if (leadError || !leadData?.slack_message_ts) {
-            console.error('Error retrieving slack_message_ts or value not set:', leadError);
-            throw new Error('No thread ID found for this lead');
-          }
-          
-          messageTs = leadData.slack_message_ts;
-        }
-        
-        if (!messageTs) {
-          console.error('No valid thread ID available');
-          throw new Error('No valid thread ID available');
-        }
-        
-        console.log('Using thread ID:', messageTs);
-        
-        // Send reply to thread
+        // Send reply to thread using the provided threadTs
         let replyText;
         switch(step) {
           case "billing-system-selected":
@@ -117,11 +80,12 @@ Deno.serve(async (req) => {
         const threadMessage = {
           channel: SLACK_CHANNEL,
           text: replyText,
-          thread_ts: messageTs
+          thread_ts: threadTs // This is crucial for making it a reply
         };
         
-        console.log('Sending thread reply to Slack:', threadMessage);
+        console.log('Sending thread reply to Slack with thread_ts:', threadTs);
         
+        // Call Slack API to post a message in the thread
         const threadResponse = await fetch('https://slack.com/api/chat.postMessage', {
           method: 'POST',
           headers: {
@@ -135,8 +99,7 @@ Deno.serve(async (req) => {
         
         if (!threadResult.ok) {
           console.error('Error sending thread message to Slack:', threadResult);
-          // We don't throw here to avoid interrupting the main flow, just log the error
-          return new Response(JSON.stringify({ success: false, error: 'Error sending thread message' }), {
+          return new Response(JSON.stringify({ success: false, error: 'Error sending thread message', details: threadResult }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
             status: 200, // Still return 200 to not interrupt the main flow
           });
@@ -223,7 +186,7 @@ Deno.serve(async (req) => {
       blocks
     }
     
-    console.log('Sending Slack message:', JSON.stringify(message, null, 2));
+    console.log('Sending initial Slack message');
 
     try {
       const response = await fetch('https://slack.com/api/chat.postMessage', {
@@ -239,15 +202,15 @@ Deno.serve(async (req) => {
       
       if (!slackResponse.ok) {
         console.error('Error sending message to Slack:', slackResponse);
-        return new Response(JSON.stringify({ success: false, error: 'Error al enviar mensaje a Slack' }), {
+        return new Response(JSON.stringify({ success: false, error: 'Error al enviar mensaje a Slack', details: slackResponse }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 200, // Still return 200 to not interrupt the main flow
         });
       }
       
-      console.log('Slack message sent successfully:', slackResponse);
+      console.log('Slack message sent successfully with ts:', slackResponse.ts);
       
-      // Return the message timestamp which will be used as the thread ID
+      // Return the message timestamp which will be used as the thread ID for future replies
       return new Response(JSON.stringify({ 
         success: true, 
         ts: slackResponse.ts 
@@ -257,7 +220,7 @@ Deno.serve(async (req) => {
       });
     } catch (slackError) {
       console.error('Error in Slack API request:', slackError);
-      return new Response(JSON.stringify({ success: false, error: 'Error in Slack API request' }), {
+      return new Response(JSON.stringify({ success: false, error: 'Error in Slack API request', details: slackError.message }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200, // Still return 200 to not interrupt the main flow
       });
