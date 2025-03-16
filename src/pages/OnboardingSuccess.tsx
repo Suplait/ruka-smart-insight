@@ -402,6 +402,34 @@ const OnboardingSuccess = () => {
     }
   };
 
+  const validateSiiCredentials = async (rut: string, password: string) => {
+    debugLog(`Validating SII credentials for RUT: ${rut} (password length: ${password.length})`);
+    
+    try {
+      const response = await supabase.functions.invoke('validate-sii', {
+        body: {
+          rut: rut,
+          password: password
+        }
+      });
+      
+      debugLog(`SII validation response:`, response);
+      
+      if (response.error) {
+        debugLog(`Error from validate-sii function:`, response.error);
+        return { success: false, error: response.error.message };
+      }
+      
+      return { 
+        success: response.data?.success === true, 
+        error: response.data?.error
+      };
+    } catch (error) {
+      debugLog(`Exception in validateSiiCredentials:`, error);
+      return { success: false, error: error.message };
+    }
+  };
+
   const handleNext = async () => {
     setIsLoading(true);
     if (currentStep === 0) {
@@ -457,7 +485,22 @@ const OnboardingSuccess = () => {
         });
         return;
       }
+      
       try {
+        const validationResult = await validateSiiCredentials(formData.rut, formData.clave);
+        debugLog(`SII validation result:`, validationResult);
+        
+        if (!validationResult.success) {
+          setIsLoading(false);
+          toast({
+            title: "Credenciales inválidas",
+            description: "Las credenciales del SII no son válidas. Por favor verifica e intenta nuevamente.",
+            variant: "destructive"
+          });
+          return;
+        }
+        
+        debugLog(`SII credentials valid, proceeding to save`);
         const saved = await saveFormData();
         if (!saved) {
           setIsLoading(false);
@@ -484,6 +527,7 @@ const OnboardingSuccess = () => {
         setIsLoading(false);
         return;
       } catch (error) {
+        debugLog(`Error validating or saving SII credentials:`, error);
         toast({
           title: "Error",
           description: "Ha ocurrido un error al conectar con el SII. Intenta nuevamente.",
