@@ -188,7 +188,7 @@ export default function RegistrationForm({
                 </div>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="max-w-[200px] p-3">
-                <p>Si no te gusta, no pagarás ni $1</p>
+                <p>Si no te gusta, no pagarás ni un peso. </p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
