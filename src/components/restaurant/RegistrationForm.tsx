@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, CreditCard, Clock4, ShieldCheck, Info } from "lucide-react";
+import { ArrowRight, CreditCard, Clock4, ShieldCheck, Info, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -178,7 +179,21 @@ export default function RegistrationForm({
     scale: 1
   }} className={`bg-white rounded-xl shadow-xl border p-6 sm:p-8 space-y-6 sm:space-y-8 transition-all duration-300 w-full ${highlightForm ? 'ring-4 ring-primary shadow-2xl scale-105' : ''}`}>
       <div className="space-y-4">
-        <h2 className="text-2xl font-semibold">Prueba Ruka por 30 días</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-2xl font-semibold">Prueba Ruka por 30 días</h2>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="cursor-help">
+                  <HelpCircle className="w-5 h-5 text-primary" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="top" className="max-w-[250px] p-4">
+                <p>Si en los 30 días no te gusta la plataforma y no deseas usarla más, no tendrás que pagar nada.</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
         <div className="flex flex-col gap-2">
           <div className="text-sm font-medium text-primary">
             Si te registras antes de las 12:00pm tendrás acceso el mismo día
