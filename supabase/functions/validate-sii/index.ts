@@ -24,8 +24,6 @@ Deno.serve(async (req) => {
       })
     }
     
-    console.log(`[DEBUG] Validating SII credentials for RUT: ${rut}`)
-    
     // Prepare the request to the SII validation endpoint
     const headers = {
       'Content-Type': 'application/json'
@@ -36,8 +34,6 @@ Deno.serve(async (req) => {
       password: password
     })
     
-    console.log(`[DEBUG] Making request to SII validation endpoint`)
-    
     try {
       // Call the external validation service
       const response = await fetch('https://scraper.ruka.ai/api/validate_sii_credentials', {
@@ -46,19 +42,14 @@ Deno.serve(async (req) => {
         body: params
       })
       
-      console.log(`[DEBUG] SII validation response status: ${response.status}`)
-      
       // Get raw response text for debugging
       const responseText = await response.text()
-      console.log(`[DEBUG] SII validation raw response: ${responseText}`)
       
       // Try to parse the response
       let validationResult
       try {
         validationResult = JSON.parse(responseText)
       } catch (e) {
-        console.log(`[DEBUG] Error parsing validation response: ${e.message}`)
-        
         // Check if it's a plain text "success: true" or "success: false"
         if (responseText.includes('success: true')) {
           validationResult = { success: true }
@@ -69,15 +60,12 @@ Deno.serve(async (req) => {
         }
       }
       
-      console.log(`[DEBUG] SII validation result:`, validationResult)
-      
       // Return the validation result
       return new Response(JSON.stringify(validationResult), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200
       })
     } catch (validationError) {
-      console.error(`[DEBUG] Error calling SII validation service: ${validationError.message}`)
       return new Response(JSON.stringify({
         success: false,
         error: `Error en la validación: ${validationError.message}`
@@ -87,7 +75,6 @@ Deno.serve(async (req) => {
       })
     }
   } catch (error) {
-    console.error(`[DEBUG] General error in validate-sii function: ${error.message}`)
     return new Response(JSON.stringify({
       success: false,
       error: `Error general: ${error.message}`

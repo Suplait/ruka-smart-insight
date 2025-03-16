@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -64,16 +63,6 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
         ? `+56${formData.whatsapp.replace(/^\+56/, '')}`
         : '';
 
-      console.log('Creating lead with data:', { 
-        company_name: formData.nombreRestaurante,
-        name: `${formData.firstName} ${formData.lastName}`,
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        email: formData.email,
-        ccity: formData.ciudad,
-        whatsapp: whatsappNumber
-      });
-
       // First create the lead record
       const { data: leadData, error: leadError } = await supabase
         .from('leads')
@@ -92,14 +81,11 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
         .single();
 
       if (leadError) {
-        console.error('Error creating lead:', leadError);
         throw leadError;
       }
 
       // Get the ID of the inserted lead
       const leadId = leadData.id;
-      
-      console.log('Created lead with ID:', leadId);
 
       // Send notification to Slack about the new lead (only for initial registration)
       try {
@@ -116,15 +102,11 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
           }
         });
         
-        console.log('Slack notification response:', slackResponse);
-        
         if (slackResponse.error) {
-          console.warn('Warning: Slack notification failed, but registration can proceed:', slackResponse.error);
           // Don't throw error here, just log warning
         } else if (slackResponse.data?.ts) {
           // Store the Slack message timestamp for future thread replies
           const slackTs = slackResponse.data.ts;
-          console.log('Received Slack message ts:', slackTs);
           
           // Use the more reliable Edge Function to update the lead record
           const updateResponse = await supabase.functions.invoke('update-lead', {
@@ -134,13 +116,9 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
             }
           });
           
-          console.log('Update lead response:', updateResponse);
-          
           if (updateResponse.error) {
-            console.error('Error updating lead with slack_message_ts:', updateResponse.error);
+            // Error handling
           } else {
-            console.log('Successfully stored Slack message ts with edge function');
-            
             // Verification step - Check if the timestamp was actually stored
             const { data: verifyData, error: verifyError } = await supabase
               .from('leads')
@@ -149,25 +127,17 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
               .single();
               
             if (verifyError) {
-              console.error('Error verifying Slack message ts storage:', verifyError);
+              // Error handling
             } else {
-              console.log('Verification result - Slack message ts in database:', verifyData?.slack_message_ts);
-              
               if (verifyData.slack_message_ts !== slackTs) {
-                console.error('Verification failed: Slack message ts was not stored correctly', {
-                  expected: slackTs,
-                  actual: verifyData?.slack_message_ts
-                });
-                
                 // Try one more direct update as fallback
-                console.log('Attempting direct update as fallback...');
                 const { error: directUpdateError } = await supabase
                   .from('leads')
                   .update({ slack_message_ts: slackTs })
                   .eq('id', leadId);
                   
                 if (directUpdateError) {
-                  console.error('Direct update failed:', directUpdateError);
+                  // Error handling
                 } else {
                   // Final verification
                   const { data: finalVerifyData } = await supabase
@@ -175,19 +145,12 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
                     .select('slack_message_ts')
                     .eq('id', leadId)
                     .single();
-                    
-                  console.log('After direct update, Slack message ts is:', finalVerifyData?.slack_message_ts);
                 }
-              } else {
-                console.log('Verification successful: Slack message ts was stored correctly');
               }
             }
           }
-        } else {
-          console.warn('Warning: No ts value in Slack response:', slackResponse);
         }
       } catch (slackError) {
-        console.warn('Warning: Slack notification error, but registration can proceed:', slackError);
         // Don't throw error here, just log warning
       }
 
@@ -200,7 +163,6 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
       });
 
     } catch (error) {
-      console.error('Error during registration:', error);
       toast({
         title: "Error",
         description: "Hubo un problema al enviar tu información. Por favor intenta nuevamente.",
