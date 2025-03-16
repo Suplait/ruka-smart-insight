@@ -166,7 +166,11 @@ export default function Restaurantes() {
                     de tu Restaurante?
                   </h1>
                   <p className="text-2xl text-muted-foreground leading-relaxed">
-                    <ValueMessageTypewriter messages={valueMessages} />
+                    <ValueMessageTypewriter 
+                      messages={valueMessages} 
+                      staticMode={true}
+                      staticText="Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel, POS o ERP."
+                    />
                   </p>
                 </motion.header>
 

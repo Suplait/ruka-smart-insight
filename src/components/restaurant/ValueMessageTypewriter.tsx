@@ -3,12 +3,23 @@ import { useState, useEffect } from "react";
 
 interface ValueMessageTypewriterProps {
   messages: string[];
+  staticMode?: boolean;
+  staticText?: string;
 }
 
-export default function ValueMessageTypewriter({ messages }: ValueMessageTypewriterProps) {
+export default function ValueMessageTypewriter({ 
+  messages, 
+  staticMode = false, 
+  staticText = "" 
+}: ValueMessageTypewriterProps) {
   const [currentMessage, setCurrentMessage] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // If in static mode, just return the static text
+  if (staticMode) {
+    return <span>{staticText}</span>;
+  }
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
