@@ -10,7 +10,6 @@ import { toast } from "@/components/ui/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { supabase } from "@/integrations/supabase/client";
 import { Lead } from "@/types/supabase";
-
 interface FormData {
   firstName: string;
   lastName: string;
@@ -20,12 +19,10 @@ interface FormData {
   whatsapp: string;
   acceptTerms: boolean;
 }
-
 interface RegistrationFormProps {
   highlightForm: boolean;
   timeLeft: string;
 }
-
 export default function RegistrationForm({
   highlightForm,
   timeLeft
@@ -41,7 +38,6 @@ export default function RegistrationForm({
     acceptTerms: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.acceptTerms) {
@@ -156,7 +152,6 @@ export default function RegistrationForm({
       setIsSubmitting(false);
     }
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       name,
@@ -175,7 +170,6 @@ export default function RegistrationForm({
       [name]: value
     }));
   };
-
   return <motion.div initial={{
     opacity: 0,
     scale: 0.95
@@ -194,7 +188,7 @@ export default function RegistrationForm({
                 </div>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="max-w-[200px] p-3">
-                <p>Si no te gusta, te devolvemos el 100% sin preguntas.</p>
+                <p>Si no te gusta, no pagarás ni $1</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
