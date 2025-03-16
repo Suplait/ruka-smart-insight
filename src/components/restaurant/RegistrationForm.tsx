@@ -200,7 +200,7 @@ export default function RegistrationForm({ highlightForm, timeLeft }: Registrati
       }`}
     >
       <div className="space-y-4">
-        <h2 className="text-2xl font-semibold">Comienza tu Prueba Gratuita</h2>
+        <h2 className="text-2xl font-semibold">Comienza con Ruka y Optimiza tus Costos</h2>
         <div className="flex flex-col gap-2">
           <div className="text-sm font-medium text-primary">
             Si te registras antes de las 12:00pm tendrás acceso el mismo día

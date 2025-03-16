@@ -52,7 +52,7 @@ export default function CTA() {
               className="gap-2 group hover:scale-105 transition-all duration-300"
               onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}
             >
-              Comenzar Ahora
+              Agendar Demo
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
 

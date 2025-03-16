@@ -1,4 +1,3 @@
-
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
@@ -88,7 +87,7 @@ export default function Hero() {
                 className="gap-2 group hover:scale-105 transition-all duration-300"
                 onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}
               >
-                Comienza Ahora
+                Agendar Demo
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button 
