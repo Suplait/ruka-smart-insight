@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,6 +12,7 @@ import Partners from "@/components/Partners";
 import AutomationFeatures from "@/components/restaurant/AutomationFeatures";
 import SimpleConnection from "@/components/restaurant/SimpleConnection";
 import CompactImpactStats from "@/components/restaurant/CompactImpactStats";
+import OnboardingAnimation from "@/components/restaurant/OnboardingAnimation";
 import { supabase } from "@/integrations/supabase/client";
 import { notifySlackOnboardingStep } from "@/utils/slackNotifier";
 import { Lead } from "@/types/supabase";
@@ -614,6 +616,15 @@ const OnboardingSuccess = () => {
                   Conectando...
                 </span>}
             </Button>
+            
+            <a 
+              href="https://www.youtube.com/embed/1wV-corpO74" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-xs text-primary flex items-center justify-center mt-4 hover:underline"
+            >
+              Seguir escuchando en otra pestaña <ExternalLink className="w-3 h-3 ml-1" />
+            </a>
           </div>
         </div>
   }];
@@ -626,8 +637,8 @@ const OnboardingSuccess = () => {
       <h2 className="text-2xl font-bold">¡Todo listo! 🎉</h2>
       
       <div className="space-y-4 text-gray-600">
-        <p>Ahora levantaremos tu plataforma y cargaremos
- los datos iniciales para que Ruka los agrupe y clasifique. En breve:</p>
+        <p>Ahora levantaremos tu plataforma y cargaremos
+ los datos iniciales para que Ruka los agrupe y clasifique. En breve:</p>
         
         <div className="space-y-3 text-left max-w-sm mx-auto">
           <div className="flex items-start gap-2">
@@ -760,7 +771,11 @@ const OnboardingSuccess = () => {
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col overflow-hidden">
           <div className="max-w-md mx-auto flex-1">
             <AnimatePresence mode="wait">
-              {getLeftSideContent()}
+              {isComplete ? (
+                <OnboardingAnimation />
+              ) : (
+                getLeftSideContent()
+              )}
             </AnimatePresence>
           </div>
         </div>
