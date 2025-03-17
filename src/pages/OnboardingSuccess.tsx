@@ -615,15 +615,6 @@ const OnboardingSuccess = () => {
                   Conectando...
                 </span>}
             </Button>
-            
-            <a 
-              href="https://www.youtube.com/embed/1wV-corpO74" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-xs text-primary flex items-center justify-center mt-4 hover:underline"
-            >
-              Seguir escuchando en otra pestaña <ExternalLink className="w-3 h-3 ml-1" />
-            </a>
           </div>
         </div>
   }];
@@ -669,8 +660,6 @@ const OnboardingSuccess = () => {
         </Button>
       </div>
     </div>;
-
-  const currentStepData = steps[currentStep];
 
   const getLeftSideContent = () => {
     switch (currentStep) {
@@ -754,14 +743,7 @@ const OnboardingSuccess = () => {
                 <iframe width="100%" height="100%" src="https://www.youtube.com/embed/1wV-corpO74" title="CEO de Ruka.ai hablando sobre la plataforma" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="w-full h-full"></iframe>
               </motion.div>
               
-              <a 
-                href="https://www.youtube.com/embed/1wV-corpO74" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-xs text-primary flex items-center justify-center mb-8 hover:underline"
-              >
-                Seguir escuchando en otra pestaña <ExternalLink className="w-3 h-3 ml-1" />
-              </a>
+              
               
               <Partners />
             </div>
@@ -830,67 +812,4 @@ const OnboardingSuccess = () => {
                           <div className="flex justify-between mt-10">
                             <Button 
                               id={`back-button-step-${currentStep}`} 
-                              variant="outline" 
-                              onClick={handleBack} 
-                              disabled={currentStep === 0 || isLoading} 
-                              className="gap-2"
-                            >
-                              <ArrowLeft className="w-4 h-4" /> Atrás
-                            </Button>
-                            
-                            <Button 
-                              id={`next-button-step-${currentStep}`} 
-                              onClick={handleNext} 
-                              disabled={isLoading} 
-                              className="gap-2"
-                            >
-                              {!isLoading ? (
-                                <>
-                                  Siguiente <ArrowRight className="w-4 h-4" />
-                                </>
-                              ) : (
-                                <span className="flex items-center gap-2">
-                                  <Loader className="h-4 w-4 animate-spin" />
-                                  Procesando...
-                                </span>
-                              )}
-                            </Button>
-                          </div>
-                        )}
-                        
-                        {currentStep === 3 && (
-                          <div className="flex justify-start mt-6">
-                            <Button 
-                              id="back-button-step-3" 
-                              variant="outline" 
-                              onClick={handleBack} 
-                              disabled={isLoading} 
-                              className="gap-2"
-                            >
-                              <ArrowLeft className="w-4 h-4" /> Atrás
-                            </Button>
-                          </div>
-                        )}
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                </AnimatePresence>
-              </>
-            ) : (
-              <Card className="border shadow-md p-8">
-                {successContent}
-              </Card>
-            )}
-            
-            <div className="mt-6 text-center text-sm text-muted-foreground">
-              <p>¿Necesitas ayuda? <a href="https://wa.me/56981213314" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Contáctanos</a></p>
-            </div>
-          </div>
-        </div>
-      </main>
-    </>
-  );
-};
-
-export default OnboardingSuccess;
-
+                              variant="outline"

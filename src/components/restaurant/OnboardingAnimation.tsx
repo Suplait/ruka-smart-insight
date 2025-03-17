@@ -12,11 +12,8 @@ import {
   Mail, 
   CheckCircle2, 
   Rocket,
-  BrainCircuit,
-  HomeIcon
+  BrainCircuit
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 
 interface AnimationStep {
   icon: React.ReactNode;
@@ -27,7 +24,6 @@ interface AnimationStep {
 const OnboardingAnimation = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
-  const navigate = useNavigate();
 
   const steps: AnimationStep[] = [
     {
@@ -126,13 +122,6 @@ const OnboardingAnimation = () => {
               </div>
               <h3 className="text-2xl font-bold mb-3">¡Todo listo!</h3>
               <p className="text-slate-600">Nos pondremos en contacto contigo muy pronto para ayudarte a comenzar.</p>
-              
-              <Button 
-                onClick={() => navigate('/')} 
-                className="mt-8 gap-2"
-              >
-                <HomeIcon className="w-4 h-4" /> Ir al inicio
-              </Button>
             </motion.div>
           )}
         </AnimatePresence>
