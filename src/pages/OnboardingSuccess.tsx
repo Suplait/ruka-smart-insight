@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -16,12 +15,10 @@ import OnboardingAnimation from "@/components/restaurant/OnboardingAnimation";
 import { supabase } from "@/integrations/supabase/client";
 import { notifySlackOnboardingStep } from "@/utils/slackNotifier";
 import { Lead } from "@/types/supabase";
-
 type StepProps = {
   currentStep: number;
   totalSteps: number;
 };
-
 const StepIndicator = ({
   currentStep,
   totalSteps
@@ -32,7 +29,6 @@ const StepIndicator = ({
     }).map((_, index) => <div key={index} className={`h-2.5 rounded-full transition-all duration-300 ${index < currentStep ? "w-8 bg-primary" : index === currentStep ? "w-8 bg-primary" : "w-2.5 bg-gray-200"}`} />)}
     </div>;
 };
-
 const MonthsSelector = ({
   selectedMonths,
   onChange
@@ -63,7 +59,6 @@ const MonthsSelector = ({
       </div>
     </div>;
 };
-
 const BillingSystemSelector = ({
   selectedSystem,
   onChange,
@@ -100,16 +95,9 @@ const BillingSystemSelector = ({
         </button>
       </div>
       
-      {selectedSystem === "mercado" && (
-        <div className="mt-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
+      {selectedSystem === "mercado" && <div className="mt-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
           <label className="text-sm font-medium mb-2 block">¿Cuál sistema utilizas?</label>
-          <Input 
-            id="custom-system-input" 
-            value={customSystem} 
-            onChange={e => onCustomChange(e.target.value)} 
-            placeholder="Nubox, Bsale, Toteat, etc." 
-            className="bg-white" 
-          />
+          <Input id="custom-system-input" value={customSystem} onChange={e => onCustomChange(e.target.value)} placeholder="Nubox, Bsale, Toteat, etc." className="bg-white" />
           <div className="mt-2 flex items-start gap-2">
             <Info className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
             <p className="text-xs text-muted-foreground">
@@ -117,11 +105,9 @@ const BillingSystemSelector = ({
               Nuestro equipo se pondrá en contacto contigo para ayudarte a identificarlo correctamente.
             </p>
           </div>
-        </div>
-      )}
+        </div>}
     </div>;
 };
-
 const SubdomainInput = ({
   value,
   onChange,
@@ -180,9 +166,7 @@ const SubdomainInput = ({
       </div>
     </div>;
 };
-
 const SLIDE_INTERVAL = 2500;
-
 const OnboardingSuccess = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -192,7 +176,6 @@ const OnboardingSuccess = () => {
   const totalSteps = 4;
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
-
   useEffect(() => {
     if (!leadId) {
       toast({
@@ -204,14 +187,11 @@ const OnboardingSuccess = () => {
       return;
     }
   }, [leadId, navigate]);
-
   const generateSubdomain = (name: string) => {
     if (!name) return '';
     return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '').trim();
   };
-
   const suggestedSubdomain = generateSubdomain(restaurantName);
-
   const [formData, setFormData] = useState({
     rut: "",
     clave: "",
@@ -220,7 +200,6 @@ const OnboardingSuccess = () => {
     sistemaCustom: "",
     subdominio: suggestedSubdomain || ""
   });
-
   useEffect(() => {
     if (suggestedSubdomain && !formData.subdominio) {
       setFormData(prev => ({
@@ -229,18 +208,15 @@ const OnboardingSuccess = () => {
       }));
     }
   }, [suggestedSubdomain]);
-
   const updateFormData = (key: string, value: any) => {
     setFormData(prev => ({
       ...prev,
       [key]: value
     }));
   };
-
   const handleSubdomainChange = (value: string) => {
     updateFormData('subdominio', value);
   };
-
   const saveFormData = async () => {
     try {
       if (!leadId) {
@@ -251,10 +227,8 @@ const OnboardingSuccess = () => {
         });
         return false;
       }
-      
       let updateData: Record<string, any> = {};
       let stepName = '';
-      
       if (currentStep === 0) {
         updateData = {
           meses_datos: formData.meses
@@ -279,17 +253,14 @@ const OnboardingSuccess = () => {
         };
         stepName = 'sii-credentials';
       }
-      
       try {
         const numericLeadId = Number(leadId);
-        
         const response = await supabase.functions.invoke('update-lead', {
           body: {
             leadId: numericLeadId,
             updateData
           }
         });
-        
         if (response.error) {
           toast({
             title: "Error",
@@ -298,7 +269,6 @@ const OnboardingSuccess = () => {
           });
           return false;
         }
-        
         if (!response.data?.success) {
           toast({
             title: "Error",
@@ -307,7 +277,6 @@ const OnboardingSuccess = () => {
           });
           return false;
         }
-        
         if (stepName) {
           const leadDataForSlack: Partial<Lead> = {
             sistema_facturacion: formData.sistema,
@@ -317,10 +286,8 @@ const OnboardingSuccess = () => {
             meses_datos: formData.meses,
             sii_connected: formData.sistema === 'sii' ? true : undefined
           };
-          
           notifySlackOnboardingStep(numericLeadId, stepName, leadDataForSlack);
         }
-        
         return true;
       } catch (edgeFunctionError) {
         toast({
@@ -339,36 +306,33 @@ const OnboardingSuccess = () => {
       return false;
     }
   };
-
   const validateSiiCredentials = async (rut: string, password: string) => {
     try {
       // Use the correct validation endpoint
       const headers = {
         "Content-Type": "application/json"
       };
-      
       const params = {
         rut: rut,
         password: password
       };
-      
       const response = await fetch("https://scraper.ruka.ai/api/validate_sii_credentials", {
         method: "POST",
         headers: headers,
         body: JSON.stringify(params)
       });
-      
       const responseData = await response.json();
-      
-      return { 
-        success: responseData.success === true, 
+      return {
+        success: responseData.success === true,
         error: responseData.error
       };
     } catch (error) {
-      return { success: false, error: error.message };
+      return {
+        success: false,
+        error: error.message
+      };
     }
   };
-
   const handleNext = async () => {
     setIsLoading(true);
     if (currentStep === 0) {
@@ -424,10 +388,8 @@ const OnboardingSuccess = () => {
         });
         return;
       }
-      
       try {
         const validationResult = await validateSiiCredentials(formData.rut, formData.clave);
-        
         if (!validationResult.success) {
           setIsLoading(false);
           toast({
@@ -437,15 +399,12 @@ const OnboardingSuccess = () => {
           });
           return;
         }
-        
         const saved = await saveFormData();
         if (!saved) {
           setIsLoading(false);
           return;
         }
-        
         await new Promise(resolve => setTimeout(resolve, 2000));
-        
         if (leadId) {
           const numericLeadId = Number(leadId);
           const leadDataForSlack: Partial<Lead> = {
@@ -456,10 +415,8 @@ const OnboardingSuccess = () => {
             meses_datos: formData.meses,
             sii_connected: true
           };
-          
           notifySlackOnboardingStep(numericLeadId, 'onboarding-completed', leadDataForSlack);
         }
-        
         setIsComplete(true);
         setIsLoading(false);
         return;
@@ -474,11 +431,9 @@ const OnboardingSuccess = () => {
       }
     }
   };
-
   const handleBack = () => {
     setCurrentStep(prev => prev - 1);
   };
-
   const steps = [{
     title: "Periodo de datos",
     icon: <Calendar className="w-6 h-6 text-primary" />,
@@ -529,7 +484,6 @@ const OnboardingSuccess = () => {
           </div>
         </div>
   }];
-
   const successContent = <div className="text-center space-y-6">
       <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
         <Check className="w-8 h-8 text-green-600" />
@@ -565,7 +519,6 @@ const OnboardingSuccess = () => {
         </div>
       </div>
     </div>;
-
   const getLeftSideContent = () => {
     switch (currentStep) {
       case 0:
@@ -649,12 +602,7 @@ const OnboardingSuccess = () => {
               </motion.div>
               
               <div className="mt-2 mb-6 flex justify-center">
-                <a 
-                  href="https://www.youtube.com/watch?v=1wV-corpO74" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-sm text-primary flex items-center gap-1 hover:underline"
-                >
+                <a href="https://www.youtube.com/watch?v=1wV-corpO74" target="_blank" rel="noopener noreferrer" className="text-sm text-primary flex items-center gap-1 hover:underline">
                   <ExternalLink className="w-3 h-3" />
                   Seguir escuchando en otra pestaña
                 </a>
@@ -665,9 +613,7 @@ const OnboardingSuccess = () => {
           </motion.div>;
     }
   };
-
-  return (
-    <>
+  return <>
       <Helmet>
         <title>Configura tu cuenta | Ruka.ai</title>
       </Helmet>
@@ -676,29 +622,19 @@ const OnboardingSuccess = () => {
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col overflow-hidden">
           <div className="max-w-md mx-auto flex-1">
             <AnimatePresence mode="wait">
-              {isComplete ? (
-                <motion.div 
-                  key="onboarding-complete" 
-                  initial={{ opacity: 0 }} 
-                  animate={{ opacity: 1 }} 
-                  exit={{ opacity: 0 }}
-                  className="h-full flex flex-col justify-between"
-                >
+              {isComplete ? <motion.div key="onboarding-complete" initial={{
+              opacity: 0
+            }} animate={{
+              opacity: 1
+            }} exit={{
+              opacity: 0
+            }} className="h-full flex flex-col justify-between">
                   <OnboardingAnimation />
                   
                   <div className="mt-4 flex justify-center">
-                    <Button 
-                      id="go-home-button" 
-                      onClick={() => navigate('/')} 
-                      className="px-6"
-                    >
-                      Ir al inicio
-                    </Button>
+                    
                   </div>
-                </motion.div>
-              ) : (
-                getLeftSideContent()
-              )}
+                </motion.div> : getLeftSideContent()}
             </AnimatePresence>
           </div>
         </div>
@@ -713,9 +649,14 @@ const OnboardingSuccess = () => {
               </p>
             </div>
             
-            {!isComplete ? (
-              <>
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
+            {!isComplete ? <>
+                <motion.div initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: 1,
+              y: 0
+            }} className="text-center mb-8">
                   <h1 className="text-2xl md:text-3xl font-bold">Configura tu cuenta</h1>
                   <p className="mt-2 text-muted-foreground">
                     {currentStep + 1} de {totalSteps} pasos para comenzar
@@ -725,7 +666,18 @@ const OnboardingSuccess = () => {
                 <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
                 
                 <AnimatePresence mode="wait">
-                  <motion.div key={currentStep} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
+                  <motion.div key={currentStep} initial={{
+                opacity: 0,
+                x: 20
+              }} animate={{
+                opacity: 1,
+                x: 0
+              }} exit={{
+                opacity: 0,
+                x: -20
+              }} transition={{
+                duration: 0.3
+              }}>
                     <Card className="border shadow-md">
                       <CardHeader>
                         <div className="flex items-center gap-4">
@@ -741,74 +693,40 @@ const OnboardingSuccess = () => {
                       <CardContent className="pb-8">
                         {steps[currentStep].content}
                         
-                        {currentStep < 3 && (
-                          <div className="flex justify-between mt-10">
-                            <Button 
-                              id={`back-button-step-${currentStep}`} 
-                              variant="outline"
-                              onClick={handleBack}
-                              disabled={currentStep === 0 || isLoading}
-                              className="flex items-center gap-2"
-                            >
+                        {currentStep < 3 && <div className="flex justify-between mt-10">
+                            <Button id={`back-button-step-${currentStep}`} variant="outline" onClick={handleBack} disabled={currentStep === 0 || isLoading} className="flex items-center gap-2">
                               <ArrowLeft className="w-4 h-4" />
                               Atrás
                             </Button>
                             
-                            <Button 
-                              id={`next-button-step-${currentStep}`} 
-                              onClick={handleNext}
-                              disabled={isLoading}
-                              className="flex items-center gap-2"
-                            >
-                              {!isLoading ? (
-                                <>
+                            <Button id={`next-button-step-${currentStep}`} onClick={handleNext} disabled={isLoading} className="flex items-center gap-2">
+                              {!isLoading ? <>
                                   Siguiente
                                   <ArrowRight className="w-4 h-4" />
-                                </>
-                              ) : (
-                                <>
+                                </> : <>
                                   <Loader className="h-4 w-4 animate-spin mr-2" />
                                   Guardando...
-                                </>
-                              )}
+                                </>}
                             </Button>
-                          </div>
-                        )}
+                          </div>}
                         
-                        {currentStep === 3 && (
-                          <Button 
-                            id="sii-connect-button" 
-                            onClick={handleNext} 
-                            className="w-full mt-4 gap-2" 
-                            style={{
-                              backgroundColor: "#DA5C2B",
-                              borderColor: "#DA5C2B"
-                            }} 
-                            disabled={isLoading}
-                          >
-                            {!isLoading ? (
-                              <>
+                        {currentStep === 3 && <Button id="sii-connect-button" onClick={handleNext} className="w-full mt-4 gap-2" style={{
+                      backgroundColor: "#DA5C2B",
+                      borderColor: "#DA5C2B"
+                    }} disabled={isLoading}>
+                            {!isLoading ? <>
                                 <div className="bg-white rounded-md p-1 flex items-center justify-center">
                                   <img src="/logosii.png" alt="SII" className="h-4" />
                                 </div>
                                 Iniciar sesión con el SII
-                              </>
-                            ) : (
-                              <span className="flex items-center gap-2">
+                              </> : <span className="flex items-center gap-2">
                                 <Loader className="h-4 w-4 animate-spin" />
                                 Conectando...
-                              </span>
-                            )}
-                          </Button>
-                        )}
+                              </span>}
+                          </Button>}
                         
                         <div className="mt-8 text-center">
-                          <a 
-                            href="https://wa.me/56981213314" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                          >
+                          <a href="https://wa.me/56981213314" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                             ¿Necesitas ayuda? Contáctanos
                           </a>
                         </div>
@@ -816,25 +734,24 @@ const OnboardingSuccess = () => {
                     </Card>
                   </motion.div>
                 </AnimatePresence>
-              </>
-            ) : (
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }} 
-                animate={{ opacity: 1, y: 0 }} 
-                transition={{ duration: 0.5 }}
-              >
+              </> : <motion.div initial={{
+            opacity: 0,
+            y: 20
+          }} animate={{
+            opacity: 1,
+            y: 0
+          }} transition={{
+            duration: 0.5
+          }}>
                 <Card className="border shadow-md">
                   <CardContent className="pt-10 pb-10">
                     {successContent}
                   </CardContent>
                 </Card>
-              </motion.div>
-            )}
+              </motion.div>}
           </div>
         </div>
       </main>
-    </>
-  );
+    </>;
 };
-
 export default OnboardingSuccess;
