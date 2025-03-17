@@ -90,6 +90,14 @@ const OnboardingAnimation = () => {
       return () => clearTimeout(timer);
     } else {
       setIsComplete(true);
+      
+      // Push event to dataLayer when animation completes
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'onboarding_animation_complete',
+          timestamp: new Date().toISOString()
+        });
+      }
     }
   }, [currentStep, steps.length]);
 
@@ -136,7 +144,16 @@ const OnboardingAnimation = () => {
                   >
                     <Button 
                       id="go-home-button" 
-                      onClick={() => navigate('/')} 
+                      onClick={() => {
+                        // Push event to dataLayer when user clicks "Go home"
+                        if (window.dataLayer) {
+                          window.dataLayer.push({
+                            event: 'onboarding_go_home_click',
+                            timestamp: new Date().toISOString()
+                          });
+                        }
+                        navigate('/');
+                      }} 
                       className="px-6"
                     >
                       Ir al inicio
