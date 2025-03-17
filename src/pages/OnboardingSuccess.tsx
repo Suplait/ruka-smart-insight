@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -751,9 +750,18 @@ const OnboardingSuccess = () => {
             }} transition={{
               duration: 0.5,
               delay: 0.3
-            }} className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl border border-white/80 mb-8">
+            }} className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl border border-white/80 mb-2">
                 <iframe width="100%" height="100%" src="https://www.youtube.com/embed/1wV-corpO74" title="CEO de Ruka.ai hablando sobre la plataforma" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="w-full h-full"></iframe>
               </motion.div>
+              
+              <a 
+                href="https://www.youtube.com/embed/1wV-corpO74" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-xs text-primary flex items-center justify-center mb-8 hover:underline"
+              >
+                Seguir escuchando en otra pestaña <ExternalLink className="w-3 h-3 ml-1" />
+              </a>
               
               <Partners />
             </div>
@@ -875,7 +883,7 @@ const OnboardingSuccess = () => {
             )}
             
             <div className="mt-6 text-center text-sm text-muted-foreground">
-              <p>¿Necesitas ayuda? <a href="#" className="text-primary hover:underline">Contáctanos</a></p>
+              <p>¿Necesitas ayuda? <a href="https://wa.me/56981213314" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Contáctanos</a></p>
             </div>
           </div>
         </div>
@@ -885,3 +893,4 @@ const OnboardingSuccess = () => {
 };
 
 export default OnboardingSuccess;
+
