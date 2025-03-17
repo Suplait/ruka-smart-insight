@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -835,3 +836,28 @@ const OnboardingSuccess = () => {
                           </a>
                         </div>
                       </CardContent>
+                    </Card>
+                  </motion.div>
+                </AnimatePresence>
+              </>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                transition={{ duration: 0.5 }}
+              >
+                <Card className="border shadow-md">
+                  <CardContent className="pt-10 pb-10">
+                    {successContent}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
+          </div>
+        </div>
+      </main>
+    </>
+  );
+};
+
+export default OnboardingSuccess;
