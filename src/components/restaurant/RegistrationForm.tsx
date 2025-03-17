@@ -9,7 +9,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/components/ui/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { supabase } from "@/integrations/supabase/client";
+import { pushToDataLayer, trackFormSubmission, trackRegistration } from "@/utils/dataLayer";
 import { Lead } from "@/types/supabase";
+
 interface FormData {
   firstName: string;
   lastName: string;
@@ -19,10 +21,12 @@ interface FormData {
   whatsapp: string;
   acceptTerms: boolean;
 }
+
 interface RegistrationFormProps {
   highlightForm: boolean;
   timeLeft: string;
 }
+
 export default function RegistrationForm({
   highlightForm,
   timeLeft
@@ -38,19 +42,43 @@ export default function RegistrationForm({
     acceptTerms: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Track form submission attempt
+    pushToDataLayer('registration_form_submit_attempt', {
+      has_terms_accepted: formData.acceptTerms
+    });
+
     if (!formData.acceptTerms) {
       toast({
         title: "Error",
         description: "Debes aceptar los términos y condiciones para continuar.",
         variant: "destructive"
       });
+      
+      // Track validation error
+      pushToDataLayer('registration_validation_error', {
+        error_type: 'terms_not_accepted'
+      });
+      
       return;
     }
+
     try {
       setIsSubmitting(true);
+
+      // Format whatsapp number
       const whatsappNumber = formData.whatsapp ? `+56${formData.whatsapp.replace(/^\+56/, '')}` : '';
+
+      // Track form submission with safe data (before API call)
+      trackFormSubmission('restaurant_registration', {
+        email_domain: formData.email.split('@')[1],
+        has_whatsapp: !!formData.whatsapp,
+        city: formData.ciudad,
+        company_name: formData.nombreRestaurante
+      }, true);
 
       // First create the lead record
       const {
@@ -65,12 +93,19 @@ export default function RegistrationForm({
         ccity: formData.ciudad,
         whatsapp: whatsappNumber
       }]).select().single();
+
       if (leadError) {
         throw leadError;
       }
 
       // Get the ID of the inserted lead
       const leadId = leadData.id;
+
+      // Track successful database insertion
+      pushToDataLayer('lead_created', {
+        lead_id: leadId,
+        company_name: formData.nombreRestaurante
+      });
 
       // Send notification to Slack about the new lead (only for initial registration)
       try {
@@ -86,11 +121,18 @@ export default function RegistrationForm({
             isOnboarding: false // Esta es una notificación inicial, no una actualización de onboarding
           }
         });
+
         if (slackResponse.error) {
+          console.error('Error notifying Slack:', slackResponse.error);
           // Don't throw error here, just log warning
         } else if (slackResponse.data?.ts) {
           // Store the Slack message timestamp for future thread replies
           const slackTs = slackResponse.data.ts;
+
+          // Track Slack notification success
+          pushToDataLayer('slack_notification_sent', {
+            lead_id: leadId
+          });
 
           // Use the more reliable Edge Function to update the lead record
           const updateResponse = await supabase.functions.invoke('update-lead', {
@@ -101,16 +143,18 @@ export default function RegistrationForm({
               }
             }
           });
+
           if (updateResponse.error) {
-            // Error handling
+            console.error('Error updating lead with slack timestamp:', updateResponse.error);
           } else {
             // Verification step - Check if the timestamp was actually stored
             const {
               data: verifyData,
               error: verifyError
             } = await supabase.from('leads').select('slack_message_ts').eq('id', leadId).single();
+
             if (verifyError) {
-              // Error handling
+              console.error('Error verifying lead data:', verifyError);
             } else {
               if (verifyData.slack_message_ts !== slackTs) {
                 // Try one more direct update as fallback
@@ -119,30 +163,43 @@ export default function RegistrationForm({
                 } = await supabase.from('leads').update({
                   slack_message_ts: slackTs
                 }).eq('id', leadId);
+
                 if (directUpdateError) {
-                  // Error handling
-                } else {
-                  // Final verification
-                  const {
-                    data: finalVerifyData
-                  } = await supabase.from('leads').select('slack_message_ts').eq('id', leadId).single();
+                  console.error('Error in direct lead update:', directUpdateError);
                 }
               }
             }
           }
         }
       } catch (slackError) {
+        console.error('Exception in Slack notification:', slackError);
         // Don't throw error here, just log warning
       }
 
+      // Final success tracking
+      trackRegistration({
+        lead_id: leadId,
+        restaurant_name: formData.nombreRestaurante
+      }, true);
+
       // Navigate to onboarding with restaurant name and leadId in state
-      navigate('/onboarding-success', {
-        state: {
-          restaurantName: formData.nombreRestaurante,
-          leadId: leadId
-        }
-      });
+      // Use setTimeout to ensure dataLayer has time to process the events
+      setTimeout(() => {
+        navigate('/onboarding-success', {
+          state: {
+            restaurantName: formData.nombreRestaurante,
+            leadId: leadId
+          }
+        });
+      }, 100);
     } catch (error) {
+      console.error('Registration error:', error);
+      
+      // Track error
+      trackRegistration({
+        error_message: error instanceof Error ? error.message : 'Unknown error'
+      }, false);
+      
       toast({
         title: "Error",
         description: "Hubo un problema al enviar tu información. Por favor intenta nuevamente.",
@@ -152,11 +209,13 @@ export default function RegistrationForm({
       setIsSubmitting(false);
     }
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       name,
       value
     } = e.target;
+    
     if (name === 'whatsapp') {
       const cleanedValue = value.replace(/^\+56/, '').replace(/[^0-9]/g, '');
       setFormData(prev => ({
@@ -165,11 +224,13 @@ export default function RegistrationForm({
       }));
       return;
     }
+    
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
   };
+
   return <motion.div initial={{
     opacity: 0,
     scale: 0.95
