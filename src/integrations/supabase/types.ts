@@ -12,29 +12,59 @@ export type Database = {
       leads: {
         Row: {
           ccity: string
+          clave_sii: string | null
           company_name: string
           created_at: string
           email: string
+          first_name: string | null
           id: number
+          last_name: string | null
+          meses_datos: number | null
           name: string
+          rut: string | null
+          sii_connected: boolean | null
+          sistema_custom: string | null
+          sistema_facturacion: string | null
+          slack_message_ts: string | null
+          subdominio: string | null
           whatsapp: string | null
         }
         Insert: {
           ccity: string
+          clave_sii?: string | null
           company_name: string
           created_at?: string
           email: string
+          first_name?: string | null
           id?: never
+          last_name?: string | null
+          meses_datos?: number | null
           name: string
+          rut?: string | null
+          sii_connected?: boolean | null
+          sistema_custom?: string | null
+          sistema_facturacion?: string | null
+          slack_message_ts?: string | null
+          subdominio?: string | null
           whatsapp?: string | null
         }
         Update: {
           ccity?: string
+          clave_sii?: string | null
           company_name?: string
           created_at?: string
           email?: string
+          first_name?: string | null
           id?: never
+          last_name?: string | null
+          meses_datos?: number | null
           name?: string
+          rut?: string | null
+          sii_connected?: boolean | null
+          sistema_custom?: string | null
+          sistema_facturacion?: string | null
+          slack_message_ts?: string | null
+          subdominio?: string | null
           whatsapp?: string | null
         }
         Relationships: []

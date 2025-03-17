@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X } from "lucide-react";
@@ -68,7 +67,7 @@ export default function Navbar() {
               window.open('https://calendly.com/suplait_lorenzo/30min', '_blank');
               setIsOpen(false);
             }}>
-              Solicitar Demo <ArrowRight className="w-4 h-4" />
+              Agendar Demo <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
         </nav>
@@ -147,7 +146,7 @@ export default function Navbar() {
                 Iniciar Sesión <LogIn className="w-4 h-4" />
               </Button>
               <Button size="sm" className="gap-2" onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}>
-                Solicitar Demo <ArrowRight className="w-4 h-4" />
+                Agendar Demo <ArrowRight className="w-4 h-4" />
               </Button>
             </div>
             <MobileMenu />

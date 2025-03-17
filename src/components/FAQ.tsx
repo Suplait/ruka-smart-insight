@@ -1,3 +1,4 @@
+
 import {
   Accordion,
   AccordionContent,
@@ -7,12 +8,12 @@ import {
 
 const faqs = [
   {
-    question: "¿Ofrecen prueba gratuita?",
-    answer: "Sí, 15 días gratis, sin tarjeta de crédito, sin compromiso, ni letra chica."
+    question: "¿Ofrecen garantía de devolución?",
+    answer: "Sí, garantía de devolución 100% en los primeros 30 días, sin preguntas, sin compromiso, ni letra chica."
   },
   {
     question: "¿Cómo me creo una cuenta?",
-    answer: "Agenda un demo con nuestro equipo para conocer tu historia y descubrir la mejor manera de implementar Ruka en tu negocio :)"
+    answer: "Agenda un espacio con nuestro equipo para conocer tu historia y descubrir la mejor manera de implementar Ruka en tu negocio."
   },
   {
     question: "¿Qué tan compleja es la integración?",

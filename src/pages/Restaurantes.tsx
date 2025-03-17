@@ -1,22 +1,15 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, Clock, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, CreditCard, Clock, ChartBarIcon, Zap, TrendingUp, ShieldCheck, Clock4, Info } from "lucide-react";
 import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
 import FAQ from "@/components/FAQ";
-import { supabase } from "@/integrations/supabase/client";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import RegistrationForm from "@/components/restaurant/RegistrationForm";
+import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
+import ImpactStats from "@/components/restaurant/ImpactStats";
 
 const valueMessages = [
   "Deja que tus chefs se concentren en cocinar, no en Excel.",
@@ -29,25 +22,13 @@ const valueMessages = [
 ];
 
 export default function Restaurantes() {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    nombre: "",
-    email: "",
-    nombreRestaurante: "",
-    ciudad: "",
-    whatsapp: ""
-  });
+  const [highlightForm, setHighlightForm] = useState(false);
+  const [timeLeft, setTimeLeft] = useState("");
+  const [showScrollToForm, setShowScrollToForm] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const [highlightForm, setHighlightForm] = useState(false);
-  const [timeLeft, setTimeLeft] = useState("");
-  const [currentMessage, setCurrentMessage] = useState(0);
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [showScrollToForm, setShowScrollToForm] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,34 +37,6 @@ export default function Restaurantes() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    const current = valueMessages[currentMessage];
-    
-    if (isDeleting) {
-      if (displayText === "") {
-        setIsDeleting(false);
-        setCurrentMessage((prev) => (prev + 1) % valueMessages.length);
-      } else {
-        timeout = setTimeout(() => {
-          setDisplayText(displayText.substring(0, displayText.length - 1));
-        }, 30);
-      }
-    } else {
-      if (displayText === current) {
-        timeout = setTimeout(() => {
-          setIsDeleting(true);
-        }, 2000);
-      } else {
-        timeout = setTimeout(() => {
-          setDisplayText(current.substring(0, displayText.length + 1));
-        }, 30);
-      }
-    }
-
-    return () => clearTimeout(timeout);
-  }, [currentMessage, displayText, isDeleting]);
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -103,72 +56,6 @@ export default function Restaurantes() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    try {
-      const whatsappNumber = formData.whatsapp 
-        ? `+56${formData.whatsapp.replace(/^\+56/, '')}`
-        : '';
-
-      const { error } = await supabase
-        .from('leads')
-        .insert([
-          { 
-            company_name: formData.nombreRestaurante,
-            name: formData.nombre,
-            email: formData.email,
-            ccity: formData.ciudad,
-            whatsapp: whatsappNumber
-          }
-        ]);
-
-      if (error) throw error;
-
-      supabase.functions.invoke('notify-slack', {
-        body: {
-          lead: {
-            company_name: formData.nombreRestaurante,
-            name: formData.nombre,
-            email: formData.email,
-            ccity: formData.ciudad,
-            whatsapp: whatsappNumber
-          }
-        }
-      }).catch(error => {
-        console.error('Error al notificar a Slack:', error);
-      });
-
-      navigate('/onboarding-success');
-
-    } catch (error) {
-      console.error('Error:', error);
-      toast({
-        title: "Error",
-        description: "Hubo un problema al enviar tu información. Por favor intenta nuevamente.",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    
-    if (name === 'whatsapp') {
-      const cleanedValue = value.replace(/^\+56/, '').replace(/[^0-9]/g, '');
-      setFormData(prev => ({
-        ...prev,
-        [name]: cleanedValue
-      }));
-      return;
-    }
-
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
   const scrollToForm = () => {
     const form = document.querySelector('form');
     if (form) {
@@ -177,110 +64,6 @@ export default function Restaurantes() {
       setTimeout(() => setHighlightForm(false), 2000);
     }
   };
-
-  const renderForm = () => (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className={`bg-white rounded-xl shadow-xl border p-6 sm:p-8 space-y-6 sm:space-y-8 transition-all duration-300 w-full ${
-        highlightForm ? 'ring-4 ring-primary shadow-2xl scale-105' : ''
-      }`}
-    >
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold">Comienza tu Prueba Gratuita</h2>
-        <div className="flex flex-col gap-2">
-          <div className="text-sm font-medium text-primary">
-            Si te registras antes de las 12:00pm tendrás acceso el mismo día
-          </div>
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Clock className="w-4 h-4" />
-            <span>Faltan {timeLeft} para las 12:00pm</span>
-          </div>
-        </div>
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-        <Input
-          name="nombre"
-          placeholder="Tu Nombre"
-          value={formData.nombre}
-          onChange={handleChange}
-          required
-          className="h-12"
-        />
-        <Input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="h-12"
-        />
-        <div className="relative">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="relative">
-                  <Input
-                    name="whatsapp"
-                    placeholder="WhatsApp (opcional)"
-                    value={formData.whatsapp}
-                    onChange={handleChange}
-                    className="h-12 pl-16 pr-10"
-                  />
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-sm">
-                    🇨🇱 +56
-                  </div>
-                  <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Déjanos tu WhatsApp para contactarte más rápido</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-        <Input
-          name="ciudad"
-          placeholder="Ciudad"
-          value={formData.ciudad}
-          onChange={handleChange}
-          required
-          className="h-12"
-        />
-        <Input
-          name="nombreRestaurante"
-          placeholder="Nombre de tu Restaurante"
-          value={formData.nombreRestaurante}
-          onChange={handleChange}
-          required
-          className="h-12"
-        />
-        
-        <div className="space-y-4">
-          <Button type="submit" className="w-full gap-2 h-12 text-lg">
-            Comenzar Ahora <ArrowRight className="w-5 h-5" />
-          </Button>
-          
-          <div className="flex items-center justify-center gap-4 flex-wrap">
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <ShieldCheck className="w-4 h-4" />
-              <span>Datos seguros</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <Clock4 className="w-4 h-4" />
-              <span>Soporte 24/7</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <CreditCard className="w-4 h-4" />
-              <span>Sin tarjeta</span>
-            </div>
-          </div>
-        </div>
-      </form>
-    </motion.div>
-  );
 
   return (
     <>
@@ -363,7 +146,10 @@ export default function Restaurantes() {
             </div>
 
             <div className="lg:hidden w-full sm:px-4 mb-8">
-              {renderForm()}
+              <RegistrationForm 
+                highlightForm={highlightForm} 
+                timeLeft={timeLeft}
+              />
             </div>
 
             <div className="lg:grid lg:grid-cols-[1fr,460px] lg:gap-16">
@@ -380,8 +166,12 @@ export default function Restaurantes() {
                     de tu Restaurante?
                   </h1>
                   <p className="text-2xl text-muted-foreground leading-relaxed">
-                    Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel, POS o ERP.
-                  </p> 
+                    <ValueMessageTypewriter 
+                      messages={valueMessages} 
+                      staticMode={true}
+                      staticText="Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel, POS o ERP."
+                    />
+                  </p>
                 </motion.header>
 
                 <motion.div
@@ -488,51 +278,7 @@ export default function Restaurantes() {
 
                 <RestaurantDataFlowSection />
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="space-y-12 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-12 rounded-3xl"
-                >
-                  <h2 className="text-4xl font-bold text-center">
-                    El impacto en tu restaurante
-                  </h2>
-                  <div className="grid md:grid-cols-3 gap-8">
-                    {[
-                      {
-                        icon: Zap,
-                        stat: "90%",
-                        text: "Menos tiempo en papeleo",
-                        color: "text-yellow-500"
-                      },
-                      {
-                        icon: ChartBarIcon,
-                        stat: "100%",
-                        text: "Control de food cost",
-                        color: "text-blue-500"
-                      },
-                      {
-                        icon: TrendingUp,
-                        stat: "15%",
-                        text: "Ahorro en insumos",
-                        color: "text-green-500"
-                      }
-                    ].map((item, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.2 }}
-                        className="bg-white p-8 rounded-xl shadow-lg text-center space-y-4 hover:shadow-xl transition-shadow"
-                      >
-                        <item.icon className={`w-12 h-12 ${item.color} mx-auto`} />
-                        <div className={`text-4xl font-bold ${item.color}`}>{item.stat}</div>
-                        <p className="text-gray-600">{item.text}</p>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
+                <ImpactStats />
 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -563,7 +309,10 @@ export default function Restaurantes() {
 
               <div className="hidden lg:block">
                 <div className="sticky top-24" style={{ height: 'calc(100vh - 96px)' }}>
-                  {renderForm()}
+                  <RegistrationForm 
+                    highlightForm={highlightForm} 
+                    timeLeft={timeLeft}
+                  />
                 </div>
               </div>
             </div>
