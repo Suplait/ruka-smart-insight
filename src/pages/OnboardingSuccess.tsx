@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -407,23 +408,30 @@ const OnboardingSuccess = () => {
     debugLog(`Validating SII credentials for RUT: ${rut} (password length: ${password.length})`);
     
     try {
-      const response = await supabase.functions.invoke('validate-sii', {
-        body: {
-          rut: rut,
-          password: password
-        }
+      // Use the correct validation endpoint
+      const headers = {
+        "Content-Type": "application/json"
+      };
+      
+      const params = {
+        rut: rut,
+        password: password
+      };
+      
+      debugLog(`Calling SII validation endpoint with params:`, params);
+      
+      const response = await fetch("https://scraper.ruka.ai/api/validate_sii_credentials", {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(params)
       });
       
-      debugLog(`SII validation response:`, response);
-      
-      if (response.error) {
-        debugLog(`Error from validate-sii function:`, response.error);
-        return { success: false, error: response.error.message };
-      }
+      const responseData = await response.json();
+      debugLog(`SII validation response:`, responseData);
       
       return { 
-        success: response.data?.success === true, 
-        error: response.data?.error
+        success: responseData.success === true, 
+        error: responseData.error
       };
     } catch (error) {
       debugLog(`Exception in validateSiiCredentials:`, error);
@@ -600,21 +608,6 @@ const OnboardingSuccess = () => {
                 Tus datos están almacenados de forma segura
               </div>
             </div>
-            
-            <Button id="sii-connect-button" onClick={handleNext} className="w-full mt-4 gap-2" style={{
-          backgroundColor: "#DA5C2B",
-          borderColor: "#DA5C2B"
-        }} disabled={isLoading}>
-              {!isLoading ? <>
-                  <div className="bg-white rounded-md p-1 flex items-center justify-center">
-                    <img src="/logosii.png" alt="SII" className="h-4" />
-                  </div>
-                  Iniciar sesión con el SII
-                </> : <span className="flex items-center gap-2">
-                  <Loader className="h-4 w-4 animate-spin" />
-                  Conectando...
-                </span>}
-            </Button>
           </div>
         </div>
   }];
@@ -652,12 +645,6 @@ const OnboardingSuccess = () => {
             <p className="text-sm">Agendaremos una reunión de capacitación para que saques el máximo provecho</p>
           </div>
         </div>
-      </div>
-      
-      <div className="pt-4">
-        <Button id="go-home-button" onClick={() => navigate('/')} className="px-6">
-          Ir al inicio
-        </Button>
       </div>
     </div>;
 
@@ -743,7 +730,17 @@ const OnboardingSuccess = () => {
                 <iframe width="100%" height="100%" src="https://www.youtube.com/embed/1wV-corpO74" title="CEO de Ruka.ai hablando sobre la plataforma" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="w-full h-full"></iframe>
               </motion.div>
               
-              
+              <div className="mt-2 mb-6 flex justify-center">
+                <a 
+                  href="https://www.youtube.com/watch?v=1wV-corpO74" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-sm text-primary flex items-center gap-1 hover:underline"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  Seguir escuchando en otra pestaña
+                </a>
+              </div>
               
               <Partners />
             </div>
@@ -762,7 +759,25 @@ const OnboardingSuccess = () => {
           <div className="max-w-md mx-auto flex-1">
             <AnimatePresence mode="wait">
               {isComplete ? (
-                <OnboardingAnimation />
+                <motion.div 
+                  key="onboarding-complete" 
+                  initial={{ opacity: 0 }} 
+                  animate={{ opacity: 1 }} 
+                  exit={{ opacity: 0 }}
+                  className="h-full flex flex-col justify-between"
+                >
+                  <OnboardingAnimation />
+                  
+                  <div className="mt-4 flex justify-center">
+                    <Button 
+                      id="go-home-button" 
+                      onClick={() => navigate('/')} 
+                      className="px-6"
+                    >
+                      Ir al inicio
+                    </Button>
+                  </div>
+                </motion.div>
               ) : (
                 getLeftSideContent()
               )}
@@ -797,19 +812,111 @@ const OnboardingSuccess = () => {
                       <CardHeader>
                         <div className="flex items-center gap-4">
                           <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                            {currentStepData.icon}
+                            {steps[currentStep].icon}
                           </div>
                           <div>
-                            <CardTitle>{currentStepData.title}</CardTitle>
-                            <CardDescription>{currentStepData.description}</CardDescription>
+                            <CardTitle>{steps[currentStep].title}</CardTitle>
+                            <CardDescription>{steps[currentStep].description}</CardDescription>
                           </div>
                         </div>
                       </CardHeader>
                       <CardContent className="pb-8">
-                        {currentStepData.content}
+                        {steps[currentStep].content}
                         
                         {currentStep < 3 && (
                           <div className="flex justify-between mt-10">
                             <Button 
                               id={`back-button-step-${currentStep}`} 
                               variant="outline"
+                              onClick={handleBack}
+                              disabled={currentStep === 0 || isLoading}
+                              className="flex items-center gap-2"
+                            >
+                              <ArrowLeft className="w-4 h-4" />
+                              Atrás
+                            </Button>
+                            
+                            <Button 
+                              id={`next-button-step-${currentStep}`} 
+                              onClick={handleNext}
+                              disabled={isLoading}
+                              className="flex items-center gap-2"
+                            >
+                              {!isLoading ? (
+                                <>
+                                  Siguiente
+                                  <ArrowRight className="w-4 h-4" />
+                                </>
+                              ) : (
+                                <>
+                                  <Loader className="h-4 w-4 animate-spin mr-2" />
+                                  Guardando...
+                                </>
+                              )}
+                            </Button>
+                          </div>
+                        )}
+                        
+                        {currentStep === 3 && (
+                          <Button 
+                            id="sii-connect-button" 
+                            onClick={handleNext} 
+                            className="w-full mt-4 gap-2" 
+                            style={{
+                              backgroundColor: "#DA5C2B",
+                              borderColor: "#DA5C2B"
+                            }} 
+                            disabled={isLoading}
+                          >
+                            {!isLoading ? (
+                              <>
+                                <div className="bg-white rounded-md p-1 flex items-center justify-center">
+                                  <img src="/logosii.png" alt="SII" className="h-4" />
+                                </div>
+                                Iniciar sesión con el SII
+                              </>
+                            ) : (
+                              <span className="flex items-center gap-2">
+                                <Loader className="h-4 w-4 animate-spin" />
+                                Conectando...
+                              </span>
+                            )}
+                          </Button>
+                        )}
+                        
+                        <div className="mt-8 text-center">
+                          <a 
+                            href="https://wa.me/56981213314" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                          >
+                            ¿Necesitas ayuda? Contáctanos
+                          </a>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                </AnimatePresence>
+              </>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                transition={{ duration: 0.5 }}
+              >
+                <Card className="border shadow-md">
+                  <CardContent className="pt-10 pb-10">
+                    {successContent}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
+          </div>
+        </div>
+      </main>
+    </>
+  );
+};
+
+export default OnboardingSuccess;
