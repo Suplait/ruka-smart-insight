@@ -193,14 +193,6 @@ const OnboardingSuccess = () => {
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
 
-  const debugLog = (message: string, data?: any) => {
-    if (data) {
-      console.log(`[DEBUG-ONBOARDING] ${message}`, data);
-    } else {
-      console.log(`[DEBUG-ONBOARDING] ${message}`);
-    }
-  };
-
   useEffect(() => {
     if (!leadId) {
       toast({
@@ -211,34 +203,6 @@ const OnboardingSuccess = () => {
       navigate('/restaurantes');
       return;
     }
-    
-    debugLog(`Onboarding initialized with lead ID: ${leadId}`);
-    
-    const checkSlackTs = async () => {
-      try {
-        debugLog(`Fetching Slack message ts for lead ${leadId}`);
-        const { data, error } = await supabase
-          .from('leads')
-          .select('slack_message_ts')
-          .eq('id', leadId)
-          .single();
-          
-        if (error) {
-          debugLog(`Error fetching lead data: ${error.message}`, error);
-        } else {
-          debugLog(`Lead data fetched successfully`, data);
-          if (data.slack_message_ts) {
-            debugLog(`Lead has slack_message_ts: ${data.slack_message_ts}`);
-          } else {
-            debugLog(`Lead does NOT have slack_message_ts saved in database`);
-          }
-        }
-      } catch (e) {
-        debugLog(`Exception checking Slack ts`, e);
-      }
-    };
-    
-    checkSlackTs();
   }, [leadId, navigate]);
 
   const generateSubdomain = (name: string) => {
@@ -288,7 +252,6 @@ const OnboardingSuccess = () => {
         return false;
       }
       
-      debugLog(`Starting saveFormData for lead ${leadId}`);
       let updateData: Record<string, any> = {};
       let stepName = '';
       
@@ -319,7 +282,6 @@ const OnboardingSuccess = () => {
       
       try {
         const numericLeadId = Number(leadId);
-        debugLog(`Invoking update-lead function with:`, { leadId: numericLeadId, updateData });
         
         const response = await supabase.functions.invoke('update-lead', {
           body: {
@@ -328,10 +290,7 @@ const OnboardingSuccess = () => {
           }
         });
         
-        debugLog(`update-lead response:`, response);
-        
         if (response.error) {
-          debugLog(`Error from update-lead:`, response.error);
           toast({
             title: "Error",
             description: "Error al guardar los datos. Por favor intenta nuevamente.",
@@ -341,7 +300,6 @@ const OnboardingSuccess = () => {
         }
         
         if (!response.data?.success) {
-          debugLog(`update-lead returned success: false`);
           toast({
             title: "Error",
             description: "Error al guardar los datos. Por favor intenta nuevamente.",
@@ -360,32 +318,11 @@ const OnboardingSuccess = () => {
             sii_connected: formData.sistema === 'sii' ? true : undefined
           };
           
-          debugLog(`Calling notifySlackOnboardingStep for step ${stepName}`, leadDataForSlack);
-          
-          const { data: leadBeforeNotify } = await supabase
-            .from('leads')
-            .select('slack_message_ts')
-            .eq('id', numericLeadId)
-            .single();
-            
-          debugLog(`Lead slack_message_ts before notify: ${leadBeforeNotify?.slack_message_ts}`);
-          
           notifySlackOnboardingStep(numericLeadId, stepName, leadDataForSlack);
-          
-          setTimeout(async () => {
-            const { data: leadAfterNotify } = await supabase
-              .from('leads')
-              .select('slack_message_ts')
-              .eq('id', numericLeadId)
-              .single();
-              
-            debugLog(`Lead slack_message_ts after notify: ${leadAfterNotify?.slack_message_ts}`);
-          }, 3000);
         }
         
         return true;
       } catch (edgeFunctionError) {
-        debugLog(`Edge function error:`, edgeFunctionError);
         toast({
           title: "Error",
           description: "Error al guardar los datos. Por favor intenta nuevamente.",
@@ -394,7 +331,6 @@ const OnboardingSuccess = () => {
         return false;
       }
     } catch (error) {
-      debugLog(`General error in saveFormData:`, error);
       toast({
         title: "Error",
         description: "Error al guardar los datos. Por favor intenta nuevamente.",
@@ -405,8 +341,6 @@ const OnboardingSuccess = () => {
   };
 
   const validateSiiCredentials = async (rut: string, password: string) => {
-    debugLog(`Validating SII credentials for RUT: ${rut} (password length: ${password.length})`);
-    
     try {
       // Use the correct validation endpoint
       const headers = {
@@ -418,8 +352,6 @@ const OnboardingSuccess = () => {
         password: password
       };
       
-      debugLog(`Calling SII validation endpoint with params:`, params);
-      
       const response = await fetch("https://scraper.ruka.ai/api/validate_sii_credentials", {
         method: "POST",
         headers: headers,
@@ -427,14 +359,12 @@ const OnboardingSuccess = () => {
       });
       
       const responseData = await response.json();
-      debugLog(`SII validation response:`, responseData);
       
       return { 
         success: responseData.success === true, 
         error: responseData.error
       };
     } catch (error) {
-      debugLog(`Exception in validateSiiCredentials:`, error);
       return { success: false, error: error.message };
     }
   };
@@ -497,7 +427,6 @@ const OnboardingSuccess = () => {
       
       try {
         const validationResult = await validateSiiCredentials(formData.rut, formData.clave);
-        debugLog(`SII validation result:`, validationResult);
         
         if (!validationResult.success) {
           setIsLoading(false);
@@ -509,7 +438,6 @@ const OnboardingSuccess = () => {
           return;
         }
         
-        debugLog(`SII credentials valid, proceeding to save`);
         const saved = await saveFormData();
         if (!saved) {
           setIsLoading(false);
@@ -536,7 +464,6 @@ const OnboardingSuccess = () => {
         setIsLoading(false);
         return;
       } catch (error) {
-        debugLog(`Error validating or saving SII credentials:`, error);
         toast({
           title: "Error",
           description: "Ha ocurrido un error al conectar con el SII. Intenta nuevamente.",
@@ -550,15 +477,6 @@ const OnboardingSuccess = () => {
 
   const handleBack = () => {
     setCurrentStep(prev => prev - 1);
-  };
-
-  const handleStepChange = (direction: 'next' | 'back') => {
-    debugLog(`Step change ${direction} from step ${currentStep}`);
-    if (direction === 'next') {
-      setCurrentStep(prev => prev + 1);
-    } else {
-      setCurrentStep(prev => prev - 1); 
-    }
   };
 
   const steps = [{

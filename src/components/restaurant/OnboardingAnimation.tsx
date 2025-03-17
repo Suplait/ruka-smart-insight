@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { 
   Server, 
   Globe, 
@@ -14,6 +15,7 @@ import {
   Rocket,
   BrainCircuit
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface AnimationStep {
   icon: React.ReactNode;
@@ -24,6 +26,7 @@ interface AnimationStep {
 const OnboardingAnimation = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const navigate = useNavigate();
 
   const steps: AnimationStep[] = [
     {
@@ -122,6 +125,25 @@ const OnboardingAnimation = () => {
               </div>
               <h3 className="text-2xl font-bold mb-3">¡Todo listo!</h3>
               <p className="text-slate-600">Nos pondremos en contacto contigo muy pronto para ayudarte a comenzar.</p>
+              
+              <AnimatePresence>
+                {isComplete && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }} 
+                    animate={{ opacity: 1, y: 0 }} 
+                    transition={{ delay: 0.5 }}
+                    className="mt-6"
+                  >
+                    <Button 
+                      id="go-home-button" 
+                      onClick={() => navigate('/')} 
+                      className="px-6"
+                    >
+                      Ir al inicio
+                    </Button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           )}
         </AnimatePresence>
