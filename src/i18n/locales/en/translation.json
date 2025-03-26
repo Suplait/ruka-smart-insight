@@ -29,6 +29,27 @@
       "visibility": "Complete Visibility",
       "visibility_desc": "Monitor your operations in real-time from anywhere",
       "demo_button": "Watch Demo"
+    },
+    "features": {
+      "title": "Features that solve real problems",
+      "subtitle": "We've designed each feature with a specific business challenge in mind",
+      "automatic_digitization": "Automatic Digitization",
+      "automatic_digitization_desc": "Our AI reads your documents and extracts all the data automatically, no human intervention needed",
+      "real_time_monitoring": "Real-Time Monitoring",
+      "real_time_monitoring_desc": "Track all your operations live from any device with real-time dashboards and alerts",
+      "easy_integration": "Easy Integration",
+      "easy_integration_desc": "Connects with your existing systems - no need to change how you work",
+      "decision_making": "Smarter Decision Making",
+      "decision_making_desc": "Get insights and recommendations based on your data to optimize your business"
+    },
+    "testimonials": {
+      "title": "Trusted by companies like yours",
+      "subtitle": "See what our clients say about us"
+    },
+    "cta": {
+      "title": "Ready to transform your business?",
+      "subtitle": "Start automating your processes today and see the difference",
+      "button": "Get Started Free"
     }
   },
   "restaurants": {
@@ -51,10 +72,70 @@
     "optimization_desc": "Forget about spending on more staff to control costs. Ruka does the work for you, 24/7, error-free and in real-time.",
     "cta_title": "Optimize your food cost now",
     "cta_desc": "Join the 100+ restaurants already saving time and money with Ruka",
-    "cta_button": "Start Your Free Trial"
+    "cta_button": "Start Your Free Trial",
+    "form": {
+      "title": "Start your automation journey",
+      "subtitle": "Fill out the form and we'll contact you within 24 hours",
+      "restaurant_name": "Restaurant Name",
+      "restaurant_name_placeholder": "Enter your restaurant name",
+      "owner_name": "Owner's Name",
+      "owner_name_placeholder": "Enter owner's name",
+      "email": "Email",
+      "email_placeholder": "Enter your email",
+      "phone": "Phone",
+      "phone_placeholder": "Enter your phone number",
+      "submit": "Get Started",
+      "success": "Thank you! We'll be in touch soon.",
+      "error": "There was an error submitting your information. Please try again."
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "mission": "Our Mission",
+    "mission_text": "We're on a mission to transform how businesses manage their documentation through intelligent automation.",
+    "vision": "Our Vision",
+    "vision_text": "A world where businesses can focus on what truly matters, while AI handles the repetitive tasks.",
+    "team": "Our Team",
+    "team_text": "We're a dedicated team of AI experts, engineers, and business professionals passionate about solving real problems."
+  },
+  "terms": {
+    "title": "Terms and Conditions",
+    "last_updated": "Last Updated"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "last_updated": "Last Updated"
+  },
+  "footer": {
+    "company": "Company",
+    "about": "About Us",
+    "careers": "Careers",
+    "contact": "Contact Us",
+    "legal": "Legal",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "cookies": "Cookies Policy",
+    "product": "Product",
+    "features": "Features",
+    "pricing": "Pricing",
+    "integrations": "Integrations",
+    "documentation": "Documentation",
+    "copyright": "© 2024 Ruka.ai. All rights reserved."
   },
   "common": {
     "start_now": "Start Now",
-    "learn_more": "Learn More"
+    "learn_more": "Learn More",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "success": "Success!",
+    "see_more": "See More",
+    "see_less": "See Less",
+    "next": "Next",
+    "previous": "Previous",
+    "back": "Back",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "save": "Save"
   }
 }

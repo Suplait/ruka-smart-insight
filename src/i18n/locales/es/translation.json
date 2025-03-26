@@ -29,6 +29,27 @@
       "visibility": "Visibilidad Total",
       "visibility_desc": "Monitorea tus operaciones en tiempo real desde cualquier lugar",
       "demo_button": "Ver Demo"
+    },
+    "features": {
+      "title": "Funcionalidades que resuelven problemas reales",
+      "subtitle": "Hemos diseñado cada función pensando en un desafío específico de tu negocio",
+      "automatic_digitization": "Digitalización Automática",
+      "automatic_digitization_desc": "Nuestra IA lee tus documentos y extrae todos los datos automáticamente, sin intervención humana",
+      "real_time_monitoring": "Monitoreo en Tiempo Real",
+      "real_time_monitoring_desc": "Sigue todas tus operaciones en vivo desde cualquier dispositivo con tableros y alertas en tiempo real",
+      "easy_integration": "Fácil Integración",
+      "easy_integration_desc": "Se conecta con tus sistemas existentes - no necesitas cambiar tu forma de trabajar",
+      "decision_making": "Toma de Decisiones Inteligente",
+      "decision_making_desc": "Obtén insights y recomendaciones basadas en tus datos para optimizar tu negocio"
+    },
+    "testimonials": {
+      "title": "Empresas como la tuya confían en nosotros",
+      "subtitle": "Mira lo que dicen nuestros clientes sobre nosotros"
+    },
+    "cta": {
+      "title": "¿Listo para transformar tu negocio?",
+      "subtitle": "Comienza a automatizar tus procesos hoy y nota la diferencia",
+      "button": "Comienza Gratis"
     }
   },
   "restaurants": {
@@ -51,10 +72,70 @@
     "optimization_desc": "Olvídate de gastar en más personal para controlar costos. Ruka hace el trabajo por ti, 24/7, sin errores y en tiempo real.",
     "cta_title": "Optimiza tu food cost ahora",
     "cta_desc": "Únete a los +100 restaurantes que ya están ahorrando tiempo y dinero con Ruka",
-    "cta_button": "Comienza Tu Prueba Gratuita"
+    "cta_button": "Comienza Tu Prueba Gratuita",
+    "form": {
+      "title": "Comienza tu camino a la automatización",
+      "subtitle": "Completa el formulario y te contactaremos en 24 horas",
+      "restaurant_name": "Nombre del Restaurante",
+      "restaurant_name_placeholder": "Ingresa el nombre de tu restaurante",
+      "owner_name": "Nombre del Propietario",
+      "owner_name_placeholder": "Ingresa el nombre del propietario",
+      "email": "Correo Electrónico",
+      "email_placeholder": "Ingresa tu correo electrónico",
+      "phone": "Teléfono",
+      "phone_placeholder": "Ingresa tu número de teléfono",
+      "submit": "Comenzar Ahora",
+      "success": "¡Gracias! Pronto nos pondremos en contacto.",
+      "error": "Hubo un error al enviar tu información. Por favor, intenta de nuevo."
+    }
+  },
+  "about": {
+    "title": "Sobre Nosotros",
+    "mission": "Nuestra Misión",
+    "mission_text": "Estamos en una misión para transformar cómo las empresas manejan su documentación a través de la automatización inteligente.",
+    "vision": "Nuestra Visión",
+    "vision_text": "Un mundo donde las empresas puedan enfocarse en lo que realmente importa, mientras la IA se encarga de las tareas repetitivas.",
+    "team": "Nuestro Equipo",
+    "team_text": "Somos un equipo dedicado de expertos en IA, ingenieros y profesionales de negocios apasionados por resolver problemas reales."
+  },
+  "terms": {
+    "title": "Términos y Condiciones",
+    "last_updated": "Última Actualización"
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "last_updated": "Última Actualización"
+  },
+  "footer": {
+    "company": "Empresa",
+    "about": "Sobre Nosotros",
+    "careers": "Carreras",
+    "contact": "Contáctanos",
+    "legal": "Legal",
+    "terms": "Términos de Servicio",
+    "privacy": "Política de Privacidad",
+    "cookies": "Política de Cookies",
+    "product": "Producto",
+    "features": "Funcionalidades",
+    "pricing": "Precios",
+    "integrations": "Integraciones",
+    "documentation": "Documentación",
+    "copyright": "© 2024 Ruka.ai. Todos los derechos reservados."
   },
   "common": {
     "start_now": "Comenzar Ahora",
-    "learn_more": "Saber más"
+    "learn_more": "Saber más",
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "retry": "Reintentar",
+    "success": "¡Éxito!",
+    "see_more": "Ver Más",
+    "see_less": "Ver Menos",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "back": "Atrás",
+    "cancel": "Cancelar",
+    "submit": "Enviar",
+    "save": "Guardar"
   }
 }
