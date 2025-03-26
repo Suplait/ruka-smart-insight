@@ -73,6 +73,12 @@
     "cta_title": "Optimize your food cost now",
     "cta_desc": "Join the 100+ restaurants already saving time and money with Ruka",
     "cta_button": "Start Your Free Trial",
+    "testimonials_title": "What our clients say",
+    "testimonials": {
+      "hernan": "Immediate information on purchase volumes, price evolution and payment control. Savings in HH in payroll.",
+      "esteban": "It helps me know the number of invoices and monthly purchases per supplier. Now I can instantly know if they're overcharging me.",
+      "alphonse": "Ruka is fundamental to our operation. Plus, they have next-level customer service."
+    },
     "form": {
       "title": "Start your automation journey",
       "subtitle": "Fill out the form and we'll contact you within 24 hours",
