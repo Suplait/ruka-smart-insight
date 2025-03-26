@@ -29,8 +29,8 @@ function App() {
             <Route path="/onboarding-success" element={<OnboardingSuccess />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <Toaster />
         </BrowserRouter>
-        <Toaster />
       </ThemeProvider>
     </QueryClientProvider>
   );
