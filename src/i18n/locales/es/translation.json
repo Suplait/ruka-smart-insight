@@ -1,0 +1,60 @@
+
+{
+  "language": "Español",
+  "navbar": {
+    "features": "Funcionalidades",
+    "product": "Producto",
+    "guarantee": "Garantía",
+    "testimonials": "Testimonios",
+    "industries": "Industrias",
+    "login": "Iniciar Sesión",
+    "schedule_demo": "Agendar Demo"
+  },
+  "home": {
+    "hero": {
+      "title": "Automatiza tus Procesos de Negocio con Inteligencia Artificial",
+      "subtitle": "Digitaliza, procesa y analiza automáticamente toda tu documentación para tomar mejores decisiones y ser más productivo"
+    },
+    "value_proposition": {
+      "title": "Automatización que Entiende tu Negocio",
+      "subtitle": "Diseñado específicamente para resolver los dolores diarios de empresas medianas como la tuya"
+    },
+    "product_showcase": {
+      "title": "Una plataforma diseñada para darte el control total",
+      "subtitle": "Te brindamos una plataforma moderna y simple para que encuentres rápido lo que necesitas y puedas tomar mejores decisiones",
+      "integration": "Integración Ultra Rápida",
+      "integration_desc": "Conecta tus sistemas en minutos, sin cambiar tu forma de trabajar",
+      "security": "Datos 100% Seguros",
+      "security_desc": "Tu información protegida con los más altos estándares de seguridad",
+      "visibility": "Visibilidad Total",
+      "visibility_desc": "Monitorea tus operaciones en tiempo real desde cualquier lugar",
+      "demo_button": "Ver Demo"
+    }
+  },
+  "restaurants": {
+    "title": "¿Te quita tiempo digitar las facturas de tu Restaurante?",
+    "subtitle": "Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel, POS o ERP.",
+    "automation": "Automatiza tus Costos",
+    "join": "Únete a +100 restaurantes que ya optimizan su food cost con inteligencia artificial",
+    "start_today": "Comienza hoy mismo",
+    "problem_title": "Y cuando por fin tienes los datos...",
+    "problem_desc": "Ya es demasiado tarde. Te enteras que el precio del aceite subió hace un mes y has estado perdiendo margen en todos tus platos principales.",
+    "solution_title": "Ruka lo hace todo automático",
+    "benefits": {
+      "digitize": "Digitaliza tus facturas automáticamente",
+      "group": "Agrupa y crea un maestro de insumos",
+      "monitor": "Monitorea precios en tiempo real",
+      "alert": "Alerta ante alzas de precios",
+      "integrate": "Se integra con tu facturador"
+    },
+    "optimization_title": "Optimiza la gestión de compras sin sobrecargar a tu equipo",
+    "optimization_desc": "Olvídate de gastar en más personal para controlar costos. Ruka hace el trabajo por ti, 24/7, sin errores y en tiempo real.",
+    "cta_title": "Optimiza tu food cost ahora",
+    "cta_desc": "Únete a los +100 restaurantes que ya están ahorrando tiempo y dinero con Ruka",
+    "cta_button": "Comienza Tu Prueba Gratuita"
+  },
+  "common": {
+    "start_now": "Comenzar Ahora",
+    "learn_more": "Saber más"
+  }
+}

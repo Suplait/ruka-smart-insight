@@ -1,0 +1,60 @@
+
+{
+  "language": "English",
+  "navbar": {
+    "features": "Features",
+    "product": "Product",
+    "guarantee": "Guarantee",
+    "testimonials": "Testimonials",
+    "industries": "Industries",
+    "login": "Login",
+    "schedule_demo": "Schedule Demo"
+  },
+  "home": {
+    "hero": {
+      "title": "Automate Your Business Processes with AI",
+      "subtitle": "Digitize, process, and analyze all your documentation automatically to make better decisions and become more productive"
+    },
+    "value_proposition": {
+      "title": "Automation That Understands Your Business",
+      "subtitle": "Specifically designed to solve the daily challenges of medium-sized businesses like yours"
+    },
+    "product_showcase": {
+      "title": "A platform designed to give you total control",
+      "subtitle": "We provide you with a modern, simple platform so you can quickly find what you need and make better decisions",
+      "integration": "Ultra-Fast Integration",
+      "integration_desc": "Connect your systems in minutes without changing your workflow",
+      "security": "100% Secure Data",
+      "security_desc": "Your information protected with the highest security and encryption standards",
+      "visibility": "Complete Visibility",
+      "visibility_desc": "Monitor your operations in real-time from anywhere",
+      "demo_button": "Watch Demo"
+    }
+  },
+  "restaurants": {
+    "title": "Tired of manually entering invoices for your restaurant?",
+    "subtitle": "We know your team spends hours recording supplier invoices in Excel, POS, or ERP systems.",
+    "automation": "Automate Your Costs",
+    "join": "Join over 100 restaurants already optimizing their food costs with artificial intelligence",
+    "start_today": "Start today",
+    "problem_title": "And when you finally have the data...",
+    "problem_desc": "It's already too late. You discover that the price of oil went up a month ago, and you've been losing margin on all your main dishes.",
+    "solution_title": "Ruka does everything automatically",
+    "benefits": {
+      "digitize": "Digitize your invoices automatically",
+      "group": "Group and create a master inventory",
+      "monitor": "Monitor prices in real-time",
+      "alert": "Alert you to price increases",
+      "integrate": "Integrate with your billing system"
+    },
+    "optimization_title": "Optimize purchasing management without overloading your team",
+    "optimization_desc": "Forget about spending on more staff to control costs. Ruka does the work for you, 24/7, error-free and in real-time.",
+    "cta_title": "Optimize your food cost now",
+    "cta_desc": "Join the 100+ restaurants already saving time and money with Ruka",
+    "cta_button": "Start Your Free Trial"
+  },
+  "common": {
+    "start_now": "Start Now",
+    "learn_more": "Learn More"
+  }
+}

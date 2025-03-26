@@ -1,25 +1,28 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2, Shield, Zap, LineChart } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function ProductShowcase() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { t } = useTranslation();
 
   const benefits = [
     {
       icon: Zap,
-      title: "Integración Ultra Rápida",
-      description: "Conecta tus sistemas en minutos, sin cambiar tu forma de trabajar"
+      title: t('home.product_showcase.integration'),
+      description: t('home.product_showcase.integration_desc')
     },
     {
       icon: Shield,
-      title: "Datos 100% Seguros",
-      description: "Tu información protegida con los más altos estándares de seguridad"
+      title: t('home.product_showcase.security'),
+      description: t('home.product_showcase.security_desc')
     },
     {
       icon: LineChart,
-      title: "Visibilidad Total",
-      description: "Monitorea tus operaciones en tiempo real desde cualquier lugar"
+      title: t('home.product_showcase.visibility'),
+      description: t('home.product_showcase.visibility_desc')
     }
   ];
 
@@ -29,10 +32,10 @@ export default function ProductShowcase() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <h2 className="text-4xl font-bold leading-tight">
-              Una plataforma diseñada para darte el control total
+              {t('home.product_showcase.title')}
             </h2>
             <p className="text-xl text-muted-foreground">
-              Te brindamos una plataforma moderna y simple para que encuentres rápido lo que necesitas y puedas tomar mejores decisiones.
+              {t('home.product_showcase.subtitle')}
             </p>
             <div className="grid gap-6">
               {benefits.map((benefit, index) => (
@@ -50,7 +53,7 @@ export default function ProductShowcase() {
               className="gap-2"
               onClick={() => window.open('https://www.youtube.com/watch?v=5Mgdczprvlc', '_blank')}
             >
-              Ver Demo <ArrowRight className="w-4 h-4" />
+              {t('home.product_showcase.demo_button')} <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
           <div className="relative rounded-xl overflow-hidden shadow-2xl group w-full">

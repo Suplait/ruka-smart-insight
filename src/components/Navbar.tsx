@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X } from "lucide-react";
@@ -7,6 +8,8 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 export default function Navbar() {
   const [showSubdomainModal, setShowSubdomainModal] = useState(false);
@@ -14,6 +17,7 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { t } = useTranslation();
 
   const scrollToSection = (id: string) => {
     if (location.pathname !== '/') {
@@ -41,16 +45,16 @@ export default function Navbar() {
       <SheetContent side="right" className="w-[300px] sm:w-[400px]">
         <nav className="flex flex-col gap-4">
           <button onClick={() => scrollToSection('features')} className="flex items-center space-x-2 text-left text-lg font-medium">
-            Features
+            {t('navbar.features')}
           </button>
           <button onClick={() => scrollToSection('product')} className="flex items-center space-x-2 text-left text-lg font-medium">
-            Producto
+            {t('navbar.product')}
           </button>
           <button onClick={() => scrollToSection('guarantee')} className="flex items-center space-x-2 text-left text-lg font-medium">
-            Garantía
+            {t('navbar.guarantee')}
           </button>
           <button onClick={() => scrollToSection('testimonials')} className="flex items-center space-x-2 text-left text-lg font-medium">
-            Testimonios
+            {t('navbar.testimonials')}
           </button>
           <Link to="/restaurantes" className="flex items-center space-x-2 text-left text-lg font-medium" onClick={() => setIsOpen(false)}>
             <UtensilsCrossed className="h-5 w-5" />
@@ -61,14 +65,17 @@ export default function Navbar() {
               setShowSubdomainModal(true);
               setIsOpen(false);
             }}>
-              Iniciar Sesión <LogIn className="w-4 h-4" />
+              {t('navbar.login')} <LogIn className="w-4 h-4" />
             </Button>
             <Button className="w-full justify-start gap-2" onClick={() => {
               window.open('https://calendly.com/suplait_lorenzo/30min', '_blank');
               setIsOpen(false);
             }}>
-              Agendar Demo <ArrowRight className="w-4 h-4" />
+              {t('navbar.schedule_demo')} <ArrowRight className="w-4 h-4" />
             </Button>
+          </div>
+          <div className="mt-4">
+            <LanguageSwitcher />
           </div>
         </nav>
       </SheetContent>
@@ -87,23 +94,23 @@ export default function Navbar() {
           
           <div className="hidden md:flex items-center space-x-6">
             <button onClick={() => scrollToSection('features')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-              Features
+              {t('navbar.features')}
             </button>
             <button onClick={() => scrollToSection('product')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-              Producto
+              {t('navbar.product')}
             </button>
             <button onClick={() => scrollToSection('guarantee')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-              Garantía
+              {t('navbar.guarantee')}
             </button>
             <button onClick={() => scrollToSection('testimonials')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-              Testimonios
+              {t('navbar.testimonials')}
             </button>
             
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="text-sm text-muted-foreground hover:text-primary bg-transparent">
-                    Industrias
+                    {t('navbar.industries')}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="w-[300px] p-4 bg-white rounded-lg shadow-lg border">
@@ -142,11 +149,12 @@ export default function Navbar() {
 
           <div className="flex items-center gap-2 md:gap-4">
             <div className="hidden md:flex items-center gap-4">
+              <LanguageSwitcher />
               <Button variant="outline" size="sm" className="gap-2" onClick={() => setShowSubdomainModal(true)}>
-                Iniciar Sesión <LogIn className="w-4 h-4" />
+                {t('navbar.login')} <LogIn className="w-4 h-4" />
               </Button>
               <Button size="sm" className="gap-2" onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}>
-                Agendar Demo <ArrowRight className="w-4 h-4" />
+                {t('navbar.schedule_demo')} <ArrowRight className="w-4 h-4" />
               </Button>
             </div>
             <MobileMenu />
