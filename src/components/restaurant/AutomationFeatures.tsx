@@ -1,17 +1,14 @@
 
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
-import { useTranslation } from "react-i18next";
 
 export default function AutomationFeatures() {
-  const { t } = useTranslation();
-  
   const features = [
-    t('restaurants.benefits.digitize'),
-    t('restaurants.benefits.group'),
-    t('restaurants.benefits.monitor'),
-    t('restaurants.benefits.alert'),
-    t('restaurants.benefits.integrate')
+    "Digitaliza tus facturas automáticamente",
+    "Agrupa y crea un maestro de insumos",
+    "Monitorea precios en tiempo real",
+    "Alerta ante alzas de precios",
+    "Se integra con tu facturador"
   ];
   
   return (
@@ -36,7 +33,7 @@ export default function AutomationFeatures() {
         className="p-6 rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 border border-primary/20"
       >
         <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-6">
-          {t('restaurants.solution_title')}
+          Ruka lo hace todo automático
         </h2>
         
         <div className="space-y-3">
