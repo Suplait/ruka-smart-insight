@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import ValueMessageTypewriter from "./restaurant/ValueMessageTypewriter";
 
 const valueMessages = [
   "Automate purchase recording.",
@@ -15,38 +16,6 @@ const valueMessages = [
 ];
 
 export default function Hero() {
-  const [currentMessage, setCurrentMessage] = useState(0);
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    const current = valueMessages[currentMessage];
-    
-    if (isDeleting) {
-      if (displayText === "") {
-        setIsDeleting(false);
-        setCurrentMessage((prev) => (prev + 1) % valueMessages.length);
-      } else {
-        timeout = setTimeout(() => {
-          setDisplayText(displayText.substring(0, displayText.length - 1));
-        }, 30);
-      }
-    } else {
-      if (displayText === current) {
-        timeout = setTimeout(() => {
-          setIsDeleting(true);
-        }, 2000);
-      } else {
-        timeout = setTimeout(() => {
-          setDisplayText(current.substring(0, displayText.length + 1));
-        }, 30);
-      }
-    }
-
-    return () => clearTimeout(timeout);
-  }, [currentMessage, displayText, isDeleting]);
-
   const scrollToGuarantee = () => {
     const element = document.getElementById('guarantee');
     if (element) {
@@ -74,7 +43,7 @@ export default function Hero() {
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
               <span className="bg-gradient-to-r from-gray-900 to-gray-800 bg-clip-text text-transparent after:content-['|'] after:ml-1 after:animate-blink after:text-primary">
-                {displayText}
+                <ValueMessageTypewriter messages={valueMessages} />
               </span>
             </h1>
             
