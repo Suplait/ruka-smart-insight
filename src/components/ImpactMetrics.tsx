@@ -7,21 +7,21 @@ const metrics = [
   {
     value: 120,
     suffix: "+",
-    label: "Clientes activos",
+    label: "Active clients",
     icon: Users,
     color: "text-blue-500"
   },
   {
     value: 15,
     suffix: " hrs",
-    label: "Ahorro semanal",
+    label: "Weekly savings",
     icon: Clock,
     color: "text-emerald-500"
   },
   {
     value: 800,
     suffix: "K+",
-    label: "Facturas procesadas",
+    label: "Processed invoices",
     icon: FileText,
     color: "text-purple-500"
   },
@@ -29,7 +29,7 @@ const metrics = [
     value: 250,
     suffix: "M+",
     prefix: "US$",
-    label: "Transacciones",
+    label: "Transactions",
     icon: TrendingUp,
     color: "text-amber-500"
   }

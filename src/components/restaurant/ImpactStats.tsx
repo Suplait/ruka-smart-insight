@@ -8,19 +8,19 @@ export default function ImpactStats() {
     {
       icon: Zap,
       stat: "90%",
-      text: "Menos tiempo en papeleo",
+      text: "Less time on paperwork",
       color: "text-yellow-500"
     },
     {
       icon: ChartBarIcon,
       stat: "100%",
-      text: "Control de food cost",
+      text: "Food cost control",
       color: "text-blue-500"
     },
     {
       icon: TrendingUp,
       stat: "15%",
-      text: "Ahorro en insumos",
+      text: "Savings on supplies",
       color: "text-green-500"
     }
   ];
@@ -34,7 +34,7 @@ export default function ImpactStats() {
       className="space-y-12 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-12 rounded-3xl"
     >
       <h2 className="text-4xl font-bold text-center">
-        El impacto en tu restaurante
+        The impact on your restaurant
       </h2>
       <div className="grid md:grid-cols-3 gap-8">
         {stats.map((item, index) => (

@@ -4,27 +4,27 @@ import { Users, FileText, TrendingUp, Clock } from "lucide-react";
 const stats = [
   {
     value: "120+",
-    metric: "Clientes Felices",
+    metric: "Happy Clients",
     icon: Users,
-    description: "empresas confían en nosotros",
+    description: "companies trust us",
   },
   {
     value: "800K+",
-    metric: "Facturas",
+    metric: "Invoices",
     icon: FileText,
-    description: "documentos procesados automáticamente",
+    description: "documents processed automatically",
   },
   {
     value: "US$250M+",
-    metric: "Transacciones",
+    metric: "Transactions",
     icon: TrendingUp,
-    description: "en datos digitalizados",
+    description: "in digitized data",
   },
   {
     value: "15 hrs",
-    metric: "Ahorro Semanal",
+    metric: "Weekly Savings",
     icon: Clock,
-    description: "promedio por empresa",
+    description: "average per company",
   },
 ];
 
