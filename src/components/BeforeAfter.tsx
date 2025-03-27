@@ -1,22 +1,23 @@
+
 import { motion } from "framer-motion";
 import { Clock, CheckCircle, X } from "lucide-react";
 
 const beforePoints = [
-  "Registro manual de compras",
-  "Datos desactualizados",
-  "Errores humanos frecuentes",
-  "Alto costo en personal de back office",
-  "Poco tiempo de monitoreo",
-  "Conoce margen desfazado. Sin tiempo de reacción",  
+  "Manual purchase recording",
+  "Outdated data",
+  "Frequent human errors",
+  "High cost in back office staff",
+  "Limited monitoring time",
+  "Learn about margin too late. No reaction time",  
 ];
 
 const afterPoints = [
-  "Registro y clasificación automática",
-  "Datos precisos y al día",
-  "Sin error humano",
-  "Reducción de costos operativos",
-  "Monitoreo 24/7 en tiempo real",
-  "Margen diario con alertas inmediante ante anomalías"
+  "Automatic registration and classification",
+  "Accurate and up-to-date data",
+  "No human error",
+  "Reduced operating costs",
+  "24/7 real-time monitoring",
+  "Daily margin with immediate alerts for anomalies"
 ];
 
 const containerVariants = {
@@ -75,16 +76,16 @@ export default function BeforeAfter() {
       <div className="container px-4 sm:px-6">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
           <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-            Automatización que Transforma
+            Automation That Transforms
           </span>
           <br />
           <span className="text-2xl md:text-3xl text-gray-700 mt-2 block">
-            De procesos manuales a control total
+            From manual processes to total control
           </span>
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Antes */}
+          {/* Before */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -101,7 +102,7 @@ export default function BeforeAfter() {
             <div className="relative p-8 space-y-6">
               <div className="flex items-center gap-4 mb-6">
                 <Clock className="w-8 h-8 text-red-500" />
-                <h3 className="text-2xl font-semibold">Antes</h3>
+                <h3 className="text-2xl font-semibold">Before</h3>
               </div>
               <motion.ul className="space-y-4" variants={containerVariants}>
                 {beforePoints.map((point, index) => (
@@ -123,7 +124,7 @@ export default function BeforeAfter() {
             </div>
           </motion.div>
 
-          {/* Después */}
+          {/* After */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -140,7 +141,7 @@ export default function BeforeAfter() {
             <div className="relative p-8 space-y-6">
               <div className="flex items-center gap-4 mb-6">
                 <CheckCircle className="w-8 h-8 text-green-500" />
-                <h3 className="text-2xl font-semibold">Con Ruka</h3>
+                <h3 className="text-2xl font-semibold">With Ruka</h3>
               </div>
               <motion.ul className="space-y-4" variants={containerVariants}>
                 {afterPoints.map((point, index) => (

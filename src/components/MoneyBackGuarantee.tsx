@@ -18,11 +18,11 @@ export default function MoneyBackGuarantee() {
           </div>
           
           <h2 className="text-3xl font-bold">
-            Garantía de devolución de 30 días
+            30-Day Money-Back Guarantee
           </h2>
           
           <p className="text-xl text-muted-foreground">
-            Si no estás 100% satisfecho con Ruka.ai en los primeros 30 días, te devolvemos tu dinero sin hacer preguntas. Así de seguros estamos de que te encantará.
+            If you're not 100% satisfied with Ruka.ai in the first 30 days, we'll refund your money without asking questions. That's how confident we are that you'll love it.
           </p>
           
           <Button 
@@ -30,7 +30,7 @@ export default function MoneyBackGuarantee() {
             className="gap-2 group"
             onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}
           >
-            Agendar Demo
+            Schedule Demo
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </motion.div>

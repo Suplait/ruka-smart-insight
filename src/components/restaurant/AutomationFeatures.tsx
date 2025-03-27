@@ -4,11 +4,11 @@ import { Check } from "lucide-react";
 
 export default function AutomationFeatures() {
   const features = [
-    "Digitaliza tus facturas automáticamente",
-    "Agrupa y crea un maestro de insumos",
-    "Monitorea precios en tiempo real",
-    "Alerta ante alzas de precios",
-    "Se integra con tu facturador"
+    "Digitize your invoices automatically",
+    "Group and create a master inventory",
+    "Monitor prices in real time",
+    "Alert when prices increase",
+    "Integrates with your billing system"
   ];
   
   return (
@@ -33,7 +33,7 @@ export default function AutomationFeatures() {
         className="p-6 rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 border border-primary/20"
       >
         <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-6">
-          Ruka lo hace todo automático
+          Ruka does everything automatically
         </h2>
         
         <div className="space-y-3">

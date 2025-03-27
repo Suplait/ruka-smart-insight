@@ -11,23 +11,23 @@ import { useRef } from "react";
 const testimonials = [
   {
     name: "Hernan Sugg",
-    role: "Socio",
+    role: "Partner",
     company: "Barbazul",
-    content: "Información inmediata de volúmenes de compra, evolución de precios y control de pagos. Ahorro de HH en planillas.",
+    content: "Immediate information on purchase volumes, price evolution, and payment control. Savings in hours on spreadsheets.",
     rating: 5,
   },
   {
     name: "Esteban Hojas",
-    role: "Socio",
+    role: "Partner",
     company: "Ottoburguer",
-    content: "Me ayuda a saber la cantidad de facturas y compras mensuales por proveedor. Ahora puedo saber de una si me están cobrando de más.",
+    content: "It helps me know the number of invoices and monthly purchases per supplier. Now I can instantly tell if I'm being overcharged.",
     rating: 5,
   },
   {
     name: "Alphonse Reynes",
-    role: "Gerencia",
-    company: "Grupo Melting cook",
-    content: "Ruka es fundamental en nuestra operación. Además, tienen un servicio al cliente de otro nivel.",
+    role: "Management",
+    company: "Melting Cook Group",
+    content: "Ruka is fundamental to our operation. Plus, they have next-level customer service.",
     rating: 5,
   },
 ];
@@ -41,7 +41,7 @@ export default function Testimonials() {
     <section id="testimonials" className="py-24 bg-secondary/30">
       <div className="container">
         <h2 className="text-4xl font-bold text-center mb-16">
-          Lo que dicen nuestros clientes
+          What our clients say
         </h2>
         <div className="relative">
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-secondary/30 to-transparent z-10" />

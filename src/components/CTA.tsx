@@ -4,24 +4,24 @@ import { ArrowRight, ShieldCheck, Clock4, UtensilsCrossed, CheckCircle2 } from "
 
 export default function CTA() {
   const benefits = [
-    "Elimina por completo la digitación manual de documentos",
-    "Detecta variaciones de precios en tiempo real",
-    "Monitorea tus precios en modo automático",
-    "Mantén el control total de tu margen operativo"
+    "Completely eliminate manual document entry",
+    "Detect price variations in real time",
+    "Monitor your prices automatically",
+    "Maintain complete control of your operating margin"
   ];
 
   const trustBadges = [
     {
       icon: ShieldCheck,
-      text: "Garantía 30 días"
+      text: "30-day guarantee"
     },
     {
       icon: Clock4,
-      text: "Soporte 24/7"
+      text: "24/7 Support"
     },
     {
       icon: UtensilsCrossed,
-      text: "100% devolución"
+      text: "100% refund"
     }
   ];
 
@@ -31,10 +31,10 @@ export default function CTA() {
       <div className="container relative">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-primary bg-clip-text text-transparent">
-            ¿List@ para tomar el control de tu margen operativo?
+            Ready to take control of your operating margin?
           </h2>
           <p className="text-xl text-muted-foreground">
-            Únete a las empresas que ya eliminaron la digitación manual y tienen visibilidad total de sus operaciones con Ruka.ai
+            Join the companies that have already eliminated manual data entry and have total visibility of their operations with Ruka.ai
           </p>
           
           <div className="grid sm:grid-cols-2 gap-4 text-left max-w-2xl mx-auto mb-8">
@@ -52,7 +52,7 @@ export default function CTA() {
               className="gap-2 group hover:scale-105 transition-all duration-300"
               onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}
             >
-              Agendar Demo
+              Schedule Demo
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
 

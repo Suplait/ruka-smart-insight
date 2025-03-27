@@ -8,32 +8,32 @@ import {
 
 const faqs = [
   {
-    question: "¿Ofrecen garantía de devolución?",
-    answer: "Sí, garantía de devolución 100% en los primeros 30 días, sin preguntas, sin compromiso, ni letra chica."
+    question: "Do you offer a money-back guarantee?",
+    answer: "Yes, 100% money-back guarantee in the first 30 days, no questions, no commitment, no fine print."
   },
   {
-    question: "¿Cómo me creo una cuenta?",
-    answer: "Agenda un espacio con nuestro equipo para conocer tu historia y descubrir la mejor manera de implementar Ruka en tu negocio."
+    question: "How do I create an account?",
+    answer: "Schedule a meeting with our team to learn about your story and discover the best way to implement Ruka in your business."
   },
   {
-    question: "¿Qué tan compleja es la integración?",
-    answer: "Es tan simple como iniciar sesión. Ruka se encarga de traer todos los datos."
+    question: "How complex is the integration?",
+    answer: "It's as simple as logging in. Ruka takes care of bringing in all the data."
   },
   {
-    question: "¿Debo usar un facturador en particular? ¿Y si uso el del SII gratuito?",
-    answer: "No importa si usas facturador de mercado o el gratuito del SII. En ambas opciones nos integramos rápido y fácil."
+    question: "Do I need to use a specific billing system? What if I use the free SII one?",
+    answer: "It doesn't matter if you use a market billing system or the free SII one. In both options, we integrate quickly and easily."
   },
   {
-    question: "¿Cuánto tiempo toma ver resultados?",
-    answer: "Resultados inmediatos. Desde el primer día tendrás acceso a reportes y análisis automáticos."
+    question: "How long does it take to see results?",
+    answer: "Immediate results. From day one, you'll have access to automatic reports and analysis."
   },
   {
-    question: "¿Qué soporte ofrecen?",
-    answer: "Contamos con un equipo dedicado de soporte disponible para ayudarte en todo momento."
+    question: "What support do you offer?",
+    answer: "We have a dedicated support team available to help you at all times."
   },
   {
-    question: "¿Mis datos están seguros?",
-    answer: "Absolutamente. Utilizamos encriptación de nivel bancario y cumplimos con todos los estándares de seguridad."
+    question: "Are my data secure?",
+    answer: "Absolutely. We use bank-level encryption and comply with all security standards."
   }
 ];
 
@@ -42,9 +42,9 @@ export default function FAQ() {
     <section className="py-24 bg-white">
       <div className="container max-w-4xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Preguntas Frecuentes</h2>
+          <h2 className="text-4xl font-bold mb-4">Frequently Asked Questions</h2>
           <p className="text-xl text-muted-foreground">
-            Todo lo que necesitas saber sobre Ruka.ai
+            Everything you need to know about Ruka.ai
           </p>
         </div>
 

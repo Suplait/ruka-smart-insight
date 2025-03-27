@@ -6,23 +6,23 @@ import { Bot, Brain, Clock, LineChart } from 'lucide-react';
 const features = [
   {
     icon: Bot,
-    title: "Agentes Autónomos 24/7",
-    description: "Automatiza tareas repetitivas mientras reduces costos operativos y errores humanos"
+    title: "24/7 Autonomous Agents",
+    description: "Automate repetitive tasks while reducing operating costs and human errors"
   },
   {
     icon: Brain,
-    title: "IA que Aprende de tu Negocio",
-    description: "Nuestros agentes se adaptan a tus procesos para entregarte insights más precisos cada día"
+    title: "AI that Learns from Your Business",
+    description: "Our agents adapt to your processes to deliver more accurate insights every day"
   },
   {
     icon: Clock,
-    title: "Información al Instante",
-    description: "Accede a tus datos en tiempo real para tomar decisiones informadas cuando las necesites"
+    title: "Instant Information",
+    description: "Access your data in real time to make informed decisions when you need them"
   },
   {
     icon: LineChart,
-    title: "Control Total",
-    description: "Visualiza y optimiza tu margen operativo con datos actualizados y reportes detallados"
+    title: "Total Control",
+    description: "Visualize and optimize your operating margin with up-to-date data and detailed reports"
   }
 ];
 

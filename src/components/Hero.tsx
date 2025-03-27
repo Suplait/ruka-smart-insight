@@ -1,16 +1,17 @@
+
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const valueMessages = [
-  "Automatiza el registro de compras.",
-  "Controla tu margen al día, no al mes.",
-  "Descubre alzas de precio de tus insumos en tiempo real.",
-  "Genera reportes en segundos usando lenguaje natural.",
-  "Gestiona simple el pago a tus proveedores.",
-  "Ten toda tu información a la mano.",
-  "Libera HH a la semana para que te enfoques en lo que importa.",
+  "Automate purchase recording.",
+  "Control your margin daily, not monthly.",
+  "Discover price increases of your supplies in real time.",
+  "Generate reports in seconds using natural language.",
+  "Easily manage payments to your suppliers.",
+  "Have all your information at hand.",
+  "Free up hours per week to focus on what matters.",
 ];
 
 export default function Hero() {
@@ -68,7 +69,7 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              Ideal en empresas con alta rotación de inventario
+              Ideal for businesses with high inventory turnover
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
@@ -78,7 +79,7 @@ export default function Hero() {
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-xl">
-              Agentes con IA que procesan, agrupan y monitorean tus transacciones para que tengas control absoluto de tu negocio.
+              AI agents that process, group, and monitor your transactions so you have absolute control of your business.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -87,7 +88,7 @@ export default function Hero() {
                 className="gap-2 group hover:scale-105 transition-all duration-300"
                 onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}
               >
-                Agendar Demo
+                Schedule Demo
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button 
@@ -96,7 +97,7 @@ export default function Hero() {
                 className="hover:scale-105 transition-all duration-300"
                 onClick={scrollToGuarantee}
               >
-                Garantía de 30 días
+                30-Day Guarantee
               </Button>
             </div>
 
@@ -112,7 +113,7 @@ export default function Hero() {
                 ))}
               </div>
               <p className="text-muted-foreground">
-                <span className="font-semibold text-primary">+100</span> empresas confían en nosotros
+                <span className="font-semibold text-primary">+100</span> companies trust us
               </p>
             </div>
           </div>
