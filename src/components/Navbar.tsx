@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X } from "lucide-react";
@@ -44,30 +45,30 @@ export default function Navbar() {
             Features
           </button>
           <button onClick={() => scrollToSection('product')} className="flex items-center space-x-2 text-left text-lg font-medium">
-            Producto
+            Product
           </button>
           <button onClick={() => scrollToSection('guarantee')} className="flex items-center space-x-2 text-left text-lg font-medium">
-            Garantía
+            Guarantee
           </button>
           <button onClick={() => scrollToSection('testimonials')} className="flex items-center space-x-2 text-left text-lg font-medium">
-            Testimonios
+            Testimonials
           </button>
           <Link to="/restaurantes" className="flex items-center space-x-2 text-left text-lg font-medium" onClick={() => setIsOpen(false)}>
             <UtensilsCrossed className="h-5 w-5" />
-            <span>Restaurantes</span>
+            <span>Restaurants</span>
           </Link>
           <div className="flex flex-col gap-2 mt-4">
             <Button variant="outline" className="w-full justify-start gap-2" onClick={() => {
               setShowSubdomainModal(true);
               setIsOpen(false);
             }}>
-              Iniciar Sesión <LogIn className="w-4 h-4" />
+              Log In <LogIn className="w-4 h-4" />
             </Button>
             <Button className="w-full justify-start gap-2" onClick={() => {
               window.open('https://calendly.com/suplait_lorenzo/30min', '_blank');
               setIsOpen(false);
             }}>
-              Agendar Demo <ArrowRight className="w-4 h-4" />
+              Schedule Demo <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
         </nav>
@@ -90,25 +91,25 @@ export default function Navbar() {
               Features
             </button>
             <button onClick={() => scrollToSection('product')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-              Producto
+              Product
             </button>
             <button onClick={() => scrollToSection('guarantee')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-              Garantía
+              Guarantee
             </button>
             <button onClick={() => scrollToSection('testimonials')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-              Testimonios
+              Testimonials
             </button>
             
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="text-sm text-muted-foreground hover:text-primary bg-transparent">
-                    Industrias
+                    Industries
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="w-[300px] p-4 bg-white rounded-lg shadow-lg border">
                       <p className="text-sm font-medium text-muted-foreground mb-3 px-2">
-                        Soluciones por Industria
+                        Industry Solutions
                       </p>
                       <ul className="grid gap-2">
                         <li>
@@ -119,9 +120,9 @@ export default function Navbar() {
                               </div>
                               <div className="grid gap-1">
                                 <div className="text-sm font-medium">
-                                  Restaurantes
+                                  Restaurants
                                 </div>
-                                <div className="line-clamp-2 text-xs text-muted-foreground">Automatiza el registro, seguimiento de precios y monitoreo de foodcost</div>
+                                <div className="line-clamp-2 text-xs text-muted-foreground">Automate registration, price tracking and foodcost monitoring</div>
                               </div>
                             </Link>
                           </NavigationMenuLink>
@@ -129,7 +130,7 @@ export default function Navbar() {
                         
                         <li className="px-2 py-1">
                           <div className="text-xs text-muted-foreground italic">
-                            Más industrias próximamente...
+                            More industries coming soon...
                           </div>
                         </li>
                       </ul>
@@ -143,10 +144,10 @@ export default function Navbar() {
           <div className="flex items-center gap-2 md:gap-4">
             <div className="hidden md:flex items-center gap-4">
               <Button variant="outline" size="sm" className="gap-2" onClick={() => setShowSubdomainModal(true)}>
-                Iniciar Sesión <LogIn className="w-4 h-4" />
+                Log In <LogIn className="w-4 h-4" />
               </Button>
               <Button size="sm" className="gap-2" onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}>
-                Agendar Demo <ArrowRight className="w-4 h-4" />
+                Schedule Demo <ArrowRight className="w-4 h-4" />
               </Button>
             </div>
             <MobileMenu />
