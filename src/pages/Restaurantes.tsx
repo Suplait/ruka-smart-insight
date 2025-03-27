@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,21 +11,23 @@ import FAQ from "@/components/FAQ";
 import RegistrationForm from "@/components/restaurant/RegistrationForm";
 import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
 import ImpactStats from "@/components/restaurant/ImpactStats";
-
-const valueMessages = [
-  "Deja que tus chefs se concentren en cocinar, no en Excel.",
-  "Controla tus costos de insumos al día, no al mes.",
-  "Detecta alzas de precio de tus proveedores en tiempo real.",
-  "Genera reportes de food cost en segundos.",
-  "Gestiona el pago a tus proveedores sin complicaciones.",
-  "Ten todos tus pedidos y facturas a la mano.",
-  "Ahorra horas a la semana en procesos administrativos.",
-];
+import { useTranslation } from "react-i18next";
 
 export default function Restaurantes() {
+  const { t } = useTranslation();
   const [highlightForm, setHighlightForm] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
   const [showScrollToForm, setShowScrollToForm] = useState(false);
+
+  const valueMessages = [
+    "Deja que tus chefs se concentren en cocinar, no en Excel.",
+    "Controla tus costos de insumos al día, no al mes.",
+    "Detecta alzas de precio de tus proveedores en tiempo real.",
+    "Genera reportes de food cost en segundos.",
+    "Gestiona el pago a tus proveedores sin complicaciones.",
+    "Ten todos tus pedidos y facturas a la mano.",
+    "Ahorra horas a la semana en procesos administrativos.",
+  ];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -133,14 +136,14 @@ export default function Restaurantes() {
                 className="space-y-4"
               >
                 <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                  Automatiza tus Costos
+                  {t('restaurants.automation')}
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-md mx-auto">
-                  Únete a +100 restaurantes que ya optimizan su food cost con inteligencia artificial
+                  {t('restaurants.join')}
                 </p>
                 <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
                   <Clock className="w-4 h-4" />
-                  <span>Comienza hoy mismo</span>
+                  <span>{t('restaurants.start_today')}</span>
                 </div>
               </motion.div>
             </div>
@@ -161,15 +164,14 @@ export default function Restaurantes() {
                   className="space-y-8"
                 >
                   <h1 className="text-5xl sm:text-6xl font-bold leading-tight">
-                    ¿Te quita tiempo
-                    <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> digitar las facturas </span>
-                    de tu Restaurante?
+                    {t('restaurants.title')}
+                    <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> </span>
                   </h1>
                   <p className="text-2xl text-muted-foreground leading-relaxed">
                     <ValueMessageTypewriter 
                       messages={valueMessages} 
                       staticMode={true}
-                      staticText="Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel, POS o ERP."
+                      staticText={t('restaurants.subtitle')}
                     />
                   </p>
                 </motion.header>
@@ -185,11 +187,11 @@ export default function Restaurantes() {
                     <Clock className="w-6 h-6 text-red-600" />
                   </div>
                   <h2 className="text-4xl font-bold text-red-900">
-                    Y cuando por fin tienes los datos...
+                    {t('restaurants.problem_title')}
                   </h2>
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <p className="text-2xl text-red-800/80 leading-relaxed">
-                      Ya es demasiado tarde. Te enteras que el precio del aceite subió hace un mes y has estado perdiendo margen en todos tus platos principales.
+                      {t('restaurants.problem_desc')}
                     </p>
                     <div className="bg-white p-6 rounded-xl shadow-lg">
                       <div className="space-y-4">
@@ -215,29 +217,29 @@ export default function Restaurantes() {
                     <img src="/0webclip.jpg" alt="Ruka Logo" className="w-8 h-8 rounded-full" />
                   </div>
                   <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                    Ruka lo hace todo automático
+                    {t('restaurants.solution_title')}
                   </h2>
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-6 text-xl text-primary/80 leading-relaxed">
                       <p className="flex items-center gap-2">
                         <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                        Digitaliza tus facturas automáticamente
+                        {t('restaurants.benefits.digitize')}
                       </p>
                       <p className="flex items-center gap-2">
                         <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                        Agrupa y crea un maestro de insumos
+                        {t('restaurants.benefits.group')}
                       </p>
                       <p className="flex items-center gap-2">
                         <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                        Monitorea precios en tiempo real
+                        {t('restaurants.benefits.monitor')}
                       </p>
                       <p className="flex items-center gap-2">
                         <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                        Alerta ante alzas de precios
+                        {t('restaurants.benefits.alert')}
                       </p>
                       <p className="flex items-center gap-2">
                         <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                        Se integra con tu facturador
+                        {t('restaurants.benefits.integrate')}
                       </p>
                     </div>
                     <div className="relative">
@@ -257,11 +259,11 @@ export default function Restaurantes() {
                     <TrendingUp className="w-6 h-6 text-green-600" />
                   </div>
                   <h2 className="text-4xl font-bold text-green-900">
-                    Optimiza la gestión de compras sin sobrecargar a tu equipo
+                    {t('restaurants.optimization_title')}
                   </h2>
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <p className="text-2xl text-green-800/80 leading-relaxed">
-                      Olvídate de gastar en más personal para controlar costos. Ruka hace el trabajo por ti, 24/7, sin errores y en tiempo real.
+                      {t('restaurants.optimization_desc')}
                     </p>
                     <div className="bg-white p-6 rounded-xl shadow-lg">
                       <div className="space-y-4">
@@ -288,17 +290,17 @@ export default function Restaurantes() {
                   className="text-center space-y-8 bg-gradient-to-br from-primary/10 to-purple-100 p-6 sm:p-12 rounded-3xl mx-auto"
                 >
                   <h2 className="text-4xl font-bold">
-                    Optimiza tu food cost ahora
+                    {t('restaurants.cta_title')}
                   </h2>
                   <p className="text-2xl text-gray-700">
-                    Únete a los +100 restaurantes que ya están ahorrando tiempo y dinero con Ruka
+                    {t('restaurants.cta_desc')}
                   </p>
                   <Button
                     size="lg"
                     className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105 max-w-full"
                     onClick={() => setHighlightForm(true)}
                   >
-                    Comienza Tu Prueba Gratuita <ArrowRight className="ml-2" />
+                    {t('restaurants.cta_button')} <ArrowRight className="ml-2" />
                   </Button>
                 </motion.div>
 
@@ -338,7 +340,7 @@ export default function Restaurantes() {
                 size="lg"
                 className="shadow-lg bg-primary hover:bg-primary/90 text-white font-semibold transition-all duration-300 px-6 py-6 h-auto rounded-full"
               >
-                Comenzar Ahora
+                {t('common.start_now')}
               </Button>
             </motion.div>
           )}
