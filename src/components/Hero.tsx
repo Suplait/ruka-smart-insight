@@ -6,13 +6,13 @@ import { cn } from "@/lib/utils";
 import ValueMessageTypewriter from "./restaurant/ValueMessageTypewriter";
 
 const valueMessages = [
-  "Automate purchase recording.",
-  "Control your margin daily, not monthly.",
-  "Discover price increases of your supplies in real time.",
+  "Automate your purchase tracking.",
+  "Monitor your margins daily, not monthly.",
+  "Get real-time alerts on supply price increases.",
   "Generate reports in seconds using natural language.",
-  "Easily manage payments to your suppliers.",
-  "Have all your information at hand.",
-  "Free up hours per week to focus on what matters.",
+  "Easily manage your supplier payments.",
+  "Have all your data at your fingertips.",
+  "Free up hours each week to focus on what matters.",
 ];
 
 export default function Hero() {
