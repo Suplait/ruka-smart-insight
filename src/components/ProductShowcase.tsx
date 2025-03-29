@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2, Shield, Zap, LineChart } from "lucide-react";
@@ -9,18 +8,18 @@ export default function ProductShowcase() {
   const benefits = [
     {
       icon: Zap,
-      title: "Ultra-Fast Integration",
-      description: "Connect your systems in minutes, without changing how you work"
+      title: "Integración Ultra Rápida",
+      description: "Conecta tus sistemas en minutos, sin cambiar tu forma de trabajar"
     },
     {
       icon: Shield,
-      title: "100% Secure Data",
-      description: "Your information protected with the highest security standards"
+      title: "Datos 100% Seguros",
+      description: "Tu información protegida con los más altos estándares de seguridad"
     },
     {
       icon: LineChart,
-      title: "Total Visibility",
-      description: "Monitor your operations in real time from anywhere"
+      title: "Visibilidad Total",
+      description: "Monitorea tus operaciones en tiempo real desde cualquier lugar"
     }
   ];
 
@@ -30,10 +29,10 @@ export default function ProductShowcase() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <h2 className="text-4xl font-bold leading-tight">
-              A platform designed to give you total control
+              Una plataforma diseñada para darte el control total
             </h2>
             <p className="text-xl text-muted-foreground">
-              We provide you with a modern and simple platform so you can quickly find what you need and make better decisions.
+              Te brindamos una plataforma moderna y simple para que encuentres rápido lo que necesitas y puedas tomar mejores decisiones.
             </p>
             <div className="grid gap-6">
               {benefits.map((benefit, index) => (
@@ -51,7 +50,7 @@ export default function ProductShowcase() {
               className="gap-2"
               onClick={() => window.open('https://www.youtube.com/watch?v=5Mgdczprvlc', '_blank')}
             >
-              Watch Demo <ArrowRight className="w-4 h-4" />
+              Ver Demo <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
           <div className="relative rounded-xl overflow-hidden shadow-2xl group w-full">

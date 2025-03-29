@@ -7,19 +7,19 @@ export default function CompactImpactStats() {
     {
       icon: Zap,
       stat: "90%",
-      text: "Less time on paperwork",
+      text: "Menos tiempo en papeleo",
       color: "text-yellow-500"
     },
     {
       icon: BarChart2,
       stat: "100%",
-      text: "Food cost control",
+      text: "Control de food cost",
       color: "text-blue-500"
     },
     {
       icon: TrendingUp,
       stat: "15%",
-      text: "Savings on supplies",
+      text: "Ahorro en insumos",
       color: "text-green-500"
     }
   ];
@@ -32,7 +32,7 @@ export default function CompactImpactStats() {
       className="p-6 rounded-xl bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 max-w-md mx-auto"
     >
       <h2 className="text-2xl font-bold text-center mb-6">
-        The impact on your restaurant
+        El impacto en tu restaurante
       </h2>
       
       <div className="grid grid-cols-3 gap-4">

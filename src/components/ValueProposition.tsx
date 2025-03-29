@@ -1,4 +1,3 @@
-
 import { Bot, FileText, LineChart, Clock, Users, Zap } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
@@ -6,33 +5,33 @@ export default function ValueProposition() {
   const values = [
     {
       icon: Bot,
-      title: "Zero Manual Data Entry",
-      description: "Forget about entering data manually. Our agents automatically process your documents 24/7."
+      title: "Cero Digitación Manual",
+      description: "Olvídate de ingresar datos manualmente. Nuestros agentes procesan automáticamente tus documentos 24/7."
     },
     {
       icon: FileText,
-      title: "Automatic Classification",
-      description: "Each document is automatically grouped and classified, keeping your information organized and accessible."
+      title: "Clasificación Automática",
+      description: "Cada documento se agrupa y clasifica automáticamente, manteniendo tu información ordenada y accesible."
     },
     {
       icon: LineChart,
-      title: "Complete Business Overview",
-      description: "Access your master data in real-time. Visualize purchases, sales, and margins instantly."
+      title: "Visión Completa del Negocio",
+      description: "Accede a tu insumo maestro en tiempo real. Visualiza compras, ventas y márgenes al instante."
     },
     {
       icon: Clock,
-      title: "Reports in Seconds",
-      description: "Generate custom reports instantly. What used to take days now takes seconds."
+      title: "Reportes en Segundos",
+      description: "Genera reportes personalizados instantáneamente. Lo que antes tomaba días, ahora toma segundos."
     },
     {
       icon: Users,
-      title: "Supplier Integration",
-      description: "We connect directly with your suppliers to automatically obtain updated data."
+      title: "Integración con Proveedores",
+      description: "Conectamos directamente con tus proveedores para obtener datos actualizados automáticamente."
     },
     {
       icon: Zap,
-      title: "Ultra-Fast Implementation",
-      description: "You'll be operating with Ruka in minutes. The fastest integration in the market."
+      title: "Implementación Ultra Rápida",
+      description: "En minutos estarás operando con Ruka. La integración más rápida del mercado."
     }
   ];
 
@@ -42,10 +41,10 @@ export default function ValueProposition() {
       <div className="container relative">
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-primary bg-clip-text text-transparent">
-            Automation That Understands Your Business
+            Automatización que Entiende tu Negocio
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Specifically designed to solve the daily challenges of medium-sized businesses like yours
+            Diseñado específicamente para resolver los dolores diarios de empresas medianas como la tuya
           </p>
         </div>
 

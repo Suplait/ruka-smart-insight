@@ -1,4 +1,3 @@
-
 import { Bot, Brain, Clock, LineChart } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
@@ -6,23 +5,23 @@ export default function Features() {
   const features = [
     {
       icon: Bot,
-      title: "24/7 Autonomous Agents",
-      description: "Automate repetitive tasks while reducing operating costs and human errors"
+      title: "Agentes Autónomos 24/7",
+      description: "Automatiza tareas repetitivas mientras reduces costos operativos y errores humanos"
     },
     {
       icon: Brain,
-      title: "AI That Learns From Your Business",
-      description: "Our agents adapt to your processes to deliver more accurate insights every day"
+      title: "IA que Aprende de tu Negocio",
+      description: "Nuestros agentes se adaptan a tus procesos para entregarte insights más precisos cada día"
     },
     {
       icon: Clock,
-      title: "Instant Information",
-      description: "Access your data in real time to make informed decisions when you need them"
+      title: "Información al Instante",
+      description: "Accede a tus datos en tiempo real para tomar decisiones informadas cuando las necesites"
     },
     {
       icon: LineChart,
-      title: "Total Control",
-      description: "Visualize and optimize your operating margin with up-to-date data and detailed reports"
+      title: "Control Total",
+      description: "Visualiza y optimiza tu margen operativo con datos actualizados y reportes detallados"
     }
   ];
 
@@ -32,18 +31,18 @@ export default function Features() {
       <div className="container relative">
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-4xl font-bold">
-            Intelligent Agents Working for You
+            Agentes Inteligentes que Trabajan por Ti
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Imagine having a team that works 24/7 recording purchases, grouping master supplies, monitoring prices, alerting anomalies, and detecting opportunities.
+            Imagina tener un equipo que trabaja 24/7 registrando compras, agrupando insumos maestros, monitoreando precios, alertando anomalías y detectando oportunidades.
           </p>
         </div>
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { title: "Digitize and Clean", desc: "Reduce to 0 the time to record your purchases", imgSrc: "/value1.png" },
-            { title: "Group and Classify", desc: "Automatically create a master inventory", imgSrc: "/value2.png" },
-            { title: "Monitor 24/7", desc: "Immediate alert for anomalies that affect your margin", imgSrc: "/value3.png" }
+            { title: "Digita y Limpia", desc: "Reduce a 0 el tiempo de registrar tus compras", imgSrc: "/value1.png" },
+            { title: "Agrupa y Clasifica", desc: "Crea automáticamente un maestro de insumos", imgSrc: "/value2.png" },
+            { title: "Monitorea 24/7", desc: "Alerta en inmediato ante anomalías que afecten tu margen", imgSrc: "/value3.png" }
           ].map((agent, i) => (
             <div key={i} className="relative rounded-xl overflow-hidden bg-white/50 shadow-lg hover:shadow-xl transition-all duration-300 group">
               <div className="aspect-video">

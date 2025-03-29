@@ -11,7 +11,7 @@ export default function SimpleConnection() {
       className="max-w-md mx-auto p-6"
     >
       <h2 className="text-2xl font-bold text-center text-primary mb-8">
-        Simple and Fast Connection
+        Conexión Simple y Rápida
       </h2>
       
       <div className="relative mb-12">
@@ -31,7 +31,7 @@ export default function SimpleConnection() {
               />
             </div>
             <h3 className="text-sm font-medium">SII</h3>
-            <p className="text-xs text-gray-600">Purchase and sales</p>
+            <p className="text-xs text-gray-600">Compra y venta</p>
           </motion.div>
 
           {/* Ruka.ai */}
@@ -49,7 +49,7 @@ export default function SimpleConnection() {
               />
             </div>
             <h3 className="text-sm font-medium">Ruka</h3>
-            <p className="text-xs">Intelligence</p>
+            <p className="text-xs">Inteligencia</p>
           </motion.div>
 
           {/* Facturador */}
@@ -62,7 +62,7 @@ export default function SimpleConnection() {
             <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full mb-2 mx-auto">
               <FileText className="w-5 h-5 text-primary" />
             </div>
-            <h3 className="text-sm font-medium">Billing</h3>
+            <h3 className="text-sm font-medium">Facturador</h3>
             <p className="text-xs text-gray-600">XMLs</p>
           </motion.div>
         </div>
@@ -79,7 +79,7 @@ export default function SimpleConnection() {
           transition={{ duration: 0.5, delay: 0.5 }}
         >
           <div className="text-xl font-bold text-primary">100%</div>
-          <p className="text-xs text-gray-600">Automated</p>
+          <p className="text-xs text-gray-600">Automatizado</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -87,7 +87,7 @@ export default function SimpleConnection() {
           transition={{ duration: 0.5, delay: 0.6 }}
         >
           <div className="text-xl font-bold text-primary">24/7</div>
-          <p className="text-xs text-gray-600">Monitoring</p>
+          <p className="text-xs text-gray-600">Monitoreo</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -95,7 +95,7 @@ export default function SimpleConnection() {
           transition={{ duration: 0.5, delay: 0.7 }}
         >
           <div className="text-xl font-bold text-primary">98%</div>
-          <p className="text-xs text-gray-600">Accuracy</p>
+          <p className="text-xs text-gray-600">Precisión</p>
         </motion.div>
       </div>
     </motion.div>
