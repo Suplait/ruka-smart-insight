@@ -20,8 +20,8 @@ serve(async (req) => {
       throw new Error('Missing SLACK_BOT_TOKEN');
     }
 
-    // Updated Slack channel ID - using a valid channel ID from your workspace
-    const SLACK_CHANNEL_ID = "C07TNCYA66L"; // Replace with your actual channel ID
+    // Use the correct Slack channel ID
+    const SLACK_CHANNEL_ID = "C07TNCYA66L"; // This should be a valid channel ID
 
     // Format industry-specific message parts
     const industryName = industryType === 'hotel' ? 'Hotel' : 'Restaurante';
@@ -43,6 +43,9 @@ serve(async (req) => {
           break;
         case 'sii-credentials':
           text = `:key: *Actualización de Onboarding*\nIngresó credenciales de SII para: ${lead.rut}`;
+          break;
+        case 'onboarding-completed':
+          text = `:white_check_mark: *Onboarding Completado*\nEl cliente ha finalizado el proceso de onboarding.`;
           break;
         default:
           text = `:information_source: *Actualización de Onboarding*\nPaso completado: ${step}`;
@@ -71,6 +74,8 @@ serve(async (req) => {
     if (isOnboarding && threadTs) {
       requestBody.thread_ts = threadTs;
     }
+
+    console.log(`Sending message to Slack: ${JSON.stringify(requestBody)}`);
 
     const slackResponse = await fetch(slackApiUrl, {
       method: "POST",

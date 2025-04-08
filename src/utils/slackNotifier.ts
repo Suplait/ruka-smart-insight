@@ -16,7 +16,7 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
       // First, get the current lead data including the slack_message_ts
       const { data: leadRecord, error: fetchError } = await supabase
         .from('leads')
-        .select('slack_message_ts')
+        .select('slack_message_ts, company_name')
         .eq('id', leadId)
         .single();
       
@@ -29,23 +29,19 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
       // Get the thread_ts from the lead record
       const threadTs = leadRecord?.slack_message_ts;
       
+      // Determine industry type based on company name or other indicators
+      const industryType = determineIndustryType(leadRecord?.company_name || leadData.company_name);
+      
       if (!threadTs) {
-        // Attempt to check if leadRecord exists but just doesn't have the slack_message_ts
+        // No thread exists yet, attempt to create a new one
         if (leadRecord) {
-          // Determine industry type based on company name convention or available data
-          // For now using a basic check - can be improved with more specific criteria
-          const industryType = leadData.company_name && 
-            (leadData.company_name.toLowerCase().includes('hotel') || 
-             leadData.company_name.toLowerCase().includes('hostal') || 
-             leadData.company_name.toLowerCase().includes('hospedaje')) 
-            ? 'hotel' 
-            : 'restaurant';
-          
-          // Attempt to send an initial notification since we don't have a thread to reply to
           try {
             const initialResponse = await supabase.functions.invoke('notify-slack', {
               body: {
-                lead: leadData,
+                lead: {
+                  ...leadData,
+                  company_name: leadRecord.company_name
+                },
                 isOnboarding: false,
                 industryType
               }
@@ -73,33 +69,30 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
         return;
       }
       
-      // Determine industry type based on company name or other indicators
-      const industryType = leadData.company_name && 
-        (leadData.company_name.toLowerCase().includes('hotel') || 
-         leadData.company_name.toLowerCase().includes('hostal') || 
-         leadData.company_name.toLowerCase().includes('hospedaje')) 
-        ? 'hotel' 
-        : 'restaurant';
-      
       // Send the notification as a thread reply
-      const response = await supabase.functions.invoke('notify-slack', {
-        body: {
-          lead: leadData,
-          isOnboarding: true,
-          leadId: leadId,
-          step: step,
-          threadTs: threadTs,
-          industryType
+      try {
+        const response = await supabase.functions.invoke('notify-slack', {
+          body: {
+            lead: leadData,
+            isOnboarding: true,
+            leadId: leadId,
+            step: step,
+            threadTs: threadTs,
+            industryType
+          }
+        });
+        
+        if (response.error) {
+          console.error('Error replying to thread:', response.error);
+          resolve(false);
+          return;
         }
-      });
-      
-      if (response.error) {
-        console.error('Error replying to thread:', response.error);
+        
+        resolve(true);
+      } catch (error) {
+        console.error('Exception in slack notification process:', error);
         resolve(false);
-        return;
       }
-      
-      resolve(true);
     } catch (error) {
       console.error('Exception in slack notification process:', error);
       resolve(false);
@@ -108,4 +101,29 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
   
   // Don't await the promise, let it run in the background
   return true;
+}
+
+/**
+ * Determine industry type based on company name
+ */
+function determineIndustryType(companyName: string | undefined): 'hotel' | 'restaurant' {
+  if (!companyName) return 'restaurant';
+  
+  const lowerCaseName = companyName.toLowerCase();
+  
+  // Check for hotel-related keywords in the company name
+  if (
+    lowerCaseName.includes('hotel') || 
+    lowerCaseName.includes('hostal') || 
+    lowerCaseName.includes('hospedaje') || 
+    lowerCaseName.includes('posada') ||
+    lowerCaseName.includes('alojamiento') ||
+    lowerCaseName.includes('hostería') ||
+    lowerCaseName.includes('lodge')
+  ) {
+    return 'hotel';
+  }
+  
+  // Default to restaurant if no hotel keywords found
+  return 'restaurant';
 }

@@ -48,7 +48,6 @@ export default function ValueMessageTypewriter({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="inline"
         >
           <span className="inline-block w-8 h-5 bg-primary/20 rounded animate-pulse"></span>
         </motion.span>
@@ -58,7 +57,6 @@ export default function ValueMessageTypewriter({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="inline"
         >
           {currentMessage}
         </motion.span>
