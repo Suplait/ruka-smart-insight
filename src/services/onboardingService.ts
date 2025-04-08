@@ -15,7 +15,7 @@ export const saveFormData = async (
     rut: string;
     clave: string;
   },
-  restaurantName: string
+  businessName: string
 ): Promise<boolean> => {
   try {
     if (!leadId) {

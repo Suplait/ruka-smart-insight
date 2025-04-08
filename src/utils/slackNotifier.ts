@@ -36,7 +36,8 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
             const initialResponse = await supabase.functions.invoke('notify-slack', {
               body: {
                 lead: leadData,
-                isOnboarding: false
+                isOnboarding: false,
+                industryType: 'hotel' // Default to hotel if we can't determine
               }
             });
             
