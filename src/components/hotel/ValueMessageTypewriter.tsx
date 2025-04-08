@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ValueMessageTypewriterProps {
@@ -11,73 +11,58 @@ interface ValueMessageTypewriterProps {
 export default function ValueMessageTypewriter({
   messages,
   staticMode = false,
-  staticText
+  staticText = ""
 }: ValueMessageTypewriterProps) {
-  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
-  const [displayedText, setDisplayedText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [showCursor, setShowCursor] = useState(true);
-
-  useEffect(() => {
-    if (staticMode && staticText) {
-      setDisplayedText(staticText);
-      setShowCursor(false);
-      return;
-    }
-
-    let timer: NodeJS.Timeout;
-    const currentMessage = messages[currentMessageIndex];
-    
-    if (isDeleting) {
-      if (displayedText === "") {
-        setIsDeleting(false);
-        setCurrentMessageIndex((prevIndex) => (prevIndex + 1) % messages.length);
-      } else {
-        timer = setTimeout(() => {
-          setDisplayedText(displayedText.slice(0, -1));
-        }, 30);
-      }
-    } else {
-      if (displayedText === currentMessage) {
-        timer = setTimeout(() => {
-          setIsDeleting(true);
-        }, 2000);
-      } else {
-        timer = setTimeout(() => {
-          setDisplayedText(currentMessage.slice(0, displayedText.length + 1));
-        }, 70);
-      }
-    }
-    
-    return () => clearTimeout(timer);
-  }, [displayedText, currentMessageIndex, isDeleting, messages, staticMode, staticText]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentMessage, setCurrentMessage] = useState(messages[0]);
+  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     if (staticMode) return;
     
-    const cursorTimer = setInterval(() => {
-      setShowCursor((prev) => !prev);
-    }, 500);
-    
-    return () => clearInterval(cursorTimer);
-  }, [staticMode]);
+    const interval = setInterval(() => {
+      setIsTyping(true);
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % messages.length);
+        setIsTyping(false);
+      }, 200);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [messages, staticMode]);
+
+  useEffect(() => {
+    if (staticMode) return;
+    setCurrentMessage(messages[currentIndex]);
+  }, [currentIndex, messages, staticMode]);
+
+  if (staticMode && staticText) {
+    return <span>{staticText}</span>;
+  }
 
   return (
-    <div className="inline">
-      <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait">
+      {isTyping ? (
         <motion.span
-          key={displayedText}
-          initial={{ opacity: 0.8 }}
+          key="typing"
+          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0.8 }}
-          transition={{ duration: 0.2 }}
+          exit={{ opacity: 0 }}
+          className="inline"
         >
-          {displayedText}
-          {showCursor && !staticMode && (
-            <span className="animate-pulse">|</span>
-          )}
+          <span className="inline-block w-8 h-5 bg-primary/20 rounded animate-pulse"></span>
         </motion.span>
-      </AnimatePresence>
-    </div>
+      ) : (
+        <motion.span
+          key={currentMessage}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="inline"
+        >
+          {currentMessage}
+        </motion.span>
+      )}
+    </AnimatePresence>
   );
 }

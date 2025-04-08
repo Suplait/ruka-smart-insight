@@ -21,6 +21,7 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
         .single();
       
       if (fetchError) {
+        console.error('Error fetching lead data:', fetchError);
         resolve(false);
         return;
       }
@@ -31,13 +32,22 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
       if (!threadTs) {
         // Attempt to check if leadRecord exists but just doesn't have the slack_message_ts
         if (leadRecord) {
+          // Determine industry type based on company name convention or available data
+          // For now using a basic check - can be improved with more specific criteria
+          const industryType = leadData.company_name && 
+            (leadData.company_name.toLowerCase().includes('hotel') || 
+             leadData.company_name.toLowerCase().includes('hostal') || 
+             leadData.company_name.toLowerCase().includes('hospedaje')) 
+            ? 'hotel' 
+            : 'restaurant';
+          
           // Attempt to send an initial notification since we don't have a thread to reply to
           try {
             const initialResponse = await supabase.functions.invoke('notify-slack', {
               body: {
                 lead: leadData,
                 isOnboarding: false,
-                industryType: 'hotel' // Default to hotel if we can't determine
+                industryType
               }
             });
             
@@ -51,17 +61,25 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
               });
               
               if (updateResponse.error) {
-                // Error handling
+                console.error('Error updating lead with slack timestamp:', updateResponse.error);
               }
             }
           } catch (initialError) {
-            // Error handling
+            console.error('Error sending initial slack notification:', initialError);
           }
         }
         
         resolve(false);
         return;
       }
+      
+      // Determine industry type based on company name or other indicators
+      const industryType = leadData.company_name && 
+        (leadData.company_name.toLowerCase().includes('hotel') || 
+         leadData.company_name.toLowerCase().includes('hostal') || 
+         leadData.company_name.toLowerCase().includes('hospedaje')) 
+        ? 'hotel' 
+        : 'restaurant';
       
       // Send the notification as a thread reply
       const response = await supabase.functions.invoke('notify-slack', {
@@ -70,17 +88,20 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
           isOnboarding: true,
           leadId: leadId,
           step: step,
-          threadTs: threadTs
+          threadTs: threadTs,
+          industryType
         }
       });
       
       if (response.error) {
+        console.error('Error replying to thread:', response.error);
         resolve(false);
         return;
       }
       
       resolve(true);
     } catch (error) {
+      console.error('Exception in slack notification process:', error);
       resolve(false);
     }
   });

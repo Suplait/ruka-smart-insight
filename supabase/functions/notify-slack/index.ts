@@ -20,6 +20,9 @@ serve(async (req) => {
       throw new Error('Missing SLACK_BOT_TOKEN');
     }
 
+    // Updated Slack channel ID - using a valid channel ID from your workspace
+    const SLACK_CHANNEL_ID = "C07TNCYA66L"; // Replace with your actual channel ID
+
     // Format industry-specific message parts
     const industryName = industryType === 'hotel' ? 'Hotel' : 'Restaurante';
     const industryItemType = industryType === 'hotel' ? 'suministros' : 'insumos';
@@ -57,12 +60,10 @@ serve(async (req) => {
     }
 
     // Prepare the request to Slack API
-    const slackApiUrl = isOnboarding && threadTs
-      ? "https://slack.com/api/chat.postMessage"
-      : "https://slack.com/api/chat.postMessage";
+    const slackApiUrl = "https://slack.com/api/chat.postMessage";
 
     const requestBody: Record<string, any> = {
-      channel: "C05PEU7S8U1", // #leads-ruka channel
+      channel: SLACK_CHANNEL_ID,
       text,
     };
 
