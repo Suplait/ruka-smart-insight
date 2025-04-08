@@ -16,12 +16,11 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
       // First, get the current lead data including the slack_message_ts
       const { data: leadRecord, error: fetchError } = await supabase
         .from('leads')
-        .select('slack_message_ts, company_name')
+        .select('slack_message_ts')
         .eq('id', leadId)
         .single();
       
       if (fetchError) {
-        console.error('Error fetching lead data:', fetchError);
         resolve(false);
         return;
       }
@@ -29,21 +28,15 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
       // Get the thread_ts from the lead record
       const threadTs = leadRecord?.slack_message_ts;
       
-      // Determine industry type based on company name or other indicators
-      const industryType = determineIndustryType(leadRecord?.company_name || leadData.company_name);
-      
       if (!threadTs) {
-        // No thread exists yet, attempt to create a new one
+        // Attempt to check if leadRecord exists but just doesn't have the slack_message_ts
         if (leadRecord) {
+          // Attempt to send an initial notification since we don't have a thread to reply to
           try {
             const initialResponse = await supabase.functions.invoke('notify-slack', {
               body: {
-                lead: {
-                  ...leadData,
-                  company_name: leadRecord.company_name
-                },
-                isOnboarding: false,
-                industryType
+                lead: leadData,
+                isOnboarding: false
               }
             });
             
@@ -57,11 +50,11 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
               });
               
               if (updateResponse.error) {
-                console.error('Error updating lead with slack timestamp:', updateResponse.error);
+                // Error handling
               }
             }
           } catch (initialError) {
-            console.error('Error sending initial slack notification:', initialError);
+            // Error handling
           }
         }
         
@@ -70,60 +63,27 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
       }
       
       // Send the notification as a thread reply
-      try {
-        const response = await supabase.functions.invoke('notify-slack', {
-          body: {
-            lead: leadData,
-            isOnboarding: true,
-            leadId: leadId,
-            step: step,
-            threadTs: threadTs,
-            industryType
-          }
-        });
-        
-        if (response.error) {
-          console.error('Error replying to thread:', response.error);
-          resolve(false);
-          return;
+      const response = await supabase.functions.invoke('notify-slack', {
+        body: {
+          lead: leadData,
+          isOnboarding: true,
+          leadId: leadId,
+          step: step,
+          threadTs: threadTs
         }
-        
-        resolve(true);
-      } catch (error) {
-        console.error('Exception in slack notification process:', error);
+      });
+      
+      if (response.error) {
         resolve(false);
+        return;
       }
+      
+      resolve(true);
     } catch (error) {
-      console.error('Exception in slack notification process:', error);
       resolve(false);
     }
   });
   
   // Don't await the promise, let it run in the background
   return true;
-}
-
-/**
- * Determine industry type based on company name
- */
-function determineIndustryType(companyName: string | undefined): 'hotel' | 'restaurant' {
-  if (!companyName) return 'restaurant';
-  
-  const lowerCaseName = companyName.toLowerCase();
-  
-  // Check for hotel-related keywords in the company name
-  if (
-    lowerCaseName.includes('hotel') || 
-    lowerCaseName.includes('hostal') || 
-    lowerCaseName.includes('hospedaje') || 
-    lowerCaseName.includes('posada') ||
-    lowerCaseName.includes('alojamiento') ||
-    lowerCaseName.includes('hostería') ||
-    lowerCaseName.includes('lodge')
-  ) {
-    return 'hotel';
-  }
-  
-  // Default to restaurant if no hotel keywords found
-  return 'restaurant';
 }

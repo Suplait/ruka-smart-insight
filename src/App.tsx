@@ -7,7 +7,6 @@ import { Toaster } from "@/components/ui/toaster"
 
 import Index from './pages/Index';
 import Restaurantes from './pages/Restaurantes';
-import Hoteles from './pages/Hoteles';
 import AboutUs from './pages/AboutUs';
 import TermsAndConditions from './pages/TermsAndConditions';
 import OnboardingSuccess from './pages/OnboardingSuccess';
@@ -24,7 +23,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/restaurantes" element={<Restaurantes />} />
-            <Route path="/hoteles" element={<Hoteles />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/terms" element={<TermsAndConditions />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />

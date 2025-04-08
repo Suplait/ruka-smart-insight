@@ -1,115 +1,231 @@
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
 
-serve(async (req) => {
-  // This is needed if you're planning to invoke your function from a browser.
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+const SLACK_CHANNEL = 'ruka-leads'
+
+interface Lead {
+  company_name: string
+  name: string
+  email: string
+  ccity: string
+  whatsapp?: string
+  meses_datos?: number
+  sistema_facturacion?: string
+  sistema_custom?: string
+  subdominio?: string
+  rut?: string
+  clave_sii?: string
+  sii_connected?: boolean
+}
+
+Deno.serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders })
   }
 
   try {
-    const { lead, threadTs, isOnboarding, leadId, step, industryType = 'restaurant' } = await req.json();
-
-    const SLACK_BOT_TOKEN = Deno.env.get('SLACK_BOT_TOKEN');
+    const SLACK_BOT_TOKEN = Deno.env.get('SLACK_BOT_TOKEN')
     if (!SLACK_BOT_TOKEN) {
-      throw new Error('Missing SLACK_BOT_TOKEN');
+      throw new Error('SLACK_BOT_TOKEN no encontrado')
+    }
+    
+    const requestBody = await req.json();
+    const { lead, isOnboarding, leadId, step, threadTs } = requestBody as { 
+      lead: Lead, 
+      isOnboarding?: boolean,
+      leadId?: number,
+      step?: string,
+      threadTs?: string 
     }
 
-    // Use the correct Slack channel ID
-    const SLACK_CHANNEL_ID = "C07TNCYA66L"; // This should be a valid channel ID
-
-    // Format industry-specific message parts
-    const industryName = industryType === 'hotel' ? 'Hotel' : 'Restaurante';
-    const industryItemType = industryType === 'hotel' ? 'suministros' : 'insumos';
-
-    let text = '';
-
-    if (isOnboarding) {
-      // This is a follow-up message in a thread
-      switch (step) {
-        case 'data-months-selected':
-          text = `:calendar: *Actualización de Onboarding*\nSeleccionó ${lead.meses_datos} meses de datos para importar.`;
-          break;
-        case 'billing-system-selected':
-          text = `:receipt: *Actualización de Onboarding*\nSeleccionó ${lead.sistema_facturacion} como sistema de facturación${lead.sistema_custom ? ` (${lead.sistema_custom})` : ''}.`;
-          break;
-        case 'subdomain-selected':
-          text = `:link: *Actualización de Onboarding*\nSeleccionó el subdominio: ${lead.subdominio}.ruka.ai`;
-          break;
-        case 'sii-credentials':
-          text = `:key: *Actualización de Onboarding*\nIngresó credenciales de SII para: ${lead.rut}`;
-          break;
-        case 'onboarding-completed':
-          text = `:white_check_mark: *Onboarding Completado*\nEl cliente ha finalizado el proceso de onboarding.`;
-          break;
-        default:
-          text = `:information_source: *Actualización de Onboarding*\nPaso completado: ${step}`;
+    // If this is an onboarding update for an existing thread
+    if (isOnboarding && leadId && step && threadTs) {
+      try {
+        // Send reply to thread using the provided threadTs
+        let replyText;
+        switch(step) {
+          case "data-months-selected":
+            replyText = `1️⃣ *Actualización de Onboarding:* El restaurante quiere importar *${lead.meses_datos || 0}* meses de datos`;
+            break;
+          case "billing-system-selected":
+            if (lead.sistema_facturacion === 'mercado' && lead.sistema_custom) {
+              replyText = `2️⃣ *Actualización de Onboarding:* El restaurante ha seleccionado sistema de facturación *${lead.sistema_facturacion} (${lead.sistema_custom})*`;
+            } else {
+              replyText = `2️⃣ *Actualización de Onboarding:* El restaurante ha seleccionado sistema de facturación *${lead.sistema_facturacion || lead.sistema_custom || "No especificado"}*`;
+            }
+            break;
+          case "subdomain-selected":
+            replyText = `3️⃣ *Actualización de Onboarding:* El restaurante ha seleccionado su subdominio: *${lead.subdominio || "No disponible"}* (https://${lead.subdominio}.ruka.ai)`;
+            break;
+          case "sii-credentials":
+            replyText = `4️⃣ *Actualización de Onboarding:* El restaurante ha ingresado sus credenciales del SII`;
+            break;
+          case "onboarding-completed":
+            replyText = `✅ *Onboarding Completado:* El restaurante ha finalizado el proceso de onboarding`;
+            break;
+          default:
+            replyText = `➡️ *Actualización de Onboarding:* Paso "${step}"`;
+        }
+        
+        const threadMessage = {
+          channel: SLACK_CHANNEL,
+          text: replyText,
+          thread_ts: threadTs // This is crucial for making it a reply
+        };
+        
+        // Call Slack API to post a message in the thread
+        const threadResponse = await fetch('https://slack.com/api/chat.postMessage', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${SLACK_BOT_TOKEN}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(threadMessage)
+        });
+        
+        const threadResult = await threadResponse.json();
+        
+        if (!threadResult.ok) {
+          return new Response(JSON.stringify({ success: false, error: 'Error sending thread message', details: threadResult }), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            status: 200, // Still return 200 to not interrupt the main flow
+          });
+        }
+        
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        });
+        
+      } catch (threadError) {
+        // Return success anyway to not interrupt the main flow
+        return new Response(JSON.stringify({ success: false, error: threadError.message }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200, // Still return 200 to not interrupt the main flow
+        });
       }
-    } else {
-      // This is an initial notification message
-      text = `:tada: *¡Nuevo registro de ${industryName}!*\n` +
-        `*Nombre:* ${lead.name}\n` +
-        `*Email:* ${lead.email}\n` +
-        `*${industryName}:* ${lead.company_name}\n` +
-        `*Ciudad:* ${lead.ccity}\n` +
-        (lead.whatsapp ? `*WhatsApp:* ${lead.whatsapp}\n` : '') +
-        `\n:rocket: Este cliente quiere automatizar el control de ${industryItemType} con Ruka.ai\n` +
-        `\n:calendar: Asigna este lead para contactarlo dentro de las próximas 24 horas.`;
     }
 
-    // Prepare the request to Slack API
-    const slackApiUrl = "https://slack.com/api/chat.postMessage";
-
-    const requestBody: Record<string, any> = {
-      channel: SLACK_CHANNEL_ID,
-      text,
-    };
-
-    // If this is a thread reply, include the thread_ts
-    if (isOnboarding && threadTs) {
-      requestBody.thread_ts = threadTs;
-    }
-
-    console.log(`Sending message to Slack: ${JSON.stringify(requestBody)}`);
-
-    const slackResponse = await fetch(slackApiUrl, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${SLACK_BOT_TOKEN}`,
-        "Content-Type": "application/json; charset=utf-8"
+    // If not an onboarding notification, send an initial message
+    let blocks = [
+      {
+        type: "header",
+        text: {
+          type: "plain_text",
+          text: "🎉 ¡Tenemos un Nuevo Restaurante Interesado!",
+          emoji: true
+        }
       },
-      body: JSON.stringify(requestBody)
-    });
+      {
+        type: "divider"
+      },
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `<!channel>\n\n*¡Nuevo Lead!*\n\n*¡Hola equipo!* Tenemos un nuevo lead que quiere optimizar sus costos:\n\n🏪 *${lead.company_name}*`
+        }
+      },
+      {
+        type: "section",
+        fields: [
+          {
+            type: "mrkdwn",
+            text: `👤 *Contacto:*\n${lead.name}`
+          },
+          {
+            type: "mrkdwn",
+            text: `📍 *Ciudad:*\n${lead.ccity}`
+          }
+        ]
+      },
+      {
+        type: "section",
+        fields: [
+          {
+            type: "mrkdwn",
+            text: `📧 *Email:*\n${lead.email}`
+          },
+          {
+            type: "mrkdwn",
+            text: `📱 *WhatsApp:*\n${lead.whatsapp ? lead.whatsapp : "No proporcionado"}`
+          }
+        ]
+      },
+      {
+        type: "context",
+        elements: [
+          {
+            type: "mrkdwn",
+            text: "💡 _Recuerda: mientras más rápido contactemos, más probabilidades de conversión_"
+          }
+        ]
+      }
+    ];
 
-    const slackData = await slackResponse.json();
-
-    if (!slackData.ok) {
-      console.error("Error sending message to Slack:", slackData.error);
-      throw new Error(`Slack API error: ${slackData.error}`);
+    const message = {
+      channel: SLACK_CHANNEL,
+      text: "🎉 ¡Nuevo Lead de Restaurante!",
+      icon_emoji: ":money_with_wings:",
+      blocks
     }
+    
+    try {
+      const response = await fetch('https://slack.com/api/chat.postMessage', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${SLACK_BOT_TOKEN}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(message)
+      });
 
-    return new Response(
-      JSON.stringify({
-        success: true,
-        ts: slackData.ts || slackData.message?.ts
-      }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" }
+      const responseText = await response.text();
+      
+      let slackResponse;
+      try {
+        slackResponse = JSON.parse(responseText);
+      } catch (parseError) {
+        return new Response(JSON.stringify({ 
+          success: false, 
+          error: 'Error parsing Slack API response',
+          rawResponse: responseText
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        });
       }
-    );
+      
+      if (!slackResponse.ok) {
+        return new Response(JSON.stringify({ success: false, error: 'Error al enviar mensaje a Slack', details: slackResponse }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200, // Still return 200 to not interrupt the main flow
+        });
+      }
+      
+      // Return the message timestamp which will be used as the thread ID for future replies
+      return new Response(JSON.stringify({ 
+        success: true, 
+        ts: slackResponse.ts 
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200,
+      });
+    } catch (slackError) {
+      return new Response(JSON.stringify({ success: false, error: 'Error in Slack API request', details: slackError.message }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200, // Still return 200 to not interrupt the main flow
+      });
+    }
   } catch (error) {
-    console.error("Error in notify-slack function:", error.message);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" }
-      }
-    );
+    return new Response(JSON.stringify({ success: false, error: error.message }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 200, // Still return 200 to not interrupt the main flow
+    });
   }
 })
