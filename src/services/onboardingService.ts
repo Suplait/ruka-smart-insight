@@ -99,24 +99,30 @@ export const saveFormData = async (
 
 export const validateSiiCredentials = async (rut: string, password: string) => {
   try {
-    const headers = {
-      "Content-Type": "application/json"
-    };
-    const params = {
-      rut: rut,
-      password: password
-    };
-    const response = await fetch("https://scraper.ruka.ai/api/validate_sii_credentials", {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(params)
+    // Use the new Supabase Edge Function for validation
+    const response = await supabase.functions.invoke('validate-sii', {
+      body: {
+        rut: rut,
+        password: password
+      }
     });
-    const responseData = await response.json();
+    
+    console.log('SII validation response:', response);
+    
+    if (response.error) {
+      console.error('SII validation error:', response.error);
+      return {
+        success: false,
+        error: response.error.message
+      };
+    }
+    
     return {
-      success: responseData.success === true,
-      error: responseData.error
+      success: response.data?.success === true,
+      error: response.data?.error
     };
   } catch (error) {
+    console.error('SII validation exception:', error);
     return {
       success: false,
       error: error.message
