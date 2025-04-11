@@ -1,1 +1,8 @@
+
 project_id = "rmxzryueysmzksmvpwpv"
+
+[functions.update-lead]
+verify_jwt = false
+
+[functions.notify-slack]
+verify_jwt = false

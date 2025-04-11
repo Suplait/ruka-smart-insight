@@ -9,5 +9,8 @@ export const pushToDataLayer = (eventName: string, additionalData = {}) => {
       ...additionalData,
       timestamp: new Date().toISOString()
     });
+    console.log(`DataLayer: ${eventName}`, additionalData);
+  } else {
+    console.log('DataLayer not found', eventName, additionalData);
   }
 };
