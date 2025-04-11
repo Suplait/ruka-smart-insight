@@ -44,6 +44,7 @@ Deno.serve(async (req) => {
       
       // Get raw response text for debugging
       const responseText = await response.text()
+      console.log('Raw response from SII validation:', responseText)
       
       // Try to parse the response
       let validationResult
@@ -66,6 +67,7 @@ Deno.serve(async (req) => {
         status: 200
       })
     } catch (validationError) {
+      console.error('Validation error:', validationError)
       return new Response(JSON.stringify({
         success: false,
         error: `Error en la validación: ${validationError.message}`
@@ -75,6 +77,7 @@ Deno.serve(async (req) => {
       })
     }
   } catch (error) {
+    console.error('General error:', error)
     return new Response(JSON.stringify({
       success: false,
       error: `Error general: ${error.message}`

@@ -99,7 +99,9 @@ export const saveFormData = async (
 
 export const validateSiiCredentials = async (rut: string, password: string) => {
   try {
-    // Use the new Supabase Edge Function for validation
+    console.log(`Validating SII credentials for RUT: ${rut}`);
+    
+    // Use the Supabase Edge Function for validation
     const response = await supabase.functions.invoke('validate-sii', {
       body: {
         rut: rut,
@@ -117,9 +119,13 @@ export const validateSiiCredentials = async (rut: string, password: string) => {
       };
     }
     
+    // Make sure we correctly interpret the response
+    const isSuccess = response.data?.success === true;
+    console.log(`SII validation result: ${isSuccess ? 'success' : 'failed'}`);
+    
     return {
-      success: response.data?.success === true,
-      error: response.data?.error
+      success: isSuccess,
+      error: response.data?.error || response.data?.message
     };
   } catch (error) {
     console.error('SII validation exception:', error);
