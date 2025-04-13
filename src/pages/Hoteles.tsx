@@ -1,8 +1,7 @@
-
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Clock, TrendingUp, Bed, Calendar, CreditCard, Hotel, Users, Receipt, AlertTriangle } from "lucide-react";
+import { ArrowRight, Clock, TrendingUp, Bed, Calendar, CreditCard, Hotel, Users, Receipt, AlertTriangle, Zap, BarChart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -378,7 +377,7 @@ export default function Hoteles() {
                       transition={{ delay: 1 * 0.2 }}
                       className="bg-white p-8 rounded-xl shadow-lg text-center space-y-4 hover:shadow-xl transition-shadow"
                     >
-                      <ChartBarIcon className="w-12 h-12 text-blue-500 mx-auto" />
+                      <BarChart className="w-12 h-12 text-blue-500 mx-auto" />
                       <div className="text-4xl font-bold text-blue-500">100%</div>
                       <p className="text-gray-600">Control de costos</p>
                     </motion.div>
