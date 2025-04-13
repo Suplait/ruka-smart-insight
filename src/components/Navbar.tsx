@@ -1,6 +1,7 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X } from "lucide-react";
+import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X, Hotel } from "lucide-react";
 import SubdomainModal from "./SubdomainModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
@@ -55,6 +56,10 @@ export default function Navbar() {
           <Link to="/restaurantes" className="flex items-center space-x-2 text-left text-lg font-medium" onClick={() => setIsOpen(false)}>
             <UtensilsCrossed className="h-5 w-5" />
             <span>Restaurantes</span>
+          </Link>
+          <Link to="/hoteles" className="flex items-center space-x-2 text-left text-lg font-medium" onClick={() => setIsOpen(false)}>
+            <Hotel className="h-5 w-5" />
+            <span>Hoteles</span>
           </Link>
           <div className="flex flex-col gap-2 mt-4">
             <Button variant="outline" className="w-full justify-start gap-2" onClick={() => {
@@ -122,6 +127,21 @@ export default function Navbar() {
                                   Restaurantes
                                 </div>
                                 <div className="line-clamp-2 text-xs text-muted-foreground">Automatiza el registro, seguimiento de precios y monitoreo de foodcost</div>
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link to="/hoteles" className={cn("flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors", "bg-card hover:bg-accent hover:text-accent-foreground", "border border-transparent hover:border-border")}>
+                              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                <Hotel className="h-5 w-5 text-primary" />
+                              </div>
+                              <div className="grid gap-1">
+                                <div className="text-sm font-medium">
+                                  Hoteles
+                                </div>
+                                <div className="line-clamp-2 text-xs text-muted-foreground">Optimiza tus costos operativos y gestiona tus proveedores eficientemente</div>
                               </div>
                             </Link>
                           </NavigationMenuLink>

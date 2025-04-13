@@ -21,6 +21,7 @@ interface Lead {
   rut?: string
   clave_sii?: string
   sii_connected?: boolean
+  industry?: string
 }
 
 Deno.serve(async (req) => {
@@ -42,6 +43,10 @@ Deno.serve(async (req) => {
       step?: string,
       threadTs?: string 
     }
+    
+    const isHotel = lead.industry === 'hotel';
+    const businessType = isHotel ? 'Hotel' : 'Restaurante';
+    const businessTypeLC = isHotel ? 'hotel' : 'restaurante';
 
     // If this is an onboarding update for an existing thread
     if (isOnboarding && leadId && step && threadTs) {
@@ -50,23 +55,23 @@ Deno.serve(async (req) => {
         let replyText;
         switch(step) {
           case "data-months-selected":
-            replyText = `1️⃣ *Actualización de Onboarding:* El restaurante quiere importar *${lead.meses_datos || 0}* meses de datos`;
+            replyText = `1️⃣ *Actualización de Onboarding:* El ${businessTypeLC} quiere importar *${lead.meses_datos || 0}* meses de datos`;
             break;
           case "billing-system-selected":
             if (lead.sistema_facturacion === 'mercado' && lead.sistema_custom) {
-              replyText = `2️⃣ *Actualización de Onboarding:* El restaurante ha seleccionado sistema de facturación *${lead.sistema_facturacion} (${lead.sistema_custom})*`;
+              replyText = `2️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha seleccionado sistema de facturación *${lead.sistema_facturacion} (${lead.sistema_custom})*`;
             } else {
-              replyText = `2️⃣ *Actualización de Onboarding:* El restaurante ha seleccionado sistema de facturación *${lead.sistema_facturacion || lead.sistema_custom || "No especificado"}*`;
+              replyText = `2️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha seleccionado sistema de facturación *${lead.sistema_facturacion || lead.sistema_custom || "No especificado"}*`;
             }
             break;
           case "subdomain-selected":
-            replyText = `3️⃣ *Actualización de Onboarding:* El restaurante ha seleccionado su subdominio: *${lead.subdominio || "No disponible"}* (https://${lead.subdominio}.ruka.ai)`;
+            replyText = `3️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha seleccionado su subdominio: *${lead.subdominio || "No disponible"}* (https://${lead.subdominio}.ruka.ai)`;
             break;
           case "sii-credentials":
-            replyText = `4️⃣ *Actualización de Onboarding:* El restaurante ha ingresado sus credenciales del SII`;
+            replyText = `4️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha ingresado sus credenciales del SII`;
             break;
           case "onboarding-completed":
-            replyText = `✅ *Onboarding Completado:* El restaurante ha finalizado el proceso de onboarding`;
+            replyText = `✅ *Onboarding Completado:* El ${businessTypeLC} ha finalizado el proceso de onboarding`;
             break;
           default:
             replyText = `➡️ *Actualización de Onboarding:* Paso "${step}"`;
@@ -117,7 +122,7 @@ Deno.serve(async (req) => {
         type: "header",
         text: {
           type: "plain_text",
-          text: "🎉 ¡Tenemos un Nuevo Restaurante Interesado!",
+          text: `🎉 ¡Tenemos un Nuevo ${businessType} Interesado!`,
           emoji: true
         }
       },
@@ -158,6 +163,15 @@ Deno.serve(async (req) => {
         ]
       },
       {
+        type: "section",
+        fields: [
+          {
+            type: "mrkdwn",
+            text: `🏢 *Tipo de Negocio:*\n${businessType}`
+          }
+        ]
+      },
+      {
         type: "context",
         elements: [
           {
@@ -170,7 +184,7 @@ Deno.serve(async (req) => {
 
     const message = {
       channel: SLACK_CHANNEL,
-      text: "🎉 ¡Nuevo Lead de Restaurante!",
+      text: `🎉 ¡Nuevo Lead de ${businessType}!`,
       icon_emoji: ":money_with_wings:",
       blocks
     }
