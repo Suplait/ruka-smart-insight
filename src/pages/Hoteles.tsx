@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Clock, TrendingUp } from "lucide-react";
+import { ArrowRight, Clock, TrendingUp, Bed, Calendar, CreditCard, Hotel, Users, Receipt, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -134,7 +134,7 @@ export default function Hoteles() {
                 className="space-y-4"
               >
                 <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                  Automatiza tus Costos
+                  Gestión Inteligente para tu Hotel
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-md mx-auto">
                   Únete a +50 hoteles que ya optimizan sus costos operativos con inteligencia artificial
@@ -162,15 +162,15 @@ export default function Hoteles() {
                   className="space-y-8"
                 >
                   <h1 className="text-5xl sm:text-6xl font-bold leading-tight">
-                    ¿Te quita tiempo
-                    <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> procesar las facturas </span>
-                    de tu Hotel?
+                    ¿Tu hotel pierde tiempo
+                    <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> procesando facturas</span>
+                    manualmente?
                   </h1>
                   <p className="text-2xl text-muted-foreground leading-relaxed">
                     <ValueMessageTypewriter 
                       messages={valueMessages} 
                       staticMode={true}
-                      staticText="Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel, sistema de gestión hotelera o ERP."
+                      staticText="Sabemos que el personal administrativo de tu hotel pasa horas registrando facturas de proveedores en Excel o en tu PMS hotelero."
                     />
                   </p>
                 </motion.header>
@@ -183,15 +183,38 @@ export default function Hoteles() {
                   className="relative p-8 rounded-2xl bg-gradient-to-br from-red-50 to-orange-50 border border-red-100 space-y-8"
                 >
                   <div className="absolute -top-6 right-8 w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                    <Clock className="w-6 h-6 text-red-600" />
+                    <AlertTriangle className="w-6 h-6 text-red-600" />
                   </div>
                   <h2 className="text-4xl font-bold text-red-900">
-                    Y cuando por fin tienes los datos...
+                    Los desafíos únicos de la industria hotelera:
                   </h2>
                   <div className="grid md:grid-cols-2 gap-8 items-center">
-                    <p className="text-2xl text-red-800/80 leading-relaxed">
-                      Ya es demasiado tarde. Te enteras que el precio de los amenities subió hace un mes y has estado gastando más de lo presupuestado en todos los departamentos.
-                    </p>
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-3">
+                        <Bed className="w-6 h-6 text-red-600 mt-1 flex-shrink-0" />
+                        <p className="text-lg text-red-800/80">
+                          Múltiples departamentos generando facturas (A&B, Housekeeping, Mantenimiento)
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Calendar className="w-6 h-6 text-red-600 mt-1 flex-shrink-0" />
+                        <p className="text-lg text-red-800/80">
+                          Temporalidad que afecta los precios y la disponibilidad de insumos
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Users className="w-6 h-6 text-red-600 mt-1 flex-shrink-0" />
+                        <p className="text-lg text-red-800/80">
+                          Alta rotación de personal que complica mantener procesos constantes
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Receipt className="w-6 h-6 text-red-600 mt-1 flex-shrink-0" />
+                        <p className="text-lg text-red-800/80">
+                          Volumen masivo de facturas que llegan a fin de mes
+                        </p>
+                      </div>
+                    </div>
                     <div className="bg-white p-6 rounded-xl shadow-lg">
                       <div className="space-y-4">
                         <div className="h-2 bg-red-200 rounded-full w-full" />
@@ -199,7 +222,7 @@ export default function Hoteles() {
                         <div className="h-2 bg-red-200 rounded-full w-1/2" />
                       </div>
                       <div className="mt-6 text-center text-red-600 font-semibold">
-                        -15% Margen Operativo
+                        Pérdida de control sobre el 35% de tus gastos operativos
                       </div>
                     </div>
                   </div>
@@ -216,32 +239,39 @@ export default function Hoteles() {
                     <img src="/0webclip.jpg" alt="Ruka Logo" className="w-8 h-8 rounded-full" />
                   </div>
                   <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                    Ruka lo hace todo automático
+                    Ruka: Diseñado específicamente para Hoteles
                   </h2>
                   <div className="grid md:grid-cols-2 gap-8 items-center">
-                    <div className="space-y-6 text-xl text-primary/80 leading-relaxed">
-                      <p className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                        Digitaliza tus facturas automáticamente
-                      </p>
-                      <p className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                        Agrupa y crea un maestro de insumos
-                      </p>
-                      <p className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                        Monitorea precios en tiempo real
-                      </p>
-                      <p className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                        Alerta ante alzas de precios
-                      </p>
-                      <p className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
-                        Se integra con tu sistema de gestión
-                      </p>
+                    <div className="space-y-6">
+                      <div className="flex items-start gap-3">
+                        <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0 mt-1">✓</div>
+                        <p className="text-lg text-primary/80">
+                          <span className="font-semibold">Procesamiento centralizado:</span> Todas las facturas de todos los departamentos en un solo lugar
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0 mt-1">✓</div>
+                        <p className="text-lg text-primary/80">
+                          <span className="font-semibold">Detección avanzada:</span> Identifica variaciones de precios entre temporadas
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0 mt-1">✓</div>
+                        <p className="text-lg text-primary/80">
+                          <span className="font-semibold">Integración PMS:</span> Compatible con los principales sistemas de gestión hotelera
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0 mt-1">✓</div>
+                        <p className="text-lg text-primary/80">
+                          <span className="font-semibold">Dashboards por departamento:</span> Análisis segmentado para housekeeping, A&B y mantenimiento
+                        </p>
+                      </div>
                     </div>
                     <div className="relative">
+                      <div className="absolute -top-10 -right-10 bg-yellow-100 text-yellow-800 text-sm font-medium px-3 py-1 rounded-full transform rotate-12">
+                        Diseñado para Hoteles
+                      </div>
                       <img src="/robotshero2.png" alt="Robot procesando datos" className="w-full object-contain transform hover:scale-105 transition-transform duration-300" />
                     </div>
                   </div>
@@ -255,23 +285,65 @@ export default function Hoteles() {
                   className="relative p-8 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 space-y-8"
                 >
                   <div className="absolute -top-6 right-8 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                    <TrendingUp className="w-6 h-6 text-green-600" />
+                    <Hotel className="w-6 h-6 text-green-600" />
                   </div>
                   <h2 className="text-4xl font-bold text-green-900">
-                    Optimiza la gestión de compras sin sobrecargar a tu equipo
+                    Beneficios específicos para la operación hotelera
                   </h2>
                   <div className="grid md:grid-cols-2 gap-8 items-center">
-                    <p className="text-2xl text-green-800/80 leading-relaxed">
-                      Olvídate de gastar en más personal para controlar costos. Ruka hace el trabajo por ti, 24/7, sin errores y en tiempo real.
-                    </p>
-                    <div className="bg-white p-6 rounded-xl shadow-lg">
-                      <div className="space-y-4">
-                        <div className="h-2 bg-green-200 rounded-full w-full" />
-                        <div className="h-2 bg-green-200 rounded-full w-4/5" />
-                        <div className="h-2 bg-green-200 rounded-full w-full" />
+                    <div className="space-y-5">
+                      <div className="bg-white p-4 rounded-lg shadow-sm border border-green-100">
+                        <h3 className="text-lg font-medium text-green-800 mb-2 flex items-center gap-2">
+                          <Bed className="w-5 h-5" /> Housekeeping
+                        </h3>
+                        <p className="text-green-700">Control automático de inventario de amenities y productos de limpieza con alertas de reorden</p>
                       </div>
-                      <div className="mt-6 text-center text-green-600 font-semibold">
-                        +25% Eficiencia Operativa
+                      <div className="bg-white p-4 rounded-lg shadow-sm border border-green-100">
+                        <h3 className="text-lg font-medium text-green-800 mb-2 flex items-center gap-2">
+                          <CreditCard className="w-5 h-5" /> Finanzas
+                        </h3>
+                        <p className="text-green-700">Proyecciones de flujo de caja basadas en históricos de temporadas anteriores</p>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg shadow-sm border border-green-100">
+                        <h3 className="text-lg font-medium text-green-800 mb-2 flex items-center gap-2">
+                          <Users className="w-5 h-5" /> Gerencia
+                        </h3>
+                        <p className="text-green-700">Dashboard unificado con KPIs de todos los departamentos para toma de decisiones</p>
+                      </div>
+                    </div>
+                    <div className="bg-white p-6 rounded-xl shadow-lg">
+                      <div className="text-center mb-6">
+                        <span className="text-3xl font-bold text-green-600">+32%</span>
+                        <p className="text-green-700 font-medium">Reducción en tiempo administrativo</p>
+                      </div>
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-sm">
+                            <span className="text-gray-600">Eficiencia operativa</span>
+                            <span className="text-green-600 font-medium">+25%</span>
+                          </div>
+                          <div className="h-2 bg-gray-100 rounded-full">
+                            <div className="h-2 bg-green-500 rounded-full w-[85%]"></div>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-sm">
+                            <span className="text-gray-600">Control de costos</span>
+                            <span className="text-green-600 font-medium">+40%</span>
+                          </div>
+                          <div className="h-2 bg-gray-100 rounded-full">
+                            <div className="h-2 bg-green-500 rounded-full w-[90%]"></div>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-sm">
+                            <span className="text-gray-600">ROI primer trimestre</span>
+                            <span className="text-green-600 font-medium">320%</span>
+                          </div>
+                          <div className="h-2 bg-gray-100 rounded-full">
+                            <div className="h-2 bg-green-500 rounded-full w-[95%]"></div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -289,10 +361,10 @@ export default function Hoteles() {
                   className="text-center space-y-8 bg-gradient-to-br from-primary/10 to-purple-100 p-6 sm:p-12 rounded-3xl mx-auto"
                 >
                   <h2 className="text-4xl font-bold">
-                    Optimiza tus costos operativos ahora
+                    Optimiza la gestión financiera de tu hotel ahora
                   </h2>
                   <p className="text-2xl text-gray-700">
-                    Únete a los +50 hoteles que ya están ahorrando tiempo y dinero con Ruka
+                    Únete a los +50 hoteles que ya están ahorrando tiempo y elevando su rentabilidad con Ruka
                   </p>
                   <Button
                     size="lg"

@@ -96,6 +96,7 @@ Deno.serve(async (req) => {
         const threadResult = await threadResponse.json();
         
         if (!threadResult.ok) {
+          console.error('Error sending thread message:', threadResult);
           return new Response(JSON.stringify({ success: false, error: 'Error sending thread message', details: threadResult }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
             status: 200, // Still return 200 to not interrupt the main flow
@@ -108,6 +109,7 @@ Deno.serve(async (req) => {
         });
         
       } catch (threadError) {
+        console.error('Thread error:', threadError);
         // Return success anyway to not interrupt the main flow
         return new Response(JSON.stringify({ success: false, error: threadError.message }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -117,12 +119,13 @@ Deno.serve(async (req) => {
     }
 
     // If not an onboarding notification, send an initial message
+    const hotelEmoji = isHotel ? '🏨' : '🍽️';
     let blocks = [
       {
         type: "header",
         text: {
           type: "plain_text",
-          text: `🎉 ¡Tenemos un Nuevo ${businessType} Interesado!`,
+          text: `${hotelEmoji} ¡Tenemos un Nuevo ${businessType} Interesado!`,
           emoji: true
         }
       },
@@ -133,7 +136,7 @@ Deno.serve(async (req) => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `<!channel>\n\n*¡Nuevo Lead!*\n\n*¡Hola equipo!* Tenemos un nuevo lead que quiere optimizar sus costos:\n\n🏪 *${lead.company_name}*`
+          text: `<!channel>\n\n*¡Nuevo Lead!*\n\n*¡Hola equipo!* Tenemos un nuevo lead que quiere optimizar sus costos:\n\n${isHotel ? '🏨' : '🏪'} *${lead.company_name}*`
         }
       },
       {
@@ -184,12 +187,13 @@ Deno.serve(async (req) => {
 
     const message = {
       channel: SLACK_CHANNEL,
-      text: `🎉 ¡Nuevo Lead de ${businessType}!`,
-      icon_emoji: ":money_with_wings:",
+      text: `${hotelEmoji} ¡Nuevo Lead de ${businessType}!`,
+      icon_emoji: isHotel ? ":hotel:" : ":money_with_wings:",
       blocks
     }
     
     try {
+      console.log('Sending message to Slack:', JSON.stringify(message));
       const response = await fetch('https://slack.com/api/chat.postMessage', {
         method: 'POST',
         headers: {
@@ -200,11 +204,13 @@ Deno.serve(async (req) => {
       });
 
       const responseText = await response.text();
+      console.log('Slack API response:', responseText);
       
       let slackResponse;
       try {
         slackResponse = JSON.parse(responseText);
       } catch (parseError) {
+        console.error('Error parsing Slack API response:', parseError, 'Raw response:', responseText);
         return new Response(JSON.stringify({ 
           success: false, 
           error: 'Error parsing Slack API response',
@@ -216,6 +222,7 @@ Deno.serve(async (req) => {
       }
       
       if (!slackResponse.ok) {
+        console.error('Error sending message to Slack:', slackResponse);
         return new Response(JSON.stringify({ success: false, error: 'Error al enviar mensaje a Slack', details: slackResponse }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 200, // Still return 200 to not interrupt the main flow
@@ -231,12 +238,14 @@ Deno.serve(async (req) => {
         status: 200,
       });
     } catch (slackError) {
+      console.error('Error in Slack API request:', slackError);
       return new Response(JSON.stringify({ success: false, error: 'Error in Slack API request', details: slackError.message }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200, // Still return 200 to not interrupt the main flow
       });
     }
   } catch (error) {
+    console.error('General error in notify-slack:', error);
     return new Response(JSON.stringify({ success: false, error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200, // Still return 200 to not interrupt the main flow

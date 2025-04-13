@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -60,18 +59,23 @@ export default function HotelRegistrationForm({
       const {
         data: leadData,
         error: leadError
-      } = await supabase.from('leads').insert([{
-        company_name: formData.nombreHotel,
-        name: `${formData.firstName} ${formData.lastName}`,
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        email: formData.email,
-        ccity: formData.ciudad,
-        whatsapp: whatsappNumber,
-        industry: "hotel" // Add this field to distinguish between industries
-      }]).select().single();
+      } = await supabase
+        .from('leads')
+        .insert({
+          company_name: formData.nombreHotel,
+          name: `${formData.firstName} ${formData.lastName}`,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          email: formData.email,
+          ccity: formData.ciudad,
+          whatsapp: whatsappNumber,
+          industry: "hotel" // Add this field to distinguish between industries
+        })
+        .select()
+        .single();
       
       if (leadError) {
+        console.error("Lead creation error:", leadError);
         throw leadError;
       }
 
@@ -94,6 +98,7 @@ export default function HotelRegistrationForm({
           }
         });
         if (slackResponse.error) {
+          console.error("Slack notification error:", slackResponse.error);
           // Don't throw error here, just log warning
         } else if (slackResponse.data?.ts) {
           // Store the Slack message timestamp for future thread replies
@@ -109,10 +114,12 @@ export default function HotelRegistrationForm({
             }
           });
           if (updateResponse.error) {
+            console.error("Lead update error:", updateResponse.error);
             // Error handling
           }
         }
       } catch (slackError) {
+        console.error("Slack communication error:", slackError);
         // Don't throw error here, just log warning
       }
 
@@ -124,6 +131,7 @@ export default function HotelRegistrationForm({
         }
       });
     } catch (error) {
+      console.error("Form submission error:", error);
       toast({
         title: "Error",
         description: "Hubo un problema al enviar tu información. Por favor intenta nuevamente.",
