@@ -10,26 +10,14 @@ import FAQ from "@/components/FAQ";
 import HotelRegistrationForm from "@/components/hotel/HotelRegistrationForm";
 import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
 import ImpactStats from "@/components/restaurant/ImpactStats";
-
-const valueMessages = [
-  "Deja que tu staff se concentre en atender huéspedes, no en Excel.",
-  "Controla tus costos operativos diariamente, no al mes.",
-  "Detecta alzas de precio de tus proveedores en tiempo real.",
-  "Genera reportes de gastos en segundos.",
-  "Gestiona el pago a tus proveedores sin complicaciones.",
-  "Ten todas tus órdenes de compra y facturas a la mano.",
-  "Ahorra horas a la semana en procesos administrativos.",
-];
-
+const valueMessages = ["Deja que tu staff se concentre en atender huéspedes, no en Excel.", "Controla tus costos operativos diariamente, no al mes.", "Detecta alzas de precio de tus proveedores en tiempo real.", "Genera reportes de gastos en segundos.", "Gestiona el pago a tus proveedores sin complicaciones.", "Ten todas tus órdenes de compra y facturas a la mano.", "Ahorra horas a la semana en procesos administrativos."];
 export default function Hoteles() {
   const [highlightForm, setHighlightForm] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
   const [showScrollToForm, setShowScrollToForm] = useState(false);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollToForm(window.scrollY > 300);
@@ -37,7 +25,6 @@ export default function Hoteles() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -55,18 +42,17 @@ export default function Hoteles() {
     const timer = setInterval(calculateTimeLeft, 60000);
     return () => clearInterval(timer);
   }, []);
-
   const scrollToForm = () => {
     const form = document.querySelector('form');
     if (form) {
-      form.scrollIntoView({ behavior: 'smooth' });
+      form.scrollIntoView({
+        behavior: 'smooth'
+      });
       setHighlightForm(true);
       setTimeout(() => setHighlightForm(false), 2000);
     }
   };
-
-  return (
-    <>
+  return <>
       <Helmet>
         <title>Ruka.ai | Control de Costos y Gestión para Hoteles</title>
         <meta name="title" content="Ruka.ai | Control de Costos y Gestión para Hoteles" />
@@ -127,11 +113,13 @@ export default function Hoteles() {
         <div className="w-full pb-8">
           <div className="container px-4 sm:px-6">
             <div className="lg:hidden py-8 space-y-6 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="space-y-4"
-              >
+              <motion.div initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: 1,
+              y: 0
+            }} className="space-y-4">
                 <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                   Gestión Inteligente para tu Hotel
                 </h1>
@@ -146,41 +134,41 @@ export default function Hoteles() {
             </div>
 
             <div className="lg:hidden w-full sm:px-4 mb-8">
-              <HotelRegistrationForm 
-                highlightForm={highlightForm} 
-                timeLeft={timeLeft}
-              />
+              <HotelRegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
             </div>
 
             <div className="lg:grid lg:grid-cols-[1fr,460px] lg:gap-16">
               <div className="py-12 lg:py-24 space-y-16 lg:space-y-32">
-                <motion.header
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="space-y-8"
-                >
+                <motion.header initial={{
+                opacity: 0,
+                y: 20
+              }} animate={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5
+              }} className="space-y-8">
                   <h1 className="text-5xl sm:text-6xl font-bold leading-tight">
                     ¿Tu hotel pierde tiempo
                     <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> procesando facturas</span>
                     manualmente?
                   </h1>
                   <p className="text-2xl text-muted-foreground leading-relaxed">
-                    <ValueMessageTypewriter 
-                      messages={valueMessages} 
-                      staticMode={true}
-                      staticText="Sabemos que el personal administrativo de tu hotel pasa horas registrando facturas de proveedores en Excel o en tu PMS hotelero."
-                    />
+                    <ValueMessageTypewriter messages={valueMessages} staticMode={true} staticText="Sabemos que el personal administrativo de tu hotel pasa horas registrando facturas de proveedores en Excel o en tu PMS hotelero." />
                   </p>
                 </motion.header>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="relative p-8 rounded-2xl bg-gradient-to-br from-red-50 to-orange-50 border border-red-100 space-y-8"
-                >
+                <motion.div initial={{
+                opacity: 0,
+                y: 20
+              }} whileInView={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5
+              }} viewport={{
+                once: true
+              }} className="relative p-8 rounded-2xl bg-gradient-to-br from-red-50 to-orange-50 border border-red-100 space-y-8">
                   <div className="absolute -top-6 right-8 w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
                     <AlertTriangle className="w-6 h-6 text-red-600" />
                   </div>
@@ -227,13 +215,17 @@ export default function Hoteles() {
                   </div>
                 </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="relative p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 border border-primary/20 space-y-8"
-                >
+                <motion.div initial={{
+                opacity: 0,
+                y: 20
+              }} whileInView={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5
+              }} viewport={{
+                once: true
+              }} className="relative p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 border border-primary/20 space-y-8">
                   <div className="absolute -top-6 right-8 w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
                     <img src="/0webclip.jpg" alt="Ruka Logo" className="w-8 h-8 rounded-full" />
                   </div>
@@ -268,21 +260,23 @@ export default function Hoteles() {
                       </div>
                     </div>
                     <div className="relative">
-                      <div className="absolute -top-10 -right-10 bg-yellow-100 text-yellow-800 text-sm font-medium px-3 py-1 rounded-full transform rotate-12">
-                        Para la industria hotelera
-                      </div>
+                      
                       <img src="/robotshero2.png" alt="Robot procesando datos" className="w-full object-contain transform hover:scale-105 transition-transform duration-300" />
                     </div>
                   </div>
                 </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="relative p-8 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 space-y-8"
-                >
+                <motion.div initial={{
+                opacity: 0,
+                y: 20
+              }} whileInView={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5
+              }} viewport={{
+                once: true
+              }} className="relative p-8 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 space-y-8">
                   <div className="absolute -top-6 right-8 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
                     <Hotel className="w-6 h-6 text-green-600" />
                   </div>
@@ -350,43 +344,56 @@ export default function Hoteles() {
 
                 <RestaurantDataFlowSection />
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="space-y-12 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-12 rounded-3xl"
-                >
+                <motion.div initial={{
+                opacity: 0,
+                y: 20
+              }} whileInView={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5
+              }} viewport={{
+                once: true
+              }} className="space-y-12 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-12 rounded-3xl">
                   <h2 className="text-4xl font-bold text-center">
                     El impacto en tu hotel
                   </h2>
                   <div className="grid md:grid-cols-3 gap-8">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0 * 0.2 }}
-                      className="bg-white p-8 rounded-xl shadow-lg text-center space-y-4 hover:shadow-xl transition-shadow"
-                    >
+                    <motion.div initial={{
+                    opacity: 0,
+                    y: 20
+                  }} whileInView={{
+                    opacity: 1,
+                    y: 0
+                  }} transition={{
+                    delay: 0 * 0.2
+                  }} className="bg-white p-8 rounded-xl shadow-lg text-center space-y-4 hover:shadow-xl transition-shadow">
                       <Zap className="w-12 h-12 text-yellow-500 mx-auto" />
                       <div className="text-4xl font-bold text-yellow-500">90%</div>
                       <p className="text-gray-600">Menos tiempo en papeleo</p>
                     </motion.div>
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1 * 0.2 }}
-                      className="bg-white p-8 rounded-xl shadow-lg text-center space-y-4 hover:shadow-xl transition-shadow"
-                    >
+                    <motion.div initial={{
+                    opacity: 0,
+                    y: 20
+                  }} whileInView={{
+                    opacity: 1,
+                    y: 0
+                  }} transition={{
+                    delay: 1 * 0.2
+                  }} className="bg-white p-8 rounded-xl shadow-lg text-center space-y-4 hover:shadow-xl transition-shadow">
                       <BarChart className="w-12 h-12 text-blue-500 mx-auto" />
                       <div className="text-4xl font-bold text-blue-500">100%</div>
                       <p className="text-gray-600">Control de costos</p>
                     </motion.div>
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 2 * 0.2 }}
-                      className="bg-white p-8 rounded-xl shadow-lg text-center space-y-4 hover:shadow-xl transition-shadow"
-                    >
+                    <motion.div initial={{
+                    opacity: 0,
+                    y: 20
+                  }} whileInView={{
+                    opacity: 1,
+                    y: 0
+                  }} transition={{
+                    delay: 2 * 0.2
+                  }} className="bg-white p-8 rounded-xl shadow-lg text-center space-y-4 hover:shadow-xl transition-shadow">
                       <TrendingUp className="w-12 h-12 text-green-500 mx-auto" />
                       <div className="text-4xl font-bold text-green-500">15%</div>
                       <p className="text-gray-600">Ahorro en insumos</p>
@@ -394,24 +401,24 @@ export default function Hoteles() {
                   </div>
                 </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="text-center space-y-8 bg-gradient-to-br from-primary/10 to-purple-100 p-6 sm:p-12 rounded-3xl mx-auto"
-                >
+                <motion.div initial={{
+                opacity: 0,
+                y: 20
+              }} whileInView={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5
+              }} viewport={{
+                once: true
+              }} className="text-center space-y-8 bg-gradient-to-br from-primary/10 to-purple-100 p-6 sm:p-12 rounded-3xl mx-auto">
                   <h2 className="text-4xl font-bold">
                     Optimiza la gestión financiera de tu hotel ahora
                   </h2>
                   <p className="text-2xl text-gray-700">
                     Únete a los +50 hoteles que ya están ahorrando tiempo y elevando su rentabilidad con Ruka
                   </p>
-                  <Button
-                    size="lg"
-                    className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105 max-w-full"
-                    onClick={() => setHighlightForm(true)}
-                  >
+                  <Button size="lg" className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105 max-w-full" onClick={() => setHighlightForm(true)}>
                     Comienza Tu Prueba Gratuita <ArrowRight className="ml-2" />
                   </Button>
                 </motion.div>
@@ -422,11 +429,10 @@ export default function Hoteles() {
               </div>
 
               <div className="hidden lg:block">
-                <div className="sticky top-24" style={{ height: 'calc(100vh - 96px)' }}>
-                  <HotelRegistrationForm 
-                    highlightForm={highlightForm} 
-                    timeLeft={timeLeft}
-                  />
+                <div className="sticky top-24" style={{
+                height: 'calc(100vh - 96px)'
+              }}>
+                  <HotelRegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
                 </div>
               </div>
             </div>
@@ -440,24 +446,21 @@ export default function Hoteles() {
         <Footer />
 
         <AnimatePresence>
-          {showScrollToForm && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="lg:hidden fixed bottom-6 right-6 z-50"
-            >
-              <Button
-                onClick={scrollToForm}
-                size="lg"
-                className="shadow-lg bg-primary hover:bg-primary/90 text-white font-semibold transition-all duration-300 px-6 py-6 h-auto rounded-full"
-              >
+          {showScrollToForm && <motion.div initial={{
+          opacity: 0,
+          y: 20
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} exit={{
+          opacity: 0,
+          y: 20
+        }} className="lg:hidden fixed bottom-6 right-6 z-50">
+              <Button onClick={scrollToForm} size="lg" className="shadow-lg bg-primary hover:bg-primary/90 text-white font-semibold transition-all duration-300 px-6 py-6 h-auto rounded-full">
                 Comenzar Ahora
               </Button>
-            </motion.div>
-          )}
+            </motion.div>}
         </AnimatePresence>
       </main>
-    </>
-  );
+    </>;
 }
