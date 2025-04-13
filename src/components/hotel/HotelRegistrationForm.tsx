@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -55,7 +56,9 @@ export default function HotelRegistrationForm({
       setIsSubmitting(true);
       const whatsappNumber = formData.whatsapp ? `+56${formData.whatsapp.replace(/^\+56/, '')}` : '';
 
-      // First create the lead record
+      console.log("Submitting hotel registration form...");
+      
+      // First create the lead record - without the industry field which doesn't exist in the DB
       const {
         data: leadData,
         error: leadError
@@ -68,8 +71,8 @@ export default function HotelRegistrationForm({
           last_name: formData.lastName,
           email: formData.email,
           ccity: formData.ciudad,
-          whatsapp: whatsappNumber,
-          industry: "hotel" // Add this field to distinguish between industries
+          whatsapp: whatsappNumber
+          // Removed industry field since it doesn't exist in the database
         })
         .select()
         .single();
@@ -79,11 +82,14 @@ export default function HotelRegistrationForm({
         throw leadError;
       }
 
+      console.log("Lead created successfully:", leadData);
+
       // Get the ID of the inserted lead
       const leadId = leadData.id;
 
       // Send notification to Slack about the new lead (only for initial registration)
       try {
+        console.log("Sending notification to Slack...");
         const slackResponse = await supabase.functions.invoke('notify-slack', {
           body: {
             lead: {
@@ -92,17 +98,21 @@ export default function HotelRegistrationForm({
               email: formData.email,
               ccity: formData.ciudad,
               whatsapp: whatsappNumber,
-              industry: "hotel" // Add this to distinguish in Slack
+              industry: "hotel" // This is for the Slack notification only, not DB storage
             },
             isOnboarding: false // Esta es una notificación inicial, no una actualización de onboarding
           }
         });
+        
+        console.log("Slack response:", slackResponse);
+        
         if (slackResponse.error) {
           console.error("Slack notification error:", slackResponse.error);
           // Don't throw error here, just log warning
         } else if (slackResponse.data?.ts) {
           // Store the Slack message timestamp for future thread replies
           const slackTs = slackResponse.data.ts;
+          console.log("Slack message timestamp:", slackTs);
 
           // Use the more reliable Edge Function to update the lead record
           const updateResponse = await supabase.functions.invoke('update-lead', {
@@ -113,6 +123,9 @@ export default function HotelRegistrationForm({
               }
             }
           });
+          
+          console.log("Update lead response:", updateResponse);
+          
           if (updateResponse.error) {
             console.error("Lead update error:", updateResponse.error);
             // Error handling

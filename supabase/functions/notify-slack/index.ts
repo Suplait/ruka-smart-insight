@@ -44,6 +44,8 @@ Deno.serve(async (req) => {
       threadTs?: string 
     }
     
+    console.log("Received notification request:", { lead, isOnboarding, leadId, step });
+    
     const isHotel = lead.industry === 'hotel';
     const businessType = isHotel ? 'Hotel' : 'Restaurante';
     const businessTypeLC = isHotel ? 'hotel' : 'restaurante';
@@ -51,6 +53,7 @@ Deno.serve(async (req) => {
     // If this is an onboarding update for an existing thread
     if (isOnboarding && leadId && step && threadTs) {
       try {
+        console.log("Processing onboarding update for thread:", threadTs);
         // Send reply to thread using the provided threadTs
         let replyText;
         switch(step) {
@@ -83,6 +86,8 @@ Deno.serve(async (req) => {
           thread_ts: threadTs // This is crucial for making it a reply
         };
         
+        console.log("Sending thread message:", threadMessage);
+        
         // Call Slack API to post a message in the thread
         const threadResponse = await fetch('https://slack.com/api/chat.postMessage', {
           method: 'POST',
@@ -94,6 +99,8 @@ Deno.serve(async (req) => {
         });
         
         const threadResult = await threadResponse.json();
+        
+        console.log("Thread message response:", threadResult);
         
         if (!threadResult.ok) {
           console.error('Error sending thread message:', threadResult);

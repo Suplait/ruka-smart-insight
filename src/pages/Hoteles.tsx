@@ -16,7 +16,7 @@ const valueMessages = [
   "Deja que tu staff se concentre en atender huéspedes, no en Excel.",
   "Controla tus costos operativos diariamente, no al mes.",
   "Detecta alzas de precio de tus proveedores en tiempo real.",
-  "Genera reportes de gastos por departamento en segundos.",
+  "Genera reportes de gastos en segundos.",
   "Gestiona el pago a tus proveedores sin complicaciones.",
   "Ten todas tus órdenes de compra y facturas a la mano.",
   "Ahorra horas a la semana en procesos administrativos.",
@@ -186,26 +186,26 @@ export default function Hoteles() {
                     <AlertTriangle className="w-6 h-6 text-red-600" />
                   </div>
                   <h2 className="text-4xl font-bold text-red-900">
-                    Los desafíos únicos de la industria hotelera:
+                    Los desafíos comunes en la gestión de hoteles:
                   </h2>
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
                         <Bed className="w-6 h-6 text-red-600 mt-1 flex-shrink-0" />
                         <p className="text-lg text-red-800/80">
-                          Múltiples departamentos generando facturas (A&B, Housekeeping, Mantenimiento)
+                          Múltiples departamentos generando gran volumen de facturas
                         </p>
                       </div>
                       <div className="flex items-start gap-3">
                         <Calendar className="w-6 h-6 text-red-600 mt-1 flex-shrink-0" />
                         <p className="text-lg text-red-800/80">
-                          Temporalidad que afecta los precios y la disponibilidad de insumos
+                          Temporalidad que complica el seguimiento de gastos
                         </p>
                       </div>
                       <div className="flex items-start gap-3">
                         <Users className="w-6 h-6 text-red-600 mt-1 flex-shrink-0" />
                         <p className="text-lg text-red-800/80">
-                          Alta rotación de personal que complica mantener procesos constantes
+                          Alta rotación de personal que afecta la continuidad de procesos
                         </p>
                       </div>
                       <div className="flex items-start gap-3">
@@ -239,38 +239,38 @@ export default function Hoteles() {
                     <img src="/0webclip.jpg" alt="Ruka Logo" className="w-8 h-8 rounded-full" />
                   </div>
                   <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                    Ruka: Diseñado específicamente para Hoteles
+                    Ruka: La solución para la gestión de costos en hoteles
                   </h2>
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-6">
                       <div className="flex items-start gap-3">
                         <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0 mt-1">✓</div>
                         <p className="text-lg text-primary/80">
-                          <span className="font-semibold">Procesamiento centralizado:</span> Todas las facturas de todos los departamentos en un solo lugar
+                          <span className="font-semibold">Procesamiento centralizado:</span> Todas las facturas en un solo lugar, fácil de gestionar
                         </p>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0 mt-1">✓</div>
                         <p className="text-lg text-primary/80">
-                          <span className="font-semibold">Detección avanzada:</span> Identifica variaciones de precios entre temporadas
+                          <span className="font-semibold">Monitoreo de costos:</span> Seguimiento de precios de proveedores en tiempo real
                         </p>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0 mt-1">✓</div>
                         <p className="text-lg text-primary/80">
-                          <span className="font-semibold">Integración PMS:</span> Compatible con los principales sistemas de gestión hotelera
+                          <span className="font-semibold">Automatización:</span> Reduce el tiempo dedicado a tareas administrativas
                         </p>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0 mt-1">✓</div>
                         <p className="text-lg text-primary/80">
-                          <span className="font-semibold">Dashboards por departamento:</span> Análisis segmentado para housekeeping, A&B y mantenimiento
+                          <span className="font-semibold">Reportes detallados:</span> Visualiza y analiza tus costos fácilmente
                         </p>
                       </div>
                     </div>
                     <div className="relative">
                       <div className="absolute -top-10 -right-10 bg-yellow-100 text-yellow-800 text-sm font-medium px-3 py-1 rounded-full transform rotate-12">
-                        Diseñado para Hoteles
+                        Para la industria hotelera
                       </div>
                       <img src="/robotshero2.png" alt="Robot procesando datos" className="w-full object-contain transform hover:scale-105 transition-transform duration-300" />
                     </div>
@@ -288,27 +288,27 @@ export default function Hoteles() {
                     <Hotel className="w-6 h-6 text-green-600" />
                   </div>
                   <h2 className="text-4xl font-bold text-green-900">
-                    Beneficios específicos para la operación hotelera
+                    Beneficios para la operación hotelera
                   </h2>
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-5">
                       <div className="bg-white p-4 rounded-lg shadow-sm border border-green-100">
                         <h3 className="text-lg font-medium text-green-800 mb-2 flex items-center gap-2">
-                          <Bed className="w-5 h-5" /> Housekeeping
+                          <Bed className="w-5 h-5" /> Gestión hotelera
                         </h3>
-                        <p className="text-green-700">Control automático de inventario de amenities y productos de limpieza con alertas de reorden</p>
+                        <p className="text-green-700">Seguimiento de gastos por departamento y automatización de procesos</p>
                       </div>
                       <div className="bg-white p-4 rounded-lg shadow-sm border border-green-100">
                         <h3 className="text-lg font-medium text-green-800 mb-2 flex items-center gap-2">
                           <CreditCard className="w-5 h-5" /> Finanzas
                         </h3>
-                        <p className="text-green-700">Proyecciones de flujo de caja basadas en históricos de temporadas anteriores</p>
+                        <p className="text-green-700">Mejor control de costos y optimización de recursos</p>
                       </div>
                       <div className="bg-white p-4 rounded-lg shadow-sm border border-green-100">
                         <h3 className="text-lg font-medium text-green-800 mb-2 flex items-center gap-2">
                           <Users className="w-5 h-5" /> Gerencia
                         </h3>
-                        <p className="text-green-700">Dashboard unificado con KPIs de todos los departamentos para toma de decisiones</p>
+                        <p className="text-green-700">Datos centralizados para toma de decisiones más informadas</p>
                       </div>
                     </div>
                     <div className="bg-white p-6 rounded-xl shadow-lg">
@@ -351,7 +351,49 @@ export default function Hoteles() {
 
                 <RestaurantDataFlowSection />
 
-                <ImpactStats />
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="space-y-12 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-12 rounded-3xl"
+                >
+                  <h2 className="text-4xl font-bold text-center">
+                    El impacto en tu hotel
+                  </h2>
+                  <div className="grid md:grid-cols-3 gap-8">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0 * 0.2 }}
+                      className="bg-white p-8 rounded-xl shadow-lg text-center space-y-4 hover:shadow-xl transition-shadow"
+                    >
+                      <Zap className="w-12 h-12 text-yellow-500 mx-auto" />
+                      <div className="text-4xl font-bold text-yellow-500">90%</div>
+                      <p className="text-gray-600">Menos tiempo en papeleo</p>
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1 * 0.2 }}
+                      className="bg-white p-8 rounded-xl shadow-lg text-center space-y-4 hover:shadow-xl transition-shadow"
+                    >
+                      <ChartBarIcon className="w-12 h-12 text-blue-500 mx-auto" />
+                      <div className="text-4xl font-bold text-blue-500">100%</div>
+                      <p className="text-gray-600">Control de costos</p>
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 2 * 0.2 }}
+                      className="bg-white p-8 rounded-xl shadow-lg text-center space-y-4 hover:shadow-xl transition-shadow"
+                    >
+                      <TrendingUp className="w-12 h-12 text-green-500 mx-auto" />
+                      <div className="text-4xl font-bold text-green-500">15%</div>
+                      <p className="text-gray-600">Ahorro en insumos</p>
+                    </motion.div>
+                  </div>
+                </motion.div>
 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
