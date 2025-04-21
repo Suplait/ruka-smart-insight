@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,6 +11,7 @@ import FAQ from "@/components/FAQ";
 import RegistrationForm from "@/components/restaurant/RegistrationForm";
 import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
 import ImpactStats from "@/components/restaurant/ImpactStats";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const valueMessages = [
   "Deja que tus chefs se concentren en cocinar, no en Excel.",
@@ -25,6 +27,7 @@ export default function Restaurantes() {
   const [highlightForm, setHighlightForm] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
   const [showScrollToForm, setShowScrollToForm] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,11 +35,24 @@ export default function Restaurantes() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollToForm(window.scrollY > 300);
+      if (isMobile) {
+        // En móvil, mostrar el botón solo cuando no está en la sección del formulario
+        const formSection = document.getElementById('mobile-form-section');
+        if (formSection) {
+          const rect = formSection.getBoundingClientRect();
+          const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+          setShowScrollToForm(!isVisible);
+        } else {
+          setShowScrollToForm(window.scrollY > 300);
+        }
+      } else {
+        // Comportamiento original para desktop
+        setShowScrollToForm(window.scrollY > 300);
+      }
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -57,7 +73,9 @@ export default function Restaurantes() {
   }, []);
 
   const scrollToForm = () => {
-    const form = document.querySelector('form');
+    const form = isMobile 
+      ? document.getElementById('mobile-form-section')
+      : document.querySelector('form');
     if (form) {
       form.scrollIntoView({ behavior: 'smooth' });
       setHighlightForm(true);
@@ -126,7 +144,7 @@ export default function Restaurantes() {
         
         <div className="w-full pb-8">
           <div className="container px-4 sm:px-6">
-            <div className="lg:hidden py-8 space-y-6 text-center">
+            <div className="lg:hidden py-8 pt-24 space-y-6 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -143,9 +161,25 @@ export default function Restaurantes() {
                   <span>Comienza hoy mismo</span>
                 </div>
               </motion.div>
+              
+              {/* Botón para ir al formulario en mobile (parte superior) */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="pt-4"
+              >
+                <Button
+                  size="lg"
+                  className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105 w-full"
+                  onClick={scrollToForm}
+                >
+                  Comenzar Ahora <ArrowRight className="ml-2" />
+                </Button>
+              </motion.div>
             </div>
 
-            <div className="lg:hidden w-full sm:px-4 mb-8">
+            {/* Quitamos el formulario de esta posición en mobile */}
+            <div className="lg:hidden w-full sm:px-4 mb-8 hidden">
               <RegistrationForm 
                 highlightForm={highlightForm} 
                 timeLeft={timeLeft}
@@ -245,6 +279,14 @@ export default function Restaurantes() {
                     </div>
                   </div>
                 </motion.div>
+
+                {/* Insertar formulario de registro en mobile aquí */}
+                <div id="mobile-form-section" className="lg:hidden w-full mb-8">
+                  <RegistrationForm 
+                    highlightForm={highlightForm} 
+                    timeLeft={timeLeft}
+                  />
+                </div>
 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
