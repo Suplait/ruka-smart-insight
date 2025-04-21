@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Clock, TrendingUp } from "lucide-react";
@@ -24,24 +24,18 @@ const valueMessages = [
 export default function Restaurantes() {
   const [highlightForm, setHighlightForm] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
-  const [showScrollToFormTop, setShowScrollToFormTop] = useState(false);
-  const [showScrollToFormBottom, setShowScrollToFormBottom] = useState(false);
-
-  const formRef = useRef<HTMLDivElement>(null);
+  const [showScrollToForm, setShowScrollToForm] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
-    if (window.innerWidth < 1024) {
-      document.body.style.paddingTop = "64px";
-    } else {
-      document.body.style.paddingTop = "";
-    }
-    return () => {
-      document.body.style.paddingTop = "";
+    const handleScroll = () => {
+      setShowScrollToForm(window.scrollY > 300);
     };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -62,22 +56,10 @@ export default function Restaurantes() {
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    if (window.innerWidth >= 1024) return;
-    const handleScroll = () => {
-      if (!formRef.current) return;
-      const rect = formRef.current.getBoundingClientRect();
-      setShowScrollToFormTop(rect.top - 80 > 0);
-      setShowScrollToFormBottom(rect.bottom + 80 < window.innerHeight);
-    };
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const scrollToForm = () => {
-    if (formRef.current) {
-      formRef.current.scrollIntoView({ behavior: 'smooth' });
+    const form = document.querySelector('form');
+    if (form) {
+      form.scrollIntoView({ behavior: 'smooth' });
       setHighlightForm(true);
       setTimeout(() => setHighlightForm(false), 2000);
     }
@@ -161,6 +143,13 @@ export default function Restaurantes() {
                   <span>Comienza hoy mismo</span>
                 </div>
               </motion.div>
+            </div>
+
+            <div className="lg:hidden w-full sm:px-4 mb-8">
+              <RegistrationForm 
+                highlightForm={highlightForm} 
+                timeLeft={timeLeft}
+              />
             </div>
 
             <div className="lg:grid lg:grid-cols-[1fr,460px] lg:gap-16">
@@ -337,12 +326,12 @@ export default function Restaurantes() {
         <Footer />
 
         <AnimatePresence>
-          {showScrollToFormTop && (
+          {showScrollToForm && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="lg:hidden fixed top-24 left-1/2 -translate-x-1/2 z-50"
+              className="lg:hidden fixed bottom-6 right-6 z-50"
             >
               <Button
                 onClick={scrollToForm}
@@ -354,23 +343,6 @@ export default function Restaurantes() {
             </motion.div>
           )}
         </AnimatePresence>
-
-        {showScrollToFormBottom && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="lg:hidden fixed bottom-6 right-6 z-50"
-          >
-            <Button
-              onClick={scrollToForm}
-              size="lg"
-              className="shadow-lg bg-primary hover:bg-primary/90 text-white font-semibold transition-all duration-300 px-6 py-6 h-auto rounded-full"
-            >
-              Comenzar Ahora
-            </Button>
-          </motion.div>
-        )}
       </main>
     </>
   );
