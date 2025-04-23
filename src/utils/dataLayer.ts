@@ -14,3 +14,22 @@ export const pushToDataLayer = (eventName: string, additionalData = {}) => {
     console.log('DataLayer not found', eventName, additionalData);
   }
 };
+
+/**
+ * Track form submission events with additional metadata
+ */
+export const trackFormSubmission = (formName: string, formData = {}, isSuccess = true) => {
+  pushToDataLayer(`form_${isSuccess ? 'success' : 'error'}`, {
+    form_name: formName,
+    form_data: formData
+  });
+};
+
+/**
+ * Track user registration events
+ */
+export const trackRegistration = (registrationData = {}, isSuccess = true) => {
+  pushToDataLayer(`registration_${isSuccess ? 'success' : 'error'}`, {
+    ...registrationData
+  });
+};
