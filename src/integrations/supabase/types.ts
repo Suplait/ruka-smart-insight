@@ -26,6 +26,7 @@ export type Database = {
           sistema_custom: string | null
           sistema_facturacion: string | null
           slack_message_ts: string | null
+          subdomain_ready: boolean | null
           subdominio: string | null
           whatsapp: string | null
         }
@@ -45,6 +46,7 @@ export type Database = {
           sistema_custom?: string | null
           sistema_facturacion?: string | null
           slack_message_ts?: string | null
+          subdomain_ready?: boolean | null
           subdominio?: string | null
           whatsapp?: string | null
         }
@@ -64,6 +66,7 @@ export type Database = {
           sistema_custom?: string | null
           sistema_facturacion?: string | null
           slack_message_ts?: string | null
+          subdomain_ready?: boolean | null
           subdominio?: string | null
           whatsapp?: string | null
         }

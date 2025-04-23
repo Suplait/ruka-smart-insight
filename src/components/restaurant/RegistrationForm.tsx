@@ -9,7 +9,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/components/ui/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { supabase } from "@/integrations/supabase/client";
+import { pushToDataLayer, trackFormSubmission, trackRegistration } from "@/utils/dataLayer";
 import { Lead } from "@/types/supabase";
+
 interface FormData {
   firstName: string;
   lastName: string;
@@ -19,10 +21,12 @@ interface FormData {
   whatsapp: string;
   acceptTerms: boolean;
 }
+
 interface RegistrationFormProps {
   highlightForm: boolean;
   timeLeft: string;
 }
+
 export default function RegistrationForm({
   highlightForm,
   timeLeft
@@ -38,9 +42,19 @@ export default function RegistrationForm({
     acceptTerms: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    pushToDataLayer('registration_form_submit_attempt', {
+      has_terms_accepted: formData.acceptTerms
+    });
+    
     if (!formData.acceptTerms) {
+      pushToDataLayer('registration_validation_error', {
+        error_type: 'terms_not_accepted'
+      });
+      
       toast({
         title: "Error",
         description: "Debes aceptar los términos y condiciones para continuar.",
@@ -48,9 +62,17 @@ export default function RegistrationForm({
       });
       return;
     }
+    
     try {
       setIsSubmitting(true);
       const whatsappNumber = formData.whatsapp ? `+56${formData.whatsapp.replace(/^\+56/, '')}` : '';
+      
+      trackFormSubmission('restaurant_registration', {
+        email_domain: formData.email.split('@')[1],
+        has_whatsapp: !!formData.whatsapp,
+        city: formData.ciudad,
+        company_name: formData.nombreRestaurante
+      }, true);
 
       // First create the lead record
       const {
@@ -65,12 +87,18 @@ export default function RegistrationForm({
         ccity: formData.ciudad,
         whatsapp: whatsappNumber
       }]).select().single();
+      
       if (leadError) {
         throw leadError;
       }
 
       // Get the ID of the inserted lead
       const leadId = leadData.id;
+      
+      pushToDataLayer('lead_created', {
+        lead_id: leadId,
+        company_name: formData.nombreRestaurante
+      });
 
       // Send notification to Slack about the new lead (only for initial registration)
       try {
@@ -86,11 +114,16 @@ export default function RegistrationForm({
             isOnboarding: false // Esta es una notificación inicial, no una actualización de onboarding
           }
         });
+        
         if (slackResponse.error) {
           // Don't throw error here, just log warning
         } else if (slackResponse.data?.ts) {
           // Store the Slack message timestamp for future thread replies
           const slackTs = slackResponse.data.ts;
+          
+          pushToDataLayer('slack_notification_sent', {
+            lead_id: leadId
+          });
 
           // Use the more reliable Edge Function to update the lead record
           const updateResponse = await supabase.functions.invoke('update-lead', {
@@ -135,6 +168,11 @@ export default function RegistrationForm({
         // Don't throw error here, just log warning
       }
 
+      trackRegistration({
+        lead_id: leadId,
+        restaurant_name: formData.nombreRestaurante
+      }, true);
+
       // Navigate to onboarding with restaurant name and leadId in state
       navigate('/onboarding-success', {
         state: {
@@ -143,6 +181,10 @@ export default function RegistrationForm({
         }
       });
     } catch (error) {
+      trackRegistration({
+        error_message: error instanceof Error ? error.message : 'Unknown error'
+      }, false);
+      
       toast({
         title: "Error",
         description: "Hubo un problema al enviar tu información. Por favor intenta nuevamente.",
@@ -152,6 +194,7 @@ export default function RegistrationForm({
       setIsSubmitting(false);
     }
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       name,
@@ -170,6 +213,7 @@ export default function RegistrationForm({
       [name]: value
     }));
   };
+
   return <motion.div initial={{
     opacity: 0,
     scale: 0.95
