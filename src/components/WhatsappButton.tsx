@@ -27,47 +27,58 @@ const WhatsappButton = ({
   const getWhatsAppUrl = () => {
     let message = text;
     
-    // If formData is provided, add it to the message
+    // Si se proporcionan datos de formulario, agregarlos al mensaje
     if (formData && Object.keys(formData).length > 0) {
       message += "\n\nMis datos:\n";
       
-      if (formData.firstName && formData.lastName) {
-        message += `Nombre: ${formData.firstName} ${formData.lastName}\n`;
+      // Nombre y apellido (si están disponibles)
+      if (formData.firstName || formData.lastName) {
+        const fullName = [formData.firstName, formData.lastName].filter(Boolean).join(' ');
+        if (fullName) {
+          message += `Nombre: ${fullName}\n`;
+        }
       }
       
+      // Correo electrónico
       if (formData.email) {
         message += `Email: ${formData.email}\n`;
       }
       
+      // Nombre del restaurante
       if (formData.nombreRestaurante) {
         message += `Negocio: ${formData.nombreRestaurante}\n`;
       }
       
+      // Ciudad
       if (formData.ciudad) {
         message += `Ciudad: ${formData.ciudad}\n`;
       }
       
+      // WhatsApp
       if (formData.whatsapp) {
         message += `WhatsApp: +56${formData.whatsapp}\n`;
       }
       
+      // Subdominio
       if (formData.subdominio) {
         message += `Subdominio: ${formData.subdominio}\n`;
       }
       
-      if (formData.sistema && formData.sistema !== "sii") {
+      // Sistema de facturación
+      if (formData.sistema) {
         message += `Sistema: ${formData.sistema}`;
-        if (formData.sistemaCustom) {
+        if (formData.sistemaCustom && formData.sistema !== "sii") {
           message += ` (${formData.sistemaCustom})`;
         }
         message += '\n';
       }
       
+      // Meses de datos
       if (formData.meses) {
         message += `Meses de datos: ${formData.meses}\n`;
       }
       
-      // Add SII connection status only (not credentials)
+      // Estado de conexión SII (sin incluir credenciales)
       if (formData.siiConnected) {
         message += `SII conectado: ${formData.siiConnected}\n`;
       } else if (formData.rut && formData.clave) {
@@ -75,7 +86,7 @@ const WhatsappButton = ({
       }
     }
     
-    // URL encode the message
+    // Codificar el mensaje para URL
     const encodedMessage = encodeURIComponent(message);
     return `https://api.whatsapp.com/send/?phone=${phone}&text=${encodedMessage}&type=phone_number&app_absent=0`;
   };

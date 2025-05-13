@@ -186,8 +186,26 @@ const OnboardingSuccess = () => {
           });
         }
         
+        // Antes de navegar a la página de éxito, asegúrate de incluir todos los datos del usuario
+        // incluidos los datos del formulario de registro inicial y los del onboarding
         setIsComplete(true);
         setIsLoading(false);
+        
+        // Conservar también los datos del usuario pasados al estado de la vista
+        const updatedLocationState = {
+          ...location.state,
+          formData: {
+            ...formData,
+            siiConnected: true // Siempre establecer como Sí si ha completado el proceso
+          }
+        };
+        
+        // Actualizamos el estado de ubicación con los datos completos
+        navigate('/onboarding-success', { 
+          state: updatedLocationState,
+          replace: true // Reemplaza la entrada de historial actual
+        });
+        
         return;
       } catch (error) {
         toast({

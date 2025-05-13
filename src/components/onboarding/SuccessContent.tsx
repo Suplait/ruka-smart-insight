@@ -8,6 +8,9 @@ const SuccessContent = () => {
   const location = useLocation();
   const formData = location.state || {};
   
+  // Para debugging
+  console.log("Success Content - Location state:", location.state);
+
   return (
     <div className="text-center space-y-4">
       <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
@@ -66,7 +69,7 @@ const SuccessContent = () => {
             sistema: formData.formData?.sistema || "",
             sistemaCustom: formData.formData?.sistemaCustom || "",
             meses: formData.formData?.meses || "",
-            siiConnected: formData.formData?.rut && formData.formData?.clave ? "Sí" : "No"
+            siiConnected: "Sí" // Siempre debe ser Sí si llegó a la página de éxito
           }}
         >
           Activar mi plataforma
