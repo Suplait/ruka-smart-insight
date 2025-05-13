@@ -18,7 +18,7 @@ const valueMessages = [
   "Deja que tus chefs se concentren en cocinar, no en Excel.",
   "Controla tus costos de insumos al día, no al mes.",
   "Detecta alzas de precio de tus proveedores en tiempo real.",
-  "Genera reportes de food cost en segundos.",
+  "Genera reportes de food cost en seguhttps://www.ruka.ai/restaurantesndos.",
   "Gestiona el pago a tus proveedores sin complicaciones.",
   "Ten todos tus pedidos y facturas a la mano.",
   "Ahorra horas a la semana en procesos administrativos.",
