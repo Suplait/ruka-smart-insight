@@ -13,27 +13,15 @@ import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewrit
 import ImpactStats from "@/components/restaurant/ImpactStats";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { trackWhatsAppClick } from "@/utils/dataLayer";
-
-const valueMessages = [
-  "Deja que tus chefs se concentren en cocinar, no en Excel.",
-  "Controla tus costos de insumos al día, no al mes.",
-  "Detecta alzas de precio de tus proveedores en tiempo real.",
-  "Genera reportes de food cost en seguhttps://www.ruka.ai/restaurantesndos.",
-  "Gestiona el pago a tus proveedores sin complicaciones.",
-  "Ten todos tus pedidos y facturas a la mano.",
-  "Ahorra horas a la semana en procesos administrativos.",
-];
-
+const valueMessages = ["Deja que tus chefs se concentren en cocinar, no en Excel.", "Controla tus costos de insumos al día, no al mes.", "Detecta alzas de precio de tus proveedores en tiempo real.", "Genera reportes de food cost en seguhttps://www.ruka.ai/restaurantesndos.", "Gestiona el pago a tus proveedores sin complicaciones.", "Ten todos tus pedidos y facturas a la mano.", "Ahorra horas a la semana en procesos administrativos."];
 export default function Restaurantes() {
   const [highlightForm, setHighlightForm] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
   const [showScrollToForm, setShowScrollToForm] = useState(false);
   const isMobile = useIsMobile();
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
   useEffect(() => {
     const handleScroll = () => {
       if (isMobile) {
@@ -54,7 +42,6 @@ export default function Restaurantes() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isMobile]);
-
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -72,24 +59,20 @@ export default function Restaurantes() {
     const timer = setInterval(calculateTimeLeft, 60000);
     return () => clearInterval(timer);
   }, []);
-
   const scrollToForm = () => {
-    const form = isMobile 
-      ? document.getElementById('mobile-form-section')
-      : document.querySelector('form');
+    const form = isMobile ? document.getElementById('mobile-form-section') : document.querySelector('form');
     if (form) {
-      form.scrollIntoView({ behavior: 'smooth' });
+      form.scrollIntoView({
+        behavior: 'smooth'
+      });
       setHighlightForm(true);
       setTimeout(() => setHighlightForm(false), 2000);
     }
   };
-
   const handleWhatsAppClick = () => {
     trackWhatsAppClick('restaurant_mobile_floating', 'whatsapp_onboarding');
   };
-
-  return (
-    <>
+  return <>
       <Helmet>
         <title>Ruka.ai | Control de Food Cost y Gastos para Restaurantes</title>
         <meta name="title" content="Ruka.ai | Control de Food Cost y Gastos para Restaurantes" />
@@ -150,17 +133,17 @@ export default function Restaurantes() {
         <div className="w-full pb-8">
           <div className="container px-4 sm:px-6">
             <div className="lg:hidden py-8 pt-24 space-y-6 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="space-y-4"
-              >
+              <motion.div initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: 1,
+              y: 0
+            }} className="space-y-4">
                 <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                   Automatiza tus Costos
                 </h1>
-                <p className="text-lg text-muted-foreground max-w-md mx-auto">
-                  Únete a +100 restaurantes que ya optimizan su food cost con inteligencia artificial
-                </p>
+                <p className="text-lg text-muted-foreground max-w-md mx-auto">Únete a +150 restaurantes que ya optimizan su food cost con inteligencia artificial</p>
                 <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
                   <Clock className="w-4 h-4" />
                   <span>Comienza hoy mismo</span>
@@ -168,16 +151,14 @@ export default function Restaurantes() {
               </motion.div>
               
               {/* Botón para ir al formulario en mobile (parte superior) */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="pt-4"
-              >
-                <Button
-                  size="lg"
-                  className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105 w-full"
-                  onClick={scrollToForm}
-                >
+              <motion.div initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: 1,
+              y: 0
+            }} className="pt-4">
+                <Button size="lg" className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105 w-full" onClick={scrollToForm}>
                   Comenzar Ahora <ArrowRight className="ml-2" />
                 </Button>
               </motion.div>
@@ -185,41 +166,41 @@ export default function Restaurantes() {
 
             {/* Quitamos el formulario de esta posición en mobile */}
             <div className="lg:hidden w-full sm:px-4 mb-8 hidden">
-              <RegistrationForm 
-                highlightForm={highlightForm} 
-                timeLeft={timeLeft}
-              />
+              <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
             </div>
 
             <div className="lg:grid lg:grid-cols-[1fr,460px] lg:gap-16">
               <div className="py-12 lg:py-24 space-y-16 lg:space-y-32">
-                <motion.header
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="space-y-8"
-                >
+                <motion.header initial={{
+                opacity: 0,
+                y: 20
+              }} animate={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5
+              }} className="space-y-8">
                   <h1 className="text-5xl sm:text-6xl font-bold leading-tight">
                     ¿Te quita tiempo
                     <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> digitar las facturas </span>
                     de tu Restaurante?
                   </h1>
                   <p className="text-2xl text-muted-foreground leading-relaxed">
-                    <ValueMessageTypewriter 
-                      messages={valueMessages} 
-                      staticMode={true}
-                      staticText="Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel, POS o ERP."
-                    />
+                    <ValueMessageTypewriter messages={valueMessages} staticMode={true} staticText="Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel, POS o ERP." />
                   </p>
                 </motion.header>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="relative p-8 rounded-2xl bg-gradient-to-br from-red-50 to-orange-50 border border-red-100 space-y-8"
-                >
+                <motion.div initial={{
+                opacity: 0,
+                y: 20
+              }} whileInView={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5
+              }} viewport={{
+                once: true
+              }} className="relative p-8 rounded-2xl bg-gradient-to-br from-red-50 to-orange-50 border border-red-100 space-y-8">
                   <div className="absolute -top-6 right-8 w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
                     <Clock className="w-6 h-6 text-red-600" />
                   </div>
@@ -243,13 +224,17 @@ export default function Restaurantes() {
                   </div>
                 </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="relative p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 border border-primary/20 space-y-8"
-                >
+                <motion.div initial={{
+                opacity: 0,
+                y: 20
+              }} whileInView={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5
+              }} viewport={{
+                once: true
+              }} className="relative p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 border border-primary/20 space-y-8">
                   <div className="absolute -top-6 right-8 w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
                     <img src="/0webclip.jpg" alt="Ruka Logo" className="w-8 h-8 rounded-full" />
                   </div>
@@ -287,19 +272,20 @@ export default function Restaurantes() {
 
                 {/* Insertar formulario de registro en mobile aquí */}
                 <div id="mobile-form-section" className="lg:hidden w-full mb-8">
-                  <RegistrationForm 
-                    highlightForm={highlightForm} 
-                    timeLeft={timeLeft}
-                  />
+                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
                 </div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="relative p-8 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 space-y-8"
-                >
+                <motion.div initial={{
+                opacity: 0,
+                y: 20
+              }} whileInView={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5
+              }} viewport={{
+                once: true
+              }} className="relative p-8 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 space-y-8">
                   <div className="absolute -top-6 right-8 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
                     <TrendingUp className="w-6 h-6 text-green-600" />
                   </div>
@@ -327,24 +313,24 @@ export default function Restaurantes() {
 
                 <ImpactStats />
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="text-center space-y-8 bg-gradient-to-br from-primary/10 to-purple-100 p-6 sm:p-12 rounded-3xl mx-auto"
-                >
+                <motion.div initial={{
+                opacity: 0,
+                y: 20
+              }} whileInView={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.5
+              }} viewport={{
+                once: true
+              }} className="text-center space-y-8 bg-gradient-to-br from-primary/10 to-purple-100 p-6 sm:p-12 rounded-3xl mx-auto">
                   <h2 className="text-4xl font-bold">
                     Optimiza tu food cost ahora
                   </h2>
                   <p className="text-2xl text-gray-700">
                     Únete a los +100 restaurantes que ya están ahorrando tiempo y dinero con Ruka
                   </p>
-                  <Button
-                    size="lg"
-                    className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105 max-w-full"
-                    onClick={() => setHighlightForm(true)}
-                  >
+                  <Button size="lg" className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105 max-w-full" onClick={() => setHighlightForm(true)}>
                     Comienza Tu Prueba Gratuita <ArrowRight className="ml-2" />
                   </Button>
                 </motion.div>
@@ -355,11 +341,10 @@ export default function Restaurantes() {
               </div>
 
               <div className="hidden lg:block">
-                <div className="sticky top-24" style={{ height: 'calc(100vh - 96px)' }}>
-                  <RegistrationForm 
-                    highlightForm={highlightForm} 
-                    timeLeft={timeLeft}
-                  />
+                <div className="sticky top-24" style={{
+                height: 'calc(100vh - 96px)'
+              }}>
+                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
                 </div>
               </div>
             </div>
@@ -373,20 +358,17 @@ export default function Restaurantes() {
         <Footer />
 
         <AnimatePresence>
-          {showScrollToForm && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="lg:hidden fixed bottom-6 right-6 z-50 flex gap-2"
-            >
-              <Button
-                onClick={handleWhatsAppClick}
-                size="lg"
-                variant="outline"
-                asChild
-                className="shadow-lg bg-white hover:bg-green-50 text-green-600 border-green-500 font-semibold transition-all duration-300 px-4 py-6 h-auto rounded-full"
-              >
+          {showScrollToForm && <motion.div initial={{
+          opacity: 0,
+          y: 20
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} exit={{
+          opacity: 0,
+          y: 20
+        }} className="lg:hidden fixed bottom-6 right-6 z-50 flex gap-2">
+              <Button onClick={handleWhatsAppClick} size="lg" variant="outline" asChild className="shadow-lg bg-white hover:bg-green-50 text-green-600 border-green-500 font-semibold transition-all duration-300 px-4 py-6 h-auto rounded-full">
                 <Link to="/whatsapp">
                   <div className="flex items-center gap-2">
                     <img src="/lovable-uploads/950f4b99-40ab-40a3-a017-7375458df29d.png" alt="WhatsApp" className="w-5 h-5" />
@@ -395,17 +377,11 @@ export default function Restaurantes() {
                 </Link>
               </Button>
               
-              <Button
-                onClick={scrollToForm}
-                size="lg"
-                className="shadow-lg bg-primary hover:bg-primary/90 text-white font-semibold transition-all duration-300 px-6 py-6 h-auto rounded-full"
-              >
+              <Button onClick={scrollToForm} size="lg" className="shadow-lg bg-primary hover:bg-primary/90 text-white font-semibold transition-all duration-300 px-6 py-6 h-auto rounded-full">
                 Comenzar Ahora
               </Button>
-            </motion.div>
-          )}
+            </motion.div>}
         </AnimatePresence>
       </main>
-    </>
-  );
+    </>;
 }
