@@ -1,7 +1,8 @@
+
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, CreditCard, Clock4, ShieldCheck, Info, HelpCircle, WhatsApp } from "lucide-react";
+import { ArrowRight, CreditCard, Clock4, ShieldCheck, Info, HelpCircle, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -256,7 +257,7 @@ export default function RegistrationForm({
             asChild
           >
             <Link to="/whatsapp">
-              <WhatsApp className="w-4 h-4" />
+              <MessageCircle className="w-4 h-4" />
               Prefiero hacerlo por WhatsApp
             </Link>
           </Button>
