@@ -390,7 +390,7 @@ export default function Restaurantes() {
                 <Link to="/whatsapp">
                   <div className="flex items-center gap-2">
                     <img src="/lovable-uploads/950f4b99-40ab-40a3-a017-7375458df29d.png" alt="WhatsApp" className="w-5 h-5" />
-                      Abrir en WhatsApp
+                      Solicitar info.
                   </div>
                 </Link>
               </Button>
