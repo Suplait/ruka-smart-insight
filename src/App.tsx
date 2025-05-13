@@ -14,6 +14,7 @@ import OnboardingSuccess from './pages/OnboardingSuccess';
 import NotFound from './pages/NotFound';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import WhatsappRedirect from './pages/WhatsappRedirect';
+import CalendlySuccess from './pages/CalendlySuccess';
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/terms" element={<TermsAndConditions />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/onboarding-success" element={<OnboardingSuccess />} />
+            <Route path="/calendly-success" element={<CalendlySuccess />} />
             <Route path="/whatsapp" element={<WhatsappRedirect />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
