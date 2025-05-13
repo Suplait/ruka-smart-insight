@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -175,7 +176,7 @@ export default function HotelRegistrationForm({
   };
 
   const handleWhatsAppClick = () => {
-    trackWhatsAppClick('hotel_registration_form');
+    trackWhatsAppClick('hotel_registration_form', 'whatsapp_onboarding');
   };
 
   return <motion.div initial={{
@@ -209,7 +210,7 @@ export default function HotelRegistrationForm({
             <Clock4 className="w-4 h-4" />
             <span>Faltan {timeLeft} para las 12:00pm</span>
           </div>
-          <div className="relative mt-2">
+          <div className="relative mt-4">
             <Button 
               variant="outline" 
               size="sm" 
@@ -231,7 +232,7 @@ export default function HotelRegistrationForm({
         </div>
       </div>
       
-      <Separator className="h-px bg-gray-200" />
+      <Separator className="h-px bg-gray-200 my-4" />
 
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

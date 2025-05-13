@@ -57,8 +57,9 @@ export const trackRegistration = (registrationData = {}, isSuccess = true) => {
 /**
  * Track WhatsApp preference click event
  */
-export const trackWhatsAppClick = (source: string) => {
-  pushToDataLayer('whatsapp_preference_click', {
+export const trackWhatsAppClick = (source: string, eventName: string = 'whatsapp_preference_click') => {
+  pushToDataLayer(eventName, {
     source: source
   });
 };
+

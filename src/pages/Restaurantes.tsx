@@ -84,6 +84,10 @@ export default function Restaurantes() {
     }
   };
 
+  const handleWhatsAppClick = () => {
+    trackWhatsAppClick('restaurant_mobile_floating', 'whatsapp_onboarding');
+  };
+
   return (
     <>
       <Helmet>
@@ -374,8 +378,23 @@ export default function Restaurantes() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="lg:hidden fixed bottom-6 right-6 z-50"
+              className="lg:hidden fixed bottom-6 right-6 z-50 flex gap-2"
             >
+              <Button
+                onClick={handleWhatsAppClick}
+                size="lg"
+                variant="outline"
+                asChild
+                className="shadow-lg bg-white hover:bg-green-50 text-green-600 border-green-500 font-semibold transition-all duration-300 px-4 py-6 h-auto rounded-full"
+              >
+                <Link to="/whatsapp">
+                  <div className="flex items-center gap-2">
+                    <img src="/lovable-uploads/950f4b99-40ab-40a3-a017-7375458df29d.png" alt="WhatsApp" className="w-5 h-5" />
+                    Por WhatsApp
+                  </div>
+                </Link>
+              </Button>
+              
               <Button
                 onClick={scrollToForm}
                 size="lg"
