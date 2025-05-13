@@ -12,6 +12,7 @@ interface WhatsAppButtonProps {
   variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
   children?: React.ReactNode;
   formData?: Record<string, any>;
+  isSuccessPage?: boolean;
 }
 
 const WhatsappButton = ({
@@ -21,7 +22,8 @@ const WhatsappButton = ({
   className = "",
   variant = "outline",
   children,
-  formData
+  formData,
+  isSuccessPage = false
 }: WhatsAppButtonProps) => {
   
   const getWhatsAppUrl = () => {
@@ -79,7 +81,10 @@ const WhatsappButton = ({
       }
       
       // Estado de conexión SII (sin incluir credenciales)
-      if (formData.siiConnected) {
+      // Solo mostramos "Sí" si estamos en la página de éxito
+      if (isSuccessPage) {
+        message += `SII conectado: Sí\n`;
+      } else if (formData.siiConnected) {
         message += `SII conectado: ${formData.siiConnected}\n`;
       } else if (formData.rut && formData.clave) {
         message += `SII conectado: Sí\n`;

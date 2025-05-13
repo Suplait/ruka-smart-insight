@@ -58,6 +58,7 @@ const SuccessContent = () => {
           source="onboarding_success_completion"
           text="Hola! He completado mi registro en Ruka.ai y quiero activar mi plataforma. Estos son mis datos:"
           className="w-full bg-green-600 hover:bg-green-700 text-white py-3"
+          isSuccessPage={true}
           formData={{
             firstName: formData.firstName || "",
             lastName: formData.lastName || "",
@@ -68,8 +69,7 @@ const SuccessContent = () => {
             subdominio: formData.formData?.subdominio || "",
             sistema: formData.formData?.sistema || "",
             sistemaCustom: formData.formData?.sistemaCustom || "",
-            meses: formData.formData?.meses || "",
-            siiConnected: "Sí" // Siempre debe ser Sí si llegó a la página de éxito
+            meses: formData.formData?.meses || ""
           }}
         >
           Activar mi plataforma

@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -442,6 +441,7 @@ const OnboardingSuccess = () => {
                   ciudad: location.state?.ciudad || "",
                   whatsapp: location.state?.whatsapp || ""
                 }}
+                isSuccessPage={false}
                 className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"
               >
                 Seguir en WhatsApp
@@ -462,6 +462,7 @@ const OnboardingSuccess = () => {
                   ciudad: location.state?.ciudad || "",
                   whatsapp: location.state?.whatsapp || ""
                 }}
+                isSuccessPage={false}
                 className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"
               >
                 Seguir en WhatsApp
