@@ -224,10 +224,7 @@ export default function RegistrationForm({
         </div>
         <div className="flex flex-col gap-2">
           
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Clock4 className="w-4 h-4" />
-            <span>Faltan {timeLeft} para las 12:00pm</span>
-          </div>
+          
           <div className="relative mt-2">
             <Button variant="outline" size="sm" className="gap-2 text-muted-foreground hover:text-green-500 hover:border-green-500 w-full" onClick={handleWhatsAppClick} asChild>
               <Link to="/whatsapp">
