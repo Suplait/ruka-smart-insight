@@ -10,7 +10,6 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Separator } from "@/components/ui/separator";
 import { supabase } from "@/integrations/supabase/client";
 import { pushToDataLayer, trackFormSubmission, trackRegistration, trackWhatsAppClick } from "@/utils/dataLayer";
-
 interface FormData {
   firstName: string;
   lastName: string;
@@ -20,12 +19,10 @@ interface FormData {
   whatsapp: string;
   acceptTerms: boolean;
 }
-
 interface RegistrationFormProps {
   highlightForm: boolean;
   timeLeft: string;
 }
-
 export default function RegistrationForm({
   highlightForm,
   timeLeft
@@ -41,19 +38,15 @@ export default function RegistrationForm({
     acceptTerms: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     pushToDataLayer('registration_form_submit_attempt', {
       has_terms_accepted: formData.acceptTerms
     });
-    
     if (!formData.acceptTerms) {
       pushToDataLayer('registration_validation_error', {
         error_type: 'terms_not_accepted'
       });
-      
       toast({
         title: "Error",
         description: "Debes aceptar los términos y condiciones para continuar.",
@@ -61,11 +54,9 @@ export default function RegistrationForm({
       });
       return;
     }
-    
     try {
       setIsSubmitting(true);
       const whatsappNumber = formData.whatsapp ? `+56${formData.whatsapp.replace(/^\+56/, '')}` : '';
-      
       trackFormSubmission('restaurant_registration', {
         email_domain: formData.email.split('@')[1],
         has_whatsapp: !!formData.whatsapp,
@@ -86,14 +77,12 @@ export default function RegistrationForm({
         ccity: formData.ciudad,
         whatsapp: whatsappNumber
       }]).select().single();
-      
       if (leadError) {
         throw leadError;
       }
 
       // Get the ID of the inserted lead
       const leadId = leadData.id;
-      
       pushToDataLayer('lead_created', {
         lead_id: leadId,
         company_name: formData.nombreRestaurante
@@ -113,13 +102,11 @@ export default function RegistrationForm({
             isOnboarding: false // Esta es una notificación inicial, no una actualización de onboarding
           }
         });
-        
         if (slackResponse.error) {
           // Don't throw error here, just log warning
         } else if (slackResponse.data?.ts) {
           // Store the Slack message timestamp for future thread replies
           const slackTs = slackResponse.data.ts;
-          
           pushToDataLayer('slack_notification_sent', {
             lead_id: leadId
           });
@@ -166,7 +153,6 @@ export default function RegistrationForm({
       } catch (slackError) {
         // Don't throw error here, just log warning
       }
-
       trackRegistration({
         lead_id: leadId,
         restaurant_name: formData.nombreRestaurante
@@ -183,7 +169,6 @@ export default function RegistrationForm({
       trackRegistration({
         error_message: error instanceof Error ? error.message : 'Unknown error'
       }, false);
-      
       toast({
         title: "Error",
         description: "Hubo un problema al enviar tu información. Por favor intenta nuevamente.",
@@ -193,7 +178,6 @@ export default function RegistrationForm({
       setIsSubmitting(false);
     }
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       name,
@@ -212,11 +196,9 @@ export default function RegistrationForm({
       [name]: value
     }));
   };
-
   const handleWhatsAppClick = () => {
     trackWhatsAppClick('restaurant_registration_form', 'whatsapp_onboarding');
   };
-
   return <motion.div initial={{
     opacity: 0,
     scale: 0.95
@@ -241,21 +223,13 @@ export default function RegistrationForm({
           </TooltipProvider>
         </div>
         <div className="flex flex-col gap-2">
-          <div className="text-sm font-medium text-primary">
-            Si te registras antes de las 12:00pm tendrás acceso el mismo día
-          </div>
+          
           <div className="flex items-center gap-2 text-muted-foreground">
             <Clock4 className="w-4 h-4" />
             <span>Faltan {timeLeft} para las 12:00pm</span>
           </div>
           <div className="relative mt-2">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="gap-2 text-muted-foreground hover:text-green-500 hover:border-green-500 w-full"
-              onClick={handleWhatsAppClick}
-              asChild
-            >
+            <Button variant="outline" size="sm" className="gap-2 text-muted-foreground hover:text-green-500 hover:border-green-500 w-full" onClick={handleWhatsAppClick} asChild>
               <Link to="/whatsapp">
                 <div className="flex items-center gap-2">
                   <img src="/lovable-uploads/950f4b99-40ab-40a3-a017-7375458df29d.png" alt="WhatsApp" className="w-4 h-4" />
