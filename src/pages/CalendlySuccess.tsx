@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import CalendlySuccessContent from "@/components/calendly/CalendlySuccessContent";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const CalendlySuccess = () => {
   return (
@@ -16,7 +17,11 @@ const CalendlySuccess = () => {
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col overflow-hidden">
           <div className="max-w-md mx-auto flex-1">
             <div className="h-full flex flex-col justify-center">
-              <img src="/logo.png" alt="Ruka.ai" className="h-10 mb-6" />
+              <div className="w-40 mb-6">
+                <AspectRatio ratio={3/1} className="flex items-center">
+                  <img src="/logo.png" alt="Ruka.ai" className="h-auto w-full object-contain" />
+                </AspectRatio>
+              </div>
               <h2 className="text-3xl font-bold mb-4">¡Cita agendada con éxito!</h2>
               <p className="text-slate-600 mb-6">
                 Has reservado tu cita para conocer más sobre cómo Ruka.ai puede automatizar 
@@ -59,10 +64,14 @@ const CalendlySuccess = () => {
         <div className="flex-1 flex items-center justify-center p-6 md:p-12 bg-white">
           <div className="w-full max-w-md">
             <div className="md:hidden mb-8 flex flex-col items-center text-center">
-              <img src="/logo.png" alt="Ruka.ai" className="h-10 mb-4" />
+              <div className="w-32 mb-4">
+                <AspectRatio ratio={3/1} className="flex items-center">
+                  <img src="/logo.png" alt="Ruka.ai" className="h-auto w-full object-contain" />
+                </AspectRatio>
+              </div>
               <h1 className="text-2xl font-bold mb-2">¡Cita agendada!</h1>
               <p className="text-slate-600 text-sm mb-6">
-                El siguiente paso es contactarnos por WhatsApp para seguir con el proceso.
+                Es obligatorio contactarnos por WhatsApp para poder realizar la reunión.
               </p>
             </div>
             
