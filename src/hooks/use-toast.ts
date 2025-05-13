@@ -152,12 +152,14 @@ const useToast = () => {
   };
 };
 
-// Fixed the dispatch initialization
-const dispatch = React.createContext<React.Dispatch<Action>>(() => {})
-  .Provider.props.value;
+// Creating a standalone dispatch function that will be assigned later
+let dispatch: React.Dispatch<Action> = () => {};
 
 function ToastProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = React.useReducer(reducer, { toasts: [] });
+  const [state, dispatchAction] = React.useReducer(reducer, { toasts: [] });
+  
+  // Assign the dispatch function to our module-level variable
+  dispatch = dispatchAction;
 
   React.useEffect(() => {
     state.toasts.forEach((toast) => {
