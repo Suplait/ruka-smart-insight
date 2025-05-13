@@ -1,13 +1,13 @@
-
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, CreditCard, Clock4, ShieldCheck, Info, HelpCircle, MessageCircle } from "lucide-react";
+import { ArrowRight, CreditCard, Clock4, ShieldCheck, Info, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/components/ui/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Separator } from "@/components/ui/separator";
 import { supabase } from "@/integrations/supabase/client";
 import { trackWhatsAppClick } from "@/utils/dataLayer";
 
@@ -209,20 +209,29 @@ export default function HotelRegistrationForm({
             <Clock4 className="w-4 h-4" />
             <span>Faltan {timeLeft} para las 12:00pm</span>
           </div>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="mt-2 gap-2 text-muted-foreground hover:text-primary"
-            onClick={handleWhatsAppClick}
-            asChild
-          >
-            <Link to="/whatsapp">
-              <MessageCircle className="w-4 h-4" />
-              Prefiero hacerlo por WhatsApp
-            </Link>
-          </Button>
+          <div className="relative mt-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="gap-2 text-muted-foreground hover:text-green-500 hover:border-green-500 w-full"
+              onClick={handleWhatsAppClick}
+              asChild
+            >
+              <Link to="/whatsapp">
+                <div className="flex items-center gap-2">
+                  <img src="/lovable-uploads/950f4b99-40ab-40a3-a017-7375458df29d.png" alt="WhatsApp" className="w-4 h-4" />
+                  Prefiero hacerlo por WhatsApp
+                </div>
+              </Link>
+            </Button>
+            <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">
+              Nuevo
+            </span>
+          </div>
         </div>
       </div>
+      
+      <Separator className="h-px bg-gray-200" />
 
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

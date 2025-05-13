@@ -1,9 +1,9 @@
-
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Clock, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
@@ -12,6 +12,7 @@ import RegistrationForm from "@/components/restaurant/RegistrationForm";
 import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
 import ImpactStats from "@/components/restaurant/ImpactStats";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { trackWhatsAppClick } from "@/utils/dataLayer";
 
 const valueMessages = [
   "Deja que tus chefs se concentren en cocinar, no en Excel.",
