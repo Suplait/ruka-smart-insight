@@ -53,3 +53,13 @@ export const trackRegistration = (registrationData = {}, isSuccess = true) => {
     ...sanitizedData
   });
 };
+
+/**
+ * Track WhatsApp preference click event
+ */
+export const trackWhatsAppClick = (source: string, eventName: string = 'whatsapp_preference_click') => {
+  pushToDataLayer(eventName, {
+    source: source
+  });
+};
+

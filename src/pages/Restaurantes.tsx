@@ -1,9 +1,9 @@
-
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Clock, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
@@ -12,6 +12,7 @@ import RegistrationForm from "@/components/restaurant/RegistrationForm";
 import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
 import ImpactStats from "@/components/restaurant/ImpactStats";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { trackWhatsAppClick } from "@/utils/dataLayer";
 
 const valueMessages = [
   "Deja que tus chefs se concentren en cocinar, no en Excel.",
@@ -81,6 +82,10 @@ export default function Restaurantes() {
       setHighlightForm(true);
       setTimeout(() => setHighlightForm(false), 2000);
     }
+  };
+
+  const handleWhatsAppClick = () => {
+    trackWhatsAppClick('restaurant_mobile_floating', 'whatsapp_onboarding');
   };
 
   return (
@@ -373,8 +378,23 @@ export default function Restaurantes() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="lg:hidden fixed bottom-6 right-6 z-50"
+              className="lg:hidden fixed bottom-6 right-6 z-50 flex gap-2"
             >
+              <Button
+                onClick={handleWhatsAppClick}
+                size="lg"
+                variant="outline"
+                asChild
+                className="shadow-lg bg-white hover:bg-green-50 text-green-600 border-green-500 font-semibold transition-all duration-300 px-4 py-6 h-auto rounded-full"
+              >
+                <Link to="/whatsapp">
+                  <div className="flex items-center gap-2">
+                    <img src="/lovable-uploads/950f4b99-40ab-40a3-a017-7375458df29d.png" alt="WhatsApp" className="w-5 h-5" />
+                      Solicitar info.
+                  </div>
+                </Link>
+              </Button>
+              
               <Button
                 onClick={scrollToForm}
                 size="lg"
