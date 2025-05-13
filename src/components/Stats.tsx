@@ -3,19 +3,19 @@ import { Users, FileText, TrendingUp, Clock } from "lucide-react";
 
 const stats = [
   {
-    value: "120+",
+    value: "150+",
     metric: "Clientes Felices",
     icon: Users,
     description: "empresas confían en nosotros",
   },
   {
-    value: "800K+",
+    value: "1M+",
     metric: "Facturas",
     icon: FileText,
     description: "documentos procesados automáticamente",
   },
   {
-    value: "US$250M+",
+    value: "US$300M+",
     metric: "Transacciones",
     icon: TrendingUp,
     description: "en datos digitalizados",

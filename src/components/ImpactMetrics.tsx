@@ -5,7 +5,7 @@ import { Users, FileText, TrendingUp, Clock } from "lucide-react";
 
 const metrics = [
   {
-    value: 120,
+    value: 150,
     suffix: "+",
     label: "Clientes activos",
     icon: Users,
@@ -19,14 +19,14 @@ const metrics = [
     color: "text-emerald-500"
   },
   {
-    value: 800,
+    value: 1000,
     suffix: "K+",
     label: "Facturas procesadas",
     icon: FileText,
     color: "text-purple-500"
   },
   {
-    value: 250,
+    value: 300,
     suffix: "M+",
     prefix: "US$",
     label: "Transacciones",
