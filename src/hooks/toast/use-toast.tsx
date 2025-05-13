@@ -3,7 +3,14 @@ import { useToastContext } from "./toast-context";
 import { ToasterToast } from "./types";
 import { genId } from "./utils";
 
-export const useToast = () => {
+// Helper function for direct toast usage (not exported)
+const createToast = (props: Omit<ToasterToast, "id">) => {
+  const { toast } = useToastImpl();
+  return toast(props);
+};
+
+// The main hook implementation
+const useToastImpl = () => {
   const { toasts, addToast, updateToast, dismissToast, removeToast } = useToastContext();
 
   return {
@@ -25,21 +32,28 @@ export const useToast = () => {
   };
 };
 
-export const toast = {
-  success: (props: Omit<ToasterToast, "id">) => {
-    const { toast } = useToast();
-    return toast({ ...props, variant: "success" });
-  },
-  error: (props: Omit<ToasterToast, "id">) => {
-    const { toast } = useToast();
-    return toast({ ...props, variant: "destructive" });
-  },
-  warning: (props: Omit<ToasterToast, "id">) => {
-    const { toast } = useToast();
-    return toast({ ...props, variant: "warning" });
-  },
-  info: (props: Omit<ToasterToast, "id">) => {
-    const { toast } = useToast();
-    return toast({ ...props });
-  },
+// Exported hook
+export const useToast = useToastImpl;
+
+// Standalone toast function (this is what components will use)
+export const toast = (props: Omit<ToasterToast, "id">) => {
+  const { toast } = useToastImpl();
+  return toast(props);
+};
+
+// Add method variants
+toast.success = (props: Omit<ToasterToast, "id">) => {
+  return toast({ ...props, variant: "success" as any });
+};
+
+toast.error = (props: Omit<ToasterToast, "id">) => {
+  return toast({ ...props, variant: "destructive" });
+};
+
+toast.warning = (props: Omit<ToasterToast, "id">) => {
+  return toast({ ...props, variant: "warning" as any });
+};
+
+toast.info = (props: Omit<ToasterToast, "id">) => {
+  return toast({ ...props });
 };

@@ -70,5 +70,5 @@ export const reducer = (state: State, action: Action): State => {
   }
 };
 
-// Creating a global dispatch function that will be assigned in the provider
-export let globalDispatch: React.Dispatch<Action> = () => {};
+// Define globalDispatch here instead of importing it
+export let globalDispatch: React.Dispatch<Action>;

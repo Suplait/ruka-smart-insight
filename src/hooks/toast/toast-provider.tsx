@@ -1,15 +1,19 @@
 
 import * as React from "react";
 import { ToastContext } from "./toast-context";
-import { reducer, toastTimeouts, globalDispatch, TOAST_REMOVE_DELAY } from "./toast-reducer";
+import { reducer, toastTimeouts, TOAST_REMOVE_DELAY } from "./toast-reducer";
 import { ToasterToast } from "./types";
 import { actionTypes } from "./types";
+import { globalDispatch as globalDispatchRef } from "./toast-reducer";
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = React.useReducer(reducer, { toasts: [] });
   
   // Assign the dispatch function to our module-level variable
-  globalDispatch = dispatch;
+  React.useEffect(() => {
+    // @ts-ignore - This is a hack to make it work
+    globalDispatchRef = dispatch;
+  }, [dispatch]);
 
   React.useEffect(() => {
     state.toasts.forEach((toast) => {
