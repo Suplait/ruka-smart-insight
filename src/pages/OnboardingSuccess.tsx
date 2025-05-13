@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -410,7 +411,7 @@ const OnboardingSuccess = () => {
         {showWhatsAppButtons && !isComplete && (
           <>
             {/* Desktop version */}
-            <div className="hidden md:block fixed bottom-6 right-6 z-50">
+            <div className="hidden md:block fixed bottom-6 left-6 z-50">
               <WhatsappButton 
                 source="onboarding_desktop_floating"
                 text="Hola! Prefiero continuar mi registro de Ruka.ai por WhatsApp 🤖"
@@ -423,14 +424,14 @@ const OnboardingSuccess = () => {
                   ciudad: location.state?.ciudad || "",
                   whatsapp: location.state?.whatsapp || ""
                 }}
-                className="shadow-lg bg-green-600 hover:bg-green-700 text-white font-semibold transition-all duration-300 px-6 py-6 h-auto rounded-full"
+                className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"
               >
                 Seguir en WhatsApp
               </WhatsappButton>
             </div>
             
             {/* Mobile version */}
-            <div className="md:hidden fixed bottom-6 right-6 z-50">
+            <div className="md:hidden fixed bottom-6 left-6 z-50">
               <WhatsappButton 
                 source="onboarding_mobile_floating"
                 text="Hola! Prefiero continuar mi registro de Ruka.ai por WhatsApp 🤖"
@@ -443,7 +444,7 @@ const OnboardingSuccess = () => {
                   ciudad: location.state?.ciudad || "",
                   whatsapp: location.state?.whatsapp || ""
                 }}
-                className="shadow-lg bg-green-600 hover:bg-green-700 text-white font-semibold transition-all duration-300 px-6 py-6 h-auto rounded-full"
+                className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"
               >
                 Seguir en WhatsApp
               </WhatsappButton>
