@@ -1,15 +1,15 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, CreditCard, Clock4, ShieldCheck, Info, HelpCircle } from "lucide-react";
+import { ArrowRight, CreditCard, Clock4, ShieldCheck, Info, HelpCircle, WhatsApp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/components/ui/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { supabase } from "@/integrations/supabase/client";
+import { trackWhatsAppClick } from "@/utils/dataLayer";
 
 interface FormData {
   firstName: string;
@@ -174,6 +174,10 @@ export default function HotelRegistrationForm({
     }));
   };
 
+  const handleWhatsAppClick = () => {
+    trackWhatsAppClick('hotel_registration_form');
+  };
+
   return <motion.div initial={{
     opacity: 0,
     scale: 0.95
@@ -205,6 +209,18 @@ export default function HotelRegistrationForm({
             <Clock4 className="w-4 h-4" />
             <span>Faltan {timeLeft} para las 12:00pm</span>
           </div>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="mt-2 gap-2 text-muted-foreground hover:text-primary"
+            onClick={handleWhatsAppClick}
+            asChild
+          >
+            <Link to="/whatsapp">
+              <WhatsApp className="w-4 h-4" />
+              Prefiero hacerlo por WhatsApp
+            </Link>
+          </Button>
         </div>
       </div>
 
