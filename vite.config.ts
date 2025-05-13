@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    allowedHosts: 'all', // Allow all hosts to access the development server
+    allowedHosts: true, // Allow all hosts to access the development server
   },
   plugins: [
     react(),
