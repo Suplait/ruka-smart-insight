@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -17,6 +18,7 @@ import SubdomainInput from "@/components/onboarding/SubdomainInput";
 import SiiCredentialsInput from "@/components/onboarding/SiiCredentialsInput";
 import SuccessContent from "@/components/onboarding/SuccessContent";
 import LeftSideContent from "@/components/onboarding/LeftSideContent";
+import WhatsappButton from "@/components/WhatsappButton";
 import { saveFormData, validateSiiCredentials, generateSubdomain } from "@/services/onboardingService";
 
 const SLIDE_INTERVAL = 2500;
@@ -27,6 +29,7 @@ const OnboardingSuccess = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [showWhatsAppButtons, setShowWhatsAppButtons] = useState(true);
   const totalSteps = 4;
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
@@ -252,7 +255,7 @@ const OnboardingSuccess = () => {
         <title>Configura tu cuenta | Ruka.ai</title>
       </Helmet>
       
-      <main className="min-h-screen flex flex-col md:flex-row">
+      <main className="min-h-screen flex flex-col md:flex-row relative">
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col overflow-hidden">
           <div className="max-w-md mx-auto flex-1">
             <AnimatePresence mode="wait">
@@ -415,6 +418,51 @@ const OnboardingSuccess = () => {
             )}
           </div>
         </div>
+        
+        {/* WhatsApp Floating Button - Only show when not complete */}
+        {showWhatsAppButtons && !isComplete && (
+          <>
+            {/* Desktop version */}
+            <div className="hidden md:block fixed bottom-6 right-6 z-50">
+              <WhatsappButton 
+                source="onboarding_desktop_floating"
+                text="Hola! Prefiero continuar mi registro de Ruka.ai por WhatsApp 🤖"
+                formData={{
+                  ...formData,
+                  firstName: location.state?.firstName || "",
+                  lastName: location.state?.lastName || "",
+                  email: location.state?.email || "",
+                  nombreRestaurante: restaurantName,
+                  ciudad: location.state?.ciudad || "",
+                  whatsapp: location.state?.whatsapp || ""
+                }}
+                className="shadow-lg bg-green-600 hover:bg-green-700 text-white font-semibold transition-all duration-300 px-6 py-6 h-auto rounded-full"
+              >
+                Seguir en WhatsApp
+              </WhatsappButton>
+            </div>
+            
+            {/* Mobile version */}
+            <div className="md:hidden fixed bottom-6 right-6 z-50">
+              <WhatsappButton 
+                source="onboarding_mobile_floating"
+                text="Hola! Prefiero continuar mi registro de Ruka.ai por WhatsApp 🤖"
+                formData={{
+                  ...formData,
+                  firstName: location.state?.firstName || "",
+                  lastName: location.state?.lastName || "",
+                  email: location.state?.email || "",
+                  nombreRestaurante: restaurantName,
+                  ciudad: location.state?.ciudad || "",
+                  whatsapp: location.state?.whatsapp || ""
+                }}
+                className="shadow-lg bg-green-600 hover:bg-green-700 text-white font-semibold transition-all duration-300 px-6 py-6 h-auto rounded-full"
+              >
+                Seguir en WhatsApp
+              </WhatsappButton>
+            </div>
+          </>
+        )}
       </main>
     </>
   );

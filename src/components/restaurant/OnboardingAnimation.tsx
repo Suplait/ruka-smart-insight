@@ -16,6 +16,7 @@ import {
   BrainCircuit
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import WhatsappButton from "@/components/WhatsappButton";
 
 interface AnimationStep {
   icon: React.ReactNode;
@@ -140,7 +141,7 @@ const OnboardingAnimation = () => {
                     initial={{ opacity: 0, y: 20 }} 
                     animate={{ opacity: 1, y: 0 }} 
                     transition={{ delay: 0.5 }}
-                    className="mt-6"
+                    className="mt-6 space-y-4"
                   >
                     <Button 
                       id="go-home-button" 
@@ -158,6 +159,17 @@ const OnboardingAnimation = () => {
                     >
                       Ir al inicio
                     </Button>
+                    
+                    <div className="mt-4">
+                      <WhatsappButton
+                        source="onboarding_animation_complete"
+                        text="Hola! Acabo de completar el registro en Ruka.ai y quiero saber los siguientes pasos 🤖"
+                        variant="outline"
+                        className="w-full border-green-500 text-green-600 hover:bg-green-50"
+                      >
+                        Continuar en WhatsApp
+                      </WhatsappButton>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
