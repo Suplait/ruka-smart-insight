@@ -66,6 +66,11 @@ const WhatsappButton = ({
       if (formData.meses) {
         message += `Meses de datos: ${formData.meses}\n`;
       }
+      
+      // Add SII connection status only (not credentials)
+      if (formData.rut && formData.clave) {
+        message += `SII conectado: Sí\n`;
+      }
     }
     
     // URL encode the message

@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -259,22 +258,10 @@ const OnboardingSuccess = () => {
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col overflow-hidden">
           <div className="max-w-md mx-auto flex-1">
             <AnimatePresence mode="wait">
-              {isComplete ? (
-                <motion.div 
-                  key="onboarding-complete" 
-                  initial={{ opacity: 0 }} 
-                  animate={{ opacity: 1 }} 
-                  exit={{ opacity: 0 }} 
-                  className="h-full flex flex-col justify-between"
-                >
-                  <OnboardingAnimation />
-                </motion.div>
-              ) : (
-                <LeftSideContent 
-                  currentStep={currentStep}
-                  isComplete={isComplete}
-                />
-              )}
+              <LeftSideContent 
+                currentStep={currentStep}
+                isComplete={isComplete}
+              />
             </AnimatePresence>
           </div>
         </div>

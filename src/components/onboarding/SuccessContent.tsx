@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { Check } from 'lucide-react';
+import { Check, MessageSquare } from 'lucide-react';
+import WhatsappButton from "@/components/WhatsappButton";
 
 const SuccessContent = () => {
   return (
@@ -13,7 +14,7 @@ const SuccessContent = () => {
       
       <div className="space-y-4 text-gray-600">
         <p>
-          Ahora levantaremos tu plataforma y cargaremos los datos iniciales para que Ruka los agrupe y clasifique. En breve:
+          Has completado el registro con éxito. El siguiente paso es contactarnos por WhatsApp para activar tu plataforma.
         </p>
         
         <div className="space-y-3 text-left max-w-sm mx-auto">
@@ -21,23 +22,33 @@ const SuccessContent = () => {
             <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0 mt-0.5">
               <Check className="w-3 h-3" />
             </div>
-            <p className="text-sm">Crearemos un grupo de WhatsApp para asistirte siempre que lo necesites</p>
+            <p className="text-sm">Tus datos han sido guardados correctamente</p>
           </div>
           
           <div className="flex items-start gap-2">
             <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0 mt-0.5">
               <Check className="w-3 h-3" />
             </div>
-            <p className="text-sm">Te enviaremos las credenciales de acceso cuando la plataforma esté lista</p>
+            <p className="text-sm">La información del SII ha sido registrada de forma segura</p>
           </div>
           
           <div className="flex items-start gap-2">
             <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center text-primary flex-shrink-0 mt-0.5">
-              <Check className="w-3 h-3" />
+              <MessageSquare className="w-3 h-3" />
             </div>
-            <p className="text-sm">Agendaremos una reunión de capacitación para que saques el máximo provecho</p>
+            <p className="text-sm">Contáctanos ahora por WhatsApp para iniciar la activación de tu plataforma</p>
           </div>
         </div>
+      </div>
+      
+      <div className="mt-8">
+        <WhatsappButton
+          source="onboarding_success_completion"
+          text="Hola! He completado mi registro en Ruka.ai y quiero activar mi plataforma. Estos son mis datos:"
+          className="w-full bg-green-600 hover:bg-green-700 text-white"
+        >
+          Continuar en WhatsApp para activar mi plataforma
+        </WhatsappButton>
       </div>
     </div>
   );
