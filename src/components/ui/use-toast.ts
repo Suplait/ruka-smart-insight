@@ -1,5 +1,5 @@
 
-// This is where our toast hooks should come from, not importing from elsewhere
-import { useToast, toast } from "@/components/ui/toast";
+// Re-export from the correct location
+import { useToast, toast } from "@/hooks/use-toast";
 
 export { useToast, toast };

@@ -152,10 +152,9 @@ const useToast = () => {
   };
 };
 
-const [state, dispatch] = React.createContext<[State, React.Dispatch<Action>]>([
-  { toasts: [] },
-  () => {},
-]);
+// Fixed the dispatch initialization
+const dispatch = React.createContext<React.Dispatch<Action>>(() => {})
+  .Provider.props.value;
 
 function ToastProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = React.useReducer(reducer, { toasts: [] });
@@ -202,23 +201,19 @@ function ToastProvider({ children }: { children: React.ReactNode }) {
 
 const toast = {
   success: (props: Omit<ToasterToast, "id">) => {
-    const { useToast: useToastHook } = require("@/hooks/use-toast");
-    const { toast } = useToastHook();
+    const { toast } = useToast();
     return toast({ ...props, variant: "success" });
   },
   error: (props: Omit<ToasterToast, "id">) => {
-    const { useToast: useToastHook } = require("@/hooks/use-toast");
-    const { toast } = useToastHook();
+    const { toast } = useToast();
     return toast({ ...props, variant: "destructive" });
   },
   warning: (props: Omit<ToasterToast, "id">) => {
-    const { useToast: useToastHook } = require("@/hooks/use-toast");
-    const { toast } = useToastHook();
+    const { toast } = useToast();
     return toast({ ...props, variant: "warning" });
   },
   info: (props: Omit<ToasterToast, "id">) => {
-    const { useToast: useToastHook } = require("@/hooks/use-toast");
-    const { toast } = useToastHook();
+    const { toast } = useToast();
     return toast({ ...props });
   },
 };
