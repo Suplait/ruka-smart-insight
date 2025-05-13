@@ -13,6 +13,7 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import OnboardingSuccess from './pages/OnboardingSuccess';
 import NotFound from './pages/NotFound';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import WhatsappRedirect from './pages/WhatsappRedirect';
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ function App() {
             <Route path="/terms" element={<TermsAndConditions />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/onboarding-success" element={<OnboardingSuccess />} />
+            <Route path="/whatsapp" element={<WhatsappRedirect />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
