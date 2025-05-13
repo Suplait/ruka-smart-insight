@@ -16,7 +16,7 @@ const CalendlySuccess = () => {
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col overflow-hidden">
           <div className="max-w-md mx-auto flex-1">
             <div className="h-full flex flex-col justify-center">
-              <img src="/logo.png" alt="Ruka.ai" className="h-10 mb-6" />
+              <img src="/logo.png" alt="Ruka.ai" className="h-10 w-auto mb-6" />
               <h2 className="text-3xl font-bold mb-4">¡Cita agendada con éxito!</h2>
               <p className="text-slate-600 mb-6">
                 Has reservado tu cita para conocer más sobre cómo Ruka.ai puede automatizar 
@@ -59,10 +59,10 @@ const CalendlySuccess = () => {
         <div className="flex-1 flex items-center justify-center p-6 md:p-12 bg-white">
           <div className="w-full max-w-md">
             <div className="md:hidden mb-8 flex flex-col items-center text-center">
-              <img src="/logo.png" alt="Ruka.ai" className="h-10 mb-4" />
+              <img src="/logo.png" alt="Ruka.ai" className="h-10 w-auto mb-4" />
               <h1 className="text-2xl font-bold mb-2">¡Cita agendada!</h1>
               <p className="text-slate-600 text-sm mb-6">
-                El siguiente paso es contactarnos por WhatsApp para seguir con el proceso.
+                Es obligatorio que nos hables por WhatsApp para poder realizar la reunión.
               </p>
             </div>
             
