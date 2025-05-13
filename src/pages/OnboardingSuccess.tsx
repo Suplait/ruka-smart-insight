@@ -17,6 +17,7 @@ import SubdomainInput from "@/components/onboarding/SubdomainInput";
 import SiiCredentialsInput from "@/components/onboarding/SiiCredentialsInput";
 import SuccessContent from "@/components/onboarding/SuccessContent";
 import LeftSideContent from "@/components/onboarding/LeftSideContent";
+import WhatsappButton from "@/components/WhatsappButton";
 import { saveFormData, validateSiiCredentials, generateSubdomain } from "@/services/onboardingService";
 
 const SLIDE_INTERVAL = 2500;
@@ -27,6 +28,7 @@ const OnboardingSuccess = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [showWhatsAppButtons, setShowWhatsAppButtons] = useState(true);
   const totalSteps = 4;
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
@@ -183,8 +185,26 @@ const OnboardingSuccess = () => {
           });
         }
         
+        // Antes de navegar a la página de éxito, asegúrate de incluir todos los datos del usuario
+        // incluidos los datos del formulario de registro inicial y los del onboarding
         setIsComplete(true);
         setIsLoading(false);
+        
+        // Conservar también los datos del usuario pasados al estado de la vista
+        const updatedLocationState = {
+          ...location.state,
+          formData: {
+            ...formData,
+            siiConnected: true // Siempre establecer como Sí si ha completado el proceso
+          }
+        };
+        
+        // Actualizamos el estado de ubicación con los datos completos
+        navigate('/onboarding-success', { 
+          state: updatedLocationState,
+          replace: true // Reemplaza la entrada de historial actual
+        });
+        
         return;
       } catch (error) {
         toast({
@@ -252,26 +272,14 @@ const OnboardingSuccess = () => {
         <title>Configura tu cuenta | Ruka.ai</title>
       </Helmet>
       
-      <main className="min-h-screen flex flex-col md:flex-row">
+      <main className="min-h-screen flex flex-col md:flex-row relative">
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col overflow-hidden">
           <div className="max-w-md mx-auto flex-1">
             <AnimatePresence mode="wait">
-              {isComplete ? (
-                <motion.div 
-                  key="onboarding-complete" 
-                  initial={{ opacity: 0 }} 
-                  animate={{ opacity: 1 }} 
-                  exit={{ opacity: 0 }} 
-                  className="h-full flex flex-col justify-between"
-                >
-                  <OnboardingAnimation />
-                </motion.div>
-              ) : (
-                <LeftSideContent 
-                  currentStep={currentStep}
-                  isComplete={isComplete}
-                />
-              )}
+              <LeftSideContent 
+                currentStep={currentStep}
+                isComplete={isComplete}
+              />
             </AnimatePresence>
           </div>
         </div>
@@ -415,6 +423,53 @@ const OnboardingSuccess = () => {
             )}
           </div>
         </div>
+        
+        {/* WhatsApp Floating Button - Only show when not complete */}
+        {showWhatsAppButtons && !isComplete && (
+          <>
+            {/* Desktop version */}
+            <div className="hidden md:block fixed bottom-6 left-6 z-50">
+              <WhatsappButton 
+                source="onboarding_desktop_floating"
+                text="Hola! Prefiero continuar mi registro de Ruka.ai por WhatsApp 🤖"
+                formData={{
+                  ...formData,
+                  firstName: location.state?.firstName || "",
+                  lastName: location.state?.lastName || "",
+                  email: location.state?.email || "",
+                  nombreRestaurante: restaurantName,
+                  ciudad: location.state?.ciudad || "",
+                  whatsapp: location.state?.whatsapp || ""
+                }}
+                isSuccessPage={false}
+                className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"
+              >
+                Seguir en WhatsApp
+              </WhatsappButton>
+            </div>
+            
+            {/* Mobile version */}
+            <div className="md:hidden fixed bottom-6 left-6 z-50">
+              <WhatsappButton 
+                source="onboarding_mobile_floating"
+                text="Hola! Prefiero continuar mi registro de Ruka.ai por WhatsApp 🤖"
+                formData={{
+                  ...formData,
+                  firstName: location.state?.firstName || "",
+                  lastName: location.state?.lastName || "",
+                  email: location.state?.email || "",
+                  nombreRestaurante: restaurantName,
+                  ciudad: location.state?.ciudad || "",
+                  whatsapp: location.state?.whatsapp || ""
+                }}
+                isSuccessPage={false}
+                className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"
+              >
+                Seguir en WhatsApp
+              </WhatsappButton>
+            </div>
+          </>
+        )}
       </main>
     </>
   );
