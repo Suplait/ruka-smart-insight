@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { trackWhatsAppClick } from "@/utils/dataLayer";
 
 interface WhatsAppButtonProps {
-  text: string;
-  phone: string;
+  text?: string;
+  phone?: string;
   source: string;
   className?: string;
   variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
