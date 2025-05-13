@@ -68,7 +68,9 @@ const WhatsappButton = ({
       }
       
       // Add SII connection status only (not credentials)
-      if (formData.rut && formData.clave) {
+      if (formData.siiConnected) {
+        message += `SII conectado: ${formData.siiConnected}\n`;
+      } else if (formData.rut && formData.clave) {
         message += `SII conectado: Sí\n`;
       }
     }

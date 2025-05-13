@@ -2,8 +2,12 @@
 import React from 'react';
 import { Check, MessageSquare, AlertCircle } from 'lucide-react';
 import WhatsappButton from "@/components/WhatsappButton";
+import { useLocation } from 'react-router-dom';
 
 const SuccessContent = () => {
+  const location = useLocation();
+  const formData = location.state || {};
+  
   return (
     <div className="text-center space-y-4">
       <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
@@ -51,6 +55,19 @@ const SuccessContent = () => {
           source="onboarding_success_completion"
           text="Hola! He completado mi registro en Ruka.ai y quiero activar mi plataforma. Estos son mis datos:"
           className="w-full bg-green-600 hover:bg-green-700 text-white py-3"
+          formData={{
+            firstName: formData.firstName || "",
+            lastName: formData.lastName || "",
+            email: formData.email || "",
+            nombreRestaurante: formData.restaurantName || "",
+            ciudad: formData.ciudad || "",
+            whatsapp: formData.whatsapp || "",
+            subdominio: formData.formData?.subdominio || "",
+            sistema: formData.formData?.sistema || "",
+            sistemaCustom: formData.formData?.sistemaCustom || "",
+            meses: formData.formData?.meses || "",
+            siiConnected: formData.formData?.rut && formData.formData?.clave ? "Sí" : "No"
+          }}
         >
           Activar mi plataforma
         </WhatsappButton>
