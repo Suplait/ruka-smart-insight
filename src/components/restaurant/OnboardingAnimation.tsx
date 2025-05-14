@@ -15,9 +15,19 @@ const OnboardingAnimation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
+  // Log the data we're receiving for debugging
+  useEffect(() => {
+    console.log("Animation component location state:", location.state);
+  }, [location.state]);
+  
   // Access formData and restaurantName from location state
   const formData = location.state?.formData || {};
   const restaurantName = location.state?.restaurantName || '';
+  const firstName = location.state?.firstName || '';
+  const lastName = location.state?.lastName || '';
+  const email = location.state?.email || '';
+  const ciudad = location.state?.ciudad || '';
+  const whatsapp = location.state?.whatsapp || '';
 
   return (
     <div className="h-full flex flex-col items-center justify-center">
@@ -53,12 +63,12 @@ const OnboardingAnimation = () => {
               variant="default"
               className="w-full bg-green-600 hover:bg-green-700 text-white py-3"
               formData={{
-                firstName: location.state?.firstName || "",
-                lastName: location.state?.lastName || "",
-                email: location.state?.email || "",
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
                 nombreRestaurante: restaurantName,
-                ciudad: location.state?.ciudad || "",
-                whatsapp: location.state?.whatsapp || "",
+                ciudad: ciudad,
+                whatsapp: whatsapp,
                 ...formData,
                 currentStep: 4 // Completed all steps
               }}

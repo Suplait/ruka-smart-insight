@@ -50,7 +50,10 @@ const OnboardingSuccess = () => {
       navigate('/restaurantes');
       return;
     }
-  }, [leadId, navigate]);
+
+    // Debug console log para verificar los datos recibidos del location state
+    console.log("Location state in onboarding:", location.state);
+  }, [leadId, navigate, location.state]);
 
   const suggestedSubdomain = generateSubdomain(restaurantName);
 
@@ -433,14 +436,14 @@ const OnboardingSuccess = () => {
                 source="onboarding_desktop_floating"
                 text="Hola! Prefiero continuar mi registro de Ruka.ai por WhatsApp 🤖"
                 formData={{
-                  ...formData,
                   firstName: location.state?.firstName || "",
                   lastName: location.state?.lastName || "",
                   email: location.state?.email || "",
                   nombreRestaurante: restaurantName,
                   ciudad: location.state?.ciudad || "",
                   whatsapp: location.state?.whatsapp || "",
-                  currentStep: currentStep
+                  currentStep: currentStep,
+                  ...formData, // Agregar también la data del formulario actual
                 }}
                 isSuccessPage={false}
                 className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"
@@ -455,14 +458,14 @@ const OnboardingSuccess = () => {
                 source="onboarding_mobile_floating"
                 text="Hola! Prefiero continuar mi registro de Ruka.ai por WhatsApp 🤖"
                 formData={{
-                  ...formData,
                   firstName: location.state?.firstName || "",
                   lastName: location.state?.lastName || "",
                   email: location.state?.email || "",
                   nombreRestaurante: restaurantName,
                   ciudad: location.state?.ciudad || "",
                   whatsapp: location.state?.whatsapp || "",
-                  currentStep: currentStep
+                  currentStep: currentStep,
+                  ...formData, // Agregar también la data del formulario actual
                 }}
                 isSuccessPage={false}
                 className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"
