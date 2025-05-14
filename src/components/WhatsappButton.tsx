@@ -61,13 +61,16 @@ const WhatsappButton = ({
         message += `WhatsApp: ${formData.whatsapp.startsWith('+56') ? formData.whatsapp : `+56${formData.whatsapp}`}\n`;
       }
       
-      // Subdominio - solo si existe
-      if (formData.subdominio) {
+      // SOLO agregamos la siguiente información si estamos en el proceso de onboarding 
+      // y estos campos ya han sido explícitamente definidos por el usuario
+      
+      // Subdominio - solo si el usuario ya lo ha definido explícitamente
+      if (isSuccessPage && formData.subdominio) {
         message += `Subdominio: ${formData.subdominio}\n`;
       }
       
-      // Sistema de facturación - solo si está definido
-      if (formData.sistema && formData.sistema !== "") {
+      // Sistema de facturación - solo si el usuario ya lo ha definido explícitamente
+      if (isSuccessPage && formData.sistema && formData.sistema !== "") {
         message += `Sistema: ${formData.sistema}`;
         if (formData.sistemaCustom && formData.sistemaCustom !== "" && formData.sistema !== "sii") {
           message += ` (${formData.sistemaCustom})`;
@@ -75,18 +78,13 @@ const WhatsappButton = ({
         message += '\n';
       }
       
-      // Meses de datos - solo si está definido
-      if (formData.meses && formData.meses > 0) {
+      // Meses de datos - solo si el usuario ya lo ha definido explícitamente
+      if (isSuccessPage && formData.meses && formData.meses > 0) {
         message += `Meses de datos: ${formData.meses}\n`;
       }
       
-      // Estado de conexión SII (sin incluir credenciales)
-      // Solo mostramos "Sí" si estamos en la página de éxito o si se ha conectado explícitamente
-      if (isSuccessPage) {
-        message += `SII conectado: Sí\n`;
-      } else if (formData.siiConnected === true) {
-        message += `SII conectado: Sí\n`;
-      } else if (formData.rut && formData.clave) {
+      // Estado de conexión SII - solo si el usuario ya ha completado este paso
+      if (isSuccessPage && (formData.siiConnected === true || (formData.rut && formData.clave))) {
         message += `SII conectado: Sí\n`;
       }
     }

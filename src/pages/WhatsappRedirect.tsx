@@ -8,7 +8,7 @@ export default function WhatsappRedirect() {
   
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <p className="text-lg">Redirecting to WhatsApp...</p>
+      <p className="text-lg">Redirigiendo a WhatsApp...</p>
     </div>
   );
 }
