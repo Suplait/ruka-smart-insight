@@ -19,6 +19,7 @@ import SuccessContent from "@/components/onboarding/SuccessContent";
 import LeftSideContent from "@/components/onboarding/LeftSideContent";
 import WhatsappButton from "@/components/WhatsappButton";
 import { saveFormData, validateSiiCredentials, generateSubdomain } from "@/services/onboardingService";
+import { supabase } from "@/integrations/supabase/client";
 
 const SLIDE_INTERVAL = 2500;
 
@@ -32,6 +33,98 @@ const OnboardingSuccess = () => {
   const totalSteps = 4;
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
+  
+  // Extract user information from location state
+  const firstName = location.state?.firstName || '';
+  const lastName = location.state?.lastName || '';
+  const email = location.state?.email || '';
+  const ciudad = location.state?.ciudad || '';
+  const whatsapp = location.state?.whatsapp || '';
+  
+  // Create state to store the full lead data
+  const [leadData, setLeadData] = useState({
+    firstName,
+    lastName,
+    email,
+    ciudad,
+    whatsapp,
+    nombreRestaurante: restaurantName
+  });
+
+  // Fetch the lead data from Supabase if we have a leadId but missing user info
+  useEffect(() => {
+    const fetchLeadData = async () => {
+      if (leadId && (!firstName || !lastName || !email || !ciudad)) {
+        try {
+          const { data: lead, error } = await supabase
+            .from('leads')
+            .select('*')
+            .eq('id', leadId)
+            .single();
+            
+          if (error) {
+            console.error("Error fetching lead data:", error);
+            return;
+          }
+          
+          if (lead) {
+            console.log("Retrieved lead data from Supabase:", lead);
+            
+            // Extract first and last name from name field if needed
+            let extractedFirstName = firstName;
+            let extractedLastName = lastName;
+            
+            if (!extractedFirstName && lead.first_name) {
+              extractedFirstName = lead.first_name;
+            }
+            
+            if (!extractedLastName && lead.last_name) {
+              extractedLastName = lead.last_name;
+            }
+            
+            // If we still don't have first/last name but we have full name, split it
+            if ((!extractedFirstName || !extractedLastName) && lead.name) {
+              const nameParts = lead.name.split(' ');
+              if (nameParts.length > 0 && !extractedFirstName) {
+                extractedFirstName = nameParts[0];
+              }
+              if (nameParts.length > 1 && !extractedLastName) {
+                extractedLastName = nameParts.slice(1).join(' ');
+              }
+            }
+            
+            // Update lead data state
+            setLeadData({
+              firstName: extractedFirstName,
+              lastName: extractedLastName,
+              email: lead.email || email,
+              ciudad: lead.ccity || ciudad,
+              whatsapp: lead.whatsapp ? lead.whatsapp.replace(/^\+56/, '') : whatsapp,
+              nombreRestaurante: lead.company_name || restaurantName
+            });
+            
+            // Log the updated lead data
+            console.log("Updated lead data for WhatsApp:", {
+              firstName: extractedFirstName,
+              lastName: extractedLastName,
+              email: lead.email || email,
+              ciudad: lead.ccity || ciudad,
+              whatsapp: lead.whatsapp ? lead.whatsapp.replace(/^\+56/, '') : whatsapp,
+              nombreRestaurante: lead.company_name || restaurantName
+            });
+          }
+        } catch (error) {
+          console.error("Error in fetchLeadData:", error);
+        }
+      } else {
+        console.log("Using lead data from location state:", {
+          firstName, lastName, email, ciudad, whatsapp, restaurantName
+        });
+      }
+    };
+    
+    fetchLeadData();
+  }, [leadId, firstName, lastName, email, ciudad, whatsapp, restaurantName]);
 
   useEffect(() => {
     pushToDataLayer('onboarding_page_view', { 
@@ -436,14 +529,14 @@ const OnboardingSuccess = () => {
                 source="onboarding_desktop_floating"
                 text="Hola! Prefiero continuar mi registro de Ruka.ai por WhatsApp 🤖"
                 formData={{
-                  firstName: location.state?.firstName || "",
-                  lastName: location.state?.lastName || "",
-                  email: location.state?.email || "",
-                  nombreRestaurante: restaurantName,
-                  ciudad: location.state?.ciudad || "",
-                  whatsapp: location.state?.whatsapp || "",
+                  firstName: leadData.firstName,
+                  lastName: leadData.lastName,
+                  email: leadData.email,
+                  nombreRestaurante: leadData.nombreRestaurante,
+                  ciudad: leadData.ciudad,
+                  whatsapp: leadData.whatsapp,
                   currentStep: currentStep,
-                  ...formData, // Agregar también la data del formulario actual
+                  ...formData // Agregar también la data del formulario actual
                 }}
                 isSuccessPage={false}
                 className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"
@@ -458,14 +551,14 @@ const OnboardingSuccess = () => {
                 source="onboarding_mobile_floating"
                 text="Hola! Prefiero continuar mi registro de Ruka.ai por WhatsApp 🤖"
                 formData={{
-                  firstName: location.state?.firstName || "",
-                  lastName: location.state?.lastName || "",
-                  email: location.state?.email || "",
-                  nombreRestaurante: restaurantName,
-                  ciudad: location.state?.ciudad || "",
-                  whatsapp: location.state?.whatsapp || "",
+                  firstName: leadData.firstName,
+                  lastName: leadData.lastName,
+                  email: leadData.email,
+                  nombreRestaurante: leadData.nombreRestaurante,
+                  ciudad: leadData.ciudad,
+                  whatsapp: leadData.whatsapp,
                   currentStep: currentStep,
-                  ...formData, // Agregar también la data del formulario actual
+                  ...formData // Agregar también la data del formulario actual
                 }}
                 isSuccessPage={false}
                 className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"

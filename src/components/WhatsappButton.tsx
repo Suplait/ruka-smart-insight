@@ -33,10 +33,11 @@ const WhatsappButton = ({
     if (formData && Object.keys(formData).length > 0) {
       message += "\n\nMis datos:\n";
       
-      // SIEMPRE incluir estos datos básicos del lead si existen
+      // DEBUGGING - Log all incoming data
+      console.log("WhatsApp full form data received:", formData);
       
+      // SIEMPRE incluir estos datos básicos del lead si existen
       // Nombre y apellido (si están disponibles)
-      // Verificar individual y explícitamente cada campo
       if (formData.firstName) {
         message += `Nombre: ${formData.firstName}`;
         if (formData.lastName) {
