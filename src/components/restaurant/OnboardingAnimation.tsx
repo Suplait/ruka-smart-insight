@@ -9,25 +9,99 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import WhatsappButton from "@/components/WhatsappButton";
+import { supabase } from "@/integrations/supabase/client";
 
 const OnboardingAnimation = () => {
   const [isComplete, setIsComplete] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
+  const [userData, setUserData] = useState({
+    firstName: location.state?.firstName || '',
+    lastName: location.state?.lastName || '',
+    email: location.state?.email || '',
+    ciudad: location.state?.ciudad || '',
+    whatsapp: location.state?.whatsapp || '',
+    restaurantName: location.state?.restaurantName || '',
+    formData: location.state?.formData || {}
+  });
   
   // Log the data we're receiving for debugging
   useEffect(() => {
     console.log("Animation component location state:", location.state);
+    console.log("Animation component user data state:", userData);
+    
+    // Attempt to retrieve missing user data from Supabase if we have a leadId
+    const fetchLeadData = async () => {
+      const leadId = location.state?.leadId;
+      
+      // Only fetch if we have a leadId and missing user information
+      if (leadId && (!userData.firstName || !userData.lastName || !userData.email || !userData.ciudad)) {
+        try {
+          const { data: lead, error } = await supabase
+            .from('leads')
+            .select('*')
+            .eq('id', leadId)
+            .single();
+            
+          if (error) {
+            console.error("Error fetching lead data in OnboardingAnimation:", error);
+            return;
+          }
+          
+          if (lead) {
+            console.log("Retrieved lead data from Supabase in OnboardingAnimation:", lead);
+            
+            // Extract first and last name from name field if needed
+            let extractedFirstName = userData.firstName || location.state?.firstName || '';
+            let extractedLastName = userData.lastName || location.state?.lastName || '';
+            
+            if (!extractedFirstName && lead.first_name) {
+              extractedFirstName = lead.first_name;
+            }
+            
+            if (!extractedLastName && lead.last_name) {
+              extractedLastName = lead.last_name;
+            }
+            
+            // If we still don't have first/last name but we have full name, split it
+            if ((!extractedFirstName || !extractedLastName) && lead.name) {
+              const nameParts = lead.name.split(' ');
+              if (nameParts.length > 0 && !extractedFirstName) {
+                extractedFirstName = nameParts[0];
+              }
+              if (nameParts.length > 1 && !extractedLastName) {
+                extractedLastName = nameParts.slice(1).join(' ');
+              }
+            }
+            
+            // Update user data state with all available information
+            setUserData({
+              firstName: extractedFirstName,
+              lastName: extractedLastName,
+              email: lead.email || userData.email || location.state?.email || '',
+              ciudad: lead.ccity || userData.ciudad || location.state?.ciudad || '',
+              whatsapp: lead.whatsapp ? lead.whatsapp.replace(/^\+56/, '') : (userData.whatsapp || location.state?.whatsapp || ''),
+              restaurantName: lead.company_name || userData.restaurantName || location.state?.restaurantName || '',
+              formData: location.state?.formData || {}
+            });
+            
+            console.log("Updated user data in OnboardingAnimation:", {
+              firstName: extractedFirstName,
+              lastName: extractedLastName,
+              email: lead.email || userData.email || '',
+              ciudad: lead.ccity || userData.ciudad || '',
+              whatsapp: lead.whatsapp ? lead.whatsapp.replace(/^\+56/, '') : userData.whatsapp,
+              restaurantName: lead.company_name || userData.restaurantName
+            });
+          }
+        } catch (error) {
+          console.error("Error in fetchLeadData for OnboardingAnimation:", error);
+        }
+      }
+    };
+    
+    fetchLeadData();
   }, [location.state]);
-  
-  // Access formData and restaurantName from location state
-  const formData = location.state?.formData || {};
-  const restaurantName = location.state?.restaurantName || '';
-  const firstName = location.state?.firstName || '';
-  const lastName = location.state?.lastName || '';
-  const email = location.state?.email || '';
-  const ciudad = location.state?.ciudad || '';
-  const whatsapp = location.state?.whatsapp || '';
 
   return (
     <div className="h-full flex flex-col items-center justify-center">
@@ -63,14 +137,15 @@ const OnboardingAnimation = () => {
               variant="default"
               className="w-full bg-green-600 hover:bg-green-700 text-white py-3"
               formData={{
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                nombreRestaurante: restaurantName,
-                ciudad: ciudad,
-                whatsapp: whatsapp,
-                ...formData,
-                currentStep: 4 // Completed all steps
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                email: userData.email,
+                nombreRestaurante: userData.restaurantName,
+                ciudad: userData.ciudad,
+                whatsapp: userData.whatsapp,
+                ...userData.formData,
+                currentStep: 4, // Completed all steps
+                siiConnected: true
               }}
               isSuccessPage={true}
             >

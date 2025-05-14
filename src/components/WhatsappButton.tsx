@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { trackWhatsAppClick } from "@/utils/dataLayer";
@@ -26,6 +26,13 @@ const WhatsappButton = ({
   isSuccessPage = false
 }: WhatsAppButtonProps) => {
   
+  // Add useEffect for debugging
+  useEffect(() => {
+    if (formData) {
+      console.log(`WhatsAppButton - ${source} - received form data:`, formData);
+    }
+  }, [formData, source]);
+  
   const getWhatsAppUrl = () => {
     let message = text;
     
@@ -38,14 +45,17 @@ const WhatsappButton = ({
       
       // SIEMPRE incluir estos datos básicos del lead si existen
       // Nombre y apellido (si están disponibles)
-      if (formData.firstName) {
-        message += `Nombre: ${formData.firstName}`;
-        if (formData.lastName) {
-          message += ` ${formData.lastName}`;
+      if (formData.firstName || formData.lastName) {
+        message += "Nombre: ";
+        if (formData.firstName) {
+          message += formData.firstName;
+          if (formData.lastName) {
+            message += ` ${formData.lastName}`;
+          }
+        } else if (formData.lastName) {
+          message += formData.lastName;
         }
         message += '\n';
-      } else if (formData.lastName) {
-        message += `Apellido: ${formData.lastName}\n`;
       }
       
       // Correo electrónico - siempre incluir si existe
@@ -71,12 +81,12 @@ const WhatsappButton = ({
       // A PARTIR DE AQUÍ SOLO INCLUIR SI YA SE HAN COMPLETADO LOS PASOS CORRESPONDIENTES
       
       // Subdominio (solo si ya ha sido establecido por el usuario - paso 2 completado)
-      if (formData.subdominio && formData.currentStep >= 2) {
+      if (formData.subdominio && (formData.currentStep >= 2 || isSuccessPage)) {
         message += `Subdominio: ${formData.subdominio}\n`;
       }
       
       // Sistema de facturación (solo si ya ha sido seleccionado por el usuario - paso 1 completado)
-      if (formData.sistema && formData.currentStep >= 1) {
+      if (formData.sistema && (formData.currentStep >= 1 || isSuccessPage)) {
         message += `Sistema: ${formData.sistema}`;
         if (formData.sistemaCustom && formData.sistema !== "sii") {
           message += ` (${formData.sistemaCustom})`;
@@ -85,19 +95,14 @@ const WhatsappButton = ({
       }
       
       // Meses de datos (solo si ya ha sido seleccionado por el usuario - paso 0 completado)
-      if (formData.meses && formData.currentStep >= 0) {
-        // No mostrar meses en el paso inicial, solo después de haberlo seleccionado
-        if (formData.currentStep > 0) {
-          message += `Meses de datos: ${formData.meses}\n`;
-        }
+      if ((formData.meses || formData.meses === 0) && (formData.currentStep > 0 || isSuccessPage)) {
+        message += `Meses de datos: ${formData.meses}\n`;
       }
       
       // Estado de conexión SII (sin incluir credenciales)
       // Solo mostramos "Sí" si estamos en la página de éxito o si el usuario ha completado ese paso
-      if (isSuccessPage) {
+      if (isSuccessPage || formData.siiConnected) {
         message += `SII conectado: Sí\n`;
-      } else if (formData.siiConnected) {
-        message += `SII conectado: ${formData.siiConnected}\n`;
       } else if (formData.rut && formData.clave && formData.currentStep >= 3) {
         message += `SII conectado: Sí\n`;
       }
@@ -116,6 +121,7 @@ const WhatsappButton = ({
     trackWhatsAppClick(source, 'whatsapp_onboarding');
     // Debug info
     console.log("WhatsApp button clicked with source:", source);
+    console.log("WhatsApp button form data:", formData);
   };
 
   return (

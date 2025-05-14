@@ -1,15 +1,99 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Check, MessageSquare, AlertCircle } from 'lucide-react';
 import WhatsappButton from "@/components/WhatsappButton";
 import { useLocation } from 'react-router-dom';
+import { supabase } from "@/integrations/supabase/client";
 
 const SuccessContent = () => {
   const location = useLocation();
-  const formData = location.state || {};
+  const [userData, setUserData] = React.useState({
+    firstName: location.state?.firstName || '',
+    lastName: location.state?.lastName || '',
+    email: location.state?.email || '',
+    ciudad: location.state?.ciudad || '',
+    whatsapp: location.state?.whatsapp || '',
+    restaurantName: location.state?.restaurantName || '',
+    formData: location.state?.formData || {}
+  });
   
   // Para debugging
   console.log("Success Content - Location state:", location.state);
+  console.log("Success Content - User data state:", userData);
+  
+  // Attempt to retrieve missing user data from Supabase if we have a leadId
+  useEffect(() => {
+    const fetchLeadData = async () => {
+      const leadId = location.state?.leadId;
+      
+      // Only fetch if we have a leadId and missing user information
+      if (leadId && (!userData.firstName || !userData.lastName || !userData.email || !userData.ciudad)) {
+        try {
+          const { data: lead, error } = await supabase
+            .from('leads')
+            .select('*')
+            .eq('id', leadId)
+            .single();
+            
+          if (error) {
+            console.error("Error fetching lead data in SuccessContent:", error);
+            return;
+          }
+          
+          if (lead) {
+            console.log("Retrieved lead data from Supabase in SuccessContent:", lead);
+            
+            // Extract first and last name from name field if needed
+            let extractedFirstName = userData.firstName || location.state?.firstName || '';
+            let extractedLastName = userData.lastName || location.state?.lastName || '';
+            
+            if (!extractedFirstName && lead.first_name) {
+              extractedFirstName = lead.first_name;
+            }
+            
+            if (!extractedLastName && lead.last_name) {
+              extractedLastName = lead.last_name;
+            }
+            
+            // If we still don't have first/last name but we have full name, split it
+            if ((!extractedFirstName || !extractedLastName) && lead.name) {
+              const nameParts = lead.name.split(' ');
+              if (nameParts.length > 0 && !extractedFirstName) {
+                extractedFirstName = nameParts[0];
+              }
+              if (nameParts.length > 1 && !extractedLastName) {
+                extractedLastName = nameParts.slice(1).join(' ');
+              }
+            }
+            
+            // Update user data state with all available information
+            setUserData({
+              firstName: extractedFirstName,
+              lastName: extractedLastName,
+              email: lead.email || userData.email || location.state?.email || '',
+              ciudad: lead.ccity || userData.ciudad || location.state?.ciudad || '',
+              whatsapp: lead.whatsapp ? lead.whatsapp.replace(/^\+56/, '') : (userData.whatsapp || location.state?.whatsapp || ''),
+              restaurantName: lead.company_name || userData.restaurantName || location.state?.restaurantName || '',
+              formData: location.state?.formData || {}
+            });
+            
+            console.log("Updated user data in SuccessContent:", {
+              firstName: extractedFirstName,
+              lastName: extractedLastName,
+              email: lead.email || userData.email || '',
+              ciudad: lead.ccity || userData.ciudad || '',
+              whatsapp: lead.whatsapp ? lead.whatsapp.replace(/^\+56/, '') : userData.whatsapp,
+              restaurantName: lead.company_name || userData.restaurantName
+            });
+          }
+        } catch (error) {
+          console.error("Error in fetchLeadData for SuccessContent:", error);
+        }
+      }
+    };
+    
+    fetchLeadData();
+  }, [location.state]);
 
   return (
     <div className="text-center space-y-4">
@@ -60,16 +144,17 @@ const SuccessContent = () => {
           className="w-full bg-green-600 hover:bg-green-700 text-white py-3"
           isSuccessPage={true}
           formData={{
-            firstName: formData.firstName || "",
-            lastName: formData.lastName || "",
-            email: formData.email || "",
-            nombreRestaurante: formData.restaurantName || "",
-            ciudad: formData.ciudad || "",
-            whatsapp: formData.whatsapp || "",
-            subdominio: formData.formData?.subdominio || "",
-            sistema: formData.formData?.sistema || "",
-            sistemaCustom: formData.formData?.sistemaCustom || "",
-            meses: formData.formData?.meses || ""
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            email: userData.email,
+            nombreRestaurante: userData.restaurantName,
+            ciudad: userData.ciudad,
+            whatsapp: userData.whatsapp,
+            subdominio: userData.formData?.subdominio || location.state?.formData?.subdominio || "",
+            sistema: userData.formData?.sistema || location.state?.formData?.sistema || "",
+            sistemaCustom: userData.formData?.sistemaCustom || location.state?.formData?.sistemaCustom || "",
+            meses: userData.formData?.meses || location.state?.formData?.meses || "",
+            siiConnected: true
           }}
         >
           Activar mi plataforma
