@@ -17,18 +17,19 @@ const SuccessContent = () => {
     formData: location.state?.formData || {}
   });
   
-  // Para debugging
+  // Debugging logs
   console.log("Success Content - Location state:", location.state);
-  console.log("Success Content - User data state:", userData);
+  console.log("Success Content - User data initial state:", userData);
   
   // Attempt to retrieve missing user data from Supabase if we have a leadId
   useEffect(() => {
     const fetchLeadData = async () => {
       const leadId = location.state?.leadId;
       
-      // Only fetch if we have a leadId and missing user information
-      if (leadId && (!userData.firstName || !userData.lastName || !userData.email || !userData.ciudad)) {
+      // Only fetch if we have a leadId
+      if (leadId) {
         try {
+          console.log("Fetching lead data for ID:", leadId);
           const { data: lead, error } = await supabase
             .from('leads')
             .select('*')
@@ -66,25 +67,29 @@ const SuccessContent = () => {
               }
             }
             
+            // Get formData from location state or create empty object
+            const formData = location.state?.formData || {};
+            
             // Update user data state with all available information
-            setUserData({
+            const updatedUserData = {
               firstName: extractedFirstName,
               lastName: extractedLastName,
               email: lead.email || userData.email || location.state?.email || '',
               ciudad: lead.ccity || userData.ciudad || location.state?.ciudad || '',
               whatsapp: lead.whatsapp ? lead.whatsapp.replace(/^\+56/, '') : (userData.whatsapp || location.state?.whatsapp || ''),
               restaurantName: lead.company_name || userData.restaurantName || location.state?.restaurantName || '',
-              formData: location.state?.formData || {}
-            });
+              formData: {
+                ...formData,
+                // Make sure these values are preserved from the formData
+                subdominio: formData.subdominio || lead.subdominio || '',
+                sistema: formData.sistema || lead.sistema_facturacion || '',
+                sistemaCustom: formData.sistemaCustom || lead.sistema_custom || '',
+                meses: formData.meses || lead.meses_datos || ''
+              }
+            };
             
-            console.log("Updated user data in SuccessContent:", {
-              firstName: extractedFirstName,
-              lastName: extractedLastName,
-              email: lead.email || userData.email || '',
-              ciudad: lead.ccity || userData.ciudad || '',
-              whatsapp: lead.whatsapp ? lead.whatsapp.replace(/^\+56/, '') : userData.whatsapp,
-              restaurantName: lead.company_name || userData.restaurantName
-            });
+            console.log("Updated user data in SuccessContent:", updatedUserData);
+            setUserData(updatedUserData);
           }
         } catch (error) {
           console.error("Error in fetchLeadData for SuccessContent:", error);
@@ -94,6 +99,9 @@ const SuccessContent = () => {
     
     fetchLeadData();
   }, [location.state]);
+
+  // Log the final userData right before rendering for debugging
+  console.log("Final userData for WhatsApp in SuccessContent:", userData);
 
   return (
     <div className="text-center space-y-4">

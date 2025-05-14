@@ -54,8 +54,9 @@ const OnboardingSuccess = () => {
   // Fetch the lead data from Supabase if we have a leadId but missing user info
   useEffect(() => {
     const fetchLeadData = async () => {
-      if (leadId && (!firstName || !lastName || !email || !ciudad)) {
+      if (leadId) {
         try {
+          console.log("Fetching lead data from Supabase in OnboardingSuccess for leadId:", leadId);
           const { data: lead, error } = await supabase
             .from('leads')
             .select('*')
@@ -125,7 +126,7 @@ const OnboardingSuccess = () => {
     
     fetchLeadData();
   }, [leadId, firstName, lastName, email, ciudad, whatsapp, restaurantName]);
-
+  
   useEffect(() => {
     pushToDataLayer('onboarding_page_view', { 
       leadId: leadId,
@@ -281,24 +282,31 @@ const OnboardingSuccess = () => {
           });
         }
         
-        // Antes de navegar a la página de éxito, asegúrate de incluir todos los datos del usuario
-        // incluidos los datos del formulario de registro inicial y los del onboarding
+        // Create a complete state object with all user data to pass to the success page
         setIsComplete(true);
         setIsLoading(false);
         
-        // Conservar también los datos del usuario pasados al estado de la vista
-        const updatedLocationState = {
+        // Ensure we're passing ALL the user data to the success page
+        const completeUserData = {
           ...location.state,
+          firstName: leadData.firstName,
+          lastName: leadData.lastName,
+          email: leadData.email,
+          ciudad: leadData.ciudad,
+          whatsapp: leadData.whatsapp,
+          restaurantName: leadData.nombreRestaurante,
           formData: {
             ...formData,
-            siiConnected: true // Siempre establecer como Sí si ha completado el proceso
+            siiConnected: true
           }
         };
         
-        // Actualizamos el estado de ubicación con los datos completos
+        console.log("Navigating to success with complete user data:", completeUserData);
+        
+        // Navigate with the complete data
         navigate('/onboarding-success', { 
-          state: updatedLocationState,
-          replace: true // Reemplaza la entrada de historial actual
+          state: completeUserData,
+          replace: true
         });
         
         return;

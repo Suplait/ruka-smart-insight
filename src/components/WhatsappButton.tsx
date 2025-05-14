@@ -79,13 +79,14 @@ const WhatsappButton = ({
       }
       
       // A PARTIR DE AQUÍ SOLO INCLUIR SI YA SE HAN COMPLETADO LOS PASOS CORRESPONDIENTES
+      // O si estamos en la página de éxito
       
-      // Subdominio (solo si ya ha sido establecido por el usuario - paso 2 completado)
+      // Subdominio (solo si ya ha sido establecido por el usuario - paso 2 completado o página de éxito)
       if (formData.subdominio && (formData.currentStep >= 2 || isSuccessPage)) {
         message += `Subdominio: ${formData.subdominio}\n`;
       }
       
-      // Sistema de facturación (solo si ya ha sido seleccionado por el usuario - paso 1 completado)
+      // Sistema de facturación (solo si ya ha sido seleccionado por el usuario - paso 1 completado o página de éxito)
       if (formData.sistema && (formData.currentStep >= 1 || isSuccessPage)) {
         message += `Sistema: ${formData.sistema}`;
         if (formData.sistemaCustom && formData.sistema !== "sii") {
@@ -94,7 +95,7 @@ const WhatsappButton = ({
         message += '\n';
       }
       
-      // Meses de datos (solo si ya ha sido seleccionado por el usuario - paso 0 completado)
+      // Meses de datos (solo si ya ha sido seleccionado por el usuario - paso 0 completado o página de éxito)
       if ((formData.meses || formData.meses === 0) && (formData.currentStep > 0 || isSuccessPage)) {
         message += `Meses de datos: ${formData.meses}\n`;
       }
@@ -107,8 +108,7 @@ const WhatsappButton = ({
         message += `SII conectado: Sí\n`;
       }
 
-      // Agregar console.log para debuggear los datos que están llegando
-      console.log("WhatsApp form data:", JSON.stringify(formData, null, 2));
+      // Agregar console.log para debuggear el mensaje final
       console.log("WhatsApp message:", message);
     }
     
