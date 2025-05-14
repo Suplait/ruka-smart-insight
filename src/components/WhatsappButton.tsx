@@ -46,7 +46,7 @@ const WhatsappButton = ({
         message += `Email: ${formData.email}\n`;
       }
       
-      // Nombre del restaurante
+      // Nombre del restaurante o negocio
       if (formData.nombreRestaurante) {
         message += `Negocio: ${formData.nombreRestaurante}\n`;
       }
@@ -58,34 +58,34 @@ const WhatsappButton = ({
       
       // WhatsApp
       if (formData.whatsapp) {
-        message += `WhatsApp: +56${formData.whatsapp}\n`;
+        message += `WhatsApp: ${formData.whatsapp.startsWith('+56') ? formData.whatsapp : `+56${formData.whatsapp}`}\n`;
       }
       
-      // Subdominio
+      // Subdominio - solo si existe
       if (formData.subdominio) {
         message += `Subdominio: ${formData.subdominio}\n`;
       }
       
-      // Sistema de facturación
-      if (formData.sistema) {
+      // Sistema de facturación - solo si está definido
+      if (formData.sistema && formData.sistema !== "") {
         message += `Sistema: ${formData.sistema}`;
-        if (formData.sistemaCustom && formData.sistema !== "sii") {
+        if (formData.sistemaCustom && formData.sistemaCustom !== "" && formData.sistema !== "sii") {
           message += ` (${formData.sistemaCustom})`;
         }
         message += '\n';
       }
       
-      // Meses de datos
-      if (formData.meses) {
+      // Meses de datos - solo si está definido
+      if (formData.meses && formData.meses > 0) {
         message += `Meses de datos: ${formData.meses}\n`;
       }
       
       // Estado de conexión SII (sin incluir credenciales)
-      // Solo mostramos "Sí" si estamos en la página de éxito
+      // Solo mostramos "Sí" si estamos en la página de éxito o si se ha conectado explícitamente
       if (isSuccessPage) {
         message += `SII conectado: Sí\n`;
-      } else if (formData.siiConnected) {
-        message += `SII conectado: ${formData.siiConnected}\n`;
+      } else if (formData.siiConnected === true) {
+        message += `SII conectado: Sí\n`;
       } else if (formData.rut && formData.clave) {
         message += `SII conectado: Sí\n`;
       }
