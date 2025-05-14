@@ -46,7 +46,7 @@ const WhatsappButton = ({
         message += `Email: ${formData.email}\n`;
       }
       
-      // Nombre del restaurante o negocio
+      // Nombre del restaurante
       if (formData.nombreRestaurante) {
         message += `Negocio: ${formData.nombreRestaurante}\n`;
       }
@@ -58,33 +58,35 @@ const WhatsappButton = ({
       
       // WhatsApp
       if (formData.whatsapp) {
-        message += `WhatsApp: ${formData.whatsapp.startsWith('+56') ? formData.whatsapp : `+56${formData.whatsapp}`}\n`;
+        message += `WhatsApp: +56${formData.whatsapp}\n`;
       }
       
-      // SOLO agregamos la siguiente información si estamos en el proceso de onboarding 
-      // y estos campos ya han sido explícitamente definidos por el usuario
-      
-      // Subdominio - solo si el usuario ya lo ha definido explícitamente
-      if (isSuccessPage && formData.subdominio) {
+      // Subdominio
+      if (formData.subdominio) {
         message += `Subdominio: ${formData.subdominio}\n`;
       }
       
-      // Sistema de facturación - solo si el usuario ya lo ha definido explícitamente
-      if (isSuccessPage && formData.sistema && formData.sistema !== "") {
+      // Sistema de facturación
+      if (formData.sistema) {
         message += `Sistema: ${formData.sistema}`;
-        if (formData.sistemaCustom && formData.sistemaCustom !== "" && formData.sistema !== "sii") {
+        if (formData.sistemaCustom && formData.sistema !== "sii") {
           message += ` (${formData.sistemaCustom})`;
         }
         message += '\n';
       }
       
-      // Meses de datos - solo si el usuario ya lo ha definido explícitamente
-      if (isSuccessPage && formData.meses && formData.meses > 0) {
+      // Meses de datos
+      if (formData.meses) {
         message += `Meses de datos: ${formData.meses}\n`;
       }
       
-      // Estado de conexión SII - solo si el usuario ya ha completado este paso
-      if (isSuccessPage && (formData.siiConnected === true || (formData.rut && formData.clave))) {
+      // Estado de conexión SII (sin incluir credenciales)
+      // Solo mostramos "Sí" si estamos en la página de éxito
+      if (isSuccessPage) {
+        message += `SII conectado: Sí\n`;
+      } else if (formData.siiConnected) {
+        message += `SII conectado: ${formData.siiConnected}\n`;
+      } else if (formData.rut && formData.clave) {
         message += `SII conectado: Sí\n`;
       }
     }
