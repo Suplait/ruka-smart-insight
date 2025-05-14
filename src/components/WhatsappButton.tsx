@@ -46,11 +46,6 @@ const WhatsappButton = ({
         message += `Email: ${formData.email}\n`;
       }
       
-      // Nombre del restaurante
-      if (formData.nombreRestaurante) {
-        message += `Negocio: ${formData.nombreRestaurante}\n`;
-      }
-      
       // Ciudad
       if (formData.ciudad) {
         message += `Ciudad: ${formData.ciudad}\n`;
@@ -61,13 +56,21 @@ const WhatsappButton = ({
         message += `WhatsApp: +56${formData.whatsapp}\n`;
       }
       
-      // Subdominio
-      if (formData.subdominio) {
+      // Nombre del restaurante (solo si está disponible)
+      if (formData.nombreRestaurante) {
+        message += `Negocio: ${formData.nombreRestaurante}\n`;
+      }
+      
+      // Solo agregar estos campos si ya han sido completados por el usuario
+      // y no son valores por defecto
+      
+      // Subdominio (solo si ya ha sido establecido por el usuario)
+      if (formData.subdominio && formData.currentStep > 1) {
         message += `Subdominio: ${formData.subdominio}\n`;
       }
       
-      // Sistema de facturación
-      if (formData.sistema) {
+      // Sistema de facturación (solo si ya ha sido seleccionado por el usuario)
+      if (formData.sistema && formData.currentStep > 0) {
         message += `Sistema: ${formData.sistema}`;
         if (formData.sistemaCustom && formData.sistema !== "sii") {
           message += ` (${formData.sistemaCustom})`;
@@ -75,8 +78,8 @@ const WhatsappButton = ({
         message += '\n';
       }
       
-      // Meses de datos
-      if (formData.meses) {
+      // Meses de datos (solo si ya ha sido seleccionado por el usuario)
+      if (formData.meses && formData.currentStep > 0) {
         message += `Meses de datos: ${formData.meses}\n`;
       }
       
@@ -86,7 +89,7 @@ const WhatsappButton = ({
         message += `SII conectado: Sí\n`;
       } else if (formData.siiConnected) {
         message += `SII conectado: ${formData.siiConnected}\n`;
-      } else if (formData.rut && formData.clave) {
+      } else if (formData.rut && formData.clave && formData.currentStep > 2) {
         message += `SII conectado: Sí\n`;
       }
     }

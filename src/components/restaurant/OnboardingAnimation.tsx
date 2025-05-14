@@ -59,8 +59,10 @@ const OnboardingAnimation = () => {
                 nombreRestaurante: restaurantName,
                 ciudad: location.state?.ciudad || "",
                 whatsapp: location.state?.whatsapp || "",
-                ...formData
+                ...formData,
+                currentStep: 4 // Completed all steps
               }}
+              isSuccessPage={true}
             >
               Activar mi plataforma
             </WhatsappButton>

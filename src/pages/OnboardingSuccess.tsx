@@ -439,7 +439,8 @@ const OnboardingSuccess = () => {
                   email: location.state?.email || "",
                   nombreRestaurante: restaurantName,
                   ciudad: location.state?.ciudad || "",
-                  whatsapp: location.state?.whatsapp || ""
+                  whatsapp: location.state?.whatsapp || "",
+                  currentStep: currentStep
                 }}
                 isSuccessPage={false}
                 className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"
@@ -460,7 +461,8 @@ const OnboardingSuccess = () => {
                   email: location.state?.email || "",
                   nombreRestaurante: restaurantName,
                   ciudad: location.state?.ciudad || "",
-                  whatsapp: location.state?.whatsapp || ""
+                  whatsapp: location.state?.whatsapp || "",
+                  currentStep: currentStep
                 }}
                 isSuccessPage={false}
                 className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"
