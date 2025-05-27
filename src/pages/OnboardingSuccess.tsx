@@ -529,53 +529,7 @@ const OnboardingSuccess = () => {
         </div>
         
         {/* WhatsApp Floating Button - Only show when not complete */}
-        {showWhatsAppButtons && !isComplete && (
-          <>
-            {/* Desktop version */}
-            <div className="hidden md:block fixed bottom-6 left-6 z-50">
-              <WhatsappButton 
-                source="onboarding_desktop_floating"
-                text="Hola! Prefiero continuar mi registro de Ruka.ai por WhatsApp 🤖"
-                formData={{
-                  firstName: leadData.firstName,
-                  lastName: leadData.lastName,
-                  email: leadData.email,
-                  nombreRestaurante: leadData.nombreRestaurante,
-                  ciudad: leadData.ciudad,
-                  whatsapp: leadData.whatsapp,
-                  currentStep: currentStep,
-                  ...formData // Agregar también la data del formulario actual
-                }}
-                isSuccessPage={false}
-                className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"
-              >
-                Seguir en WhatsApp
-              </WhatsappButton>
-            </div>
-            
-            {/* Mobile version */}
-            <div className="md:hidden fixed bottom-6 left-6 z-50">
-              <WhatsappButton 
-                source="onboarding_mobile_floating"
-                text="Hola! Prefiero continuar mi registro de Ruka.ai por WhatsApp 🤖"
-                formData={{
-                  firstName: leadData.firstName,
-                  lastName: leadData.lastName,
-                  email: leadData.email,
-                  nombreRestaurante: leadData.nombreRestaurante,
-                  ciudad: leadData.ciudad,
-                  whatsapp: leadData.whatsapp,
-                  currentStep: currentStep,
-                  ...formData // Agregar también la data del formulario actual
-                }}
-                isSuccessPage={false}
-                className="shadow-md bg-white border-green-600 text-green-600 hover:bg-green-50 font-medium transition-all duration-300 px-4 py-2 h-auto rounded-md"
-              >
-                Seguir en WhatsApp
-              </WhatsappButton>
-            </div>
-          </>
-        )}
+        {/* WhatsApp Floating Button - Only show when not complete */}
       </main>
     </>
   );
