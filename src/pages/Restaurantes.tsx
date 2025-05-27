@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, Clock, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
@@ -12,16 +11,19 @@ import RegistrationForm from "@/components/restaurant/RegistrationForm";
 import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
 import ImpactStats from "@/components/restaurant/ImpactStats";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { trackWhatsAppClick } from "@/utils/dataLayer";
-const valueMessages = ["Deja que tus chefs se concentren en cocinar, no en Excel.", "Controla tus costos de insumos al día, no al mes.", "Detecta alzas de precio de tus proveedores en tiempo real.", "Genera reportes de food cost en seguhttps://www.ruka.ai/restaurantesndos.", "Gestiona el pago a tus proveedores sin complicaciones.", "Ten todos tus pedidos y facturas a la mano.", "Ahorra horas a la semana en procesos administrativos."];
+
+const valueMessages = ["Deja que tus chefs se concentren en cocinar, no en Excel.", "Controla tus costos de insumos al día, no al mes.", "Detecta alzas de precio de tus proveedores en tiempo real.", "Genera reportes de food cost en segundos.", "Gestiona el pago a tus proveedores sin complicaciones.", "Ten todos tus pedidos y facturas a la mano.", "Ahorra horas a la semana en procesos administrativos."];
+
 export default function Restaurantes() {
   const [highlightForm, setHighlightForm] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
   const [showScrollToForm, setShowScrollToForm] = useState(false);
   const isMobile = useIsMobile();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       if (isMobile) {
@@ -42,6 +44,7 @@ export default function Restaurantes() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isMobile]);
+
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -59,6 +62,7 @@ export default function Restaurantes() {
     const timer = setInterval(calculateTimeLeft, 60000);
     return () => clearInterval(timer);
   }, []);
+
   const scrollToForm = () => {
     const form = isMobile ? document.getElementById('mobile-form-section') : document.querySelector('form');
     if (form) {
@@ -69,9 +73,7 @@ export default function Restaurantes() {
       setTimeout(() => setHighlightForm(false), 2000);
     }
   };
-  const handleWhatsAppClick = () => {
-    trackWhatsAppClick('restaurant_mobile_floating', 'whatsapp_onboarding');
-  };
+
   return <>
       <Helmet>
         <title>Ruka.ai | Control de Food Cost y Gastos para Restaurantes</title>
@@ -357,8 +359,7 @@ export default function Restaurantes() {
         
         <Footer />
 
-        <AnimatePresence>
-          {showScrollToForm && <motion.div initial={{
+        {showScrollToForm && <motion.div initial={{
           opacity: 0,
           y: 20
         }} animate={{
@@ -367,21 +368,11 @@ export default function Restaurantes() {
         }} exit={{
           opacity: 0,
           y: 20
-        }} className="lg:hidden fixed bottom-6 right-6 z-50 flex gap-2">
-              <Button onClick={handleWhatsAppClick} size="lg" variant="outline" asChild className="shadow-lg bg-white hover:bg-green-50 text-green-600 border-green-500 font-semibold transition-all duration-300 px-4 py-6 h-auto rounded-full">
-                <Link to="/whatsapp">
-                  <div className="flex items-center gap-2">
-                    <img src="/lovable-uploads/950f4b99-40ab-40a3-a017-7375458df29d.png" alt="WhatsApp" className="w-5 h-5" />
-                      Solicitar info.
-                  </div>
-                </Link>
-              </Button>
-              
+        }} className="lg:hidden fixed bottom-6 right-6 z-50">
               <Button onClick={scrollToForm} size="lg" className="shadow-lg bg-primary hover:bg-primary/90 text-white font-semibold transition-all duration-300 px-6 py-6 h-auto rounded-full">
                 Comenzar Ahora
               </Button>
             </motion.div>}
-        </AnimatePresence>
       </main>
     </>;
 }

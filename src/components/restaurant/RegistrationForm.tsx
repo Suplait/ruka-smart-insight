@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -7,9 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/components/ui/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Separator } from "@/components/ui/separator";
 import { supabase } from "@/integrations/supabase/client";
-import { pushToDataLayer, trackFormSubmission, trackRegistration, trackWhatsAppClick } from "@/utils/dataLayer";
+import { pushToDataLayer, trackFormSubmission, trackRegistration } from "@/utils/dataLayer";
+
 interface FormData {
   firstName: string;
   lastName: string;
@@ -19,10 +20,12 @@ interface FormData {
   whatsapp: string;
   acceptTerms: boolean;
 }
+
 interface RegistrationFormProps {
   highlightForm: boolean;
   timeLeft: string;
 }
+
 export default function RegistrationForm({
   highlightForm,
   timeLeft
@@ -38,6 +41,7 @@ export default function RegistrationForm({
     acceptTerms: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     pushToDataLayer('registration_form_submit_attempt', {
@@ -178,6 +182,7 @@ export default function RegistrationForm({
       setIsSubmitting(false);
     }
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       name,
@@ -196,9 +201,7 @@ export default function RegistrationForm({
       [name]: value
     }));
   };
-  const handleWhatsAppClick = () => {
-    trackWhatsAppClick('restaurant_registration_form', 'whatsapp_onboarding');
-  };
+
   return <motion.div initial={{
     opacity: 0,
     scale: 0.95
@@ -222,26 +225,7 @@ export default function RegistrationForm({
             </Tooltip>
           </TooltipProvider>
         </div>
-        <div className="flex flex-col gap-2">
-          
-          
-          <div className="relative mt-2">
-            <Button variant="outline" size="sm" className="gap-2 text-muted-foreground hover:text-green-500 hover:border-green-500 w-full" onClick={handleWhatsAppClick} asChild>
-              <Link to="/whatsapp">
-                <div className="flex items-center gap-2">
-                  <img src="/lovable-uploads/950f4b99-40ab-40a3-a017-7375458df29d.png" alt="WhatsApp" className="w-4 h-4" />
-                  Prefiero hacerlo por WhatsApp
-                </div>
-              </Link>
-            </Button>
-            <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">
-              Nuevo
-            </span>
-          </div>
-        </div>
       </div>
-      
-      <Separator className="h-px bg-gray-200 my-2" />
 
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
