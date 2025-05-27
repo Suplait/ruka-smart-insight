@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, Clock, TrendingUp, Bed, Calendar, CreditCard, Hotel, Users, Receipt, AlertTriangle, Zap, BarChart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
@@ -11,16 +10,17 @@ import FAQ from "@/components/FAQ";
 import HotelRegistrationForm from "@/components/hotel/HotelRegistrationForm";
 import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
 import ImpactStats from "@/components/restaurant/ImpactStats";
-import { trackWhatsAppClick } from "@/utils/dataLayer";
 
 const valueMessages = ["Deja que tu staff se concentre en atender huéspedes, no en Excel.", "Controla tus costos operativos diariamente, no al mes.", "Detecta alzas de precio de tus proveedores en tiempo real.", "Genera reportes de gastos en segundos.", "Gestiona el pago a tus proveedores sin complicaciones.", "Ten todas tus órdenes de compra y facturas a la mano.", "Ahorra horas a la semana en procesos administrativos."];
 export default function Hoteles() {
   const [highlightForm, setHighlightForm] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
   const [showScrollToForm, setShowScrollToForm] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollToForm(window.scrollY > 300);
@@ -28,6 +28,7 @@ export default function Hoteles() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
@@ -45,6 +46,7 @@ export default function Hoteles() {
     const timer = setInterval(calculateTimeLeft, 60000);
     return () => clearInterval(timer);
   }, []);
+
   const scrollToForm = () => {
     const form = document.querySelector('form');
     if (form) {
@@ -55,9 +57,7 @@ export default function Hoteles() {
       setTimeout(() => setHighlightForm(false), 2000);
     }
   };
-  const handleWhatsAppClick = () => {
-    trackWhatsAppClick('hotel_mobile_floating', 'whatsapp_onboarding');
-  };
+
   return <>
       <Helmet>
         <title>Ruka.ai | Control de Costos y Gestión para Hoteles</title>
@@ -451,8 +451,7 @@ export default function Hoteles() {
         
         <Footer />
 
-        <AnimatePresence>
-          {showScrollToForm && <motion.div initial={{
+        {showScrollToForm && <motion.div initial={{
           opacity: 0,
           y: 20
         }} animate={{
@@ -461,27 +460,11 @@ export default function Hoteles() {
         }} exit={{
           opacity: 0,
           y: 20
-        }} className="lg:hidden fixed bottom-6 right-6 z-50 flex gap-2">
-              <Button
-                onClick={handleWhatsAppClick}
-                size="lg"
-                variant="outline"
-                asChild
-                className="shadow-lg bg-white hover:bg-green-50 text-green-600 border-green-500 font-semibold transition-all duration-300 px-4 py-6 h-auto rounded-full"
-              >
-                <Link to="/whatsapp">
-                  <div className="flex items-center gap-2">
-                    <img src="/lovable-uploads/950f4b99-40ab-40a3-a017-7375458df29d.png" alt="WhatsApp" className="w-5 h-5" />
-                    Por WhatsApp
-                  </div>
-                </Link>
-              </Button>
-              
+        }} className="lg:hidden fixed bottom-6 right-6 z-50">
               <Button onClick={scrollToForm} size="lg" className="shadow-lg bg-primary hover:bg-primary/90 text-white font-semibold transition-all duration-300 px-6 py-6 h-auto rounded-full">
                 Comenzar Ahora
               </Button>
             </motion.div>}
-        </AnimatePresence>
       </main>
     </>;
 }
