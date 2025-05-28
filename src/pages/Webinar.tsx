@@ -14,7 +14,7 @@ export default function Webinar() {
   const [formData, setFormData] = useState({
     nombre: "",
     correo: "",
-    whatsapp: ""
+    whatsapp: "+56 "
   });
   const [isRegistered, setIsRegistered] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,6 +28,18 @@ export default function Webinar() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    
+    if (name === 'whatsapp') {
+      // Ensure the field always starts with "+56 "
+      if (!value.startsWith('+56 ')) {
+        setFormData(prev => ({
+          ...prev,
+          [name]: '+56 '
+        }));
+        return;
+      }
+    }
+    
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -37,7 +49,7 @@ export default function Webinar() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.nombre || !formData.correo || !formData.whatsapp) {
+    if (!formData.nombre || !formData.correo || !formData.whatsapp || formData.whatsapp === '+56 ') {
       toast({
         title: "Error",
         description: "Por favor completa todos los campos",
@@ -49,12 +61,15 @@ export default function Webinar() {
     setIsSubmitting(true);
 
     try {
+      // Clean the phone number: remove "+", spaces, and any other characters except numbers
+      const cleanedWhatsapp = formData.whatsapp.replace(/\D/g, '');
+      
       const { error } = await supabase
         .from('webinar_leads')
         .insert({
           nombre: formData.nombre,
           correo: formData.correo,
-          whatsapp: formData.whatsapp,
+          whatsapp: cleanedWhatsapp,
           webinar_name: 'ia-restaurantes-junio-2025'
         });
 
@@ -68,7 +83,7 @@ export default function Webinar() {
         return;
       }
 
-      console.log("Registro webinar guardado exitosamente:", formData);
+      console.log("Registro webinar guardado exitosamente:", { ...formData, whatsapp: cleanedWhatsapp });
       
       setIsRegistered(true);
       toast({
