@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, Clock, Users, CheckCircle } from "lucide-react";
+import { Calendar, Clock, Users, CheckCircle, ChefHat, Bot } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
@@ -18,8 +18,8 @@ export default function Webinar() {
   const [isRegistered, setIsRegistered] = useState(false);
   const { toast } = useToast();
 
-  // Fecha del webinar (ejemplo: próximo viernes a las 3 PM)
-  const webinarDate = new Date('2024-12-06T15:00:00');
+  // Fecha del webinar: martes 2 de junio a las 5 PM
+  const webinarDate = new Date('2025-06-02T17:00:00');
   const now = new Date();
   const timeUntilWebinar = webinarDate.getTime() - now.getTime();
   const daysUntil = Math.ceil(timeUntilWebinar / (1000 * 60 * 60 * 24));
@@ -63,19 +63,28 @@ export default function Webinar() {
           {/* Hero Section */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-800 text-sm font-medium mb-6">
-              <Users className="w-4 h-4 mr-2" />
-              Webinar Exclusivo
+              <ChefHat className="w-4 h-4 mr-2" />
+              Webinar Exclusivo para Restaurantes
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Cómo los Agentes de IA Pueden{" "}
-              <span className="text-blue-600">Reducir tus Costos</span>{" "}
-              hasta un 30%
+              Cómo otros{" "}
+              <span className="text-blue-600">Restaurantes</span>{" "}
+              están usando la IA
             </h1>
             
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Descubre estrategias probadas para optimizar tus operaciones y maximizar tu rentabilidad con inteligencia artificial
+              Descubre cómo marcas top en Chile y el mundo están revolucionando sus operaciones 
+              con inteligencia artificial
             </p>
+
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-8 max-w-2xl mx-auto">
+              <p className="text-orange-800 text-lg font-medium">
+                <Bot className="w-5 h-5 inline mr-2" />
+                Desde La Piojera hasta Chicken Love You: 
+                <span className="font-bold"> todos ya tienen IA trabajando en su restaurante</span>
+              </p>
+            </div>
 
             {/* Webinar Info Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -84,9 +93,9 @@ export default function Webinar() {
                   <Calendar className="w-8 h-8 text-blue-600 mx-auto mb-3" />
                   <CardTitle className="text-lg mb-2">Fecha</CardTitle>
                   <CardDescription className="text-gray-600">
-                    Viernes 6 de Diciembre
+                    Martes 2 de Junio
                     <br />
-                    3:00 PM (Hora de Chile)
+                    5:00 PM (Hora de Chile)
                   </CardDescription>
                 </CardContent>
               </Card>
@@ -110,7 +119,7 @@ export default function Webinar() {
                   <CardDescription className="text-gray-600">
                     100% Online
                     <br />
-                    Cupos limitados
+                    Inscripción gratuita
                   </CardDescription>
                 </CardContent>
               </Card>
@@ -122,16 +131,17 @@ export default function Webinar() {
             {/* Left Column - What you'll learn */}
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                Lo que aprenderás
+                En este webinar descubrirás
               </h2>
               
               <div className="space-y-4">
                 {[
-                  "Cómo identificar oportunidades de ahorro en tiempo real",
-                  "Estrategias para automatizar la detección de anomalías",
-                  "Casos de éxito: empresas que redujeron costos 30%",
-                  "Demo en vivo de agentes de IA en acción",
-                  "Hoja de ruta para implementar IA en tu empresa"
+                  "Cómo cocinas robóticas están transformando la preparación de alimentos",
+                  "Casos reales: restaurantes chilenos que ya usan IA en su operación",
+                  "Garzones autónomos y sistemas de atención inteligente",
+                  "IA para toma de decisiones operativas y financieras",
+                  "Demo en vivo: tecnologías que puedes implementar HOY",
+                  "Roadmap: cómo empezar con IA en tu restaurante"
                 ].map((item, index) => (
                   <div key={index} className="flex items-start">
                     <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
@@ -142,11 +152,21 @@ export default function Webinar() {
 
               <div className="mt-8 p-6 bg-blue-50 rounded-lg">
                 <h3 className="text-xl font-semibold text-blue-900 mb-2">
-                  Bonus Exclusivo
+                  Casos de Éxito Reales
                 </h3>
                 <p className="text-blue-800">
-                  Los primeros 50 registrados recibirán una consultoría gratuita de 30 minutos 
-                  para evaluar el potencial de ahorro en su empresa.
+                  Te mostraremos ejemplos específicos de restaurantes en Chile que han implementado 
+                  IA exitosamente, desde pequeños locales hasta cadenas reconocidas.
+                </p>
+              </div>
+
+              <div className="mt-6 p-6 bg-orange-50 rounded-lg">
+                <h3 className="text-xl font-semibold text-orange-900 mb-2">
+                  ¿Para quién es este webinar?
+                </h3>
+                <p className="text-orange-800">
+                  <strong>Dueños y administradores de restaurantes</strong> que quieren mantenerse 
+                  competitivos y optimizar sus operaciones con las últimas tecnologías.
                 </p>
               </div>
             </div>
@@ -156,12 +176,12 @@ export default function Webinar() {
               <Card className="border-2 border-blue-200 shadow-lg">
                 <CardHeader className="bg-blue-600 text-white rounded-t-lg">
                   <CardTitle className="text-2xl text-center">
-                    {isRegistered ? "¡Registro Confirmado!" : "Regístrate Gratis"}
+                    {isRegistered ? "¡Registro Confirmado!" : "Inscríbete Gratis"}
                   </CardTitle>
                   <CardDescription className="text-blue-100 text-center">
                     {isRegistered 
                       ? "Te hemos enviado todos los detalles a tu correo"
-                      : "Asegura tu cupo en este webinar exclusivo"
+                      : "Asegura tu cupo - Martes 2 de Junio, 5:00 PM"
                     }
                   </CardDescription>
                 </CardHeader>
@@ -175,10 +195,10 @@ export default function Webinar() {
                           ¡Todo listo!
                         </h3>
                         <p className="text-gray-600 mb-4">
-                          Recibirás un recordatorio 24 horas antes del webinar con el enlace de acceso.
+                          Recibirás un recordatorio el día del webinar con el enlace de acceso.
                         </p>
                         <p className="text-sm text-gray-500">
-                          Mientras tanto, puedes explorar más sobre nuestras soluciones de IA.
+                          Prepárate para descubrir cómo la IA puede transformar tu restaurante.
                         </p>
                       </div>
                     </div>
@@ -205,7 +225,7 @@ export default function Webinar() {
                           type="email"
                           value={formData.correo}
                           onChange={handleInputChange}
-                          placeholder="tu@empresa.com"
+                          placeholder="tu@restaurante.com"
                           required
                         />
                       </div>
@@ -224,11 +244,11 @@ export default function Webinar() {
                       </div>
 
                       <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-                        Registrarme al Webinar
+                        Inscribirme al Webinar
                       </Button>
 
                       <p className="text-xs text-gray-500 text-center">
-                        Al registrarte, aceptas recibir comunicaciones sobre el webinar. 
+                        Al registrarte, aceptas recibir información sobre el webinar. 
                         Puedes darte de baja en cualquier momento.
                       </p>
                     </form>
