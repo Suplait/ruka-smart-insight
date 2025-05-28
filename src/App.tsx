@@ -15,6 +15,7 @@ import NotFound from './pages/NotFound';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import WhatsappRedirect from './pages/WhatsappRedirect';
 import CalendlySuccess from './pages/CalendlySuccess';
+import Webinar from './pages/Webinar';
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ function App() {
             <Route path="/onboarding-success" element={<OnboardingSuccess />} />
             <Route path="/calendly-success" element={<CalendlySuccess />} />
             <Route path="/whatsapp" element={<WhatsappRedirect />} />
+            <Route path="/webinar" element={<Webinar />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
