@@ -8,6 +8,7 @@ import { Calendar, Clock, Users, CheckCircle, ChefHat, Bot } from "lucide-react"
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function Webinar() {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ export default function Webinar() {
     whatsapp: ""
   });
   const [isRegistered, setIsRegistered] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   // Fecha del webinar: martes 2 de junio a las 5 PM
@@ -32,7 +34,7 @@ export default function Webinar() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.nombre || !formData.correo || !formData.whatsapp) {
@@ -44,14 +46,45 @@ export default function Webinar() {
       return;
     }
 
-    // Aquí se podría integrar con el backend para guardar el registro
-    console.log("Registro webinar:", formData);
-    
-    setIsRegistered(true);
-    toast({
-      title: "¡Registro exitoso!",
-      description: "Te hemos enviado los detalles del webinar a tu correo",
-    });
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase
+        .from('webinar_leads')
+        .insert({
+          nombre: formData.nombre,
+          correo: formData.correo,
+          whatsapp: formData.whatsapp,
+          webinar_name: 'ia-restaurantes-junio-2025'
+        });
+
+      if (error) {
+        console.error('Error guardando registro:', error);
+        toast({
+          title: "Error",
+          description: "Hubo un problema al procesar tu registro. Inténtalo nuevamente.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      console.log("Registro webinar guardado exitosamente:", formData);
+      
+      setIsRegistered(true);
+      toast({
+        title: "¡Registro exitoso!",
+        description: "Te hemos enviado los detalles del webinar a tu correo",
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: "Error",
+        description: "Hubo un problema al procesar tu registro. Inténtalo nuevamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -214,6 +247,7 @@ export default function Webinar() {
                           onChange={handleInputChange}
                           placeholder="Ingresa tu nombre completo"
                           required
+                          disabled={isSubmitting}
                         />
                       </div>
 
@@ -227,6 +261,7 @@ export default function Webinar() {
                           onChange={handleInputChange}
                           placeholder="tu@restaurante.com"
                           required
+                          disabled={isSubmitting}
                         />
                       </div>
 
@@ -240,11 +275,16 @@ export default function Webinar() {
                           onChange={handleInputChange}
                           placeholder="+56 9 XXXX XXXX"
                           required
+                          disabled={isSubmitting}
                         />
                       </div>
 
-                      <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-                        Inscribirme al Webinar
+                      <Button 
+                        type="submit" 
+                        className="w-full bg-blue-600 hover:bg-blue-700"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? "Procesando..." : "Inscribirme al Webinar"}
                       </Button>
 
                       <p className="text-xs text-gray-500 text-center">
