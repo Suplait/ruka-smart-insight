@@ -9,6 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { trackFormSubmission } from "@/utils/dataLayer";
 
 export default function Webinar() {
   const [formData, setFormData] = useState({
@@ -80,10 +81,25 @@ export default function Webinar() {
           description: "Hubo un problema al procesar tu registro. Inténtalo nuevamente.",
           variant: "destructive",
         });
+        
+        // Track failed registration
+        trackFormSubmission('webinar_registration', {
+          webinar_name: 'ia-restaurantes-junio-2025',
+          nombre: formData.nombre,
+          correo: formData.correo
+        }, false);
+        
         return;
       }
 
       console.log("Registro webinar guardado exitosamente:", { ...formData, whatsapp: cleanedWhatsapp });
+      
+      // Track successful registration
+      trackFormSubmission('webinar_registration', {
+        webinar_name: 'ia-restaurantes-junio-2025',
+        nombre: formData.nombre,
+        correo: formData.correo
+      }, true);
       
       setIsRegistered(true);
       toast({
@@ -97,6 +113,13 @@ export default function Webinar() {
         description: "Hubo un problema al procesar tu registro. Inténtalo nuevamente.",
         variant: "destructive",
       });
+      
+      // Track failed registration
+      trackFormSubmission('webinar_registration', {
+        webinar_name: 'ia-restaurantes-junio-2025',
+        nombre: formData.nombre,
+        correo: formData.correo
+      }, false);
     } finally {
       setIsSubmitting(false);
     }
