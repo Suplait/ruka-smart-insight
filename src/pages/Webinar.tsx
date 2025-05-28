@@ -136,12 +136,12 @@ export default function Webinar() {
               
               <div className="space-y-4">
                 {[
-                  "Cómo cocinas robóticas están transformando la preparación de alimentos",
-                  "Casos reales: restaurantes chilenos que ya usan IA en su operación",
-                  "Garzones autónomos y sistemas de atención inteligente",
-                  "IA para toma de decisiones operativas y financieras",
-                  "Demo en vivo: tecnologías que puedes implementar HOY",
-                  "Roadmap: cómo empezar con IA en tu restaurante"
+                  "Cómo restaurantes en todo el mundo están aplicando IA para mejorar su eficiencia operativa",
+                  "Qué procesos clave se están optimizando con IA en áreas como compras, inventario y atención al cliente",
+                  "Cómo la inteligencia artificial está ayudando a reducir costos, errores y tiempos de respuesta",
+                  "Casos concretos de marcas en Latinoamérica y Chile que ya están obteniendo resultados",
+                  "Cuáles son las tendencias globales en la aplicación de IA en la industria gastronómica",
+                  "Qué puedes hacer desde hoy mismo para empezar a aplicar IA en tu restaurante, sin complicaciones ni grandes inversiones"
                 ].map((item, index) => (
                   <div key={index} className="flex items-start">
                     <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
