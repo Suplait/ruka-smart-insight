@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { trackFormSubmission } from "@/utils/dataLayer";
+import { pushToDataLayer } from "@/utils/dataLayer";
 
 export default function Webinar() {
   const [formData, setFormData] = useState({
@@ -62,11 +63,12 @@ export default function Webinar() {
 
     try {
       // Track successful registration BEFORE database insert (like in RegistrationForm)
-      trackFormSubmission('webinar_registration', {
+      pushToDataLayer('webinar_registration_success', {
         webinar_name: 'ia-restaurantes-junio-2025',
         nombre: formData.nombre,
-        correo: formData.correo
-      }, true);
+        correo: formData.correo,
+        timestamp: new Date().toISOString()
+      });
 
       // Clean the phone number: remove "+", spaces, and any other characters except numbers
       const cleanedWhatsapp = formData.whatsapp.replace(/\D/g, '');
@@ -106,11 +108,13 @@ export default function Webinar() {
       });
       
       // Track failed registration only in catch block
-      trackFormSubmission('webinar_registration', {
+      pushToDataLayer('webinar_registration_failure', {
         webinar_name: 'ia-restaurantes-junio-2025',
         nombre: formData.nombre,
-        correo: formData.correo
-      }, false);
+        correo: formData.correo,
+        error_message: error instanceof Error ? error.message : 'Unknown error',
+        timestamp: new Date().toISOString()
+      });
     } finally {
       setIsSubmitting(false);
     }
