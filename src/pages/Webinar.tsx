@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -62,6 +61,13 @@ export default function Webinar() {
     setIsSubmitting(true);
 
     try {
+      // Track successful registration BEFORE database insert (like in RegistrationForm)
+      trackFormSubmission('webinar_registration', {
+        webinar_name: 'ia-restaurantes-junio-2025',
+        nombre: formData.nombre,
+        correo: formData.correo
+      }, true);
+
       // Clean the phone number: remove "+", spaces, and any other characters except numbers
       const cleanedWhatsapp = formData.whatsapp.replace(/\D/g, '');
       
@@ -81,25 +87,10 @@ export default function Webinar() {
           description: "Hubo un problema al procesar tu registro. Inténtalo nuevamente.",
           variant: "destructive",
         });
-        
-        // Track failed registration
-        trackFormSubmission('webinar_registration', {
-          webinar_name: 'ia-restaurantes-junio-2025',
-          nombre: formData.nombre,
-          correo: formData.correo
-        }, false);
-        
         return;
       }
 
       console.log("Registro webinar guardado exitosamente:", { ...formData, whatsapp: cleanedWhatsapp });
-      
-      // Track successful registration
-      trackFormSubmission('webinar_registration', {
-        webinar_name: 'ia-restaurantes-junio-2025',
-        nombre: formData.nombre,
-        correo: formData.correo
-      }, true);
       
       setIsRegistered(true);
       toast({
@@ -114,7 +105,7 @@ export default function Webinar() {
         variant: "destructive",
       });
       
-      // Track failed registration
+      // Track failed registration only in catch block
       trackFormSubmission('webinar_registration', {
         webinar_name: 'ia-restaurantes-junio-2025',
         nombre: formData.nombre,
