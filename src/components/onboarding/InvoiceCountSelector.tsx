@@ -1,13 +1,10 @@
-
 import React from 'react';
 import { Info, Receipt } from 'lucide-react';
 import { Slider } from "@/components/ui/slider";
-
 interface InvoiceCountSelectorProps {
   selectedCount: number;
   onChange: (count: number) => void;
 }
-
 const InvoiceCountSelector = ({
   selectedCount,
   onChange
@@ -18,16 +15,13 @@ const InvoiceCountSelector = ({
     if (count <= 150) return "Volumen alto";
     return "Volumen muy alto";
   };
-
   const getRecommendationText = (count: number) => {
     if (count > 150) {
       return "Con este volumen, te recomendamos agendar una llamada personalizada para configurar tu plataforma de manera óptima.";
     }
     return "Perfecto, podemos configurar tu plataforma automáticamente en los siguientes pasos.";
   };
-
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
         <div className="flex gap-3">
           <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
@@ -52,14 +46,7 @@ const InvoiceCountSelector = ({
         </div>
 
         <div className="px-4">
-          <Slider
-            value={[selectedCount]}
-            onValueChange={(value) => onChange(value[0])}
-            max={500}
-            min={1}
-            step={5}
-            className="w-full"
-          />
+          <Slider value={[selectedCount]} onValueChange={value => onChange(value[0])} max={500} min={1} step={5} className="w-full" />
           <div className="flex justify-between text-xs text-muted-foreground mt-2">
             <span>1</span>
             <span>150</span>
@@ -67,20 +54,8 @@ const InvoiceCountSelector = ({
           </div>
         </div>
 
-        <div className={`p-4 rounded-lg border ${
-          selectedCount > 150 
-            ? "bg-amber-50 border-amber-200" 
-            : "bg-green-50 border-green-200"
-        }`}>
-          <p className={`text-sm font-medium ${
-            selectedCount > 150 ? "text-amber-700" : "text-green-700"
-          }`}>
-            {getRecommendationText(selectedCount)}
-          </p>
-        </div>
+        
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default InvoiceCountSelector;
