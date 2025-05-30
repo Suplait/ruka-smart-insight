@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Store, Check, Globe, ShieldCheck, Loader, Receipt } from "lucide-react";
+import { ArrowLeft, ArrowRight, Store, Check, Globe, ShieldCheck, Loader, Receipt, CheckCircle2, Clock, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
