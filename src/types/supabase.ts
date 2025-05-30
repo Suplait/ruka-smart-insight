@@ -17,4 +17,6 @@ export interface Lead {
   sii_connected?: boolean;
   slack_message_ts?: string;
   created_at?: string;
+  facturas_compra_mes?: number;
+  requires_calendly?: boolean;
 }

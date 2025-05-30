@@ -1,4 +1,5 @@
 
+import React, { useRef } from "react";
 import { Star } from "lucide-react";
 import {
   Carousel,
@@ -6,7 +7,6 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { useRef } from "react";
 
 const testimonials = [
   {
