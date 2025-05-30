@@ -1,6 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { Calendar, Clock, CheckCircle2 } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface CalendlyIntegrationProps {
   leadData: {
@@ -29,43 +30,55 @@ const CalendlyIntegration = ({ leadData }: CalendlyIntegrationProps) => {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <div className="w-full max-w-md mx-auto">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-4">
-          <Calendar className="w-8 h-8 text-blue-600" />
-        </div>
-        <h2 className="text-2xl font-bold mb-3">¡Perfecto! Agendemos una llamada</h2>
-        <p className="text-muted-foreground max-w-md mx-auto">
-          Con {leadData.invoiceCount} facturas mensuales, te ayudaremos a configurar tu plataforma de manera personalizada para obtener el máximo beneficio.
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">¡Perfecto! Agendemos una llamada</h1>
+        <p className="text-muted-foreground">
+          Con {leadData.invoiceCount} facturas mensuales, te ayudaremos a configurar tu plataforma de manera personalizada.
         </p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-4 mb-6">
-        <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-          <CheckCircle2 className="w-5 h-5 text-green-600" />
-          <span className="text-sm font-medium">Configuración personalizada</span>
-        </div>
-        <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
-          <Clock className="w-5 h-5 text-blue-600" />
-          <span className="text-sm font-medium">Solo 30 minutos</span>
-        </div>
-        <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
-          <Calendar className="w-5 h-5 text-purple-600" />
-          <span className="text-sm font-medium">Sin compromiso</span>
-        </div>
-      </div>
+      <Card className="border shadow-md mb-6">
+        <CardHeader>
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+              <Calendar className="w-6 h-6 text-primary" />
+            </div>
+            <div>
+              <CardTitle>Agenda tu llamada personalizada</CardTitle>
+              <CardDescription>Configuraremos tu plataforma para obtener el máximo beneficio</CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-3 gap-4 mb-6">
+            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+              <CheckCircle2 className="w-5 h-5 text-green-600" />
+              <span className="text-sm font-medium">Configuración personalizada</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+              <Clock className="w-5 h-5 text-blue-600" />
+              <span className="text-sm font-medium">Solo 30 minutos</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
+              <Calendar className="w-5 h-5 text-purple-600" />
+              <span className="text-sm font-medium">Sin compromiso</span>
+            </div>
+          </div>
 
-      <div className="bg-white rounded-lg border shadow-sm">
-        <div 
-          className="calendly-inline-widget" 
-          data-url="https://calendly.com/suplait_lorenzo/30min?hide_event_type_details=1&hide_gdpr_banner=1&text_color=000000&primary_color=4e66e9" 
-          style={{ minWidth: '320px', height: '700px' }}
-        ></div>
-      </div>
+          <div className="bg-white rounded-lg border shadow-sm">
+            <div 
+              className="calendly-inline-widget" 
+              data-url="https://calendly.com/suplait_lorenzo/30min?hide_event_type_details=1&hide_gdpr_banner=1&text_color=000000&primary_color=4e66e9" 
+              style={{ minWidth: '320px', height: '700px' }}
+            ></div>
+          </div>
 
-      <div className="text-center text-sm text-muted-foreground">
-        <p>¿Prefieres continuar sin agendar? <a href="/" className="text-primary hover:underline">Volver al inicio</a></p>
-      </div>
+          <div className="text-center text-sm text-muted-foreground mt-4">
+            <p>¿Prefieres continuar sin agendar? <a href="/" className="text-primary hover:underline">Volver al inicio</a></p>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

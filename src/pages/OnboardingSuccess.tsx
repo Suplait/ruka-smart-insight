@@ -457,8 +457,48 @@ const OnboardingSuccess = () => {
           <title>Agenda tu llamada | Ruka.ai</title>
         </Helmet>
         
-        <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6 md:p-12">
-          <div className="max-w-4xl mx-auto">
+        <main className="min-h-screen flex flex-col md:flex-row relative">
+          <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col overflow-hidden">
+            <div className="max-w-md mx-auto flex-1">
+              <div className="h-full flex flex-col justify-center">
+                <div className="w-auto h-10 relative mb-6">
+                  <img 
+                    src="/logo.png" 
+                    alt="Ruka.ai" 
+                    className="h-10 w-auto object-contain object-left"
+                  />
+                </div>
+                <h2 className="text-3xl font-bold mb-4">¡Perfecto! Tu volumen requiere atención personalizada</h2>
+                <p className="text-slate-600 mb-6">
+                  Con más de 150 facturas mensuales, necesitas una configuración especializada 
+                  para obtener el máximo beneficio de nuestra plataforma.
+                </p>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 className="h-5 w-5 text-green-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-lg">Configuración personalizada</h3>
+                      <p className="text-slate-600">Adaptamos cada funcionalidad a tu volumen específico de transacciones.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                      <Clock className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-lg">Optimización avanzada</h3>
+                      <p className="text-slate-600">Implementamos algoritmos especializados para manejar tu volumen eficientemente.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex-1 flex items-center justify-center p-6 md:p-12 bg-white">
             <CalendlyIntegration 
               leadData={{
                 firstName: leadData.firstName,
@@ -558,7 +598,7 @@ const OnboardingSuccess = () => {
                             >
                               {!isLoading ? (
                                 <>
-                                  {currentStep === 1 && formData.facturas > 150 ? "Agendar llamada" : "Siguiente"}
+                                  Siguiente
                                   <ArrowRight className="w-4 h-4" />
                                 </>
                               ) : (
