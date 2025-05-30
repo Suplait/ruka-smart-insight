@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { Lead } from "@/types/supabase";
 import { notifySlackOnboardingStep } from "@/utils/slackNotifier";
@@ -8,7 +7,7 @@ export const saveFormData = async (
   leadId: number | string | undefined,
   currentStep: number,
   formData: {
-    meses: number;
+    facturas: number;
     sistema: string;
     sistemaCustom: string;
     subdominio: string;
@@ -27,25 +26,22 @@ export const saveFormData = async (
     let eventName = '';
 
     if (currentStep === 0) {
-      updateData = {
-        meses_datos: formData.meses
-      };
-      stepName = 'data-months-selected';
-      eventName = 'onboarding_step_1_months';
-    } else if (currentStep === 1) {
+      // Billing system step
       updateData = {
         sistema_facturacion: formData.sistema,
         sistema_custom: formData.sistemaCustom
       };
       stepName = 'billing-system-selected';
-      eventName = 'onboarding_step_2_billing';
+      eventName = 'onboarding_step_1_billing';
     } else if (currentStep === 2) {
+      // Subdomain step (step 1 is now invoices, handled separately)
       updateData = {
         subdominio: formData.subdominio
       };
       stepName = 'subdomain-selected';
       eventName = 'onboarding_step_3_subdomain';
     } else if (currentStep === 3) {
+      // SII credentials step
       updateData = {
         rut: formData.rut,
         clave_sii: formData.clave,
@@ -74,7 +70,7 @@ export const saveFormData = async (
           sistema_custom: formData.sistemaCustom,
           subdominio: formData.subdominio,
           rut: formData.rut,
-          meses_datos: formData.meses,
+          facturas_compra_mes: formData.facturas,
           sii_connected: formData.sistema === 'sii' ? true : undefined
         };
         

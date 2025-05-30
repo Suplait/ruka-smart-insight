@@ -15,20 +15,7 @@ interface LeftSideContentProps {
 const LeftSideContent = ({ currentStep, isComplete }: LeftSideContentProps) => {
   const getLeftSideContent = () => {
     switch (currentStep) {
-      case 0:
-        return (
-          <motion.div 
-            key="automation-features" 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }} 
-            transition={{ duration: 0.5 }} 
-            className="flex flex-col h-full items-center justify-center"
-          >
-            <AutomationFeatures />
-          </motion.div>
-        );
-      case 1:
+      case 1: // Billing system (was case 0)
         return (
           <motion.div 
             key="simple-connection" 
@@ -41,7 +28,7 @@ const LeftSideContent = ({ currentStep, isComplete }: LeftSideContentProps) => {
             <SimpleConnection />
           </motion.div>
         );
-      case 2:
+      case 2: // Subdomain (was case 1)
         return (
           <motion.div 
             key="impact-stats" 
@@ -54,7 +41,7 @@ const LeftSideContent = ({ currentStep, isComplete }: LeftSideContentProps) => {
             <CompactImpactStats />
           </motion.div>
         );
-      case 3:
+      case 3: // SII credentials (was case 2)
       default:
         return (
           <motion.div 
