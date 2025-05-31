@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Calendar, Store, Check, Globe, ShieldCheck, Loader } from "lucide-react";
+import { ArrowLeft, ArrowRight, Store, Check, Globe, ShieldCheck, Loader, Receipt, CheckCircle2, Clock, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
@@ -11,12 +11,14 @@ import { Lead } from "@/types/supabase";
 import { notifySlackOnboardingStep } from "@/utils/slackNotifier";
 import { pushToDataLayer } from "@/utils/dataLayer";
 import StepIndicator from "@/components/onboarding/StepIndicator";
-import MonthsSelector from "@/components/onboarding/MonthsSelector";
 import BillingSystemSelector from "@/components/onboarding/BillingSystemSelector";
+import InvoiceCountSelector from "@/components/onboarding/InvoiceCountSelector";
 import SubdomainInput from "@/components/onboarding/SubdomainInput";
 import SiiCredentialsInput from "@/components/onboarding/SiiCredentialsInput";
+import CalendlyIntegration from "@/components/onboarding/CalendlyIntegration";
 import SuccessContent from "@/components/onboarding/SuccessContent";
 import LeftSideContent from "@/components/onboarding/LeftSideContent";
+import InvoiceVolumeInfo from "@/components/onboarding/InvoiceVolumeInfo";
 import WhatsappButton from "@/components/WhatsappButton";
 import { saveFormData, validateSiiCredentials, generateSubdomain } from "@/services/onboardingService";
 import { supabase } from "@/integrations/supabase/client";
@@ -29,8 +31,8 @@ const OnboardingSuccess = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
-  const [showWhatsAppButtons, setShowWhatsAppButtons] = useState(true);
-  const totalSteps = 4;
+  const [showCalendly, setShowCalendly] = useState(false);
+  const totalSteps = 4; // billing, invoices, subdomain, sii
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
   
@@ -154,7 +156,7 @@ const OnboardingSuccess = () => {
   const [formData, setFormData] = useState({
     rut: "",
     clave: "",
-    meses: 3,
+    facturas: 50, // New field for invoice count
     sistema: "sii",
     sistemaCustom: "",
     subdominio: suggestedSubdomain || ""
@@ -180,10 +182,66 @@ const OnboardingSuccess = () => {
     updateFormData('subdominio', value);
   };
 
+  const saveInvoiceData = async (currentStep: number, invoiceCount: number) => {
+    try {
+      if (!leadId) return false;
+
+      const updateData = {
+        facturas_compra_mes: invoiceCount,
+        requires_calendly: invoiceCount > 150
+      };
+
+      const numericLeadId = Number(leadId);
+      const response = await supabase.functions.invoke('update-lead', {
+        body: {
+          leadId: numericLeadId,
+          updateData
+        }
+      });
+
+      if (response.error || !response.data?.success) {
+        toast({
+          title: "Error",
+          description: "Error al guardar los datos. Intenta nuevamente.",
+          variant: "destructive"
+        });
+        return false;
+      }
+
+      // Notify Slack
+      const leadDataForSlack: Partial<Lead> = {
+        facturas_compra_mes: invoiceCount,
+        requires_calendly: invoiceCount > 150
+      };
+      
+      notifySlackOnboardingStep(numericLeadId, 'invoice-count-selected', leadDataForSlack);
+
+      // Push to dataLayer
+      pushToDataLayer('onboarding_step_2_invoices', {
+        leadId: numericLeadId,
+        step: currentStep + 1,
+        stepName: 'invoice-count-selected',
+        facturas_compra_mes: invoiceCount,
+        requires_calendly: invoiceCount > 150
+      });
+
+      return true;
+    } catch (error) {
+      console.error("Error saving invoice data:", error);
+      toast({
+        title: "Error",
+        description: "Error al guardar los datos. Intenta nuevamente.",
+        variant: "destructive"
+      });
+      return false;
+    }
+  };
+
   const handleNext = async () => {
     setIsLoading(true);
     
     if (currentStep === 0) {
+      // Billing system step
       const saved = await saveFormData(leadId, currentStep, formData, restaurantName);
       setIsLoading(false);
       if (saved) {
@@ -193,15 +251,21 @@ const OnboardingSuccess = () => {
     }
     
     if (currentStep === 1) {
-      const saved = await saveFormData(leadId, currentStep, formData, restaurantName);
+      // Invoice count step
+      const saved = await saveInvoiceData(currentStep, formData.facturas);
       setIsLoading(false);
       if (saved) {
-        setCurrentStep(prev => prev + 1);
+        if (formData.facturas > 150) {
+          setShowCalendly(true);
+        } else {
+          setCurrentStep(prev => prev + 1);
+        }
       }
       return;
     }
     
     if (currentStep === 2) {
+      // Subdomain step
       if (!formData.subdominio) {
         setIsLoading(false);
         toast({
@@ -221,6 +285,7 @@ const OnboardingSuccess = () => {
     }
     
     if (currentStep === 3) {
+      // SII credentials step
       if (!formData.rut || !formData.clave) {
         setIsLoading(false);
         toast({
@@ -269,7 +334,7 @@ const OnboardingSuccess = () => {
             sistema_custom: formData.sistemaCustom,
             subdominio: formData.subdominio,
             rut: formData.rut,
-            meses_datos: formData.meses,
+            facturas_compra_mes: formData.facturas,
             sii_connected: true
           };
           notifySlackOnboardingStep(numericLeadId, 'onboarding-completed', leadDataForSlack);
@@ -326,16 +391,22 @@ const OnboardingSuccess = () => {
     setCurrentStep(prev => prev - 1);
   };
 
+  const getLeftSideContent = () => {
+    if (showCalendly) return null;
+    
+    if (currentStep === 1) {
+      return <InvoiceVolumeInfo />;
+    }
+    
+    return (
+      <LeftSideContent 
+        currentStep={currentStep === 0 ? 1 : currentStep === 2 ? 2 : 3} // Map to original steps
+        isComplete={isComplete}
+      />
+    );
+  };
+
   const steps = [
-    {
-      title: "Periodo de datos",
-      icon: <Calendar className="w-6 h-6 text-primary" />,
-      description: "¿Cuántos meses de datos quieres importar?",
-      content: <MonthsSelector 
-                selectedMonths={formData.meses} 
-                onChange={months => updateFormData('meses', months)} 
-              />
-    }, 
     {
       title: "Sistema de facturación",
       icon: <Store className="w-6 h-6 text-primary" />,
@@ -345,6 +416,15 @@ const OnboardingSuccess = () => {
                 onChange={system => updateFormData('sistema', system)} 
                 customSystem={formData.sistemaCustom} 
                 onCustomChange={value => updateFormData('sistemaCustom', value)} 
+              />
+    }, 
+    {
+      title: "Volumen de facturas",
+      icon: <Receipt className="w-6 h-6 text-primary" />,
+      description: "¿Cuántas facturas de compra recibes cada mes?",
+      content: <InvoiceCountSelector 
+                selectedCount={formData.facturas} 
+                onChange={count => updateFormData('facturas', count)} 
               />
     }, 
     {
@@ -370,6 +450,73 @@ const OnboardingSuccess = () => {
     }
   ];
 
+  if (showCalendly) {
+    return (
+      <>
+        <Helmet>
+          <title>Agenda tu llamada | Ruka.ai</title>
+        </Helmet>
+        
+        <main className="min-h-screen flex flex-col lg:flex-row relative">
+          <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-6 xl:p-8 flex-col overflow-hidden">
+            <div className="max-w-md mx-auto flex-1">
+              <div className="h-full flex flex-col justify-center">
+                <div className="w-auto h-10 relative mb-6">
+                  <img 
+                    src="/logo.png" 
+                    alt="Ruka.ai" 
+                    className="h-10 w-auto object-contain object-left"
+                  />
+                </div>
+                <h2 className="text-2xl xl:text-3xl font-bold mb-4">¡Perfecto! Tu volumen requiere atención personalizada</h2>
+                <p className="text-slate-600 mb-6 text-sm xl:text-base">
+                  Con más de 150 facturas mensuales, necesitas una configuración especializada 
+                  para obtener el máximo beneficio de nuestra plataforma.
+                </p>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 className="h-5 w-5 text-green-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-lg">Configuración personalizada</h3>
+                      <p className="text-slate-600 text-sm">Adaptamos cada funcionalidad a tu volumen específico de transacciones.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                      <Clock className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-lg">Optimización avanzada</h3>
+                      <p className="text-slate-600 text-sm">Implementamos algoritmos especializados para manejar tu volumen eficientemente.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8 xl:p-12 bg-white overflow-auto">
+            <div className="w-full max-w-4xl">
+              <CalendlyIntegration 
+                leadData={{
+                  firstName: leadData.firstName,
+                  lastName: leadData.lastName,
+                  email: leadData.email,
+                  restaurantName: leadData.nombreRestaurante,
+                  invoiceCount: formData.facturas,
+                  whatsapp: leadData.whatsapp
+                }}
+              />
+            </div>
+          </div>
+        </main>
+      </>
+    );
+  }
+
   return (
     <>
       <Helmet>
@@ -380,10 +527,7 @@ const OnboardingSuccess = () => {
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col overflow-hidden">
           <div className="max-w-md mx-auto flex-1">
             <AnimatePresence mode="wait">
-              <LeftSideContent 
-                currentStep={currentStep}
-                isComplete={isComplete}
-              />
+              {getLeftSideContent()}
             </AnimatePresence>
           </div>
         </div>
@@ -527,9 +671,6 @@ const OnboardingSuccess = () => {
             )}
           </div>
         </div>
-        
-        {/* WhatsApp Floating Button - Only show when not complete */}
-        {/* WhatsApp Floating Button - Only show when not complete */}
       </main>
     </>
   );

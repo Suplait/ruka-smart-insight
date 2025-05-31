@@ -16,11 +16,13 @@ export type Database = {
           company_name: string
           created_at: string
           email: string
+          facturas_compra_mes: number | null
           first_name: string | null
           id: number
           last_name: string | null
           meses_datos: number | null
           name: string
+          requires_calendly: boolean | null
           rut: string | null
           sii_connected: boolean | null
           sistema_custom: string | null
@@ -36,11 +38,13 @@ export type Database = {
           company_name: string
           created_at?: string
           email: string
+          facturas_compra_mes?: number | null
           first_name?: string | null
           id?: never
           last_name?: string | null
           meses_datos?: number | null
           name: string
+          requires_calendly?: boolean | null
           rut?: string | null
           sii_connected?: boolean | null
           sistema_custom?: string | null
@@ -56,11 +60,13 @@ export type Database = {
           company_name?: string
           created_at?: string
           email?: string
+          facturas_compra_mes?: number | null
           first_name?: string | null
           id?: never
           last_name?: string | null
           meses_datos?: number | null
           name?: string
+          requires_calendly?: boolean | null
           rut?: string | null
           sii_connected?: boolean | null
           sistema_custom?: string | null
