@@ -457,8 +457,8 @@ const OnboardingSuccess = () => {
           <title>Agenda tu llamada | Ruka.ai</title>
         </Helmet>
         
-        <main className="min-h-screen flex flex-col md:flex-row relative">
-          <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col overflow-hidden">
+        <main className="min-h-screen flex flex-col lg:flex-row relative">
+          <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-6 xl:p-8 flex-col overflow-hidden">
             <div className="max-w-md mx-auto flex-1">
               <div className="h-full flex flex-col justify-center">
                 <div className="w-auto h-10 relative mb-6">
@@ -468,8 +468,8 @@ const OnboardingSuccess = () => {
                     className="h-10 w-auto object-contain object-left"
                   />
                 </div>
-                <h2 className="text-3xl font-bold mb-4">¡Perfecto! Tu volumen requiere atención personalizada</h2>
-                <p className="text-slate-600 mb-6">
+                <h2 className="text-2xl xl:text-3xl font-bold mb-4">¡Perfecto! Tu volumen requiere atención personalizada</h2>
+                <p className="text-slate-600 mb-6 text-sm xl:text-base">
                   Con más de 150 facturas mensuales, necesitas una configuración especializada 
                   para obtener el máximo beneficio de nuestra plataforma.
                 </p>
@@ -480,7 +480,7 @@ const OnboardingSuccess = () => {
                     </div>
                     <div>
                       <h3 className="font-medium text-lg">Configuración personalizada</h3>
-                      <p className="text-slate-600">Adaptamos cada funcionalidad a tu volumen específico de transacciones.</p>
+                      <p className="text-slate-600 text-sm">Adaptamos cada funcionalidad a tu volumen específico de transacciones.</p>
                     </div>
                   </div>
                   
@@ -490,7 +490,7 @@ const OnboardingSuccess = () => {
                     </div>
                     <div>
                       <h3 className="font-medium text-lg">Optimización avanzada</h3>
-                      <p className="text-slate-600">Implementamos algoritmos especializados para manejar tu volumen eficientemente.</p>
+                      <p className="text-slate-600 text-sm">Implementamos algoritmos especializados para manejar tu volumen eficientemente.</p>
                     </div>
                   </div>
                 </div>
@@ -498,16 +498,18 @@ const OnboardingSuccess = () => {
             </div>
           </div>
           
-          <div className="flex-1 flex items-center justify-center p-6 md:p-12 bg-white">
-            <CalendlyIntegration 
-              leadData={{
-                firstName: leadData.firstName,
-                lastName: leadData.lastName,
-                email: leadData.email,
-                restaurantName: leadData.nombreRestaurante,
-                invoiceCount: formData.facturas
-              }}
-            />
+          <div className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8 xl:p-12 bg-white overflow-x-hidden">
+            <div className="w-full max-w-lg">
+              <CalendlyIntegration 
+                leadData={{
+                  firstName: leadData.firstName,
+                  lastName: leadData.lastName,
+                  email: leadData.email,
+                  restaurantName: leadData.nombreRestaurante,
+                  invoiceCount: formData.facturas
+                }}
+              />
+            </div>
           </div>
         </main>
       </>

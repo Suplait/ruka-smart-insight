@@ -14,9 +14,16 @@ const InvoiceCountSelector = ({
 }: InvoiceCountSelectorProps) => {
   const getInvoiceRangeText = (count: number) => {
     if (count <= 50) return "Pocas facturas";
-    if (count <= 100) return "Volumen moderado";
-    if (count <= 150) return "Volumen alto";
-    return "Volumen muy alto";
+    if (count <= 150) return "Volumen moderado";
+    if (count <= 300) return "Volumen alto";
+    if (count <= 500) return "Volumen muy alto";
+    return "Volumen empresarial";
+  };
+
+  const formatInvoiceCount = (count: number) => {
+    if (count >= 1000) return "+1.000";
+    if (count >= 500) return "+500";
+    return count.toString();
   };
 
   return (
@@ -36,7 +43,7 @@ const InvoiceCountSelector = ({
 
       <div className="space-y-6">
         <div className="text-center">
-          <h3 className="text-xl font-semibold mb-2">{selectedCount} facturas/mes</h3>
+          <h3 className="text-xl font-semibold mb-2">{formatInvoiceCount(selectedCount)} facturas/mes</h3>
           <p className="text-sm text-muted-foreground mb-4">{getInvoiceRangeText(selectedCount)}</p>
         </div>
 
@@ -44,15 +51,15 @@ const InvoiceCountSelector = ({
           <Slider 
             value={[selectedCount]} 
             onValueChange={value => onChange(value[0])} 
-            max={500} 
+            max={1000} 
             min={1} 
             step={5} 
             className="w-full" 
           />
           <div className="flex justify-between text-xs text-muted-foreground mt-2">
             <span>1</span>
-            <span>150</span>
-            <span>500+</span>
+            <span>500</span>
+            <span>+1.000</span>
           </div>
         </div>
       </div>
