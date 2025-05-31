@@ -498,15 +498,16 @@ const OnboardingSuccess = () => {
             </div>
           </div>
           
-          <div className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8 xl:p-12 bg-white overflow-x-hidden">
-            <div className="w-full max-w-lg">
+          <div className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8 xl:p-12 bg-white overflow-auto">
+            <div className="w-full max-w-4xl">
               <CalendlyIntegration 
                 leadData={{
                   firstName: leadData.firstName,
                   lastName: leadData.lastName,
                   email: leadData.email,
                   restaurantName: leadData.nombreRestaurante,
-                  invoiceCount: formData.facturas
+                  invoiceCount: formData.facturas,
+                  whatsapp: leadData.whatsapp
                 }}
               />
             </div>

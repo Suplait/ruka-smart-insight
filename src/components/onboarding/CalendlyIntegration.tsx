@@ -10,6 +10,7 @@ interface CalendlyIntegrationProps {
     email: string;
     restaurantName: string;
     invoiceCount: number;
+    whatsapp?: string;
   };
 }
 
@@ -19,25 +20,50 @@ const CalendlyIntegration = ({ leadData }: CalendlyIntegrationProps) => {
     const script = document.createElement('script');
     script.src = 'https://assets.calendly.com/assets/external/widget.js';
     script.async = true;
-    document.body.appendChild(script);
+    script.onload = () => {
+      // Initialize Calendly with prefilled data once script loads
+      if (window.Calendly) {
+        const calendlyElement = document.getElementById('calendly-embed-element');
+        if (calendlyElement) {
+          // Format WhatsApp number for Calendly
+          const formattedWhatsapp = leadData.whatsapp ? 
+            `+56 ${leadData.whatsapp.substring(0, 1)} ${leadData.whatsapp.substring(1, 5)} ${leadData.whatsapp.substring(5)}` : 
+            '';
+          
+          window.Calendly.initInlineWidget({
+            url: 'https://calendly.com/suplait_lorenzo/30min?hide_event_type_details=1&hide_gdpr_banner=1&text_color=000000&primary_color=4e66e9',
+            parentElement: calendlyElement,
+            prefill: {
+              name: `${leadData.firstName} ${leadData.lastName}`.trim(),
+              email: leadData.email,
+              textReminderNumber: formattedWhatsapp,
+              customAnswers: {
+                a1: leadData.restaurantName,
+                a2: 'Entiendo'
+              }
+            }
+          });
+        }
+      }
+    };
+    document.head.appendChild(script);
 
     return () => {
       // Clean up script when component unmounts
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
+      if (document.head.contains(script)) {
+        document.head.removeChild(script);
       }
     };
-  }, []);
+  }, [leadData]);
 
   const formatInvoiceCount = (count: number) => {
     if (count >= 1000) return "+1.000";
-    if (count >= 500) return "+500";
     return count.toString();
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <div className="text-center mb-8">
+    <div className="w-full max-w-2xl mx-auto">
+      <div className="text-center mb-6">
         <h1 className="text-2xl md:text-3xl font-bold mb-2">¡Perfecto! Agendemos una llamada</h1>
         <p className="text-muted-foreground">
           Con {formatInvoiceCount(leadData.invoiceCount)} facturas mensuales, te ayudaremos a configurar tu plataforma de manera personalizada.
@@ -57,26 +83,25 @@ const CalendlyIntegration = ({ leadData }: CalendlyIntegrationProps) => {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-              <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
-              <span className="text-sm font-medium">Configuración personalizada</span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+            <div className="flex items-center gap-2 p-3 bg-green-50 rounded-lg">
+              <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-medium">Configuración personalizada</span>
             </div>
-            <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
-              <Clock className="w-5 h-5 text-blue-600 flex-shrink-0" />
-              <span className="text-sm font-medium">Solo 30 minutos</span>
+            <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg">
+              <Clock className="w-4 h-4 text-blue-600 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-medium">Solo 30 minutos</span>
             </div>
-            <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
-              <Calendar className="w-5 h-5 text-purple-600 flex-shrink-0" />
-              <span className="text-sm font-medium">Sin compromiso</span>
+            <div className="flex items-center gap-2 p-3 bg-purple-50 rounded-lg">
+              <Calendar className="w-4 h-4 text-purple-600 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-medium">Sin compromiso</span>
             </div>
           </div>
 
           <div className="bg-white rounded-lg border shadow-sm overflow-hidden">
             <div 
-              className="calendly-inline-widget w-full" 
-              data-url="https://calendly.com/suplait_lorenzo/30min?hide_event_type_details=1&hide_gdpr_banner=1&text_color=000000&primary_color=4e66e9" 
-              style={{ minWidth: '300px', width: '100%', height: '600px' }}
+              id="calendly-embed-element"
+              style={{ minWidth: '320px', width: '100%', height: '700px' }}
             ></div>
           </div>
 

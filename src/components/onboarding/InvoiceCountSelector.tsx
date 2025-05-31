@@ -12,17 +12,8 @@ const InvoiceCountSelector = ({
   selectedCount,
   onChange
 }: InvoiceCountSelectorProps) => {
-  const getInvoiceRangeText = (count: number) => {
-    if (count <= 50) return "Pocas facturas";
-    if (count <= 150) return "Volumen moderado";
-    if (count <= 300) return "Volumen alto";
-    if (count <= 500) return "Volumen muy alto";
-    return "Volumen empresarial";
-  };
-
   const formatInvoiceCount = (count: number) => {
     if (count >= 1000) return "+1.000";
-    if (count >= 500) return "+500";
     return count.toString();
   };
 
@@ -44,7 +35,6 @@ const InvoiceCountSelector = ({
       <div className="space-y-6">
         <div className="text-center">
           <h3 className="text-xl font-semibold mb-2">{formatInvoiceCount(selectedCount)} facturas/mes</h3>
-          <p className="text-sm text-muted-foreground mb-4">{getInvoiceRangeText(selectedCount)}</p>
         </div>
 
         <div className="px-4">
