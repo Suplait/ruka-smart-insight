@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Calendar, Clock, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,6 +15,25 @@ interface CalendlyIntegrationProps {
 
 const CalendlyIntegration = ({ leadData }: CalendlyIntegrationProps) => {
   useEffect(() => {
+    // Add event listener for Calendly scheduling events
+    const handleCalendlyEvent = (e: MessageEvent) => {
+      if (e.data.event === 'calendly.event_scheduled') {
+        if (window.dataLayer) {
+          window.dataLayer.push({
+            event: 'calendly_event_scheduled',
+            calendly_name: e.data.payload?.name,
+            calendly_email: e.data.payload?.email
+          });
+          console.log('DataLayer: calendly_event_scheduled', {
+            calendly_name: e.data.payload?.name,
+            calendly_email: e.data.payload?.email
+          });
+        }
+      }
+    };
+
+    window.addEventListener('message', handleCalendlyEvent);
+
     // Load Calendly widget script
     const script = document.createElement('script');
     script.src = 'https://assets.calendly.com/assets/external/widget.js';
@@ -25,21 +43,14 @@ const CalendlyIntegration = ({ leadData }: CalendlyIntegrationProps) => {
       if (window.Calendly) {
         const calendlyElement = document.getElementById('calendly-embed-element');
         if (calendlyElement) {
-          // Format WhatsApp number for Calendly
-          const formattedWhatsapp = leadData.whatsapp ? 
-            `+56 ${leadData.whatsapp.substring(0, 1)} ${leadData.whatsapp.substring(1, 5)} ${leadData.whatsapp.substring(5)}` : 
-            '';
-          
           window.Calendly.initInlineWidget({
             url: 'https://calendly.com/suplait_lorenzo/30min?hide_event_type_details=1&hide_gdpr_banner=1&text_color=000000&primary_color=4e66e9',
             parentElement: calendlyElement,
             prefill: {
               name: `${leadData.firstName} ${leadData.lastName}`.trim(),
               email: leadData.email,
-              textReminderNumber: formattedWhatsapp,
               customAnswers: {
-                a1: leadData.restaurantName,
-                a2: 'Entiendo'
+                a1: leadData.restaurantName
               }
             }
           });
@@ -49,7 +60,8 @@ const CalendlyIntegration = ({ leadData }: CalendlyIntegrationProps) => {
     document.head.appendChild(script);
 
     return () => {
-      // Clean up script when component unmounts
+      // Clean up event listener and script when component unmounts
+      window.removeEventListener('message', handleCalendlyEvent);
       if (document.head.contains(script)) {
         document.head.removeChild(script);
       }
