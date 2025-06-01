@@ -196,6 +196,9 @@ export default function HotelRegistrationForm({
             </Tooltip>
           </TooltipProvider>
         </div>
+        <p className="text-lg text-muted-foreground font-medium">
+          Si no te sirve o no te gusta, no pagarás ni $1
+        </p>
         <div className="flex flex-col gap-2">
           <div className="text-sm font-medium text-primary">
             Si te registras antes de las 12:00pm tendrás acceso el mismo día

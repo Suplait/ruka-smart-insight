@@ -225,6 +225,9 @@ export default function RegistrationForm({
             </Tooltip>
           </TooltipProvider>
         </div>
+        <p className="text-lg text-muted-foreground font-medium">
+          Si no te sirve o no te gusta, no pagarás ni $1
+        </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">

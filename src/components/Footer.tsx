@@ -115,14 +115,12 @@ export default function Footer() {
                 </div>
               </li>
               <li>
-                <a 
-                  href="https://calendly.com/suplait_lorenzo/30min" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
+                <Link 
+                  to="/register"
                   className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
                 >
-                  Agendar una demo
-                </a>
+                  Regístrate
+                </Link>
               </li>
             </ul>
           </div>
