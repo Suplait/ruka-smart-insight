@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
@@ -301,6 +300,8 @@ export default function Register() {
                     </div>
                   </div>
                 </motion.div>
+
+                <DataFlowSection />
 
                 <motion.div initial={{
                   opacity: 0,
