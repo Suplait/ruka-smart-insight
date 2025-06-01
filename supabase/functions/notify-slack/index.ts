@@ -58,15 +58,15 @@ Deno.serve(async (req) => {
         // Send reply to thread using the provided threadTs
         let replyText;
         switch(step) {
+          case "invoice-count-selected":
+            replyText = `1️⃣ *Actualización de Onboarding:* El ${businessTypeLC} recibe *${lead.facturas_compra_mes || 0}* facturas de compra al mes`;
+            break;
           case "billing-system-selected":
             if (lead.sistema_facturacion === 'mercado' && lead.sistema_custom) {
-              replyText = `1️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha seleccionado sistema de facturación *${lead.sistema_facturacion} (${lead.sistema_custom})*`;
+              replyText = `2️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha seleccionado sistema de facturación *${lead.sistema_facturacion} (${lead.sistema_custom})*`;
             } else {
-              replyText = `1️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha seleccionado sistema de facturación *${lead.sistema_facturacion || lead.sistema_custom || "No especificado"}*`;
+              replyText = `2️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha seleccionado sistema de facturación *${lead.sistema_facturacion || lead.sistema_custom || "No especificado"}*`;
             }
-            break;
-          case "invoice-count-selected":
-            replyText = `2️⃣ *Actualización de Onboarding:* El ${businessTypeLC} recibe *${lead.facturas_compra_mes || 0}* facturas de compra al mes`;
             break;
           case "subdomain-selected":
             replyText = `3️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha seleccionado su subdominio: *${lead.subdominio || "No disponible"}* (https://${lead.subdominio}.ruka.ai)`;
