@@ -246,7 +246,7 @@ export default function RegistrationForm({
           </TooltipProvider>
         </div>
         <Input id="registration-city" name="ciudad" placeholder="Ciudad" value={formData.ciudad} onChange={handleChange} required className="h-12" disabled={isSubmitting} />
-        <Input id="registration-restaurant-name" name="nombreRestaurante" placeholder="Nombre de tu Restaurante" value={formData.nombreRestaurante} onChange={handleChange} required className="h-12" disabled={isSubmitting} />
+        <Input id="registration-restaurant-name" name="nombreRestaurante" placeholder="Nombre de tu Empresa" value={formData.nombreRestaurante} onChange={handleChange} required className="h-12" disabled={isSubmitting} />
         
         <div className="flex items-start space-x-2">
           <Checkbox id="registration-terms" checked={formData.acceptTerms} onCheckedChange={checked => setFormData(prev => ({
