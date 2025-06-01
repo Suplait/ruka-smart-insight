@@ -22,6 +22,7 @@ interface Lead {
   clave_sii?: string
   sii_connected?: boolean
   industry?: string
+  facturas_compra_mes?: number
 }
 
 Deno.serve(async (req) => {
@@ -57,15 +58,15 @@ Deno.serve(async (req) => {
         // Send reply to thread using the provided threadTs
         let replyText;
         switch(step) {
-          case "data-months-selected":
-            replyText = `1️⃣ *Actualización de Onboarding:* El ${businessTypeLC} quiere importar *${lead.meses_datos || 0}* meses de datos`;
-            break;
           case "billing-system-selected":
             if (lead.sistema_facturacion === 'mercado' && lead.sistema_custom) {
-              replyText = `2️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha seleccionado sistema de facturación *${lead.sistema_facturacion} (${lead.sistema_custom})*`;
+              replyText = `1️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha seleccionado sistema de facturación *${lead.sistema_facturacion} (${lead.sistema_custom})*`;
             } else {
-              replyText = `2️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha seleccionado sistema de facturación *${lead.sistema_facturacion || lead.sistema_custom || "No especificado"}*`;
+              replyText = `1️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha seleccionado sistema de facturación *${lead.sistema_facturacion || lead.sistema_custom || "No especificado"}*`;
             }
+            break;
+          case "invoice-count-selected":
+            replyText = `2️⃣ *Actualización de Onboarding:* El ${businessTypeLC} recibe *${lead.facturas_compra_mes || 0}* facturas de compra al mes`;
             break;
           case "subdomain-selected":
             replyText = `3️⃣ *Actualización de Onboarding:* El ${businessTypeLC} ha seleccionado su subdominio: *${lead.subdominio || "No disponible"}* (https://${lead.subdominio}.ruka.ai)`;
