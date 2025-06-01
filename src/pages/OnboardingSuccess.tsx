@@ -32,7 +32,7 @@ const OnboardingSuccess = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
-  const totalSteps = 4; // billing, invoices, subdomain, sii
+  const totalSteps = 4; // invoices, billing, subdomain, sii
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
   
@@ -156,7 +156,7 @@ const OnboardingSuccess = () => {
   const [formData, setFormData] = useState({
     rut: "",
     clave: "",
-    facturas: 50, // New field for invoice count
+    facturas: 50,
     sistema: "sii",
     sistemaCustom: "",
     subdominio: suggestedSubdomain || ""
@@ -188,7 +188,7 @@ const OnboardingSuccess = () => {
 
       const updateData = {
         facturas_compra_mes: invoiceCount,
-        requires_calendly: invoiceCount > 150
+        requires_calendly: invoiceCount >= 150
       };
 
       const numericLeadId = Number(leadId);
@@ -211,18 +211,18 @@ const OnboardingSuccess = () => {
       // Notify Slack
       const leadDataForSlack: Partial<Lead> = {
         facturas_compra_mes: invoiceCount,
-        requires_calendly: invoiceCount > 150
+        requires_calendly: invoiceCount >= 150
       };
       
       notifySlackOnboardingStep(numericLeadId, 'invoice-count-selected', leadDataForSlack);
 
       // Push to dataLayer
-      pushToDataLayer('onboarding_step_2_invoices', {
+      pushToDataLayer('onboarding_step_1_invoices', {
         leadId: numericLeadId,
         step: currentStep + 1,
         stepName: 'invoice-count-selected',
         facturas_compra_mes: invoiceCount,
-        requires_calendly: invoiceCount > 150
+        requires_calendly: invoiceCount >= 150
       });
 
       return true;
@@ -241,21 +241,11 @@ const OnboardingSuccess = () => {
     setIsLoading(true);
     
     if (currentStep === 0) {
-      // Billing system step
-      const saved = await saveFormData(leadId, currentStep, formData, restaurantName);
-      setIsLoading(false);
-      if (saved) {
-        setCurrentStep(prev => prev + 1);
-      }
-      return;
-    }
-    
-    if (currentStep === 1) {
-      // Invoice count step
+      // Invoice count step (now first step)
       const saved = await saveInvoiceData(currentStep, formData.facturas);
       setIsLoading(false);
       if (saved) {
-        if (formData.facturas > 150) {
+        if (formData.facturas >= 150) {
           setShowCalendly(true);
         } else {
           setCurrentStep(prev => prev + 1);
@@ -264,8 +254,18 @@ const OnboardingSuccess = () => {
       return;
     }
     
+    if (currentStep === 1) {
+      // Billing system step (now second step)
+      const saved = await saveFormData(leadId, currentStep, formData, restaurantName);
+      setIsLoading(false);
+      if (saved) {
+        setCurrentStep(prev => prev + 1);
+      }
+      return;
+    }
+    
     if (currentStep === 2) {
-      // Subdomain step
+      // Subdomain step (now third step)
       if (!formData.subdominio) {
         setIsLoading(false);
         toast({
@@ -285,7 +285,7 @@ const OnboardingSuccess = () => {
     }
     
     if (currentStep === 3) {
-      // SII credentials step
+      // SII credentials step (now fourth step)
       if (!formData.rut || !formData.clave) {
         setIsLoading(false);
         toast({
@@ -394,19 +394,28 @@ const OnboardingSuccess = () => {
   const getLeftSideContent = () => {
     if (showCalendly) return null;
     
-    if (currentStep === 1) {
+    if (currentStep === 0) {
       return <InvoiceVolumeInfo />;
     }
     
     return (
       <LeftSideContent 
-        currentStep={currentStep === 0 ? 1 : currentStep === 2 ? 2 : 3} // Map to original steps
+        currentStep={currentStep === 1 ? 1 : currentStep === 2 ? 2 : 3} // Map to original steps
         isComplete={isComplete}
       />
     );
   };
 
   const steps = [
+    {
+      title: "Volumen de facturas",
+      icon: <Receipt className="w-6 h-6 text-primary" />,
+      description: "¿Cuántas facturas de compra recibes cada mes?",
+      content: <InvoiceCountSelector 
+                selectedCount={formData.facturas} 
+                onChange={count => updateFormData('facturas', count)} 
+              />
+    },
     {
       title: "Sistema de facturación",
       icon: <Store className="w-6 h-6 text-primary" />,
@@ -416,15 +425,6 @@ const OnboardingSuccess = () => {
                 onChange={system => updateFormData('sistema', system)} 
                 customSystem={formData.sistemaCustom} 
                 onCustomChange={value => updateFormData('sistemaCustom', value)} 
-              />
-    }, 
-    {
-      title: "Volumen de facturas",
-      icon: <Receipt className="w-6 h-6 text-primary" />,
-      description: "¿Cuántas facturas de compra recibes cada mes?",
-      content: <InvoiceCountSelector 
-                selectedCount={formData.facturas} 
-                onChange={count => updateFormData('facturas', count)} 
               />
     }, 
     {

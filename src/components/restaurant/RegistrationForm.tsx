@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -10,7 +9,6 @@ import { toast } from "@/components/ui/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { supabase } from "@/integrations/supabase/client";
 import { pushToDataLayer, trackFormSubmission, trackRegistration } from "@/utils/dataLayer";
-
 interface FormData {
   firstName: string;
   lastName: string;
@@ -20,12 +18,10 @@ interface FormData {
   whatsapp: string;
   acceptTerms: boolean;
 }
-
 interface RegistrationFormProps {
   highlightForm: boolean;
   timeLeft: string;
 }
-
 export default function RegistrationForm({
   highlightForm,
   timeLeft
@@ -41,7 +37,6 @@ export default function RegistrationForm({
     acceptTerms: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     pushToDataLayer('registration_form_submit_attempt', {
@@ -182,7 +177,6 @@ export default function RegistrationForm({
       setIsSubmitting(false);
     }
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       name,
@@ -201,7 +195,6 @@ export default function RegistrationForm({
       [name]: value
     }));
   };
-
   return <motion.div initial={{
     opacity: 0,
     scale: 0.95
@@ -225,9 +218,7 @@ export default function RegistrationForm({
             </Tooltip>
           </TooltipProvider>
         </div>
-        <p className="text-lg text-muted-foreground font-medium">
-          Si no te sirve o no te gusta, no pagarás ni $1
-        </p>
+        <p className="text-lg text-muted-foreground font-medium">Si no te sirve o no te gusta, no pagarás ni $1.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
@@ -255,7 +246,7 @@ export default function RegistrationForm({
           </TooltipProvider>
         </div>
         <Input id="registration-city" name="ciudad" placeholder="Ciudad" value={formData.ciudad} onChange={handleChange} required className="h-12" disabled={isSubmitting} />
-        <Input id="registration-restaurant-name" name="nombreRestaurante" placeholder="Nombre de tu Restaurante" value={formData.nombreRestaurante} onChange={handleChange} required className="h-12" disabled={isSubmitting} />
+        <Input id="registration-restaurant-name" name="nombreRestaurante" placeholder="Nombre de tu Empresa" value={formData.nombreRestaurante} onChange={handleChange} required className="h-12" disabled={isSubmitting} />
         
         <div className="flex items-start space-x-2">
           <Checkbox id="registration-terms" checked={formData.acceptTerms} onCheckedChange={checked => setFormData(prev => ({

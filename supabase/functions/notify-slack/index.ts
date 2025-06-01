@@ -22,6 +22,7 @@ interface Lead {
   clave_sii?: string
   sii_connected?: boolean
   industry?: string
+  facturas_compra_mes?: number
 }
 
 Deno.serve(async (req) => {
@@ -57,8 +58,8 @@ Deno.serve(async (req) => {
         // Send reply to thread using the provided threadTs
         let replyText;
         switch(step) {
-          case "data-months-selected":
-            replyText = `1️⃣ *Actualización de Onboarding:* El ${businessTypeLC} quiere importar *${lead.meses_datos || 0}* meses de datos`;
+          case "invoice-count-selected":
+            replyText = `1️⃣ *Actualización de Onboarding:* El ${businessTypeLC} recibe *${lead.facturas_compra_mes || 0}* facturas de compra al mes`;
             break;
           case "billing-system-selected":
             if (lead.sistema_facturacion === 'mercado' && lead.sistema_custom) {
