@@ -2,8 +2,11 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export default function MoneyBackGuarantee() {
+  const navigate = useNavigate();
+  
   return (
     <section id="guarantee" className="py-16 bg-gradient-to-b from-white via-primary/5 to-white">
       <div className="container px-4 sm:px-6">
@@ -28,9 +31,9 @@ export default function MoneyBackGuarantee() {
           <Button 
             size="lg" 
             className="gap-2 group"
-            onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}
+            onClick={() => navigate('/register')}
           >
-            Agendar Demo
+            Regístrate
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </motion.div>

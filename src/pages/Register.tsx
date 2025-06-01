@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FAQ from "@/components/FAQ";
 import RegistrationForm from "@/components/restaurant/RegistrationForm";
+import DataFlowSection from "@/components/DataFlowSection";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function Register() {
@@ -180,6 +181,8 @@ export default function Register() {
                     Sabemos que tu equipo pasa horas registrando facturas de proveedores en Excel, sistemas contables o ERP.
                   </p>
                 </motion.header>
+
+                <DataFlowSection />
 
                 <motion.div initial={{
                   opacity: 0,
