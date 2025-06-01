@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X, Hotel } from "lucide-react";
@@ -68,10 +69,10 @@ export default function Navbar() {
               Iniciar Sesión <LogIn className="w-4 h-4" />
             </Button>
             <Button className="w-full justify-start gap-2" onClick={() => {
-              window.open('https://calendly.com/suplait_lorenzo/30min', '_blank');
+              navigate('/register');
               setIsOpen(false);
             }}>
-              Agendar Demo <ArrowRight className="w-4 h-4" />
+              Regístrate <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
         </nav>
@@ -164,8 +165,8 @@ export default function Navbar() {
               <Button variant="outline" size="sm" className="gap-2" onClick={() => setShowSubdomainModal(true)}>
                 Iniciar Sesión <LogIn className="w-4 h-4" />
               </Button>
-              <Button size="sm" className="gap-2" onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}>
-                Agendar Demo <ArrowRight className="w-4 h-4" />
+              <Button size="sm" className="gap-2" onClick={() => navigate('/register')}>
+                Regístrate <ArrowRight className="w-4 h-4" />
               </Button>
             </div>
             <MobileMenu />

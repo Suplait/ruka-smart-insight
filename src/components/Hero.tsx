@@ -1,12 +1,17 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+
 const valueMessages = ["Automatiza el registro de compras.", "Controla tu margen al día, no al mes.", "Descubre alzas de precio de tus insumos en tiempo real.", "Genera reportes en segundos usando lenguaje natural.", "Gestiona simple el pago a tus proveedores.", "Ten toda tu información a la mano.", "Libera HH a la semana para que te enfoques en lo que importa."];
+
 export default function Hero() {
+  const navigate = useNavigate();
   const [currentMessage, setCurrentMessage] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     const current = valueMessages[currentMessage];
@@ -32,6 +37,7 @@ export default function Hero() {
     }
     return () => clearTimeout(timeout);
   }, [currentMessage, displayText, isDeleting]);
+
   const scrollToGuarantee = () => {
     const element = document.getElementById('guarantee');
     if (element) {
@@ -40,6 +46,7 @@ export default function Hero() {
       });
     }
   };
+
   return <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] gradient-blur opacity-50" />
@@ -68,8 +75,8 @@ export default function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="gap-2 group hover:scale-105 transition-all duration-300" onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}>
-                Agendar Demo
+              <Button size="lg" className="gap-2 group hover:scale-105 transition-all duration-300" onClick={() => navigate('/register')}>
+                Regístrate
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button size="lg" variant="outline" className="hover:scale-105 transition-all duration-300" onClick={scrollToGuarantee}>
@@ -90,7 +97,7 @@ export default function Hero() {
           </div>
 
           <div className="relative lg:h-[640px] animate-float">
-            <div className="absolute inset-0 bg-gradient-to-b from-white/0 to-white/80 backdrop-blur-sm rounded-2xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-b from-white/0 to-white/80 from-white/0 to-white/80 backdrop-blur-sm rounded-2xl overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
                 <img src="/robotshero2.png" alt="Dashboard Ruka.ai" className="w-full h-[640px] object-contain rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-500" />
               </div>

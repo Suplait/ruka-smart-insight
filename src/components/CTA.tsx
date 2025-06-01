@@ -1,8 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ShieldCheck, Clock4, UtensilsCrossed, CheckCircle2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function CTA() {
+  const navigate = useNavigate();
+  
   const benefits = [
     "Elimina por completo la digitación manual de documentos",
     "Detecta variaciones de precios en tiempo real",
@@ -50,9 +53,9 @@ export default function CTA() {
             <Button 
               size="lg" 
               className="gap-2 group hover:scale-105 transition-all duration-300"
-              onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}
+              onClick={() => navigate('/register')}
             >
-              Agendar Demo
+              Regístrate
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
 
