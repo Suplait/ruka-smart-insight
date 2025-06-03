@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, CreditCard, Clock4, ShieldCheck, Info, HelpCircle } from "lucide-react";
+import { ArrowRight, CreditCard, Clock4, ShieldCheck, Info, HelpCircle, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -17,6 +17,7 @@ interface FormData {
   nombreHotel: string;
   ciudad: string;
   whatsapp: string;
+  codigoPromocional: string;
   acceptTerms: boolean;
 }
 
@@ -37,6 +38,7 @@ export default function HotelRegistrationForm({
     nombreHotel: "",
     ciudad: "",
     whatsapp: "",
+    codigoPromocional: "",
     acceptTerms: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -57,7 +59,7 @@ export default function HotelRegistrationForm({
 
       console.log("Submitting hotel registration form...");
       
-      // First create the lead record - without the industry field which doesn't exist in the DB
+      // First create the lead record
       const {
         data: leadData,
         error: leadError
@@ -70,8 +72,8 @@ export default function HotelRegistrationForm({
           last_name: formData.lastName,
           email: formData.email,
           ccity: formData.ciudad,
-          whatsapp: whatsappNumber
-          // Removed industry field since it doesn't exist in the database
+          whatsapp: whatsappNumber,
+          codigo_promocional: formData.codigoPromocional || null
         })
         .select()
         .single();
@@ -236,6 +238,30 @@ export default function HotelRegistrationForm({
         </div>
         <Input id="registration-city" name="ciudad" placeholder="Ciudad" value={formData.ciudad} onChange={handleChange} required className="h-12" disabled={isSubmitting} />
         <Input id="registration-hotel-name" name="nombreHotel" placeholder="Nombre de tu Hotel" value={formData.nombreHotel} onChange={handleChange} required className="h-12" disabled={isSubmitting} />
+        
+        <div className="relative">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="relative">
+                  <Input 
+                    id="registration-promo-code" 
+                    name="codigoPromocional" 
+                    placeholder="Código promocional (opcional)" 
+                    value={formData.codigoPromocional} 
+                    onChange={handleChange} 
+                    className="h-12 pl-12 pr-4" 
+                    disabled={isSubmitting} 
+                  />
+                  <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>¿Tienes un código promocional? Ingrésalo aquí</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
         
         <div className="flex items-start space-x-2">
           <Checkbox id="registration-terms" checked={formData.acceptTerms} onCheckedChange={checked => setFormData(prev => ({
