@@ -1,4 +1,3 @@
-
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
@@ -23,6 +22,7 @@ interface Lead {
   sii_connected?: boolean
   industry?: string
   facturas_compra_mes?: number
+  codigo_promocional?: string
 }
 
 Deno.serve(async (req) => {
@@ -128,12 +128,15 @@ Deno.serve(async (req) => {
 
     // If not an onboarding notification, send an initial message
     const hotelEmoji = isHotel ? '🏨' : '🍽️';
+    const hasPromoCode = lead.codigo_promocional && lead.codigo_promocional.trim() !== '';
+    const titleSuffix = hasPromoCode ? ' (webinar)' : '';
+    
     let blocks = [
       {
         type: "header",
         text: {
           type: "plain_text",
-          text: `${hotelEmoji} ¡Tenemos un Nuevo ${businessType} Interesado!`,
+          text: `${hotelEmoji} ¡Tenemos un Nuevo ${businessType} Interesado!${titleSuffix}`,
           emoji: true
         }
       },
@@ -181,21 +184,35 @@ Deno.serve(async (req) => {
             text: `🏢 *Tipo de Negocio:*\n${businessType}`
           }
         ]
-      },
-      {
-        type: "context",
-        elements: [
-          {
-            type: "mrkdwn",
-            text: "💡 _Recuerda: mientras más rápido contactemos, más probabilidades de conversión_"
-          }
-        ]
       }
     ];
 
+    // Add promotional code field if present
+    if (hasPromoCode) {
+      blocks.push({
+        type: "section",
+        fields: [
+          {
+            type: "mrkdwn",
+            text: `🎫 *Código Promocional:*\n${lead.codigo_promocional}`
+          }
+        ]
+      });
+    }
+
+    blocks.push({
+      type: "context",
+      elements: [
+        {
+          type: "mrkdwn",
+          text: "💡 _Recuerda: mientras más rápido contactemos, más probabilidades de conversión_"
+        }
+      ]
+    });
+
     const message = {
       channel: SLACK_CHANNEL,
-      text: `${hotelEmoji} ¡Nuevo Lead de ${businessType}!`,
+      text: `${hotelEmoji} ¡Nuevo Lead de ${businessType}!${titleSuffix}`,
       icon_emoji: isHotel ? ":hotel:" : ":money_with_wings:",
       blocks
     }

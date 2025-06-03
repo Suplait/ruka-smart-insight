@@ -13,6 +13,7 @@ export type Database = {
         Row: {
           ccity: string
           clave_sii: string | null
+          codigo_promocional: string | null
           company_name: string
           created_at: string
           email: string
@@ -35,6 +36,7 @@ export type Database = {
         Insert: {
           ccity: string
           clave_sii?: string | null
+          codigo_promocional?: string | null
           company_name: string
           created_at?: string
           email: string
@@ -57,6 +59,7 @@ export type Database = {
         Update: {
           ccity?: string
           clave_sii?: string | null
+          codigo_promocional?: string | null
           company_name?: string
           created_at?: string
           email?: string
