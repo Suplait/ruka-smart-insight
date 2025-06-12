@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, Clock, Users, CheckCircle, ChefHat, Bot } from "lucide-react";
+import { Calendar, Clock, Users, CheckCircle, BarChart3, TrendingUp } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
@@ -21,15 +21,17 @@ export default function Webinar() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  // Fecha del webinar: martes 2 de junio a las 5 PM
-  const webinarDate = new Date('2025-06-02T17:00:00');
+  // Fecha del webinar: jueves 19 de junio de 2025 a las 6:00 PM
+  const webinarDate = new Date('2025-06-19T18:00:00');
   const now = new Date();
   const timeUntilWebinar = webinarDate.getTime() - now.getTime();
   const daysUntil = Math.ceil(timeUntilWebinar / (1000 * 60 * 60 * 24));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    
+    const {
+      name,
+      value
+    } = e.target;
     if (name === 'whatsapp') {
       // Ensure the field always starts with "+56 "
       if (!value.startsWith('+56 ')) {
@@ -40,7 +42,6 @@ export default function Webinar() {
         return;
       }
     }
-    
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -49,22 +50,19 @@ export default function Webinar() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!formData.nombre || !formData.correo || !formData.whatsapp || formData.whatsapp === '+56 ') {
       toast({
         title: "Error",
         description: "Por favor completa todos los campos",
-        variant: "destructive",
+        variant: "destructive"
       });
       return;
     }
-
     setIsSubmitting(true);
-
     try {
       // Track successful registration BEFORE database insert (like in RegistrationForm)
       pushToDataLayer('webinar_registration_success', {
-        webinar_name: 'ia-restaurantes-junio-2025',
+        webinar_name: 'dashboard-control-junio-2025',
         nombre: formData.nombre,
         correo: formData.correo,
         timestamp: new Date().toISOString()
@@ -72,44 +70,43 @@ export default function Webinar() {
 
       // Clean the phone number: remove "+", spaces, and any other characters except numbers
       const cleanedWhatsapp = formData.whatsapp.replace(/\D/g, '');
-      
       const { error } = await supabase
         .from('webinar_leads')
         .insert({
           nombre: formData.nombre,
           correo: formData.correo,
           whatsapp: cleanedWhatsapp,
-          webinar_name: 'ia-restaurantes-junio-2025'
+          webinar_name: 'dashboard-control-junio-2025'
         });
-
       if (error) {
         console.error('Error guardando registro:', error);
         toast({
           title: "Error",
           description: "Hubo un problema al procesar tu registro. Inténtalo nuevamente.",
-          variant: "destructive",
+          variant: "destructive"
         });
         return;
       }
-
-      console.log("Registro webinar guardado exitosamente:", { ...formData, whatsapp: cleanedWhatsapp });
-      
+      console.log("Registro webinar guardado exitosamente:", {
+        ...formData,
+        whatsapp: cleanedWhatsapp
+      });
       setIsRegistered(true);
       toast({
         title: "¡Registro exitoso!",
-        description: "Te hemos enviado los detalles del webinar a tu correo",
+        description: "Te hemos enviado los detalles del webinar a tu correo"
       });
     } catch (error) {
       console.error('Error:', error);
       toast({
         title: "Error",
         description: "Hubo un problema al procesar tu registro. Inténtalo nuevamente.",
-        variant: "destructive",
+        variant: "destructive"
       });
-      
+
       // Track failed registration only in catch block
       pushToDataLayer('webinar_registration_failure', {
-        webinar_name: 'ia-restaurantes-junio-2025',
+        webinar_name: 'dashboard-control-junio-2025',
         nombre: formData.nombre,
         correo: formData.correo,
         error_message: error instanceof Error ? error.message : 'Unknown error',
@@ -129,26 +126,29 @@ export default function Webinar() {
           {/* Hero Section */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-800 text-sm font-medium mb-6">
-              <ChefHat className="w-4 h-4 mr-2" />
+              <BarChart3 className="w-4 h-4 mr-2" />
               Webinar Exclusivo para Restaurantes
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Cómo otros{" "}
-              <span className="text-blue-600">Restaurantes</span>{" "}
-              están usando la IA
+              <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent">
+                Del Caos
+              </span>
+              {" "}al{" "}
+              <span className="bg-gradient-to-r from-blue-500 via-primary to-blue-600 bg-clip-text text-transparent">
+                Control
+              </span>
             </h1>
             
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Descubre cómo marcas top en Chile y el mundo están revolucionando sus operaciones 
-              con inteligencia artificial
+              Aprende cómo ver ventas, compras y gastos en un solo dashboard para tu restaurante
             </p>
 
-            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-8 max-w-2xl mx-auto">
-              <p className="text-orange-800 text-lg font-medium">
-                <Bot className="w-5 h-5 inline mr-2" />
-                Desde La Piojera hasta Chicken Love You: 
-                <span className="font-bold"> todos ya tienen IA trabajando en su restaurante</span>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8 max-w-2xl mx-auto">
+              <p className="text-blue-800 text-lg font-medium">
+                <TrendingUp className="w-5 h-5 inline mr-2" />
+                ¿Sabías que la mayoría de los restaurantes toma decisiones con información incompleta… 
+                <span className="font-bold"> o sin datos en absoluto?</span>
               </p>
             </div>
 
@@ -159,9 +159,9 @@ export default function Webinar() {
                   <Calendar className="w-8 h-8 text-blue-600 mx-auto mb-3" />
                   <CardTitle className="text-lg mb-2">Fecha</CardTitle>
                   <CardDescription className="text-gray-600">
-                    Martes 2 de Junio
+                    Jueves 19 de Junio 2025
                     <br />
-                    5:00 PM (Hora de Chile)
+                    6:00 PM (Hora de Chile)
                   </CardDescription>
                 </CardContent>
               </Card>
@@ -178,9 +178,9 @@ export default function Webinar() {
                 </CardContent>
               </Card>
 
-              <Card className="border-2 border-purple-100">
+              <Card className="border-2 border-primary/20">
                 <CardContent className="pt-6">
-                  <Users className="w-8 h-8 text-purple-600 mx-auto mb-3" />
+                  <Users className="w-8 h-8 text-primary mx-auto mb-3" />
                   <CardTitle className="text-lg mb-2">Modalidad</CardTitle>
                   <CardDescription className="text-gray-600">
                     100% Online
@@ -202,12 +202,10 @@ export default function Webinar() {
               
               <div className="space-y-4">
                 {[
-                  "Cómo restaurantes en todo el mundo están aplicando IA para mejorar su eficiencia operativa",
-                  "Qué procesos clave se están optimizando con IA en áreas como compras, inventario y atención al cliente",
-                  "Cómo la inteligencia artificial está ayudando a reducir costos, errores y tiempos de respuesta",
-                  "Casos concretos de marcas en Latinoamérica y Chile que ya están obteniendo resultados",
-                  "Cuáles son las tendencias globales en la aplicación de IA en la industria gastronómica",
-                  "Qué puedes hacer desde hoy mismo para empezar a aplicar IA en tu restaurante, sin complicaciones ni grandes inversiones"
+                  "Por qué tener ventas por un lado, compras por otro y las boletas dispersas está matando tu rentabilidad",
+                  "Cómo unificar toda tu información financiera en un solo dashboard para tomar decisiones basadas en datos reales",
+                  "Qué métricas clave debes monitorear diariamente para mantener el control total de tu restaurante",
+                  "Casos reales de restaurantes que pasaron del caos financiero al control absoluto de sus números"
                 ].map((item, index) => (
                   <div key={index} className="flex items-start">
                     <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
@@ -218,43 +216,42 @@ export default function Webinar() {
 
               <div className="mt-8 p-6 bg-blue-50 rounded-lg">
                 <h3 className="text-xl font-semibold text-blue-900 mb-2">
-                  Casos de Éxito Reales
+                  De la Confusión a la Claridad
                 </h3>
                 <p className="text-blue-800">
-                  Te mostraremos ejemplos específicos de restaurantes en Chile que han implementado 
-                  IA exitosamente, desde pequeños locales hasta cadenas reconocidas.
+                  Te mostraremos ejemplos reales de dashboards que están transformando la gestión 
+                  de restaurantes, desde pequeños locales hasta cadenas establecidas.
                 </p>
               </div>
 
-              <div className="mt-6 p-6 bg-orange-50 rounded-lg">
-                <h3 className="text-xl font-semibold text-orange-900 mb-2">
+              <div className="mt-6 p-6 bg-primary/10 rounded-lg">
+                <h3 className="text-xl font-semibold text-primary mb-2">
                   ¿Para quién es este webinar?
                 </h3>
-                <p className="text-orange-800">
-                  <strong>Dueños y administradores de restaurantes</strong> que quieren mantenerse 
-                  competitivos y optimizar sus operaciones con las últimas tecnologías.
+                <p className="text-primary/80">
+                  <strong>Dueños y administradores de restaurantes</strong> que están cansados de 
+                  trabajar a ciegas y quieren tener control total sobre sus números y operaciones.
                 </p>
               </div>
             </div>
 
             {/* Right Column - Registration Form */}
             <div>
-              <Card className="border-2 border-blue-200 shadow-lg">
-                <CardHeader className="bg-blue-600 text-white rounded-t-lg">
+              <Card className="border-2 border-primary/20 shadow-lg">
+                <CardHeader className="bg-primary text-white rounded-t-lg">
                   <CardTitle className="text-2xl text-center">
                     {isRegistered ? "¡Registro Confirmado!" : "Inscríbete Gratis"}
                   </CardTitle>
-                  <CardDescription className="text-blue-100 text-center">
+                  <CardDescription className="text-primary-foreground/80 text-center">
                     {isRegistered 
-                      ? "Te hemos enviado todos los detalles a tu correo"
-                      : "Asegura tu cupo - Martes 2 de Junio, 5:00 PM"
+                      ? "Te hemos enviado todos los detalles a tu correo" 
+                      : "Asegura tu cupo - Jueves 19 de Junio 2025, 6:00 PM"
                     }
                   </CardDescription>
                 </CardHeader>
                 
                 <CardContent className="pt-6">
-                  {isRegistered ? (
-                    <div className="text-center space-y-4">
+                  {isRegistered ? <div className="text-center space-y-4">
                       <CheckCircle className="w-16 h-16 text-green-500 mx-auto" />
                       <div>
                         <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -264,59 +261,26 @@ export default function Webinar() {
                           Recibirás un recordatorio el día del webinar con el enlace de acceso.
                         </p>
                         <p className="text-sm text-gray-500">
-                          Prepárate para descubrir cómo la IA puede transformar tu restaurante.
+                          Prepárate para pasar del caos al control total de tu restaurante.
                         </p>
                       </div>
-                    </div>
-                  ) : (
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    </div> : <form onSubmit={handleSubmit} className="space-y-4">
                       <div>
                         <Label htmlFor="nombre">Nombre completo *</Label>
-                        <Input
-                          id="nombre"
-                          name="nombre"
-                          type="text"
-                          value={formData.nombre}
-                          onChange={handleInputChange}
-                          placeholder="Ingresa tu nombre completo"
-                          required
-                          disabled={isSubmitting}
-                        />
+                        <Input id="nombre" name="nombre" type="text" value={formData.nombre} onChange={handleInputChange} placeholder="Ingresa tu nombre completo" required disabled={isSubmitting} />
                       </div>
 
                       <div>
                         <Label htmlFor="correo">Correo electrónico *</Label>
-                        <Input
-                          id="correo"
-                          name="correo"
-                          type="email"
-                          value={formData.correo}
-                          onChange={handleInputChange}
-                          placeholder="tu@restaurante.com"
-                          required
-                          disabled={isSubmitting}
-                        />
+                        <Input id="correo" name="correo" type="email" value={formData.correo} onChange={handleInputChange} placeholder="tu@restaurante.com" required disabled={isSubmitting} />
                       </div>
 
                       <div>
                         <Label htmlFor="whatsapp">WhatsApp *</Label>
-                        <Input
-                          id="whatsapp"
-                          name="whatsapp"
-                          type="tel"
-                          value={formData.whatsapp}
-                          onChange={handleInputChange}
-                          placeholder="+56 9 XXXX XXXX"
-                          required
-                          disabled={isSubmitting}
-                        />
+                        <Input id="whatsapp" name="whatsapp" type="tel" value={formData.whatsapp} onChange={handleInputChange} placeholder="+56 9 XXXX XXXX" required disabled={isSubmitting} />
                       </div>
 
-                      <Button 
-                        type="submit" 
-                        className="w-full bg-blue-600 hover:bg-blue-700"
-                        disabled={isSubmitting}
-                      >
+                      <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isSubmitting}>
                         {isSubmitting ? "Procesando..." : "Inscribirme al Webinar"}
                       </Button>
 
@@ -324,8 +288,7 @@ export default function Webinar() {
                         Al registrarte, aceptas recibir información sobre el webinar. 
                         Puedes darte de baja en cualquier momento.
                       </p>
-                    </form>
-                  )}
+                    </form>}
                 </CardContent>
               </Card>
             </div>
