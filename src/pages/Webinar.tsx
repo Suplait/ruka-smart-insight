@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,7 +21,7 @@ export default function Webinar() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  // Fecha del webinar: miércoles 19 de junio a las 6:00 PM
+  // Fecha del webinar: jueves 19 de junio de 2025 a las 6:00 PM
   const webinarDate = new Date('2025-06-19T18:00:00');
   const now = new Date();
   const timeUntilWebinar = webinarDate.getTime() - now.getTime();
@@ -130,10 +131,13 @@ export default function Webinar() {
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Del{" "}
-              <span className="text-slate-600">Caos</span>{" "}
-              al{" "}
-              <span className="text-primary">Control</span>
+              <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent">
+                Del Caos
+              </span>
+              {" "}al{" "}
+              <span className="bg-gradient-to-r from-blue-500 via-primary to-blue-600 bg-clip-text text-transparent">
+                Control
+              </span>
             </h1>
             
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
@@ -155,7 +159,7 @@ export default function Webinar() {
                   <Calendar className="w-8 h-8 text-blue-600 mx-auto mb-3" />
                   <CardTitle className="text-lg mb-2">Fecha</CardTitle>
                   <CardDescription className="text-gray-600">
-                    Miércoles 19 de Junio
+                    Jueves 19 de Junio 2025
                     <br />
                     6:00 PM (Hora de Chile)
                   </CardDescription>
@@ -198,12 +202,10 @@ export default function Webinar() {
               
               <div className="space-y-4">
                 {[
-                  "Por qué tener ventas por un lado, compras por otro y las boletas quién sabe dónde está matando tu rentabilidad",
-                  "Cómo unificar toda tu información financiera en un solo lugar para tomar decisiones basadas en datos reales",
-                  "Qué métricas clave debes monitorear diariamente en tu dashboard para mantener el control total",
-                  "Casos reales de restaurantes que pasaron del caos financiero al control absoluto de sus números",
-                  "Cómo identificar patrones ocultos en tus datos que pueden revelarte oportunidades de ahorro inmediatas",
-                  "La metodología paso a paso para implementar un sistema de control que funcione en tu restaurante desde el día 1"
+                  "Por qué tener ventas por un lado, compras por otro y las boletas dispersas está matando tu rentabilidad",
+                  "Cómo unificar toda tu información financiera en un solo dashboard para tomar decisiones basadas en datos reales",
+                  "Qué métricas clave debes monitorear diariamente para mantener el control total de tu restaurante",
+                  "Casos reales de restaurantes que pasaron del caos financiero al control absoluto de sus números"
                 ].map((item, index) => (
                   <div key={index} className="flex items-start">
                     <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
@@ -243,7 +245,7 @@ export default function Webinar() {
                   <CardDescription className="text-primary-foreground/80 text-center">
                     {isRegistered 
                       ? "Te hemos enviado todos los detalles a tu correo" 
-                      : "Asegura tu cupo - Miércoles 19 de Junio, 6:00 PM"
+                      : "Asegura tu cupo - Jueves 19 de Junio 2025, 6:00 PM"
                     }
                   </CardDescription>
                 </CardHeader>
