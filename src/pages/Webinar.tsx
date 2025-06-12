@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { pushToDataLayer } from "@/utils/dataLayer";
+
 export default function Webinar() {
   const [formData, setFormData] = useState({
     nombre: "",
@@ -17,15 +18,14 @@ export default function Webinar() {
   });
   const [isRegistered, setIsRegistered] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
 
-  // Fecha del webinar: jueves 19 de enero a las 5:30 PM
-  const webinarDate = new Date('2025-01-19T17:30:00');
+  // Fecha del webinar: miércoles 19 de junio a las 6:00 PM
+  const webinarDate = new Date('2025-06-19T18:00:00');
   const now = new Date();
   const timeUntilWebinar = webinarDate.getTime() - now.getTime();
   const daysUntil = Math.ceil(timeUntilWebinar / (1000 * 60 * 60 * 24));
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       name,
@@ -46,6 +46,7 @@ export default function Webinar() {
       [name]: value
     }));
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.nombre || !formData.correo || !formData.whatsapp || formData.whatsapp === '+56 ') {
@@ -60,7 +61,7 @@ export default function Webinar() {
     try {
       // Track successful registration BEFORE database insert (like in RegistrationForm)
       pushToDataLayer('webinar_registration_success', {
-        webinar_name: 'dashboard-control-enero-2025',
+        webinar_name: 'dashboard-control-junio-2025',
         nombre: formData.nombre,
         correo: formData.correo,
         timestamp: new Date().toISOString()
@@ -68,14 +69,14 @@ export default function Webinar() {
 
       // Clean the phone number: remove "+", spaces, and any other characters except numbers
       const cleanedWhatsapp = formData.whatsapp.replace(/\D/g, '');
-      const {
-        error
-      } = await supabase.from('webinar_leads').insert({
-        nombre: formData.nombre,
-        correo: formData.correo,
-        whatsapp: cleanedWhatsapp,
-        webinar_name: 'dashboard-control-enero-2025'
-      });
+      const { error } = await supabase
+        .from('webinar_leads')
+        .insert({
+          nombre: formData.nombre,
+          correo: formData.correo,
+          whatsapp: cleanedWhatsapp,
+          webinar_name: 'dashboard-control-junio-2025'
+        });
       if (error) {
         console.error('Error guardando registro:', error);
         toast({
@@ -104,7 +105,7 @@ export default function Webinar() {
 
       // Track failed registration only in catch block
       pushToDataLayer('webinar_registration_failure', {
-        webinar_name: 'dashboard-control-enero-2025',
+        webinar_name: 'dashboard-control-junio-2025',
         nombre: formData.nombre,
         correo: formData.correo,
         error_message: error instanceof Error ? error.message : 'Unknown error',
@@ -114,7 +115,9 @@ export default function Webinar() {
       setIsSubmitting(false);
     }
   };
-  return <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <Navbar />
       
       <div className="pt-20 pb-16 px-4 sm:px-6 lg:px-8">
@@ -152,9 +155,9 @@ export default function Webinar() {
                   <Calendar className="w-8 h-8 text-blue-600 mx-auto mb-3" />
                   <CardTitle className="text-lg mb-2">Fecha</CardTitle>
                   <CardDescription className="text-gray-600">
-                    Jueves 19 de Enero
+                    Miércoles 19 de Junio
                     <br />
-                    5:30 PM (Hora de Chile)
+                    6:00 PM (Hora de Chile)
                   </CardDescription>
                 </CardContent>
               </Card>
@@ -194,10 +197,19 @@ export default function Webinar() {
               </h2>
               
               <div className="space-y-4">
-                {["Por qué tener ventas por un lado, compras por otro y las boletas quién sabe dónde está matando tu rentabilidad", "Cómo unificar toda tu información financiera en un solo lugar para tomar decisiones basadas en datos reales", "Qué métricas clave debes monitorear diariamente en tu dashboard para mantener el control total", "Casos reales de restaurantes que pasaron del caos financiero al control absoluto de sus números", "Cómo identificar patrones ocultos en tus datos que pueden revelarte oportunidades de ahorro inmediatas", "La metodología paso a paso para implementar un sistema de control que funcione en tu restaurante desde el día 1"].map((item, index) => <div key={index} className="flex items-start">
+                {[
+                  "Por qué tener ventas por un lado, compras por otro y las boletas quién sabe dónde está matando tu rentabilidad",
+                  "Cómo unificar toda tu información financiera en un solo lugar para tomar decisiones basadas en datos reales",
+                  "Qué métricas clave debes monitorear diariamente en tu dashboard para mantener el control total",
+                  "Casos reales de restaurantes que pasaron del caos financiero al control absoluto de sus números",
+                  "Cómo identificar patrones ocultos en tus datos que pueden revelarte oportunidades de ahorro inmediatas",
+                  "La metodología paso a paso para implementar un sistema de control que funcione en tu restaurante desde el día 1"
+                ].map((item, index) => (
+                  <div key={index} className="flex items-start">
                     <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
                     <span className="text-gray-700">{item}</span>
-                  </div>)}
+                  </div>
+                ))}
               </div>
 
               <div className="mt-8 p-6 bg-blue-50 rounded-lg">
@@ -229,7 +241,10 @@ export default function Webinar() {
                     {isRegistered ? "¡Registro Confirmado!" : "Inscríbete Gratis"}
                   </CardTitle>
                   <CardDescription className="text-primary-foreground/80 text-center">
-                    {isRegistered ? "Te hemos enviado todos los detalles a tu correo" : "Asegura tu cupo - Jueves 19 de Enero, 5:30 PM"}
+                    {isRegistered 
+                      ? "Te hemos enviado todos los detalles a tu correo" 
+                      : "Asegura tu cupo - Miércoles 19 de Junio, 6:00 PM"
+                    }
                   </CardDescription>
                 </CardHeader>
                 
@@ -280,5 +295,6 @@ export default function Webinar() {
       </div>
 
       <Footer />
-    </main>;
+    </main>
+  );
 }
