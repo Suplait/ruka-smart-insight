@@ -153,10 +153,11 @@ const OnboardingSuccess = () => {
 
   const suggestedSubdomain = generateSubdomain(restaurantName);
 
+  // Inicializar con el primer rango (75 facturas promedio)
   const [formData, setFormData] = useState({
     rut: "",
     clave: "",
-    facturas: 50,
+    facturas: 75, // Valor por defecto del primer rango
     sistema: "sii",
     sistemaCustom: "",
     subdominio: suggestedSubdomain || ""
@@ -188,7 +189,7 @@ const OnboardingSuccess = () => {
 
       const updateData = {
         facturas_compra_mes: invoiceCount,
-        requires_calendly: invoiceCount >= 150
+        requires_calendly: invoiceCount >= 150 // 150 o más requiere Calendly
       };
 
       const numericLeadId = Number(leadId);
@@ -208,7 +209,15 @@ const OnboardingSuccess = () => {
         return false;
       }
 
-      // Notify Slack
+      // Notify Slack con el rango correspondiente
+      const getRangeLabel = (count: number) => {
+        if (count === 75) return "Menos de 150 facturas";
+        if (count === 225) return "150 a 300 facturas";
+        if (count === 450) return "300 a 600 facturas";
+        if (count === 750) return "Más de 600 facturas";
+        return `${count} facturas`;
+      };
+
       const leadDataForSlack: Partial<Lead> = {
         facturas_compra_mes: invoiceCount,
         requires_calendly: invoiceCount >= 150
@@ -222,7 +231,8 @@ const OnboardingSuccess = () => {
         step: currentStep + 1,
         stepName: 'invoice-count-selected',
         facturas_compra_mes: invoiceCount,
-        requires_calendly: invoiceCount >= 150
+        requires_calendly: invoiceCount >= 150,
+        range_label: getRangeLabel(invoiceCount)
       });
 
       return true;
@@ -245,7 +255,7 @@ const OnboardingSuccess = () => {
       const saved = await saveInvoiceData(currentStep, formData.facturas);
       setIsLoading(false);
       if (saved) {
-        if (formData.facturas >= 150) {
+        if (formData.facturas >= 150) { // 150 o más van a Calendly
           setShowCalendly(true);
         } else {
           setCurrentStep(prev => prev + 1);
