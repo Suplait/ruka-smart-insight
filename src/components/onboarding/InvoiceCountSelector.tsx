@@ -12,10 +12,26 @@ const InvoiceCountSelector = ({
   selectedCount,
   onChange
 }: InvoiceCountSelectorProps) => {
-  const formatInvoiceCount = (count: number) => {
-    if (count >= 1000) return "+1.000";
-    return count.toString();
+  // Define los 4 rangos con sus valores promedio para la base de datos
+  const ranges = [
+    { label: "Menos de 150 facturas", value: 75 },
+    { label: "150 a 300 facturas", value: 225 },
+    { label: "300 a 600 facturas", value: 450 },
+    { label: "Más de 600 facturas", value: 750 }
+  ];
+
+  // Encontrar el rango actual basado en el valor seleccionado
+  const getCurrentRangeIndex = (value: number) => {
+    return ranges.findIndex(range => range.value === value);
   };
+
+  const handleSliderChange = (value: number[]) => {
+    const rangeIndex = value[0];
+    onChange(ranges[rangeIndex].value);
+  };
+
+  const currentRangeIndex = getCurrentRangeIndex(selectedCount);
+  const displayIndex = currentRangeIndex >= 0 ? currentRangeIndex : 0;
 
   return (
     <div className="space-y-6">
@@ -34,22 +50,23 @@ const InvoiceCountSelector = ({
 
       <div className="space-y-6">
         <div className="text-center">
-          <h3 className="text-xl font-semibold mb-2">{formatInvoiceCount(selectedCount)} facturas/mes</h3>
+          <h3 className="text-xl font-semibold mb-2">{ranges[displayIndex].label}</h3>
         </div>
 
         <div className="px-4">
           <Slider 
-            value={[selectedCount]} 
-            onValueChange={value => onChange(value[0])} 
-            max={1000} 
-            min={1} 
-            step={5} 
+            value={[displayIndex]} 
+            onValueChange={handleSliderChange} 
+            max={3} 
+            min={0} 
+            step={1} 
             className="w-full" 
           />
           <div className="flex justify-between text-xs text-muted-foreground mt-2">
-            <span>1</span>
-            <span>500</span>
-            <span>+1.000</span>
+            <span>&lt;150</span>
+            <span>150-300</span>
+            <span>300-600</span>
+            <span>&gt;600</span>
           </div>
         </div>
       </div>
