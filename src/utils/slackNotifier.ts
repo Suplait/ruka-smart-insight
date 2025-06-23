@@ -69,8 +69,7 @@ export async function notifySlackOnboardingStep(leadId: number, step: string, le
           isOnboarding: true,
           leadId: leadId,
           step: step,
-          threadTs: threadTs,
-          rangeLabel: leadData.rangeLabel // Pasar el rango seleccionado
+          threadTs: threadTs
         }
       });
       

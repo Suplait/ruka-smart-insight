@@ -19,5 +19,4 @@ export interface Lead {
   created_at?: string;
   facturas_compra_mes?: number;
   requires_calendly?: boolean;
-  rangeLabel?: string;
 }
