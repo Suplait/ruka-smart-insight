@@ -220,7 +220,8 @@ const OnboardingSuccess = () => {
 
       const leadDataForSlack: Partial<Lead> = {
         facturas_compra_mes: invoiceCount,
-        requires_calendly: invoiceCount >= 150
+        requires_calendly: invoiceCount >= 150,
+        rangeLabel: getRangeLabel(invoiceCount) // Agregar el rango para Slack
       };
       
       notifySlackOnboardingStep(numericLeadId, 'invoice-count-selected', leadDataForSlack);
