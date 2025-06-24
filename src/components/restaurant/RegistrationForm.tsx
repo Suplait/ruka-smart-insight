@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -10,7 +9,6 @@ import { toast } from "@/components/ui/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { supabase } from "@/integrations/supabase/client";
 import { pushToDataLayer, trackFormSubmission, trackRegistration } from "@/utils/dataLayer";
-
 interface FormData {
   firstName: string;
   lastName: string;
@@ -21,12 +19,10 @@ interface FormData {
   codigoPromocional: string;
   acceptTerms: boolean;
 }
-
 interface RegistrationFormProps {
   highlightForm: boolean;
   timeLeft: string;
 }
-
 export default function RegistrationForm({
   highlightForm,
   timeLeft
@@ -43,7 +39,6 @@ export default function RegistrationForm({
     acceptTerms: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     pushToDataLayer('registration_form_submit_attempt', {
@@ -186,7 +181,6 @@ export default function RegistrationForm({
       setIsSubmitting(false);
     }
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       name,
@@ -205,7 +199,6 @@ export default function RegistrationForm({
       [name]: value
     }));
   };
-
   return <motion.div initial={{
     opacity: 0,
     scale: 0.95
@@ -229,7 +222,7 @@ export default function RegistrationForm({
             </Tooltip>
           </TooltipProvider>
         </div>
-        <p className="text-lg text-muted-foreground font-medium">Si no te sirve o no te gusta, no pagarás ni $1.</p>
+        <p className="text-lg text-muted-foreground font-medium">Si no te gusta o no le ves valor, emitimos una NC por el 100%. Sin preguntas, sin letra chica.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
@@ -264,15 +257,7 @@ export default function RegistrationForm({
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="relative">
-                  <Input 
-                    id="registration-promo-code" 
-                    name="codigoPromocional" 
-                    placeholder="Código promocional (opcional)" 
-                    value={formData.codigoPromocional} 
-                    onChange={handleChange} 
-                    className="h-12 pl-12 pr-4" 
-                    disabled={isSubmitting} 
-                  />
+                  <Input id="registration-promo-code" name="codigoPromocional" placeholder="Código promocional (opcional)" value={formData.codigoPromocional} onChange={handleChange} className="h-12 pl-12 pr-4" disabled={isSubmitting} />
                   <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 </div>
               </TooltipTrigger>
