@@ -213,7 +213,7 @@ export default function RegistrationForm({
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="cursor-help">
-                  <HelpCircle className="w-5 h-5 text-primary" />
+                  
                 </div>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="max-w-[200px] p-3">
