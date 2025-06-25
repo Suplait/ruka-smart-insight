@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { Calendar, Clock, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -44,7 +45,7 @@ const CalendlyIntegration = ({ leadData }: CalendlyIntegrationProps) => {
         const calendlyElement = document.getElementById('calendly-embed-element');
         if (calendlyElement) {
           window.Calendly.initInlineWidget({
-            url: 'https://calendly.com/suplait_lorenzo/30min?hide_event_type_details=1&hide_gdpr_banner=1&text_color=000000&primary_color=4e66e9',
+            url: 'https://calendly.com/ruka-ai/calendario-general-1?hide_event_type_details=1&hide_gdpr_banner=1&text_color=000000&primary_color=4e66e9',
             parentElement: calendlyElement,
             prefill: {
               name: `${leadData.firstName} ${leadData.lastName}`.trim(),

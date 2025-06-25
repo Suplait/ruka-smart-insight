@@ -1,3 +1,4 @@
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -181,7 +182,7 @@ export default function AboutUs() {
                 a las empresas medianas competir al nivel de las grandes corporaciones. 
                 Creemos en un futuro donde la tecnología libera el potencial de cada organización.
               </p>
-              <Button size="lg" className="gap-2" onClick={() => window.open('https://calendly.com/suplait_lorenzo/30min', '_blank')}>
+              <Button size="lg" className="gap-2" onClick={() => window.open('https://calendly.com/ruka-ai/calendario-general-1', '_blank')}>
                 Conversemos sobre tu Negocio <ArrowRight className="w-4 h-4" />
               </Button>
             </div>
