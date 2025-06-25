@@ -25,6 +25,19 @@ interface Lead {
   codigo_promocional?: string
 }
 
+// Function to convert invoice count to descriptive range
+function getInvoiceRangeText(count: number): string {
+  if (count <= 75) {
+    return "Menos de 150 facturas";
+  } else if (count <= 225) {
+    return "Entre 150 y 300 facturas";
+  } else if (count <= 450) {
+    return "Entre 300 y 600 facturas";
+  } else {
+    return "Más de 600 facturas";
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
@@ -59,7 +72,7 @@ Deno.serve(async (req) => {
         let replyText;
         switch(step) {
           case "invoice-count-selected":
-            replyText = `1️⃣ *Actualización de Onboarding:* El ${businessTypeLC} recibe *${lead.facturas_compra_mes || 0}* facturas de compra al mes`;
+            replyText = `1️⃣ *Actualización de Onboarding:* El ${businessTypeLC} recibe *${getInvoiceRangeText(lead.facturas_compra_mes || 0)}* al mes`;
             break;
           case "billing-system-selected":
             if (lead.sistema_facturacion === 'mercado' && lead.sistema_custom) {
