@@ -16,6 +16,7 @@ import InvoiceCountSelector from "@/components/onboarding/InvoiceCountSelector";
 import SubdomainInput from "@/components/onboarding/SubdomainInput";
 import SiiCredentialsInput from "@/components/onboarding/SiiCredentialsInput";
 import CalendlyIntegration from "@/components/onboarding/CalendlyIntegration";
+import CalendlyIntegrationLow from "@/components/onboarding/CalendlyIntegrationLow";
 import SuccessContent from "@/components/onboarding/SuccessContent";
 import LeftSideContent from "@/components/onboarding/LeftSideContent";
 import InvoiceVolumeInfo from "@/components/onboarding/InvoiceVolumeInfo";
@@ -32,6 +33,7 @@ const OnboardingSuccess = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
+  const [showCalendlyLow, setShowCalendlyLow] = useState(false);
   const totalSteps = 4; // invoices, billing, subdomain, sii
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
@@ -255,7 +257,7 @@ const OnboardingSuccess = () => {
       const saved = await saveInvoiceData(currentStep, formData.facturas);
       setIsLoading(false);
       if (saved) {
-        if (formData.facturas >= 150) { // 150 o más van a Calendly
+        if (formData.facturas >= 150) { // 150 o más van a Calendly alto volumen
           setShowCalendly(true);
         } else {
           setCurrentStep(prev => prev + 1);
@@ -269,7 +271,12 @@ const OnboardingSuccess = () => {
       const saved = await saveFormData(leadId, currentStep, formData, restaurantName);
       setIsLoading(false);
       if (saved) {
-        setCurrentStep(prev => prev + 1);
+        // Si tiene menos de 150 facturas, mostrar Calendly para volumen bajo
+        if (formData.facturas < 150) {
+          setShowCalendlyLow(true);
+        } else {
+          setCurrentStep(prev => prev + 1);
+        }
       }
       return;
     }
@@ -401,8 +408,13 @@ const OnboardingSuccess = () => {
     setCurrentStep(prev => prev - 1);
   };
 
+  const handleContinueFromCalendlyLow = () => {
+    setShowCalendlyLow(false);
+    setCurrentStep(2); // Continuar al paso de subdominio
+  };
+
   const getLeftSideContent = () => {
-    if (showCalendly) return null;
+    if (showCalendly || showCalendlyLow) return null;
     
     if (currentStep === 0) {
       return <InvoiceVolumeInfo />;
@@ -511,6 +523,83 @@ const OnboardingSuccess = () => {
           <div className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8 xl:p-12 bg-white overflow-auto">
             <div className="w-full max-w-4xl">
               <CalendlyIntegration 
+                leadData={{
+                  firstName: leadData.firstName,
+                  lastName: leadData.lastName,
+                  email: leadData.email,
+                  restaurantName: leadData.nombreRestaurante,
+                  invoiceCount: formData.facturas,
+                  whatsapp: leadData.whatsapp
+                }}
+              />
+            </div>
+          </div>
+        </main>
+      </>
+    );
+  }
+
+  if (showCalendlyLow) {
+    return (
+      <>
+        <Helmet>
+          <title>Agenda tu configuración | Ruka.ai</title>
+        </Helmet>
+        
+        <main className="min-h-screen flex flex-col lg:flex-row relative">
+          <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-6 xl:p-8 flex-col overflow-hidden">
+            <div className="max-w-md mx-auto flex-1">
+              <div className="h-full flex flex-col justify-center">
+                <div className="w-auto h-10 relative mb-6">
+                  <img 
+                    src="/logo.png" 
+                    alt="Ruka.ai" 
+                    className="h-10 w-auto object-contain object-left"
+                  />
+                </div>
+                <h2 className="text-2xl xl:text-3xl font-bold mb-4">¡Excelente! Configuremos tu plataforma</h2>
+                <p className="text-slate-600 mb-6 text-sm xl:text-base">
+                  Tu volumen de facturas es perfecto para una configuración rápida y eficiente. 
+                  Te ayudaremos a aprovechar al máximo todas las funcionalidades.
+                </p>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 className="h-5 w-5 text-green-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-lg">Configuración guiada</h3>
+                      <p className="text-slate-600 text-sm">Te guiamos paso a paso para optimizar tu configuración.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                      <Clock className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-lg">Proceso eficiente</h3>
+                      <p className="text-slate-600 text-sm">Solo necesitamos 20 minutos para dejarlo todo funcionando.</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-8">
+                  <Button 
+                    variant="outline" 
+                    onClick={handleContinueFromCalendlyLow}
+                    className="w-full"
+                  >
+                    Continuar sin agendar
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8 xl:p-12 bg-white overflow-auto">
+            <div className="w-full max-w-4xl">
+              <CalendlyIntegrationLow 
                 leadData={{
                   firstName: leadData.firstName,
                   lastName: leadData.lastName,
