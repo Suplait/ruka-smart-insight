@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Navbar from "@/components/Navbar";
@@ -25,10 +24,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">1. Introducción</h2>
             <p>
-              Suplait LLC (Estados Unidos) y Suplait SPA (Chile), en adelante "Ruka.ai" o "nosotros", se compromete a proteger la privacidad de los datos personales que recopilamos. Esta Política de Privacidad describe cómo recopilamos, utilizamos, almacenamos y protegemos su información cuando utiliza nuestra plataforma y servicios.
-            </p>
-            <p>
-              Al acceder o utilizar Ruka.ai, usted acepta las prácticas descritas en esta Política de Privacidad. Le recomendamos leer detenidamente este documento.
+              Suplait LLC y Suplait SpA ("Ruka.ai", "nosotros") nos comprometemos a proteger la información personal y empresarial que tratamos. Al usar la plataforma, usted acepta las prácticas descritas a continuación.
             </p>
           </section>
           
@@ -73,81 +69,65 @@ export default function PrivacyPolicy() {
           </section>
           
           <section>
-            <h2 className="text-2xl font-semibold mb-4">4. Limitaciones en el uso de datos</h2>
+            <h2 className="text-2xl font-semibold mb-4">4. Propiedad de los datos y limitaciones de uso</h2>
             <p>
-              Nos comprometemos a usar sus datos respetando las siguientes limitaciones:
+              El Cliente es dueño de sus datos identificables. Ruka.ai actúa como encargado de tratamiento.
             </p>
-            <ul className="list-disc pl-6 mb-4">
-              <li><strong>Uso a nivel macro, no micro:</strong> Podemos identificar tendencias generales, como si una industria está comprando más materiales de construcción que alimentos. Sin embargo, no podemos divulgar compras específicas o proveedores a terceros.</li>
-              <li><strong>Anonimización:</strong> Cualquier dato utilizado para análisis o informes debe ser completamente anonimizado, eliminando cualquier detalle que pueda identificar a empresas o individuos.</li>
-              <li><strong>Sin comercialización de datos individuales:</strong> No podemos vender, compartir o distribuir datos de transacciones individuales a terceros (por ejemplo, no podemos informar a una empresa qué precio está pagando su competencia, incluso si desean pagar por esta información).</li>
-              <li><strong>Transparencia y consentimiento:</strong> Cualquier uso adicional de los datos requerirá el consentimiento explícito del usuario.</li>
-              <li><strong>Cumplimiento legal y regulatorio:</strong> Cumplimos con todas las regulaciones relevantes de privacidad de datos.</li>
-            </ul>
-          </section>
-          
-          <section>
-            <h2 className="text-2xl font-semibold mb-4">5. Compartiendo información</h2>
+            
             <p>
-              No vendemos su información personal. Podemos compartir información en las siguientes circunstancias:
+              <strong>Uso a nivel macro, nunca micro.</strong> Tendencias sectoriales o comparativas se calculan sobre datos anonimizados y agregados (D A+A).
             </p>
-            <ul className="list-disc pl-6 mb-4">
-              <li>Con proveedores de servicios que nos ayudan a operar nuestra plataforma</li>
-              <li>Con su consentimiento explícito para propósitos específicos</li>
-              <li>Para cumplir con obligaciones legales o regulatorias</li>
-              <li>En caso de fusión, adquisición o venta de activos, siempre protegiendo la confidencialidad</li>
-              <li>De forma agregada y anonimizada para análisis de mercado e investigación</li>
-            </ul>
-          </section>
-          
-          <section>
-            <h2 className="text-2xl font-semibold mb-4">6. Seguridad de datos</h2>
+            
             <p>
-              Implementamos medidas técnicas y organizativas apropiadas para proteger su información contra acceso no autorizado, alteración, divulgación o destrucción. Estas medidas incluyen:
+              <strong>No comercialización de datos individuales.</strong> Nunca vendemos ni compartimos datos que permitan identificar a su empresa o revelar sus precios concretos.
             </p>
-            <ul className="list-disc pl-6 mb-4">
-              <li>Encriptación de datos sensibles</li>
-              <li>Protocolos de seguridad en nuestros servidores</li>
-              <li>Acceso restringido a información personal</li>
-              <li>Evaluaciones regulares de seguridad</li>
-              <li>Capacitación del personal en prácticas de seguridad de datos</li>
-            </ul>
+            
             <p>
-              Sin embargo, ningún método de transmisión por Internet o de almacenamiento electrónico es 100% seguro, por lo que no podemos garantizar una seguridad absoluta.
+              <strong>Anonimización irrevocable.</strong> Antes de cualquier análisis externo, los datos se transforman de modo que la re-identificación sea imposible según el estado del arte.
+            </p>
+            
+            <p>
+              <strong>Consentimiento adicional.</strong> Para usos distintos a los aquí descritos se solicitará su permiso expreso, sin que ello condicione la continuidad del Servicio.
             </p>
           </section>
           
           <section>
-            <h2 className="text-2xl font-semibold mb-4">7. Oportunidades futuras y uso de datos agregados</h2>
+            <h2 className="text-2xl font-semibold mb-4">5. Compartición de información</h2>
             <p>
-              Con el fin de mejorar nuestros servicios y ofrecer valor adicional, podemos desarrollar las siguientes oportunidades usando datos agregados y anonimizados:
+              Compartimos información únicamente en las siguientes circunstancias:
             </p>
             <ul className="list-disc pl-6 mb-4">
-              <li><strong>Análisis de mercado y tendencias:</strong> Observando patrones a nivel macro, podemos ofrecer informes sectoriales para ayudar a las empresas a comprender el panorama del mercado actual.</li>
-              <li><strong>Benchmarking y comparaciones:</strong> Sin revelar datos específicos, permitimos a las empresas comparar sus hábitos de compra y precios con promedios de mercado.</li>
-              <li><strong>Alertas de precios:</strong> Detectamos fluctuaciones significativas en los precios de productos o servicios, enviando alertas a las empresas.</li>
-              <li><strong>Predicciones de mercado:</strong> Utilizando aprendizaje automático, podemos pronosticar tendencias futuras y ofrecer proyecciones sobre demanda, precios o cambios en el mercado.</li>
+              <li>Proveedores de servicio que operan bajo contrato de confidencialidad (hosting, procesamiento de pagos, soporte)</li>
+              <li>Autoridades cuando la ley lo exija</li>
+              <li>Fusiones o adquisiciones, garantizando la continuidad de las protecciones aquí establecidas</li>
+              <li>Informes D A+A para investigación de mercado, nunca con datos re-identificables</li>
             </ul>
+          </section>
+          
+          <section>
+            <h2 className="text-2xl font-semibold mb-4">6. Seguridad de los datos</h2>
             <p>
-              Para cualquiera de estos usos que implique un nivel de detalle más allá de datos completamente anonimizados y agregados, solicitaremos su consentimiento explícito.
+              Implementamos las siguientes medidas de seguridad para proteger su información:
+            </p>
+            <ul className="list-disc pl-6 mb-4">
+              <li>Cifrado en tránsito (TLS 1.3) y en reposo (AES-256)</li>
+              <li>Control de acceso basado en roles y doble factor</li>
+              <li>Copias de seguridad cifradas y segregadas</li>
+              <li>Auditorías periódicas y formación interna en seguridad</li>
+            </ul>
+          </section>
+          
+          <section>
+            <h2 className="text-2xl font-semibold mb-4">7. Derechos del titular</h2>
+            <p>
+              Dependiendo de su jurisdicción, puede ejercer: acceso, rectificación, eliminación, oposición, portabilidad y retiro de consentimiento, enviando un correo a <a href="mailto:privacidad@ruka.ai" className="text-primary hover:underline">privacidad@ruka.ai</a>.
             </p>
           </section>
           
           <section>
-            <h2 className="text-2xl font-semibold mb-4">8. Sus derechos</h2>
+            <h2 className="text-2xl font-semibold mb-4">8. Retención</h2>
             <p>
-              Dependiendo de su ubicación, puede tener ciertos derechos con respecto a sus datos personales, incluyendo:
-            </p>
-            <ul className="list-disc pl-6 mb-4">
-              <li>Acceder a los datos personales que tenemos sobre usted</li>
-              <li>Corregir datos inexactos</li>
-              <li>Eliminar sus datos personales</li>
-              <li>Oponerse al procesamiento de sus datos</li>
-              <li>Retirar su consentimiento</li>
-              <li>Solicitar la portabilidad de sus datos</li>
-            </ul>
-            <p>
-              Para ejercer estos derechos, contáctenos a través de <a href="mailto:privacidad@ruka.ai" className="text-primary hover:underline">privacidad@ruka.ai</a>.
+              Conservamos sus datos mientras mantenga una cuenta activa y por los plazos necesarios para cumplir obligaciones legales o resolver disputas. Los D A+A pueden conservarse indefinidamente por no ser datos personales.
             </p>
           </section>
           
@@ -170,7 +150,7 @@ export default function PrivacyPolicy() {
           
           <section className="pt-6 border-t border-gray-200">
             <p className="text-sm text-gray-500">
-              Última actualización: Septiembre 2023
+              Última actualización: 27 de junio de 2025
             </p>
           </section>
         </div>

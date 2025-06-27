@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Navbar from "@/components/Navbar";
@@ -25,27 +24,24 @@ export default function TermsAndConditions() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">1. Introducción</h2>
             <p>
-              Bienvenido a Ruka.ai ("nosotros", "nuestra", "nuestro" o "Ruka"), operado por Suplait LLC (Estados Unidos) y Suplait SPA (Chile). Al acceder o utilizar nuestro servicio, sitio web, y aplicación (colectivamente, los "Servicios"), usted acepta estar sujeto a estos Términos y Condiciones ("Términos").
-            </p>
-            <p>
-              Por favor, lea estos Términos cuidadosamente antes de utilizar nuestros Servicios. Si no está de acuerdo con alguna parte de estos Términos, no podrá acceder a nuestros Servicios.
+              Bienvenido a Ruka.ai ("nosotros", "nuestra" o "Ruka"), operado por Suplait LLC (Estados Unidos) y Suplait SpA (Chile). Al acceder o utilizar nuestros servicios, sitio web y aplicación (colectivamente, los "Servicios"), usted acepta estos Términos y Condiciones ("Términos").
             </p>
           </section>
           
           <section>
             <h2 className="text-2xl font-semibold mb-4">2. Servicios</h2>
             <p>
-              Ruka.ai proporciona una plataforma de gestión de costos para restaurantes que incluye, pero no se limita a:
+              Ruka.ai ofrece una plataforma de gestión de costos para restaurantes que incluye, entre otros:
             </p>
             <ul className="list-disc pl-6 mb-4">
               <li>Digitalización automática de facturas</li>
               <li>Control de costos de insumos en tiempo real</li>
               <li>Monitoreo de precios y alertas</li>
-              <li>Generación de reportes de food cost</li>
+              <li>Generación de reportes de food-cost</li>
               <li>Gestión de proveedores e inventario</li>
             </ul>
             <p>
-              Nos reservamos el derecho de modificar, suspender o discontinuar, temporal o permanentemente, los Servicios (o cualquier parte de los mismos) con o sin previo aviso.
+              Podremos modificar, suspender o descontinuar total o parcialmente los Servicios, con o sin previo aviso.
             </p>
           </section>
           
@@ -84,7 +80,40 @@ export default function TermsAndConditions() {
           </section>
           
           <section>
-            <h2 className="text-2xl font-semibold mb-4">7. Limitación de Responsabilidad</h2>
+            <h2 className="text-2xl font-semibold mb-4">7. Propiedad de los datos y licencia de uso</h2>
+            <h3 className="text-xl font-medium mt-4 mb-2">Titularidad del Cliente</h3>
+            <p>
+              Todos los datos identificables que ingrese o que capture la plataforma en su nombre (facturas, cantidades, precios, nombres de proveedores, etc.) son y seguirán siendo de su exclusiva propiedad.
+            </p>
+            
+            <h3 className="text-xl font-medium mt-4 mb-2">Licencia limitada a Ruka</h3>
+            <p>
+              Usted otorga a Ruka.ai una licencia mundial, no exclusiva, revocable y libre de regalías únicamente para:
+            </p>
+            <ul className="list-disc pl-6 mb-4">
+              <li>custodiar sus datos,</li>
+              <li>procesarlos con el fin de prestarle los Servicios, y</li>
+              <li>cumplir obligaciones legales o regulatorias.</li>
+            </ul>
+            
+            <h3 className="text-xl font-medium mt-4 mb-2">Derechos del Cliente</h3>
+            <p>
+              Puede solicitar copia, portabilidad o eliminación definitiva de sus datos identificables en cualquier momento escribiendo a <a href="mailto:privacidad@ruka.ai" className="text-primary hover:underline">privacidad@ruka.ai</a>; responderemos en un plazo máximo de 30 días naturales.
+            </p>
+            
+            <h3 className="text-xl font-medium mt-4 mb-2">Datos anonimizados y agregados (D A+A)</h3>
+            <p>
+              Ruka.ai es titular de los datos que han sido irreversiblemente anonimizados y estadísticamente agregados (por ejemplo, "precio promedio del kilo de tomate en 200 restaurantes"). Dichos D A+A no permiten identificar a su empresa ni a ninguna otra y se usan para:
+            </p>
+            <ul className="list-disc pl-6 mb-4">
+              <li>elaborar informes de mercado y productos analíticos;</li>
+              <li>ofrecerle comparaciones ("benchmarking") sobre si compra más caro o barato que el mercado;</li>
+              <li>mejorar algoritmos y modelos estadísticos.</li>
+            </ul>
+          </section>
+          
+          <section>
+            <h2 className="text-2xl font-semibold mb-4">8. Limitación de Responsabilidad</h2>
             <p>
               En ningún caso Suplait LLC, Suplait SPA, sus directores, empleados, socios, agentes, proveedores o afiliados serán responsables por cualquier daño indirecto, incidental, especial, consecuente o punitivo, incluyendo sin limitación, pérdida de beneficios, datos, uso, buena voluntad, u otras pérdidas intangibles, resultantes de:
             </p>
@@ -97,21 +126,21 @@ export default function TermsAndConditions() {
           </section>
           
           <section>
-            <h2 className="text-2xl font-semibold mb-4">8. Privacidad</h2>
+            <h2 className="text-2xl font-semibold mb-4">9. Privacidad</h2>
             <p>
-              Su uso de nuestros Servicios está sujeto a nuestra Política de Privacidad, que describe cómo recopilamos, usamos y compartimos su información personal.
+              Su uso de los Servicios se rige por nuestra Política de Privacidad (véase más abajo).
             </p>
           </section>
           
           <section>
-            <h2 className="text-2xl font-semibold mb-4">9. Modificaciones</h2>
+            <h2 className="text-2xl font-semibold mb-4">10. Modificaciones</h2>
             <p>
               Nos reservamos el derecho, a nuestra sola discreción, de modificar o reemplazar estos Términos en cualquier momento. Si una revisión es material, proporcionaremos al menos 30 días de aviso antes de que los nuevos términos entren en vigor. Lo que constituye un cambio material será determinado a nuestra sola discreción.
             </p>
           </section>
           
           <section>
-            <h2 className="text-2xl font-semibold mb-4">10. Ley Aplicable</h2>
+            <h2 className="text-2xl font-semibold mb-4">11. Ley Aplicable</h2>
             <p>
               Estos Términos se regirán e interpretarán de acuerdo con las leyes de Estados Unidos y Chile, sin tener en cuenta sus disposiciones sobre conflictos de leyes.
             </p>
@@ -121,7 +150,7 @@ export default function TermsAndConditions() {
           </section>
           
           <section>
-            <h2 className="text-2xl font-semibold mb-4">11. Contacto</h2>
+            <h2 className="text-2xl font-semibold mb-4">12. Contacto</h2>
             <p>
               Si tiene alguna pregunta sobre estos Términos, póngase en contacto con nosotros en <a href="mailto:legal@ruka.ai" className="text-primary hover:underline">legal@ruka.ai</a>.
             </p>
@@ -129,7 +158,7 @@ export default function TermsAndConditions() {
           
           <section className="pt-6 border-t border-gray-200">
             <p className="text-sm text-gray-500">
-              Última actualización: Septiembre 2023
+              Última actualización: 27 de junio de 2025
             </p>
           </section>
         </div>
