@@ -1,8 +1,11 @@
 
 import { Bot, Brain, Clock, LineChart } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useState } from "react";
 
 export default function Features() {
+  const [videoStates, setVideoStates] = useState<{[key: string]: {loaded: boolean, error: boolean}}>({});
+
   const features = [
     {
       icon: Bot,
@@ -27,10 +30,26 @@ export default function Features() {
   ];
 
   const agentVideos = [
-    { title: "Digita y Limpia", desc: "Reduce a 0 el tiempo de registrar tus compras", videoSrc: "/robot_facturas.mp4" },
-    { title: "Agrupa y Clasifica", desc: "Crea automáticamente un maestro de insumos", videoSrc: "/robot_cajas.mp4" },
-    { title: "Monitorea 24/7", desc: "Alerta en inmediato ante anomalías que afecten tu margen", videoSrc: "/robot_grafico2.mp4" }
+    { title: "Digita y Limpia", desc: "Reduce a 0 el tiempo de registrar tus compras", videoSrc: "/robot_facturas.mp4", id: "facturas" },
+    { title: "Agrupa y Clasifica", desc: "Crea automáticamente un maestro de insumos", videoSrc: "/robot_cajas.mp4", id: "cajas" },
+    { title: "Monitorea 24/7", desc: "Alerta en inmediato ante anomalías que afecten tu margen", videoSrc: "/robot_grafico2.mp4", id: "grafico" }
   ];
+
+  const handleVideoLoad = (videoId: string) => {
+    console.log(`Features video ${videoId} loaded successfully`);
+    setVideoStates(prev => ({
+      ...prev,
+      [videoId]: { loaded: true, error: false }
+    }));
+  };
+
+  const handleVideoError = (videoId: string, e: any) => {
+    console.error(`Features video ${videoId} error:`, e);
+    setVideoStates(prev => ({
+      ...prev,
+      [videoId]: { loaded: false, error: true }
+    }));
+  };
 
   return (
     <section id="features" className="py-24 relative overflow-hidden">
@@ -46,27 +65,46 @@ export default function Features() {
         </div>
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-          {agentVideos.map((agent, i) => (
-            <div key={i} className="relative rounded-xl overflow-hidden bg-white/50 shadow-lg hover:shadow-xl transition-all duration-300 group">
-              <div className="aspect-video">
-                <video 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                >
-                  <source src={agent.videoSrc} type="video/mp4" />
-                </video>
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
-                <div className="p-6 text-white">
-                  <h4 className="text-lg font-semibold mb-2">{agent.title}</h4>
-                  <p className="text-sm opacity-90">{agent.desc}</p>
+          {agentVideos.map((agent, i) => {
+            const videoState = videoStates[agent.id] || { loaded: false, error: false };
+            return (
+              <div key={i} className="relative rounded-xl overflow-hidden bg-white/50 shadow-lg hover:shadow-xl transition-all duration-300 group">
+                <div className="aspect-video relative">
+                  {videoState.error ? (
+                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                      <p className="text-gray-500 text-sm">Error cargando video</p>
+                    </div>
+                  ) : (
+                    <>
+                      <video 
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline
+                        preload="metadata"
+                        onLoadedData={() => handleVideoLoad(agent.id)}
+                        onError={(e) => handleVideoError(agent.id, e)}
+                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                      >
+                        <source src={agent.videoSrc} type="video/mp4" />
+                      </video>
+                      {!videoState.loaded && (
+                        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+                          <p className="text-gray-500 text-sm">Cargando...</p>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                  <div className="p-6 text-white">
+                    <h4 className="text-lg font-semibold mb-2">{agent.title}</h4>
+                    <p className="text-sm opacity-90">{agent.desc}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="my-16"></div>

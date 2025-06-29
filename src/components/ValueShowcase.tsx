@@ -49,7 +49,27 @@ const features = [
 
 export default function ValueShowcase() {
   const [activeFeature, setActiveFeature] = useState(0);
+  const [videoStates, setVideoStates] = useState<{[key: string]: {loaded: boolean, error: boolean}}>({});
+  
   const ActiveIcon = features[activeFeature].Icon;
+
+  const handleVideoLoad = (videoId: string) => {
+    console.log(`ValueShowcase video ${videoId} loaded successfully`);
+    setVideoStates(prev => ({
+      ...prev,
+      [videoId]: { loaded: true, error: false }
+    }));
+  };
+
+  const handleVideoError = (videoId: string, e: any) => {
+    console.error(`ValueShowcase video ${videoId} error:`, e);
+    setVideoStates(prev => ({
+      ...prev,
+      [videoId]: { loaded: false, error: true }
+    }));
+  };
+
+  const currentVideoState = videoStates[features[activeFeature].id] || { loaded: false, error: false };
 
   return (
     <section className="py-24 bg-white relative overflow-hidden">
@@ -108,17 +128,33 @@ export default function ValueShowcase() {
                 className="absolute inset-0 flex items-center justify-center p-8"
               >
                 <div className="max-w-md text-center space-y-6">
-                  <div className="aspect-video rounded-lg overflow-hidden bg-white shadow-lg">
-                    <video 
-                      key={features[activeFeature].video}
-                      autoPlay 
-                      loop 
-                      muted 
-                      playsInline
-                      className="w-full h-full object-cover"
-                    >
-                      <source src={features[activeFeature].video} type="video/mp4" />
-                    </video>
+                  <div className="aspect-video rounded-lg overflow-hidden bg-white shadow-lg relative">
+                    {currentVideoState.error ? (
+                      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                        <p className="text-gray-500">Error cargando video</p>
+                      </div>
+                    ) : (
+                      <>
+                        <video 
+                          key={features[activeFeature].video}
+                          autoPlay 
+                          loop 
+                          muted 
+                          playsInline
+                          preload="metadata"
+                          onLoadedData={() => handleVideoLoad(features[activeFeature].id)}
+                          onError={(e) => handleVideoError(features[activeFeature].id, e)}
+                          className="w-full h-full object-cover"
+                        >
+                          <source src={features[activeFeature].video} type="video/mp4" />
+                        </video>
+                        {!currentVideoState.loaded && (
+                          <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+                            <p className="text-gray-500">Cargando...</p>
+                          </div>
+                        )}
+                      </>
+                    )}
                   </div>
                   <div className={cn(
                     "w-20 h-20 rounded-2xl mx-auto flex items-center justify-center",

@@ -3,7 +3,6 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { cn } from "@/lib/utils";
 
 const valueMessages = ["Automatiza el registro de compras.", "Controla tu margen al día, no al mes.", "Descubre alzas de precio de tus insumos en tiempo real.", "Genera reportes en segundos usando lenguaje natural.", "Gestiona simple el pago a tus proveedores.", "Ten toda tu información a la mano.", "Libera HH a la semana para que te enfoques en lo que importa."];
 
@@ -12,6 +11,8 @@ export default function Hero() {
   const [currentMessage, setCurrentMessage] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -38,6 +39,18 @@ export default function Hero() {
     }
     return () => clearTimeout(timeout);
   }, [currentMessage, displayText, isDeleting]);
+
+  const handleVideoLoad = () => {
+    console.log('Hero video loaded successfully');
+    setVideoLoaded(true);
+    setVideoError(false);
+  };
+
+  const handleVideoError = (e: any) => {
+    console.error('Hero video error:', e);
+    setVideoError(true);
+    setVideoLoaded(false);
+  };
 
   const scrollToGuarantee = () => {
     const element = document.getElementById('guarantee');
@@ -103,16 +116,30 @@ export default function Hero() {
           <div className="relative lg:h-[640px] animate-float">
             <div className="absolute inset-0 bg-gradient-to-b from-white/0 to-white/80 backdrop-blur-sm rounded-2xl overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
-                <video 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-full h-[640px] object-contain rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-500"
-                >
-                  <source src="/robot_facturas.mp4" type="video/mp4" />
-                  Tu navegador no soporta videos HTML5.
-                </video>
+                {videoError ? (
+                  <div className="w-full h-[640px] bg-gray-200 rounded-lg shadow-2xl flex items-center justify-center">
+                    <p className="text-gray-500">Error cargando video</p>
+                  </div>
+                ) : (
+                  <video 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline
+                    preload="metadata"
+                    onLoadedData={handleVideoLoad}
+                    onError={handleVideoError}
+                    className="w-full h-[640px] object-contain rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-500"
+                  >
+                    <source src="/robot_facturas.mp4" type="video/mp4" />
+                    Tu navegador no soporta videos HTML5.
+                  </video>
+                )}
+                {!videoLoaded && !videoError && (
+                  <div className="absolute inset-0 bg-gray-200 rounded-lg animate-pulse flex items-center justify-center">
+                    <p className="text-gray-500">Cargando video...</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
