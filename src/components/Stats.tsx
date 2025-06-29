@@ -3,25 +3,25 @@ import { Users, FileText, TrendingUp, Clock } from "lucide-react";
 
 const stats = [
   {
-    value: "200+",
+    value: "+200",
     metric: "Clientes Felices",
     icon: Users,
-    description: "empresas confían en nosotros",
+    description: "confían en nosotros",
   },
   {
-    value: "2.5M+",
+    value: "+2.5MM",
     metric: "Transacciones",
     icon: TrendingUp,
-    description: "en datos digitalizados",
+    description: "digitalizadas",
   },
   {
-    value: "US$350M+",
+    value: "+US$350M",
     metric: "Procesados",
     icon: FileText,
-    description: "en documentos automatizados",
+    description: "automáticamente",
   },
   {
-    value: "15 hrs",
+    value: "+15 hrs",
     metric: "Ahorro Semanal",
     icon: Clock,
     description: "promedio por empresa",
