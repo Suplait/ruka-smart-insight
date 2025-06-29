@@ -9,16 +9,16 @@ const stats = [
     description: "empresas confían en nosotros",
   },
   {
-    value: "1M+",
-    metric: "Facturas",
-    icon: FileText,
-    description: "documentos procesados automáticamente",
-  },
-  {
     value: "2.5M+",
     metric: "Transacciones",
     icon: TrendingUp,
     description: "en datos digitalizados",
+  },
+  {
+    value: "US$350M+",
+    metric: "Procesados",
+    icon: FileText,
+    description: "en documentos automatizados",
   },
   {
     value: "15 hrs",
@@ -30,7 +30,7 @@ const stats = [
 
 export default function Stats() {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-12 bg-white">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (

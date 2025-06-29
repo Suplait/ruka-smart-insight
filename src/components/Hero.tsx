@@ -76,11 +76,11 @@ export default function Hero() {
       <div className="absolute bottom-40 left-32 w-5 h-5 bg-indigo-500/20 rounded-full animate-float" style={{ animationDelay: '4s' }} />
       <div className="absolute bottom-20 right-20 w-2 h-2 bg-purple-500/30 rounded-full animate-float" style={{ animationDelay: '1s' }} />
 
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-24">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left content - Text */}
-          <div className="space-y-8 text-left max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-blue-500/10 text-purple-700 animate-fade-in border border-purple-200/50 backdrop-blur-sm">
+          <div className="space-y-6 sm:space-y-8 text-left max-w-2xl order-2 lg:order-1">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-blue-500/10 text-purple-700 animate-fade-in border border-purple-200/50 backdrop-blur-sm text-sm">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-500 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
@@ -88,13 +88,13 @@ export default function Hero() {
               Ideal en empresas con alta rotación de inventario
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
               <span className="bg-gradient-to-r from-gray-900 via-purple-800 to-blue-800 bg-clip-text text-transparent after:content-['|'] after:ml-1 after:animate-blink after:text-purple-600">
                 {displayText}
               </span>
             </h1>
             
-            <p className="text-xl text-gray-600 max-w-xl leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-xl leading-relaxed">
               Agentes con IA que procesan, agrupan y monitorean tus transacciones para que tengas control absoluto de tu negocio.
             </p>
             
@@ -108,10 +108,10 @@ export default function Hero() {
               </Button>
             </div>
 
-            <div className="flex items-center gap-6 text-sm">
-              <div className="flex -space-x-4">
+            <div className="flex items-center gap-4 sm:gap-6 text-sm">
+              <div className="flex -space-x-3 sm:-space-x-4">
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-gradient-to-br from-purple-100 to-blue-100 flex items-center justify-center text-xs font-semibold text-purple-700 shadow-md">
+                  <div key={i} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white bg-gradient-to-br from-purple-100 to-blue-100 flex items-center justify-center text-xs font-semibold text-purple-700 shadow-md">
                     {i < 3 ? "C" : "+200"}
                   </div>
                 ))}
@@ -123,19 +123,19 @@ export default function Hero() {
           </div>
 
           {/* Right content - Premium Video Container */}
-          <div className="flex justify-center items-center relative">
+          <div className="flex justify-center items-center relative order-1 lg:order-2">
             {/* Premium Container with Multiple Layers */}
             <div className="relative">
               {/* Outer Glow Ring */}
-              <div className="absolute -inset-6 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-indigo-500/20 rounded-3xl blur-2xl opacity-60 animate-pulse" />
+              <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-indigo-500/20 rounded-3xl blur-2xl opacity-60 animate-pulse" />
               
               {/* Main Video Container */}
-              <div className="relative w-96 h-96 rounded-3xl overflow-hidden shadow-2xl border border-white/50 bg-white group hover:scale-105 transition-all duration-700 backdrop-blur-sm">
+              <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-3xl overflow-hidden shadow-2xl border border-white/50 bg-white group hover:scale-105 transition-all duration-700 backdrop-blur-sm">
                 {videoError ? (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50">
                     <div className="text-center">
-                      <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-200 to-blue-200 rounded-full flex items-center justify-center">
-                        <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 bg-gradient-to-br from-purple-200 to-blue-200 rounded-full flex items-center justify-center">
+                        <svg className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </div>
@@ -160,7 +160,7 @@ export default function Hero() {
                     {!videoLoaded && !videoError && (
                       <div className="absolute inset-0 bg-gradient-to-br from-purple-100/95 to-blue-100/95 backdrop-blur-sm flex items-center justify-center">
                         <div className="text-center">
-                          <div className="w-12 h-12 mx-auto mb-3 bg-white/70 rounded-full animate-spin border-2 border-transparent border-t-purple-500"></div>
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 bg-white/70 rounded-full animate-spin border-2 border-transparent border-t-purple-500"></div>
                           <p className="text-purple-600 text-sm font-medium">Cargando demo...</p>
                         </div>
                       </div>
@@ -173,8 +173,8 @@ export default function Hero() {
               </div>
 
               {/* Floating Accent Elements */}
-              <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-br from-purple-500/30 to-blue-500/30 rounded-full blur-sm animate-float" style={{ animationDelay: '0s' }} />
-              <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-br from-blue-500/30 to-indigo-500/30 rounded-full blur-sm animate-float" style={{ animationDelay: '2s' }} />
+              <div className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-purple-500/30 to-blue-500/30 rounded-full blur-sm animate-float" style={{ animationDelay: '0s' }} />
+              <div className="absolute -bottom-2 -left-2 sm:-bottom-4 sm:-left-4 w-4 h-4 sm:w-6 sm:h-6 bg-gradient-to-br from-blue-500/30 to-indigo-500/30 rounded-full blur-sm animate-float" style={{ animationDelay: '2s' }} />
             </div>
           </div>
         </div>
