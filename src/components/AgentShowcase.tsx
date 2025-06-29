@@ -82,11 +82,18 @@ export default function AgentShowcase() {
         viewport={{ once: true }}
         className="group relative"
       >
-        <div className={`bg-white rounded-2xl shadow-lg ${isAddon ? 'p-8' : 'p-6'} h-full hover:shadow-xl transition-all duration-300 group-hover:scale-105`}>
-          <div className={`${isAddon ? 'aspect-video mb-6' : 'aspect-video mb-4'} rounded-lg overflow-hidden bg-gray-50 relative`}>
+        <div className={`bg-white rounded-2xl shadow-xl ${isAddon ? 'p-8' : 'p-6'} h-full hover:shadow-2xl transition-all duration-300 group-hover:scale-105 border border-gray-100`}>
+          <div className={`${isAddon ? 'aspect-[4/3] mb-6' : 'aspect-[4/3] mb-4'} rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 relative`}>
             {videoState.error ? (
-              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                <p className="text-gray-500 text-sm">Error cargando video</p>
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-12 h-12 mx-auto mb-3 bg-gray-300 rounded-full flex items-center justify-center">
+                    <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <p className="text-gray-500 text-sm">Error al cargar</p>
+                </div>
               </div>
             ) : (
               <>
@@ -103,15 +110,18 @@ export default function AgentShowcase() {
                   <source src={feature.video} type="video/mp4" />
                 </video>
                 {!videoState.loaded && (
-                  <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
-                    <p className="text-gray-500 text-sm">Cargando...</p>
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-8 h-8 mx-auto mb-2 bg-gray-300 rounded-full animate-spin border-2 border-transparent border-t-gray-400"></div>
+                      <p className="text-gray-500 text-xs">Cargando...</p>
+                    </div>
                   </div>
                 )}
               </>
             )}
           </div>
           <div className={`flex items-center gap-3 ${isAddon ? 'mb-4' : 'mb-3'}`}>
-            <div className={`${isAddon ? 'w-12 h-12' : 'w-10 h-10'} rounded-lg ${isAddon ? 'bg-purple-100 text-purple-600' : 'bg-blue-100 text-blue-600'} flex items-center justify-center`}>
+            <div className={`${isAddon ? 'w-12 h-12' : 'w-10 h-10'} rounded-xl ${isAddon ? 'bg-purple-100 text-purple-600' : 'bg-blue-100 text-blue-600'} flex items-center justify-center shadow-sm`}>
               <feature.icon className={`${isAddon ? 'w-6 h-6' : 'w-5 h-5'}`} />
             </div>
             <h4 className={`font-semibold ${isAddon ? 'text-xl' : 'text-lg'}`}>{feature.title}</h4>

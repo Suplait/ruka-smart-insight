@@ -94,15 +94,15 @@ export default function ValueShowcase() {
                 <motion.div
                   key={feature.id}
                   className={cn(
-                    "p-6 rounded-xl transition-all duration-300 cursor-pointer",
-                    activeFeature === index ? "bg-white shadow-lg scale-105" : "hover:bg-white/50"
+                    "p-6 rounded-xl transition-all duration-300 cursor-pointer border",
+                    activeFeature === index ? "bg-white shadow-xl scale-105 border-purple-200" : "hover:bg-white/50 border-transparent hover:border-gray-200"
                   )}
                   onClick={() => setActiveFeature(index)}
                   whileHover={{ x: activeFeature === index ? 0 : 5 }}
                 >
                   <div className="flex items-start gap-4">
                     <div className={cn(
-                      "w-12 h-12 rounded-lg flex items-center justify-center",
+                      "w-12 h-12 rounded-xl flex items-center justify-center shadow-sm",
                       feature.color
                     )}>
                       <FeatureIcon className="w-6 h-6" />
@@ -117,7 +117,7 @@ export default function ValueShowcase() {
             })}
           </div>
 
-          <div className="relative lg:h-[600px] rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-blue-50">
+          <div className="relative lg:h-[600px] rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-blue-50 shadow-2xl border border-gray-200">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeFeature}
@@ -128,10 +128,17 @@ export default function ValueShowcase() {
                 className="absolute inset-0 flex items-center justify-center p-8"
               >
                 <div className="max-w-md text-center space-y-6">
-                  <div className="aspect-video rounded-lg overflow-hidden bg-white shadow-lg relative">
+                  <div className="aspect-[4/3] rounded-xl overflow-hidden bg-white shadow-xl relative border border-gray-100">
                     {currentVideoState.error ? (
-                      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                        <p className="text-gray-500">Error cargando video</p>
+                      <div className="w-full h-full flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="w-12 h-12 mx-auto mb-3 bg-gray-300 rounded-full flex items-center justify-center">
+                            <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                          <p className="text-gray-500 text-sm">Error al cargar</p>
+                        </div>
                       </div>
                     ) : (
                       <>
@@ -149,15 +156,18 @@ export default function ValueShowcase() {
                           <source src={features[activeFeature].video} type="video/mp4" />
                         </video>
                         {!currentVideoState.loaded && (
-                          <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
-                            <p className="text-gray-500">Cargando...</p>
+                          <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-8 h-8 mx-auto mb-2 bg-gray-300 rounded-full animate-spin border-2 border-transparent border-t-gray-400"></div>
+                              <p className="text-gray-500 text-xs">Cargando...</p>
+                            </div>
                           </div>
                         )}
                       </>
                     )}
                   </div>
                   <div className={cn(
-                    "w-20 h-20 rounded-2xl mx-auto flex items-center justify-center",
+                    "w-20 h-20 rounded-2xl mx-auto flex items-center justify-center shadow-lg",
                     features[activeFeature].color
                   )}>
                     <ActiveIcon className="w-10 h-10" />

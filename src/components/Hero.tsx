@@ -113,14 +113,21 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="relative lg:h-[640px] animate-float">
-            <div className="absolute inset-0 bg-gradient-to-b from-white/0 to-white/80 backdrop-blur-sm rounded-2xl overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                {videoError ? (
-                  <div className="w-full h-[640px] bg-gray-200 rounded-lg shadow-2xl flex items-center justify-center">
-                    <p className="text-gray-500">Error cargando video</p>
+          <div className="relative flex justify-center items-center">
+            <div className="relative w-full max-w-[480px] h-[320px] rounded-2xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 shadow-2xl border border-gray-200/50">
+              {videoError ? (
+                <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                  <div className="text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 bg-gray-300 rounded-full flex items-center justify-center">
+                      <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-500 text-sm">Error cargando demo</p>
                   </div>
-                ) : (
+                </div>
+              ) : (
+                <>
                   <video 
                     autoPlay 
                     loop 
@@ -129,18 +136,24 @@ export default function Hero() {
                     preload="metadata"
                     onLoadedData={handleVideoLoad}
                     onError={handleVideoError}
-                    className="w-full h-[640px] object-contain rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover"
                   >
                     <source src="/robot_facturas.mp4" type="video/mp4" />
                     Tu navegador no soporta videos HTML5.
                   </video>
-                )}
-                {!videoLoaded && !videoError && (
-                  <div className="absolute inset-0 bg-gray-200 rounded-lg animate-pulse flex items-center justify-center">
-                    <p className="text-gray-500">Cargando video...</p>
-                  </div>
-                )}
-              </div>
+                  {!videoLoaded && !videoError && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="w-12 h-12 mx-auto mb-3 bg-gray-300 rounded-full animate-spin border-2 border-transparent border-t-gray-400"></div>
+                        <p className="text-gray-500 text-sm">Cargando demo...</p>
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+              
+              {/* Decorative overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none"></div>
             </div>
           </div>
         </div>
