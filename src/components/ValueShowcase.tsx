@@ -10,106 +10,97 @@ const features = [
     title: 'Agentes a tu servicio',
     description: 'Trabajan 24/7 y automatizan trabajos manuales que necesitaban HH para funcionar.',
     Icon: Bot,
-    color: 'bg-purple-100 text-purple-600',
-    video: '/robot_facturas.mp4'
+    color: 'bg-gradient-to-br from-purple-500 to-purple-600',
+    bgColor: 'bg-purple-50',
+    stats: 'Ahorra 15+ horas semanales'
   },
   {
     id: 'intelligence',
     title: 'IA que Aprende',
     description: 'Nuestros agentes se adaptan a tus procesos y mejoran con cada interacción, haciéndose más precisos.',
     Icon: Brain,
-    color: 'bg-blue-100 text-blue-600',
-    video: '/robot_cajas.mp4'
+    color: 'bg-gradient-to-br from-blue-500 to-blue-600',
+    bgColor: 'bg-blue-50',
+    stats: '99.5% precisión después de 30 días'
   },
   {
     id: 'documents',
     title: 'Procesamiento Inteligente',
     description: 'Extrae, clasifica y organiza la información de tus documentos automáticamente en tiempo real.',
     Icon: FileText,
-    color: 'bg-green-100 text-green-600',
-    video: '/robot_facturas.mp4'
+    color: 'bg-gradient-to-br from-green-500 to-green-600',
+    bgColor: 'bg-green-50',
+    stats: '1000+ documentos por día'
   },
   {
     id: 'monitoring',
     title: 'Monitoreo Continuo',
     description: 'Detecta anomalías y patrones que afecten tu margen operativo, alertándote inmediatamente.',
     Icon: AlertCircle,
-    color: 'bg-yellow-100 text-yellow-600',
-    video: '/robot_alerta.mp4'
+    color: 'bg-gradient-to-br from-yellow-500 to-orange-500',
+    bgColor: 'bg-yellow-50',
+    stats: 'Alertas en < 5 minutos'
   },
   {
     id: 'insights',
     title: 'Insights Inmediatos',
     description: 'Visualiza tus KPIs y genera reportes personalizados en lenguaje natural. No más tablas dinámicas.',
     Icon: LineChart,
-    color: 'bg-red-100 text-red-600',
-    video: '/robot_grafico2.mp4'
+    color: 'bg-gradient-to-br from-red-500 to-pink-500',
+    bgColor: 'bg-red-50',
+    stats: 'Reportes en segundos'
   }
 ] as const;
 
 export default function ValueShowcase() {
   const [activeFeature, setActiveFeature] = useState(0);
-  const [videoStates, setVideoStates] = useState<{[key: string]: {loaded: boolean, error: boolean}}>({});
   
   const ActiveIcon = features[activeFeature].Icon;
 
-  const handleVideoLoad = (videoId: string) => {
-    console.log(`ValueShowcase video ${videoId} loaded successfully`);
-    setVideoStates(prev => ({
-      ...prev,
-      [videoId]: { loaded: true, error: false }
-    }));
-  };
-
-  const handleVideoError = (videoId: string, e: any) => {
-    console.error(`ValueShowcase video ${videoId} error:`, e);
-    setVideoStates(prev => ({
-      ...prev,
-      [videoId]: { loaded: false, error: true }
-    }));
-  };
-
-  const currentVideoState = videoStates[features[activeFeature].id] || { loaded: false, error: false };
-
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-purple-50/30 to-white" />
+    <section className="py-24 bg-gradient-to-br from-slate-50 via-white to-purple-50/30 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(147,51,234,0.05)_0%,transparent_50%)]" />
       
       <div className="container relative">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl font-bold">
+        <div className="text-center mb-20 space-y-6">
+          <h2 className="text-4xl lg:text-5xl font-bold">
             Automatización Inteligente que
             <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> Entiende tu Negocio</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Una plataforma que evoluciona contigo, aprendiendo y mejorando constantemente
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-6">
             {features.map((feature, index) => {
               const FeatureIcon = feature.Icon;
               return (
                 <motion.div
                   key={feature.id}
                   className={cn(
-                    "p-6 rounded-xl transition-all duration-300 cursor-pointer border",
-                    activeFeature === index ? "bg-white shadow-xl scale-105 border-purple-200" : "hover:bg-white/50 border-transparent hover:border-gray-200"
+                    "p-6 rounded-2xl transition-all duration-500 cursor-pointer border-2",
+                    activeFeature === index 
+                      ? "bg-white shadow-2xl scale-105 border-purple-200 shadow-purple-500/10" 
+                      : "hover:bg-white/80 border-transparent hover:border-gray-200 hover:shadow-lg"
                   )}
                   onClick={() => setActiveFeature(index)}
-                  whileHover={{ x: activeFeature === index ? 0 : 5 }}
+                  whileHover={{ x: activeFeature === index ? 0 : 8 }}
                 >
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-5">
                     <div className={cn(
-                      "w-12 h-12 rounded-xl flex items-center justify-center shadow-sm",
+                      "w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg text-white",
                       feature.color
                     )}>
-                      <FeatureIcon className="w-6 h-6" />
+                      <FeatureIcon className="w-7 h-7" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-                      <p className="text-muted-foreground">{feature.description}</p>
+                      <h3 className="text-xl font-bold mb-2 text-gray-900">{feature.title}</h3>
+                      <p className="text-gray-600 mb-3 leading-relaxed">{feature.description}</p>
+                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-sm font-medium text-gray-700">
+                        {feature.stats}
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -117,63 +108,37 @@ export default function ValueShowcase() {
             })}
           </div>
 
-          <div className="relative lg:h-[600px] rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-blue-50 shadow-2xl border border-gray-200">
+          <div className="relative lg:h-[700px] rounded-3xl overflow-hidden shadow-2xl border border-gray-200 bg-white">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeFeature}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="absolute inset-0 flex items-center justify-center p-8"
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.4 }}
+                className="absolute inset-0 flex items-center justify-center p-12"
               >
-                <div className="max-w-md text-center space-y-6">
-                  <div className="aspect-[4/3] rounded-xl overflow-hidden bg-white shadow-xl relative border border-gray-100">
-                    {currentVideoState.error ? (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="w-12 h-12 mx-auto mb-3 bg-gray-300 rounded-full flex items-center justify-center">
-                            <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                            </svg>
-                          </div>
-                          <p className="text-gray-500 text-sm">Error al cargar</p>
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <video 
-                          key={features[activeFeature].video}
-                          autoPlay 
-                          loop 
-                          muted 
-                          playsInline
-                          preload="metadata"
-                          onLoadedData={() => handleVideoLoad(features[activeFeature].id)}
-                          onError={(e) => handleVideoError(features[activeFeature].id, e)}
-                          className="w-full h-full object-cover"
-                        >
-                          <source src={features[activeFeature].video} type="video/mp4" />
-                        </video>
-                        {!currentVideoState.loaded && (
-                          <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse flex items-center justify-center">
-                            <div className="text-center">
-                              <div className="w-8 h-8 mx-auto mb-2 bg-gray-300 rounded-full animate-spin border-2 border-transparent border-t-gray-400"></div>
-                              <p className="text-gray-500 text-xs">Cargando...</p>
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </div>
+                <div className="text-center space-y-8 max-w-md">
+                  {/* Large illustration area */}
                   <div className={cn(
-                    "w-20 h-20 rounded-2xl mx-auto flex items-center justify-center shadow-lg",
-                    features[activeFeature].color
+                    "w-48 h-48 mx-auto rounded-3xl flex items-center justify-center shadow-xl",
+                    features[activeFeature].bgColor
                   )}>
-                    <ActiveIcon className="w-10 h-10" />
+                    <div className={cn(
+                      "w-24 h-24 rounded-2xl flex items-center justify-center text-white shadow-lg",
+                      features[activeFeature].color
+                    )}>
+                      <ActiveIcon className="w-12 h-12" />
+                    </div>
                   </div>
-                  <h3 className="text-2xl font-bold">{features[activeFeature].title}</h3>
-                  <p className="text-lg text-muted-foreground">{features[activeFeature].description}</p>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-3xl font-bold text-gray-900">{features[activeFeature].title}</h3>
+                    <p className="text-lg text-gray-600 leading-relaxed">{features[activeFeature].description}</p>
+                    <div className="inline-flex items-center px-4 py-2 rounded-full bg-gray-100 text-lg font-semibold text-gray-800">
+                      {features[activeFeature].stats}
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>

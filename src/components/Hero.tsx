@@ -62,14 +62,13 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] gradient-blur opacity-50" />
-        <div className="absolute inset-0 hero-gradient" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] gradient-blur opacity-30" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 py-24">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8 text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary animate-fade-in">
               <span className="relative flex h-2 w-2">
@@ -114,9 +113,9 @@ export default function Hero() {
           </div>
 
           <div className="relative flex justify-center items-center">
-            <div className="relative w-full max-w-[480px] h-[320px] rounded-2xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 shadow-2xl border border-gray-200/50">
+            <div className="relative w-full max-w-[600px] aspect-video rounded-3xl overflow-hidden shadow-2xl border border-gray-200/50 bg-white">
               {videoError ? (
-                <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
                   <div className="text-center">
                     <div className="w-16 h-16 mx-auto mb-4 bg-gray-300 rounded-full flex items-center justify-center">
                       <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,19 +141,20 @@ export default function Hero() {
                     Tu navegador no soporta videos HTML5.
                   </video>
                   {!videoLoaded && !videoError && (
-                    <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse flex items-center justify-center">
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-100/90 to-gray-200/90 backdrop-blur-sm flex items-center justify-center">
                       <div className="text-center">
-                        <div className="w-12 h-12 mx-auto mb-3 bg-gray-300 rounded-full animate-spin border-2 border-transparent border-t-gray-400"></div>
-                        <p className="text-gray-500 text-sm">Cargando demo...</p>
+                        <div className="w-12 h-12 mx-auto mb-3 bg-white/50 rounded-full animate-spin border-2 border-transparent border-t-primary"></div>
+                        <p className="text-gray-600 text-sm font-medium">Cargando demo...</p>
                       </div>
                     </div>
                   )}
                 </>
               )}
-              
-              {/* Decorative overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none"></div>
             </div>
+            
+            {/* Elementos decorativos */}
+            <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-xl"></div>
+            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full blur-xl"></div>
           </div>
         </div>
       </div>

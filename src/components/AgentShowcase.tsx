@@ -82,17 +82,18 @@ export default function AgentShowcase() {
         viewport={{ once: true }}
         className="group relative"
       >
-        <div className={`bg-white rounded-2xl shadow-xl ${isAddon ? 'p-8' : 'p-6'} h-full hover:shadow-2xl transition-all duration-300 group-hover:scale-105 border border-gray-100`}>
-          <div className={`${isAddon ? 'aspect-[4/3] mb-6' : 'aspect-[4/3] mb-4'} rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 relative`}>
+        <div className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-[1.02] border border-gray-100/50 overflow-hidden">
+          {/* Video Container */}
+          <div className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
             {videoState.error ? (
               <div className="w-full h-full flex items-center justify-center">
                 <div className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-3 bg-gray-300 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gray-300 rounded-full flex items-center justify-center">
+                    <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <p className="text-gray-500 text-sm">Error al cargar</p>
+                  <p className="text-gray-500 text-sm font-medium">Error al cargar</p>
                 </div>
               </div>
             ) : (
@@ -105,51 +106,63 @@ export default function AgentShowcase() {
                   preload="metadata"
                   onLoadedData={() => handleVideoLoad(feature.id)}
                   onError={(e) => handleVideoError(feature.id, e)}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                 >
                   <source src={feature.video} type="video/mp4" />
                 </video>
                 {!videoState.loaded && (
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse flex items-center justify-center">
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-100/95 to-gray-200/95 backdrop-blur-sm flex items-center justify-center">
                     <div className="text-center">
-                      <div className="w-8 h-8 mx-auto mb-2 bg-gray-300 rounded-full animate-spin border-2 border-transparent border-t-gray-400"></div>
-                      <p className="text-gray-500 text-xs">Cargando...</p>
+                      <div className="w-10 h-10 mx-auto mb-3 bg-white/70 rounded-full animate-spin border-2 border-transparent border-t-blue-500"></div>
+                      <p className="text-gray-600 text-sm font-medium">Cargando...</p>
                     </div>
                   </div>
                 )}
               </>
             )}
+            
+            {/* Overlay gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </div>
-          <div className={`flex items-center gap-3 ${isAddon ? 'mb-4' : 'mb-3'}`}>
-            <div className={`${isAddon ? 'w-12 h-12' : 'w-10 h-10'} rounded-xl ${isAddon ? 'bg-purple-100 text-purple-600' : 'bg-blue-100 text-blue-600'} flex items-center justify-center shadow-sm`}>
-              <feature.icon className={`${isAddon ? 'w-6 h-6' : 'w-5 h-5'}`} />
+          
+          {/* Content */}
+          <div className={`p-6 ${isAddon ? 'pb-8' : ''}`}>
+            <div className="flex items-center gap-4 mb-4">
+              <div className={`${isAddon ? 'w-14 h-14' : 'w-12 h-12'} rounded-2xl ${isAddon ? 'bg-gradient-to-br from-purple-500 to-purple-600 text-white' : 'bg-gradient-to-br from-blue-500 to-blue-600 text-white'} flex items-center justify-center shadow-lg`}>
+                <feature.icon className={`${isAddon ? 'w-7 h-7' : 'w-6 h-6'}`} />
+              </div>
+              <div className="flex-1">
+                <h4 className={`font-bold ${isAddon ? 'text-xl' : 'text-lg'} text-gray-900 mb-1`}>{feature.title}</h4>
+              </div>
             </div>
-            <h4 className={`font-semibold ${isAddon ? 'text-xl' : 'text-lg'}`}>{feature.title}</h4>
+            <p className={`text-gray-600 leading-relaxed ${isAddon ? 'text-base' : 'text-sm'}`}>{feature.description}</p>
           </div>
-          <p className={`text-muted-foreground ${isAddon ? '' : 'text-sm'}`}>{feature.description}</p>
         </div>
       </motion.div>
     );
   };
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/30 to-white" />
+    <section className="py-24 bg-gradient-to-b from-white via-slate-50/50 to-white relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05)_0%,transparent_50%)]" />
       
       <div className="container relative">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl font-bold">
+        <div className="text-center mb-20 space-y-6">
+          <h2 className="text-4xl lg:text-5xl font-bold">
             Así Funcionan Nuestros
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Agentes Inteligentes</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Cada agente trabaja 24/7 automatizando procesos específicos de tu negocio
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Cada agente trabaja 24/7 automatizando procesos específicos de tu negocio con precisión milimétrica
           </p>
         </div>
 
         {/* Core Features */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-semibold text-center mb-12">Funciones Principales</h3>
+        <div className="mb-20">
+          <div className="text-center mb-12">
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">Funciones Principales</h3>
+            <p className="text-gray-600">El núcleo de la automatización inteligente</p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {coreFeatures.map((feature, index) => renderVideoCard(feature, index))}
           </div>
@@ -157,8 +170,11 @@ export default function AgentShowcase() {
 
         {/* Add-ons */}
         <div>
-          <h3 className="text-2xl font-semibold text-center mb-12">Funciones Adicionales</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">Funciones Adicionales</h3>
+            <p className="text-gray-600">Expansiones premium para operaciones avanzadas</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
             {addOns.map((addon, index) => renderVideoCard(addon, index, true))}
           </div>
         </div>
