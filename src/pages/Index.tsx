@@ -3,17 +3,15 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Partners from "@/components/Partners";
+import Stats from "@/components/Stats";
+import YouTubeDemo from "@/components/YouTubeDemo";
 import DataFlowSection from "@/components/DataFlowSection";
 import AgentShowcase from "@/components/AgentShowcase";
-import BeforeAfter from "@/components/BeforeAfter";
+import Partners from "@/components/Partners";
 import Features from "@/components/Features";
-import ProductShowcase from "@/components/ProductShowcase";
-import ValueShowcase from "@/components/ValueShowcase";
-import Stats from "@/components/Stats";
+import MoneyBackGuarantee from "@/components/MoneyBackGuarantee";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
-import MoneyBackGuarantee from "@/components/MoneyBackGuarantee";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
@@ -36,13 +34,11 @@ export default function Index() {
       <Navbar />
       <Hero />
       <Stats />
+      <YouTubeDemo />
       <DataFlowSection />
       <AgentShowcase />
       <Partners />
       <Features />
-      <BeforeAfter />
-      <ProductShowcase />
-      <ValueShowcase />
       <MoneyBackGuarantee />
       <Testimonials />
       <FAQ />

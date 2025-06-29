@@ -3,7 +3,7 @@ import { Users, FileText, TrendingUp, Clock } from "lucide-react";
 
 const stats = [
   {
-    value: "150+",
+    value: "200+",
     metric: "Clientes Felices",
     icon: Users,
     description: "empresas confían en nosotros",
@@ -15,7 +15,7 @@ const stats = [
     description: "documentos procesados automáticamente",
   },
   {
-    value: "US$300M+",
+    value: "2.5M+",
     metric: "Transacciones",
     icon: TrendingUp,
     description: "en datos digitalizados",
@@ -30,7 +30,7 @@ const stats = [
 
 export default function Stats() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-16 bg-white">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
