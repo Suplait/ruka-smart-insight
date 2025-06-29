@@ -21,14 +21,14 @@ const coreFeatures = [
   {
     icon: TrendingUp,
     title: "Monitorea en Tiempo Real",
-    description: "Analiza gráficos y detecta tendencias de precios",
+    description: "Y aprende de tus patrones de compras",
     video: "/robot_grafico2.mp4",
     id: "grafico"
   },
   {
     icon: AlertTriangle,
     title: "Alerta Instantánea",
-    description: "Notifica anomalías y cambios críticos al momento",
+    description: "Notifica anomalías y cambios críticos, al momento",
     video: "/robot_alerta.mp4",
     id: "alerta"
   }
@@ -38,14 +38,14 @@ const addOns = [
   {
     icon: CreditCard,
     title: "Gestión de Cuentas por Cobrar",
-    description: "Facilita pagos y genera nóminas bancarias",
+    description: "Facilita pagos de proveedores y genera nóminas bancarias",
     video: "/robot_dinero.mp4",
     id: "dinero"
   },
   {
     icon: Repeat,
-    title: "Sincronización de Inventarios",
-    description: "Actualiza precios en plataformas externas",
+    title: "Sincronización con otras platformas",
+    description: "Actualiza stock y precios en plataformas externas",
     video: "/robot_inventario.mp4",
     id: "inventario"
   }
