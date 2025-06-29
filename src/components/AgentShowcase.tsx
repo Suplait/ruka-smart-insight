@@ -7,25 +7,25 @@ const coreFeatures = [
     icon: FileText,
     title: "Digita Facturas Automáticamente",
     description: "Procesa y extrae datos de facturas sin intervención manual",
-    video: "/robot_facturas.mp4"
+    video: "public/robot_facturas.mp4"
   },
   {
     icon: Layers,
     title: "Categoriza y Clasifica",
     description: "Agrupa productos y crea maestros de insumos inteligentemente",
-    video: "/robot_cajas.mp4"
+    video: "public/robot_cajas.mp4"
   },
   {
     icon: TrendingUp,
     title: "Monitorea en Tiempo Real",
     description: "Analiza gráficos y detecta tendencias de precios",
-    video: "/robot_grafico2.mp4"
+    video: "public/robot_grafico2.mp4"
   },
   {
     icon: AlertTriangle,
     title: "Alerta Instantánea",
     description: "Notifica anomalías y cambios críticos al momento",
-    video: "/robot_alerta.mp4"
+    video: "public/robot_alerta.mp4"
   }
 ];
 
@@ -34,13 +34,13 @@ const addOns = [
     icon: CreditCard,
     title: "Gestión de Cuentas por Cobrar",
     description: "Facilita pagos y genera nóminas bancarias",
-    video: "/robot_dinero.mp4"
+    video: "public/robot_dinero.mp4"
   },
   {
     icon: Repeat,
     title: "Sincronización de Inventarios",
     description: "Actualiza precios en plataformas externas",
-    video: "/robot_inventario.mp4"
+    video: "public/robot_inventario.mp4"
   }
 ];
 

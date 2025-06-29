@@ -11,7 +11,7 @@ const features = [
     description: 'Trabajan 24/7 y automatizan trabajos manuales que necesitaban HH para funcionar.',
     Icon: Bot,
     color: 'bg-purple-100 text-purple-600',
-    video: '/robot_facturas.mp4'
+    video: 'public/robot_facturas.mp4'
   },
   {
     id: 'intelligence',
@@ -19,7 +19,7 @@ const features = [
     description: 'Nuestros agentes se adaptan a tus procesos y mejoran con cada interacción, haciéndose más precisos.',
     Icon: Brain,
     color: 'bg-blue-100 text-blue-600',
-    video: '/robot_cajas.mp4'
+    video: 'public/robot_cajas.mp4'
   },
   {
     id: 'documents',
@@ -27,7 +27,7 @@ const features = [
     description: 'Extrae, clasifica y organiza la información de tus documentos automáticamente en tiempo real.',
     Icon: FileText,
     color: 'bg-green-100 text-green-600',
-    video: '/robot_facturas.mp4'
+    video: 'public/robot_facturas.mp4'
   },
   {
     id: 'monitoring',
@@ -35,7 +35,7 @@ const features = [
     description: 'Detecta anomalías y patrones que afecten tu margen operativo, alertándote inmediatamente.',
     Icon: AlertCircle,
     color: 'bg-yellow-100 text-yellow-600',
-    video: '/robot_alerta.mp4'
+    video: 'public/robot_alerta.mp4'
   },
   {
     id: 'insights',
@@ -43,7 +43,7 @@ const features = [
     description: 'Visualiza tus KPIs y genera reportes personalizados en lenguaje natural. No más tablas dinámicas.',
     Icon: LineChart,
     color: 'bg-red-100 text-red-600',
-    video: '/robot_grafico2.mp4'
+    video: 'public/robot_grafico2.mp4'
   }
 ] as const;
 
