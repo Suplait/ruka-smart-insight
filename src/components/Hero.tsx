@@ -1,4 +1,3 @@
-
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
@@ -130,7 +129,7 @@ export default function Hero() {
               <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-indigo-500/20 rounded-3xl blur-2xl opacity-60 animate-pulse" />
               
               {/* Main Video Container */}
-              <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-white/50 bg-white group hover:scale-105 transition-all duration-700 backdrop-blur-sm">
+              <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-3xl overflow-hidden shadow-2xl border border-white/50 bg-white group hover:scale-105 transition-all duration-700 backdrop-blur-sm">
                 {videoError ? (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50">
                     <div className="text-center">
