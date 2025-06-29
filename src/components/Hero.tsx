@@ -62,7 +62,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-purple-900/5 via-blue-50 to-indigo-100/30 flex items-center overflow-hidden">
+    <section className="relative min-h-screen bg-gradient-to-br from-purple-900/5 via-blue-50 to-indigo-100/30 flex items-center overflow-hidden pt-16">
       {/* Premium Background Elements */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-full blur-3xl" />
@@ -77,7 +77,7 @@ export default function Hero() {
       <div className="absolute bottom-20 right-20 w-2 h-2 bg-purple-500/30 rounded-full animate-float" style={{ animationDelay: '1s' }} />
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center">
           {/* Left content - Text */}
           <div className="space-y-6 sm:space-y-8 text-left max-w-2xl order-2 lg:order-1">
             <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-blue-500/10 text-purple-700 animate-fade-in border border-purple-200/50 backdrop-blur-sm text-sm">
