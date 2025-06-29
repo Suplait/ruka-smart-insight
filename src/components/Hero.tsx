@@ -62,14 +62,15 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+    <section className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
       <div className="absolute inset-0 z-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] gradient-blur opacity-30" />
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-24">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8 text-left">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 pt-24 pb-12">
+        <div className="grid lg:grid-cols-5 gap-12 items-center min-h-[80vh]">
+          {/* Left content - Text */}
+          <div className="lg:col-span-2 space-y-8 text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary animate-fade-in">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
@@ -78,13 +79,13 @@ export default function Hero() {
               Ideal en empresas con alta rotación de inventario
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight transition-all duration-300">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight transition-all duration-300">
               <span className="bg-gradient-to-r from-gray-900 to-gray-800 bg-clip-text text-transparent after:content-['|'] after:ml-1 after:animate-blink after:text-primary">
                 {displayText}
               </span>
             </h1>
             
-            <p className="text-xl text-muted-foreground max-w-xl">
+            <p className="text-lg text-muted-foreground max-w-xl">
               Agentes con IA que procesan, agrupan y monitorean tus transacciones para que tengas control absoluto de tu negocio.
             </p>
             
@@ -112,8 +113,9 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="relative flex justify-center items-center">
-            <div className="relative w-full max-w-[600px] aspect-video rounded-3xl overflow-hidden shadow-2xl border border-gray-200/50 bg-white">
+          {/* Right content - Large Video */}
+          <div className="lg:col-span-3 flex justify-center items-center">
+            <div className="relative w-full h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl border border-gray-200/50 bg-white">
               {videoError ? (
                 <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
                   <div className="text-center">
