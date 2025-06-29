@@ -110,7 +110,7 @@ export default function Hero() {
                   playsInline
                   className="w-full h-[640px] object-contain rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-500"
                 >
-                  <source src="public/robot_facturas.mp4" type="video/mp4" />
+                  <source src="/robot_facturas.mp4" type="video/mp4" />
                   Tu navegador no soporta videos HTML5.
                 </video>
               </div>

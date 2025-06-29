@@ -27,9 +27,9 @@ export default function Features() {
   ];
 
   const agentVideos = [
-    { title: "Digita y Limpia", desc: "Reduce a 0 el tiempo de registrar tus compras", videoSrc: "public/robot_facturas.mp4" },
-    { title: "Agrupa y Clasifica", desc: "Crea automáticamente un maestro de insumos", videoSrc: "public/robot_cajas.mp4" },
-    { title: "Monitorea 24/7", desc: "Alerta en inmediato ante anomalías que afecten tu margen", videoSrc: "public/robot_grafico2.mp4" }
+    { title: "Digita y Limpia", desc: "Reduce a 0 el tiempo de registrar tus compras", videoSrc: "/robot_facturas.mp4" },
+    { title: "Agrupa y Clasifica", desc: "Crea automáticamente un maestro de insumos", videoSrc: "/robot_cajas.mp4" },
+    { title: "Monitorea 24/7", desc: "Alerta en inmediato ante anomalías que afecten tu margen", videoSrc: "/robot_grafico2.mp4" }
   ];
 
   return (
