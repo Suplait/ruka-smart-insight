@@ -1,3 +1,4 @@
+
 import { Bot, Brain, Clock, LineChart } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
@@ -6,75 +7,61 @@ export default function Features() {
     {
       icon: Bot,
       title: "Agentes Autónomos 24/7",
-      description: "Automatiza tareas repetitivas mientras reduces costos operativos y errores humanos"
+      description: "Automatiza tareas repetitivas mientras reduces costos operativos y errores humanos",
+      gradient: "from-blue-500 to-cyan-500"
     },
     {
       icon: Brain,
       title: "IA que Aprende de tu Negocio",
-      description: "Nuestros agentes se adaptan a tus procesos para entregarte insights más precisos cada día"
+      description: "Nuestros agentes se adaptan a tus procesos para entregarte insights más precisos cada día",
+      gradient: "from-purple-500 to-pink-500"
     },
     {
       icon: Clock,
       title: "Información al Instante",
-      description: "Accede a tus datos en tiempo real para tomar decisiones informadas cuando las necesites"
+      description: "Accede a tus datos en tiempo real para tomar decisiones informadas cuando las necesites",
+      gradient: "from-green-500 to-emerald-500"
     },
     {
       icon: LineChart,
       title: "Control Total",
-      description: "Visualiza y optimiza tu margen operativo con datos actualizados y reportes detallados"
+      description: "Visualiza y optimiza tu margen operativo con datos actualizados y reportes detallados",
+      gradient: "from-orange-500 to-red-500"
     }
   ];
 
   return (
-    <section id="features" className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-secondary/30 to-white" />
+    <section id="features" className="py-24 relative overflow-hidden bg-gradient-to-b from-white via-gray-50/30 to-white">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.1)_0%,transparent_50%)]" />
+      
       <div className="container relative">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl font-bold">
+        <div className="text-center mb-20 space-y-6">
+          <h2 className="text-4xl lg:text-5xl font-bold">
             Agentes Inteligentes que Trabajan por Ti
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Imagina tener un equipo que trabaja 24/7 registrando compras, agrupando insumos maestros, monitoreando precios, alertando anomalías y detectando oportunidades.
           </p>
         </div>
-
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { title: "Digita y Limpia", desc: "Reduce a 0 el tiempo de registrar tus compras", imgSrc: "/value1.png" },
-            { title: "Agrupa y Clasifica", desc: "Crea automáticamente un maestro de insumos", imgSrc: "/value2.png" },
-            { title: "Monitorea 24/7", desc: "Alerta en inmediato ante anomalías que afecten tu margen", imgSrc: "/value3.png" }
-          ].map((agent, i) => (
-            <div key={i} className="relative rounded-xl overflow-hidden bg-white/50 shadow-lg hover:shadow-xl transition-all duration-300 group">
-              <div className="aspect-video">
-                <img 
-                  src={agent.imgSrc} 
-                  alt={agent.title}
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
-                <div className="p-6 text-white">
-                  <h4 className="text-lg font-semibold mb-2">{agent.title}</h4>
-                  <p className="text-sm opacity-90">{agent.desc}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="my-16"></div> {/* Added space between the two sections */}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <Card
               key={index}
-              className="p-6 bg-white/50 backdrop-blur hover:scale-105 transition-all duration-300 border-primary/10 group"
+              className="group p-8 bg-white/90 backdrop-blur hover:scale-105 hover:shadow-2xl transition-all duration-500 border border-gray-200/50 relative overflow-hidden"
             >
-              <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                <feature.icon className="w-12 h-12 text-primary" />
+              {/* Background gradient */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+              
+              <div className="relative z-10">
+                <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center shadow-lg`}>
+                    <feature.icon className="w-8 h-8 text-white" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold mb-4 text-gray-900">{feature.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
               </div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-muted-foreground">{feature.description}</p>
             </Card>
           ))}
         </div>
