@@ -1,3 +1,4 @@
+
 import { Bot, Brain, Clock, LineChart } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
@@ -25,6 +26,12 @@ export default function Features() {
     }
   ];
 
+  const agentVideos = [
+    { title: "Digita y Limpia", desc: "Reduce a 0 el tiempo de registrar tus compras", videoSrc: "/robot_facturas.mp4" },
+    { title: "Agrupa y Clasifica", desc: "Crea automáticamente un maestro de insumos", videoSrc: "/robot_cajas.mp4" },
+    { title: "Monitorea 24/7", desc: "Alerta en inmediato ante anomalías que afecten tu margen", videoSrc: "/robot_grafico2.mp4" }
+  ];
+
   return (
     <section id="features" className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-white via-secondary/30 to-white" />
@@ -39,18 +46,18 @@ export default function Features() {
         </div>
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { title: "Digita y Limpia", desc: "Reduce a 0 el tiempo de registrar tus compras", imgSrc: "/value1.png" },
-            { title: "Agrupa y Clasifica", desc: "Crea automáticamente un maestro de insumos", imgSrc: "/value2.png" },
-            { title: "Monitorea 24/7", desc: "Alerta en inmediato ante anomalías que afecten tu margen", imgSrc: "/value3.png" }
-          ].map((agent, i) => (
+          {agentVideos.map((agent, i) => (
             <div key={i} className="relative rounded-xl overflow-hidden bg-white/50 shadow-lg hover:shadow-xl transition-all duration-300 group">
               <div className="aspect-video">
-                <img 
-                  src={agent.imgSrc} 
-                  alt={agent.title}
+                <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                />
+                >
+                  <source src={agent.videoSrc} type="video/mp4" />
+                </video>
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                 <div className="p-6 text-white">
@@ -62,7 +69,7 @@ export default function Features() {
           ))}
         </div>
 
-        <div className="my-16"></div> {/* Added space between the two sections */}
+        <div className="my-16"></div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (

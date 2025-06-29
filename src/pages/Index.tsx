@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Partners from "@/components/Partners";
 import DataFlowSection from "@/components/DataFlowSection";
+import AgentShowcase from "@/components/AgentShowcase";
 import BeforeAfter from "@/components/BeforeAfter";
 import Features from "@/components/Features";
 import ProductShowcase from "@/components/ProductShowcase";
@@ -36,12 +37,13 @@ export default function Index() {
       <Hero />
       <Stats />
       <DataFlowSection />
+      <AgentShowcase />
       <Partners />
       <Features />
       <BeforeAfter />
       <ProductShowcase />
-      <MoneyBackGuarantee />
       <ValueShowcase />
+      <MoneyBackGuarantee />
       <Testimonials />
       <FAQ />
       <CTA />

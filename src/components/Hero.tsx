@@ -1,3 +1,4 @@
+
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
@@ -47,7 +48,8 @@ export default function Hero() {
     }
   };
 
-  return <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+  return (
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] gradient-blur opacity-50" />
         <div className="absolute inset-0 hero-gradient" />
@@ -86,9 +88,11 @@ export default function Hero() {
 
             <div className="flex items-center gap-6 text-sm">
               <div className="flex -space-x-4">
-                {[...Array(4)].map((_, i) => <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-xs font-semibold">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-xs font-semibold">
                     {i < 3 ? "C" : "+100"}
-                  </div>)}
+                  </div>
+                ))}
               </div>
               <p className="text-muted-foreground">
                 <span className="font-semibold text-primary">+150</span> empresas confían en nosotros
@@ -97,13 +101,23 @@ export default function Hero() {
           </div>
 
           <div className="relative lg:h-[640px] animate-float">
-            <div className="absolute inset-0 bg-gradient-to-b from-white/0 to-white/80 from-white/0 to-white/80 backdrop-blur-sm rounded-2xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-b from-white/0 to-white/80 backdrop-blur-sm rounded-2xl overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
-                <img src="/robotshero2.png" alt="Dashboard Ruka.ai" className="w-full h-[640px] object-contain rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-500" />
+                <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="w-full h-[640px] object-contain rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-500"
+                >
+                  <source src="/robot_facturas.mp4" type="video/mp4" />
+                  Tu navegador no soporta videos HTML5.
+                </video>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 }
