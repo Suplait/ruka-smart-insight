@@ -6,7 +6,7 @@ const stats = [
     value: "200+",
     metric: "Clientes Felices",
     icon: Users,
-    description: "empresas confían en nosotros",
+    description: "confían en nosotros",
   },
   {
     value: "2.5M+",
