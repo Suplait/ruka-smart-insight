@@ -21,7 +21,7 @@ const coreFeatures = [
   {
     icon: TrendingUp,
     title: "Monitorea en Tiempo Real",
-    description: "Y aprende de tus patrones de compras",
+    description: "Aprende de tus patrones de compras y monitorea 24/7",
     video: "/robot_grafico2.mp4",
     id: "grafico"
   },
@@ -37,7 +37,7 @@ const coreFeatures = [
 const addOns = [
   {
     icon: CreditCard,
-    title: "Gestión de Cuentas por Cobrar",
+    title: "Gestión de Cuentas por Pagar",
     description: "Facilita pagos de proveedores y genera nóminas bancarias",
     video: "/robot_dinero.mp4",
     id: "dinero"
