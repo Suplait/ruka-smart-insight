@@ -1,3 +1,4 @@
+
 import { Play, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -49,7 +50,7 @@ export default function YouTubeDemo() {
                     </div>
                   </div>
                 </div>
-              </div> : <iframe src="https://www.youtube.com/embed/5Mgdczprvlc?autoplay=1&t=1s" title="Ruka.ai Demo" className="w-full h-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />}
+              </div> : <iframe src="https://www.youtube.com/embed/g-xbad__wQQ?autoplay=1&t=1s" title="Ruka.ai Demo" className="w-full h-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />}
             
             {/* Premium Glow Effect */}
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 via-indigo-500/20 to-slate-500/20 rounded-3xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
