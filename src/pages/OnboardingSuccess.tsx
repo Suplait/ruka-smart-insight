@@ -34,7 +34,7 @@ const OnboardingSuccess = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
   const [showCalendlyLow, setShowCalendlyLow] = useState(false);
-  const totalSteps = 4; // invoices, billing, subdomain, sii
+  const totalSteps = 2; // invoices, billing
   const restaurantName = location.state?.restaurantName || '';
   const leadId = location.state?.leadId;
   
@@ -267,141 +267,17 @@ const OnboardingSuccess = () => {
     }
     
     if (currentStep === 1) {
-      // Billing system step (now second step)
+      // Billing system step (final step for <150 invoices)
       const saved = await saveFormData(leadId, currentStep, formData, restaurantName);
       setIsLoading(false);
       if (saved) {
-        // Si tiene menos de 150 facturas, mostrar Calendly para volumen bajo
-        if (formData.facturas < 150) {
-          setShowCalendlyLow(true);
-        } else {
-          setCurrentStep(prev => prev + 1);
-        }
+        // Mostrar Calendly para volumen bajo después del sistema de facturación
+        setShowCalendlyLow(true);
       }
       return;
     }
     
-    if (currentStep === 2) {
-      // Subdomain step (now third step)
-      if (!formData.subdominio) {
-        setIsLoading(false);
-        toast({
-          title: "Campo requerido",
-          description: "Por favor elige un subdominio",
-          variant: "destructive"
-        });
-        return;
-      }
-      
-      const saved = await saveFormData(leadId, currentStep, formData, restaurantName);
-      setIsLoading(false);
-      if (saved) {
-        setCurrentStep(prev => prev + 1);
-      }
-      return;
-    }
-    
-    if (currentStep === 3) {
-      // SII credentials step (now fourth step)
-      if (!formData.rut || !formData.clave) {
-        setIsLoading(false);
-        toast({
-          title: "Campos requeridos",
-          description: "Por favor completa el RUT y clave del SII",
-          variant: "destructive"
-        });
-        return;
-      }
-      
-      const rutRegex = /^\d{1,8}-[\dkK]$/;
-      if (!rutRegex.test(formData.rut)) {
-        setIsLoading(false);
-        toast({
-          title: "Formato incorrecto",
-          description: "El RUT debe tener el formato 1234567-8 o 12345678-9",
-          variant: "destructive"
-        });
-        return;
-      }
-      
-      try {
-        const validationResult = await validateSiiCredentials(formData.rut, formData.clave);
-        if (!validationResult.success) {
-          setIsLoading(false);
-          toast({
-            title: "Credenciales inválidas",
-            description: "Las credenciales del SII no son válidas. Por favor verifica e intenta nuevamente.",
-            variant: "destructive"
-          });
-          return;
-        }
-        
-        const saved = await saveFormData(leadId, currentStep, formData, restaurantName);
-        if (!saved) {
-          setIsLoading(false);
-          return;
-        }
-        
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        if (leadId) {
-          const numericLeadId = Number(leadId);
-          const leadDataForSlack: Partial<Lead> = {
-            sistema_facturacion: formData.sistema,
-            sistema_custom: formData.sistemaCustom,
-            subdominio: formData.subdominio,
-            rut: formData.rut,
-            facturas_compra_mes: formData.facturas,
-            sii_connected: true
-          };
-          notifySlackOnboardingStep(numericLeadId, 'onboarding-completed', leadDataForSlack);
-          
-          pushToDataLayer('onboarding_completed', {
-            leadId: numericLeadId,
-            restaurantName: restaurantName,
-            subdomain: formData.subdominio,
-            ...leadDataForSlack
-          });
-        }
-        
-        // Create a complete state object with all user data to pass to the success page
-        setIsComplete(true);
-        setIsLoading(false);
-        
-        // Ensure we're passing ALL the user data to the success page
-        const completeUserData = {
-          ...location.state,
-          firstName: leadData.firstName,
-          lastName: leadData.lastName,
-          email: leadData.email,
-          ciudad: leadData.ciudad,
-          whatsapp: leadData.whatsapp,
-          restaurantName: leadData.nombreRestaurante,
-          formData: {
-            ...formData,
-            siiConnected: true
-          }
-        };
-        
-        console.log("Navigating to success with complete user data:", completeUserData);
-        
-        // Navigate with the complete data
-        navigate('/onboarding-success', { 
-          state: completeUserData,
-          replace: true
-        });
-        
-        return;
-      } catch (error) {
-        toast({
-          title: "Error",
-          description: "Ha ocurrido un error al conectar con el SII. Intenta nuevamente.",
-          variant: "destructive"
-        });
-        setIsLoading(false);
-        return;
-      }
-    }
+    // Remove deprecated steps - no longer part of the main flow
   };
 
   const handleBack = () => {
@@ -410,7 +286,7 @@ const OnboardingSuccess = () => {
 
   const handleContinueFromCalendlyLow = () => {
     setShowCalendlyLow(false);
-    setCurrentStep(2); // Continuar al paso de subdominio
+    setIsComplete(true); // Completar el proceso y mostrar página de éxito
   };
 
   const getLeftSideContent = () => {
@@ -679,7 +555,7 @@ const OnboardingSuccess = () => {
                       <CardContent className="pb-8">
                         {steps[currentStep].content}
                         
-                        {currentStep < 3 && (
+                        {currentStep < 1 && (
                           <div className="flex justify-between mt-10">
                             <Button 
                               id={`back-button-step-${currentStep}`} 
@@ -713,28 +589,22 @@ const OnboardingSuccess = () => {
                           </div>
                         )}
                         
-                        {currentStep === 3 && (
+                        {currentStep === 1 && (
                           <Button 
-                            id="sii-connect-button" 
+                            id="complete-billing-button" 
                             onClick={handleNext} 
                             className="w-full mt-4 gap-2" 
-                            style={{
-                              backgroundColor: "#DA5C2B",
-                              borderColor: "#DA5C2B"
-                            }} 
                             disabled={isLoading}
                           >
                             {!isLoading ? (
                               <>
-                                <div className="bg-white rounded-md p-1 flex items-center justify-center">
-                                  <img src="/logosii.png" alt="SII" className="h-4" />
-                                </div>
-                                Iniciar sesión con el SII
+                                Continuar
+                                <ArrowRight className="w-4 h-4" />
                               </>
                             ) : (
                               <span className="flex items-center gap-2">
                                 <Loader className="h-4 w-4 animate-spin" />
-                                Conectando...
+                                Guardando...
                               </span>
                             )}
                           </Button>
