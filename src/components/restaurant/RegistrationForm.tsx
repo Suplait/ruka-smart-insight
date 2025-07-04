@@ -230,7 +230,7 @@ export default function RegistrationForm({
     >
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <h2 className="text-2xl font-semibold">Prueba Ruka por 30 días</h2>
+          <h2 className="text-2xl font-semibold">Agenda una llamada para implementar Ruka</h2>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -239,13 +239,13 @@ export default function RegistrationForm({
                 </div>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="max-w-[200px] p-3">
-                <p>Si no te gusta, no pagarás ni un peso. </p>
+                <p>Implementación completa en menos de 48 horas</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </div>
         <p className="text-lg text-muted-foreground font-medium">
-          Si no te gusta o no le ves valor, emitimos una NC por el 100%. Sin preguntas, sin letra chica.
+          Implementamos Ruka en tu restaurante en menos de 48 horas. Agenda una llamada y empezaremos de inmediato.
         </p>
       </div>
 
@@ -399,7 +399,7 @@ export default function RegistrationForm({
               <>Procesando...</>
             ) : (
               <>
-                Comenzar Ahora <ArrowRight className="w-5 h-5" />
+                Agendar Llamada <ArrowRight className="w-5 h-5" />
               </>
             )}
           </Button>
@@ -411,7 +411,7 @@ export default function RegistrationForm({
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <Clock4 className="w-4 h-4" />
-              <span>Soporte 24/7</span>
+              <span>Implementación 48hrs</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <CreditCard className="w-4 h-4" />
