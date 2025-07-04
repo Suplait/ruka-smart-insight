@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FAQ from "@/components/FAQ";
-import GeneralRegistrationForm from "@/components/general/GeneralRegistrationForm";
+import RegistrationForm from "@/components/restaurant/RegistrationForm";
 import DataFlowSection from "@/components/DataFlowSection";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -264,7 +264,7 @@ export default function Register() {
                 </motion.div>
 
                 <div id="mobile-form-section" className="lg:hidden w-full mb-8">
-                  <GeneralRegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
+                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
                 </div>
 
                 <motion.div initial={{
@@ -334,7 +334,7 @@ export default function Register() {
                 <div className="sticky top-24" style={{
                   height: 'calc(100vh - 96px)'
                 }}>
-                  <GeneralRegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
+                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
                 </div>
               </div>
             </div>
