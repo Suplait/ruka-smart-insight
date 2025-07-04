@@ -7,7 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RestaurantDataFlowSection from "@/components/RestaurantDataFlowSection";
 import FAQ from "@/components/FAQ";
-import HotelRegistrationForm from "@/components/hotel/HotelRegistrationForm";
+import RegistrationForm from "@/components/restaurant/RegistrationForm";
 import ValueMessageTypewriter from "@/components/restaurant/ValueMessageTypewriter";
 import ImpactStats from "@/components/restaurant/ImpactStats";
 
@@ -140,7 +140,7 @@ export default function Hoteles() {
             </div>
 
             <div className="lg:hidden w-full sm:px-4 mb-8">
-              <HotelRegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
+              <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
             </div>
 
             <div className="lg:grid lg:grid-cols-[1fr,460px] lg:gap-16">
@@ -438,7 +438,7 @@ export default function Hoteles() {
                 <div className="sticky top-24" style={{
                 height: 'calc(100vh - 96px)'
               }}>
-                  <HotelRegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
+                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
                 </div>
               </div>
             </div>
