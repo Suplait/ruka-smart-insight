@@ -1,9 +1,10 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from "@/components/theme-provider"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from "@/components/ui/toaster"
+import { extractUTMParams, saveUTMParams } from '@/utils/utmTracker';
 
 import Index from './pages/Index';
 import Restaurantes from './pages/Restaurantes';
@@ -21,6 +22,12 @@ import Webinar from './pages/Webinar';
 const queryClient = new QueryClient();
 
 function App() {
+  useEffect(() => {
+    // Capture UTM parameters on app load
+    const utmParams = extractUTMParams();
+    saveUTMParams(utmParams);
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="ruka-theme">
