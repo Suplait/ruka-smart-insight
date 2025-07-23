@@ -9,6 +9,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { supabase } from "@/integrations/supabase/client";
 import { pushToDataLayer, trackFormSubmission, trackRegistration } from "@/utils/dataLayer";
+import { getStoredUTMParams } from "@/utils/utmTracker";
 interface FormData {
   firstName: string;
   lastName: string;
@@ -102,6 +103,9 @@ export default function RegistrationForm({
         console.log('Slack notification error, proceeding without timestamp:', slackError);
       }
 
+      // Get stored UTM parameters
+      const utmParams = getStoredUTMParams();
+
       // Create the lead data object
       const leadDataToInsert: any = {
         company_name: formData.nombreRestaurante,
@@ -111,7 +115,11 @@ export default function RegistrationForm({
         email: formData.email,
         ccity: formData.ciudad,
         whatsapp: whatsappNumber,
-        codigo_promocional: formData.codigoPromocional || null
+        codigo_promocional: formData.codigoPromocional || null,
+        utm_source: utmParams.utm_source,
+        utm_medium: utmParams.utm_medium,
+        utm_campaign: utmParams.utm_campaign,
+        utm_content: utmParams.utm_content
       };
 
       // Add slack_message_ts if we got it in time
