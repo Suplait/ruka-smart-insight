@@ -45,7 +45,7 @@ const CalendlyIntegrationLow = ({ leadData }: CalendlyIntegrationLowProps) => {
         const calendlyElement = document.getElementById('calendly-embed-element-low');
         if (calendlyElement) {
           window.Calendly.initInlineWidget({
-            url: 'https://calendly.com/ruka-ai/calendario-general-share?hide_event_type_details=1&hide_gdpr_banner=1&text_color=000000&primary_color=4e66e9',
+            url: 'https://calendly.com/ruka-ai/calendario-general-150?hide_event_type_details=1&hide_gdpr_banner=1&text_color=000000&primary_color=4e66e9',
             parentElement: calendlyElement,
             prefill: {
               name: `${leadData.firstName} ${leadData.lastName}`.trim(),
