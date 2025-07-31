@@ -93,7 +93,7 @@ export default function Hero() {
               </span>
             </h1>
             
-            <p className="text-lg sm:text-xl text-gray-600 max-w-xl leading-relaxed">Agentes con IA que reducen el esfuerzo que necesitas para llevar controlado tu margen operativo</p>
+            <p className="text-lg sm:text-xl text-gray-600 max-w-xl leading-relaxed">Agentes con IA que reducen el esfuerzo que necesitas para llevar controlado tu margen operativo.</p>
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="gap-2 group hover:scale-105 transition-all duration-300 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg" onClick={() => navigate('/register')}>
