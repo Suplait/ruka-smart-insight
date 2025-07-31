@@ -9,7 +9,7 @@ const stats = [
     description: "confían en nosotros",
   },
   {
-    value: "+2.5MM",
+    value: "+3MM",
     metric: "Transacciones",
     icon: TrendingUp,
     description: "digitalizadas",
