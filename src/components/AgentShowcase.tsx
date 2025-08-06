@@ -149,36 +149,70 @@ export default function AgentShowcase() {
       {/* Animated Flow Lines - Desktop */}
       <div className="hidden md:block absolute inset-0 pointer-events-none z-0">
         {/* Vertical line from top to before Funciones Principales */}
-        <div className="absolute left-1/2 top-0 w-0 h-80 border-l border-dashed border-primary/30 transform -translate-x-1/2">
-          {/* Animated dots flowing down */}
-          <div className="absolute -left-1 top-4 w-2 h-2 bg-gradient-to-r from-primary to-purple-600 rounded-full shadow-lg shadow-primary/20 animate-flow-down"></div>
-          <div className="absolute -left-1 top-8 w-2 h-2 bg-gradient-to-r from-primary to-purple-600 rounded-full shadow-lg shadow-primary/20 animate-flow-down" style={{animationDelay: '0.5s'}}></div>
-          <div className="absolute -left-1 top-12 w-2 h-2 bg-gradient-to-r from-primary to-purple-600 rounded-full shadow-lg shadow-primary/20 animate-flow-down" style={{animationDelay: '1s'}}></div>
+        <div className="absolute left-1/2 top-0 h-80 w-2 -translate-x-1/2">
+          <div className="relative w-full h-full">
+            {/* Base dashed line */}
+            <div className="absolute inset-0 border-l-4 border-dashed border-primary/30" />
+            
+            {/* Animated dots */}
+            <div className="absolute inset-0 flex flex-col gap-8 animate-flow-down overflow-hidden">
+              {[...Array(6)].map((_, i) => (
+                <div 
+                  key={i} 
+                  className="w-4 h-4 rounded-full bg-gradient-to-r from-primary to-purple-600 -translate-x-1 shadow-lg shadow-primary/20"
+                />
+              ))}
+            </div>
+          </div>
         </div>
         
         {/* Horizontal line breaking left to Digita Facturas */}
-        <div className="absolute left-1/2 top-80 w-0 h-0 transform -translate-x-1/2">
-          <div className="w-40 h-0 border-t border-dashed border-primary/30 transform -translate-x-full">
-            {/* Animated dots flowing right */}
-            <div className="absolute -top-1 left-4 w-2 h-2 bg-gradient-to-r from-primary to-purple-600 rounded-full shadow-lg shadow-primary/20 animate-flow-right"></div>
-            <div className="absolute -top-1 left-8 w-2 h-2 bg-gradient-to-r from-primary to-purple-600 rounded-full shadow-lg shadow-primary/20 animate-flow-right" style={{animationDelay: '0.3s'}}></div>
-            <div className="absolute -top-1 left-12 w-2 h-2 bg-gradient-to-r from-primary to-purple-600 rounded-full shadow-lg shadow-primary/20 animate-flow-right" style={{animationDelay: '0.6s'}}></div>
+        <div className="absolute left-1/2 top-80 w-48 h-2 -translate-x-full">
+          <div className="relative w-full h-full">
+            {/* Base dashed line */}
+            <div className="absolute inset-0 border-t-4 border-dashed border-primary/30" />
+            
+            {/* Animated dots */}
+            <div className="absolute inset-0 flex gap-8 animate-flow-right overflow-hidden">
+              {[...Array(6)].map((_, i) => (
+                <div 
+                  key={i} 
+                  className="h-4 w-4 rounded-full bg-gradient-to-r from-primary to-purple-600 -translate-y-1 shadow-lg shadow-primary/20"
+                />
+              ))}
+            </div>
+            
+            {/* Arrow pointing to Digita Facturas */}
+            <div className="absolute right-0 -translate-y-1/2 top-1/2">
+              <div className="w-4 h-4 rotate-45 border-t-4 border-r-4 border-primary transform translate-x-1/2" />
+            </div>
           </div>
-          {/* Arrow pointing to Digita Facturas */}
-          <div className="absolute -left-40 -top-2 w-0 h-0 border-r-4 border-b-4 border-primary transform rotate-45 translate-y-1/2"></div>
         </div>
       </div>
 
       {/* Animated Flow Lines - Mobile */}
       <div className="md:hidden absolute inset-0 pointer-events-none z-0">
         {/* Single vertical line flowing down */}
-        <div className="absolute left-1/2 top-0 w-0 h-96 border-l border-dashed border-primary/30 transform -translate-x-1/2">
-          {/* Animated dots flowing down */}
-          <div className="absolute -left-1 top-4 w-2 h-2 bg-gradient-to-r from-primary to-purple-600 rounded-full shadow-lg shadow-primary/20 animate-flow-down"></div>
-          <div className="absolute -left-1 top-8 w-2 h-2 bg-gradient-to-r from-primary to-purple-600 rounded-full shadow-lg shadow-primary/20 animate-flow-down" style={{animationDelay: '0.5s'}}></div>
-          <div className="absolute -left-1 top-12 w-2 h-2 bg-gradient-to-r from-primary to-purple-600 rounded-full shadow-lg shadow-primary/20 animate-flow-down" style={{animationDelay: '1s'}}></div>
-          {/* Arrow pointing down */}
-          <div className="absolute -left-2 top-96 w-0 h-0 border-l-4 border-r-4 border-t-4 border-primary transform translate-y-2"></div>
+        <div className="absolute left-1/2 top-0 h-96 w-2 -translate-x-1/2">
+          <div className="relative w-full h-full">
+            {/* Base dashed line */}
+            <div className="absolute inset-0 border-l-4 border-dashed border-primary/30" />
+            
+            {/* Animated dots */}
+            <div className="absolute inset-0 flex flex-col gap-8 animate-flow-down overflow-hidden">
+              {[...Array(8)].map((_, i) => (
+                <div 
+                  key={i} 
+                  className="w-4 h-4 rounded-full bg-gradient-to-r from-primary to-purple-600 -translate-x-1 shadow-lg shadow-primary/20"
+                />
+              ))}
+            </div>
+            
+            {/* Arrow pointing down */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+              <div className="w-4 h-4 rotate-45 border-r-4 border-b-4 border-primary transform translate-y-1/2" />
+            </div>
+          </div>
         </div>
       </div>
       
