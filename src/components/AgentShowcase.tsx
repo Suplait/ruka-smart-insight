@@ -146,6 +146,70 @@ export default function AgentShowcase() {
     <section className="py-24 bg-gradient-to-b from-white via-slate-50/50 to-white relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05)_0%,transparent_50%)]" />
       
+      {/* Animated Flow Lines - Desktop */}
+      <div className="hidden md:block absolute inset-0 pointer-events-none">
+        {/* Main flow line from top to Funciones Principales */}
+        <div className="absolute left-1/2 top-0 w-1 h-96 transform -translate-x-1/2">
+          <div className="w-full h-full bg-gradient-to-b from-transparent via-blue-500/30 to-blue-500/60 animate-flow-down"></div>
+        </div>
+        
+        {/* Curved line that breaks before Funciones Principales */}
+        <div className="absolute left-1/2 top-80 transform -translate-x-1/2">
+          <svg width="400" height="200" viewBox="0 0 400 200" className="overflow-visible">
+            <defs>
+              <linearGradient id="flowGradientAgent" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style={{stopColor: '#3b82f6', stopOpacity: 0.6}} />
+                <stop offset="50%" style={{stopColor: '#8b5cf6', stopOpacity: 0.8}} />
+                <stop offset="100%" style={{stopColor: '#a855f7', stopOpacity: 0.9}} />
+              </linearGradient>
+              <linearGradient id="flowAnimation" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style={{stopColor: 'transparent'}} />
+                <stop offset="50%" style={{stopColor: '#8b5cf6', stopOpacity: 0.8}} />
+                <stop offset="100%" style={{stopColor: 'transparent'}} />
+                <animateTransform
+                  attributeName="gradientTransform"
+                  type="translate"
+                  values="-100 0;300 0;-100 0"
+                  dur="3s"
+                  repeatCount="indefinite"
+                />
+              </linearGradient>
+            </defs>
+            <path
+              d="M 200 20 Q 200 60 120 100 T 80 160"
+              stroke="url(#flowGradientAgent)"
+              strokeWidth="3"
+              fill="none"
+              className="opacity-60"
+            />
+            <path
+              d="M 200 20 Q 200 60 120 100 T 80 160"
+              stroke="url(#flowAnimation)"
+              strokeWidth="4"
+              fill="none"
+            />
+          </svg>
+        </div>
+        
+        {/* Flow lines to individual function cards */}
+        <div className="absolute left-1/2 top-[32rem] transform -translate-x-1/2">
+          <div className="flex justify-center gap-32">
+            {[0, 1, 2, 3].map((index) => (
+              <div key={index} className="w-1 h-32">
+                <div className="w-full h-full bg-gradient-to-b from-purple-500/60 to-transparent animate-flow-down" style={{animationDelay: `${index * 0.3}s`}}></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Animated Flow Lines - Mobile */}
+      <div className="md:hidden absolute inset-0 pointer-events-none">
+        <div className="absolute left-1/2 top-0 w-1 h-full transform -translate-x-1/2">
+          <div className="w-full h-full bg-gradient-to-b from-transparent via-blue-500/30 to-purple-500/60 animate-flow-down"></div>
+        </div>
+      </div>
+      
       <div className="container relative">
         <div className="text-center mb-20 space-y-6">
           <h2 className="text-4xl lg:text-5xl font-bold">
