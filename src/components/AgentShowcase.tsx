@@ -173,7 +173,7 @@ export default function AgentShowcase() {
             <div className="absolute inset-0 border-t-4 border-dashed border-primary/30" />
             
             {/* Animated dots */}
-            <div className="absolute inset-0 flex gap-8 animate-flow-right overflow-hidden">
+            <div className="absolute inset-0 flex gap-8 animate-flow-left overflow-hidden">
               {[...Array(6)].map((_, i) => (
                 <div 
                   key={i} 
@@ -183,8 +183,31 @@ export default function AgentShowcase() {
             </div>
             
             {/* Arrow pointing to Digita Facturas */}
-            <div className="absolute right-0 -translate-y-1/2 top-1/2">
-              <div className="w-4 h-4 rotate-45 border-t-4 border-r-4 border-primary transform translate-x-1/2" />
+            <div className="absolute left-0 -translate-y-1/2 top-1/2">
+              <div className="w-4 h-4 rotate-45 border-b-4 border-l-4 border-primary transform -translate-x-1/2" />
+            </div>
+          </div>
+        </div>
+        
+        {/* Final vertical line going down to Digita Facturas */}
+        <div className="absolute left-1/4 top-80 w-2 h-16">
+          <div className="relative w-full h-full">
+            {/* Base dashed line */}
+            <div className="absolute inset-0 border-l-4 border-dashed border-primary/30" />
+            
+            {/* Animated dots */}
+            <div className="absolute inset-0 flex flex-col gap-4 animate-flow-down overflow-hidden">
+              {[...Array(3)].map((_, i) => (
+                <div 
+                  key={i} 
+                  className="w-4 h-4 rounded-full bg-gradient-to-r from-primary to-purple-600 -translate-x-1 shadow-lg shadow-primary/20"
+                />
+              ))}
+            </div>
+            
+            {/* Arrow pointing down to card */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+              <div className="w-4 h-4 rotate-45 border-r-4 border-b-4 border-primary transform translate-y-1/2" />
             </div>
           </div>
         </div>
