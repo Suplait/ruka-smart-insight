@@ -39,28 +39,28 @@
 
 @keyframes flowRight {
   0% {
-    transform: translateX(-150%);
+    transform: translateX(-100%);
   }
   100% {
-    transform: translateX(150%);
+    transform: translateX(0%);
   }
 }
 
 @keyframes flowLeft {
   0% {
-    transform: translateX(150%);
+    transform: translateX(100%);
   }
   100% {
-    transform: translateX(-150%);
+    transform: translateX(0%);
   }
 }
 
 @keyframes flowDown {
   0% {
-    transform: translateY(-150%);
+    transform: translateY(-100%);
   }
   100% {
-    transform: translateY(150%);
+    transform: translateY(0%);
   }
 }
 
