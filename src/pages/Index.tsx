@@ -35,9 +35,9 @@ export default function Index() {
       <Navbar />
       <Hero />
       <Stats />
-      <YouTubeDemo />
-      <DataFlowSection />
       <BeforeAfter />
+      <DataFlowSection />
+      <YouTubeDemo />
       <AgentShowcase />
       <Partners />
       <Features />
