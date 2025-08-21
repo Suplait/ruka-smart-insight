@@ -174,7 +174,7 @@ export default function AgentShowcase() {
             <h3 className="text-2xl font-bold text-gray-900 mb-3">Funciones Adicionales</h3>
             <p className="text-gray-600">Expansiones premium para operaciones avanzadas</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {addOns.map((addon, index) => renderVideoCard(addon, index, true))}
           </div>
         </div>
