@@ -9,7 +9,9 @@ import DataFlowSection from "@/components/DataFlowSection";
 import BeforeAfter from "@/components/BeforeAfter";
 import AgentShowcase from "@/components/AgentShowcase";
 import Partners from "@/components/Partners";
-import Features from "@/components/Features";
+import ROICalculator from "@/components/ROICalculator";
+import ImplementationTimeline from "@/components/ImplementationTimeline";
+import PremiumPricing from "@/components/PremiumPricing";
 import MoneyBackGuarantee from "@/components/MoneyBackGuarantee";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
@@ -40,7 +42,9 @@ export default function Index() {
       <YouTubeDemo />
       <AgentShowcase />
       <Partners />
-      <Features />
+      <ROICalculator />
+      <ImplementationTimeline />
+      <PremiumPricing />
       <MoneyBackGuarantee />
       <Testimonials />
       <FAQ />
