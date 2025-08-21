@@ -73,15 +73,16 @@ export default function BeforeAfter() {
   return (
     <section className="py-24 bg-white">
       <div className="container px-4 sm:px-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-          <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-            Automatización que Transforma
-          </span>
-          <br />
-          <span className="text-2xl md:text-3xl text-gray-700 mt-2 block">
+        <div className="text-center mb-16 space-y-6">
+          <h2 className="text-4xl lg:text-5xl font-bold">
+            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+              Automatización que Transforma
+            </span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             De procesos manuales a control total
-          </span>
-        </h2>
+          </p>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Antes */}
