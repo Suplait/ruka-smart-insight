@@ -10,15 +10,16 @@ const DataFlowSection = () => {
       </div>
       
       <div className="container relative">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-          <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-            Conexión Simple y Rápida
-          </span>
-          <br />
-          <span className="text-xl md:text-2xl text-gray-600 mt-4 block">
+        <div className="text-center mb-16 space-y-6">
+          <h2 className="text-4xl lg:text-5xl font-bold">
+            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+              Conexión Simple y Rápida
+            </span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Traemos tus datos de compras y ventas en minutos
-          </span>
-        </h2>
+          </p>
+        </div>
 
         <div className="relative mt-20">
           {/* Desktop Flow Lines */}
