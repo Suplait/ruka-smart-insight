@@ -6,6 +6,7 @@ import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
 import YouTubeDemo from "@/components/YouTubeDemo";
 import DataFlowSection from "@/components/DataFlowSection";
+import BeforeAfter from "@/components/BeforeAfter";
 import AgentShowcase from "@/components/AgentShowcase";
 import Partners from "@/components/Partners";
 import Features from "@/components/Features";
@@ -36,6 +37,7 @@ export default function Index() {
       <Stats />
       <YouTubeDemo />
       <DataFlowSection />
+      <BeforeAfter />
       <AgentShowcase />
       <Partners />
       <Features />
