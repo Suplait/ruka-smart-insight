@@ -126,16 +126,16 @@ export default function AgentShowcase() {
           </div>
           
           {/* Content */}
-          <div className={`p-6 ${isAddon ? 'pb-8' : ''}`}>
+          <div className="p-6">
             <div className="flex items-center gap-4 mb-4">
-              <div className={`${isAddon ? 'w-14 h-14' : 'w-12 h-12'} rounded-2xl ${isAddon ? 'bg-gradient-to-br from-purple-500 to-purple-600 text-white' : 'bg-gradient-to-br from-blue-500 to-blue-600 text-white'} flex items-center justify-center shadow-lg`}>
-                <feature.icon className={`${isAddon ? 'w-7 h-7' : 'w-6 h-6'}`} />
+              <div className={`w-12 h-12 rounded-2xl ${isAddon ? 'bg-gradient-to-br from-purple-500 to-purple-600 text-white' : 'bg-gradient-to-br from-blue-500 to-blue-600 text-white'} flex items-center justify-center shadow-lg`}>
+                <feature.icon className="w-6 h-6" />
               </div>
               <div className="flex-1">
-                <h4 className={`font-bold ${isAddon ? 'text-xl' : 'text-lg'} text-gray-900 mb-1`}>{feature.title}</h4>
+                <h4 className="font-bold text-lg text-gray-900 mb-1">{feature.title}</h4>
               </div>
             </div>
-            <p className={`text-gray-600 leading-relaxed ${isAddon ? 'text-base' : 'text-sm'}`}>{feature.description}</p>
+            <p className="text-gray-600 leading-relaxed text-sm">{feature.description}</p>
           </div>
         </div>
       </motion.div>
