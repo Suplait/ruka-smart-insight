@@ -133,7 +133,7 @@ export default function AgentShowcase() {
         <div className="text-center mb-20 space-y-6">
           <h2 className="text-4xl lg:text-5xl font-bold">
             Así Funcionan Nuestros
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Agentes Inteligentes</span>
+            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"> Agentes Inteligentes</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">Cada agente trabaja 24/7 automatizando procesos específicos de tu negocio</p>
         </div>

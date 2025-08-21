@@ -12,9 +12,8 @@ const DataFlowSection = () => {
       <div className="container relative">
         <div className="text-center mb-16 space-y-6">
           <h2 className="text-4xl lg:text-5xl font-bold">
-            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-              Conexión Simple y Rápida
-            </span>
+            Conexión 
+            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Simple y Rápida</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Traemos tus datos de compras y ventas en minutos

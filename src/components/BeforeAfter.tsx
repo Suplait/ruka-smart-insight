@@ -75,9 +75,8 @@ export default function BeforeAfter() {
       <div className="container px-4 sm:px-6">
         <div className="text-center mb-16 space-y-6">
           <h2 className="text-4xl lg:text-5xl font-bold">
-            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-              Automatización que Transforma
-            </span>
+            Automatización que 
+            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Transforma</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             De procesos manuales a control total
