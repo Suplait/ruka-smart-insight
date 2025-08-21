@@ -1,92 +1,92 @@
-
 import { motion } from "framer-motion";
 import { FileText, Layers, TrendingUp, AlertTriangle, CreditCard, Repeat } from "lucide-react";
 import { useState } from "react";
-
-const coreFeatures = [
-  {
-    icon: FileText,
-    title: "Digita Facturas Automáticamente",
-    description: "Procesa y extrae datos de facturas sin intervención manual",
-    video: "/robot_facturas.mp4",
-    id: "facturas"
-  },
-  {
-    icon: Layers,
-    title: "Categoriza y Clasifica",
-    description: "Agrupa productos y crea maestros de insumos inteligentemente",
-    video: "/robot_cajas.mp4",
-    id: "cajas"
-  },
-  {
-    icon: TrendingUp,
-    title: "Monitorea en Tiempo Real",
-    description: "Aprende de tus patrones de compras y monitorea 24/7",
-    video: "/robot_grafico2.mp4",
-    id: "grafico"
-  },
-  {
-    icon: AlertTriangle,
-    title: "Alerta Instantánea",
-    description: "Notifica anomalías y cambios críticos, al momento",
-    video: "/robot_alerta.mp4",
-    id: "alerta"
-  }
-];
-
-const addOns = [
-  {
-    icon: CreditCard,
-    title: "Gestión de Cuentas por Pagar",
-    description: "Facilita pagos de proveedores y genera nóminas bancarias",
-    video: "/robot_dinero.mp4",
-    id: "dinero"
-  },
-  {
-    icon: Repeat,
-    title: "Sincronización con otras platformas",
-    description: "Actualiza stock y precios en plataformas externas",
-    video: "/robot_inventario.mp4",
-    id: "inventario"
-  }
-];
-
+const coreFeatures = [{
+  icon: FileText,
+  title: "Digita Facturas Automáticamente",
+  description: "Procesa y extrae datos de facturas sin intervención manual",
+  video: "/robot_facturas.mp4",
+  id: "facturas"
+}, {
+  icon: Layers,
+  title: "Categoriza y Clasifica",
+  description: "Agrupa productos y crea maestros de insumos inteligentemente",
+  video: "/robot_cajas.mp4",
+  id: "cajas"
+}, {
+  icon: TrendingUp,
+  title: "Monitorea en Tiempo Real",
+  description: "Aprende de tus patrones de compras y monitorea 24/7",
+  video: "/robot_grafico2.mp4",
+  id: "grafico"
+}, {
+  icon: AlertTriangle,
+  title: "Alerta Instantánea",
+  description: "Notifica anomalías y cambios críticos, al momento",
+  video: "/robot_alerta.mp4",
+  id: "alerta"
+}];
+const addOns = [{
+  icon: CreditCard,
+  title: "Gestión de Cuentas por Pagar",
+  description: "Facilita pagos de proveedores y genera nóminas bancarias",
+  video: "/robot_dinero.mp4",
+  id: "dinero"
+}, {
+  icon: Repeat,
+  title: "Sincronización con otras platformas",
+  description: "Actualiza stock y precios en plataformas externas",
+  video: "/robot_inventario.mp4",
+  id: "inventario"
+}];
 export default function AgentShowcase() {
-  const [videoStates, setVideoStates] = useState<{[key: string]: {loaded: boolean, error: boolean}}>({});
-
+  const [videoStates, setVideoStates] = useState<{
+    [key: string]: {
+      loaded: boolean;
+      error: boolean;
+    };
+  }>({});
   const handleVideoLoad = (videoId: string) => {
     console.log(`AgentShowcase video ${videoId} loaded successfully`);
     setVideoStates(prev => ({
       ...prev,
-      [videoId]: { loaded: true, error: false }
+      [videoId]: {
+        loaded: true,
+        error: false
+      }
     }));
   };
-
   const handleVideoError = (videoId: string, e: any) => {
     console.error(`AgentShowcase video ${videoId} error:`, e);
     setVideoStates(prev => ({
       ...prev,
-      [videoId]: { loaded: false, error: true }
+      [videoId]: {
+        loaded: false,
+        error: true
+      }
     }));
   };
-
   const renderVideoCard = (feature: any, index: number, isAddon: boolean = false) => {
-    const videoState = videoStates[feature.id] || { loaded: false, error: false };
-    
-    return (
-      <motion.div
-        key={index}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-        viewport={{ once: true }}
-        className="group relative"
-      >
+    const videoState = videoStates[feature.id] || {
+      loaded: false,
+      error: false
+    };
+    return <motion.div key={index} initial={{
+      opacity: 0,
+      y: 20
+    }} whileInView={{
+      opacity: 1,
+      y: 0
+    }} transition={{
+      duration: 0.5,
+      delay: index * 0.1
+    }} viewport={{
+      once: true
+    }} className="group relative">
         <div className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-[1.02] border border-gray-100/50 overflow-hidden">
           {/* Video Container */}
           <div className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
-            {videoState.error ? (
-              <div className="w-full h-full flex items-center justify-center">
+            {videoState.error ? <div className="w-full h-full flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-16 h-16 mx-auto mb-4 bg-gray-300 rounded-full flex items-center justify-center">
                     <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,31 +95,17 @@ export default function AgentShowcase() {
                   </div>
                   <p className="text-gray-500 text-sm font-medium">Error al cargar</p>
                 </div>
-              </div>
-            ) : (
-              <>
-                <video 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  preload="metadata"
-                  onLoadedData={() => handleVideoLoad(feature.id)}
-                  onError={(e) => handleVideoError(feature.id, e)}
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                >
+              </div> : <>
+                <video autoPlay loop muted playsInline preload="metadata" onLoadedData={() => handleVideoLoad(feature.id)} onError={e => handleVideoError(feature.id, e)} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
                   <source src={feature.video} type="video/mp4" />
                 </video>
-                {!videoState.loaded && (
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-100/95 to-gray-200/95 backdrop-blur-sm flex items-center justify-center">
+                {!videoState.loaded && <div className="absolute inset-0 bg-gradient-to-br from-gray-100/95 to-gray-200/95 backdrop-blur-sm flex items-center justify-center">
                     <div className="text-center">
                       <div className="w-10 h-10 mx-auto mb-3 bg-white/70 rounded-full animate-spin border-2 border-transparent border-t-blue-500"></div>
                       <p className="text-gray-600 text-sm font-medium">Cargando...</p>
                     </div>
-                  </div>
-                )}
-              </>
-            )}
+                  </div>}
+              </>}
             
             {/* Overlay gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -138,12 +124,9 @@ export default function AgentShowcase() {
             <p className="text-gray-600 leading-relaxed text-sm">{feature.description}</p>
           </div>
         </div>
-      </motion.div>
-    );
+      </motion.div>;
   };
-
-  return (
-    <section className="py-24 bg-gradient-to-b from-white via-slate-50/50 to-white relative overflow-hidden">
+  return <section className="py-24 bg-gradient-to-b from-white via-slate-50/50 to-white relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05)_0%,transparent_50%)]" />
       
       <div className="container relative">
@@ -152,9 +135,7 @@ export default function AgentShowcase() {
             Así Funcionan Nuestros
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Agentes Inteligentes</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Cada agente trabaja 24/7 automatizando procesos específicos de tu negocio con precisión milimétrica
-          </p>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">Cada agente trabaja 24/7 automatizando procesos específicos de tu negocio</p>
         </div>
 
         {/* Core Features */}
@@ -179,6 +160,5 @@ export default function AgentShowcase() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
