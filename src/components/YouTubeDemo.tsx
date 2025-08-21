@@ -17,8 +17,8 @@ export default function YouTubeDemo() {
             Demo de la Plataforma
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold">
-            Ve Ruka.ai en
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent"> Funcionamiento</span>
+            Ve 
+            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"> Ruka.ai</span> en Funcionamiento
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Descubre cómo nuestra plataforma inteligente transforma la gestión de tu negocio
