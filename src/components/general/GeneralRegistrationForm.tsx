@@ -58,39 +58,12 @@ export default function GeneralRegistrationForm({
       const whatsappNumber = formData.whatsapp ? `+56${formData.whatsapp.replace(/^\+56/, '')}` : '';
 
       console.log("Submitting general registration form...");
-      
-      // First create the lead record
-      const {
-        data: leadData,
-        error: leadError
-      } = await supabase
-        .from('leads')
-        .insert({
-          company_name: formData.nombreEmpresa,
-          name: `${formData.firstName} ${formData.lastName}`,
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          email: formData.email,
-          ccity: formData.ciudad,
-          whatsapp: whatsappNumber,
-          codigo_promocional: formData.codigoPromocional || null
-        })
-        .select()
-        .single();
-      
-      if (leadError) {
-        console.error("Lead creation error:", leadError);
-        throw leadError;
-      }
 
-      console.log("Lead created successfully:", leadData);
-
-      const leadId = leadData.id;
-
-      // Send notification to Slack about the new lead
+      // First, try to send Slack notification and get the timestamp
+      let slackTimestamp: string | null = null;
       try {
-        console.log("Sending notification to Slack...");
-        const slackResponse = await supabase.functions.invoke('notify-slack', {
+        // Send Slack notification
+        const slackPromise = supabase.functions.invoke('notify-slack', {
           body: {
             lead: {
               company_name: formData.nombreEmpresa,
@@ -102,32 +75,92 @@ export default function GeneralRegistrationForm({
             isOnboarding: false
           }
         });
-        
-        console.log("Slack response:", slackResponse);
-        
-        if (slackResponse.error) {
-          console.error("Slack notification error:", slackResponse.error);
-        } else if (slackResponse.data?.ts) {
-          const slackTs = slackResponse.data.ts;
-          console.log("Slack message timestamp:", slackTs);
 
-          const updateResponse = await supabase.functions.invoke('update-lead', {
-            body: {
-              leadId: leadId,
-              updateData: {
-                slack_message_ts: slackTs
-              }
-            }
-          });
-          
-          console.log("Update lead response:", updateResponse);
-          
-          if (updateResponse.error) {
-            console.error("Lead update error:", updateResponse.error);
-          }
+        // Create a timeout promise (10 seconds)
+        const timeoutPromise = new Promise<null>(resolve => {
+          setTimeout(() => resolve(null), 10000);
+        });
+
+        // Race between Slack response and timeout
+        const slackResult = await Promise.race([slackPromise, timeoutPromise]);
+
+        // If Slack responded in time and has a timestamp, store it
+        if (slackResult && !slackResult.error && slackResult.data?.ts) {
+          slackTimestamp = slackResult.data.ts;
+          console.log('Slack timestamp received in time:', slackTimestamp);
+        } else {
+          console.log('Slack notification timed out or failed, proceeding without timestamp');
         }
       } catch (slackError) {
-        console.error("Slack communication error:", slackError);
+        console.log('Slack notification error, proceeding without timestamp:', slackError);
+      }
+
+      // Create the lead data object
+      const leadDataToInsert: any = {
+        company_name: formData.nombreEmpresa,
+        name: `${formData.firstName} ${formData.lastName}`,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        ccity: formData.ciudad,
+        whatsapp: whatsappNumber,
+        codigo_promocional: formData.codigoPromocional || null
+      };
+
+      // Add slack_message_ts if we got it in time
+      if (slackTimestamp) {
+        leadDataToInsert.slack_message_ts = slackTimestamp;
+      }
+      
+      // Create the lead record with or without the timestamp
+      const {
+        data: leadData,
+        error: leadError
+      } = await supabase
+        .from('leads')
+        .insert([leadDataToInsert])
+        .select()
+        .single();
+      
+      if (leadError) {
+        console.error("Lead creation error:", leadError);
+        throw leadError;
+      }
+
+      console.log("Lead created successfully:", leadData);
+      const leadId = leadData.id;
+
+      // If we didn't get the timestamp in time, handle the update asynchronously
+      if (!slackTimestamp) {
+        // This runs in background without blocking the user flow
+        supabase.functions.invoke('notify-slack', {
+          body: {
+            lead: {
+              company_name: formData.nombreEmpresa,
+              name: `${formData.firstName} ${formData.lastName}`,
+              email: formData.email,
+              ccity: formData.ciudad,
+              whatsapp: whatsappNumber
+            },
+            isOnboarding: false
+          }
+        }).then(slackResponse => {
+          if (!slackResponse.error && slackResponse.data?.ts) {
+            // Update the lead with the timestamp when it arrives
+            supabase.functions.invoke('update-lead', {
+              body: {
+                leadId: leadId,
+                updateData: {
+                  slack_message_ts: slackResponse.data.ts
+                }
+              }
+            }).catch(updateError => {
+              console.log('Error updating lead with late timestamp:', updateError);
+            });
+          }
+        }).catch(slackError => {
+          console.log('Background Slack notification failed:', slackError);
+        });
       }
 
       // Navigate to onboarding

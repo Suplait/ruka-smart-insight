@@ -58,23 +58,68 @@ export default function HotelRegistrationForm({
       const whatsappNumber = formData.whatsapp ? `+56${formData.whatsapp.replace(/^\+56/, '')}` : '';
 
       console.log("Submitting hotel registration form...");
+
+      // First, try to send Slack notification and get the timestamp
+      let slackTimestamp: string | null = null;
+      try {
+        // Send Slack notification
+        const slackPromise = supabase.functions.invoke('notify-slack', {
+          body: {
+            lead: {
+              company_name: formData.nombreHotel,
+              name: `${formData.firstName} ${formData.lastName}`,
+              email: formData.email,
+              ccity: formData.ciudad,
+              whatsapp: whatsappNumber,
+              industry: "hotel"
+            },
+            isOnboarding: false
+          }
+        });
+
+        // Create a timeout promise (10 seconds)
+        const timeoutPromise = new Promise<null>(resolve => {
+          setTimeout(() => resolve(null), 10000);
+        });
+
+        // Race between Slack response and timeout
+        const slackResult = await Promise.race([slackPromise, timeoutPromise]);
+
+        // If Slack responded in time and has a timestamp, store it
+        if (slackResult && !slackResult.error && slackResult.data?.ts) {
+          slackTimestamp = slackResult.data.ts;
+          console.log('Slack timestamp received in time:', slackTimestamp);
+        } else {
+          console.log('Slack notification timed out or failed, proceeding without timestamp');
+        }
+      } catch (slackError) {
+        console.log('Slack notification error, proceeding without timestamp:', slackError);
+      }
+
+      // Create the lead data object
+      const leadDataToInsert: any = {
+        company_name: formData.nombreHotel,
+        name: `${formData.firstName} ${formData.lastName}`,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        ccity: formData.ciudad,
+        whatsapp: whatsappNumber,
+        codigo_promocional: formData.codigoPromocional || null
+      };
+
+      // Add slack_message_ts if we got it in time
+      if (slackTimestamp) {
+        leadDataToInsert.slack_message_ts = slackTimestamp;
+      }
       
-      // First create the lead record
+      // Create the lead record with or without the timestamp
       const {
         data: leadData,
         error: leadError
       } = await supabase
         .from('leads')
-        .insert({
-          company_name: formData.nombreHotel,
-          name: `${formData.firstName} ${formData.lastName}`,
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          email: formData.email,
-          ccity: formData.ciudad,
-          whatsapp: whatsappNumber,
-          codigo_promocional: formData.codigoPromocional || null
-        })
+        .insert([leadDataToInsert])
         .select()
         .single();
       
@@ -84,14 +129,12 @@ export default function HotelRegistrationForm({
       }
 
       console.log("Lead created successfully:", leadData);
-
-      // Get the ID of the inserted lead
       const leadId = leadData.id;
 
-      // Send notification to Slack about the new lead (only for initial registration)
-      try {
-        console.log("Sending notification to Slack...");
-        const slackResponse = await supabase.functions.invoke('notify-slack', {
+      // If we didn't get the timestamp in time, handle the update asynchronously
+      if (!slackTimestamp) {
+        // This runs in background without blocking the user flow
+        supabase.functions.invoke('notify-slack', {
           body: {
             lead: {
               company_name: formData.nombreHotel,
@@ -99,42 +142,27 @@ export default function HotelRegistrationForm({
               email: formData.email,
               ccity: formData.ciudad,
               whatsapp: whatsappNumber,
-              industry: "hotel" // This is for the Slack notification only, not DB storage
+              industry: "hotel"
             },
-            isOnboarding: false // Esta es una notificación inicial, no una actualización de onboarding
+            isOnboarding: false
           }
-        });
-        
-        console.log("Slack response:", slackResponse);
-        
-        if (slackResponse.error) {
-          console.error("Slack notification error:", slackResponse.error);
-          // Don't throw error here, just log warning
-        } else if (slackResponse.data?.ts) {
-          // Store the Slack message timestamp for future thread replies
-          const slackTs = slackResponse.data.ts;
-          console.log("Slack message timestamp:", slackTs);
-
-          // Use the more reliable Edge Function to update the lead record
-          const updateResponse = await supabase.functions.invoke('update-lead', {
-            body: {
-              leadId: leadId,
-              updateData: {
-                slack_message_ts: slackTs
+        }).then(slackResponse => {
+          if (!slackResponse.error && slackResponse.data?.ts) {
+            // Update the lead with the timestamp when it arrives
+            supabase.functions.invoke('update-lead', {
+              body: {
+                leadId: leadId,
+                updateData: {
+                  slack_message_ts: slackResponse.data.ts
+                }
               }
-            }
-          });
-          
-          console.log("Update lead response:", updateResponse);
-          
-          if (updateResponse.error) {
-            console.error("Lead update error:", updateResponse.error);
-            // Error handling
+            }).catch(updateError => {
+              console.log('Error updating lead with late timestamp:', updateError);
+            });
           }
-        }
-      } catch (slackError) {
-        console.error("Slack communication error:", slackError);
-        // Don't throw error here, just log warning
+        }).catch(slackError => {
+          console.log('Background Slack notification failed:', slackError);
+        });
       }
 
       // Navigate to onboarding with hotel name and leadId in state

@@ -84,9 +84,9 @@ export default function RegistrationForm({
           }
         });
 
-        // Create a timeout promise (2 seconds)
+        // Create a timeout promise (10 seconds)
         const timeoutPromise = new Promise<null>(resolve => {
-          setTimeout(() => resolve(null), 2000);
+          setTimeout(() => resolve(null), 10000);
         });
 
         // Race between Slack response and timeout
