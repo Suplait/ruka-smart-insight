@@ -39,22 +39,27 @@ const faqs = [
 
 export default function FAQ() {
   return (
-    <section className="py-24 bg-white">
-      <div className="container max-w-4xl">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Preguntas Frecuentes</h2>
-          <p className="text-xl text-muted-foreground">
+    <section className="py-32 bg-white">
+      <div className="max-w-4xl mx-auto px-6 sm:px-8">
+        <div className="text-center mb-20 space-y-6">
+          <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">
+            Preguntas{" "}
+            <span className="font-light bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
+              Frecuentes
+            </span>
+          </h2>
+          <p className="text-xl text-gray-600 font-light">
             Todo lo que necesitas saber sobre Ruka.ai
           </p>
         </div>
 
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="single" collapsible className="w-full space-y-4">
           {faqs.map((faq, index) => (
-            <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="text-left text-lg hover:text-primary transition-colors">
+            <AccordionItem key={index} value={`item-${index}`} className="bg-white/60 backdrop-blur-xl rounded-2xl border border-gray-200/50 px-6 data-[state=open]:bg-white/80 transition-all duration-300">
+              <AccordionTrigger className="text-left text-lg font-medium text-gray-900 hover:text-primary transition-colors py-6 hover:no-underline">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
+              <AccordionContent className="text-gray-600 font-light pb-6 leading-relaxed">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>
