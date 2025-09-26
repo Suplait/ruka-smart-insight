@@ -88,19 +88,19 @@ export default function Hero() {
               Agentes con IA que reducen el esfuerzo que necesitas para llevar controlado tu margen operativo.
             </p>
             
-            {/* Apple-style buttons */}
+            {/* Apple-style buttons with primary colors */}
             <div className="flex flex-col sm:flex-row gap-6">
               <Button 
                 size="lg" 
-                className="h-14 px-8 text-base font-medium rounded-full bg-blue-600 hover:bg-blue-700 border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]" 
+                className="h-14 px-8 text-base font-medium rounded-full bg-primary hover:bg-primary/90 border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]" 
                 onClick={() => navigate('/register')}
               >
                 Regístrate gratis
               </Button>
               <Button 
                 size="lg" 
-                variant="ghost" 
-                className="h-14 px-8 text-base font-medium rounded-full text-blue-600 hover:bg-blue-50 transition-all duration-300 hover:scale-[1.02]" 
+                variant="outline" 
+                className="h-14 px-8 text-base font-medium rounded-full border-primary/20 text-primary hover:bg-primary/5 transition-all duration-300 hover:scale-[1.02]" 
                 onClick={scrollToGuarantee}
               >
                 Garantía de 30 días →

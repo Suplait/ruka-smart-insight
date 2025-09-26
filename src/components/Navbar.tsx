@@ -81,7 +81,7 @@ export default function Navbar() {
   );
 
   return (
-    <nav className="fixed top-6 left-6 right-6 z-50 bg-white/70 backdrop-blur-xl border border-gray-200/50 rounded-2xl shadow-lg">
+    <nav className="fixed top-6 left-6 right-6 z-50 bg-white/70 backdrop-blur-xl border border-gray-200/30 rounded-2xl">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -90,24 +90,24 @@ export default function Navbar() {
             </Link>
           </div>
           
-          <div className="hidden md:flex items-center space-x-6">
-            <button onClick={() => scrollToSection('features')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+          <div className="hidden md:flex items-center space-x-8">
+            <button onClick={() => scrollToSection('features')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               Features
             </button>
-            <button onClick={() => scrollToSection('product')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            <button onClick={() => scrollToSection('product')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               Producto
             </button>
-            <button onClick={() => scrollToSection('guarantee')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            <button onClick={() => scrollToSection('guarantee')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               Garantía
             </button>
-            <button onClick={() => scrollToSection('testimonials')} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            <button onClick={() => scrollToSection('testimonials')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               Testimonios
             </button>
             
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm text-muted-foreground hover:text-primary bg-transparent">
+                  <NavigationMenuTrigger className="text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent border-0">
                     Industrias
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -160,13 +160,13 @@ export default function Navbar() {
             </NavigationMenu>
           </div>
 
-          <div className="flex items-center gap-2 md:gap-4">
-            <div className="hidden md:flex items-center gap-4">
-              <Button variant="outline" size="sm" className="gap-2" onClick={() => setShowSubdomainModal(true)}>
-                Iniciar Sesión <LogIn className="w-4 h-4" />
+          <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-3">
+              <Button variant="ghost" size="sm" className="h-10 px-4 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100/50 rounded-full" onClick={() => setShowSubdomainModal(true)}>
+                Iniciar Sesión
               </Button>
-              <Button size="sm" className="gap-2" onClick={() => navigate('/register')}>
-                Regístrate <ArrowRight className="w-4 h-4" />
+              <Button size="sm" className="h-10 px-6 text-sm font-medium bg-primary hover:bg-primary/90 rounded-full" onClick={() => navigate('/register')}>
+                Regístrate
               </Button>
             </div>
             <MobileMenu />
