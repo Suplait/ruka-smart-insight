@@ -1,9 +1,12 @@
-import { ArrowRight } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, useScroll, useTransform } from "framer-motion";
 const valueMessages = ["Automatiza el registro de compras.", "Controla tu margen al día, no al mes.", "Descubre alzas de precio de tus insumos en tiempo real.", "Genera reportes en segundos usando lenguaje natural.", "Gestiona simple el pago a tus proveedores.", "Ten toda tu información a la mano.", "Libera HH a la semana para que te enfoques en lo que importa."];
 export default function Hero() {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 300], [0, -50]);
+  const scale = useTransform(scrollY, [0, 300], [1, 1.05]);
   const navigate = useNavigate();
   const [currentMessage, setCurrentMessage] = useState(0);
   const [displayText, setDisplayText] = useState("");
@@ -58,7 +61,8 @@ export default function Hero() {
     }
   };
 
-  return <section className="relative min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50/50 flex items-center overflow-hidden pt-24 sm:pt-20">
+  return (
+    <section className="relative min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50/50 flex items-center overflow-hidden pt-24 sm:pt-20">
       {/* Apple-style subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-purple-50/20" />
       
