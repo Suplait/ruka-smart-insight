@@ -30,31 +30,31 @@ const stats = [
 
 export default function Stats() {
   return (
-    <section className="py-12 bg-white">
-      <div className="container">
+    <section className="py-20 bg-gray-50/50">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <div
               key={stat.metric}
-              className="relative overflow-hidden group p-8 rounded-2xl bg-gradient-to-br from-secondary/40 to-secondary/20 hover:from-secondary/60 hover:to-secondary/40 transition-all duration-300 ease-in-out"
+              className="relative group p-8 rounded-2xl bg-white/60 backdrop-blur-xl border border-gray-200/50 hover:bg-white/80 transition-all duration-500 hover:scale-[1.02]"
               style={{ 
-                animationDelay: `${index * 150}ms`,
-                transform: 'translateY(0)',
-                transition: 'transform 0.3s ease-in-out'
+                animationDelay: `${index * 100}ms`,
               }}
             >
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <stat.icon className="w-16 h-16 text-primary" />
+              {/* Subtle icon background */}
+              <div className="absolute top-6 right-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                <stat.icon className="w-12 h-12 text-gray-900" />
               </div>
-              <div className="relative z-10 space-y-4">
-                <p className="text-4xl font-bold text-primary tracking-tight">
+              
+              <div className="relative z-10 space-y-3">
+                <p className="text-3xl font-light text-gray-900 tracking-tight">
                   {stat.value}
                 </p>
-                <div className="space-y-2">
-                  <h3 className="text-xl font-semibold text-foreground">
+                <div className="space-y-1">
+                  <h3 className="text-base font-medium text-gray-900">
                     {stat.metric}
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-gray-600 font-light">
                     {stat.description}
                   </p>
                 </div>

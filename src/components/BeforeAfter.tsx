@@ -71,91 +71,81 @@ const ArrowAnimation = () => (
 
 export default function BeforeAfter() {
   return (
-    <section className="py-24 bg-white">
-      <div className="container px-4 sm:px-6">
-        <div className="text-center mb-16 space-y-6">
-          <h2 className="text-4xl lg:text-5xl font-bold">
-            Automatización que 
-            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"> Transforma</span>
+    <section className="py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
+        <div className="text-center mb-20 space-y-6">
+          <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">
+            Automatización que{" "}
+            <span className="font-light bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
+              Transforma
+            </span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 font-light max-w-2xl mx-auto">
             De procesos manuales a control total
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Antes */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
+          {/* Antes - Apple style */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="relative group"
+            className="relative"
           >
-            <motion.div 
-              initial={{ rotate: -2 }}
-              whileHover={{ rotate: 0 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-red-50 rounded-2xl"
-            />
-            <div className="relative p-8 space-y-6">
-              <div className="flex items-center gap-4 mb-6">
-                <Clock className="w-8 h-8 text-red-500" />
-                <h3 className="text-2xl font-semibold">Antes</h3>
+            <div className="p-10 bg-gray-50/50 rounded-3xl border border-gray-200/50 backdrop-blur-xl">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 bg-red-100 rounded-2xl flex items-center justify-center">
+                  <Clock className="w-6 h-6 text-red-600" />
+                </div>
+                <h3 className="text-2xl font-light text-gray-900">Antes</h3>
               </div>
+              
               <motion.ul className="space-y-4" variants={containerVariants}>
                 {beforePoints.map((point, index) => (
                   <motion.li
                     key={index}
                     variants={itemVariants}
-                    className="flex items-start gap-3 group"
+                    className="flex items-start gap-4 group"
                   >
-                    <motion.div
-                      whileHover={{ scale: 1.2 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                    >
-                      <X className="w-5 h-5 text-red-500 flex-shrink-0 mt-1" />
-                    </motion.div>
-                    <p className="group-hover:text-red-700 transition-colors">{point}</p>
+                    <div className="w-5 h-5 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <X className="w-3 h-3 text-red-600" />
+                    </div>
+                    <p className="text-gray-700 font-light leading-relaxed">{point}</p>
                   </motion.li>
                 ))}
               </motion.ul>
             </div>
           </motion.div>
 
-          {/* Después */}
+          {/* Con Ruka - Apple style */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="relative group"
+            className="relative"
           >
-            <motion.div 
-              initial={{ rotate: 2 }}
-              whileHover={{ rotate: 0 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-green-50 rounded-2xl"
-            />
-            <div className="relative p-8 space-y-6">
-              <div className="flex items-center gap-4 mb-6">
-                <CheckCircle className="w-8 h-8 text-green-500" />
-                <h3 className="text-2xl font-semibold">Con Ruka</h3>
+            <div className="p-10 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 rounded-3xl border border-primary/20 backdrop-blur-xl">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center">
+                  <CheckCircle className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-2xl font-light text-gray-900">Con Ruka</h3>
               </div>
+              
               <motion.ul className="space-y-4" variants={containerVariants}>
                 {afterPoints.map((point, index) => (
                   <motion.li
                     key={index}
                     variants={itemVariants}
-                    className="flex items-start gap-3 group"
+                    className="flex items-start gap-4 group"
                   >
-                    <motion.div
-                      whileHover={{ scale: 1.2 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                    >
-                      <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-1" />
-                    </motion.div>
-                    <p className="group-hover:text-green-700 transition-colors">{point}</p>
+                    <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <CheckCircle className="w-3 h-3 text-primary" />
+                    </div>
+                    <p className="text-gray-700 font-light leading-relaxed">{point}</p>
                   </motion.li>
                 ))}
               </motion.ul>
