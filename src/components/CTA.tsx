@@ -29,22 +29,25 @@ export default function CTA() {
   ];
 
   return (
-    <section className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/30 to-primary/5" />
-      <div className="container relative">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-primary bg-clip-text text-transparent">
-            ¿List@ para tomar el control de tu margen operativo?
+    <section className="py-32 bg-gray-50/50 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto px-6 sm:px-8 relative">
+        <div className="text-center space-y-8">
+          <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">
+            ¿List@ para tomar el{" "}
+            <span className="font-light bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
+              control
+            </span>{" "}
+            de tu margen operativo?
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-xl text-gray-600 font-light">
             Únete a las empresas que ya eliminaron la digitación manual y tienen visibilidad total de sus operaciones con Ruka.ai
           </p>
           
           <div className="grid sm:grid-cols-2 gap-4 text-left max-w-2xl mx-auto mb-8">
             {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <CheckCircle2 className="text-primary flex-shrink-0" />
-                <span>{benefit}</span>
+              <div key={index} className="flex items-center gap-3">
+                <CheckCircle2 className="text-primary flex-shrink-0 w-5 h-5" />
+                <span className="text-gray-700 font-light">{benefit}</span>
               </div>
             ))}
           </div>
@@ -52,7 +55,7 @@ export default function CTA() {
           <div className="space-y-6">
             <Button 
               size="lg" 
-              className="gap-2 group hover:scale-105 transition-all duration-300"
+              className="gap-2 group transition-all duration-300"
               onClick={() => navigate('/register')}
             >
               Regístrate
@@ -63,7 +66,7 @@ export default function CTA() {
               {trustBadges.map((badge, index) => (
                 <div key={index} className="flex items-center gap-2 text-gray-500">
                   <badge.icon className="w-4 h-4" />
-                  <span className="text-sm">{badge.text}</span>
+                  <span className="text-sm font-light">{badge.text}</span>
                 </div>
               ))}
             </div>

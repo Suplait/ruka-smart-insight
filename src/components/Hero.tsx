@@ -127,7 +127,7 @@ export default function Hero() {
               <div className="absolute -inset-8 bg-black/5 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
               
               {/* Main video container - keeping original dimensions */}
-              <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-black shadow-2xl border border-gray-200/50 group-hover:scale-[1.02] transition-all duration-500">
+              <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-black shadow-sm border border-gray-200/50 group-hover:scale-[1.02] transition-all duration-500">
                 {videoError ? (
                   <div className="w-full h-full flex items-center justify-center bg-gray-50">
                     <div className="text-center">
