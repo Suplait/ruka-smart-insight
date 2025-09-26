@@ -117,7 +117,7 @@ export default function Footer() {
               <li>
                 <Link 
                   to="/register"
-                  className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                  className="inline-flex items-center h-10 px-6 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-full transition-colors"
                 >
                   Regístrate
                 </Link>

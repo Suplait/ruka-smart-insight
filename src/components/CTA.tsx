@@ -54,8 +54,8 @@ export default function CTA() {
 
           <div className="space-y-6">
             <Button 
-              size="lg" 
-              className="gap-2 group transition-all duration-300"
+              size="sm" 
+              className="h-10 px-6 text-sm font-medium bg-primary hover:bg-primary/90 rounded-full gap-2 group"
               onClick={() => navigate('/register')}
             >
               Regístrate

@@ -91,8 +91,8 @@ export default function Hero() {
             {/* Apple-style buttons with primary colors */}
             <div className="flex flex-col sm:flex-row gap-6">
               <Button 
-                size="lg" 
-                className="h-14 px-8 text-base font-medium rounded-full bg-primary hover:bg-primary/90 border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]" 
+                size="sm" 
+                className="h-10 px-6 text-sm font-medium bg-primary hover:bg-primary/90 rounded-full" 
                 onClick={() => navigate('/register')}
               >
                 Regístrate gratis
@@ -127,7 +127,7 @@ export default function Hero() {
               <div className="absolute -inset-8 bg-black/5 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
               
               {/* Main video container - keeping original dimensions */}
-              <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-black shadow-sm border border-gray-200/50 group-hover:scale-[1.02] transition-all duration-500">
+              <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-white/60 backdrop-blur-xl shadow-sm border border-gray-200/50 group-hover:scale-[1.02] transition-all duration-500">
                 {videoError ? (
                   <div className="w-full h-full flex items-center justify-center bg-gray-50">
                     <div className="text-center">

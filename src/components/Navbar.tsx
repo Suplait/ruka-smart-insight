@@ -68,7 +68,7 @@ export default function Navbar() {
             }}>
               Iniciar Sesión <LogIn className="w-4 h-4" />
             </Button>
-            <Button className="w-full justify-start gap-2" onClick={() => {
+            <Button className="w-full justify-start gap-2 h-10 px-6 text-sm font-medium bg-primary hover:bg-primary/90 rounded-full" onClick={() => {
               navigate('/register');
               setIsOpen(false);
             }}>

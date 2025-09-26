@@ -32,8 +32,8 @@ export default function MoneyBackGuarantee() {
           </p>
           
           <Button 
-            size="lg" 
-            className="gap-2 group"
+            size="sm" 
+            className="h-10 px-6 text-sm font-medium bg-primary hover:bg-primary/90 rounded-full gap-2 group"
             onClick={() => navigate('/register')}
           >
             Regístrate
