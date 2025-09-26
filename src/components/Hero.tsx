@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
+import TextReveal from "./TextReveal";
 const valueMessages = ["Automatiza el registro de compras.", "Controla tu margen al día, no al mes.", "Descubre alzas de precio de tus insumos en tiempo real.", "Genera reportes en segundos usando lenguaje natural.", "Gestiona simple el pago a tus proveedores.", "Ten toda tu información a la mano.", "Libera HH a la semana para que te enfoques en lo que importa."];
 export default function Hero() {
   const { scrollY } = useScroll();
@@ -124,14 +125,36 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right content - Robot video with subtle parallax */}
+          {/* Right content - Robot video with dramatic parallax */}
           <motion.div 
-            style={{ y, scale }}
+            style={{ 
+              y: useTransform(scrollY, [0, 500], [0, -100]),
+              scale: useTransform(scrollY, [0, 500], [1, 1.1]),
+              rotateY: useTransform(scrollY, [0, 500], [0, -5])
+            }}
             className="flex justify-center items-center relative order-1 lg:order-2"
+            initial={{ opacity: 0, scale: 0.8, rotateY: 25 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ 
+              duration: 1.5, 
+              delay: 2,
+              ease: [0.25, 0.46, 0.45, 0.94] 
+            }}
           >
             <div className="relative group">
-              {/* Subtle Apple-style shadow */}
-              <div className="absolute -inset-8 bg-black/5 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+              {/* Dramatic glow effect */}
+              <motion.div 
+                className="absolute -inset-12 bg-gradient-to-r from-primary/20 via-purple-500/20 to-primary/20 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-70"
+                animate={{ 
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 180, 360]
+                }}
+                transition={{ 
+                  duration: 8, 
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
               
               {/* Main video container - keeping original dimensions */}
               <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-white/60 backdrop-blur-xl shadow-sm border border-gray-200/50 group-hover:scale-[1.02] transition-all duration-500">
