@@ -83,9 +83,9 @@ export default function AgentShowcase() {
     }} viewport={{
       once: true
     }} className="group relative">
-        <div className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-[1.02] border border-gray-100/50 overflow-hidden">
+        <div className="bg-white/60 backdrop-blur-xl rounded-3xl border border-gray-200/50 hover:bg-white/80 transition-all duration-500 group-hover:scale-[1.02] overflow-hidden shadow-sm hover:shadow-lg">
           {/* Video Container */}
-          <div className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
+          <div className="relative aspect-square bg-gradient-to-br from-gray-50/50 to-gray-100/50 overflow-hidden">
             {videoState.error ? <div className="w-full h-full flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-16 h-16 mx-auto mb-4 bg-gray-300 rounded-full flex items-center justify-center">
@@ -114,35 +114,37 @@ export default function AgentShowcase() {
           {/* Content */}
           <div className="p-6">
             <div className="flex items-center gap-4 mb-4">
-              <div className={`w-12 h-12 rounded-2xl ${isAddon ? 'bg-gradient-to-br from-purple-500 to-purple-600 text-white' : 'bg-gradient-to-br from-blue-500 to-blue-600 text-white'} flex items-center justify-center shadow-lg`}>
-                <feature.icon className="w-6 h-6" />
-              </div>
-              <div className="flex-1">
-                <h4 className="font-bold text-lg text-gray-900 mb-1">{feature.title}</h4>
-              </div>
+               <div className={`w-12 h-12 rounded-2xl ${isAddon ? 'bg-primary/10 text-primary' : 'bg-primary/10 text-primary'} flex items-center justify-center`}>
+                 <feature.icon className="w-6 h-6" />
+               </div>
+               <div className="flex-1">
+                 <h4 className="font-medium text-lg text-gray-900 mb-1 tracking-tight">{feature.title}</h4>
+               </div>
             </div>
-            <p className="text-gray-600 leading-relaxed text-sm">{feature.description}</p>
+            <p className="text-gray-600 leading-relaxed text-sm font-light">{feature.description}</p>
           </div>
         </div>
       </motion.div>;
   };
-  return <section className="py-24 bg-gradient-to-b from-white via-slate-50/50 to-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05)_0%,transparent_50%)]" />
-      
-      <div className="container relative">
+  return <section className="py-32 bg-white relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
         <div className="text-center mb-20 space-y-6">
-          <h2 className="text-4xl lg:text-5xl font-bold">
-            Así Funcionan Nuestros
-            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"> Agentes Inteligentes</span>
+          <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">
+            Así Funcionan Nuestros{" "}
+            <span className="font-light bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
+              Agentes Inteligentes
+            </span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">Cada agente trabaja 24/7 automatizando procesos específicos de tu negocio</p>
+          <p className="text-xl text-gray-600 font-light max-w-2xl mx-auto">
+            Cada agente trabaja 24/7 automatizando procesos específicos de tu negocio
+          </p>
         </div>
 
         {/* Core Features */}
         <div className="mb-20">
           <div className="text-center mb-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">Funciones Principales</h3>
-            <p className="text-gray-600">El núcleo de la automatización inteligente</p>
+            <h3 className="text-2xl font-light text-gray-900 mb-3 tracking-tight">Funciones Principales</h3>
+            <p className="text-gray-600 font-light">El núcleo de la automatización inteligente</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {coreFeatures.map((feature, index) => renderVideoCard(feature, index))}
@@ -152,8 +154,8 @@ export default function AgentShowcase() {
         {/* Add-ons */}
         <div>
           <div className="text-center mb-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">Funciones Adicionales</h3>
-            <p className="text-gray-600">Expansiones premium para operaciones avanzadas</p>
+            <h3 className="text-2xl font-light text-gray-900 mb-3 tracking-tight">Funciones Adicionales</h3>
+            <p className="text-gray-600 font-light">Expansiones premium para operaciones avanzadas</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
             {addOns.map((addon, index) => renderVideoCard(addon, index, true))}

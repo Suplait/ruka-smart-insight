@@ -31,38 +31,36 @@ export default function Features() {
   ];
 
   return (
-    <section id="features" className="py-24 relative overflow-hidden bg-gradient-to-b from-white via-gray-50/30 to-white">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.1)_0%,transparent_50%)]" />
-      
-      <div className="container relative">
+    <section id="features" className="py-32 bg-gray-50/50 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
         <div className="text-center mb-20 space-y-6">
-          <h2 className="text-4xl lg:text-5xl font-bold">
-            Agentes Inteligentes que Trabajan por Ti
+          <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">
+            Agentes Inteligentes que{" "}
+            <span className="font-light bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
+              Trabajan por Ti
+            </span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 font-light max-w-2xl mx-auto">
             Imagina tener un equipo que trabaja 24/7 registrando compras, agrupando insumos maestros, monitoreando precios, alertando anomalías y detectando oportunidades.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
-            <Card
+            <div
               key={index}
-              className="group p-8 bg-white/90 backdrop-blur hover:scale-105 hover:shadow-2xl transition-all duration-500 border border-gray-200/50 relative overflow-hidden"
+              className="group relative p-8 bg-white/60 backdrop-blur-xl rounded-3xl border border-gray-200/50 hover:bg-white/80 transition-all duration-500 hover:scale-[1.02] overflow-hidden"
             >
-              {/* Background gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-              
               <div className="relative z-10">
                 <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center shadow-lg`}>
-                    <feature.icon className="w-8 h-8 text-white" />
+                  <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <feature.icon className="w-8 h-8 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900">{feature.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                <h3 className="text-xl font-medium mb-4 text-gray-900 tracking-tight">{feature.title}</h3>
+                <p className="text-gray-600 leading-relaxed font-light">{feature.description}</p>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       </div>
