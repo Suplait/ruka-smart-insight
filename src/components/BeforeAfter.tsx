@@ -88,11 +88,16 @@ export default function BeforeAfter() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
           {/* Antes - Apple style */}
           <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+            initial={{ opacity: 0, x: -100, rotateY: -15 }}
+            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+            transition={{ 
+              duration: 1.2, 
+              ease: [0.25, 0.25, 0, 1],
+              delay: 0.2
+            }}
+            viewport={{ once: true, margin: "-50px" }}
             className="relative"
+            style={{ transformStyle: "preserve-3d" }}
           >
             <div className="p-10 bg-gray-50/50 rounded-3xl border border-gray-200/50 backdrop-blur-xl">
               <div className="flex items-center gap-4 mb-8">
@@ -106,7 +111,14 @@ export default function BeforeAfter() {
                 {beforePoints.map((point, index) => (
                   <motion.li
                     key={index}
-                    variants={itemVariants}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ 
+                      duration: 0.6,
+                      delay: 0.8 + (index * 0.1),
+                      ease: [0.25, 0.25, 0, 1]
+                    }}
+                    viewport={{ once: true }}
                     className="flex items-start gap-4 group"
                   >
                     <div className="w-5 h-5 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -121,11 +133,16 @@ export default function BeforeAfter() {
 
           {/* Con Ruka - Apple style */}
           <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+            initial={{ opacity: 0, x: 100, rotateY: 15 }}
+            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+            transition={{ 
+              duration: 1.2, 
+              ease: [0.25, 0.25, 0, 1],
+              delay: 0.4
+            }}
+            viewport={{ once: true, margin: "-50px" }}
             className="relative"
+            style={{ transformStyle: "preserve-3d" }}
           >
             <div className="p-10 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 rounded-3xl border border-primary/20 backdrop-blur-xl">
               <div className="flex items-center gap-4 mb-8">
@@ -139,7 +156,14 @@ export default function BeforeAfter() {
                 {afterPoints.map((point, index) => (
                   <motion.li
                     key={index}
-                    variants={itemVariants}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ 
+                      duration: 0.6,
+                      delay: 1.0 + (index * 0.1),
+                      ease: [0.25, 0.25, 0, 1]
+                    }}
+                    viewport={{ once: true }}
                     className="flex items-start gap-4 group"
                   >
                     <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">

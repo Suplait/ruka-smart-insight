@@ -120,8 +120,11 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right content - Robot video with original dimensions */}
-          <div className="flex justify-center items-center relative order-1 lg:order-2">
+          {/* Right content - Robot video with parallax effect */}
+          <motion.div 
+            style={{ y, scale }}
+            className="flex justify-center items-center relative order-1 lg:order-2"
+          >
             <div className="relative group">
               {/* Subtle Apple-style shadow */}
               <div className="absolute -inset-8 bg-black/5 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
@@ -166,8 +169,9 @@ export default function Hero() {
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 }
