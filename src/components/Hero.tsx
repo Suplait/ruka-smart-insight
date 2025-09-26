@@ -5,8 +5,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 const valueMessages = ["Automatiza el registro de compras.", "Controla tu margen al día, no al mes.", "Descubre alzas de precio de tus insumos en tiempo real.", "Genera reportes en segundos usando lenguaje natural.", "Gestiona simple el pago a tus proveedores.", "Ten toda tu información a la mano.", "Libera HH a la semana para que te enfoques en lo que importa."];
 export default function Hero() {
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 300], [0, -50]);
-  const scale = useTransform(scrollY, [0, 300], [1, 1.05]);
+  const y = useTransform(scrollY, [0, 300], [0, -30]);
+  const scale = useTransform(scrollY, [0, 300], [1, 1.02]);
   const navigate = useNavigate();
   const [currentMessage, setCurrentMessage] = useState(0);
   const [displayText, setDisplayText] = useState("");
@@ -124,7 +124,7 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right content - Robot video with parallax effect */}
+          {/* Right content - Robot video with subtle parallax */}
           <motion.div 
             style={{ y, scale }}
             className="flex justify-center items-center relative order-1 lg:order-2"
