@@ -67,15 +67,16 @@ export default function Hero() {
       <div className="absolute bottom-1/3 right-1/4 w-1 h-1 bg-gray-400/40 rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-20 sm:py-32">
-        <div className="text-center space-y-12">
-          {/* Apple-style announcement badge */}
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black/5 backdrop-blur-xl border border-gray-200/50 text-gray-700 text-sm font-medium">
-            <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-            Ideal para empresas con alta rotación de inventario
-          </div>
-          
-          {/* Apple-style ultra clean headline */}
-          <div className="space-y-6">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center">
+          {/* Left content - Apple-style Text */}
+          <div className="space-y-8 text-left max-w-2xl order-2 lg:order-1">
+            {/* Apple-style announcement badge */}
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black/5 backdrop-blur-xl border border-gray-200/50 text-gray-700 text-sm font-medium">
+              <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+              Ideal para empresas con alta rotación de inventario
+            </div>
+            
+            {/* Apple-style ultra clean headline */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-thin tracking-tight text-gray-900 leading-tight">
               <span className="block font-light">
                 {displayText}
@@ -83,92 +84,87 @@ export default function Hero() {
               </span>
             </h1>
             
-            <p className="text-xl sm:text-2xl text-gray-600 font-light max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl sm:text-2xl text-gray-600 font-light max-w-xl leading-relaxed">
               Agentes con IA que reducen el esfuerzo que necesitas para llevar controlado tu margen operativo.
             </p>
-          </div>
-          
-          {/* Apple-style buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button 
-              size="lg" 
-              className="h-14 px-8 text-base font-medium rounded-full bg-blue-600 hover:bg-blue-700 border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]" 
-              onClick={() => navigate('/register')}
-            >
-              Regístrate gratis
-            </Button>
-            <Button 
-              size="lg" 
-              variant="ghost" 
-              className="h-14 px-8 text-base font-medium rounded-full text-blue-600 hover:bg-blue-50 transition-all duration-300 hover:scale-[1.02]" 
-              onClick={scrollToGuarantee}
-            >
-              Garantía de 30 días →
-            </Button>
-          </div>
-
-          {/* Apple-style social proof - minimalist */}
-          <div className="flex flex-col items-center gap-4 pt-8">
-            <div className="flex -space-x-2">
-              {[...Array(5)].map((_, i) => (
-                <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-gradient-to-br from-gray-100 to-gray-200 shadow-sm"></div>
-              ))}
-            </div>
-            <p className="text-gray-500 text-sm font-medium">
-              Más de <span className="text-gray-900 font-semibold">200 empresas</span> confían en nosotros
-            </p>
-          </div>
-        </div>
-
-        {/* Apple-style premium video showcase */}
-        <div className="mt-20 flex justify-center">
-          <div className="relative group">
-            {/* Subtle shadow */}
-            <div className="absolute -inset-8 bg-black/5 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
             
-            {/* Main video container - Apple style */}
-            <div className="relative w-80 h-80 sm:w-96 sm:h-96 md:w-[32rem] md:h-[32rem] rounded-[2rem] overflow-hidden bg-black shadow-2xl border border-gray-200/50 group-hover:scale-[1.02] transition-all duration-500">
-              {videoError ? (
-                <div className="w-full h-full flex items-center justify-center bg-gray-50">
-                  <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                      <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <p className="text-gray-500 text-sm">Error cargando demo</p>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <video 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline 
-                    preload="metadata" 
-                    onLoadedData={handleVideoLoad} 
-                    onError={handleVideoError} 
-                    className="w-full h-full object-cover"
-                  >
-                    <source src="/robot_facturas.mp4" type="video/mp4" />
-                    Tu navegador no soporta videos HTML5.
-                  </video>
-                  {!videoLoaded && !videoError && (
-                    <div className="absolute inset-0 bg-gray-50 flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="w-8 h-8 mx-auto mb-3 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
-                        <p className="text-gray-500 text-sm">Cargando demo...</p>
+            {/* Apple-style buttons */}
+            <div className="flex flex-col sm:flex-row gap-6">
+              <Button 
+                size="lg" 
+                className="h-14 px-8 text-base font-medium rounded-full bg-blue-600 hover:bg-blue-700 border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]" 
+                onClick={() => navigate('/register')}
+              >
+                Regístrate gratis
+              </Button>
+              <Button 
+                size="lg" 
+                variant="ghost" 
+                className="h-14 px-8 text-base font-medium rounded-full text-blue-600 hover:bg-blue-50 transition-all duration-300 hover:scale-[1.02]" 
+                onClick={scrollToGuarantee}
+              >
+                Garantía de 30 días →
+              </Button>
+            </div>
+
+            {/* Apple-style social proof - minimalist */}
+            <div className="flex items-center gap-6 pt-4">
+              <div className="flex -space-x-2">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-gradient-to-br from-gray-100 to-gray-200 shadow-sm"></div>
+                ))}
+              </div>
+              <p className="text-gray-500 text-sm font-medium">
+                Más de <span className="text-gray-900 font-semibold">200 empresas</span> confían en nosotros
+              </p>
+            </div>
+          </div>
+
+          {/* Right content - Robot video with original dimensions */}
+          <div className="flex justify-center items-center relative order-1 lg:order-2">
+            <div className="relative group">
+              {/* Subtle Apple-style shadow */}
+              <div className="absolute -inset-8 bg-black/5 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+              
+              {/* Main video container - keeping original dimensions */}
+              <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-black shadow-2xl border border-gray-200/50 group-hover:scale-[1.02] transition-all duration-500">
+                {videoError ? (
+                  <div className="w-full h-full flex items-center justify-center bg-gray-50">
+                    <div className="text-center">
+                      <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                        <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                       </div>
+                      <p className="text-gray-500 text-sm">Error cargando demo</p>
                     </div>
-                  )}
-                </>
-              )}
-            </div>
-            
-            {/* Apple-style floating caption */}
-            <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-center">
-              <p className="text-gray-500 text-sm font-medium">Demo en vivo</p>
+                  </div>
+                ) : (
+                  <>
+                    <video 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline 
+                      preload="metadata" 
+                      onLoadedData={handleVideoLoad} 
+                      onError={handleVideoError} 
+                      className="w-full h-full object-cover"
+                    >
+                      <source src="/robot_facturas.mp4" type="video/mp4" />
+                      Tu navegador no soporta videos HTML5.
+                    </video>
+                    {!videoLoaded && !videoError && (
+                      <div className="absolute inset-0 bg-gray-50 flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="w-8 h-8 mx-auto mb-3 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
+                          <p className="text-gray-500 text-sm">Cargando demo...</p>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
