@@ -259,9 +259,9 @@ export default function Hero() {
               
               {/* Main video container with enhanced animations */}
               <motion.div 
-                className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-white/60 backdrop-blur-xl shadow-sm border border-gray-200/50 perspective-1000"
+                className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-gray-900/90 backdrop-blur-xl shadow-sm border border-gray-200/50 perspective-1000"
                 whileHover={{
-                  backgroundColor: "rgba(255, 255, 255, 0.8)",
+                  backgroundColor: "rgba(17, 24, 39, 0.95)",
                   borderColor: "rgba(59, 130, 246, 0.2)",
                   boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
                   rotateX: -2,
@@ -321,7 +321,7 @@ export default function Hero() {
                     </motion.video>
                     {!videoLoaded && !videoError && (
                       <motion.div 
-                        className="absolute inset-0 bg-gray-50 flex items-center justify-center"
+                        className="absolute inset-0 bg-gray-900 flex items-center justify-center"
                         initial={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                       >
@@ -331,7 +331,7 @@ export default function Hero() {
                             animate={{ rotate: 360 }}
                             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                           />
-                          <p className="text-gray-500 text-sm">Cargando demo...</p>
+                          <p className="text-gray-300 text-sm">Cargando demo...</p>
                         </div>
                       </motion.div>
                     )}
