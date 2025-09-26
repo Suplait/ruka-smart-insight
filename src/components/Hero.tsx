@@ -1,13 +1,9 @@
-import { useState, useEffect } from "react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
-import TextReveal from "./TextReveal";
 const valueMessages = ["Automatiza el registro de compras.", "Controla tu margen al día, no al mes.", "Descubre alzas de precio de tus insumos en tiempo real.", "Genera reportes en segundos usando lenguaje natural.", "Gestiona simple el pago a tus proveedores.", "Ten toda tu información a la mano.", "Libera HH a la semana para que te enfoques en lo que importa."];
 export default function Hero() {
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 300], [0, -30]);
-  const scale = useTransform(scrollY, [0, 300], [1, 1.02]);
   const navigate = useNavigate();
   const [currentMessage, setCurrentMessage] = useState(0);
   const [displayText, setDisplayText] = useState("");
@@ -62,8 +58,7 @@ export default function Hero() {
     }
   };
 
-  return (
-    <section className="relative min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50/50 flex items-center overflow-hidden pt-24 sm:pt-20">
+  return <section className="relative min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50/50 flex items-center overflow-hidden pt-24 sm:pt-20">
       {/* Apple-style subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-purple-50/20" />
       
@@ -125,36 +120,11 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right content - Robot video with dramatic parallax */}
-          <motion.div 
-            style={{ 
-              y: useTransform(scrollY, [0, 500], [0, -100]),
-              scale: useTransform(scrollY, [0, 500], [1, 1.1]),
-              rotateY: useTransform(scrollY, [0, 500], [0, -5])
-            }}
-            className="flex justify-center items-center relative order-1 lg:order-2"
-            initial={{ opacity: 0, scale: 0.8, rotateY: 25 }}
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            transition={{ 
-              duration: 1.5, 
-              delay: 2,
-              ease: [0.25, 0.46, 0.45, 0.94] 
-            }}
-          >
+          {/* Right content - Robot video with original dimensions */}
+          <div className="flex justify-center items-center relative order-1 lg:order-2">
             <div className="relative group">
-              {/* Dramatic glow effect */}
-              <motion.div 
-                className="absolute -inset-12 bg-gradient-to-r from-primary/20 via-purple-500/20 to-primary/20 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-70"
-                animate={{ 
-                  scale: [1, 1.1, 1],
-                  rotate: [0, 180, 360]
-                }}
-                transition={{ 
-                  duration: 8, 
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              />
+              {/* Subtle Apple-style shadow */}
+              <div className="absolute -inset-8 bg-black/5 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
               
               {/* Main video container - keeping original dimensions */}
               <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-white/60 backdrop-blur-xl shadow-sm border border-gray-200/50 group-hover:scale-[1.02] transition-all duration-500">
@@ -196,9 +166,8 @@ export default function Hero() {
                 )}
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
