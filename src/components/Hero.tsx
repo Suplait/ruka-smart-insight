@@ -114,7 +114,6 @@ export default function Hero() {
           {/* Left content - Apple-style Text */}
           <motion.div 
             className="space-y-8 text-left max-w-2xl order-2 lg:order-1"
-            style={{ y: textY }}
           >
             {/* Apple-style announcement badge */}
             <motion.div 

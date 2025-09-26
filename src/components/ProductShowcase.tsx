@@ -54,8 +54,10 @@ export default function ProductShowcase() {
             </Button>
           </div>
           <div className="relative rounded-xl overflow-hidden shadow-2xl group w-full bg-gray-900">
+            {/* Black background overlay to prevent white flash */}
+            <div className="absolute inset-0 bg-gray-900 z-10"></div>
             <div 
-              className="cursor-pointer w-full"
+              className="cursor-pointer w-full relative z-20"
               onClick={() => setIsModalOpen(true)}
             >
               <iframe 
@@ -66,7 +68,8 @@ export default function ProductShowcase() {
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen
-                className="transform group-hover:scale-105 transition-transform duration-500 pointer-events-none"
+                className="transform group-hover:scale-105 transition-transform duration-500 pointer-events-none bg-gray-900"
+                style={{ backgroundColor: '#111827' }}
               ></iframe>
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </div>
