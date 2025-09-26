@@ -18,9 +18,9 @@ export default function Hero() {
     offset: ["start start", "end start"]
   });
 
-  const videoY = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const videoScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
-  const textY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const videoY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const videoScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.98]);
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -30]);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -259,10 +259,9 @@ export default function Hero() {
               
               {/* Main video container with enhanced animations */}
               <motion.div 
-                className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-gray-900/90 backdrop-blur-xl shadow-sm border border-gray-200/50 perspective-1000"
+                className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-gray-900/90 backdrop-blur-xl shadow-sm"
                 whileHover={{
                   backgroundColor: "rgba(17, 24, 39, 0.95)",
-                  borderColor: "rgba(59, 130, 246, 0.2)",
                   boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
                   rotateX: -2,
                 }}

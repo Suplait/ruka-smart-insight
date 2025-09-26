@@ -11,8 +11,8 @@ export default function ValueProposition() {
     offset: ["start end", "end start"]
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [-50, 50]);
-  const cardsScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], [-20, 20]);
+  const cardsScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.99, 1, 0.99]);
   const values = [
     {
       icon: Bot,

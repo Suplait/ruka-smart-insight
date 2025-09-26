@@ -53,7 +53,7 @@ export default function ProductShowcase() {
               Ver Demo <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
-          <div className="relative rounded-xl overflow-hidden shadow-2xl group w-full">
+          <div className="relative rounded-xl overflow-hidden shadow-2xl group w-full bg-gray-900">
             <div 
               className="cursor-pointer w-full"
               onClick={() => setIsModalOpen(true)}

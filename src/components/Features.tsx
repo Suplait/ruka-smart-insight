@@ -12,9 +12,9 @@ export default function Features() {
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
-  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [0, -5, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.9]);
+  const y = useTransform(scrollYProgress, [0, 1], [20, -20]);
+  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [0, -2, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.98, 1, 0.98]);
   const features = [
     {
       icon: Bot,
