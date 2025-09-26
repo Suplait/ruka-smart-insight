@@ -7,45 +7,43 @@ export default function YouTubeDemo() {
   const handlePlayVideo = () => {
     setIsPlaying(true);
   };
-  return <section className="py-24 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05)_0%,transparent_50%)]" />
-      
-      <div className="container relative">
-        <div className="text-center mb-16 space-y-6">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-indigo-600/10 text-blue-700 border border-blue-200/50">
+  return <section className="py-32 bg-gray-50/50 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
+        <div className="text-center mb-20 space-y-6">
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/60 backdrop-blur-xl border border-gray-200/50 text-gray-700 shadow-sm">
             <Youtube className="w-4 h-4" />
-            Demo de la Plataforma
+            <span className="font-light">Demo de la Plataforma</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold">
-            Ve 
-            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"> Ruka.ai</span> en Funcionamiento
+          <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">
+            Ve{" "}
+            <span className="font-light bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
+              Ruka.ai
+            </span>{" "}
+            en Funcionamiento
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 font-light max-w-2xl mx-auto">
             Descubre cómo nuestra plataforma inteligente transforma la gestión de tu negocio
           </p>
         </div>
 
         <div className="max-w-5xl mx-auto">
-          <div className="relative aspect-video rounded-3xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 shadow-2xl border border-gray-200/50 group">
+          <div className="relative aspect-video rounded-3xl overflow-hidden bg-white/60 backdrop-blur-xl border border-gray-200/50 shadow-2xl group hover:shadow-3xl transition-all duration-500">
             {!isPlaying ? <div className="absolute inset-0 flex items-center justify-center cursor-pointer" onClick={handlePlayVideo}>
                 {/* Thumbnail Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-slate-900/20 to-indigo-900/20" />
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-100/60 via-white/40 to-gray-50/60 backdrop-blur-sm" />
                 
                 {/* Play Button */}
                 <div className="relative z-10 group-hover:scale-110 transition-transform duration-300">
-                  <div className="w-24 h-24 bg-blue-600 hover:bg-blue-700 rounded-full flex items-center justify-center shadow-2xl">
+                  <div className="w-24 h-24 bg-primary hover:bg-primary/90 rounded-full flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20">
                     <Play className="w-10 h-10 text-white ml-1" fill="white" />
                   </div>
                 </div>
                 
                 {/* Overlay Content */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center space-y-4 bg-black/40">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/40" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-900 text-center space-y-4">
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/40 via-transparent to-white/20" />
                   <div className="relative z-10 space-y-4">
-                    
-                    
-                    <div className="flex items-center justify-center gap-2 text-blue-400">
-                      
+                    <div className="flex items-center justify-center gap-2 text-gray-600">
                       
                     </div>
                   </div>
@@ -53,7 +51,7 @@ export default function YouTubeDemo() {
               </div> : <iframe src="https://www.youtube.com/embed/g-xbad__wQQ?autoplay=1&t=1s" title="Ruka.ai Demo" className="w-full h-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />}
             
             {/* Premium Glow Effect */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 via-indigo-500/20 to-slate-500/20 rounded-3xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-3xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
           </div>
           
           <div className="text-center mt-12">

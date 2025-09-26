@@ -4,18 +4,16 @@ import { FileText } from "lucide-react";
 
 const DataFlowSection = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-grid-black/[0.02] bg-[size:20px_20px]" />
-      </div>
-      
-      <div className="container relative">
-        <div className="text-center mb-16 space-y-6">
-          <h2 className="text-4xl lg:text-5xl font-bold">
-            Conexión 
-            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"> Simple y Rápida</span>
+    <section className="py-32 bg-white relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
+        <div className="text-center mb-20 space-y-6">
+          <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">
+            Conexión{" "}
+            <span className="font-light bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
+              Simple y Rápida
+            </span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 font-light max-w-2xl mx-auto">
             Traemos tus datos de compras y ventas en minutos
           </p>
         </div>
@@ -125,7 +123,7 @@ const DataFlowSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-shadow relative z-10"
+              className="relative group p-8 rounded-3xl bg-white/60 backdrop-blur-xl border border-gray-200/50 hover:bg-white/80 transition-all duration-500 hover:scale-[1.02]"
             >
               <div className="flex items-center justify-center w-16 h-16 mb-6 mx-auto">
                 <img 
@@ -134,8 +132,8 @@ const DataFlowSection = () => {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-center mb-4">Impuestos Internos</h3>
-              <p className="text-gray-600 text-center">Desde el SII nos traemos la carátula de todas tus facturas</p>
+              <h3 className="text-xl font-medium text-center text-gray-900 mb-4">Impuestos Internos</h3>
+              <p className="text-gray-600 text-center font-light leading-relaxed">Desde el SII nos traemos la carátula de todas tus facturas</p>
             </motion.div>
 
             {/* Ruka.ai */}
@@ -143,17 +141,17 @@ const DataFlowSection = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-gradient-to-br from-primary to-purple-600 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-shadow transform hover:-translate-y-1 relative z-20"
+              className="relative group p-10 rounded-3xl bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 border border-primary/20 backdrop-blur-xl hover:scale-[1.02] transition-all duration-500"
             >
-              <div className="flex items-center justify-center w-20 h-20 mb-6 mx-auto bg-white rounded-full p-2">
+              <div className="flex items-center justify-center w-20 h-20 mb-6 mx-auto bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-lg">
                 <img 
                   src="/0webclip.jpg" 
                   alt="Ruka.ai Logo" 
                   className="w-full h-full object-contain rounded-full"
                 />
               </div>
-              <h3 className="text-2xl font-bold text-center text-white mb-4">Ruka.ai</h3>
-              <p className="text-white text-center">Le brindamos inteligencia a tu operación</p>
+              <h3 className="text-2xl font-light text-center text-gray-900 mb-4">Ruka.ai</h3>
+              <p className="text-gray-700 text-center font-light leading-relaxed">Le brindamos inteligencia a tu operación</p>
             </motion.div>
 
             {/* Facturador */}
@@ -161,44 +159,44 @@ const DataFlowSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-shadow relative z-10"
+              className="relative group p-8 rounded-3xl bg-white/60 backdrop-blur-xl border border-gray-200/50 hover:bg-white/80 transition-all duration-500 hover:scale-[1.02]"
             >
-              <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6 mx-auto">
+              <div className="flex items-center justify-center w-16 h-16 bg-primary/10 rounded-2xl mb-6 mx-auto">
                 <FileText className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-center mb-4">Tu Facturador</h3>
-              <p className="text-gray-600 text-center">Desde tu facturador (cualquiera), traemos el detalle de los items transaccionados</p>
+              <h3 className="text-xl font-medium text-center text-gray-900 mb-4">Tu Facturador</h3>
+              <p className="text-gray-600 text-center font-light leading-relaxed">Desde tu facturador (cualquiera), traemos el detalle de los items transaccionados</p>
             </motion.div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.8 }}
-            className="text-center"
+            className="text-center space-y-3"
           >
-            <div className="text-4xl font-bold text-primary mb-2">100%</div>
-            <p className="text-gray-600">Automatizado</p>
+            <div className="text-4xl font-light text-primary tracking-tight">100%</div>
+            <p className="text-gray-600 font-light">Automatizado</p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1 }}
-            className="text-center"
+            className="text-center space-y-3"
           >
-            <div className="text-4xl font-bold text-primary mb-2">24/7</div>
-            <p className="text-gray-600">Monitoreo Continuo</p>
+            <div className="text-4xl font-light text-primary tracking-tight">24/7</div>
+            <p className="text-gray-600 font-light">Monitoreo Continuo</p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1.2 }}
-            className="text-center"
+            className="text-center space-y-3"
           >
-            <div className="text-4xl font-bold text-primary mb-2">98%</div>
-            <p className="text-gray-600">Reducción de Errores</p>
+            <div className="text-4xl font-light text-primary tracking-tight">98%</div>
+            <p className="text-gray-600 font-light">Reducción de Errores</p>
           </motion.div>
         </div>
       </div>
