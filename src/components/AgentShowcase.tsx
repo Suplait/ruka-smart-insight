@@ -140,26 +140,9 @@ export default function AgentShowcase() {
           </p>
         </div>
 
-        {/* Core Features */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <h3 className="text-2xl font-light text-gray-900 mb-3 tracking-tight">Funciones Principales</h3>
-            <p className="text-gray-600 font-light">El núcleo de la automatización inteligente</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {coreFeatures.map((feature, index) => renderVideoCard(feature, index))}
-          </div>
-        </div>
-
-        {/* Add-ons */}
-        <div>
-          <div className="text-center mb-12">
-            <h3 className="text-2xl font-light text-gray-900 mb-3 tracking-tight">Funciones Adicionales</h3>
-            <p className="text-gray-600 font-light">Expansiones premium para operaciones avanzadas</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-            {addOns.map((addon, index) => renderVideoCard(addon, index, true))}
-          </div>
+        {/* All Features in 2x3 Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[...coreFeatures, ...addOns].map((feature, index) => renderVideoCard(feature, index, index >= 4))}
         </div>
       </div>
     </section>;
