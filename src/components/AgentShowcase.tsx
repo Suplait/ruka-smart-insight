@@ -245,27 +245,6 @@ export default function AgentShowcase() {
                     )}
                   </>
                 )}
-                
-                {/* Floating feature indicator */}
-                <motion.div
-                  className="absolute bottom-6 left-6 right-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
-                        <currentFeature.icon className="w-5 h-5" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-gray-900 text-sm truncate">
-                          {currentFeature.title}
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
               </motion.div>
 
               {/* Progress indicators */}
