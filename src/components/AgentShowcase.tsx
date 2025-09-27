@@ -1,6 +1,7 @@
 import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from "framer-motion";
 import { FileText, Layers, TrendingUp, AlertTriangle, CreditCard, Repeat } from "lucide-react";
 import { useRef, useState } from "react";
+import { useVideoPreload } from "@/hooks/use-video-preload";
 const coreFeatures = [{
   icon: FileText,
   title: "Digita Facturas Automáticamente",
@@ -39,6 +40,10 @@ const addOns = [{
   video: "/robot_inventario.mp4",
   id: "inventario"
 }];
+
+const agentVideoSources = Array.from(
+  new Set([...coreFeatures, ...addOns].map((feature) => feature.video))
+).map((src) => ({ src, type: "video/mp4" }));
 export default function AgentShowcase() {
   const containerRef = useRef<HTMLElement>(null);
   const featuresContainerRef = useRef<HTMLDivElement | null>(null);
@@ -55,6 +60,8 @@ export default function AgentShowcase() {
     damping: 20,
     mass: 0.8
   });
+
+  useVideoPreload(agentVideoSources);
 
   // Combine all features
   const allFeatures = [...coreFeatures, ...addOns];
@@ -227,7 +234,7 @@ export default function AgentShowcase() {
                       loop
                       muted
                       playsInline
-                      preload="metadata"
+                      preload="auto"
                       onLoadedData={() => handleVideoLoad(currentFeature.id)}
                       onError={() => handleVideoError(currentFeature.id)}
                       className="w-full h-full object-cover"

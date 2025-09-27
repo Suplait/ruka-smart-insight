@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useMemo, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useVideoPreload } from "@/hooks/use-video-preload";
 const valueMessages = [
   "Automatiza completamente el registro de compras",        // 46
   "Controla tu margen al día, no una vez al mes",                 // 37
@@ -26,6 +27,11 @@ export default function Hero() {
     ), ""),
     []
   ); // Keeps heading height steady so lower sections don't jump during typing
+  const heroVideoSources = useMemo(() => ([
+    { src: "/robot_facturas.mp4", type: "video/mp4" }
+  ]), []);
+
+  useVideoPreload(heroVideoSources);
   
   const containerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -366,7 +372,7 @@ export default function Hero() {
                       loop 
                       muted 
                       playsInline 
-                      preload="metadata" 
+                      preload="auto" 
                       onLoadedData={handleVideoLoad} 
                       onError={handleVideoError} 
                       className="w-full h-full object-cover"
