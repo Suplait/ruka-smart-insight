@@ -1,6 +1,7 @@
 
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { Star } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Carousel,
   CarouselContent,
@@ -36,16 +37,50 @@ export default function Testimonials() {
   const plugin = useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true })
   );
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  const orbOneY = useTransform(scrollYProgress, [0, 1], [30, -20]);
+  const orbTwoY = useTransform(scrollYProgress, [0, 1], [-15, 25]);
 
   return (
-    <section id="testimonials" className="py-24 bg-secondary/30">
-      <div className="container">
-        <h2 className="text-4xl font-bold text-center mb-16">
-          Lo que dicen nuestros clientes
+    <motion.section id="testimonials" ref={containerRef} className="py-32 bg-gray-50/50 relative overflow-hidden">
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-white via-primary/5 to-transparent"
+        style={{ opacity: useTransform(scrollYProgress, [0, 1], [0.25, 0.5]) }}
+      />
+      <motion.div
+        className="absolute top-10 left-12 w-28 h-28 bg-gradient-to-br from-blue-400/15 via-indigo-400/10 to-purple-400/15 rounded-full blur-3xl"
+        animate={{
+          x: [0, 22, -14, 0],
+          y: [0, -28, -8, 0],
+          scale: [1, 1.07, 1.01, 1]
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        style={{ y: orbOneY }}
+      />
+      <motion.div
+        className="absolute bottom-12 right-16 w-32 h-32 bg-gradient-to-br from-emerald-400/15 via-teal-400/10 to-sky-400/15 rounded-full blur-3xl"
+        animate={{
+          x: [0, -20, 12, 0],
+          y: [0, 22, -16, 0],
+          scale: [1, 0.94, 1.06, 1]
+        }}
+        transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+        style={{ y: orbTwoY }}
+      />
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
+        <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight text-center mb-20">
+          Lo que dicen nuestros{" "}
+          <span className="font-light bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
+            clientes
+          </span>
         </h2>
         <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-secondary/30 to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-secondary/30 to-transparent z-10" />
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-50/50 to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-50/50 to-transparent z-10" />
           <Carousel 
             className="w-full max-w-6xl mx-auto"
             plugins={[plugin.current]}
@@ -57,16 +92,16 @@ export default function Testimonials() {
             <CarouselContent>
               {[...testimonials, ...testimonials].map((testimonial, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
-                  <div className="p-8 bg-white rounded-xl shadow-lg space-y-6 h-full hover:scale-105 transition-transform duration-300">
+                  <div className="p-8 bg-white/60 backdrop-blur-xl rounded-3xl border border-gray-200/50 space-y-6 h-full hover:bg-white/80 transition-all duration-500 hover:scale-[1.02]">
                     <div className="flex gap-1">
                       {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                        <Star key={i} className="w-5 h-5 fill-primary text-primary" />
                       ))}
                     </div>
-                    <p className="text-lg italic">{testimonial.content}</p>
+                    <p className="text-lg font-light text-gray-700 leading-relaxed">{testimonial.content}</p>
                     <div>
-                      <p className="font-semibold">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="font-medium text-gray-900">{testimonial.name}</p>
+                      <p className="text-sm text-gray-600 font-light">
                         {testimonial.role}, {testimonial.company}
                       </p>
                     </div>
@@ -77,6 +112,6 @@ export default function Testimonials() {
           </Carousel>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

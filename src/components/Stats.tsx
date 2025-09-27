@@ -1,5 +1,7 @@
 
 import { Users, FileText, TrendingUp, Clock } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 const stats = [
   {
@@ -29,40 +31,140 @@ const stats = [
 ];
 
 export default function Stats() {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  const orbOneY = useTransform(scrollYProgress, [0, 1], [30, -20]);
+  const orbTwoY = useTransform(scrollYProgress, [0, 1], [-10, 25]);
+  const orbThreeY = useTransform(scrollYProgress, [0, 1], [15, -30]);
+
   return (
-    <section className="py-12 bg-white">
-      <div className="container">
+    <motion.section 
+      ref={containerRef}
+      className="py-20 bg-gray-50/50 relative overflow-hidden"
+    >
+      {/* Subtle animated background */}
+      <motion.div 
+        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+        style={{
+          x: useTransform(scrollYProgress, [0, 1], ["-100%", "100%"]),
+        }}
+      />
+      <motion.div
+        className="absolute -top-12 left-12 w-32 h-32 bg-gradient-to-br from-blue-400/15 to-violet-400/10 rounded-full blur-3xl"
+        animate={{
+          x: [0, 20, -10, 0],
+          y: [0, -25, -10, 0],
+          scale: [1, 1.08, 1.02, 1]
+        }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        style={{ y: orbOneY }}
+      />
+      <motion.div
+        className="absolute bottom-6 right-10 w-36 h-36 bg-gradient-to-br from-cyan-400/15 via-sky-400/10 to-purple-400/15 rounded-full blur-3xl"
+        animate={{
+          x: [0, -25, 10, 0],
+          y: [0, 20, -10, 0],
+          scale: [1, 0.95, 1.05, 1]
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        style={{ y: orbTwoY }}
+      />
+      <motion.div
+        className="absolute top-1/2 left-1/3 w-24 h-24 bg-gradient-to-br from-pink-400/20 to-orange-400/15 rounded-full blur-2xl"
+        animate={{
+          x: [0, 15, -15, 0],
+          y: [0, -10, 15, 0],
+          scale: [1, 1.1, 0.96, 1]
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        style={{ y: orbThreeY }}
+      />
+      
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
-            <div
+            <motion.div
               key={stat.metric}
-              className="relative overflow-hidden group p-8 rounded-2xl bg-gradient-to-br from-secondary/40 to-secondary/20 hover:from-secondary/60 hover:to-secondary/40 transition-all duration-300 ease-in-out"
-              style={{ 
-                animationDelay: `${index * 150}ms`,
-                transform: 'translateY(0)',
-                transition: 'transform 0.3s ease-in-out'
+              initial={{ opacity: 0, y: 40, rotateX: 15 }}
+              whileInView={{ 
+                opacity: 1, 
+                y: 0, 
+                rotateX: 0,
+                transition: {
+                  duration: 0.6,
+                  delay: index * 0.1,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }
               }}
+              viewport={{ once: true, margin: "-10%" }}
+              whileHover={{ 
+                y: -8,
+                scale: 1.02,
+                rotateX: -2,
+                transition: { duration: 0.3, ease: "easeOut" }
+              }}
+              className="relative group perspective-1000"
             >
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <stat.icon className="w-16 h-16 text-primary" />
-              </div>
-              <div className="relative z-10 space-y-4">
-                <p className="text-4xl font-bold text-primary tracking-tight">
-                  {stat.value}
-                </p>
-                <div className="space-y-2">
-                  <h3 className="text-xl font-semibold text-foreground">
-                    {stat.metric}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {stat.description}
-                  </p>
+              <motion.div 
+                className="relative p-8 rounded-2xl bg-white/60 backdrop-blur-xl border border-gray-200/50 shadow-sm"
+                whileHover={{
+                  backgroundColor: "rgba(255, 255, 255, 0.85)",
+                  borderColor: "rgba(59, 130, 246, 0.15)",
+                  boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.1)",
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* Animated icon background */}
+                <motion.div 
+                  className="absolute top-6 right-6 opacity-5"
+                  whileHover={{ 
+                    opacity: 0.1, 
+                    rotate: 5,
+                    scale: 1.1,
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  <stat.icon className="w-12 h-12 text-gray-900" />
+                </motion.div>
+                
+                {/* Hover glow effect */}
+                <motion.div
+                  className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-blue-500/5 opacity-0"
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+                
+                <div className="relative z-10 space-y-3">
+                  <motion.p 
+                    className="text-3xl font-light text-gray-900 tracking-tight"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: index * 0.1 + 0.3 }}
+                  >
+                    {stat.value}
+                  </motion.p>
+                  <motion.div 
+                    className="space-y-1"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: index * 0.1 + 0.4 }}
+                  >
+                    <h3 className="text-base font-medium text-gray-900">
+                      {stat.metric}
+                    </h3>
+                    <p className="text-sm text-gray-600 font-light">
+                      {stat.description}
+                    </p>
+                  </motion.div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="bg-white border-t">
-      <div className="container py-12">
+    <footer className="relative bg-[#f2f4f8] border-t border-gray-200/60 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Columna 1: Logo e info */}
           <div className="space-y-4 lg:col-span-2">
@@ -16,7 +16,7 @@ export default function Footer() {
                 className="h-8 hover:opacity-80 transition-opacity"
               />
             </Link>
-            <p className="text-muted-foreground">
+            <p className="text-gray-600 font-light">
               Automatización inteligente para empresas medianas
             </p>
             
@@ -41,12 +41,12 @@ export default function Footer() {
           
           {/* Columna 2: Producto */}
           <div>
-            <h4 className="font-semibold mb-4 text-primary">Producto</h4>
+            <h4 className="font-medium mb-4 text-gray-900">Producto</h4>
             <ul className="space-y-3">
               <li>
                 <Link 
                   to="/#value-showcase" 
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  className="text-gray-600 hover:text-primary transition-colors font-light"
                 >
                   Valor
                 </Link>
@@ -54,7 +54,7 @@ export default function Footer() {
               <li>
                 <Link 
                   to="/#features" 
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  className="text-gray-600 hover:text-primary transition-colors font-light"
                 >
                   Features
                 </Link>
@@ -62,7 +62,7 @@ export default function Footer() {
               <li>
                 <Link 
                   to="/#product-showcase" 
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  className="text-gray-600 hover:text-primary transition-colors font-light"
                 >
                   Demo
                 </Link>
@@ -72,12 +72,12 @@ export default function Footer() {
           
           {/* Columna 3: Industrias */}
           <div>
-            <h4 className="font-semibold mb-4 text-primary">Industrias</h4>
+            <h4 className="font-medium mb-4 text-gray-900">Industrias</h4>
             <ul className="space-y-3">
               <li>
                 <Link 
                   to="/restaurantes" 
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  className="text-gray-600 hover:text-primary transition-colors font-light"
                 >
                   Restaurantes
                 </Link>
@@ -90,7 +90,7 @@ export default function Footer() {
           
           {/* Columna 4: Contacto y Direcciones */}
           <div>
-            <h4 className="font-semibold mb-4 text-primary">Contacto</h4>
+            <h4 className="font-medium mb-4 text-gray-900">Contacto</h4>
             <ul className="space-y-6">
               <li>
                 <div className="flex items-start gap-2">
@@ -117,7 +117,7 @@ export default function Footer() {
               <li>
                 <Link 
                   to="/register"
-                  className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                  className="inline-flex items-center h-10 px-6 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-full transition-colors"
                 >
                   Regístrate
                 </Link>
@@ -129,7 +129,7 @@ export default function Footer() {
         {/* Redes Sociales y Copyright */}
         <div className="mt-12 pt-8 border-t">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-sm text-muted-foreground order-2 md:order-1">
+            <p className="text-sm text-gray-600 font-light order-2 md:order-1">
               &copy; {new Date().getFullYear()} Ruka.ai. Todos los derechos reservados.
             </p>
             <div className="flex gap-6 order-1 md:order-2">
