@@ -94,7 +94,26 @@ export default function Hero() {
         className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-purple-50/20"
         style={{ y: useTransform(scrollYProgress, [0, 1], [0, 50]) }}
       />
-      
+      {/* Blurred floating geometric shapes (mirroring Features section) */}
+      <motion.div 
+        className="absolute top-24 left-10 w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-2xl"
+        animate={{ 
+          x: [0, 30, 0],
+          y: [0, -20, 0],
+          scale: [1, 1.1, 1]
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div 
+        className="absolute bottom-10 right-5 w-36 h-36 md:w-48 md:h-48 bg-gradient-to-br from-pink-400/15 to-orange-400/15 rounded-full blur-3xl"
+        animate={{ 
+          x: [0, -40, 0],
+          y: [0, 30, 0],
+          scale: [1, 0.9, 1]
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      />
+
       {/* Minimalist floating elements with parallax */}
       <motion.div 
         className="absolute top-1/3 left-1/4 w-2 h-2 bg-gray-300/40 rounded-full"
