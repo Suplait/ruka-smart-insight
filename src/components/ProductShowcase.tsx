@@ -59,23 +59,16 @@ export default function ProductShowcase() {
               className="cursor-pointer w-full relative"
               onClick={() => setIsModalOpen(true)}
             >
-              <iframe 
-                width="100%" 
-                height="315" 
-                src="https://www.youtube.com/embed/5Mgdczprvlc" 
-                title="Ruka.ai Dashboard"
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen
-                className={`transform group-hover:scale-105 transition-all duration-500 pointer-events-none ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
-                onLoad={() => setIsVideoLoaded(true)}
-                style={{ backgroundColor: '#111827' }}
-              ></iframe>
-              {!isVideoLoaded && (
-                <div className="absolute inset-0 bg-gray-900 z-30 flex items-center justify-center">
-                  <div className="w-full h-full bg-gray-900"></div>
+              <img 
+                src="https://img.youtube.com/vi/5Mgdczprvlc/maxresdefault.jpg"
+                alt="Ruka.ai Dashboard Demo"
+                className="w-full h-[315px] object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                  <ArrowRight className="w-8 h-8 text-white ml-1" />
                 </div>
-              )}
+              </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
             </div>
           </div>
