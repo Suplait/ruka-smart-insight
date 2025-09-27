@@ -79,6 +79,9 @@ export default function BeforeAfter() {
 
   const titleY = useTransform(scrollYProgress, [0, 0.5], [50, 0]);
   const titleOpacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
+  const orbOneY = useTransform(scrollYProgress, [0, 1], [40, -30]);
+  const orbTwoY = useTransform(scrollYProgress, [0, 1], [-10, 25]);
+  const orbThreeY = useTransform(scrollYProgress, [0, 1], [20, -40]);
 
   return (
     <motion.section 
@@ -93,6 +96,36 @@ export default function BeforeAfter() {
           backgroundSize: "40px 40px",
           y: useTransform(scrollYProgress, [0, 1], [0, -50]),
         }}
+      />
+      <motion.div
+        className="absolute top-24 -left-10 w-32 h-32 bg-gradient-to-br from-sky-400/15 via-indigo-400/10 to-purple-500/10 rounded-full blur-3xl"
+        animate={{
+          x: [0, 25, -15, 0],
+          y: [0, -30, -5, 0],
+          scale: [1, 1.08, 1.02, 1]
+        }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        style={{ y: orbOneY }}
+      />
+      <motion.div
+        className="absolute bottom-20 right-0 w-36 h-36 bg-gradient-to-br from-purple-400/15 via-pink-400/15 to-orange-400/20 rounded-full blur-3xl"
+        animate={{
+          x: [0, -20, 15, 0],
+          y: [0, 25, -10, 0],
+          scale: [1, 0.95, 1.07, 1]
+        }}
+        transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+        style={{ y: orbTwoY }}
+      />
+      <motion.div
+        className="absolute top-1/2 left-1/2 w-24 h-24 bg-gradient-to-br from-emerald-400/15 via-teal-400/15 to-blue-400/15 rounded-full blur-2xl"
+        animate={{
+          x: [0, 18, -12, 0],
+          y: [0, -15, 20, 0],
+          scale: [1, 1.1, 0.94, 1]
+        }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+        style={{ y: orbThreeY }}
       />
       
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative">

@@ -1,19 +1,58 @@
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 export default function MoneyBackGuarantee() {
   const navigate = useNavigate();
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  const orbOneY = useTransform(scrollYProgress, [0, 1], [25, -15]);
+  const orbTwoY = useTransform(scrollYProgress, [0, 1], [-20, 30]);
+  const orbThreeY = useTransform(scrollYProgress, [0, 1], [15, -25]);
   
   return (
-    <section id="guarantee" className="py-32 bg-gradient-to-b from-white via-[#f7f9fc] to-white relative overflow-hidden">
+    <motion.section id="guarantee" ref={containerRef} className="py-32 bg-gradient-to-b from-white via-[#f7f9fc] to-white relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-10 right-[15%] h-36 w-36 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.15),transparent_70%)] blur-2xl" />
         <div className="absolute bottom-0 left-1/2 h-40 w-[90%] -translate-x-1/2 bg-gradient-to-t from-white via-white/70 to-transparent" />
+        <motion.div
+          className="absolute top-8 left-[18%] w-28 h-28 bg-gradient-to-br from-blue-400/15 via-indigo-400/10 to-purple-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, 18, -12, 0],
+            y: [0, -22, -6, 0],
+            scale: [1, 1.08, 1.01, 1]
+          }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+          style={{ y: orbOneY }}
+        />
+        <motion.div
+          className="absolute bottom-16 right-[12%] w-32 h-32 bg-gradient-to-br from-emerald-400/15 via-teal-400/10 to-sky-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, -20, 14, 0],
+            y: [0, 24, -18, 0],
+            scale: [1, 0.95, 1.07, 1]
+          }}
+          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          style={{ y: orbTwoY }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 w-20 h-20 bg-gradient-to-br from-pink-400/15 via-rose-400/15 to-orange-400/15 rounded-full blur-2xl"
+          animate={{
+            x: [0, 15, -10, 0],
+            y: [0, -15, 18, 0],
+            scale: [1, 1.1, 0.95, 1]
+          }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
+          style={{ y: orbThreeY }}
+        />
       </div>
-      <div className="max-w-3xl mx-auto px-6 sm:px-8">
+      <div className="max-w-3xl mx-auto px-6 sm:px-8 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -45,6 +84,6 @@ export default function MoneyBackGuarantee() {
           </Button>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

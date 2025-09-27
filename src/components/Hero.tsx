@@ -36,6 +36,9 @@ export default function Hero() {
   const videoY = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const videoScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.98]);
   const textY = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  const heroOrbOneY = useTransform(scrollYProgress, [0, 1], [10, -30]);
+  const heroOrbTwoY = useTransform(scrollYProgress, [0, 1], [-10, 25]);
+  const heroOrbThreeY = useTransform(scrollYProgress, [0, 1], [15, -20]);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -96,27 +99,39 @@ export default function Hero() {
       />
       {/* Blurred floating geometric shapes (mirroring Features section) */}
       <motion.div 
-        className="absolute top-24 left-10 w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-2xl"
+        className="absolute top-24 left-10 w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-2xl pointer-events-none z-0"
         animate={{ 
           x: [0, 30, 0],
           y: [0, -20, 0],
           scale: [1, 1.1, 1]
         }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        style={{ y: heroOrbOneY }}
       />
       <motion.div 
-        className="absolute bottom-10 right-5 w-36 h-36 md:w-48 md:h-48 bg-gradient-to-br from-pink-400/15 to-orange-400/15 rounded-full blur-3xl"
+        className="absolute top-1/3 right-12 w-20 h-20 md:w-28 md:h-28 bg-gradient-to-br from-cyan-400/25 via-sky-400/20 to-teal-400/25 rounded-full blur-2xl pointer-events-none z-0"
+        animate={{
+          x: [0, -20, 10, 0],
+          y: [0, -15, 10, 0],
+          scale: [1, 1.08, 0.96, 1]
+        }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        style={{ y: heroOrbThreeY }}
+      />
+      <motion.div 
+        className="absolute bottom-10 right-5 w-36 h-36 md:w-48 md:h-48 bg-gradient-to-br from-pink-400/15 to-orange-400/15 rounded-full blur-3xl pointer-events-none z-0"
         animate={{ 
           x: [0, -40, 0],
           y: [0, 30, 0],
           scale: [1, 0.9, 1]
         }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        style={{ y: heroOrbTwoY }}
       />
 
       {/* Minimalist floating elements with parallax */}
       <motion.div 
-        className="absolute top-1/3 left-1/4 w-2 h-2 bg-gray-300/40 rounded-full"
+        className="absolute top-1/3 left-1/4 w-2 h-2 bg-gray-300/40 rounded-full pointer-events-none z-0"
         animate={{ 
           y: [0, -10, 0],
           opacity: [0.4, 0.7, 0.4]
@@ -129,7 +144,7 @@ export default function Hero() {
         style={{ y: useTransform(scrollYProgress, [0, 1], [0, -30]) }}
       />
       <motion.div 
-        className="absolute bottom-1/3 right-1/4 w-1 h-1 bg-gray-400/40 rounded-full"
+        className="absolute bottom-1/3 right-1/4 w-1 h-1 bg-gray-400/40 rounded-full pointer-events-none z-0"
         animate={{ 
           y: [0, 10, 0],
           opacity: [0.3, 0.6, 0.3]
@@ -280,11 +295,11 @@ export default function Hero() {
 
           {/* Right content - Robot video with original dimensions */}
           <motion.div 
-            className="flex justify-center items-center relative order-1 lg:order-2"
+            className="flex justify-center items-center relative order-1 lg:order-2 z-20"
             style={{ y: videoY, scale: videoScale }}
           >
             <motion.div 
-              className="relative group"
+              className="relative group z-20"
               initial={{ opacity: 0, scale: 0.8, rotateY: 15 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -303,7 +318,7 @@ export default function Hero() {
               
               {/* Main video container with enhanced animations */}
               <motion.div 
-                className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-gray-900/90 backdrop-blur-xl shadow-sm"
+                className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-gray-900/90 backdrop-blur-xl shadow-sm z-20"
                 whileHover={{
                   backgroundColor: "rgba(17, 24, 39, 0.95)",
                   boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",

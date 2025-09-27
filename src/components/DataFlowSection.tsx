@@ -1,15 +1,55 @@
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { FileText } from "lucide-react";
+import { useRef } from "react";
 
 const DataFlowSection = () => {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  const orbOneY = useTransform(scrollYProgress, [0, 1], [35, -25]);
+  const orbTwoY = useTransform(scrollYProgress, [0, 1], [-20, 30]);
+  const orbThreeY = useTransform(scrollYProgress, [0, 1], [10, -40]);
+
   return (
-    <section className="py-32 bg-[#f6f7fb] relative overflow-hidden">
+    <motion.section ref={containerRef} className="py-32 bg-[#f6f7fb] relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-24 left-1/2 h-56 w-[110%] -translate-x-1/2 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.08),transparent_65%)] blur-2xl" />
         <div className="absolute bottom-0 left-[12%] h-40 w-40 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent_70%)] blur-2xl" />
+        <motion.div
+          className="absolute top-16 right-[15%] w-28 h-28 bg-gradient-to-br from-blue-400/15 via-sky-400/10 to-purple-400/15 rounded-full blur-2xl"
+          animate={{
+            x: [0, -20, 15, 0],
+            y: [0, -25, 10, 0],
+            scale: [1, 1.06, 0.98, 1]
+          }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+          style={{ y: orbOneY }}
+        />
+        <motion.div
+          className="absolute bottom-16 left-[18%] w-32 h-32 bg-gradient-to-br from-emerald-400/15 via-teal-400/10 to-sky-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, 18, -12, 0],
+            y: [0, 22, -18, 0],
+            scale: [1, 1.1, 0.94, 1]
+          }}
+          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+          style={{ y: orbTwoY }}
+        />
+        <motion.div
+          className="absolute top-1/2 right-[30%] w-24 h-24 bg-gradient-to-br from-pink-400/15 via-rose-400/15 to-orange-400/15 rounded-full blur-2xl"
+          animate={{
+            x: [0, 12, -18, 0],
+            y: [0, -18, 12, 0],
+            scale: [1, 1.08, 0.96, 1]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
+          style={{ y: orbThreeY }}
+        />
       </div>
-      <div className="max-w-7xl mx-auto px-6 sm:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         <div className="text-center mb-20 space-y-6">
           <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">
             Conexión{" "}
@@ -204,7 +244,7 @@ const DataFlowSection = () => {
           </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

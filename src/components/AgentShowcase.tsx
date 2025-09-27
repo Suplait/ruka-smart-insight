@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { FileText, Layers, TrendingUp, AlertTriangle, CreditCard, Repeat } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 const coreFeatures = [{
   icon: FileText,
   title: "Digita Facturas Automáticamente",
@@ -40,6 +40,14 @@ const addOns = [{
   id: "inventario"
 }];
 export default function AgentShowcase() {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  const orbOneY = useTransform(scrollYProgress, [0, 1], [40, -30]);
+  const orbTwoY = useTransform(scrollYProgress, [0, 1], [-15, 25]);
+  const orbThreeY = useTransform(scrollYProgress, [0, 1], [20, -35]);
   const [videoStates, setVideoStates] = useState<{
     [key: string]: {
       loaded: boolean;
@@ -126,12 +134,42 @@ export default function AgentShowcase() {
         </div>
       </motion.div>;
   };
-  return <section className="py-32 bg-gradient-to-b from-[#f4f5f9] via-white to-[#eef1f6] relative overflow-hidden">
+  return <motion.section ref={containerRef} className="py-32 bg-gradient-to-b from-[#f4f5f9] via-white to-[#eef1f6] relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute top-12 left-[10%] h-40 w-40 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.12),transparent_70%)] blur-2xl" />
         <div className="absolute bottom-0 right-[12%] h-48 w-48 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1),transparent_75%)] blur-[120px]" />
+        <motion.div
+          className="absolute top-1/3 right-[18%] w-28 h-28 bg-gradient-to-br from-blue-400/15 via-sky-400/10 to-indigo-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, -25, 15, 0],
+            y: [0, -30, -5, 0],
+            scale: [1, 1.08, 1.02, 1]
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          style={{ y: orbOneY }}
+        />
+        <motion.div
+          className="absolute bottom-12 left-[14%] w-32 h-32 bg-gradient-to-br from-teal-400/15 via-emerald-400/10 to-cyan-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, 20, -15, 0],
+            y: [0, 22, -18, 0],
+            scale: [1, 1.1, 0.94, 1]
+          }}
+          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 1.3 }}
+          style={{ y: orbTwoY }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 w-24 h-24 bg-gradient-to-br from-pink-400/15 via-rose-400/15 to-orange-400/15 rounded-full blur-2xl"
+          animate={{
+            x: [0, 18, -12, 0],
+            y: [0, -18, 15, 0],
+            scale: [1, 1.09, 0.96, 1]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+          style={{ y: orbThreeY }}
+        />
       </div>
-      <div className="max-w-7xl mx-auto px-6 sm:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         <div className="text-center mb-20 space-y-6">
           <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">
             Así Funcionan Nuestros{" "}
@@ -149,5 +187,5 @@ export default function AgentShowcase() {
           {[...coreFeatures, ...addOns].map((feature, index) => renderVideoCard(feature, index, index >= 4))}
         </div>
       </div>
-    </section>;
+    </motion.section>;
 }

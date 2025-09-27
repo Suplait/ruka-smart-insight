@@ -36,6 +36,9 @@ export default function Stats() {
     target: containerRef,
     offset: ["start end", "end start"]
   });
+  const orbOneY = useTransform(scrollYProgress, [0, 1], [30, -20]);
+  const orbTwoY = useTransform(scrollYProgress, [0, 1], [-10, 25]);
+  const orbThreeY = useTransform(scrollYProgress, [0, 1], [15, -30]);
 
   return (
     <motion.section 
@@ -49,8 +52,38 @@ export default function Stats() {
           x: useTransform(scrollYProgress, [0, 1], ["-100%", "100%"]),
         }}
       />
+      <motion.div
+        className="absolute -top-12 left-12 w-32 h-32 bg-gradient-to-br from-blue-400/15 to-violet-400/10 rounded-full blur-3xl"
+        animate={{
+          x: [0, 20, -10, 0],
+          y: [0, -25, -10, 0],
+          scale: [1, 1.08, 1.02, 1]
+        }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        style={{ y: orbOneY }}
+      />
+      <motion.div
+        className="absolute bottom-6 right-10 w-36 h-36 bg-gradient-to-br from-cyan-400/15 via-sky-400/10 to-purple-400/15 rounded-full blur-3xl"
+        animate={{
+          x: [0, -25, 10, 0],
+          y: [0, 20, -10, 0],
+          scale: [1, 0.95, 1.05, 1]
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        style={{ y: orbTwoY }}
+      />
+      <motion.div
+        className="absolute top-1/2 left-1/3 w-24 h-24 bg-gradient-to-br from-pink-400/20 to-orange-400/15 rounded-full blur-2xl"
+        animate={{
+          x: [0, 15, -15, 0],
+          y: [0, -10, 15, 0],
+          scale: [1, 1.1, 0.96, 1]
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        style={{ y: orbThreeY }}
+      />
       
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 relative">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <motion.div

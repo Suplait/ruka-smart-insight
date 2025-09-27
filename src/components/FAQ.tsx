@@ -5,6 +5,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 const faqs = [
   {
@@ -38,13 +40,41 @@ const faqs = [
 ];
 
 export default function FAQ() {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  const orbOneY = useTransform(scrollYProgress, [0, 1], [35, -25]);
+  const orbTwoY = useTransform(scrollYProgress, [0, 1], [-20, 30]);
+
   return (
-    <section className="py-32 bg-[#f4f5f9] relative overflow-hidden">
+    <motion.section ref={containerRef} className="py-32 bg-[#f4f5f9] relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white via-white/70 to-transparent" />
         <div className="absolute bottom-10 right-[12%] h-44 w-44 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.12),transparent_70%)] blur-[100px]" />
+        <motion.div
+          className="absolute top-10 left-[10%] w-28 h-28 bg-gradient-to-br from-blue-400/15 via-indigo-400/10 to-purple-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, 20, -12, 0],
+            y: [0, -26, -6, 0],
+            scale: [1, 1.08, 1.01, 1]
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          style={{ y: orbOneY }}
+        />
+        <motion.div
+          className="absolute bottom-16 left-1/2 w-32 h-32 bg-gradient-to-br from-emerald-400/15 via-teal-400/10 to-cyan-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, 18, -14, 0],
+            y: [0, 24, -18, 0],
+            scale: [1, 0.95, 1.07, 1]
+          }}
+          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          style={{ y: orbTwoY }}
+        />
       </div>
-      <div className="max-w-4xl mx-auto px-6 sm:px-8">
+      <div className="max-w-4xl mx-auto px-6 sm:px-8 relative z-10">
         <div className="text-center mb-20 space-y-6">
           <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">
             Preguntas{" "}
@@ -70,6 +100,6 @@ export default function FAQ() {
           ))}
         </Accordion>
       </div>
-    </section>
+    </motion.section>
   );
 }
