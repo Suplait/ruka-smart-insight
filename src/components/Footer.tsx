@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="bg-white border-t border-gray-200/50">
+    <footer className="relative bg-[#f2f4f8] border-t border-gray-200/60 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Columna 1: Logo e info */}

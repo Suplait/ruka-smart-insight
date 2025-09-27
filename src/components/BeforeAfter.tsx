@@ -83,11 +83,11 @@ export default function BeforeAfter() {
   return (
     <motion.section 
       ref={containerRef}
-      className="py-32 bg-white relative overflow-hidden"
+      className="py-32 bg-gradient-to-b from-white via-[#f6f7fb] to-white relative overflow-hidden"
     >
       {/* Subtle animated background pattern */}
       <motion.div 
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute inset-0 opacity-[0.02] text-gray-500"
         style={{
           backgroundImage: `radial-gradient(circle at 50% 50%, currentColor 1px, transparent 1px)`,
           backgroundSize: "40px 40px",

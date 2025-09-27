@@ -4,7 +4,11 @@ import { FileText } from "lucide-react";
 
 const DataFlowSection = () => {
   return (
-    <section className="py-32 bg-white relative overflow-hidden">
+    <section className="py-32 bg-[#f6f7fb] relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-24 left-1/2 h-56 w-[110%] -translate-x-1/2 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.08),transparent_65%)] blur-2xl" />
+        <div className="absolute bottom-0 left-[12%] h-40 w-40 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent_70%)] blur-2xl" />
+      </div>
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
         <div className="text-center mb-20 space-y-6">
           <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">

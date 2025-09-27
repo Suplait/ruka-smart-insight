@@ -126,7 +126,11 @@ export default function AgentShowcase() {
         </div>
       </motion.div>;
   };
-  return <section className="py-32 bg-white relative overflow-hidden">
+  return <section className="py-32 bg-gradient-to-b from-[#f4f5f9] via-white to-[#eef1f6] relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute top-12 left-[10%] h-40 w-40 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.12),transparent_70%)] blur-2xl" />
+        <div className="absolute bottom-0 right-[12%] h-48 w-48 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1),transparent_75%)] blur-[120px]" />
+      </div>
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
         <div className="text-center mb-20 space-y-6">
           <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">

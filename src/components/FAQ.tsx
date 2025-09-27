@@ -39,7 +39,11 @@ const faqs = [
 
 export default function FAQ() {
   return (
-    <section className="py-32 bg-white">
+    <section className="py-32 bg-[#f4f5f9] relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white via-white/70 to-transparent" />
+        <div className="absolute bottom-10 right-[12%] h-44 w-44 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.12),transparent_70%)] blur-[100px]" />
+      </div>
       <div className="max-w-4xl mx-auto px-6 sm:px-8">
         <div className="text-center mb-20 space-y-6">
           <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">
