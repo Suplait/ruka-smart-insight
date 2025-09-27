@@ -1,6 +1,6 @@
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from "framer-motion";
 import { FileText, Layers, TrendingUp, AlertTriangle, CreditCard, Repeat } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 const coreFeatures = [{
   icon: FileText,
   title: "Digita Facturas Automáticamente",
@@ -41,9 +41,19 @@ const addOns = [{
 }];
 export default function AgentShowcase() {
   const containerRef = useRef<HTMLElement>(null);
+  const featuresContainerRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
+  });
+  const { scrollYProgress: rawFeaturesScroll } = useScroll({
+    target: featuresContainerRef,
+    offset: ["start center", "end center"]
+  });
+  const featuresScrollYProgress = useSpring(rawFeaturesScroll, {
+    stiffness: 80,
+    damping: 20,
+    mass: 0.8
   });
 
   // Combine all features
@@ -55,9 +65,6 @@ export default function AgentShowcase() {
     [key: string]: { loaded: boolean; error: boolean; };
   }>({});
 
-  // Refs for each feature section
-  const featureRefs = useRef<(HTMLDivElement | null)[]>([]);
-
   // Handle video events
   const handleVideoLoad = (videoId: string) => {
     setVideoStates(prev => ({ ...prev, [videoId]: { loaded: true, error: false } }));
@@ -67,28 +74,16 @@ export default function AgentShowcase() {
     setVideoStates(prev => ({ ...prev, [videoId]: { loaded: false, error: true } }));
   };
 
-  // Scroll-based feature detection
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = featureRefs.current.indexOf(entry.target as HTMLDivElement);
-            if (index !== -1) {
-              setActiveFeature(index);
-            }
-          }
-        });
-      },
-      { threshold: 0.6, rootMargin: "-20% 0px -20% 0px" }
+  useMotionValueEvent(featuresScrollYProgress, "change", (latest) => {
+    if (!Number.isFinite(latest)) return;
+    const clamped = Math.min(Math.max(latest, 0), 0.999999);
+    const segmentSize = 1 / allFeatures.length;
+    const nextIndex = Math.min(
+      allFeatures.length - 1,
+      Math.floor(clamped / segmentSize)
     );
-
-    featureRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-
-    return () => observer.disconnect();
-  }, []);
+    setActiveFeature(prev => (prev === nextIndex ? prev : nextIndex));
+  });
 
   // Parallax effects
   const orbOneY = useTransform(scrollYProgress, [0, 1], [100, -100]);
@@ -99,9 +94,9 @@ export default function AgentShowcase() {
   const currentVideoState = videoStates[currentFeature?.id] || { loaded: false, error: false };
 
   return (
-    <motion.section 
-      ref={containerRef} 
-      className="py-24 lg:py-32 bg-gradient-to-b from-gray-50/50 via-white to-gray-50/30 relative overflow-hidden"
+    <section
+      ref={containerRef}
+      className="py-24 lg:py-32 bg-gradient-to-b from-gray-50/50 via-white to-gray-50/30 relative overflow-visible"
     >
       {/* Background effects */}
       <div className="pointer-events-none absolute inset-0">
@@ -140,9 +135,12 @@ export default function AgentShowcase() {
         </motion.div>
 
         {/* Main Content - Hero Style Layout */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16 items-start">
           {/* Left Content - Feature List */}
-          <div className="space-y-8 lg:space-y-12">
+          <div
+            ref={featuresContainerRef}
+            className="flex flex-col gap-8 lg:gap-10 lg:pb-32"
+          >
             {allFeatures.map((feature, index) => {
               const Icon = feature.icon;
               const isActive = index === activeFeature;
@@ -150,22 +148,26 @@ export default function AgentShowcase() {
               return (
                 <motion.div
                   key={feature.id}
-                  ref={(el) => (featureRefs.current[index] = el)}
-                  className={`transition-all duration-700 ${
-                    isActive ? "opacity-100" : "opacity-60"
-                  }`}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: isActive ? 1 : 0.6, x: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ opacity: 1 }}
+                  className="group transition-all"
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  animate={isActive ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0.55, scale: 0.98, y: 20 }}
+                  transition={{ duration: 0.45, ease: "easeOut" }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  whileHover={{ opacity: 1, scale: 1.01 }}
+                  onMouseEnter={() => setActiveFeature(prev => (prev === index ? prev : index))}
+                  onFocus={() => setActiveFeature(prev => (prev === index ? prev : index))}
                 >
-                  <div className={`p-6 lg:p-8 rounded-3xl transition-all duration-500 ${
+                  <div className={`relative overflow-hidden rounded-3xl border transition-all duration-500 ${
                     isActive 
-                      ? "bg-white/80 backdrop-blur-xl border border-primary/20 shadow-lg shadow-primary/5" 
-                      : "bg-white/40 backdrop-blur-sm border border-gray-200/30 hover:bg-white/60"
+                      ? "border-primary/30 bg-white/90 backdrop-blur-xl shadow-xl shadow-primary/10"
+                      : "border-gray-200/50 bg-white/50 backdrop-blur-sm hover:bg-white/70"
                   }`}>
-                    <div className="flex items-start gap-6">
+                    <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-primary/90 via-primary/70 to-primary/30 opacity-0 transition-opacity duration-500 group-hover:opacity-60" />
+                    <div className={`absolute -right-12 top-1/2 h-40 w-40 rounded-full bg-primary/5 blur-2xl transition-opacity duration-500 ${
+                      isActive ? "opacity-60" : "opacity-0"
+                    }`} />
+                    <div className="relative p-7 lg:p-8 flex flex-col gap-5 lg:gap-6">
                       <div className={`w-14 h-14 lg:w-16 lg:h-16 rounded-2xl flex items-center justify-center transition-all duration-500 ${
                         isActive
                           ? "bg-primary text-white shadow-lg shadow-primary/25"
@@ -174,12 +176,12 @@ export default function AgentShowcase() {
                         <Icon className="w-7 h-7 lg:w-8 lg:h-8" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className={`text-xl lg:text-2xl font-light mb-3 transition-colors duration-500 ${
+                        <h3 className={`text-2xl lg:text-[26px] font-light tracking-tight transition-colors duration-500 ${
                           isActive ? "text-gray-900" : "text-gray-700"
                         }`}>
                           {feature.title}
                         </h3>
-                        <p className={`text-base lg:text-lg leading-relaxed transition-colors duration-500 ${
+                        <p className={`mt-3 text-base lg:text-lg leading-relaxed transition-colors duration-500 ${
                           isActive ? "text-gray-600" : "text-gray-500"
                         }`}>
                           {feature.description}
@@ -193,14 +195,13 @@ export default function AgentShowcase() {
           </div>
 
           {/* Right Content - Dynamic Video */}
-          <motion.div 
-            className="relative"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <div className="sticky top-24">
+          <div className="relative self-start lg:self-stretch h-full">
+            <div className="sticky top-24 lg:top-28">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 32 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+              >
               {/* Main Video Container */}
               <motion.div
                 className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl lg:rounded-[2rem] overflow-hidden shadow-2xl shadow-gray-900/10"
@@ -281,10 +282,11 @@ export default function AgentShowcase() {
                   />
                 ))}
               </div>
+              </motion.div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }
