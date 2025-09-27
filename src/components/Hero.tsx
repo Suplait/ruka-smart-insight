@@ -254,9 +254,9 @@ export default function Hero() {
                 transition={{ duration: 0.2 }}
               >
                 <Button 
-                  size="lg" 
+                  size="sm" 
                   variant="outline" 
-                  className="h-14 px-8 text-base font-medium rounded-full border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/30 transition-all duration-300" 
+                  className="h-10 px-6 text-sm font-medium rounded-full border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/30 transition-all duration-300" 
                   onClick={scrollToGuarantee}
                 >
                   Garantía de 30 días →
