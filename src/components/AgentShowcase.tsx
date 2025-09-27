@@ -1,6 +1,6 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { FileText, Layers, TrendingUp, AlertTriangle, CreditCard, Repeat } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 const coreFeatures = [{
   icon: FileText,
   title: "Digita Facturas Automáticamente",
@@ -45,147 +45,246 @@ export default function AgentShowcase() {
     target: containerRef,
     offset: ["start end", "end start"]
   });
-  const orbOneY = useTransform(scrollYProgress, [0, 1], [40, -30]);
-  const orbTwoY = useTransform(scrollYProgress, [0, 1], [-15, 25]);
-  const orbThreeY = useTransform(scrollYProgress, [0, 1], [20, -35]);
+
+  // Combine all features
+  const allFeatures = [...coreFeatures, ...addOns];
+  
+  // State for active feature and video loading
+  const [activeFeature, setActiveFeature] = useState(0);
   const [videoStates, setVideoStates] = useState<{
-    [key: string]: {
-      loaded: boolean;
-      error: boolean;
-    };
+    [key: string]: { loaded: boolean; error: boolean; };
   }>({});
+
+  // Refs for each feature section
+  const featureRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Handle video events
   const handleVideoLoad = (videoId: string) => {
-    console.log(`AgentShowcase video ${videoId} loaded successfully`);
-    setVideoStates(prev => ({
-      ...prev,
-      [videoId]: {
-        loaded: true,
-        error: false
-      }
-    }));
+    setVideoStates(prev => ({ ...prev, [videoId]: { loaded: true, error: false } }));
   };
-  const handleVideoError = (videoId: string, e: any) => {
-    console.error(`AgentShowcase video ${videoId} error:`, e);
-    setVideoStates(prev => ({
-      ...prev,
-      [videoId]: {
-        loaded: false,
-        error: true
-      }
-    }));
+
+  const handleVideoError = (videoId: string) => {
+    setVideoStates(prev => ({ ...prev, [videoId]: { loaded: false, error: true } }));
   };
-  const renderVideoCard = (feature: any, index: number, isAddon: boolean = false) => {
-    const videoState = videoStates[feature.id] || {
-      loaded: false,
-      error: false
-    };
-    return <motion.div key={index} initial={{
-      opacity: 0,
-      y: 20
-    }} whileInView={{
-      opacity: 1,
-      y: 0
-    }} transition={{
-      duration: 0.5,
-      delay: index * 0.1
-    }} viewport={{
-      once: true
-    }} className="group relative">
-        <div className="bg-white/60 backdrop-blur-xl rounded-3xl border border-gray-200/50 hover:bg-white/80 transition-all duration-500 group-hover:scale-[1.02] overflow-hidden shadow-sm hover:shadow-lg">
-          {/* Video Container */}
-          <div className="relative aspect-square bg-gradient-to-br from-gray-50/50 to-gray-100/50 overflow-hidden">
-            {videoState.error ? <div className="w-full h-full flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gray-300 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <p className="text-gray-500 text-sm font-medium">Error al cargar</p>
-                </div>
-              </div> : <>
-                <video autoPlay loop muted playsInline preload="metadata" onLoadedData={() => handleVideoLoad(feature.id)} onError={e => handleVideoError(feature.id, e)} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
-                  <source src={feature.video} type="video/mp4" />
-                </video>
-                {!videoState.loaded && <div className="absolute inset-0 bg-gradient-to-br from-gray-100/95 to-gray-200/95 backdrop-blur-sm flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="w-10 h-10 mx-auto mb-3 bg-white/70 rounded-full animate-spin border-2 border-transparent border-t-blue-500"></div>
-                      <p className="text-gray-600 text-sm font-medium">Cargando...</p>
-                    </div>
-                  </div>}
-              </>}
-            
-            {/* Overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </div>
-          
-          {/* Content */}
-          <div className="p-6">
-            <div className="flex items-center gap-4 mb-4">
-               <div className={`w-12 h-12 rounded-2xl ${isAddon ? 'bg-primary/10 text-primary' : 'bg-primary/10 text-primary'} flex items-center justify-center`}>
-                 <feature.icon className="w-6 h-6" />
-               </div>
-               <div className="flex-1">
-                 <h4 className="font-medium text-lg text-gray-900 mb-1 tracking-tight">{feature.title}</h4>
-               </div>
-            </div>
-            <p className="text-gray-600 leading-relaxed text-sm font-light">{feature.description}</p>
-          </div>
-        </div>
-      </motion.div>;
-  };
-  return <motion.section ref={containerRef} className="py-32 bg-gradient-to-b from-[#f4f5f9] via-white to-[#eef1f6] relative overflow-hidden">
+
+  // Scroll-based feature detection
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = featureRefs.current.indexOf(entry.target as HTMLDivElement);
+            if (index !== -1) {
+              setActiveFeature(index);
+            }
+          }
+        });
+      },
+      { threshold: 0.6, rootMargin: "-20% 0px -20% 0px" }
+    );
+
+    featureRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Parallax effects
+  const orbOneY = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const orbTwoY = useTransform(scrollYProgress, [0, 1], [-50, 50]);
+  const orbThreeY = useTransform(scrollYProgress, [0, 1], [80, -80]);
+
+  const currentFeature = allFeatures[activeFeature];
+  const currentVideoState = videoStates[currentFeature?.id] || { loaded: false, error: false };
+
+  return (
+    <motion.section 
+      ref={containerRef} 
+      className="py-24 lg:py-32 bg-gradient-to-b from-gray-50/50 via-white to-gray-50/30 relative overflow-hidden"
+    >
+      {/* Background effects */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-12 left-[10%] h-40 w-40 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.12),transparent_70%)] blur-2xl" />
-        <div className="absolute bottom-0 right-[12%] h-48 w-48 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1),transparent_75%)] blur-[120px]" />
         <motion.div
-          className="absolute top-1/3 right-[18%] w-28 h-28 bg-gradient-to-br from-blue-400/15 via-sky-400/10 to-indigo-400/15 rounded-full blur-3xl"
-          animate={{
-            x: [0, -25, 15, 0],
-            y: [0, -30, -5, 0],
-            scale: [1, 1.08, 1.02, 1]
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 left-[8%] w-96 h-96 bg-gradient-to-br from-primary/8 via-primary/4 to-transparent rounded-full blur-3xl"
           style={{ y: orbOneY }}
         />
         <motion.div
-          className="absolute bottom-12 left-[14%] w-32 h-32 bg-gradient-to-br from-teal-400/15 via-emerald-400/10 to-cyan-400/15 rounded-full blur-3xl"
-          animate={{
-            x: [0, 20, -15, 0],
-            y: [0, 22, -18, 0],
-            scale: [1, 1.1, 0.94, 1]
-          }}
-          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 1.3 }}
+          className="absolute bottom-1/4 right-[8%] w-80 h-80 bg-gradient-to-br from-blue-500/6 via-indigo-500/4 to-transparent rounded-full blur-3xl"
           style={{ y: orbTwoY }}
         />
         <motion.div
-          className="absolute top-1/2 left-1/2 w-24 h-24 bg-gradient-to-br from-pink-400/15 via-rose-400/15 to-orange-400/15 rounded-full blur-2xl"
-          animate={{
-            x: [0, 18, -12, 0],
-            y: [0, -18, 15, 0],
-            scale: [1, 1.09, 0.96, 1]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-br from-purple-500/5 via-pink-500/3 to-transparent rounded-full blur-3xl"
           style={{ y: orbThreeY }}
         />
       </div>
+
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
-        <div className="text-center mb-20 space-y-6">
-          <h2 className="text-4xl lg:text-6xl font-thin text-gray-900 tracking-tight">
+        {/* Header */}
+        <motion.div 
+          className="text-center mb-16 lg:mb-24 space-y-6"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-4xl lg:text-6xl font-extralight text-gray-900 tracking-tight leading-[1.1]">
             Así Funcionan Nuestros{" "}
-            <span className="font-light bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
+            <span className="font-light bg-gradient-to-r from-primary via-primary to-primary/70 bg-clip-text text-transparent">
               Agentes Inteligentes
             </span>
           </h2>
-          <p className="text-xl text-gray-600 font-light max-w-2xl mx-auto">
+          <p className="text-xl lg:text-2xl text-gray-600 font-light max-w-3xl mx-auto leading-relaxed">
             Cada agente trabaja 24/7 automatizando procesos específicos de tu negocio
           </p>
-        </div>
+        </motion.div>
 
-        {/* All Features in 2x3 Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[...coreFeatures, ...addOns].map((feature, index) => renderVideoCard(feature, index, index >= 4))}
+        {/* Main Content - Hero Style Layout */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
+          {/* Left Content - Feature List */}
+          <div className="space-y-8 lg:space-y-12">
+            {allFeatures.map((feature, index) => {
+              const Icon = feature.icon;
+              const isActive = index === activeFeature;
+              
+              return (
+                <motion.div
+                  key={feature.id}
+                  ref={(el) => (featureRefs.current[index] = el)}
+                  className={`transition-all duration-700 ${
+                    isActive ? "opacity-100" : "opacity-60"
+                  }`}
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: isActive ? 1 : 0.6, x: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ opacity: 1 }}
+                >
+                  <div className={`p-6 lg:p-8 rounded-3xl transition-all duration-500 ${
+                    isActive 
+                      ? "bg-white/80 backdrop-blur-xl border border-primary/20 shadow-lg shadow-primary/5" 
+                      : "bg-white/40 backdrop-blur-sm border border-gray-200/30 hover:bg-white/60"
+                  }`}>
+                    <div className="flex items-start gap-6">
+                      <div className={`w-14 h-14 lg:w-16 lg:h-16 rounded-2xl flex items-center justify-center transition-all duration-500 ${
+                        isActive
+                          ? "bg-primary text-white shadow-lg shadow-primary/25"
+                          : "bg-gray-100 text-gray-600"
+                      }`}>
+                        <Icon className="w-7 h-7 lg:w-8 lg:h-8" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className={`text-xl lg:text-2xl font-light mb-3 transition-colors duration-500 ${
+                          isActive ? "text-gray-900" : "text-gray-700"
+                        }`}>
+                          {feature.title}
+                        </h3>
+                        <p className={`text-base lg:text-lg leading-relaxed transition-colors duration-500 ${
+                          isActive ? "text-gray-600" : "text-gray-500"
+                        }`}>
+                          {feature.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Right Content - Dynamic Video */}
+          <motion.div 
+            className="relative"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="sticky top-24">
+              {/* Main Video Container */}
+              <motion.div
+                className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl lg:rounded-[2rem] overflow-hidden shadow-2xl shadow-gray-900/10"
+                layoutId="agent-video"
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+              >
+                {currentVideoState.error ? (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-20 h-20 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
+                        <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <p className="text-gray-500 text-lg font-medium">Error al cargar video</p>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <video
+                      key={currentFeature.id}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="metadata"
+                      onLoadedData={() => handleVideoLoad(currentFeature.id)}
+                      onError={() => handleVideoError(currentFeature.id)}
+                      className="w-full h-full object-cover"
+                    >
+                      <source src={currentFeature.video} type="video/mp4" />
+                    </video>
+                    
+                    {!currentVideoState.loaded && (
+                      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="w-12 h-12 mx-auto mb-4 border-3 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                          <p className="text-gray-600 text-lg font-medium">Cargando video...</p>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
+                
+                {/* Floating feature indicator */}
+                <motion.div
+                  className="absolute bottom-6 left-6 right-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
+                        <currentFeature.icon className="w-5 h-5" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium text-gray-900 text-sm truncate">
+                          {currentFeature.title}
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              {/* Progress indicators */}
+              <div className="flex justify-center mt-8 gap-2">
+                {allFeatures.map((_, index) => (
+                  <motion.div
+                    key={index}
+                    className={`h-1.5 rounded-full transition-all duration-500 ${
+                      index === activeFeature 
+                        ? "w-8 bg-primary" 
+                        : "w-2 bg-gray-300"
+                    }`}
+                    layoutId={`indicator-${index}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
-    </motion.section>;
+    </motion.section>
+  );
 }
