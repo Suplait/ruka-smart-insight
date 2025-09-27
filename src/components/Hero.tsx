@@ -332,20 +332,6 @@ export default function Hero() {
                 }}
                 transition={{ duration: 0.4 }}
               >
-                {/* Animated border glow effect */}
-                <motion.div
-                  className="absolute inset-0 rounded-[2rem] bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 opacity-0"
-                  animate={{
-                    opacity: [0, 0.5, 0],
-                    scale: [1, 1.02, 1],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-                
                 {videoError ? (
                   <motion.div 
                     className="w-full h-full flex items-center justify-center bg-gray-50"
