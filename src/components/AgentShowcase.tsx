@@ -195,8 +195,8 @@ export default function AgentShowcase() {
           </div>
 
           {/* Right Content - Dynamic Video */}
-          <div className="relative self-start lg:self-stretch h-full">
-            <div className="sticky top-24 lg:top-28">
+          <div className="relative self-start lg:self-stretch h-full lg:mt-4">
+            <div className="sticky top-24 lg:top-[max(6rem,calc(50vh-16rem))]">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, y: 32 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
