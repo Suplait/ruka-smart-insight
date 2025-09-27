@@ -3,7 +3,16 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-const valueMessages = ["Automatiza el registro de compras.", "Controla tu margen al día, no al mes.", "Descubre alzas de precio de tus insumos en tiempo real.", "Genera reportes en segundos usando lenguaje natural.", "Gestiona simple el pago a tus proveedores.", "Ten toda tu información a la mano.", "Libera HH a la semana para que te enfoques en lo que importa."];
+const valueMessages = [
+  "Automatiza completamente el registro de compras",        // 46
+  "Controla tu margen al día, no una vez al mes",                 // 37
+  "Descubre alzas de precio en tus insumos en vivo",      // 48
+  "Genera reportes en segundos usando lenguaje natural",  // 52
+  "Gestiona simple el pago a tus proveedores",            // 42
+  "Ten toda tu información a la mano, en un lugar",       // 47
+  "Libera horas para enfocarte en lo importante"    // 51
+];
+
 export default function Hero() {
   const navigate = useNavigate();
   const [currentMessage, setCurrentMessage] = useState(0);
