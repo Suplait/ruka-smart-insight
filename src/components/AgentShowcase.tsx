@@ -67,7 +67,7 @@ export default function AgentShowcase() {
     setVideoStates(prev => ({ ...prev, [videoId]: { loaded: false, error: true } }));
   };
 
-  // Scroll-based feature detection with better timing
+  // Scroll-based feature detection
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -80,10 +80,7 @@ export default function AgentShowcase() {
           }
         });
       },
-      { 
-        threshold: 0.5, 
-        rootMargin: "-40% 0px -40% 0px" // More conservative margins for better timing
-      }
+      { threshold: 0.6, rootMargin: "-20% 0px -20% 0px" }
     );
 
     featureRefs.current.forEach((ref) => {
@@ -143,9 +140,9 @@ export default function AgentShowcase() {
         </motion.div>
 
         {/* Main Content - Hero Style Layout */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Left Content - Feature List with proper spacing */}
-          <div className="space-y-32 lg:space-y-40 py-16">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
+          {/* Left Content - Feature List */}
+          <div className="space-y-8 lg:space-y-12">
             {allFeatures.map((feature, index) => {
               const Icon = feature.icon;
               const isActive = index === activeFeature;
@@ -154,7 +151,7 @@ export default function AgentShowcase() {
                 <motion.div
                   key={feature.id}
                   ref={(el) => (featureRefs.current[index] = el)}
-                  className={`min-h-[50vh] flex items-center transition-all duration-700 ${
+                  className={`transition-all duration-700 ${
                     isActive ? "opacity-100" : "opacity-60"
                   }`}
                   initial={{ opacity: 0, x: -30 }}
@@ -163,7 +160,7 @@ export default function AgentShowcase() {
                   viewport={{ once: true }}
                   whileHover={{ opacity: 1 }}
                 >
-                  <div className={`p-6 lg:p-8 rounded-3xl transition-all duration-500 w-full ${
+                  <div className={`p-6 lg:p-8 rounded-3xl transition-all duration-500 ${
                     isActive 
                       ? "bg-white/80 backdrop-blur-xl border border-primary/20 shadow-lg shadow-primary/5" 
                       : "bg-white/40 backdrop-blur-sm border border-gray-200/30 hover:bg-white/60"
@@ -197,13 +194,13 @@ export default function AgentShowcase() {
 
           {/* Right Content - Dynamic Video */}
           <motion.div 
-            className="relative lg:h-screen flex items-center"
+            className="relative"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="sticky top-1/2 -translate-y-1/2 w-full">
+            <div className="sticky top-24">
               {/* Main Video Container */}
               <motion.div
                 className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl lg:rounded-[2rem] overflow-hidden shadow-2xl shadow-gray-900/10"
