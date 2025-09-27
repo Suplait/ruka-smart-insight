@@ -4,6 +4,7 @@ import { ArrowRight, CheckCircle2, Shield, Zap, LineChart } from "lucide-react";
 
 export default function ProductShowcase() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   const benefits = [
     {
@@ -54,10 +55,8 @@ export default function ProductShowcase() {
             </Button>
           </div>
           <div className="relative rounded-xl overflow-hidden shadow-2xl group w-full bg-gray-900">
-            {/* Black background overlay to prevent white flash */}
-            <div className="absolute inset-0 bg-gray-900 z-10"></div>
             <div 
-              className="cursor-pointer w-full relative z-20"
+              className="cursor-pointer w-full relative"
               onClick={() => setIsModalOpen(true)}
             >
               <iframe 
@@ -68,10 +67,16 @@ export default function ProductShowcase() {
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen
-                className="transform group-hover:scale-105 transition-transform duration-500 pointer-events-none bg-gray-900"
+                className={`transform group-hover:scale-105 transition-all duration-500 pointer-events-none ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => setIsVideoLoaded(true)}
                 style={{ backgroundColor: '#111827' }}
               ></iframe>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              {!isVideoLoaded && (
+                <div className="absolute inset-0 bg-gray-900 z-30 flex items-center justify-center">
+                  <div className="w-full h-full bg-gray-900"></div>
+                </div>
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
             </div>
           </div>
         </div>
