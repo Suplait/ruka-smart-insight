@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 const valueMessages = [
@@ -20,6 +20,12 @@ export default function Hero() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const longestMessage = useMemo(
+    () => valueMessages.reduce((longest, current) => (
+      current.length > longest.length ? current : longest
+    ), ""),
+    []
+  ); // Keeps heading height steady so lower sections don't jump during typing
   
   const containerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -158,13 +164,24 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <span className="block font-light">
-                {displayText}
-                <motion.span 
-                  className="inline-block w-1 h-[0.9em] bg-gray-900 ml-1"
-                  animate={{ opacity: [1, 0, 1] }}
-                  transition={{ duration: 1, repeat: Infinity }}
-                />
+              <span className="relative block font-light">
+                <span 
+                  aria-hidden
+                  className="block opacity-0 select-none pointer-events-none"
+                >
+                  {longestMessage}
+                </span>
+                <span 
+                  className="absolute inset-0 block"
+                  aria-live="polite"
+                >
+                  {displayText}
+                  <motion.span 
+                    className="inline-block w-1 h-[0.9em] bg-gray-900 ml-1"
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  />
+                </span>
               </span>
             </motion.h1>
             
