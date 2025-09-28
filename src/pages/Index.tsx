@@ -35,15 +35,15 @@ export default function Index() {
     <main className="min-h-screen">
       <Navbar />
       <Hero />
+      <Partners />
       <Stats />
       <BeforeAfter />
       <DataFlowSection />
-      <YouTubeDemo />
       <AgentShowcase />
-      <Partners />
+      <YouTubeDemo />
+      <Testimonials />
       <Pricing />
       <MoneyBackGuarantee />
-      <Testimonials />
       <FAQ />
       <CTA />
       <Footer />
