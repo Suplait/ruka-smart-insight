@@ -10,6 +10,7 @@ import BeforeAfter from "@/components/BeforeAfter";
 import AgentShowcase from "@/components/AgentShowcase";
 import Partners from "@/components/Partners";
 import Features from "@/components/Features";
+import Pricing from "@/components/Pricing";
 import MoneyBackGuarantee from "@/components/MoneyBackGuarantee";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
@@ -40,7 +41,7 @@ export default function Index() {
       <YouTubeDemo />
       <AgentShowcase />
       <Partners />
-      <Features />
+      <Pricing />
       <MoneyBackGuarantee />
       <Testimonials />
       <FAQ />
