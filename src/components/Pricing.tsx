@@ -36,6 +36,7 @@ export default function Pricing() {
 
   return (
     <motion.section
+      id="pricing"
       ref={containerRef}
       className="relative py-32 bg-gradient-to-b from-gray-50 via-white to-gray-50 overflow-hidden"
     >
