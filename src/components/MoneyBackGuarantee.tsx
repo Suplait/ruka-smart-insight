@@ -20,7 +20,7 @@ export default function MoneyBackGuarantee() {
     <motion.section id="guarantee" ref={containerRef} className="py-32 bg-gradient-to-b from-white via-[#f7f9fc] to-white relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-10 right-[15%] h-36 w-36 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.15),transparent_70%)] blur-2xl" />
-        <div className="absolute bottom-0 left-1/2 h-40 w-[90%] -translate-x-1/2 bg-gradient-to-t from-white via-white/70 to-transparent" />
+        <div className="absolute bottom-0 left-1/2 h-40 w-full max-w-[90%] -translate-x-1/2 bg-gradient-to-t from-white via-white/70 to-transparent" />
         <motion.div
           className="absolute top-8 left-[18%] w-28 h-28 bg-gradient-to-br from-blue-400/15 via-indigo-400/10 to-purple-400/15 rounded-full blur-3xl"
           animate={{

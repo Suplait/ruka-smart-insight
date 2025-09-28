@@ -16,7 +16,7 @@ const DataFlowSection = () => {
   return (
     <motion.section ref={containerRef} className="py-32 bg-[#f6f7fb] relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-24 left-1/2 h-56 w-[110%] -translate-x-1/2 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.08),transparent_65%)] blur-2xl" />
+        <div className="absolute -top-24 left-1/2 h-56 w-full -translate-x-1/2 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.08),transparent_65%)] blur-2xl" />
         <div className="absolute bottom-0 left-[12%] h-40 w-40 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent_70%)] blur-2xl" />
         <motion.div
           className="absolute top-16 right-[15%] w-28 h-28 bg-gradient-to-br from-blue-400/15 via-sky-400/10 to-purple-400/15 rounded-full blur-2xl"

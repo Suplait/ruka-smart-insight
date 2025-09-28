@@ -324,7 +324,7 @@ export default function Hero() {
               
               {/* Main video container with enhanced animations */}
               <motion.div 
-                className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[504px] lg:h-[504px] rounded-[2rem] overflow-hidden bg-gray-900/90 backdrop-blur-xl shadow-sm z-20"
+                className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[480px] lg:h-[480px] xl:w-[504px] xl:h-[504px] rounded-[2rem] overflow-hidden bg-gray-900/90 backdrop-blur-xl shadow-sm z-20"
                 whileHover={{
                   backgroundColor: "rgba(17, 24, 39, 0.95)",
                   boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",

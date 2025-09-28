@@ -39,7 +39,7 @@ export default function Navbar() {
           <Menu className="h-6 w-6" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+      <SheetContent side="right" className="w-[280px] sm:w-[350px]">
         <nav className="flex flex-col gap-4">
           <button onClick={() => scrollToSection('features')} className="flex items-center space-x-2 text-left text-lg font-medium">
             Features
@@ -111,7 +111,7 @@ export default function Navbar() {
                     Industrias
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="w-[300px] p-4 bg-white rounded-lg shadow-lg border">
+                    <div className="w-[280px] p-4 bg-white rounded-lg shadow-lg border">
                       <p className="text-sm font-medium text-muted-foreground mb-3 px-2">
                         Soluciones por Industria
                       </p>
