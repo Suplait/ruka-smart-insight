@@ -39,12 +39,12 @@ const SubdomainModal = ({ isOpen, onClose }: SubdomainModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md" aria-describedby="dialog-description">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl font-semibold">
             Iniciar Sesión
           </DialogTitle>
-          <DialogDescription className="text-center pt-2">
+          <DialogDescription id="dialog-description" className="text-center pt-2">
             Ingresa el subdominio de tu empresa para acceder a tu cuenta
           </DialogDescription>
         </DialogHeader>
