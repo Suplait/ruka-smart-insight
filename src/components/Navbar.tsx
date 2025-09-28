@@ -39,13 +39,13 @@ export default function Navbar() {
           <Menu className="h-6 w-6" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+      <SheetContent side="right" className="w-[280px] sm:w-[350px]">
         <nav className="flex flex-col gap-4">
-          <button onClick={() => scrollToSection('features')} className="flex items-center space-x-2 text-left text-lg font-medium">
-            Features
-          </button>
-          <button onClick={() => scrollToSection('product')} className="flex items-center space-x-2 text-left text-lg font-medium">
+          <button onClick={() => scrollToSection('agent-showcase')} className="flex items-center space-x-2 text-left text-lg font-medium">
             Producto
+          </button>
+          <button onClick={() => scrollToSection('pricing')} className="flex items-center space-x-2 text-left text-lg font-medium">
+            Precio
           </button>
           <button onClick={() => scrollToSection('guarantee')} className="flex items-center space-x-2 text-left text-lg font-medium">
             Garantía
@@ -91,11 +91,11 @@ export default function Navbar() {
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
-            <button onClick={() => scrollToSection('features')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
-              Features
-            </button>
-            <button onClick={() => scrollToSection('product')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+            <button onClick={() => scrollToSection('agent-showcase')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               Producto
+            </button>
+            <button onClick={() => scrollToSection('pricing')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+              Pricing
             </button>
             <button onClick={() => scrollToSection('guarantee')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               Garantía
@@ -111,7 +111,7 @@ export default function Navbar() {
                     Industrias
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="w-[300px] p-4 bg-white rounded-lg shadow-lg border">
+                    <div className="w-[280px] p-4 bg-white rounded-lg shadow-lg border">
                       <p className="text-sm font-medium text-muted-foreground mb-3 px-2">
                         Soluciones por Industria
                       </p>

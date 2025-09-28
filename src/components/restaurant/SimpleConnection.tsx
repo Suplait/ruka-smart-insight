@@ -68,8 +68,8 @@ export default function SimpleConnection() {
         </div>
         
         {/* Flow lines */}
-        <div className="absolute top-1/2 left-[27%] w-[20%] h-0.5 -translate-y-1/2 bg-primary/30 z-0"></div>
-        <div className="absolute top-1/2 right-[27%] w-[20%] h-0.5 -translate-y-1/2 bg-primary/30 z-0"></div>
+        <div className="absolute top-1/2 left-[27%] w-[18%] h-0.5 -translate-y-1/2 bg-primary/30 z-0"></div>
+        <div className="absolute top-1/2 right-[27%] w-[18%] h-0.5 -translate-y-1/2 bg-primary/30 z-0"></div>
       </div>
 
       <div className="grid grid-cols-3 gap-4 text-center">

@@ -102,6 +102,7 @@ export default function AgentShowcase() {
 
   return (
     <section
+      id="agent-showcase"
       ref={containerRef}
       className="py-24 lg:py-32 bg-gradient-to-b from-gray-50/50 via-white to-gray-50/30 relative overflow-visible"
     >
