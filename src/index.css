@@ -128,13 +128,30 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-html, body {
+body {
   overflow-x: hidden;
   width: 100%;
   margin: 0;
   padding: 0;
+  min-width: 0;
+}
+
+/* Prevenir barras blancas en mobile */
+@media (max-width: 768px) {
+  html, body {
+    min-width: 0;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  * {
+    max-width: 100%;
+  }
 }
 
 * {
