@@ -21,8 +21,8 @@ export default function Webinar() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  // Fecha del webinar: jueves 19 de junio de 2025 a las 6:00 PM
-  const webinarDate = new Date('2025-06-19T18:00:00');
+  // Fecha del webinar: jueves 16 de octubre de 2025 a las 5:30 PM
+  const webinarDate = new Date('2025-10-16T17:30:00');
   const now = new Date();
   const timeUntilWebinar = webinarDate.getTime() - now.getTime();
   const daysUntil = Math.ceil(timeUntilWebinar / (1000 * 60 * 60 * 24));
@@ -118,59 +118,63 @@ export default function Webinar() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <main className="min-h-screen bg-background">
       <Navbar />
       
-      <div className="pt-20 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+      <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
           {/* Hero Section */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-800 text-sm font-medium mb-6">
-              <BarChart3 className="w-4 h-4 mr-2" />
-              Webinar Exclusivo para Restaurantes
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center px-6 py-3 rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 text-sm font-medium mb-8">
+              <BarChart3 className="w-5 h-5 mr-2 text-primary" />
+              <span className="text-foreground">Webinar Exclusivo para Restaurantes</span>
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 tracking-tight">
+              <span className="bg-gradient-to-br from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent">
                 Del Caos
               </span>
               {" "}al{" "}
-              <span className="bg-gradient-to-r from-blue-500 via-primary to-blue-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-br from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent">
                 Control
               </span>
             </h1>
             
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto font-light">
               Aprende cómo ver ventas, compras y gastos en un solo dashboard para tu restaurante
             </p>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8 max-w-2xl mx-auto">
-              <p className="text-blue-800 text-lg font-medium">
-                <TrendingUp className="w-5 h-5 inline mr-2" />
+            <div className="bg-primary/5 backdrop-blur-xl border border-primary/10 rounded-3xl p-8 mb-16 max-w-3xl mx-auto shadow-lg">
+              <p className="text-foreground text-lg sm:text-xl font-medium">
+                <TrendingUp className="w-6 h-6 inline mr-3 text-primary" />
                 ¿Sabías que la mayoría de los restaurantes toma decisiones con información incompleta… 
-                <span className="font-bold"> o sin datos en absoluto?</span>
+                <span className="font-bold text-primary"> o sin datos en absoluto?</span>
               </p>
             </div>
 
             {/* Webinar Info Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-              <Card className="border-2 border-blue-100">
-                <CardContent className="pt-6">
-                  <Calendar className="w-8 h-8 text-blue-600 mx-auto mb-3" />
-                  <CardTitle className="text-lg mb-2">Fecha</CardTitle>
-                  <CardDescription className="text-gray-600">
-                    Jueves 19 de Junio 2025
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 max-w-5xl mx-auto">
+              <Card className="border border-border/50 backdrop-blur-sm bg-card/50 rounded-3xl shadow-lg hover:shadow-xl transition-shadow">
+                <CardContent className="pt-8 pb-8">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <Calendar className="w-8 h-8 text-primary" />
+                  </div>
+                  <CardTitle className="text-xl mb-3 font-semibold">Fecha</CardTitle>
+                  <CardDescription className="text-muted-foreground text-base">
+                    Jueves 16 de Octubre 2025
                     <br />
-                    6:00 PM (Hora de Chile)
+                    5:30 PM (Hora de Chile)
                   </CardDescription>
                 </CardContent>
               </Card>
 
-              <Card className="border-2 border-green-100">
-                <CardContent className="pt-6">
-                  <Clock className="w-8 h-8 text-green-600 mx-auto mb-3" />
-                  <CardTitle className="text-lg mb-2">Faltan</CardTitle>
-                  <CardDescription className="text-gray-600">
+              <Card className="border border-border/50 backdrop-blur-sm bg-card/50 rounded-3xl shadow-lg hover:shadow-xl transition-shadow">
+                <CardContent className="pt-8 pb-8">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/20 to-green-500/10 flex items-center justify-center mx-auto mb-4">
+                    <Clock className="w-8 h-8 text-green-600" />
+                  </div>
+                  <CardTitle className="text-xl mb-3 font-semibold">Faltan</CardTitle>
+                  <CardDescription className="text-muted-foreground text-base">
                     {daysUntil > 0 ? `${daysUntil} días` : 'Próximamente'}
                     <br />
                     Duración: 45 minutos
@@ -178,11 +182,13 @@ export default function Webinar() {
                 </CardContent>
               </Card>
 
-              <Card className="border-2 border-primary/20">
-                <CardContent className="pt-6">
-                  <Users className="w-8 h-8 text-primary mx-auto mb-3" />
-                  <CardTitle className="text-lg mb-2">Modalidad</CardTitle>
-                  <CardDescription className="text-gray-600">
+              <Card className="border border-border/50 backdrop-blur-sm bg-card/50 rounded-3xl shadow-lg hover:shadow-xl transition-shadow">
+                <CardContent className="pt-8 pb-8">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <Users className="w-8 h-8 text-primary" />
+                  </div>
+                  <CardTitle className="text-xl mb-3 font-semibold">Modalidad</CardTitle>
+                  <CardDescription className="text-muted-foreground text-base">
                     100% Online
                     <br />
                     Inscripción gratuita
@@ -193,98 +199,136 @@ export default function Webinar() {
           </div>
 
           {/* Content Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start max-w-6xl mx-auto">
             {/* Left Column - What you'll learn */}
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              <h2 className="text-4xl sm:text-5xl font-bold mb-10 tracking-tight">
                 En este webinar descubrirás
               </h2>
               
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {[
                   "Por qué tener ventas por un lado, compras por otro y las boletas dispersas está matando tu rentabilidad",
                   "Cómo unificar toda tu información financiera en un solo dashboard para tomar decisiones basadas en datos reales",
                   "Qué métricas clave debes monitorear diariamente para mantener el control total de tu restaurante",
                   "Casos reales de restaurantes que pasaron del caos financiero al control absoluto de sus números"
                 ].map((item, index) => (
-                  <div key={index} className="flex items-start">
-                    <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-700">{item}</span>
+                  <div key={index} className="flex items-start group">
+                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/10 flex items-center justify-center mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform">
+                      <CheckCircle className="w-5 h-5 text-green-600" />
+                    </div>
+                    <span className="text-muted-foreground text-lg leading-relaxed">{item}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-8 p-6 bg-blue-50 rounded-lg">
-                <h3 className="text-xl font-semibold text-blue-900 mb-2">
+              <div className="mt-10 p-8 bg-primary/5 backdrop-blur-xl border border-primary/10 rounded-3xl shadow-lg">
+                <h3 className="text-2xl font-semibold mb-3">
                   De la Confusión a la Claridad
                 </h3>
-                <p className="text-blue-800">
+                <p className="text-muted-foreground text-lg leading-relaxed">
                   Te mostraremos ejemplos reales de dashboards que están transformando la gestión 
                   de restaurantes, desde pequeños locales hasta cadenas establecidas.
                 </p>
               </div>
 
-              <div className="mt-6 p-6 bg-primary/10 rounded-lg">
-                <h3 className="text-xl font-semibold text-primary mb-2">
+              <div className="mt-6 p-8 bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-xl border border-primary/20 rounded-3xl shadow-lg">
+                <h3 className="text-2xl font-semibold text-primary mb-3">
                   ¿Para quién es este webinar?
                 </h3>
-                <p className="text-primary/80">
-                  <strong>Dueños y administradores de restaurantes</strong> que están cansados de 
+                <p className="text-foreground/80 text-lg leading-relaxed">
+                  <strong className="text-primary">Dueños y administradores de restaurantes</strong> que están cansados de 
                   trabajar a ciegas y quieren tener control total sobre sus números y operaciones.
                 </p>
               </div>
             </div>
 
             {/* Right Column - Registration Form */}
-            <div>
-              <Card className="border-2 border-primary/20 shadow-lg">
-                <CardHeader className="bg-primary text-white rounded-t-lg">
-                  <CardTitle className="text-2xl text-center">
+            <div className="lg:sticky lg:top-24">
+              <Card className="border border-border/50 backdrop-blur-sm bg-card/80 shadow-2xl rounded-3xl overflow-hidden">
+                <CardHeader className="bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-primary-foreground pt-10 pb-10">
+                  <CardTitle className="text-3xl text-center font-bold">
                     {isRegistered ? "¡Registro Confirmado!" : "Inscríbete Gratis"}
                   </CardTitle>
-                  <CardDescription className="text-primary-foreground/80 text-center">
+                  <CardDescription className="text-primary-foreground/90 text-center text-base mt-2">
                     {isRegistered 
                       ? "Te hemos enviado todos los detalles a tu correo" 
-                      : "Asegura tu cupo - Jueves 19 de Junio 2025, 6:00 PM"
+                      : "Asegura tu cupo - Jueves 16 de Octubre 2025, 5:30 PM"
                     }
                   </CardDescription>
                 </CardHeader>
                 
-                <CardContent className="pt-6">
-                  {isRegistered ? <div className="text-center space-y-4">
-                      <CheckCircle className="w-16 h-16 text-green-500 mx-auto" />
+                <CardContent className="pt-8 pb-8 px-8">
+                  {isRegistered ? <div className="text-center space-y-6">
+                      <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500/20 to-green-500/10 flex items-center justify-center mx-auto">
+                        <CheckCircle className="w-12 h-12 text-green-600" />
+                      </div>
                       <div>
-                        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                        <h3 className="text-2xl font-semibold mb-3">
                           ¡Todo listo!
                         </h3>
-                        <p className="text-gray-600 mb-4">
+                        <p className="text-muted-foreground mb-4 text-lg">
                           Recibirás un recordatorio el día del webinar con el enlace de acceso.
                         </p>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-muted-foreground/80">
                           Prepárate para pasar del caos al control total de tu restaurante.
                         </p>
                       </div>
-                    </div> : <form onSubmit={handleSubmit} className="space-y-4">
+                    </div> : <form onSubmit={handleSubmit} className="space-y-6">
                       <div>
-                        <Label htmlFor="nombre">Nombre completo *</Label>
-                        <Input id="nombre" name="nombre" type="text" value={formData.nombre} onChange={handleInputChange} placeholder="Ingresa tu nombre completo" required disabled={isSubmitting} />
+                        <Label htmlFor="nombre" className="text-base font-medium">Nombre completo *</Label>
+                        <Input 
+                          id="nombre" 
+                          name="nombre" 
+                          type="text" 
+                          value={formData.nombre} 
+                          onChange={handleInputChange} 
+                          placeholder="Ingresa tu nombre completo" 
+                          required 
+                          disabled={isSubmitting}
+                          className="mt-2 h-12 rounded-xl border-border/50 bg-background/50"
+                        />
                       </div>
 
                       <div>
-                        <Label htmlFor="correo">Correo electrónico *</Label>
-                        <Input id="correo" name="correo" type="email" value={formData.correo} onChange={handleInputChange} placeholder="tu@restaurante.com" required disabled={isSubmitting} />
+                        <Label htmlFor="correo" className="text-base font-medium">Correo electrónico *</Label>
+                        <Input 
+                          id="correo" 
+                          name="correo" 
+                          type="email" 
+                          value={formData.correo} 
+                          onChange={handleInputChange} 
+                          placeholder="tu@restaurante.com" 
+                          required 
+                          disabled={isSubmitting}
+                          className="mt-2 h-12 rounded-xl border-border/50 bg-background/50"
+                        />
                       </div>
 
                       <div>
-                        <Label htmlFor="whatsapp">WhatsApp *</Label>
-                        <Input id="whatsapp" name="whatsapp" type="tel" value={formData.whatsapp} onChange={handleInputChange} placeholder="+56 9 XXXX XXXX" required disabled={isSubmitting} />
+                        <Label htmlFor="whatsapp" className="text-base font-medium">WhatsApp *</Label>
+                        <Input 
+                          id="whatsapp" 
+                          name="whatsapp" 
+                          type="tel" 
+                          value={formData.whatsapp} 
+                          onChange={handleInputChange} 
+                          placeholder="+56 9 XXXX XXXX" 
+                          required 
+                          disabled={isSubmitting}
+                          className="mt-2 h-12 rounded-xl border-border/50 bg-background/50"
+                        />
                       </div>
 
-                      <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isSubmitting}>
+                      <Button 
+                        type="submit" 
+                        className="w-full h-14 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all" 
+                        disabled={isSubmitting}
+                      >
                         {isSubmitting ? "Procesando..." : "Inscribirme al Webinar"}
                       </Button>
 
-                      <p className="text-xs text-gray-500 text-center">
+                      <p className="text-xs text-muted-foreground text-center leading-relaxed">
                         Al registrarte, aceptas recibir información sobre el webinar. 
                         Puedes darte de baja en cualquier momento.
                       </p>
