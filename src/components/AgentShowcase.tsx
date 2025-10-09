@@ -5,38 +5,38 @@ import { useVideoPreload } from "@/hooks/use-video-preload";
 const coreFeatures = [{
   icon: FileText,
   title: "Digita Facturas Automáticamente",
-  description: "Procesa y extrae datos de facturas sin intervención manual",
+  description: "Olvidate de registrar cada factura a mano en un Excel o tu POS/ERP. Ruka se encarga de tener toda la data digitalizada automáticamente.",
   video: "/robot_facturas.mp4",
   id: "facturas"
 }, {
   icon: Layers,
   title: "Categoriza y Clasifica",
-  description: "Agrupa productos y crea maestros de insumos inteligentemente",
+  description: "Si un proveedor en cada factura le cambia el nombre al item, Ruka se encarga de armar un maestro de insumos agrupados. ",
   video: "/robot_cajas.mp4",
   id: "cajas"
 }, {
   icon: TrendingUp,
   title: "Monitorea en Tiempo Real",
-  description: "Aprende de tus patrones de compras y monitorea 24/7",
+  description: "Si sólo tienes tiempo para monitorear -de vez en cuando- sólo los insumos críticos. Ruka monitorea TODOS los insumos 24/7.",
   video: "/robot_grafico2.mp4",
   id: "grafico"
 }, {
   icon: AlertTriangle,
   title: "Alerta Instantánea",
-  description: "Notifica anomalías y cambios críticos, al momento",
+  description: "Sabrás al momento si un precio se dispara, un proveedor no respeta un precio negociado o si se compró a un nuevo proveedor, para que puedas tomar acciones que impacten en tu margen.",
   video: "/robot_alerta.mp4",
   id: "alerta"
 }];
 const addOns = [{
   icon: CreditCard,
   title: "Gestión de Cuentas por Pagar",
-  description: "Facilita pagos de proveedores y genera nóminas bancarias",
+  description: "Mantén tus pagos a proveedores ordenados y genera la nómina bancaria con click. Solo subir al banco y aceptar.",
   video: "/robot_dinero.mp4",
   id: "dinero"
 }, {
   icon: Repeat,
   title: "Sincronización con otras platformas",
-  description: "Actualiza stock y precios en plataformas externas",
+  description: "Si utilizas otra plataforma para llevar tu inventario, recetario o cualquier otro análisis, puedes hacer que Ruka vaya y registre esta información en esas plataformas para que les saques el máximo provecho",
   video: "/robot_inventario.mp4",
   id: "inventario"
 }];
