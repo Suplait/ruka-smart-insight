@@ -40,10 +40,10 @@ export default function Index() {
       <BeforeAfter />
       <DataFlowSection />
       <AgentShowcase />
-      <YouTubeDemo />
       <Testimonials />
       <Pricing />
       <MoneyBackGuarantee />
+      <YouTubeDemo />
       <FAQ />
       <CTA />
       <Footer />
