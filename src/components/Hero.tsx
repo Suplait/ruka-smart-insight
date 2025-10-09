@@ -50,14 +50,10 @@ export default function Hero() {
     let timeout: NodeJS.Timeout;
     const current = valueMessages[currentMessage];
     if (isDeleting) {
-      if (displayText === "") {
-        setIsDeleting(false);
-        setCurrentMessage(prev => (prev + 1) % valueMessages.length);
-      } else {
-        timeout = setTimeout(() => {
-          setDisplayText(displayText.substring(0, displayText.length - 1));
-        }, 30);
-      }
+      // Borra todo de una vez para más dinamismo
+      setDisplayText("");
+      setIsDeleting(false);
+      setCurrentMessage(prev => (prev + 1) % valueMessages.length);
     } else {
       if (displayText === current) {
         timeout = setTimeout(() => {
