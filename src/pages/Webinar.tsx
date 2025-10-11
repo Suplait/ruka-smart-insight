@@ -127,7 +127,7 @@ export default function Webinar() {
           <div className="text-center mb-20">
             <div className="inline-flex items-center px-6 py-3 rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 text-sm font-medium mb-8">
               <BarChart3 className="w-5 h-5 mr-2 text-primary" />
-              <span className="text-foreground">Webinar Exclusivo para Restaurantes</span>
+              <span className="text-foreground">Webinar Exclusivo para Empresas</span>
             </div>
             
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 tracking-tight">
@@ -141,13 +141,13 @@ export default function Webinar() {
             </h1>
             
             <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto font-light">
-              Aprende cómo ver ventas, compras y gastos en un solo dashboard para tu restaurante
+              Aprende cómo ver ventas, compras y gastos en un solo dashboard para tu empresa
             </p>
 
             <div className="bg-primary/5 backdrop-blur-xl border border-primary/10 rounded-3xl p-8 mb-16 max-w-3xl mx-auto shadow-lg">
               <p className="text-foreground text-lg sm:text-xl font-medium">
                 <TrendingUp className="w-6 h-6 inline mr-3 text-primary" />
-                ¿Sabías que la mayoría de los restaurantes toma decisiones con información incompleta… 
+                ¿Sabías que la mayoría de las empresas toma decisiones con información incompleta… 
                 <span className="font-bold text-primary"> o sin datos en absoluto?</span>
               </p>
             </div>
@@ -210,8 +210,8 @@ export default function Webinar() {
                 {[
                   "Por qué tener ventas por un lado, compras por otro y las boletas dispersas está matando tu rentabilidad",
                   "Cómo unificar toda tu información financiera en un solo dashboard para tomar decisiones basadas en datos reales",
-                  "Qué métricas clave debes monitorear diariamente para mantener el control total de tu restaurante",
-                  "Casos reales de restaurantes que pasaron del caos financiero al control absoluto de sus números"
+                  "Qué métricas clave debes monitorear diariamente para mantener el control total de tu empresa",
+                  "Casos reales de empresas que pasaron del caos financiero al control absoluto de sus números"
                 ].map((item, index) => (
                   <div key={index} className="flex items-start group">
                     <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/10 flex items-center justify-center mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform">
@@ -228,7 +228,7 @@ export default function Webinar() {
                 </h3>
                 <p className="text-muted-foreground text-lg leading-relaxed">
                   Te mostraremos ejemplos reales de dashboards que están transformando la gestión 
-                  de restaurantes, desde pequeños locales hasta cadenas establecidas.
+                  de empresas, desde pequeños negocios hasta empresas establecidas.
                 </p>
               </div>
 
@@ -237,7 +237,7 @@ export default function Webinar() {
                   ¿Para quién es este webinar?
                 </h3>
                 <p className="text-foreground/80 text-lg leading-relaxed">
-                  <strong className="text-primary">Dueños y administradores de restaurantes</strong> que están cansados de 
+                  <strong className="text-primary">Dueños y administradores de empresas</strong> que están cansados de 
                   trabajar a ciegas y quieren tener control total sobre sus números y operaciones.
                 </p>
               </div>
@@ -271,7 +271,7 @@ export default function Webinar() {
                           Recibirás un recordatorio el día del webinar con el enlace de acceso.
                         </p>
                         <p className="text-sm text-muted-foreground/80">
-                          Prepárate para pasar del caos al control total de tu restaurante.
+                          Prepárate para pasar del caos al control total de tu empresa.
                         </p>
                       </div>
                     </div> : <form onSubmit={handleSubmit} className="space-y-6">
@@ -298,7 +298,7 @@ export default function Webinar() {
                           type="email" 
                           value={formData.correo} 
                           onChange={handleInputChange} 
-                          placeholder="tu@restaurante.com" 
+                          placeholder="tu@empresa.com" 
                           required 
                           disabled={isSubmitting}
                           className="mt-2 h-12 rounded-xl border-border/50 bg-background/50"
