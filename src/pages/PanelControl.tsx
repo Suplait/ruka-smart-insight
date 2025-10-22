@@ -23,6 +23,7 @@ import Footer from "@/components/Footer";
 import ProductRegistrationForm from "@/components/product/ProductRegistrationForm";
 import WhatsappButton from "@/components/WhatsappButton";
 import { pushToDataLayer } from "@/utils/dataLayer";
+import panelControlDashboard from "@/assets/panel-control-dashboard.png";
 
 const PanelControl = () => {
   const [highlightForm, setHighlightForm] = useState(false);
@@ -100,13 +101,6 @@ const PanelControl = () => {
     "Integraciones con principales POS chilenos",
     "Visualización clara y accionable",
     "Control total de márgenes y rentabilidad"
-  ];
-
-  const integrations = [
-    { name: "Toteat", available: true },
-    { name: "Justo", available: true },
-    { name: "Fudo", available: true },
-    { name: "Más POS", available: false }
   ];
 
   const structuredData = {
@@ -194,104 +188,115 @@ const PanelControl = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <Badge className="mb-4">
-                <Zap className="w-3 h-3 mr-1" />
-                Powered by Ruka.ai
-              </Badge>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                Convierte Tus Datos en{" "}
-                <span className="text-primary">Decisiones</span>
-              </h1>
-              <p className="text-xl text-muted-foreground">
-                Ruka Panel de Control conecta tus ventas, compras e inventario para mostrarte tu negocio como nunca antes: actualizado, visual y sin planillas.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button 
-                  size="lg" 
-                  onClick={() => {
-                    scrollToForm();
-                    pushToDataLayer('panel_control_cta_click', {
-                      cta_location: 'hero',
-                      cta_text: 'Comenzar Ahora',
-                      page_path: '/productos/panel-control'
-                    });
-                  }}
-                  className="text-lg"
-                >
-                  Comenzar Ahora
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-                <Button size="lg" variant="outline" className="text-lg">
-                  Ver Demo
-                </Button>
-              </div>
+      <header className="pt-32 pb-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="inline-block mb-4">
+              <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
+                🚀 Powered by Ruka.ai
+              </span>
             </div>
-            
-            {/* Placeholder Image */}
-            <div className="relative">
-              <div className="aspect-video rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 border-2 border-primary/20 flex items-center justify-center">
-                <div className="text-center space-y-2">
-                  <BarChart3 className="w-16 h-16 mx-auto text-primary/40" />
-                  <p className="text-sm text-muted-foreground">Dashboard Principal</p>
-                </div>
-              </div>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
+              Convierte Tus Datos en Decisiones
+            </h1>
+            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              Ruka Panel de Control conecta tus ventas, compras e inventario para mostrarte tu negocio como nunca antes: actualizado, visual y sin planillas.
+            </p>
+            <div className="flex justify-center">
+              <Button 
+                size="lg" 
+                className="text-lg px-8 py-6 rounded-full"
+                onClick={() => {
+                  scrollToForm();
+                  pushToDataLayer('panel_control_cta_click', {
+                    cta_location: 'hero',
+                    cta_text: 'Comenzar Ahora',
+                    page_path: '/productos/panel-control'
+                  });
+                }}
+              >
+                Comenzar Ahora <ArrowRight className="ml-2" />
+              </Button>
             </div>
           </div>
+
+          {/* Hero Screenshot */}
+          <figure className="mt-16 rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
+            <img 
+              src={panelControlDashboard} 
+              alt="Dashboard de ventas de Ruka mostrando métricas de ventas mensuales, impuestos, descuentos, propinas y análisis comparativo" 
+              className="w-full h-auto"
+              loading="eager"
+              width="1200"
+              height="675"
+            />
+          </figure>
         </div>
-      </section>
+      </header>
 
       {/* Integrations Section */}
-      <section className="py-16 bg-secondary/30">
-        <div className="container mx-auto max-w-7xl px-4">
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto max-w-7xl px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Integraciones Disponibles</h2>
-            <p className="text-muted-foreground">Conecta automáticamente con los principales sistemas de punto de venta</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Integraciones Disponibles</h2>
+            <p className="text-xl text-gray-600">Conecta automáticamente con los principales sistemas de punto de venta</p>
           </div>
-          <div className="flex flex-wrap justify-center gap-8">
-            {integrations.map((integration, index) => (
-              <Card key={index} className="w-48">
-                <CardContent className="pt-6 text-center">
-                  <div className="h-20 bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg mb-4 flex items-center justify-center">
-                    <span className="text-lg font-semibold text-primary">{integration.name}</span>
-                  </div>
-                  {integration.available ? (
-                    <Badge variant="default" className="w-full">Disponible</Badge>
-                  ) : (
-                    <Badge variant="secondary" className="w-full">Próximamente</Badge>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
+          <div className="flex flex-wrap justify-center items-center gap-12">
+            <div className="flex items-center justify-center">
+              <img 
+                src="/toteat-logo.png" 
+                alt="Logo de Toteat - Sistema POS integrado con Ruka" 
+                className="h-12 w-auto object-contain"
+                loading="lazy"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <img 
+                src="/justo-logo.png" 
+                alt="Logo de Justo - Sistema POS integrado con Ruka" 
+                className="h-12 w-auto object-contain"
+                loading="lazy"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <img 
+                src="/fudo-logo.png" 
+                alt="Logo de Fudo - Sistema POS integrado con Ruka" 
+                className="h-12 w-auto object-contain"
+                loading="lazy"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <Badge variant="secondary" className="text-base px-6 py-2">
+                + Más POS próximamente
+              </Badge>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto max-w-7xl">
+      <section className="py-20 px-6 bg-white" aria-labelledby="features-heading">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 id="features-heading" className="text-4xl md:text-5xl font-bold mb-4">
               ¿Por Qué Elegir Ruka Panel de Control?
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600">
               Convierte datos dispersos en inteligencia visual, precisa y continua
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <Card key={index} className="border-2 hover:border-primary/50 transition-colors">
+                <Card key={index} className="border-2 hover:border-primary/50 transition-all hover:shadow-lg w-full">
                   <CardHeader>
                     <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                       <Icon className="w-6 h-6 text-primary" />
                     </div>
-                    <CardTitle className="text-xl">{feature.title}</CardTitle>
+                    <CardTitle className="text-2xl">{feature.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription className="text-base">
@@ -306,13 +311,13 @@ const PanelControl = () => {
       </section>
 
       {/* Panels Showcase */}
-      <section className="py-20 px-4 bg-secondary/30">
-        <div className="container mx-auto max-w-7xl">
+      <section className="py-20 px-6 bg-gray-50" aria-labelledby="panels-heading">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 id="panels-heading" className="text-4xl md:text-5xl font-bold mb-4">
               Paneles Inteligentes
             </h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-gray-600">
               Visualiza tu negocio desde todos los ángulos
             </p>
           </div>
@@ -321,12 +326,12 @@ const PanelControl = () => {
             {panels.map((panel, index) => {
               const Icon = panel.icon;
               return (
-                <Card key={index} className="overflow-hidden">
+                <Card key={index} className="overflow-hidden border-2 hover:border-primary/50 transition-all hover:shadow-lg">
                   <div className="h-48 bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 flex items-center justify-center">
                     <Icon className="w-16 h-16 text-primary/40" />
                   </div>
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
+                    <CardTitle className="flex items-center gap-2 text-2xl">
                       <Icon className="w-5 h-5 text-primary" />
                       {panel.title}
                     </CardTitle>
@@ -344,14 +349,14 @@ const PanelControl = () => {
       </section>
 
       {/* Benefits Grid */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto max-w-7xl">
+      <section className="py-20 px-6 bg-white" aria-labelledby="benefits-heading">
+        <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              <h2 id="benefits-heading" className="text-4xl md:text-5xl font-bold mb-6">
                 Decisiones Inteligentes, Sin Planillas
               </h2>
-              <p className="text-xl text-muted-foreground mb-8">
+              <p className="text-xl text-gray-600 mb-8">
                 Empodera a gerentes, contadores y dueños de negocio con una herramienta que automatiza la consolidación de información y entrega insights listos para actuar.
               </p>
               <div className="space-y-4">
@@ -378,18 +383,18 @@ const PanelControl = () => {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-20 px-4 bg-secondary/30">
-        <div className="container mx-auto max-w-4xl">
+      <section className="py-20 px-6 bg-gray-50" aria-labelledby="pricing-heading">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 id="pricing-heading" className="text-4xl md:text-5xl font-bold mb-4">
               Implementación Simple y Transparente
             </h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-gray-600">
               Comienza a tomar mejores decisiones hoy
             </p>
           </div>
 
-          <Card className="border-2 border-primary">
+          <Card className="border-2 border-primary shadow-xl">
             <CardHeader className="text-center pb-8">
               <div className="mb-4">
                 <Badge className="text-base px-4 py-1">Plan Profesional</Badge>
@@ -418,7 +423,7 @@ const PanelControl = () => {
               
               <Button 
                 size="lg" 
-                className="w-full text-lg mt-6"
+                className="w-full text-lg mt-6 rounded-full px-8 py-6"
                 onClick={() => {
                   scrollToForm();
                   pushToDataLayer('panel_control_cta_click', {
@@ -432,7 +437,7 @@ const PanelControl = () => {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               
-              <p className="text-center text-sm text-muted-foreground">
+              <p className="text-center text-sm text-gray-600">
                 ⏰ Oferta válida por {timeLeft}
               </p>
             </CardContent>
@@ -441,13 +446,13 @@ const PanelControl = () => {
       </section>
 
       {/* Registration Form Section */}
-      <section id="registration-form" className="py-20 px-4">
-        <div className="container mx-auto max-w-2xl">
+      <section id="registration-form" className="py-20 px-6 bg-white">
+        <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
               Comienza a Transformar Tus Datos
             </h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-gray-600">
               Completa el formulario y nuestro equipo te contactará para una demo personalizada
             </p>
           </div>
