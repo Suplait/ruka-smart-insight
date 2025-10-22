@@ -1,11 +1,50 @@
-import { ArrowRight, Check, Zap, Shield, TrendingUp } from "lucide-react";
+import { ArrowRight, Check, Zap, Shield, TrendingUp, MessageCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "sonner";
+import { useState } from "react";
+
+const formSchema = z.object({
+  name: z.string().trim().min(2, "El nombre debe tener al menos 2 caracteres").max(100, "El nombre es muy largo"),
+  email: z.string().trim().email("Email inválido").max(255, "El email es muy largo"),
+  phone: z.string().trim().min(8, "Teléfono inválido").max(20, "Teléfono inválido"),
+  company: z.string().trim().max(100, "El nombre de la empresa es muy largo").optional(),
+  message: z.string().trim().max(500, "El mensaje es muy largo").optional()
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 export default function ProductoEjemplo() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
+    resolver: zodResolver(formSchema)
+  });
+
+  const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
+    try {
+      // TODO: Aquí se enviará a la base de datos o servicio
+      console.log("Form data:", data);
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simular envío
+      toast.success("¡Gracias! Nos contactaremos contigo pronto.");
+      reset();
+    } catch (error) {
+      toast.error("Hubo un error. Por favor intenta nuevamente.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const features = [
     {
       icon: Zap,
@@ -33,50 +72,6 @@ export default function ProductoEjemplo() {
     "Actualizaciones automáticas incluidas"
   ];
 
-  const plans = [
-    {
-      name: "Starter",
-      price: "$299",
-      period: "/mes",
-      description: "Perfecto para comenzar",
-      features: [
-        "Hasta 1,000 transacciones/mes",
-        "2 usuarios incluidos",
-        "Soporte por email",
-        "Reportes básicos"
-      ]
-    },
-    {
-      name: "Professional",
-      price: "$599",
-      period: "/mes",
-      description: "Para equipos en crecimiento",
-      features: [
-        "Hasta 10,000 transacciones/mes",
-        "10 usuarios incluidos",
-        "Soporte prioritario",
-        "Reportes avanzados",
-        "API access",
-        "Integraciones premium"
-      ],
-      popular: true
-    },
-    {
-      name: "Enterprise",
-      price: "Custom",
-      period: "",
-      description: "Soluciones a medida",
-      features: [
-        "Transacciones ilimitadas",
-        "Usuarios ilimitados",
-        "Soporte dedicado 24/7",
-        "Reportes personalizados",
-        "Onboarding completo",
-        "SLA garantizado"
-      ]
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Navbar />
@@ -98,11 +93,16 @@ export default function ProductoEjemplo() {
               Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="text-lg px-8 py-6 rounded-full">
+              <Button 
+                size="lg" 
+                className="text-lg px-8 py-6 rounded-full"
+                onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 Comenzar Ahora <ArrowRight className="ml-2" />
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6 rounded-full">
-                Ver Demo
+              <Button size="lg" variant="outline" className="text-lg px-8 py-6 rounded-full gap-2">
+                <MessageCircle className="w-5 h-5" />
+                Conversemos
               </Button>
             </div>
           </div>
@@ -190,78 +190,193 @@ export default function ProductoEjemplo() {
 
       {/* Pricing Section */}
       <section className="py-20 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Planes y Precios
+              Inversión Simple y Transparente
             </h2>
             <p className="text-xl text-gray-600">
-              Elige el plan perfecto para tu negocio
+              Un solo plan, todo incluido
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {plans.map((plan, index) => (
-              <Card 
-                key={index} 
-                className={`relative ${plan.popular ? 'border-2 border-primary shadow-xl scale-105' : 'border-2'}`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-primary text-white px-4 py-1 rounded-full text-sm font-medium">
-                      Más Popular
-                    </span>
+          <Card className="border-2 border-primary shadow-2xl">
+            <CardHeader className="text-center pb-8 pt-12">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mx-auto mb-4">
+                <Sparkles className="w-8 h-8 text-primary" />
+              </div>
+              <CardTitle className="text-3xl mb-2">Plan Profesional</CardTitle>
+              <CardDescription className="text-lg">Todo lo que necesitas para transformar tu negocio</CardDescription>
+              <div className="mt-6">
+                <div className="flex items-baseline justify-center gap-2">
+                  <span className="text-6xl font-bold text-primary">$599</span>
+                  <div className="text-left">
+                    <div className="text-gray-600 text-lg">/mes</div>
+                    <div className="text-sm text-muted-foreground">+ IVA</div>
                   </div>
-                )}
-                <CardHeader>
-                  <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                  <CardDescription>{plan.description}</CardDescription>
-                  <div className="mt-4">
-                    <span className="text-4xl font-bold">{plan.price}</span>
-                    <span className="text-gray-600">{plan.period}</span>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="pb-12">
+              <div className="grid md:grid-cols-2 gap-x-8 gap-y-4 mb-8">
+                {benefits.map((benefit, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                      <Check className="w-3 h-3 text-primary" />
+                    </div>
+                    <p className="text-gray-700">{benefit}</p>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3 mb-6">
-                    {plan.features.map((feature, fIndex) => (
-                      <li key={fIndex} className="flex items-start gap-2">
-                        <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Button 
-                    className="w-full" 
-                    variant={plan.popular ? "default" : "outline"}
-                    size="lg"
-                  >
-                    Comenzar Ahora
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                ))}
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button 
+                  size="lg" 
+                  className="flex-1 text-lg py-6"
+                  onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  Comenzar Ahora <ArrowRight className="ml-2" />
+                </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="flex-1 text-lg py-6 gap-2"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  Conversemos
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-gradient-to-r from-primary to-primary/80 rounded-3xl p-12 text-white shadow-2xl">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              ¿Listo para Transformar tu Negocio?
-            </h2>
-            <p className="text-xl mb-8 text-white/90">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Comienza hoy mismo.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-primary hover:bg-gray-100 text-lg px-8 py-6 rounded-full">
-                Agendar Demo <ArrowRight className="ml-2" />
-              </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6 rounded-full border-white text-white hover:bg-white/10">
-                Hablar con Ventas
-              </Button>
+      {/* Contact Form Section */}
+      <section id="contact-form" className="py-20 px-6 bg-gradient-to-br from-gray-50 to-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left side - Value Proposition */}
+            <div>
+              <div className="inline-block mb-4">
+                <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
+                  ⚡ Respuesta en 24 horas
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                Comienza Hoy Mismo
+              </h2>
+              <p className="text-xl text-gray-600 mb-8">
+                Completa el formulario y nuestro equipo se pondrá en contacto contigo para comenzar tu transformación digital.
+              </p>
+              <div className="space-y-4">
+                {[
+                  "Setup inicial gratuito",
+                  "Onboarding personalizado",
+                  "Sin compromisos a largo plazo",
+                  "Soporte en español"
+                ].map((item, index) => (
+                  <div key={index} className="flex items-center gap-3">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Check className="w-4 h-4 text-primary" />
+                    </div>
+                    <p className="text-gray-700 text-lg">{item}</p>
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {/* Right side - Form */}
+            <Card className="shadow-xl border-2">
+              <CardHeader>
+                <CardTitle className="text-2xl">Solicita una Demo</CardTitle>
+                <CardDescription>
+                  Completa tus datos y nos contactaremos contigo
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Nombre completo *</Label>
+                    <Input
+                      id="name"
+                      placeholder="Juan Pérez"
+                      {...register("name")}
+                      className={errors.name ? "border-red-500" : ""}
+                    />
+                    {errors.name && (
+                      <p className="text-sm text-red-500">{errors.name.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email corporativo *</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="juan@empresa.com"
+                      {...register("email")}
+                      className={errors.email ? "border-red-500" : ""}
+                    />
+                    {errors.email && (
+                      <p className="text-sm text-red-500">{errors.email.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">Teléfono *</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="+56 9 1234 5678"
+                      {...register("phone")}
+                      className={errors.phone ? "border-red-500" : ""}
+                    />
+                    {errors.phone && (
+                      <p className="text-sm text-red-500">{errors.phone.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="company">Empresa</Label>
+                    <Input
+                      id="company"
+                      placeholder="Mi Empresa SpA"
+                      {...register("company")}
+                      className={errors.company ? "border-red-500" : ""}
+                    />
+                    {errors.company && (
+                      <p className="text-sm text-red-500">{errors.company.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="message">Mensaje (opcional)</Label>
+                    <Textarea
+                      id="message"
+                      placeholder="Cuéntanos sobre tu negocio..."
+                      rows={3}
+                      {...register("message")}
+                      className={errors.message ? "border-red-500" : ""}
+                    />
+                    {errors.message && (
+                      <p className="text-sm text-red-500">{errors.message.message}</p>
+                    )}
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    size="lg" 
+                    className="w-full text-lg py-6"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Enviando..." : "Solicitar Demo"} <ArrowRight className="ml-2" />
+                  </Button>
+
+                  <p className="text-xs text-center text-muted-foreground">
+                    Al enviar este formulario, aceptas nuestros <Link to="/terms" className="underline">términos y condiciones</Link>
+                  </p>
+                </form>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
