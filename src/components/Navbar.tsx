@@ -1,10 +1,16 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X, Hotel, Zap, Bot, Receipt } from "lucide-react";
 import SubdomainModal from "./SubdomainModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -17,13 +23,13 @@ export default function Navbar() {
   const isMobile = useIsMobile();
 
   const scrollToSection = (id: string) => {
-    if (location.pathname !== '/') {
+    if (location.pathname !== "/") {
       navigate(`/#${id}`);
     } else {
       navigate(`#${id}`, { replace: true });
       const element = document.getElementById(id);
       element?.scrollIntoView({
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
     setIsOpen(false);
@@ -40,46 +46,78 @@ export default function Navbar() {
         <nav className="flex flex-col gap-4">
           <div className="space-y-2">
             <p className="text-xs text-muted-foreground px-2">Productos</p>
-            <Link to="/productos/cuentas-por-pagar" className="flex items-center space-x-2 text-left text-base font-medium pl-4" onClick={() => setIsOpen(false)}>
+            <Link
+              to="/productos/cuentas-por-pagar"
+              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
+              onClick={() => setIsOpen(false)}
+            >
               <Receipt className="h-4 w-4" />
               <span>Cuentas por Pagar</span>
             </Link>
-            <Link to="/" className="flex items-center space-x-2 text-left text-base font-medium pl-4" onClick={() => setIsOpen(false)}>
+            <Link
+              to="/"
+              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
+              onClick={() => setIsOpen(false)}
+            >
               <Bot className="h-4 w-4" />
               <span>Gestión y Analítica</span>
             </Link>
           </div>
-          <button onClick={() => scrollToSection('pricing')} className="flex items-center space-x-2 text-left text-lg font-medium">
+          <button
+            onClick={() => scrollToSection("pricing")}
+            className="flex items-center space-x-2 text-left text-lg font-medium"
+          >
             Precio
           </button>
-          <button onClick={() => scrollToSection('guarantee')} className="flex items-center space-x-2 text-left text-lg font-medium">
+          <button
+            onClick={() => scrollToSection("guarantee")}
+            className="flex items-center space-x-2 text-left text-lg font-medium"
+          >
             Garantía
           </button>
-          <button onClick={() => scrollToSection('testimonials')} className="flex items-center space-x-2 text-left text-lg font-medium">
+          <button
+            onClick={() => scrollToSection("testimonials")}
+            className="flex items-center space-x-2 text-left text-lg font-medium"
+          >
             Testimonios
           </button>
           <div className="space-y-2">
             <p className="text-xs text-muted-foreground px-2">Industrias</p>
-            <Link to="/restaurantes" className="flex items-center space-x-2 text-left text-base font-medium pl-4" onClick={() => setIsOpen(false)}>
+            <Link
+              to="/restaurantes"
+              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
+              onClick={() => setIsOpen(false)}
+            >
               <UtensilsCrossed className="h-4 w-4" />
               <span>Restaurantes</span>
             </Link>
-            <Link to="/hoteles" className="flex items-center space-x-2 text-left text-base font-medium pl-4" onClick={() => setIsOpen(false)}>
+            <Link
+              to="/hoteles"
+              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
+              onClick={() => setIsOpen(false)}
+            >
               <Hotel className="h-4 w-4" />
               <span>Hoteles</span>
             </Link>
           </div>
           <div className="flex flex-col gap-2 mt-4">
-            <Button variant="outline" className="w-full justify-start gap-2" onClick={() => {
-              setShowSubdomainModal(true);
-              setIsOpen(false);
-            }}>
+            <Button
+              variant="outline"
+              className="w-full justify-start gap-2"
+              onClick={() => {
+                setShowSubdomainModal(true);
+                setIsOpen(false);
+              }}
+            >
               Iniciar Sesión <LogIn className="w-4 h-4" />
             </Button>
-            <Button className="w-full justify-start gap-2 h-10 px-6 text-sm font-medium bg-primary hover:bg-primary/90 rounded-full" onClick={() => {
-              navigate('/register');
-              setIsOpen(false);
-            }}>
+            <Button
+              className="w-full justify-start gap-2 h-10 px-6 text-sm font-medium bg-primary hover:bg-primary/90 rounded-full"
+              onClick={() => {
+                navigate("/register");
+                setIsOpen(false);
+              }}
+            >
               Regístrate <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
@@ -97,7 +135,7 @@ export default function Navbar() {
               <img src="/logo.png" alt="Ruka.ai" className="h-8 hover:opacity-80 transition-opacity" />
             </Link>
           </div>
-          
+
           <div className="hidden md:flex items-center space-x-8">
             <NavigationMenu>
               <NavigationMenuList>
@@ -107,45 +145,55 @@ export default function Navbar() {
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="w-[280px] p-4 bg-white rounded-lg shadow-lg border">
-                      <p className="text-sm font-medium text-muted-foreground mb-3 px-2">
-                        Nuestros Productos
-                      </p>
+                      <p className="text-sm font-medium text-muted-foreground mb-3 px-2">Nuestros Productos</p>
                       <ul className="grid gap-2">
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link to="/productos/cuentas-por-pagar" className={cn("flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors", "bg-card hover:bg-accent hover:text-accent-foreground", "border border-transparent hover:border-border")}>
+                            <Link
+                              to="/productos/cuentas-por-pagar"
+                              className={cn(
+                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                "bg-card hover:bg-accent hover:text-accent-foreground",
+                                "border border-transparent hover:border-border",
+                              )}
+                            >
                               <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
                                 <Receipt className="h-5 w-5 text-primary" />
                               </div>
                               <div className="grid gap-1">
-                                <div className="text-sm font-medium">
-                                  Cuentas por Pagar
+                                <div className="text-sm font-medium">Cuentas por Pagar</div>
+                                <div className="line-clamp-2 text-xs text-muted-foreground">
+                                  Automatiza pagos, gestiona recepción y genera planillas bancarias
                                 </div>
-                                <div className="line-clamp-2 text-xs text-muted-foreground">Automatiza pagos, gestiona recepción y genera planillas bancarias</div>
                               </div>
                             </Link>
                           </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link to="/" className={cn("flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors", "bg-card hover:bg-accent hover:text-accent-foreground", "border border-transparent hover:border-border")}>
+                            <Link
+                              to="/"
+                              className={cn(
+                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                "bg-card hover:bg-accent hover:text-accent-foreground",
+                                "border border-transparent hover:border-border",
+                              )}
+                            >
                               <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
                                 <Bot className="h-5 w-5 text-primary" />
                               </div>
                               <div className="grid gap-1">
-                                <div className="text-sm font-medium">
-                                  Gestión y Analítica
+                                <div className="text-sm font-medium">Gestión y Analítica</div>
+                                <div className="line-clamp-2 text-xs text-muted-foreground">
+                                  Agentes con IA para automatizar tu gestión de compras
                                 </div>
-                                <div className="line-clamp-2 text-xs text-muted-foreground">3 agentes de IA para automatizar tu gestión de compras</div>
                               </div>
                             </Link>
                           </NavigationMenuLink>
                         </li>
-                        
+
                         <li className="px-2 py-1">
-                          <div className="text-xs text-muted-foreground italic">
-                            Más productos próximamente...
-                          </div>
+                          <div className="text-xs text-muted-foreground italic">Más productos próximamente...</div>
                         </li>
                       </ul>
                     </div>
@@ -153,17 +201,26 @@ export default function Navbar() {
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
-            
-            <button onClick={() => scrollToSection('pricing')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+
+            <button
+              onClick={() => scrollToSection("pricing")}
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
               Pricing
             </button>
-            <button onClick={() => scrollToSection('guarantee')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+            <button
+              onClick={() => scrollToSection("guarantee")}
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
               Garantía
             </button>
-            <button onClick={() => scrollToSection('testimonials')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+            <button
+              onClick={() => scrollToSection("testimonials")}
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
               Testimonios
             </button>
-            
+
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -172,45 +229,55 @@ export default function Navbar() {
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="w-[280px] p-4 bg-white rounded-lg shadow-lg border">
-                      <p className="text-sm font-medium text-muted-foreground mb-3 px-2">
-                        Soluciones por Industria
-                      </p>
+                      <p className="text-sm font-medium text-muted-foreground mb-3 px-2">Soluciones por Industria</p>
                       <ul className="grid gap-2">
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link to="/restaurantes" className={cn("flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors", "bg-card hover:bg-accent hover:text-accent-foreground", "border border-transparent hover:border-border")}>
+                            <Link
+                              to="/restaurantes"
+                              className={cn(
+                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                "bg-card hover:bg-accent hover:text-accent-foreground",
+                                "border border-transparent hover:border-border",
+                              )}
+                            >
                               <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
                                 <UtensilsCrossed className="h-5 w-5 text-primary" />
                               </div>
                               <div className="grid gap-1">
-                                <div className="text-sm font-medium">
-                                  Restaurantes
+                                <div className="text-sm font-medium">Restaurantes</div>
+                                <div className="line-clamp-2 text-xs text-muted-foreground">
+                                  Automatiza el registro, seguimiento de precios y monitoreo de foodcost
                                 </div>
-                                <div className="line-clamp-2 text-xs text-muted-foreground">Automatiza el registro, seguimiento de precios y monitoreo de foodcost</div>
                               </div>
                             </Link>
                           </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link to="/hoteles" className={cn("flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors", "bg-card hover:bg-accent hover:text-accent-foreground", "border border-transparent hover:border-border")}>
+                            <Link
+                              to="/hoteles"
+                              className={cn(
+                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                "bg-card hover:bg-accent hover:text-accent-foreground",
+                                "border border-transparent hover:border-border",
+                              )}
+                            >
                               <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
                                 <Hotel className="h-5 w-5 text-primary" />
                               </div>
                               <div className="grid gap-1">
-                                <div className="text-sm font-medium">
-                                  Hoteles
+                                <div className="text-sm font-medium">Hoteles</div>
+                                <div className="line-clamp-2 text-xs text-muted-foreground">
+                                  Optimiza tus costos operativos y gestiona tus proveedores eficientemente
                                 </div>
-                                <div className="line-clamp-2 text-xs text-muted-foreground">Optimiza tus costos operativos y gestiona tus proveedores eficientemente</div>
                               </div>
                             </Link>
                           </NavigationMenuLink>
                         </li>
-                        
+
                         <li className="px-2 py-1">
-                          <div className="text-xs text-muted-foreground italic">
-                            Más industrias próximamente...
-                          </div>
+                          <div className="text-xs text-muted-foreground italic">Más industrias próximamente...</div>
                         </li>
                       </ul>
                     </div>
@@ -222,10 +289,19 @@ export default function Navbar() {
 
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-3">
-              <Button variant="ghost" size="sm" className="h-10 px-4 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100/50 rounded-full" onClick={() => setShowSubdomainModal(true)}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-10 px-4 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100/50 rounded-full"
+                onClick={() => setShowSubdomainModal(true)}
+              >
                 Iniciar Sesión
               </Button>
-              <Button size="sm" className="h-10 px-6 text-sm font-medium bg-primary hover:bg-primary/90 rounded-full" onClick={() => navigate('/register')}>
+              <Button
+                size="sm"
+                className="h-10 px-6 text-sm font-medium bg-primary hover:bg-primary/90 rounded-full"
+                onClick={() => navigate("/register")}
+              >
                 Regístrate
               </Button>
             </div>
