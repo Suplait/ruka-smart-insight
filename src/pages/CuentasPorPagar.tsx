@@ -126,9 +126,9 @@ export default function CuentasPorPagar() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
             {features.map((feature, index) => (
-              <Card key={index} className="border-2 hover:border-primary/50 transition-all hover:shadow-lg w-full max-w-sm">
+              <Card key={index} className="border-2 hover:border-primary/50 transition-all hover:shadow-lg w-full">
                 <CardHeader>
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                     <feature.icon className="w-6 h-6 text-primary" />
