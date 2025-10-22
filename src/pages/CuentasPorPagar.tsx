@@ -9,7 +9,6 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import cuentasPorPagarInterface from "@/assets/cuentas-por-pagar-interface.png";
 import planillaBancaria from "@/assets/planilla-bancaria.png";
-import { pushToDataLayer } from "@/utils/dataLayer";
 
 export default function CuentasPorPagar() {
   const [highlightForm, setHighlightForm] = useState(false);
@@ -150,14 +149,7 @@ export default function CuentasPorPagar() {
               <Button 
                 size="lg" 
                 className="text-lg px-8 py-6 rounded-full"
-                onClick={() => {
-                  pushToDataLayer('cta_click', {
-                    cta_location: 'hero',
-                    cta_text: 'Comenzar Ahora',
-                    page_path: '/productos/cuentas-por-pagar'
-                  });
-                  document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Comenzar Ahora <ArrowRight className="ml-2" />
               </Button>
@@ -342,14 +334,7 @@ export default function CuentasPorPagar() {
               <Button 
                 size="lg" 
                 className="w-full text-lg py-6"
-                onClick={() => {
-                  pushToDataLayer('cta_click', {
-                    cta_location: 'pricing',
-                    cta_text: 'Comenzar Ahora',
-                    page_path: '/productos/cuentas-por-pagar'
-                  });
-                  document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Comenzar Ahora <ArrowRight className="ml-2" />
               </Button>
