@@ -22,11 +22,13 @@ export default function Index() {
 
   useEffect(() => {
     if (location.hash) {
-      const element = document.querySelector(location.hash);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    } else if (!location.state?.scrollTo) {
+      setTimeout(() => {
+        const element = document.querySelector(location.hash);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    } else {
       window.scrollTo(0, 0);
     }
   }, [location]);
