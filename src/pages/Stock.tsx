@@ -1,4 +1,4 @@
-import { ArrowRight, Check, Download, AlertCircle, Shield, FileText, Clock, Zap, Sparkles, Calendar } from "lucide-react";
+import { ArrowRight, Check, Package, Warehouse, ArrowLeftRight, ClipboardCheck, Sparkles, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
@@ -7,11 +7,12 @@ import ProductRegistrationForm from "@/components/product/ProductRegistrationFor
 import WhatsappButton from "@/components/WhatsappButton";
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import cuentasPorPagarInterface from "@/assets/cuentas-por-pagar-interface.png";
-import planillaBancaria from "@/assets/planilla-bancaria.png";
+import stockInventario from "@/assets/stock-inventario.png";
+import stockIngresoAutomatico from "@/assets/stock-ingreso-automatico.png";
+import stockTraspasoBodegas from "@/assets/stock-traspaso-bodegas.png";
 import { pushToDataLayer } from "@/utils/dataLayer";
 
-export default function CuentasPorPagar() {
+export default function Stock() {
   const [highlightForm, setHighlightForm] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
 
@@ -35,93 +36,97 @@ export default function CuentasPorPagar() {
 
   const features = [
     {
-      icon: Download,
-      title: "Planilla bancaria en 1 click",
-      description: "Genera automáticamente la planilla de pagos para tu banco. Sin errores, sin trabajo manual."
+      icon: Package,
+      title: "Ingreso automático de stock",
+      description: "Ruka registra automáticamente cada compra confirmada. Sin digitación manual, sin errores."
     },
     {
-      icon: AlertCircle,
-      title: "Módulo de recepción inteligente",
-      description: "Tu equipo puede reportar discrepancias al recibir productos. Sistema automático de alertas y bloqueos."
+      icon: Warehouse,
+      title: "Gestión de múltiples bodegas",
+      description: "Administra el inventario de todas tus bodegas desde un solo lugar. Visibilidad total en tiempo real."
     },
     {
-      icon: Shield,
-      title: "Bloqueo automático de facturas",
-      description: "Las facturas con problemas se bloquean automáticamente hasta resolver la incidencia."
+      icon: ArrowLeftRight,
+      title: "Traspasos entre bodegas",
+      description: "Sistema de solicitudes y aprobaciones para traspasos. Todo queda registrado y trazable."
     },
     {
-      icon: FileText,
-      title: "Registro completo de incidencias",
-      description: "Cada problema queda documentado con fecha, responsable y resolución. Trazabilidad total."
+      icon: ClipboardCheck,
+      title: "Inventarios periódicos",
+      description: "Realiza inventarios para capturar la foto exacta del momento. Detecta diferencias automáticamente."
     },
     {
-      icon: Calendar,
-      title: "Visualiza tus pagos futuros",
-      description: "Ve todos tus compromisos de pago por venir. Anticípate y planifica tu flujo de caja sin sorpresas."
+      icon: TrendingUp,
+      title: "Múltiples roles de usuario",
+      description: "Define roles específicos: solicitante, aprobador, administrador. Control de permisos granular."
     },
     {
-      icon: Clock,
-      title: "Ahorra +10 horas semanales",
-      description: "Automatiza todo el proceso de cuentas por pagar y libera tiempo de tu equipo."
+      icon: Sparkles,
+      title: "Trazabilidad completa",
+      description: "Cada movimiento queda registrado: quién, cuándo, por qué. Auditoría total de tu inventario."
     }
   ];
 
   const benefits = [
-    "Elimina errores de pago manual",
-    "Mejora relación con proveedores",
-    "Control total de discrepancias",
-    "Auditoría completa",
-    "Reduce fraude interno",
-    "Visibilidad en tiempo real"
+    "Elimina errores de digitación",
+    "Control entre bodegas",
+    "Inventarios simplificados",
+    "Detecta faltantes automáticamente"
   ];
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "Ruka - Cuentas por Pagar",
+    "name": "Ruka - Gestión de Stock e Inventario",
     "applicationCategory": "BusinessApplication",
     "offers": {
       "@type": "Offer",
-      "price": "39990",
+      "price": "99990",
       "priceCurrency": "CLP"
     },
-    "description": "Automatiza todo el proceso de pago a proveedores. Genera planillas bancarias en un click, gestiona discrepancias en la recepción y mantén control total de tus cuentas por pagar.",
+    "description": "Automatiza la gestión de tu inventario. Ruka registra automáticamente cada compra, gestiona múltiples bodegas, traspasos y te permite realizar inventarios periódicos sin complicaciones.",
     "featureList": [
-      "Planilla bancaria en 1 click",
-      "Módulo de recepción inteligente",
-      "Bloqueo automático de facturas",
-      "Registro completo de incidencias",
-      "Visualización de pagos futuros",
-      "Ahorro de más de 10 horas semanales"
+      "Ingreso automático de stock desde compras",
+      "Gestión de múltiples bodegas",
+      "Sistema de traspasos con aprobaciones",
+      "Inventarios periódicos simplificados",
+      "Control de consumos en tiempo real",
+      "Trazabilidad completa de movimientos"
     ]
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
-        <title>Cuentas por Pagar - Automatiza Pagos a Proveedores | Ruka</title>
-        <meta name="description" content="Automatiza tu proceso de cuentas por pagar. Genera planillas bancarias en 1 click, gestiona discrepancias y ahorra +10 horas semanales. Desde $39.990/mes." />
-        <meta name="keywords" content="cuentas por pagar, automatización pagos, planilla bancaria, gestión proveedores, recepción inteligente, control facturas, software contabilidad" />
+        <title>Gestión de Stock e Inventario Automatizada - Ahorra 15+ horas/semana | Ruka</title>
+        <meta name="description" content="Automatiza tu gestión de inventario con Ruka. Ingreso automático desde compras, múltiples bodegas, traspasos con aprobaciones y control de roles. Desde $99.990/mes + IVA." />
+        <meta name="keywords" content="gestión de stock, inventario automatizado, control de bodegas, traspasos entre bodegas, inventarios periódicos, software inventario chile, control stock restaurante, gestión inventario retail, sistema de bodegas" />
         
         {/* Open Graph */}
-        <meta property="og:title" content="Cuentas por Pagar - Automatiza Pagos a Proveedores | Ruka" />
-        <meta property="og:description" content="Automatiza tu proceso de cuentas por pagar. Genera planillas bancarias en 1 click, gestiona discrepancias y ahorra +10 horas semanales." />
+        <meta property="og:title" content="Gestión de Stock e Inventario Automatizada | Ruka" />
+        <meta property="og:description" content="Ingreso automático de stock, múltiples bodegas, traspasos con aprobaciones y roles configurables. Ahorra 15+ horas semanales automatizando tu inventario." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ruka.cl/productos/cuentas-por-pagar" />
-        <meta property="og:image" content={cuentasPorPagarInterface} />
+        <meta property="og:url" content="https://ruka.cl/productos/stock" />
+        <meta property="og:image" content="https://ruka.cl/stock-inventario.png" />
+        <meta property="og:image:secure_url" content="https://ruka.cl/stock-inventario.png" />
         <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="675" />
-        <meta property="og:image:alt" content="Interfaz de Cuentas por Pagar - Sistema de gestión automática de facturas y pagos" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Interfaz del sistema de gestión de stock e inventario de Ruka - Vista de inventario en bodega central" />
+        <meta property="og:site_name" content="Ruka" />
+        <meta property="og:locale" content="es_CL" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Cuentas por Pagar - Automatiza Pagos a Proveedores | Ruka" />
-        <meta name="twitter:description" content="Automatiza tu proceso de cuentas por pagar. Genera planillas bancarias en 1 click y ahorra +10 horas semanales." />
-        <meta name="twitter:image" content={cuentasPorPagarInterface} />
-        <meta name="twitter:image:alt" content="Interfaz de Cuentas por Pagar - Sistema de gestión automática de facturas y pagos" />
+        <meta name="twitter:site" content="@ruka_ai" />
+        <meta name="twitter:title" content="Gestión de Stock e Inventario Automatizada | Ruka" />
+        <meta name="twitter:description" content="Ingreso automático de stock, múltiples bodegas, traspasos con aprobaciones. Ahorra 15+ horas/semana automatizando tu inventario." />
+        <meta name="twitter:image" content="https://ruka.cl/stock-inventario.png" />
+        <meta name="twitter:image:alt" content="Interfaz del sistema de gestión de stock e inventario de Ruka" />
         
-        {/* Canonical URL */}
-        <link rel="canonical" href="https://ruka.cl/productos/cuentas-por-pagar" />
+        {/* Additional SEO Tags */}
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="author" content="Ruka" />
+        <link rel="canonical" href="https://ruka.cl/productos/stock" />
         
         {/* Structured Data */}
         <script type="application/ld+json">
@@ -140,21 +145,21 @@ export default function CuentasPorPagar() {
               </span>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
-              Cuentas por Pagar - Automatiza Pagos a Proveedores
+              Gestión de Stock e Inventario Automatizada
             </h1>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Automatiza todo el proceso de pago a proveedores. Genera planillas bancarias en un click, 
-              gestiona discrepancias en la recepción y mantén control total de tus cuentas por pagar.
+              Olvídate de planillas manuales. Ruka registra automáticamente cada compra confirmada, 
+              gestiona múltiples bodegas, traspasos y te permite realizar inventarios sin complicaciones.
             </p>
             <div className="flex justify-center">
               <Button 
                 size="lg" 
                 className="text-lg px-8 py-6 rounded-full"
                 onClick={() => {
-                  pushToDataLayer('cuentas_por_pagar_cta_click', {
+                  pushToDataLayer('stock_cta_click', {
                     cta_location: 'hero',
                     cta_text: 'Comenzar Ahora',
-                    page_path: '/productos/cuentas-por-pagar'
+                    page_path: '/productos/stock'
                   });
                   document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
                 }}
@@ -167,8 +172,8 @@ export default function CuentasPorPagar() {
           {/* Hero Screenshot */}
           <figure className="mt-16 rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
             <img 
-              src={cuentasPorPagarInterface} 
-              alt="Interfaz del sistema de cuentas por pagar de Ruka mostrando gestión automática de facturas y planillas bancarias" 
+              src={stockInventario} 
+              alt="Interfaz del sistema de gestión de stock e inventario de Ruka mostrando inventario de bodega central" 
               className="w-full h-auto"
               loading="eager"
               width="1200"
@@ -183,10 +188,10 @@ export default function CuentasPorPagar() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 id="features-heading" className="text-4xl md:text-5xl font-bold mb-4">
-              Todo lo que necesitas para gestionar pagos
+              Todo lo que necesitas para controlar tu inventario
             </h2>
             <p className="text-xl text-gray-600">
-              Desde la recepción hasta el pago final
+              Desde el ingreso automático hasta inventarios periódicos
             </p>
           </div>
 
@@ -210,37 +215,37 @@ export default function CuentasPorPagar() {
         </div>
       </section>
 
-      {/* Reception Module Section */}
-      <section className="py-20 px-6 bg-white" aria-labelledby="reception-heading">
+      {/* Automatic Entry Section */}
+      <section className="py-20 px-6 bg-white" aria-labelledby="automatic-entry-heading">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
-              <video 
-                className="w-full rounded-2xl shadow-xl border border-gray-200"
-                controls
-                preload="metadata"
-                poster={cuentasPorPagarInterface}
-                aria-label="Video demostrativo del módulo de recepción inteligente"
-              >
-                <source src="/recepcion-modulo.mp4" type="video/mp4" />
-                Tu navegador no soporta el elemento de video.
-              </video>
+              <figure className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
+                <img 
+                  src={stockIngresoAutomatico} 
+                  alt="Modal mostrando ingreso automático de productos por Ruka desde factura de compra" 
+                  className="w-full h-auto"
+                  loading="lazy"
+                  width="800"
+                  height="600"
+                />
+              </figure>
             </div>
             <div className="order-1 md:order-2">
-              <h2 id="reception-heading" className="text-4xl md:text-5xl font-bold mb-6">
-                Módulo de recepción inteligente + bloqueo automático
+              <h2 id="automatic-entry-heading" className="text-4xl md:text-5xl font-bold mb-6">
+                Ruka ingresa todo automáticamente
               </h2>
               <p className="text-xl text-gray-600 mb-8">
-                Tu equipo puede reportar problemas directamente al recibir los productos. 
-                El sistema bloquea automáticamente las facturas con discrepancias hasta que se resuelvan.
+                Cada vez que confirmas una compra, Ruka registra automáticamente los productos en tu inventario. 
+                Sin digitación, sin errores, sin trabajo manual.
               </p>
               <div className="space-y-4">
                 {[
-                  "Reporta productos en mal estado o faltantes",
-                  "Bloqueo automático de facturas con problemas",
-                  "Registro completo de cada incidencia",
-                  "Trazabilidad total de resoluciones",
-                  "Evita pagos incorrectos"
+                  "Ingreso automático desde facturas",
+                  "Vinculación con órdenes de compra",
+                  "Registro de bodega de destino",
+                  "Trazabilidad completa del ingreso",
+                  "Actualización en tiempo real"
                 ].map((benefit, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-1">
@@ -255,26 +260,26 @@ export default function CuentasPorPagar() {
         </div>
       </section>
 
-      {/* Bank Statement Section */}
-      <section className="py-20 px-6" aria-labelledby="bank-statement-heading">
+      {/* Multi-Warehouse Section */}
+      <section className="py-20 px-6" aria-labelledby="warehouse-heading">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 id="bank-statement-heading" className="text-4xl md:text-5xl font-bold mb-6">
-                Genera la planilla bancaria en 1 click
+              <h2 id="warehouse-heading" className="text-4xl md:text-5xl font-bold mb-6">
+                Gestiona múltiples bodegas y traspasos
               </h2>
               <p className="text-xl text-gray-600 mb-8">
-                Deja de perder horas armando manualmente la nómina del banco. Con Ruka es súper fácil: 
-                filtra las facturas que necesitas pagar, revisa los montos, y descarga la planilla lista para tu banco.
+                Administra el inventario de todas tus ubicaciones desde un solo lugar. 
+                Sistema de solicitudes y aprobaciones para traspasos entre bodegas con trazabilidad completa.
               </p>
               <div className="space-y-4">
                 {[
-                  "Filtra facturas por fecha, proveedor o monto",
-                  "Selecciona las que quieres pagar",
-                  "Genera la planilla en el formato de tu banco",
-                  "Descarga y sube a tu banco en segundos",
-                  "Elimina errores de digitación manual",
-                  "Ahorra más de 10 horas semanales"
+                  "Vista consolidada de todas las bodegas",
+                  "Solicitudes de traspaso entre ubicaciones",
+                  "Sistema de aprobaciones configurable",
+                  "Registro automático de movimientos",
+                  "Control de quién solicitó y quién aprobó",
+                  "Historial completo de traspasos"
                 ].map((benefit, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-1">
@@ -287,8 +292,8 @@ export default function CuentasPorPagar() {
             </div>
             <figure className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
               <img 
-                src={planillaBancaria} 
-                alt="Pantalla de generación automática de planilla bancaria con filtros de facturas y exportación directa" 
+                src={stockTraspasoBodegas} 
+                alt="Modal de nueva solicitud de traspaso entre bodegas mostrando selección de origen, destino y productos" 
                 className="w-full h-auto"
                 loading="lazy"
                 width="800"
@@ -316,11 +321,11 @@ export default function CuentasPorPagar() {
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mx-auto mb-4">
                 <Sparkles className="w-8 h-8 text-primary" />
               </div>
-              <CardTitle className="text-3xl mb-2">Plan Cuentas por Pagar</CardTitle>
-              <CardDescription className="text-lg">Automatiza todo tu proceso de pagos</CardDescription>
+              <CardTitle className="text-3xl mb-2">Plan Gestión de Stock</CardTitle>
+              <CardDescription className="text-lg">Automatiza todo tu inventario</CardDescription>
               <div className="mt-6">
                 <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-6xl font-bold text-primary">$39.990</span>
+                  <span className="text-6xl font-bold text-primary">$99.990</span>
                   <div className="text-left">
                     <div className="text-gray-600 text-lg">/mes</div>
                     <div className="text-sm text-muted-foreground">+ IVA</div>
@@ -343,10 +348,10 @@ export default function CuentasPorPagar() {
                 size="lg" 
                 className="w-full text-lg py-6"
                 onClick={() => {
-                  pushToDataLayer('cuentas_por_pagar_cta_click', {
+                  pushToDataLayer('stock_cta_click', {
                     cta_location: 'pricing',
                     cta_text: 'Comenzar Ahora',
-                    page_path: '/productos/cuentas-por-pagar'
+                    page_path: '/productos/stock'
                   });
                   document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
                 }}
@@ -373,8 +378,8 @@ export default function CuentasPorPagar() {
                 Comienza a automatizar hoy
               </h2>
               <p className="text-xl text-gray-600 mb-8">
-                Completa el formulario y nuestro equipo te mostrará cómo Cuentas por Pagar puede 
-                transformar tu proceso de pagos.
+                Completa el formulario y nuestro equipo te mostrará cómo la Gestión de Stock de Ruka 
+                puede transformar tu control de inventario.
               </p>
               <div className="space-y-4">
                 {[
@@ -397,7 +402,7 @@ export default function CuentasPorPagar() {
               <ProductRegistrationForm 
                 highlightForm={highlightForm} 
                 timeLeft={timeLeft} 
-                pagePath="/productos/cuentas-por-pagar"
+                pagePath="/productos/stock"
               />
             </article>
           </div>
@@ -405,7 +410,7 @@ export default function CuentasPorPagar() {
       </section>
 
       <Footer />
-      <WhatsappButton source="cuentas-por-pagar" />
+      <WhatsappButton source="stock" />
     </div>
   );
 }
