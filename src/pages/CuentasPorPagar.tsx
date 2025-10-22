@@ -1,4 +1,4 @@
-import { ArrowRight, Check, Download, AlertCircle, Shield, FileText, Clock, Zap, MessageCircle, Sparkles } from "lucide-react";
+import { ArrowRight, Check, Download, AlertCircle, Shield, FileText, Clock, Zap, MessageCircle, Sparkles, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
@@ -51,6 +51,11 @@ export default function CuentasPorPagar() {
       icon: FileText,
       title: "Registro completo de incidencias",
       description: "Cada problema queda documentado con fecha, responsable y resolución. Trazabilidad total."
+    },
+    {
+      icon: Calendar,
+      title: "Visualiza tus pagos futuros",
+      description: "Ve todos tus compromisos de pago por venir. Anticípate y planifica tu flujo de caja sin sorpresas."
     },
     {
       icon: Clock,
