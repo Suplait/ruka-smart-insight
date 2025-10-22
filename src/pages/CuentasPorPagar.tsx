@@ -126,9 +126,9 @@ export default function CuentasPorPagar() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
             {features.map((feature, index) => (
-              <Card key={index} className="border-2 hover:border-primary/50 transition-all hover:shadow-lg">
+              <Card key={index} className="border-2 hover:border-primary/50 transition-all hover:shadow-lg w-full">
                 <CardHeader>
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                     <feature.icon className="w-6 h-6 text-primary" />
@@ -146,7 +146,52 @@ export default function CuentasPorPagar() {
         </div>
       </section>
 
-      {/* Benefits Section */}
+      {/* Reception Module Section */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="order-2 md:order-1">
+              <video 
+                className="w-full rounded-2xl shadow-xl border border-gray-200"
+                controls
+                preload="metadata"
+                poster={cuentasPorPagarInterface}
+              >
+                <source src="/recepcion-modulo.mp4" type="video/mp4" />
+                Tu navegador no soporta el elemento de video.
+              </video>
+            </div>
+            <div className="order-1 md:order-2">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                Módulo de recepción inteligente + bloqueo automático
+              </h2>
+              <p className="text-xl text-gray-600 mb-8">
+                Tu equipo puede reportar problemas directamente al recibir los productos. 
+                El sistema bloquea automáticamente las facturas con discrepancias hasta que se resuelvan.
+              </p>
+              <div className="space-y-4">
+                {[
+                  "Reporta productos en mal estado o faltantes",
+                  "Bloqueo automático de facturas con problemas",
+                  "Notificaciones instantáneas al proveedor",
+                  "Registro completo de cada incidencia",
+                  "Trazabilidad total de resoluciones",
+                  "Evita pagos incorrectos"
+                ].map((benefit, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-1">
+                      <Check className="w-4 h-4 text-primary" />
+                    </div>
+                    <p className="text-gray-700 text-lg">{benefit}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Bank Statement Section */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
