@@ -117,11 +117,11 @@ const PanelControl = () => {
     "operatingSystem": "Web",
     "offers": {
       "@type": "Offer",
-      "price": "79990",
+      "price": "99990",
       "priceCurrency": "CLP",
       "priceSpecification": {
         "@type": "UnitPriceSpecification",
-        "price": "79990",
+        "price": "99990",
         "priceCurrency": "CLP",
         "billingIncrement": "1",
         "unitText": "mes"
@@ -156,7 +156,7 @@ const PanelControl = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
         <title>Panel de Control Empresarial - Decisiones en Tiempo Real | Ruka</title>
-        <meta name="description" content="Transforma tus datos de ventas, compras e inventario en decisiones inteligentes. Panel de control con integración automática a Toteat, Justo, Fudo y más POS. Desde $79.990/mes IVA incluido." />
+        <meta name="description" content="Transforma tus datos de ventas, compras e inventario en decisiones inteligentes. Panel de control con integración automática a Toteat, Justo, Fudo y más POS. Desde $99.990/mes IVA incluido." />
         <meta name="keywords" content="panel de control empresarial, dashboard ventas, estado de resultados automatizado, integración POS chile, toteat, justo, fudo, análisis ventas, indicadores financieros, business intelligence, KPI dashboard" />
         
         {/* Open Graph */}
@@ -409,10 +409,15 @@ const PanelControl = () => {
               <div className="mb-4">
                 <Badge className="text-base px-4 py-1">Plan Profesional</Badge>
               </div>
-              <CardTitle className="text-4xl mb-2">Desde $79.990</CardTitle>
+              <CardTitle className="text-4xl mb-2">Desde $99.990</CardTitle>
               <CardDescription className="text-lg">por mes IVA incluido</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
+              <div className="mb-4 text-center">
+                <Badge variant="secondary" className="text-sm px-3 py-1">
+                  <span className="text-primary">✨ Clientes Ruka:</span> Descuento especial aplicado
+                </Badge>
+              </div>
               <div className="grid md:grid-cols-2 gap-4">
                 {[
                   "Integración con POS principal",
