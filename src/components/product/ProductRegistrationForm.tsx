@@ -64,6 +64,13 @@ export default function ProductRegistrationForm({
         company_name: data.company_name,
         city: data.ccity
       });
+    } else if (pagePath === '/productos/panel-control') {
+      pushToDataLayer('panel_control_form_submit', {
+        form_name: 'product_registration',
+        page_path: pagePath,
+        company_name: data.company_name,
+        city: data.ccity
+      });
     }
 
     try {
