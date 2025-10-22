@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { trackRegistration } from "@/utils/dataLayer";
+import { trackRegistration, pushToDataLayer } from "@/utils/dataLayer";
 import { getStoredUTMParams } from "@/utils/utmTracker";
 import { Loader2, Sparkles } from "lucide-react";
 
@@ -48,6 +48,13 @@ export default function ProductRegistrationForm({
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
+
+    // Track form submission attempt
+    pushToDataLayer('form_submit', {
+      form_name: 'product_registration',
+      page_path: pagePath || window.location.pathname,
+      company_name: data.company_name
+    });
 
     try {
       const utmParams = getStoredUTMParams();
