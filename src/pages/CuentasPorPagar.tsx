@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import ProductRegistrationForm from "@/components/product/ProductRegistrationForm";
 import WhatsappButton from "@/components/WhatsappButton";
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import cuentasPorPagarInterface from "@/assets/cuentas-por-pagar-interface.png";
 import planillaBancaria from "@/assets/planilla-bancaria.png";
 
@@ -73,12 +74,63 @@ export default function CuentasPorPagar() {
     "Visibilidad en tiempo real"
   ];
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Ruka - Cuentas por Pagar",
+    "applicationCategory": "BusinessApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "39990",
+      "priceCurrency": "CLP"
+    },
+    "description": "Automatiza todo el proceso de pago a proveedores. Genera planillas bancarias en un click, gestiona discrepancias en la recepción y mantén control total de tus cuentas por pagar.",
+    "featureList": [
+      "Planilla bancaria en 1 click",
+      "Módulo de recepción inteligente",
+      "Bloqueo automático de facturas",
+      "Registro completo de incidencias",
+      "Visualización de pagos futuros",
+      "Ahorro de más de 10 horas semanales"
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <Helmet>
+        <title>Cuentas por Pagar - Automatiza Pagos a Proveedores | Ruka</title>
+        <meta name="description" content="Automatiza tu proceso de cuentas por pagar. Genera planillas bancarias en 1 click, gestiona discrepancias y ahorra +10 horas semanales. Desde $39.990/mes." />
+        <meta name="keywords" content="cuentas por pagar, automatización pagos, planilla bancaria, gestión proveedores, recepción inteligente, control facturas, software contabilidad" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Cuentas por Pagar - Automatiza Pagos a Proveedores | Ruka" />
+        <meta property="og:description" content="Automatiza tu proceso de cuentas por pagar. Genera planillas bancarias en 1 click, gestiona discrepancias y ahorra +10 horas semanales." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://ruka.cl/productos/cuentas-por-pagar" />
+        <meta property="og:image" content={cuentasPorPagarInterface} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="675" />
+        <meta property="og:image:alt" content="Interfaz de Cuentas por Pagar - Sistema de gestión automática de facturas y pagos" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Cuentas por Pagar - Automatiza Pagos a Proveedores | Ruka" />
+        <meta name="twitter:description" content="Automatiza tu proceso de cuentas por pagar. Genera planillas bancarias en 1 click y ahorra +10 horas semanales." />
+        <meta name="twitter:image" content={cuentasPorPagarInterface} />
+        <meta name="twitter:image:alt" content="Interfaz de Cuentas por Pagar - Sistema de gestión automática de facturas y pagos" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://ruka.cl/productos/cuentas-por-pagar" />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
+      <header className="pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-block mb-4">
@@ -87,7 +139,7 @@ export default function CuentasPorPagar() {
               </span>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
-              Cuentas por Pagar
+              Cuentas por Pagar - Automatiza Pagos a Proveedores
             </h1>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
               Automatiza todo el proceso de pago a proveedores. Genera planillas bancarias en un click, 
@@ -109,21 +161,24 @@ export default function CuentasPorPagar() {
           </div>
 
           {/* Hero Screenshot */}
-          <div className="mt-16 rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
+          <figure className="mt-16 rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
             <img 
               src={cuentasPorPagarInterface} 
-              alt="Interfaz de Cuentas por Pagar en Ruka" 
+              alt="Interfaz del sistema de cuentas por pagar de Ruka mostrando gestión automática de facturas y planillas bancarias" 
               className="w-full h-auto"
+              loading="eager"
+              width="1200"
+              height="675"
             />
-          </div>
+          </figure>
         </div>
-      </section>
+      </header>
 
       {/* Features Section */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-white" aria-labelledby="features-heading">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 id="features-heading" className="text-4xl md:text-5xl font-bold mb-4">
               Todo lo que necesitas para gestionar pagos
             </h2>
             <p className="text-xl text-gray-600">
@@ -152,7 +207,7 @@ export default function CuentasPorPagar() {
       </section>
 
       {/* Reception Module Section */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-white" aria-labelledby="reception-heading">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
@@ -161,13 +216,14 @@ export default function CuentasPorPagar() {
                 controls
                 preload="metadata"
                 poster={cuentasPorPagarInterface}
+                aria-label="Video demostrativo del módulo de recepción inteligente"
               >
                 <source src="/recepcion-modulo.mp4" type="video/mp4" />
                 Tu navegador no soporta el elemento de video.
               </video>
             </div>
             <div className="order-1 md:order-2">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <h2 id="reception-heading" className="text-4xl md:text-5xl font-bold mb-6">
                 Módulo de recepción inteligente + bloqueo automático
               </h2>
               <p className="text-xl text-gray-600 mb-8">
@@ -196,11 +252,11 @@ export default function CuentasPorPagar() {
       </section>
 
       {/* Bank Statement Section */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6" aria-labelledby="bank-statement-heading">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <h2 id="bank-statement-heading" className="text-4xl md:text-5xl font-bold mb-6">
                 Genera la planilla bancaria en 1 click
               </h2>
               <p className="text-xl text-gray-600 mb-8">
@@ -225,22 +281,25 @@ export default function CuentasPorPagar() {
                 ))}
               </div>
             </div>
-            <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
+            <figure className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
               <img 
                 src={planillaBancaria} 
-                alt="Generación de planilla bancaria en un click" 
+                alt="Pantalla de generación automática de planilla bancaria con filtros de facturas y exportación directa" 
                 className="w-full h-auto"
+                loading="lazy"
+                width="800"
+                height="600"
               />
-            </div>
+            </figure>
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-white" aria-labelledby="pricing-heading">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 id="pricing-heading" className="text-4xl md:text-5xl font-bold mb-4">
               Inversión Simple y Transparente
             </h2>
             <p className="text-xl text-gray-600">
@@ -299,17 +358,17 @@ export default function CuentasPorPagar() {
       </section>
 
       {/* Contact Form Section */}
-      <section id="contact-form" className="py-20 px-6 bg-gradient-to-br from-gray-50 to-white">
+      <section id="contact-form" className="py-20 px-6 bg-gradient-to-br from-gray-50 to-white" aria-labelledby="contact-heading">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-start">
             {/* Left side - Value Proposition */}
-            <div>
+            <aside>
               <div className="inline-block mb-4">
                 <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
                   ⚡ Respuesta en 24 horas
                 </span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <h2 id="contact-heading" className="text-4xl md:text-5xl font-bold mb-6">
                 Comienza a automatizar hoy
               </h2>
               <p className="text-xl text-gray-600 mb-8">
@@ -330,16 +389,16 @@ export default function CuentasPorPagar() {
                   </div>
                 ))}
               </div>
-            </div>
+            </aside>
 
             {/* Right side - Registration Form */}
-            <div>
+            <article>
               <ProductRegistrationForm 
                 highlightForm={highlightForm} 
                 timeLeft={timeLeft} 
                 pagePath="/productos/cuentas-por-pagar"
               />
-            </div>
+            </article>
           </div>
         </div>
       </section>
