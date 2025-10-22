@@ -178,7 +178,6 @@ export default function CuentasPorPagar() {
                 {[
                   "Reporta productos en mal estado o faltantes",
                   "Bloqueo automático de facturas con problemas",
-                  "Notificaciones instantáneas al proveedor",
                   "Registro completo de cada incidencia",
                   "Trazabilidad total de resoluciones",
                   "Evita pagos incorrectos"
@@ -319,9 +318,8 @@ export default function CuentasPorPagar() {
               </p>
               <div className="space-y-4">
                 {[
-                  "Demo personalizada gratuita",
+                  "Demo personalizada",
                   "Implementación en 48 horas",
-                  "Integración con Ruka incluida",
                   "Soporte prioritario"
                 ].map((item, index) => (
                   <div key={index} className="flex items-center gap-3">
