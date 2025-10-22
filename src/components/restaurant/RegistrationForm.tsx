@@ -23,10 +23,12 @@ interface FormData {
 interface RegistrationFormProps {
   highlightForm: boolean;
   timeLeft: string;
+  pagePath?: string;
 }
 export default function RegistrationForm({
   highlightForm,
-  timeLeft
+  timeLeft,
+  pagePath
 }: RegistrationFormProps) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
@@ -116,6 +118,7 @@ export default function RegistrationForm({
         ccity: formData.ciudad,
         whatsapp: whatsappNumber,
         codigo_promocional: formData.codigoPromocional || null,
+        page_path: pagePath || window.location.pathname,
         utm_source: utmParams.utm_source,
         utm_medium: utmParams.utm_medium,
         utm_campaign: utmParams.utm_campaign,

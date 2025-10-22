@@ -168,7 +168,7 @@ export default function Restaurantes() {
 
             {/* Quitamos el formulario de esta posición en mobile */}
             <div className="lg:hidden w-full sm:px-4 mb-8 hidden">
-              <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
+              <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} pagePath="/restaurantes" />
             </div>
 
             <div className="lg:grid lg:grid-cols-[1fr,460px] lg:gap-16">
@@ -274,7 +274,7 @@ export default function Restaurantes() {
 
                 {/* Insertar formulario de registro en mobile aquí */}
                 <div id="mobile-form-section" className="lg:hidden w-full mb-8">
-                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
+                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} pagePath="/restaurantes" />
                 </div>
 
                 <motion.div initial={{
@@ -346,7 +346,7 @@ export default function Restaurantes() {
                 <div className="sticky top-24" style={{
                 height: 'calc(100vh - 96px)'
               }}>
-                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
+                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} pagePath="/restaurantes" />
                 </div>
               </div>
             </div>

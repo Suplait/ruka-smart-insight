@@ -140,7 +140,7 @@ export default function Hoteles() {
             </div>
 
             <div className="lg:hidden w-full sm:px-4 mb-8">
-              <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
+              <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} pagePath="/hoteles" />
             </div>
 
             <div className="lg:grid lg:grid-cols-[1fr,460px] lg:gap-16">
@@ -438,7 +438,7 @@ export default function Hoteles() {
                 <div className="sticky top-24" style={{
                 height: 'calc(100vh - 96px)'
               }}>
-                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
+                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} pagePath="/hoteles" />
                 </div>
               </div>
             </div>

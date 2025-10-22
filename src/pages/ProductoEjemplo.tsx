@@ -1,49 +1,32 @@
 import { ArrowRight, Check, Zap, Shield, TrendingUp, MessageCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { toast } from "sonner";
-import { useState } from "react";
-
-const formSchema = z.object({
-  name: z.string().trim().min(2, "El nombre debe tener al menos 2 caracteres").max(100, "El nombre es muy largo"),
-  email: z.string().trim().email("Email inválido").max(255, "El email es muy largo"),
-  phone: z.string().trim().min(8, "Teléfono inválido").max(20, "Teléfono inválido"),
-  company: z.string().trim().max(100, "El nombre de la empresa es muy largo").optional(),
-  message: z.string().trim().max(500, "El mensaje es muy largo").optional()
-});
-
-type FormData = z.infer<typeof formSchema>;
+import RegistrationForm from "@/components/restaurant/RegistrationForm";
+import { useState, useEffect } from "react";
 
 export default function ProductoEjemplo() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
-    resolver: zodResolver(formSchema)
-  });
+  const [highlightForm, setHighlightForm] = useState(false);
+  const [timeLeft, setTimeLeft] = useState("");
 
-  const onSubmit = async (data: FormData) => {
-    setIsSubmitting(true);
-    try {
-      // TODO: Aquí se enviará a la base de datos o servicio
-      console.log("Form data:", data);
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simular envío
-      toast.success("¡Gracias! Nos contactaremos contigo pronto.");
-      reset();
-    } catch (error) {
-      toast.error("Hubo un error. Por favor intenta nuevamente.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      let target = new Date();
+      target.setHours(12, 0, 0, 0);
+      if (now.getHours() >= 12) {
+        target.setDate(target.getDate() + 1);
+      }
+      const diff = target.getTime() - now.getTime();
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor(diff % (1000 * 60 * 60) / (1000 * 60));
+      setTimeLeft(`${hours}h ${minutes}m`);
+    };
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 60000);
+    return () => clearInterval(timer);
+  }, []);
 
   const features = [
     {
@@ -253,7 +236,7 @@ export default function ProductoEjemplo() {
       {/* Contact Form Section */}
       <section id="contact-form" className="py-20 px-6 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
             {/* Left side - Value Proposition */}
             <div>
               <div className="inline-block mb-4">
@@ -284,99 +267,14 @@ export default function ProductoEjemplo() {
               </div>
             </div>
 
-            {/* Right side - Form */}
-            <Card className="shadow-xl border-2">
-              <CardHeader>
-                <CardTitle className="text-2xl">Solicita una Demo</CardTitle>
-                <CardDescription>
-                  Completa tus datos y nos contactaremos contigo
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Nombre completo *</Label>
-                    <Input
-                      id="name"
-                      placeholder="Juan Pérez"
-                      {...register("name")}
-                      className={errors.name ? "border-red-500" : ""}
-                    />
-                    {errors.name && (
-                      <p className="text-sm text-red-500">{errors.name.message}</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email corporativo *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="juan@empresa.com"
-                      {...register("email")}
-                      className={errors.email ? "border-red-500" : ""}
-                    />
-                    {errors.email && (
-                      <p className="text-sm text-red-500">{errors.email.message}</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Teléfono *</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="+56 9 1234 5678"
-                      {...register("phone")}
-                      className={errors.phone ? "border-red-500" : ""}
-                    />
-                    {errors.phone && (
-                      <p className="text-sm text-red-500">{errors.phone.message}</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="company">Empresa</Label>
-                    <Input
-                      id="company"
-                      placeholder="Mi Empresa SpA"
-                      {...register("company")}
-                      className={errors.company ? "border-red-500" : ""}
-                    />
-                    {errors.company && (
-                      <p className="text-sm text-red-500">{errors.company.message}</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Mensaje (opcional)</Label>
-                    <Textarea
-                      id="message"
-                      placeholder="Cuéntanos sobre tu negocio..."
-                      rows={3}
-                      {...register("message")}
-                      className={errors.message ? "border-red-500" : ""}
-                    />
-                    {errors.message && (
-                      <p className="text-sm text-red-500">{errors.message.message}</p>
-                    )}
-                  </div>
-
-                  <Button 
-                    type="submit" 
-                    size="lg" 
-                    className="w-full text-lg py-6"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "Enviando..." : "Solicitar Demo"} <ArrowRight className="ml-2" />
-                  </Button>
-
-                  <p className="text-xs text-center text-muted-foreground">
-                    Al enviar este formulario, aceptas nuestros <Link to="/terms" className="underline">términos y condiciones</Link>
-                  </p>
-                </form>
-              </CardContent>
-            </Card>
+            {/* Right side - Registration Form */}
+            <div>
+              <RegistrationForm 
+                highlightForm={highlightForm} 
+                timeLeft={timeLeft} 
+                pagePath="/productos/ejemplo"
+              />
+            </div>
           </div>
         </div>
       </section>

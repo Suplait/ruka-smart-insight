@@ -264,7 +264,7 @@ export default function Register() {
                 </motion.div>
 
                 <div id="mobile-form-section" className="lg:hidden w-full mb-8">
-                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
+                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} pagePath="/register" />
                 </div>
 
                 <motion.div initial={{
@@ -334,7 +334,7 @@ export default function Register() {
                 <div className="sticky top-24" style={{
                   height: 'calc(100vh - 96px)'
                 }}>
-                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} />
+                  <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} pagePath="/register" />
                 </div>
               </div>
             </div>
