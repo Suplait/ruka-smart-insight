@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import RegistrationForm from "@/components/restaurant/RegistrationForm";
+import ProductRegistrationForm from "@/components/product/ProductRegistrationForm";
 import { useState, useEffect } from "react";
 
 export default function ProductoEjemplo() {
@@ -269,7 +269,7 @@ export default function ProductoEjemplo() {
 
             {/* Right side - Registration Form */}
             <div>
-              <RegistrationForm 
+              <ProductRegistrationForm 
                 highlightForm={highlightForm} 
                 timeLeft={timeLeft} 
                 pagePath="/productos/ejemplo"
