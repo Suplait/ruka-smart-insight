@@ -19,7 +19,6 @@ const formSchema = z.object({
   whatsapp: z.string().min(8, "El número de WhatsApp debe tener al menos 8 dígitos"),
   company_name: z.string().min(2, "El nombre de la empresa debe tener al menos 2 caracteres"),
   ccity: z.string().min(2, "La ciudad debe tener al menos 2 caracteres"),
-  message: z.string().optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -266,20 +265,6 @@ export default function ProductRegistrationForm({
             />
             {errors.ccity && (
               <p className="text-red-500 text-sm mt-1">{errors.ccity.message}</p>
-            )}
-          </div>
-
-          <div>
-            <Label htmlFor="message">Mensaje (opcional)</Label>
-            <Textarea
-              id="message"
-              {...register("message")}
-              placeholder="Cuéntanos más sobre tus necesidades..."
-              rows={3}
-              className={errors.message ? "border-red-500" : ""}
-            />
-            {errors.message && (
-              <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>
             )}
           </div>
 

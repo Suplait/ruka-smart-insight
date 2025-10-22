@@ -206,15 +206,6 @@ Deno.serve(async (req) => {
             text: `📱 *WhatsApp:*\n${lead.whatsapp ? lead.whatsapp : "No proporcionado"}`
           }
         ]
-      },
-      {
-        type: "section",
-        fields: [
-          {
-            type: "mrkdwn",
-            text: `🏢 *Tipo de Negocio:*\n${businessType}`
-          }
-        ]
       }
     ];
 
