@@ -38,13 +38,7 @@ export default function Navbar() {
       </SheetTrigger>
       <SheetContent side="right" className="w-[280px] sm:w-[350px]">
         <nav className="flex flex-col gap-4">
-          <div className="space-y-2">
-            <p className="text-xs text-muted-foreground px-2">Productos</p>
-            <Link to="/productos/ejemplo" className="flex items-center space-x-2 text-left text-base font-medium pl-4" onClick={() => setIsOpen(false)}>
-              <Zap className="h-4 w-4" />
-              <span>Producto Ejemplo</span>
-            </Link>
-          </div>
+          {/* Productos menu will be added here */}
           <button onClick={() => scrollToSection('pricing')} className="flex items-center space-x-2 text-left text-lg font-medium">
             Precio
           </button>
@@ -95,45 +89,7 @@ export default function Navbar() {
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent border-0">
-                    Productos
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="w-[280px] p-4 bg-white rounded-lg shadow-lg border">
-                      <p className="text-sm font-medium text-muted-foreground mb-3 px-2">
-                        Nuestros Productos
-                      </p>
-                      <ul className="grid gap-2">
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link to="/productos/ejemplo" className={cn("flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors", "bg-card hover:bg-accent hover:text-accent-foreground", "border border-transparent hover:border-border")}>
-                              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                <Zap className="h-5 w-5 text-primary" />
-                              </div>
-                              <div className="grid gap-1">
-                                <div className="text-sm font-medium">
-                                  Producto Ejemplo
-                                </div>
-                                <div className="line-clamp-2 text-xs text-muted-foreground">Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                        
-                        <li className="px-2 py-1">
-                          <div className="text-xs text-muted-foreground italic">
-                            Más productos próximamente...
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+            {/* Productos menu - hidden for now, will be populated with actual products */}
             
             <button onClick={() => scrollToSection('pricing')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               Pricing
