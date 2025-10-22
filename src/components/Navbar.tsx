@@ -40,13 +40,13 @@ export default function Navbar() {
         <nav className="flex flex-col gap-4">
           <div className="space-y-2">
             <p className="text-xs text-muted-foreground px-2">Productos</p>
-            <Link to="/" className="flex items-center space-x-2 text-left text-base font-medium pl-4" onClick={() => setIsOpen(false)}>
-              <Bot className="h-4 w-4" />
-              <span>Gestión y Analítica</span>
-            </Link>
             <Link to="/productos/cuentas-por-pagar" className="flex items-center space-x-2 text-left text-base font-medium pl-4" onClick={() => setIsOpen(false)}>
               <Receipt className="h-4 w-4" />
               <span>Cuentas por Pagar</span>
+            </Link>
+            <Link to="/" className="flex items-center space-x-2 text-left text-base font-medium pl-4" onClick={() => setIsOpen(false)}>
+              <Bot className="h-4 w-4" />
+              <span>Gestión y Analítica</span>
             </Link>
           </div>
           <button onClick={() => scrollToSection('pricing')} className="flex items-center space-x-2 text-left text-lg font-medium">
@@ -113,21 +113,6 @@ export default function Navbar() {
                       <ul className="grid gap-2">
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link to="/" className={cn("flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors", "bg-card hover:bg-accent hover:text-accent-foreground", "border border-transparent hover:border-border")}>
-                              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                <Bot className="h-5 w-5 text-primary" />
-                              </div>
-                              <div className="grid gap-1">
-                                <div className="text-sm font-medium">
-                                  Gestión y Analítica
-                                </div>
-                                <div className="line-clamp-2 text-xs text-muted-foreground">3 agentes de IA para automatizar tu gestión de compras</div>
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
                             <Link to="/productos/cuentas-por-pagar" className={cn("flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors", "bg-card hover:bg-accent hover:text-accent-foreground", "border border-transparent hover:border-border")}>
                               <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
                                 <Receipt className="h-5 w-5 text-primary" />
@@ -137,6 +122,21 @@ export default function Navbar() {
                                   Cuentas por Pagar
                                 </div>
                                 <div className="line-clamp-2 text-xs text-muted-foreground">Automatiza pagos, gestiona recepción y genera planillas bancarias</div>
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link to="/" className={cn("flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors", "bg-card hover:bg-accent hover:text-accent-foreground", "border border-transparent hover:border-border")}>
+                              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                <Bot className="h-5 w-5 text-primary" />
+                              </div>
+                              <div className="grid gap-1">
+                                <div className="text-sm font-medium">
+                                  Gestión y Analítica
+                                </div>
+                                <div className="line-clamp-2 text-xs text-muted-foreground">3 agentes de IA para automatizar tu gestión de compras</div>
                               </div>
                             </Link>
                           </NavigationMenuLink>
