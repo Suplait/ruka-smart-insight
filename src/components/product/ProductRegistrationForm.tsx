@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { trackRegistration } from "@/utils/dataLayer";
+import { trackRegistration, pushToDataLayer } from "@/utils/dataLayer";
 import { getStoredUTMParams } from "@/utils/utmTracker";
 import { Loader2, Sparkles } from "lucide-react";
 
@@ -48,6 +48,16 @@ export default function ProductRegistrationForm({
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
+
+    // Track form submission for Cuentas por Pagar page
+    if (pagePath === '/productos/cuentas-por-pagar') {
+      pushToDataLayer('cuentas_por_pagar_form_submit', {
+        form_name: 'product_registration',
+        page_path: pagePath,
+        company_name: data.company_name,
+        city: data.ccity
+      });
+    }
 
     try {
       const utmParams = getStoredUTMParams();
