@@ -107,17 +107,17 @@ export default function CuentasPorPagar() {
         <meta property="og:description" content="Automatiza tu proceso de cuentas por pagar. Genera planillas bancarias en 1 click, gestiona discrepancias y ahorra +10 horas semanales." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://ruka.cl/productos/cuentas-por-pagar" />
-        <meta property="og:image" content="https://ruka.cl/og-cuentas-por-pagar.png" />
+        <meta property="og:image" content={cuentasPorPagarInterface} />
         <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Cuentas por Pagar - Automatiza Pagos a Proveedores en 1 Click" />
+        <meta property="og:image:height" content="675" />
+        <meta property="og:image:alt" content="Interfaz de Cuentas por Pagar - Sistema de gestión automática de facturas y pagos" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Cuentas por Pagar - Automatiza Pagos a Proveedores | Ruka" />
         <meta name="twitter:description" content="Automatiza tu proceso de cuentas por pagar. Genera planillas bancarias en 1 click y ahorra +10 horas semanales." />
-        <meta name="twitter:image" content="https://ruka.cl/og-cuentas-por-pagar.png" />
-        <meta name="twitter:image:alt" content="Cuentas por Pagar - Automatiza Pagos a Proveedores en 1 Click" />
+        <meta name="twitter:image" content={cuentasPorPagarInterface} />
+        <meta name="twitter:image:alt" content="Interfaz de Cuentas por Pagar - Sistema de gestión automática de facturas y pagos" />
         
         {/* Canonical URL */}
         <link rel="canonical" href="https://ruka.cl/productos/cuentas-por-pagar" />
