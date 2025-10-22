@@ -18,12 +18,9 @@ export default function Navbar() {
 
   const scrollToSection = (id: string) => {
     if (location.pathname !== '/') {
-      navigate('/', {
-        state: {
-          scrollTo: id
-        }
-      });
+      navigate(`/#${id}`);
     } else {
+      navigate(`#${id}`, { replace: true });
       const element = document.getElementById(id);
       element?.scrollIntoView({
         behavior: "smooth"
