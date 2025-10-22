@@ -195,7 +195,7 @@ export default function ProductoEjemplo() {
                   <span className="text-6xl font-bold text-primary">$599</span>
                   <div className="text-left">
                     <div className="text-gray-600 text-lg">/mes</div>
-                    <div className="text-sm text-muted-foreground">+ IVA</div>
+                    <div className="text-sm text-muted-foreground">IVA incluido</div>
                   </div>
                 </div>
               </div>
