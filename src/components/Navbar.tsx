@@ -38,7 +38,12 @@ export default function Navbar() {
       </SheetTrigger>
       <SheetContent side="right" className="w-[280px] sm:w-[350px]">
         <nav className="flex flex-col gap-4">
-          {/* Productos menu will be added here */}
+          <div className="space-y-2">
+            <p className="text-xs text-muted-foreground px-2">Productos</p>
+            <div className="px-4 py-2 text-sm text-muted-foreground italic">
+              Próximamente...
+            </div>
+          </div>
           <button onClick={() => scrollToSection('pricing')} className="flex items-center space-x-2 text-left text-lg font-medium">
             Precio
           </button>
@@ -89,7 +94,29 @@ export default function Navbar() {
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
-            {/* Productos menu - hidden for now, will be populated with actual products */}
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent border-0">
+                    Productos
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="w-[280px] p-4 bg-white rounded-lg shadow-lg border">
+                      <p className="text-sm font-medium text-muted-foreground mb-3 px-2">
+                        Nuestros Productos
+                      </p>
+                      <ul className="grid gap-2">
+                        <li className="px-2 py-1">
+                          <div className="text-xs text-muted-foreground italic">
+                            Próximamente...
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
             
             <button onClick={() => scrollToSection('pricing')} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               Pricing
