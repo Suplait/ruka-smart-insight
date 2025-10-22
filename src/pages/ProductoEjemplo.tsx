@@ -192,7 +192,7 @@ export default function ProductoEjemplo() {
               <CardDescription className="text-lg">Todo lo que necesitas para transformar tu negocio</CardDescription>
               <div className="mt-6">
                 <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-6xl font-bold text-primary">$599</span>
+                  <span className="text-6xl font-bold text-primary">Desde $599</span>
                   <div className="text-left">
                     <div className="text-gray-600 text-lg">/mes</div>
                     <div className="text-sm text-muted-foreground">IVA incluido</div>

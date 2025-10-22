@@ -320,7 +320,7 @@ export default function CuentasPorPagar() {
               <CardDescription className="text-lg">Automatiza todo tu proceso de pagos</CardDescription>
               <div className="mt-6">
                 <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-6xl font-bold text-primary">$39.990</span>
+                  <span className="text-6xl font-bold text-primary">Desde $39.990</span>
                   <div className="text-left">
                     <div className="text-gray-600 text-lg">/mes</div>
                     <div className="text-sm text-muted-foreground">IVA incluido</div>
