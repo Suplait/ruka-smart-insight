@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X, Hotel, Zap, Bot, Receipt } from "lucide-react";
+import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X, Hotel, Zap, Bot, Receipt, Package } from "lucide-react";
 import SubdomainModal from "./SubdomainModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -53,6 +53,14 @@ export default function Navbar() {
             >
               <Receipt className="h-4 w-4" />
               <span>Cuentas por Pagar</span>
+            </Link>
+            <Link
+              to="/productos/stock"
+              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
+              onClick={() => setIsOpen(false)}
+            >
+              <Package className="h-4 w-4" />
+              <span>Gestión de Stock</span>
             </Link>
             <Link
               to="/"
@@ -164,6 +172,28 @@ export default function Navbar() {
                                 <div className="text-sm font-medium">Cuentas por Pagar</div>
                                 <div className="line-clamp-2 text-xs text-muted-foreground">
                                   Automatiza pagos, gestiona recepción y genera planillas bancarias
+                                </div>
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              to="/productos/stock"
+                              className={cn(
+                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                "bg-card hover:bg-accent hover:text-accent-foreground",
+                                "border border-transparent hover:border-border",
+                              )}
+                            >
+                              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                <Package className="h-5 w-5 text-primary" />
+                              </div>
+                              <div className="grid gap-1">
+                                <div className="text-sm font-medium">Gestión de Stock</div>
+                                <div className="line-clamp-2 text-xs text-muted-foreground">
+                                  Inventario automático, múltiples bodegas y control de traspasos
                                 </div>
                               </div>
                             </Link>

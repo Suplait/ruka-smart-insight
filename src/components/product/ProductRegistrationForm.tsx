@@ -49,9 +49,16 @@ export default function ProductRegistrationForm({
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
 
-    // Track form submission for Cuentas por Pagar page
+    // Track form submission for specific product pages
     if (pagePath === '/productos/cuentas-por-pagar') {
       pushToDataLayer('cuentas_por_pagar_form_submit', {
+        form_name: 'product_registration',
+        page_path: pagePath,
+        company_name: data.company_name,
+        city: data.ccity
+      });
+    } else if (pagePath === '/productos/stock') {
+      pushToDataLayer('stock_form_submit', {
         form_name: 'product_registration',
         page_path: pagePath,
         company_name: data.company_name,
