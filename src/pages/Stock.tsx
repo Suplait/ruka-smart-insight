@@ -98,28 +98,34 @@ export default function Stock() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
-        <title>Gestión de Stock e Inventario - Automatiza tu Control | Ruka</title>
-        <meta name="description" content="Automatiza tu gestión de inventario. Ruka registra compras automáticamente, gestiona múltiples bodegas, traspasos y roles de usuario. Desde $99.990/mes." />
-        <meta name="keywords" content="gestión de stock, inventario automatizado, control de bodegas, traspasos, inventarios periódicos, software inventario, control stock restaurante" />
+        <title>Gestión de Stock e Inventario Automatizada - Ahorra 15+ horas/semana | Ruka</title>
+        <meta name="description" content="Automatiza tu gestión de inventario con Ruka. Ingreso automático desde compras, múltiples bodegas, traspasos con aprobaciones y control de roles. Desde $99.990/mes + IVA." />
+        <meta name="keywords" content="gestión de stock, inventario automatizado, control de bodegas, traspasos entre bodegas, inventarios periódicos, software inventario chile, control stock restaurante, gestión inventario retail, sistema de bodegas" />
         
         {/* Open Graph */}
-        <meta property="og:title" content="Gestión de Stock e Inventario - Automatiza tu Control | Ruka" />
-        <meta property="og:description" content="Automatiza tu gestión de inventario. Ruka registra compras automáticamente y gestiona múltiples bodegas sin errores." />
+        <meta property="og:title" content="Gestión de Stock e Inventario Automatizada | Ruka" />
+        <meta property="og:description" content="Ingreso automático de stock, múltiples bodegas, traspasos con aprobaciones y roles configurables. Ahorra 15+ horas semanales automatizando tu inventario." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://ruka.cl/productos/stock" />
-        <meta property="og:image" content={stockInventario} />
+        <meta property="og:image" content="https://ruka.cl/stock-inventario.png" />
+        <meta property="og:image:secure_url" content="https://ruka.cl/stock-inventario.png" />
         <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="675" />
-        <meta property="og:image:alt" content="Interfaz de gestión de stock e inventario de Ruka" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Interfaz del sistema de gestión de stock e inventario de Ruka - Vista de inventario en bodega central" />
+        <meta property="og:site_name" content="Ruka" />
+        <meta property="og:locale" content="es_CL" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Gestión de Stock e Inventario - Automatiza tu Control | Ruka" />
-        <meta name="twitter:description" content="Automatiza tu gestión de inventario. Ruka registra compras automáticamente y gestiona múltiples bodegas." />
-        <meta name="twitter:image" content={stockInventario} />
-        <meta name="twitter:image:alt" content="Interfaz de gestión de stock e inventario de Ruka" />
+        <meta name="twitter:site" content="@ruka_ai" />
+        <meta name="twitter:title" content="Gestión de Stock e Inventario Automatizada | Ruka" />
+        <meta name="twitter:description" content="Ingreso automático de stock, múltiples bodegas, traspasos con aprobaciones. Ahorra 15+ horas/semana automatizando tu inventario." />
+        <meta name="twitter:image" content="https://ruka.cl/stock-inventario.png" />
+        <meta name="twitter:image:alt" content="Interfaz del sistema de gestión de stock e inventario de Ruka" />
         
-        {/* Canonical URL */}
+        {/* Additional SEO Tags */}
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="author" content="Ruka" />
         <link rel="canonical" href="https://ruka.cl/productos/stock" />
         
         {/* Structured Data */}
