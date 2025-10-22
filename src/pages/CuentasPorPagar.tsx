@@ -1,4 +1,4 @@
-import { ArrowRight, Check, Download, AlertCircle, Shield, FileText, Clock, Zap, MessageCircle, Sparkles, Calendar } from "lucide-react";
+import { ArrowRight, Check, Download, AlertCircle, Shield, FileText, Clock, Zap, Sparkles, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
@@ -145,17 +145,13 @@ export default function CuentasPorPagar() {
               Automatiza todo el proceso de pago a proveedores. Genera planillas bancarias en un click, 
               gestiona discrepancias en la recepción y mantén control total de tus cuentas por pagar.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex justify-center">
               <Button 
                 size="lg" 
                 className="text-lg px-8 py-6 rounded-full"
                 onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Comenzar Ahora <ArrowRight className="ml-2" />
-              </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6 rounded-full gap-2">
-                <MessageCircle className="w-5 h-5" />
-                Conversemos
               </Button>
             </div>
           </div>
@@ -335,23 +331,13 @@ export default function CuentasPorPagar() {
                   </div>
                 ))}
               </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  size="lg" 
-                  className="flex-1 text-lg py-6"
-                  onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  Comenzar Ahora <ArrowRight className="ml-2" />
-                </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="flex-1 text-lg py-6 gap-2"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  Conversemos
-                </Button>
-              </div>
+              <Button 
+                size="lg" 
+                className="w-full text-lg py-6"
+                onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Comenzar Ahora <ArrowRight className="ml-2" />
+              </Button>
             </CardContent>
           </Card>
         </div>
