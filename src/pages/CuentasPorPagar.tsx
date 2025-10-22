@@ -152,14 +152,21 @@ export default function CuentasPorPagar() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                Control total de tu flujo de pagos
+                Genera la planilla bancaria en 1 click
               </h2>
               <p className="text-xl text-gray-600 mb-8">
-                Deja de perder tiempo en procesos manuales y elimina errores costosos. 
-                Ruka automatiza todo el ciclo de cuentas por pagar.
+                Deja de perder horas armando manualmente la nómina del banco. Con Ruka es súper fácil: 
+                filtra las facturas que necesitas pagar, revisa los montos, y descarga la planilla lista para tu banco.
               </p>
               <div className="space-y-4">
-                {benefits.map((benefit, index) => (
+                {[
+                  "Filtra facturas por fecha, proveedor o monto",
+                  "Selecciona las que quieres pagar",
+                  "Genera la planilla en el formato de tu banco",
+                  "Descarga y sube a tu banco en segundos",
+                  "Elimina errores de digitación manual",
+                  "Ahorra más de 10 horas semanales"
+                ].map((benefit, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-1">
                       <Check className="w-4 h-4 text-primary" />
@@ -201,7 +208,7 @@ export default function CuentasPorPagar() {
               <CardDescription className="text-lg">Automatiza todo tu proceso de pagos</CardDescription>
               <div className="mt-6">
                 <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-6xl font-bold text-primary">$399</span>
+                  <span className="text-6xl font-bold text-primary">$39.990</span>
                   <div className="text-left">
                     <div className="text-gray-600 text-lg">/mes</div>
                     <div className="text-sm text-muted-foreground">+ IVA</div>
