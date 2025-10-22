@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X, Hotel, Zap, Bot, Receipt, Package } from "lucide-react";
 import SubdomainModal from "./SubdomainModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -47,36 +48,56 @@ export default function Navbar() {
           <div className="space-y-2">
             <p className="text-xs text-muted-foreground px-2">Productos</p>
             <Link
-              to="/productos/panel-control"
-              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
+              to="/"
+              className="flex items-center justify-between text-left text-base font-medium pl-4 pr-2"
               onClick={() => setIsOpen(false)}
             >
-              <Zap className="h-4 w-4" />
-              <span>Panel de Control</span>
+              <div className="flex items-center space-x-2">
+                <Bot className="h-4 w-4" />
+                <span>Gestión y Analítica</span>
+              </div>
+              {location.pathname === "/" && (
+                <Badge variant="secondary" className="text-xs">Estás aquí</Badge>
+              )}
             </Link>
             <Link
               to="/productos/cuentas-por-pagar"
-              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
+              className="flex items-center justify-between text-left text-base font-medium pl-4 pr-2"
               onClick={() => setIsOpen(false)}
             >
-              <Receipt className="h-4 w-4" />
-              <span>Cuentas por Pagar</span>
+              <div className="flex items-center space-x-2">
+                <Receipt className="h-4 w-4" />
+                <span>Cuentas por Pagar</span>
+              </div>
+              {location.pathname === "/productos/cuentas-por-pagar" && (
+                <Badge variant="secondary" className="text-xs">Estás aquí</Badge>
+              )}
+            </Link>
+            <Link
+              to="/productos/panel-control"
+              className="flex items-center justify-between text-left text-base font-medium pl-4 pr-2"
+              onClick={() => setIsOpen(false)}
+            >
+              <div className="flex items-center space-x-2">
+                <Zap className="h-4 w-4" />
+                <span>Panel de Control</span>
+              </div>
+              {location.pathname === "/productos/panel-control" && (
+                <Badge variant="secondary" className="text-xs">Estás aquí</Badge>
+              )}
             </Link>
             <Link
               to="/productos/stock"
-              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
+              className="flex items-center justify-between text-left text-base font-medium pl-4 pr-2"
               onClick={() => setIsOpen(false)}
             >
-              <Package className="h-4 w-4" />
-              <span>Gestión de Stock</span>
-            </Link>
-            <Link
-              to="/"
-              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
-              onClick={() => setIsOpen(false)}
-            >
-              <Bot className="h-4 w-4" />
-              <span>Gestión y Analítica</span>
+              <div className="flex items-center space-x-2">
+                <Package className="h-4 w-4" />
+                <span>Gestión de Inventario</span>
+              </div>
+              {location.pathname === "/productos/stock" && (
+                <Badge variant="secondary" className="text-xs">Estás aquí</Badge>
+              )}
             </Link>
           </div>
           <button
@@ -166,7 +187,7 @@ export default function Navbar() {
                         <li>
                           <NavigationMenuLink asChild>
                             <Link
-                              to="/productos/panel-control"
+                              to="/"
                               className={cn(
                                 "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
                                 "bg-card hover:bg-accent hover:text-accent-foreground",
@@ -174,12 +195,17 @@ export default function Navbar() {
                               )}
                             >
                               <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                <Zap className="h-5 w-5 text-primary" />
+                                <Bot className="h-5 w-5 text-primary" />
                               </div>
-                              <div className="grid gap-1">
-                                <div className="text-sm font-medium">Panel de Control</div>
+                              <div className="grid gap-1 flex-1">
+                                <div className="text-sm font-medium flex items-center justify-between">
+                                  <span>Gestión y Analítica</span>
+                                  {location.pathname === "/" && (
+                                    <Badge variant="secondary" className="text-xs ml-2">Estás aquí</Badge>
+                                  )}
+                                </div>
                                 <div className="line-clamp-2 text-xs text-muted-foreground">
-                                  Decisiones inteligentes en tiempo real
+                                  Agentes con IA para automatizar tu gestión de compras
                                 </div>
                               </div>
                             </Link>
@@ -198,10 +224,42 @@ export default function Navbar() {
                               <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
                                 <Receipt className="h-5 w-5 text-primary" />
                               </div>
-                              <div className="grid gap-1">
-                                <div className="text-sm font-medium">Cuentas por Pagar</div>
+                              <div className="grid gap-1 flex-1">
+                                <div className="text-sm font-medium flex items-center justify-between">
+                                  <span>Cuentas por Pagar</span>
+                                  {location.pathname === "/productos/cuentas-por-pagar" && (
+                                    <Badge variant="secondary" className="text-xs ml-2">Estás aquí</Badge>
+                                  )}
+                                </div>
                                 <div className="line-clamp-2 text-xs text-muted-foreground">
                                   Automatiza pagos, gestiona recepción y genera planillas bancarias
+                                </div>
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              to="/productos/panel-control"
+                              className={cn(
+                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                "bg-card hover:bg-accent hover:text-accent-foreground",
+                                "border border-transparent hover:border-border",
+                              )}
+                            >
+                              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                <Zap className="h-5 w-5 text-primary" />
+                              </div>
+                              <div className="grid gap-1 flex-1">
+                                <div className="text-sm font-medium flex items-center justify-between">
+                                  <span>Panel de Control</span>
+                                  {location.pathname === "/productos/panel-control" && (
+                                    <Badge variant="secondary" className="text-xs ml-2">Estás aquí</Badge>
+                                  )}
+                                </div>
+                                <div className="line-clamp-2 text-xs text-muted-foreground">
+                                  Decisiones inteligentes en tiempo real
                                 </div>
                               </div>
                             </Link>
@@ -220,32 +278,15 @@ export default function Navbar() {
                               <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
                                 <Package className="h-5 w-5 text-primary" />
                               </div>
-                              <div className="grid gap-1">
-                                <div className="text-sm font-medium">Gestión de Stock</div>
+                              <div className="grid gap-1 flex-1">
+                                <div className="text-sm font-medium flex items-center justify-between">
+                                  <span>Gestión de Inventario</span>
+                                  {location.pathname === "/productos/stock" && (
+                                    <Badge variant="secondary" className="text-xs ml-2">Estás aquí</Badge>
+                                  )}
+                                </div>
                                 <div className="line-clamp-2 text-xs text-muted-foreground">
                                   Inventario automático, múltiples bodegas y control de traspasos
-                                </div>
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link
-                              to="/"
-                              className={cn(
-                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                "bg-card hover:bg-accent hover:text-accent-foreground",
-                                "border border-transparent hover:border-border",
-                              )}
-                            >
-                              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                <Bot className="h-5 w-5 text-primary" />
-                              </div>
-                              <div className="grid gap-1">
-                                <div className="text-sm font-medium">Gestión y Analítica</div>
-                                <div className="line-clamp-2 text-xs text-muted-foreground">
-                                  Agentes con IA para automatizar tu gestión de compras
                                 </div>
                               </div>
                             </Link>
