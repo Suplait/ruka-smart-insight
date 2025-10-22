@@ -6,6 +6,8 @@ import Footer from "@/components/Footer";
 import ProductRegistrationForm from "@/components/product/ProductRegistrationForm";
 import WhatsappButton from "@/components/WhatsappButton";
 import { useState, useEffect } from "react";
+import cuentasPorPagarInterface from "@/assets/cuentas-por-pagar-interface.png";
+import planillaBancaria from "@/assets/planilla-bancaria.png";
 
 export default function CuentasPorPagar() {
   const [highlightForm, setHighlightForm] = useState(false);
@@ -52,13 +54,8 @@ export default function CuentasPorPagar() {
     },
     {
       icon: Clock,
-      title: "Ahorra 15+ horas semanales",
+      title: "Ahorra +10 horas semanales",
       description: "Automatiza todo el proceso de cuentas por pagar y libera tiempo de tu equipo."
-    },
-    {
-      icon: Zap,
-      title: "Integración con Ruka",
-      description: "Se conecta automáticamente con tus facturas de compra y proveedores existentes."
     }
   ];
 
@@ -106,16 +103,13 @@ export default function CuentasPorPagar() {
             </div>
           </div>
 
-          {/* Hero Image/Video Placeholder */}
+          {/* Hero Screenshot */}
           <div className="mt-16 rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
-            <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-white/50 backdrop-blur-sm flex items-center justify-center">
-                  <Download className="w-12 h-12 text-primary" />
-                </div>
-                <p className="text-gray-600 font-medium">Demo de Cuentas por Pagar</p>
-              </div>
-            </div>
+            <img 
+              src={cuentasPorPagarInterface} 
+              alt="Interfaz de Cuentas por Pagar en Ruka" 
+              className="w-full h-auto"
+            />
           </div>
         </div>
       </section>
@@ -176,27 +170,11 @@ export default function CuentasPorPagar() {
               </div>
             </div>
             <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
-              <div className="aspect-square bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                <div className="text-center p-8">
-                  <div className="bg-card rounded-2xl p-6 shadow-lg mb-6 max-w-sm mx-auto">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-sm text-muted-foreground">Facturas pendientes</span>
-                      <span className="text-2xl font-bold">127</span>
-                    </div>
-                    <div className="h-2 bg-muted rounded-full overflow-hidden">
-                      <div className="h-full bg-primary w-3/4"></div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-card rounded-2xl p-6 shadow-lg max-w-sm mx-auto">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-muted-foreground">Monto a pagar</span>
-                      <AlertCircle className="w-5 h-5 text-amber-500" />
-                    </div>
-                    <span className="text-3xl font-bold">$45.2M</span>
-                  </div>
-                </div>
-              </div>
+              <img 
+                src={planillaBancaria} 
+                alt="Generación de planilla bancaria en un click" 
+                className="w-full h-auto"
+              />
             </div>
           </div>
         </div>
