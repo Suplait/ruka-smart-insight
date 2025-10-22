@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import stockInventario from "@/assets/stock-inventario.png";
 import stockIngresoAutomatico from "@/assets/stock-ingreso-automatico.png";
+import stockTraspasoBodegas from "@/assets/stock-traspaso-bodegas.png";
 import { pushToDataLayer } from "@/utils/dataLayer";
 
 export default function Stock() {
@@ -56,8 +57,8 @@ export default function Stock() {
     },
     {
       icon: TrendingUp,
-      title: "Control de consumos",
-      description: "Ve cuánto consumes de cada producto. Identifica patrones y optimiza tus compras."
+      title: "Múltiples roles de usuario",
+      description: "Define roles específicos: solicitante, aprobador, administrador. Control de permisos granular."
     },
     {
       icon: Sparkles,
@@ -68,11 +69,9 @@ export default function Stock() {
 
   const benefits = [
     "Elimina errores de digitación",
-    "Stock siempre actualizado",
     "Control entre bodegas",
     "Inventarios simplificados",
-    "Detecta faltantes automáticamente",
-    "Visibilidad en tiempo real"
+    "Detecta faltantes automáticamente"
   ];
 
   const structuredData = {
@@ -82,7 +81,7 @@ export default function Stock() {
     "applicationCategory": "BusinessApplication",
     "offers": {
       "@type": "Offer",
-      "price": "39990",
+      "price": "99990",
       "priceCurrency": "CLP"
     },
     "description": "Automatiza la gestión de tu inventario. Ruka registra automáticamente cada compra, gestiona múltiples bodegas, traspasos y te permite realizar inventarios periódicos sin complicaciones.",
@@ -100,7 +99,7 @@ export default function Stock() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
         <title>Gestión de Stock e Inventario - Automatiza tu Control | Ruka</title>
-        <meta name="description" content="Automatiza tu gestión de inventario. Ruka registra compras automáticamente, gestiona múltiples bodegas, traspasos y controla consumos. Desde $39.990/mes." />
+        <meta name="description" content="Automatiza tu gestión de inventario. Ruka registra compras automáticamente, gestiona múltiples bodegas, traspasos y roles de usuario. Desde $99.990/mes." />
         <meta name="keywords" content="gestión de stock, inventario automatizado, control de bodegas, traspasos, inventarios periódicos, software inventario, control stock restaurante" />
         
         {/* Open Graph */}
@@ -287,8 +286,8 @@ export default function Stock() {
             </div>
             <figure className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
               <img 
-                src={stockInventario} 
-                alt="Sistema de gestión de múltiples bodegas con vista de inventario por ubicación" 
+                src={stockTraspasoBodegas} 
+                alt="Modal de nueva solicitud de traspaso entre bodegas mostrando selección de origen, destino y productos" 
                 className="w-full h-auto"
                 loading="lazy"
                 width="800"
@@ -320,7 +319,7 @@ export default function Stock() {
               <CardDescription className="text-lg">Automatiza todo tu inventario</CardDescription>
               <div className="mt-6">
                 <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-6xl font-bold text-primary">$39.990</span>
+                  <span className="text-6xl font-bold text-primary">$99.990</span>
                   <div className="text-left">
                     <div className="text-gray-600 text-lg">/mes</div>
                     <div className="text-sm text-muted-foreground">+ IVA</div>
