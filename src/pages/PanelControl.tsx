@@ -24,6 +24,7 @@ import ProductRegistrationForm from "@/components/product/ProductRegistrationFor
 import WhatsappButton from "@/components/WhatsappButton";
 import { pushToDataLayer } from "@/utils/dataLayer";
 import panelControlDashboard from "@/assets/panel-control-dashboard.png";
+import panelControlTicket from "@/assets/panel-control-ticket-promedio.png";
 
 const PanelControl = () => {
   const [highlightForm, setHighlightForm] = useState(false);
@@ -63,6 +64,11 @@ const PanelControl = () => {
       icon: Target,
       title: "Indicadores Claros y Comparativos",
       description: "Metas vs. resultados, márgenes por canal, ticket promedio, rotación, impuestos, descuentos y desempeño histórico — todo visual, sin planillas."
+    },
+    {
+      icon: TrendingUp,
+      title: "Detecta Oportunidades de Mejora",
+      description: "Identifica automáticamente áreas de ahorro, productos con bajo margen y oportunidades para optimizar tu rentabilidad."
     },
     {
       icon: Users,
@@ -369,15 +375,19 @@ const PanelControl = () => {
               </div>
             </div>
             
-            {/* Placeholder Image */}
-            <div className="relative">
-              <div className="aspect-square rounded-lg bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 border-2 border-primary/20 flex items-center justify-center">
-                <div className="text-center space-y-2">
-                  <PieChart className="w-20 h-20 mx-auto text-primary/40" />
-                  <p className="text-sm text-muted-foreground">Panel de Estado de Resultados</p>
-                </div>
+            {/* Image */}
+            <figure className="relative">
+              <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
+                <img 
+                  src={panelControlTicket} 
+                  alt="Gráfico de ticket promedio por persona mostrando análisis de ventas en Ruka" 
+                  className="w-full h-auto"
+                  loading="lazy"
+                  width="800"
+                  height="450"
+                />
               </div>
-            </div>
+            </figure>
           </div>
         </div>
       </section>
