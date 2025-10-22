@@ -47,6 +47,14 @@ export default function Navbar() {
           <div className="space-y-2">
             <p className="text-xs text-muted-foreground px-2">Productos</p>
             <Link
+              to="/productos/panel-control"
+              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
+              onClick={() => setIsOpen(false)}
+            >
+              <Zap className="h-4 w-4" />
+              <span>Panel de Control</span>
+            </Link>
+            <Link
               to="/productos/cuentas-por-pagar"
               className="flex items-center space-x-2 text-left text-base font-medium pl-4"
               onClick={() => setIsOpen(false)}
@@ -155,6 +163,28 @@ export default function Navbar() {
                     <div className="w-[280px] p-4 bg-white rounded-lg shadow-lg border">
                       <p className="text-sm font-medium text-muted-foreground mb-3 px-2">Nuestros Productos</p>
                       <ul className="grid gap-2">
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              to="/productos/panel-control"
+                              className={cn(
+                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                "bg-card hover:bg-accent hover:text-accent-foreground",
+                                "border border-transparent hover:border-border",
+                              )}
+                            >
+                              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                <Zap className="h-5 w-5 text-primary" />
+                              </div>
+                              <div className="grid gap-1">
+                                <div className="text-sm font-medium">Panel de Control</div>
+                                <div className="line-clamp-2 text-xs text-muted-foreground">
+                                  Decisiones inteligentes en tiempo real
+                                </div>
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
                         <li>
                           <NavigationMenuLink asChild>
                             <Link

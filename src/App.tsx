@@ -12,6 +12,7 @@ import Hoteles from './pages/Hoteles';
 import ProductoEjemplo from './pages/ProductoEjemplo';
 import CuentasPorPagar from './pages/CuentasPorPagar';
 import Stock from './pages/Stock';
+import PanelControl from './pages/PanelControl';
 import Register from './pages/Register';
 import AboutUs from './pages/AboutUs';
 import TermsAndConditions from './pages/TermsAndConditions';
@@ -40,6 +41,7 @@ function App() {
             <Route path="/restaurantes" element={<Restaurantes />} />
             <Route path="/hoteles" element={<Hoteles />} />
             <Route path="/productos/ejemplo" element={<ProductoEjemplo />} />
+            <Route path="/productos/panel-control" element={<PanelControl />} />
             <Route path="/productos/cuentas-por-pagar" element={<CuentasPorPagar />} />
             <Route path="/productos/stock" element={<Stock />} />
             <Route path="/register" element={<Register />} />

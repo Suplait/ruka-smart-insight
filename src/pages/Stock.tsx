@@ -99,7 +99,7 @@ export default function Stock() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
         <title>Gestión de Stock e Inventario Automatizada - Ahorra 15+ horas/semana | Ruka</title>
-        <meta name="description" content="Automatiza tu gestión de inventario con Ruka. Ingreso automático desde compras, múltiples bodegas, traspasos con aprobaciones y control de roles. Desde $99.990/mes + IVA." />
+        <meta name="description" content="Automatiza tu gestión de inventario con Ruka. Ingreso automático desde compras, múltiples bodegas, traspasos con aprobaciones y control de roles. Desde $99.990/mes IVA incluido." />
         <meta name="keywords" content="gestión de stock, inventario automatizado, control de bodegas, traspasos entre bodegas, inventarios periódicos, software inventario chile, control stock restaurante, gestión inventario retail, sistema de bodegas" />
         
         {/* Open Graph */}
@@ -325,10 +325,10 @@ export default function Stock() {
               <CardDescription className="text-lg">Automatiza todo tu inventario</CardDescription>
               <div className="mt-6">
                 <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-6xl font-bold text-primary">$99.990</span>
+                  <span className="text-6xl font-bold text-primary">Desde $99.990</span>
                   <div className="text-left">
                     <div className="text-gray-600 text-lg">/mes</div>
-                    <div className="text-sm text-muted-foreground">+ IVA</div>
+                    <div className="text-sm text-muted-foreground">IVA incluido</div>
                   </div>
                 </div>
               </div>
