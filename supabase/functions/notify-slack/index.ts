@@ -23,6 +23,7 @@ interface Lead {
   industry?: string
   facturas_compra_mes?: number
   codigo_promocional?: string
+  page_path?: string
 }
 
 // Function to convert invoice count to descriptive range
@@ -60,9 +61,11 @@ Deno.serve(async (req) => {
     
     console.log("Received notification request:", { lead, isOnboarding, leadId, step });
     
+    // Detect if it's a product lead based on page_path
+    const isProductLead = lead.page_path && lead.page_path.startsWith('/productos/');
     const isHotel = lead.industry === 'hotel';
-    const businessType = isHotel ? 'Hotel' : 'Restaurante';
-    const businessTypeLC = isHotel ? 'hotel' : 'restaurante';
+    const businessType = isProductLead ? 'Producto' : (isHotel ? 'Hotel' : 'Restaurante');
+    const businessTypeLC = isProductLead ? 'producto' : (isHotel ? 'hotel' : 'restaurante');
 
     // If this is an onboarding update for an existing thread
     if (isOnboarding && leadId && step && threadTs) {
@@ -140,16 +143,29 @@ Deno.serve(async (req) => {
     }
 
     // If not an onboarding notification, send an initial message
-    const hotelEmoji = isHotel ? '🏨' : '🍽️';
+    const leadEmoji = isProductLead ? '🚀' : (isHotel ? '🏨' : '🍽️');
     const hasPromoCode = lead.codigo_promocional && lead.codigo_promocional.trim() !== '';
     const titleSuffix = hasPromoCode ? ' (webinar)' : '';
+    
+    // Extract product name from page_path if it's a product lead
+    let productName = '';
+    if (isProductLead && lead.page_path) {
+      const pathParts = lead.page_path.split('/');
+      productName = pathParts[pathParts.length - 1] || 'Producto';
+      // Capitalize and format the product name
+      productName = productName.split('-').map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1)
+      ).join(' ');
+    }
     
     let blocks = [
       {
         type: "header",
         text: {
           type: "plain_text",
-          text: `${hotelEmoji} ¡Tenemos un Nuevo ${businessType} Interesado!${titleSuffix}`,
+          text: isProductLead 
+            ? `${leadEmoji} ¡Tenemos un Nuevo Lead Interesado en ${productName}!${titleSuffix}`
+            : `${leadEmoji} ¡Tenemos un Nuevo ${businessType} Interesado!${titleSuffix}`,
           emoji: true
         }
       },
@@ -160,7 +176,9 @@ Deno.serve(async (req) => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `<!channel>\n\n*¡Nuevo Lead!*\n\n*¡Hola equipo!* Tenemos un nuevo lead que quiere optimizar sus costos:\n\n${isHotel ? '🏨' : '🏪'} *${lead.company_name}*`
+          text: isProductLead
+            ? `<!channel>\n\n*¡Nuevo Lead de Producto!*\n\n*¡Hola equipo!* Tenemos un nuevo lead interesado en nuestro producto:\n\n💼 *${lead.company_name}*\n🎯 *Producto de interés:* ${productName}`
+            : `<!channel>\n\n*¡Nuevo Lead!*\n\n*¡Hola equipo!* Tenemos un nuevo lead que quiere optimizar sus costos:\n\n${isHotel ? '🏨' : '🏪'} *${lead.company_name}*`
         }
       },
       {
@@ -186,15 +204,6 @@ Deno.serve(async (req) => {
           {
             type: "mrkdwn",
             text: `📱 *WhatsApp:*\n${lead.whatsapp ? lead.whatsapp : "No proporcionado"}`
-          }
-        ]
-      },
-      {
-        type: "section",
-        fields: [
-          {
-            type: "mrkdwn",
-            text: `🏢 *Tipo de Negocio:*\n${businessType}`
           }
         ]
       }
@@ -225,8 +234,10 @@ Deno.serve(async (req) => {
 
     const message = {
       channel: SLACK_CHANNEL,
-      text: `${hotelEmoji} ¡Nuevo Lead de ${businessType}!${titleSuffix}`,
-      icon_emoji: isHotel ? ":hotel:" : ":money_with_wings:",
+      text: isProductLead 
+        ? `${leadEmoji} ¡Nuevo Lead de Producto: ${productName}!${titleSuffix}`
+        : `${leadEmoji} ¡Nuevo Lead de ${businessType}!${titleSuffix}`,
+      icon_emoji: isProductLead ? ":rocket:" : (isHotel ? ":hotel:" : ":money_with_wings:"),
       blocks
     }
     

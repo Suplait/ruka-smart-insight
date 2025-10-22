@@ -23,4 +23,5 @@ export interface Lead {
   utm_medium?: string;
   utm_campaign?: string;
   utm_content?: string;
+  page_path?: string;
 }
