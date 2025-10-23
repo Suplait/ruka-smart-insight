@@ -48,7 +48,7 @@ export default function Navbar() {
           <div className="space-y-2">
             <p className="text-xs text-muted-foreground px-2">Productos</p>
             <TooltipProvider>
-              <Tooltip open={location.pathname === "/" ? undefined : false}>
+              <Tooltip open={location.pathname === "/"}>
                 <TooltipTrigger asChild>
                   <Link
                     to="/"
@@ -65,7 +65,7 @@ export default function Navbar() {
               </Tooltip>
             </TooltipProvider>
             <TooltipProvider>
-              <Tooltip open={location.pathname === "/productos/cuentas-por-pagar" ? undefined : false}>
+              <Tooltip open={location.pathname === "/productos/cuentas-por-pagar"}>
                 <TooltipTrigger asChild>
                   <Link
                     to="/productos/cuentas-por-pagar"
@@ -82,7 +82,7 @@ export default function Navbar() {
               </Tooltip>
             </TooltipProvider>
             <TooltipProvider>
-              <Tooltip open={location.pathname === "/productos/panel-control" ? undefined : false}>
+              <Tooltip open={location.pathname === "/productos/panel-control"}>
                 <TooltipTrigger asChild>
                   <Link
                     to="/productos/panel-control"
@@ -99,7 +99,7 @@ export default function Navbar() {
               </Tooltip>
             </TooltipProvider>
             <TooltipProvider>
-              <Tooltip open={location.pathname === "/productos/stock" ? undefined : false}>
+              <Tooltip open={location.pathname === "/productos/stock"}>
                 <TooltipTrigger asChild>
                   <Link
                     to="/productos/stock"
@@ -202,7 +202,7 @@ export default function Navbar() {
                       <ul className="grid gap-2">
                         <li>
                           <TooltipProvider>
-                            <Tooltip open={location.pathname === "/" ? undefined : false}>
+                            <Tooltip open={location.pathname === "/"}>
                               <TooltipTrigger asChild>
                                 <NavigationMenuLink asChild>
                                   <Link
@@ -235,7 +235,7 @@ export default function Navbar() {
                         </li>
                         <li>
                           <TooltipProvider>
-                            <Tooltip open={location.pathname === "/productos/cuentas-por-pagar" ? undefined : false}>
+                            <Tooltip open={location.pathname === "/productos/cuentas-por-pagar"}>
                               <TooltipTrigger asChild>
                                 <NavigationMenuLink asChild>
                                   <Link
@@ -268,7 +268,7 @@ export default function Navbar() {
                         </li>
                         <li>
                           <TooltipProvider>
-                            <Tooltip open={location.pathname === "/productos/panel-control" ? undefined : false}>
+                            <Tooltip open={location.pathname === "/productos/panel-control"}>
                               <TooltipTrigger asChild>
                                 <NavigationMenuLink asChild>
                                   <Link
@@ -301,7 +301,7 @@ export default function Navbar() {
                         </li>
                         <li>
                           <TooltipProvider>
-                            <Tooltip open={location.pathname === "/productos/stock" ? undefined : false}>
+                            <Tooltip open={location.pathname === "/productos/stock"}>
                               <TooltipTrigger asChild>
                                 <NavigationMenuLink asChild>
                                   <Link
