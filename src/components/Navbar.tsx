@@ -47,74 +47,118 @@ export default function Navbar() {
         <nav className="flex flex-col gap-4">
           <div className="space-y-2">
             <p className="text-xs text-muted-foreground px-2">Productos</p>
-            <TooltipProvider>
-              <Tooltip open={location.pathname === "/"} delayDuration={0}>
-                <TooltipTrigger asChild>
-                  <Link
-                    to="/"
-                    className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <Bot className="h-4 w-4" />
-                    <span>Gestión y Analítica</span>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                  Estás aquí
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            <TooltipProvider>
-              <Tooltip open={location.pathname === "/productos/cuentas-por-pagar"} delayDuration={0}>
-                <TooltipTrigger asChild>
-                  <Link
-                    to="/productos/cuentas-por-pagar"
-                    className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <Receipt className="h-4 w-4" />
-                    <span>Cuentas por Pagar</span>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                  Estás aquí
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            <TooltipProvider>
-              <Tooltip open={location.pathname === "/productos/panel-control"} delayDuration={0}>
-                <TooltipTrigger asChild>
-                  <Link
-                    to="/productos/panel-control"
-                    className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <Zap className="h-4 w-4" />
-                    <span>Panel de Control</span>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                  Estás aquí
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            <TooltipProvider>
-              <Tooltip open={location.pathname === "/productos/stock"} delayDuration={0}>
-                <TooltipTrigger asChild>
-                  <Link
-                    to="/productos/stock"
-                    className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <Package className="h-4 w-4" />
-                    <span>Gestión de Inventario</span>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                  Estás aquí
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            {location.pathname === "/" ? (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link
+                      to="/"
+                      className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <Bot className="h-4 w-4" />
+                      <span>Gestión y Analítica</span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
+                    Estás aquí
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            ) : (
+              <Link
+                to="/"
+                className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
+                onClick={() => setIsOpen(false)}
+              >
+                <Bot className="h-4 w-4" />
+                <span>Gestión y Analítica</span>
+              </Link>
+            )}
+            {location.pathname === "/productos/cuentas-por-pagar" ? (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link
+                      to="/productos/cuentas-por-pagar"
+                      className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <Receipt className="h-4 w-4" />
+                      <span>Cuentas por Pagar</span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
+                    Estás aquí
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            ) : (
+              <Link
+                to="/productos/cuentas-por-pagar"
+                className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
+                onClick={() => setIsOpen(false)}
+              >
+                <Receipt className="h-4 w-4" />
+                <span>Cuentas por Pagar</span>
+              </Link>
+            )}
+            {location.pathname === "/productos/panel-control" ? (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link
+                      to="/productos/panel-control"
+                      className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <Zap className="h-4 w-4" />
+                      <span>Panel de Control</span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
+                    Estás aquí
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            ) : (
+              <Link
+                to="/productos/panel-control"
+                className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
+                onClick={() => setIsOpen(false)}
+              >
+                <Zap className="h-4 w-4" />
+                <span>Panel de Control</span>
+              </Link>
+            )}
+            {location.pathname === "/productos/stock" ? (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link
+                      to="/productos/stock"
+                      className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <Package className="h-4 w-4" />
+                      <span>Gestión de Inventario</span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
+                    Estás aquí
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            ) : (
+              <Link
+                to="/productos/stock"
+                className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
+                onClick={() => setIsOpen(false)}
+              >
+                <Package className="h-4 w-4" />
+                <span>Gestión de Inventario</span>
+              </Link>
+            )}
           </div>
           <button
             onClick={() => scrollToSection("pricing")}
@@ -200,138 +244,246 @@ export default function Navbar() {
                     <div className="w-[280px] p-4 bg-white rounded-lg shadow-lg border">
                       <p className="text-sm font-medium text-muted-foreground mb-3 px-2">Nuestros Productos</p>
                       <ul className="grid gap-2">
-                        <TooltipProvider>
-                          <Tooltip open={location.pathname === "/"} delayDuration={0}>
-                            <TooltipTrigger asChild>
-                              <li>
-                                <NavigationMenuLink asChild>
-                                  <Link
-                                    to="/"
-                                    className={cn(
-                                      "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                      "bg-card hover:bg-accent hover:text-accent-foreground",
-                                      "border border-transparent hover:border-border",
-                                    )}
-                                  >
-                                    <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                      <Bot className="h-5 w-5 text-primary" />
-                                    </div>
-                                    <div className="grid gap-1 flex-1">
-                                      <div className="text-sm font-medium">
-                                        Gestión y Analítica
+                        {location.pathname === "/" ? (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <li>
+                                  <NavigationMenuLink asChild>
+                                    <Link
+                                      to="/"
+                                      className={cn(
+                                        "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                        "bg-card hover:bg-accent hover:text-accent-foreground",
+                                        "border border-transparent hover:border-border",
+                                      )}
+                                    >
+                                      <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                        <Bot className="h-5 w-5 text-primary" />
                                       </div>
-                                      <div className="line-clamp-2 text-xs text-muted-foreground">
-                                        Agentes con IA para automatizar tu gestión de compras
+                                      <div className="grid gap-1 flex-1">
+                                        <div className="text-sm font-medium">
+                                          Gestión y Analítica
+                                        </div>
+                                        <div className="line-clamp-2 text-xs text-muted-foreground">
+                                          Agentes con IA para automatizar tu gestión de compras
+                                        </div>
                                       </div>
-                                    </div>
-                                  </Link>
-                                </NavigationMenuLink>
-                              </li>
-                            </TooltipTrigger>
-                            <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                              Estás aquí
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                        <TooltipProvider>
-                          <Tooltip open={location.pathname === "/productos/cuentas-por-pagar"} delayDuration={0}>
-                            <TooltipTrigger asChild>
-                              <li>
-                                <NavigationMenuLink asChild>
-                                  <Link
-                                    to="/productos/cuentas-por-pagar"
-                                    className={cn(
-                                      "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                      "bg-card hover:bg-accent hover:text-accent-foreground",
-                                      "border border-transparent hover:border-border",
-                                    )}
-                                  >
-                                    <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                      <Receipt className="h-5 w-5 text-primary" />
-                                    </div>
-                                    <div className="grid gap-1 flex-1">
-                                      <div className="text-sm font-medium">
-                                        Cuentas por Pagar
+                                    </Link>
+                                  </NavigationMenuLink>
+                                </li>
+                              </TooltipTrigger>
+                              <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
+                                Estás aquí
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        ) : (
+                          <li>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                to="/"
+                                className={cn(
+                                  "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                  "bg-card hover:bg-accent hover:text-accent-foreground",
+                                  "border border-transparent hover:border-border",
+                                )}
+                              >
+                                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                  <Bot className="h-5 w-5 text-primary" />
+                                </div>
+                                <div className="grid gap-1 flex-1">
+                                  <div className="text-sm font-medium">
+                                    Gestión y Analítica
+                                  </div>
+                                  <div className="line-clamp-2 text-xs text-muted-foreground">
+                                    Agentes con IA para automatizar tu gestión de compras
+                                  </div>
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                        )}
+                        {location.pathname === "/productos/cuentas-por-pagar" ? (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <li>
+                                  <NavigationMenuLink asChild>
+                                    <Link
+                                      to="/productos/cuentas-por-pagar"
+                                      className={cn(
+                                        "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                        "bg-card hover:bg-accent hover:text-accent-foreground",
+                                        "border border-transparent hover:border-border",
+                                      )}
+                                    >
+                                      <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                        <Receipt className="h-5 w-5 text-primary" />
                                       </div>
-                                      <div className="line-clamp-2 text-xs text-muted-foreground">
-                                        Automatiza pagos, gestiona recepción y genera planillas bancarias
+                                      <div className="grid gap-1 flex-1">
+                                        <div className="text-sm font-medium">
+                                          Cuentas por Pagar
+                                        </div>
+                                        <div className="line-clamp-2 text-xs text-muted-foreground">
+                                          Automatiza pagos, gestiona recepción y genera planillas bancarias
+                                        </div>
                                       </div>
-                                    </div>
-                                  </Link>
-                                </NavigationMenuLink>
-                              </li>
-                            </TooltipTrigger>
-                            <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                              Estás aquí
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                        <TooltipProvider>
-                          <Tooltip open={location.pathname === "/productos/panel-control"} delayDuration={0}>
-                            <TooltipTrigger asChild>
-                              <li>
-                                <NavigationMenuLink asChild>
-                                  <Link
-                                    to="/productos/panel-control"
-                                    className={cn(
-                                      "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                      "bg-card hover:bg-accent hover:text-accent-foreground",
-                                      "border border-transparent hover:border-border",
-                                    )}
-                                  >
-                                    <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                      <Zap className="h-5 w-5 text-primary" />
-                                    </div>
-                                    <div className="grid gap-1 flex-1">
-                                      <div className="text-sm font-medium">
-                                        Panel de Control
+                                    </Link>
+                                  </NavigationMenuLink>
+                                </li>
+                              </TooltipTrigger>
+                              <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
+                                Estás aquí
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        ) : (
+                          <li>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                to="/productos/cuentas-por-pagar"
+                                className={cn(
+                                  "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                  "bg-card hover:bg-accent hover:text-accent-foreground",
+                                  "border border-transparent hover:border-border",
+                                )}
+                              >
+                                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                  <Receipt className="h-5 w-5 text-primary" />
+                                </div>
+                                <div className="grid gap-1 flex-1">
+                                  <div className="text-sm font-medium">
+                                    Cuentas por Pagar
+                                  </div>
+                                  <div className="line-clamp-2 text-xs text-muted-foreground">
+                                    Automatiza pagos, gestiona recepción y genera planillas bancarias
+                                  </div>
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                        )}
+                        {location.pathname === "/productos/panel-control" ? (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <li>
+                                  <NavigationMenuLink asChild>
+                                    <Link
+                                      to="/productos/panel-control"
+                                      className={cn(
+                                        "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                        "bg-card hover:bg-accent hover:text-accent-foreground",
+                                        "border border-transparent hover:border-border",
+                                      )}
+                                    >
+                                      <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                        <Zap className="h-5 w-5 text-primary" />
                                       </div>
-                                      <div className="line-clamp-2 text-xs text-muted-foreground">
-                                        Decisiones inteligentes en tiempo real
+                                      <div className="grid gap-1 flex-1">
+                                        <div className="text-sm font-medium">
+                                          Panel de Control
+                                        </div>
+                                        <div className="line-clamp-2 text-xs text-muted-foreground">
+                                          Decisiones inteligentes en tiempo real
+                                        </div>
                                       </div>
-                                    </div>
-                                  </Link>
-                                </NavigationMenuLink>
-                              </li>
-                            </TooltipTrigger>
-                            <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                              Estás aquí
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                        <TooltipProvider>
-                          <Tooltip open={location.pathname === "/productos/stock"} delayDuration={0}>
-                            <TooltipTrigger asChild>
-                              <li>
-                                <NavigationMenuLink asChild>
-                                  <Link
-                                    to="/productos/stock"
-                                    className={cn(
-                                      "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                      "bg-card hover:bg-accent hover:text-accent-foreground",
-                                      "border border-transparent hover:border-border",
-                                    )}
-                                  >
-                                    <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                      <Package className="h-5 w-5 text-primary" />
-                                    </div>
-                                    <div className="grid gap-1 flex-1">
-                                      <div className="text-sm font-medium">
-                                        Gestión de Inventario
+                                    </Link>
+                                  </NavigationMenuLink>
+                                </li>
+                              </TooltipTrigger>
+                              <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
+                                Estás aquí
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        ) : (
+                          <li>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                to="/productos/panel-control"
+                                className={cn(
+                                  "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                  "bg-card hover:bg-accent hover:text-accent-foreground",
+                                  "border border-transparent hover:border-border",
+                                )}
+                              >
+                                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                  <Zap className="h-5 w-5 text-primary" />
+                                </div>
+                                <div className="grid gap-1 flex-1">
+                                  <div className="text-sm font-medium">
+                                    Panel de Control
+                                  </div>
+                                  <div className="line-clamp-2 text-xs text-muted-foreground">
+                                    Decisiones inteligentes en tiempo real
+                                  </div>
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                        )}
+                        {location.pathname === "/productos/stock" ? (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <li>
+                                  <NavigationMenuLink asChild>
+                                    <Link
+                                      to="/productos/stock"
+                                      className={cn(
+                                        "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                        "bg-card hover:bg-accent hover:text-accent-foreground",
+                                        "border border-transparent hover:border-border",
+                                      )}
+                                    >
+                                      <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                        <Package className="h-5 w-5 text-primary" />
                                       </div>
-                                      <div className="line-clamp-2 text-xs text-muted-foreground">
-                                        Inventario automático, múltiples bodegas y control de traspasos
+                                      <div className="grid gap-1 flex-1">
+                                        <div className="text-sm font-medium">
+                                          Gestión de Inventario
+                                        </div>
+                                        <div className="line-clamp-2 text-xs text-muted-foreground">
+                                          Inventario automático, múltiples bodegas y control de traspasos
+                                        </div>
                                       </div>
-                                    </div>
-                                  </Link>
-                                </NavigationMenuLink>
-                              </li>
-                            </TooltipTrigger>
-                            <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                              Estás aquí
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
+                                    </Link>
+                                  </NavigationMenuLink>
+                                </li>
+                              </TooltipTrigger>
+                              <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
+                                Estás aquí
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        ) : (
+                          <li>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                to="/productos/stock"
+                                className={cn(
+                                  "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                  "bg-card hover:bg-accent hover:text-accent-foreground",
+                                  "border border-transparent hover:border-border",
+                                )}
+                              >
+                                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                  <Package className="h-5 w-5 text-primary" />
+                                </div>
+                                <div className="grid gap-1 flex-1">
+                                  <div className="text-sm font-medium">
+                                    Gestión de Inventario
+                                  </div>
+                                  <div className="line-clamp-2 text-xs text-muted-foreground">
+                                    Inventario automático, múltiples bodegas y control de traspasos
+                                  </div>
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                        )}
 
                         <li className="px-2 py-1">
                           <div className="text-xs text-muted-foreground italic">Más productos próximamente...</div>
