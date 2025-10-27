@@ -246,7 +246,7 @@ export default function Navbar() {
                       <ul className="grid gap-2">
                         {location.pathname === "/" ? (
                           <TooltipProvider>
-                            <Tooltip>
+                            <Tooltip open={true} delayDuration={0}>
                               <TooltipTrigger asChild>
                                 <li>
                                   <NavigationMenuLink asChild>
@@ -306,7 +306,7 @@ export default function Navbar() {
                         )}
                         {location.pathname === "/productos/cuentas-por-pagar" ? (
                           <TooltipProvider>
-                            <Tooltip>
+                            <Tooltip open={true} delayDuration={0}>
                               <TooltipTrigger asChild>
                                 <li>
                                   <NavigationMenuLink asChild>
@@ -366,7 +366,7 @@ export default function Navbar() {
                         )}
                         {location.pathname === "/productos/panel-control" ? (
                           <TooltipProvider>
-                            <Tooltip>
+                            <Tooltip open={true} delayDuration={0}>
                               <TooltipTrigger asChild>
                                 <li>
                                   <NavigationMenuLink asChild>
@@ -426,7 +426,7 @@ export default function Navbar() {
                         )}
                         {location.pathname === "/productos/stock" ? (
                           <TooltipProvider>
-                            <Tooltip>
+                            <Tooltip open={true} delayDuration={0}>
                               <TooltipTrigger asChild>
                                 <li>
                                   <NavigationMenuLink asChild>
