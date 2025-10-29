@@ -222,11 +222,10 @@ export default function Webinar() {
 
               <div className="mt-10 p-8 bg-primary/5 backdrop-blur-xl border border-primary/10 rounded-3xl shadow-lg">
                 <h3 className="text-2xl font-semibold mb-3">
-                  De la Confusión a la Claridad
+                  "Automatizar no es programar"
                 </h3>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Te mostraremos ejemplos reales de dashboards que están transformando la gestión 
-                  de empresas, desde pequeños negocios hasta empresas establecidas.
+                  Es liberar tiempo, reducir errores y enfocarte en lo que realmente aporta valor. En este webinar te demostramos que la automatización está al alcance de todos
                 </p>
               </div>
 
