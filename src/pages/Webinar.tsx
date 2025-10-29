@@ -131,8 +131,12 @@ export default function Webinar() {
             </div>
             
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 tracking-tight">
+              <span className="text-foreground">
+                Automatiza tu semana
+              </span>
+              {" "}
               <span className="bg-gradient-to-br from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent">
-                Automatiza tu Semana sin Programar
+                sin Programar
               </span>
             </h1>
             
