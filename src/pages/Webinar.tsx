@@ -206,10 +206,10 @@ export default function Webinar() {
               
               <div className="space-y-6">
                 {[
-                  "Por qué tener ventas por un lado, compras por otro y las boletas dispersas está matando tu rentabilidad",
-                  "Cómo unificar toda tu información financiera en un solo dashboard para tomar decisiones basadas en datos reales",
-                  "Qué métricas clave debes monitorear diariamente para mantener el control total de tu empresa",
-                  "Casos reales de empresas que pasaron del caos financiero al control absoluto de sus números"
+                  "Los principios básicos de la automatización de procesos sin necesidad de programar",
+                  "Cómo crear un flujo completo en vivo: desde recibir un correo con factura hasta registrar datos en Google Sheets",
+                  "Cómo ahorrar horas de trabajo repetitivo cada semana y reducir errores humanos",
+                  "Herramientas accesibles que puedes usar desde mañana en tu empresa"
                 ].map((item, index) => (
                   <div key={index} className="flex items-start group">
                     <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/10 flex items-center justify-center mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform">
@@ -231,13 +231,23 @@ export default function Webinar() {
               </div>
 
               <div className="mt-6 p-8 bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-xl border border-primary/20 rounded-3xl shadow-lg">
-                <h3 className="text-2xl font-semibold text-primary mb-3">
+                <h3 className="text-2xl font-semibold text-primary mb-4">
                   ¿Para quién es este webinar?
                 </h3>
-                <p className="text-foreground/80 text-lg leading-relaxed">
-                  <strong className="text-primary">Dueños y administradores de empresas</strong> que están cansados de 
-                  trabajar a ciegas y quieren tener control total sobre sus números y operaciones.
-                </p>
+                <div className="space-y-3 text-foreground/80 text-lg leading-relaxed">
+                  <p>
+                    <strong className="text-primary">Profesionales que realizan tareas operativas repetitivas:</strong> compras, administración, contabilidad, operaciones, soporte.
+                  </p>
+                  <p>
+                    <strong className="text-primary">Personas sin perfil técnico</strong> que quieren mejorar su productividad con herramientas digitales accesibles.
+                  </p>
+                  <p>
+                    <strong className="text-primary">Líderes de equipos o áreas</strong> que buscan introducir la automatización en su organización de forma práctica y sin complicaciones.
+                  </p>
+                  <p className="mt-4 font-semibold text-primary">
+                    Si trabajas con tareas repetitivas y quieres recuperar tu tiempo, este webinar es para ti.
+                  </p>
+                </div>
               </div>
             </div>
 
