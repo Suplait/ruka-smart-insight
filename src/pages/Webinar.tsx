@@ -131,24 +131,18 @@ export default function Webinar() {
             </div>
             
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 tracking-tight">
-              <span className="bg-gradient-to-br from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent">
-                Del Caos
-              </span>
-              {" "}al{" "}
               <span className="bg-gradient-to-br from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent">
-                Control
+                Automatiza tu Semana sin Programar
               </span>
             </h1>
             
             <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto font-light">
-              Aprende cómo ver ventas, compras y gastos en un solo dashboard para tu empresa
+              Aprende a automatizar tareas repetitivas en menos de 15 minutos, sin conocimientos técnicos. De un correo con factura a datos organizados, en vivo.
             </p>
 
             <div className="bg-primary/5 backdrop-blur-xl border border-primary/10 rounded-3xl p-8 mb-16 max-w-3xl mx-auto shadow-lg">
               <p className="text-foreground text-lg sm:text-xl font-medium">
-                <TrendingUp className="w-6 h-6 inline mr-3 text-primary" />
-                ¿Sabías que la mayoría de las empresas toma decisiones con información incompleta… 
-                <span className="font-bold text-primary"> o sin datos en absoluto?</span>
+                💡 <strong>Descubre cómo</strong> liberar tiempo, reducir errores y enfocarte en lo que realmente aporta valor
               </p>
             </div>
 
