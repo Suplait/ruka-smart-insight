@@ -21,8 +21,8 @@ export default function Webinar() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  // Fecha del webinar: jueves 16 de octubre de 2025 a las 5:30 PM
-  const webinarDate = new Date('2025-10-16T17:30:00');
+  // Fecha del webinar: jueves 06 de noviembre de 2025 a las 5:30 PM
+  const webinarDate = new Date('2025-11-06T17:30:00');
   const now = new Date();
   const timeUntilWebinar = webinarDate.getTime() - now.getTime();
   const daysUntil = Math.ceil(timeUntilWebinar / (1000 * 60 * 60 * 24));
@@ -159,9 +159,9 @@ export default function Webinar() {
                   </div>
                   <CardTitle className="text-xl mb-3 font-semibold">Fecha</CardTitle>
                   <CardDescription className="text-muted-foreground text-base">
-                    Jueves 16 de Octubre 2025
+                    Jueves 06 de noviembre 2025
                     <br />
-                    5:30 PM (Hora de Chile)
+                    5:30 PM (hora Chile)
                   </CardDescription>
                 </CardContent>
               </Card>
@@ -251,7 +251,7 @@ export default function Webinar() {
                   <CardDescription className="text-primary-foreground/90 text-center text-base mt-2">
                     {isRegistered 
                       ? "Te hemos enviado todos los detalles a tu correo" 
-                      : "Asegura tu cupo - Jueves 16 de Octubre 2025, 5:30 PM"
+                      : "Asegura tu cupo - Jueves 06 de noviembre 2025, 5:30 PM"
                     }
                   </CardDescription>
                 </CardHeader>
