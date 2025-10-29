@@ -236,13 +236,13 @@ export default function Webinar() {
                 </h3>
                 <div className="space-y-3 text-foreground/80 text-lg leading-relaxed">
                   <p>
-                    <strong className="text-primary">Profesionales que realizan tareas operativas repetitivas:</strong> compras, administración, contabilidad, operaciones, soporte.
+                    <strong className="text-foreground">Profesionales que realizan tareas operativas repetitivas:</strong> compras, administración, contabilidad, operaciones, soporte.
                   </p>
                   <p>
-                    <strong className="text-primary">Personas sin perfil técnico</strong> que quieren mejorar su productividad con herramientas digitales accesibles.
+                    <strong className="text-foreground">Personas sin perfil técnico</strong> que quieren mejorar su productividad con herramientas digitales accesibles.
                   </p>
                   <p>
-                    <strong className="text-primary">Líderes de equipos o áreas</strong> que buscan introducir la automatización en su organización de forma práctica y sin complicaciones.
+                    <strong className="text-foreground">Líderes de equipos o áreas</strong> que buscan introducir la automatización en su organización de forma práctica y sin complicaciones.
                   </p>
                   <p className="mt-4 font-semibold text-primary">
                     Si trabajas con tareas repetitivas y quieres recuperar tu tiempo, este webinar es para ti.
