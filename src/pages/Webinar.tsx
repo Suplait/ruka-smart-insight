@@ -21,8 +21,8 @@ export default function Webinar() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  // Fecha del webinar: jueves 16 de octubre de 2025 a las 5:30 PM
-  const webinarDate = new Date('2025-10-16T17:30:00');
+  // Fecha del webinar: jueves 06 de noviembre de 2025 a las 5:30 PM
+  const webinarDate = new Date('2025-11-06T17:30:00');
   const now = new Date();
   const timeUntilWebinar = webinarDate.getTime() - now.getTime();
   const daysUntil = Math.ceil(timeUntilWebinar / (1000 * 60 * 60 * 24));
@@ -131,24 +131,22 @@ export default function Webinar() {
             </div>
             
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 tracking-tight">
-              <span className="bg-gradient-to-br from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent">
-                Del Caos
+              <span className="text-foreground">
+                Automatiza tu semana
               </span>
-              {" "}al{" "}
+              {" "}
               <span className="bg-gradient-to-br from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent">
-                Control
+                sin Programar
               </span>
             </h1>
             
             <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto font-light">
-              Aprende cómo ver ventas, compras y gastos en un solo dashboard para tu empresa
+              Aprende a automatizar tareas repetitivas en menos de 15 minutos, sin conocimientos técnicos. De un correo con factura a datos organizados, en vivo.
             </p>
 
             <div className="bg-primary/5 backdrop-blur-xl border border-primary/10 rounded-3xl p-8 mb-16 max-w-3xl mx-auto shadow-lg">
               <p className="text-foreground text-lg sm:text-xl font-medium">
-                <TrendingUp className="w-6 h-6 inline mr-3 text-primary" />
-                ¿Sabías que la mayoría de las empresas toma decisiones con información incompleta… 
-                <span className="font-bold text-primary"> o sin datos en absoluto?</span>
+                💡 <strong>Descubre cómo</strong> liberar tiempo, reducir errores y enfocarte en lo que realmente aporta valor
               </p>
             </div>
 
@@ -161,9 +159,9 @@ export default function Webinar() {
                   </div>
                   <CardTitle className="text-xl mb-3 font-semibold">Fecha</CardTitle>
                   <CardDescription className="text-muted-foreground text-base">
-                    Jueves 16 de Octubre 2025
+                    Jueves 06 de noviembre 2025
                     <br />
-                    5:30 PM (Hora de Chile)
+                    5:30 PM (hora Chile)
                   </CardDescription>
                 </CardContent>
               </Card>
@@ -208,10 +206,10 @@ export default function Webinar() {
               
               <div className="space-y-6">
                 {[
-                  "Por qué tener ventas por un lado, compras por otro y las boletas dispersas está matando tu rentabilidad",
-                  "Cómo unificar toda tu información financiera en un solo dashboard para tomar decisiones basadas en datos reales",
-                  "Qué métricas clave debes monitorear diariamente para mantener el control total de tu empresa",
-                  "Casos reales de empresas que pasaron del caos financiero al control absoluto de sus números"
+                  "Los principios básicos de la automatización de procesos sin necesidad de programar",
+                  "Cómo crear un flujo completo en vivo: desde recibir un correo con factura hasta registrar datos en Google Sheets",
+                  "Cómo ahorrar horas de trabajo repetitivo cada semana y reducir errores humanos",
+                  "Herramientas accesibles que puedes usar desde mañana en tu empresa"
                 ].map((item, index) => (
                   <div key={index} className="flex items-start group">
                     <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/10 flex items-center justify-center mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform">
@@ -224,22 +222,31 @@ export default function Webinar() {
 
               <div className="mt-10 p-8 bg-primary/5 backdrop-blur-xl border border-primary/10 rounded-3xl shadow-lg">
                 <h3 className="text-2xl font-semibold mb-3">
-                  De la Confusión a la Claridad
+                  "Automatizar no es programar"
                 </h3>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Te mostraremos ejemplos reales de dashboards que están transformando la gestión 
-                  de empresas, desde pequeños negocios hasta empresas establecidas.
+                  Es liberar tiempo, reducir errores y enfocarte en lo que realmente aporta valor. En este webinar te demostramos que la automatización está al alcance de todos
                 </p>
               </div>
 
               <div className="mt-6 p-8 bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-xl border border-primary/20 rounded-3xl shadow-lg">
-                <h3 className="text-2xl font-semibold text-primary mb-3">
+                <h3 className="text-2xl font-semibold text-primary mb-4">
                   ¿Para quién es este webinar?
                 </h3>
-                <p className="text-foreground/80 text-lg leading-relaxed">
-                  <strong className="text-primary">Dueños y administradores de empresas</strong> que están cansados de 
-                  trabajar a ciegas y quieren tener control total sobre sus números y operaciones.
-                </p>
+                <div className="space-y-3 text-foreground/80 text-lg leading-relaxed">
+                  <p>
+                    <strong className="text-foreground">Profesionales que realizan tareas operativas repetitivas:</strong> compras, administración, contabilidad, operaciones, soporte.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">Personas sin perfil técnico</strong> que quieren mejorar su productividad con herramientas digitales accesibles.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">Líderes de equipos o áreas</strong> que buscan introducir la automatización en su organización de forma práctica y sin complicaciones.
+                  </p>
+                  <p className="mt-4 font-semibold text-primary">
+                    Si trabajas con tareas repetitivas y quieres recuperar tu tiempo, este webinar es para ti.
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -253,7 +260,7 @@ export default function Webinar() {
                   <CardDescription className="text-primary-foreground/90 text-center text-base mt-2">
                     {isRegistered 
                       ? "Te hemos enviado todos los detalles a tu correo" 
-                      : "Asegura tu cupo - Jueves 16 de Octubre 2025, 5:30 PM"
+                      : "Asegura tu cupo - Jueves 06 de noviembre 2025, 5:30 PM"
                     }
                   </CardDescription>
                 </CardHeader>
