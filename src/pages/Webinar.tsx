@@ -25,7 +25,7 @@ export default function Webinar() {
   const webinarDate = new Date('2025-11-13T17:30:00');
   const now = new Date();
   const timeUntilWebinar = webinarDate.getTime() - now.getTime();
-  const daysUntil = Math.ceil(timeUntilWebinar / (1000 * 60 * 60 * 24));
+  const daysUntil = Math.floor(timeUntilWebinar / (1000 * 60 * 60 * 24));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
