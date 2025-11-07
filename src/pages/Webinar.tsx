@@ -21,11 +21,11 @@ export default function Webinar() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  // Fecha del webinar: jueves 06 de noviembre de 2025 a las 5:30 PM
-  const webinarDate = new Date('2025-11-06T17:30:00');
+  // Fecha del webinar: jueves 13 de noviembre de 2025 a las 5:30 PM
+  const webinarDate = new Date('2025-11-13T17:30:00');
   const now = new Date();
   const timeUntilWebinar = webinarDate.getTime() - now.getTime();
-  const daysUntil = Math.ceil(timeUntilWebinar / (1000 * 60 * 60 * 24));
+  const daysUntil = Math.floor(timeUntilWebinar / (1000 * 60 * 60 * 24));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -159,7 +159,7 @@ export default function Webinar() {
                   </div>
                   <CardTitle className="text-xl mb-3 font-semibold">Fecha</CardTitle>
                   <CardDescription className="text-muted-foreground text-base">
-                    Jueves 06 de noviembre 2025
+                    Jueves 13 de noviembre 2025
                     <br />
                     5:30 PM (hora Chile)
                   </CardDescription>
@@ -260,7 +260,7 @@ export default function Webinar() {
                   <CardDescription className="text-primary-foreground/90 text-center text-base mt-2">
                     {isRegistered 
                       ? "Te hemos enviado todos los detalles a tu correo" 
-                      : "Asegura tu cupo - Jueves 06 de noviembre 2025, 5:30 PM"
+                      : "Asegura tu cupo - Jueves 13 de noviembre 2025, 5:30 PM"
                     }
                   </CardDescription>
                 </CardHeader>
