@@ -343,9 +343,7 @@ export default function Restaurantes() {
               </div>
 
               <div className="hidden lg:block">
-                <div className="sticky top-24" style={{
-                height: 'calc(100vh - 96px)'
-              }}>
+                <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto">
                   <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} pagePath="/restaurantes" />
                 </div>
               </div>
