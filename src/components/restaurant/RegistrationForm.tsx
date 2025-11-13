@@ -225,10 +225,10 @@ export default function RegistrationForm({
   }} animate={{
     opacity: 1,
     scale: 1
-  }} className={`bg-white rounded-xl shadow-xl border p-6 sm:p-8 space-y-6 sm:space-y-8 transition-all duration-300 w-full ${highlightForm ? 'ring-4 ring-primary shadow-2xl scale-105' : ''}`}>
-      <div className="space-y-4">
+  }} className={`bg-white rounded-xl shadow-xl border p-4 sm:p-6 space-y-4 sm:space-y-6 transition-all duration-300 w-full ${highlightForm ? 'ring-4 ring-primary shadow-2xl scale-105' : ''}`}>
+      <div className="space-y-3">
         <div className="flex items-center gap-2">
-          <h2 className="text-2xl font-semibold">Agenda una llamada  con nuestro equipo 📞</h2>
+          <h2 className="text-xl font-semibold">Agenda una llamada con nuestro equipo 📞</h2>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -242,21 +242,21 @@ export default function RegistrationForm({
             </Tooltip>
           </TooltipProvider>
         </div>
-        <p className="text-lg text-muted-foreground font-medium">Te ayudaremos a tener IA trabajando en tu negocio en menos de 48hrs.</p>
+        <p className="text-base text-muted-foreground font-medium">Te ayudaremos a tener IA trabajando en tu negocio en menos de 48hrs.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Input id="registration-first-name" name="firstName" placeholder="Nombre" value={formData.firstName} onChange={handleChange} required className="h-12" disabled={isSubmitting} />
-          <Input id="registration-last-name" name="lastName" placeholder="Apellido" value={formData.lastName} onChange={handleChange} required className="h-12" disabled={isSubmitting} />
+      <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <Input id="registration-first-name" name="firstName" placeholder="Nombre" value={formData.firstName} onChange={handleChange} required className="h-10" disabled={isSubmitting} />
+          <Input id="registration-last-name" name="lastName" placeholder="Apellido" value={formData.lastName} onChange={handleChange} required className="h-10" disabled={isSubmitting} />
         </div>
-        <Input id="registration-email" name="email" type="email" placeholder="Email" value={formData.email} onChange={handleChange} required className="h-12" disabled={isSubmitting} />
+        <Input id="registration-email" name="email" type="email" placeholder="Email" value={formData.email} onChange={handleChange} required className="h-10" disabled={isSubmitting} />
         <div className="relative">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="relative">
-                  <Input id="registration-whatsapp" name="whatsapp" placeholder="WhatsApp (opcional)" value={formData.whatsapp} onChange={handleChange} className="h-12 pl-16 pr-10" disabled={isSubmitting} />
+                  <Input id="registration-whatsapp" name="whatsapp" placeholder="WhatsApp (opcional)" value={formData.whatsapp} onChange={handleChange} className="h-10 pl-16 pr-10" disabled={isSubmitting} />
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
                     +56
                   </div>
@@ -269,15 +269,15 @@ export default function RegistrationForm({
             </Tooltip>
           </TooltipProvider>
         </div>
-        <Input id="registration-city" name="ciudad" placeholder="Ciudad" value={formData.ciudad} onChange={handleChange} required className="h-12" disabled={isSubmitting} />
-        <Input id="registration-restaurant-name" name="nombreRestaurante" placeholder="Nombre de tu Empresa" value={formData.nombreRestaurante} onChange={handleChange} required className="h-12" disabled={isSubmitting} />
+        <Input id="registration-city" name="ciudad" placeholder="Ciudad" value={formData.ciudad} onChange={handleChange} required className="h-10" disabled={isSubmitting} />
+        <Input id="registration-restaurant-name" name="nombreRestaurante" placeholder="Nombre de tu Empresa" value={formData.nombreRestaurante} onChange={handleChange} required className="h-10" disabled={isSubmitting} />
         
         <div className="relative">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="relative">
-                  <Input id="registration-promo-code" name="codigoPromocional" placeholder="Código promocional (opcional)" value={formData.codigoPromocional} onChange={handleChange} className="h-12 pl-12 pr-4" disabled={isSubmitting} />
+                  <Input id="registration-promo-code" name="codigoPromocional" placeholder="Código promocional (opcional)" value={formData.codigoPromocional} onChange={handleChange} className="h-10 pl-12 pr-4" disabled={isSubmitting} />
                   <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 </div>
               </TooltipTrigger>
@@ -293,7 +293,7 @@ export default function RegistrationForm({
           ...prev,
           acceptTerms: checked as boolean
         }))} disabled={isSubmitting} />
-          <label htmlFor="registration-terms" className="text-sm text-muted-foreground leading-relaxed">
+          <label htmlFor="registration-terms" className="text-xs text-muted-foreground leading-relaxed">
             Acepto los{" "}
             <Link to="/terms" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
               términos y condiciones
@@ -305,24 +305,24 @@ export default function RegistrationForm({
           </label>
         </div>
         
-        <div className="space-y-4">
-          <Button id="registration-submit" type="submit" className="w-full gap-2 h-12 text-lg" disabled={!formData.acceptTerms || isSubmitting}>
+        <div className="space-y-3">
+          <Button id="registration-submit" type="submit" className="w-full gap-2 h-10 text-base" disabled={!formData.acceptTerms || isSubmitting}>
             {isSubmitting ? <>Procesando...</> : <>
-                Agendar Llamada <ArrowRight className="w-5 h-5" />
+                Agendar Llamada <ArrowRight className="w-4 h-4" />
               </>}
           </Button>
           
-          <div className="flex items-center justify-center gap-4 flex-wrap">
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <ShieldCheck className="w-4 h-4" />
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <div className="flex items-center gap-1.5 text-xs text-gray-500">
+              <ShieldCheck className="w-3.5 h-3.5" />
               <span>Datos seguros</span>
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <Clock4 className="w-4 h-4" />
+            <div className="flex items-center gap-1.5 text-xs text-gray-500">
+              <Clock4 className="w-3.5 h-3.5" />
               <span>Implementación 48hrs</span>
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <CreditCard className="w-4 h-4" />
+            <div className="flex items-center gap-1.5 text-xs text-gray-500">
+              <CreditCard className="w-3.5 h-3.5" />
               <span>Sin tarjeta</span>
             </div>
           </div>
