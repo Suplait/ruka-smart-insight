@@ -141,7 +141,7 @@ export default function Webinar() {
             </h1>
             
             <p className="text-xl sm:text-2xl text-muted-foreground/80 mb-20 max-w-3xl mx-auto font-light leading-relaxed">
-              Conoce las últimas funcionalidades de Ruka.ai y descubre cómo automatizar tu operación contable y financiera
+              Conoce las últimas funcionalidades de Ruka.ai y descubre cómo automatizar tu operación
             </p>
 
             {/* Webinar Info Cards */}
@@ -243,15 +243,15 @@ export default function Webinar() {
               </div>
 
               <div className="space-y-4">
-                <div className="p-6 bg-background/50 backdrop-blur-sm border border-border/20 rounded-xl">
+                <div className="p-6 bg-primary/5 backdrop-blur-sm border border-border/20 rounded-xl">
                   <p className="text-muted-foreground/80 text-sm leading-relaxed">
                     <strong className="text-foreground font-medium">Para clientes actuales:</strong> Conoce las últimas funcionalidades y comparte feedback sobre tus necesidades.
                   </p>
                 </div>
 
-                <div className="p-6 bg-background/50 backdrop-blur-sm border border-border/20 rounded-xl">
+                <div className="p-6 bg-primary/5 backdrop-blur-sm border border-border/20 rounded-xl">
                   <p className="text-muted-foreground/80 text-sm leading-relaxed">
-                    <strong className="text-foreground font-medium">Para nuevos interesados:</strong> Descubre cómo Ruka automatiza tu operación contable y financiera.
+                    <strong className="text-foreground font-medium">Para nuevos interesados:</strong> Descubre cómo Ruka automatiza tu operación.
                   </p>
                 </div>
               </div>
