@@ -21,8 +21,8 @@ export default function Webinar() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  // Fecha del webinar: jueves 13 de noviembre de 2025 a las 5:30 PM
-  const webinarDate = new Date('2025-11-13T17:30:00');
+  // Fecha del webinar: jueves 27 de noviembre de 2025 a las 5:00 PM
+  const webinarDate = new Date('2025-11-27T17:00:00');
   const now = new Date();
   const timeUntilWebinar = webinarDate.getTime() - now.getTime();
   const daysUntil = Math.floor(timeUntilWebinar / (1000 * 60 * 60 * 24));
@@ -62,7 +62,7 @@ export default function Webinar() {
     try {
       // Track successful registration BEFORE database insert (like in RegistrationForm)
       pushToDataLayer('webinar_registration_success', {
-        webinar_name: 'dashboard-control-junio-2025',
+        webinar_name: 'alto-rendimiento-noviembre-2025',
         nombre: formData.nombre,
         correo: formData.correo,
         timestamp: new Date().toISOString()
@@ -76,7 +76,7 @@ export default function Webinar() {
           nombre: formData.nombre,
           correo: formData.correo,
           whatsapp: cleanedWhatsapp,
-          webinar_name: 'dashboard-control-junio-2025'
+          webinar_name: 'alto-rendimiento-noviembre-2025'
         });
       if (error) {
         console.error('Error guardando registro:', error);
@@ -106,7 +106,7 @@ export default function Webinar() {
 
       // Track failed registration only in catch block
       pushToDataLayer('webinar_registration_failure', {
-        webinar_name: 'dashboard-control-junio-2025',
+        webinar_name: 'alto-rendimiento-noviembre-2025',
         nombre: formData.nombre,
         correo: formData.correo,
         error_message: error instanceof Error ? error.message : 'Unknown error',
@@ -126,27 +126,27 @@ export default function Webinar() {
           {/* Hero Section */}
           <div className="text-center mb-20">
             <div className="inline-flex items-center px-6 py-3 rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 text-sm font-medium mb-8">
-              <BarChart3 className="w-5 h-5 mr-2 text-primary" />
-              <span className="text-foreground">Webinar Exclusivo para Empresas</span>
+              <TrendingUp className="w-5 h-5 mr-2 text-primary" />
+              <span className="text-foreground">Webinar Exclusivo para Clientes Ruka</span>
             </div>
             
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 tracking-tight">
               <span className="text-foreground">
-                Automatiza tu semana
+                Claves para una operación de
               </span>
               {" "}
               <span className="bg-gradient-to-br from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent">
-                sin Programar
+                alto rendimiento
               </span>
             </h1>
             
             <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto font-light">
-              Aprende a automatizar tareas repetitivas en menos de 15 minutos, sin conocimientos técnicos. De un correo con factura a datos organizados, en vivo.
+              Conoce las nuevas funcionalidades para sacarle el máximo provecho a la plataforma
             </p>
 
             <div className="bg-primary/5 backdrop-blur-xl border border-primary/10 rounded-3xl p-8 mb-16 max-w-3xl mx-auto shadow-lg">
               <p className="text-foreground text-lg sm:text-xl font-medium">
-                💡 <strong>Descubre cómo</strong> liberar tiempo, reducir errores y enfocarte en lo que realmente aporta valor
+                🚀 <strong>Descubre cómo</strong> optimizar tu operación y aprovechar al máximo todas las capacidades de Ruka.ai
               </p>
             </div>
 
@@ -159,9 +159,9 @@ export default function Webinar() {
                   </div>
                   <CardTitle className="text-xl mb-3 font-semibold">Fecha</CardTitle>
                   <CardDescription className="text-muted-foreground text-base">
-                    Jueves 13 de noviembre 2025
+                    Jueves 27 de noviembre 2025
                     <br />
-                    5:30 PM (hora Chile)
+                    5:00 PM (hora Chile)
                   </CardDescription>
                 </CardContent>
               </Card>
@@ -206,10 +206,11 @@ export default function Webinar() {
               
               <div className="space-y-6">
                 {[
-                  "Los principios básicos de la automatización de procesos sin necesidad de programar",
-                  "Cómo crear un flujo completo en vivo: desde recibir un correo con factura hasta registrar datos en Google Sheets",
-                  "Cómo ahorrar horas de trabajo repetitivo cada semana y reducir errores humanos",
-                  "Herramientas accesibles que puedes usar desde mañana en tu empresa"
+                  "Las últimas funcionalidades y mejoras implementadas en la plataforma Ruka.ai",
+                  "Cómo optimizar tus flujos de trabajo actuales para obtener resultados más rápidos y precisos",
+                  "Estrategias avanzadas para maximizar el ROI de tu inversión en automatización",
+                  "Mejores prácticas y casos de uso exitosos de otros clientes que están sacando el máximo provecho a Ruka",
+                  "Respuestas en vivo a tus dudas sobre funcionalidades específicas y casos de uso particulares"
                 ].map((item, index) => (
                   <div key={index} className="flex items-start group">
                     <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/10 flex items-center justify-center mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform">
@@ -222,10 +223,10 @@ export default function Webinar() {
 
               <div className="mt-10 p-8 bg-primary/5 backdrop-blur-xl border border-primary/10 rounded-3xl shadow-lg">
                 <h3 className="text-2xl font-semibold mb-3">
-                  "Automatizar no es programar"
+                  "Maximiza el valor de tu inversión"
                 </h3>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Es liberar tiempo, reducir errores y enfocarte en lo que realmente aporta valor. En este webinar te demostramos que la automatización está al alcance de todos
+                  Muchos clientes de Ruka tienen la sensación de que podrían estar aprovechando mejor la plataforma. Este webinar te mostrará cómo convertirte en un usuario experto y lograr una operación de alto rendimiento.
                 </p>
               </div>
 
@@ -235,16 +236,19 @@ export default function Webinar() {
                 </h3>
                 <div className="space-y-3 text-foreground/80 text-lg leading-relaxed">
                   <p>
-                    <strong className="text-foreground">Profesionales que realizan tareas operativas repetitivas:</strong> compras, administración, contabilidad, operaciones, soporte.
+                    <strong className="text-foreground">Clientes actuales de Ruka.ai</strong> que quieren dominar todas las funcionalidades de la plataforma.
                   </p>
                   <p>
-                    <strong className="text-foreground">Personas sin perfil técnico</strong> que quieren mejorar su productividad con herramientas digitales accesibles.
+                    <strong className="text-foreground">Equipos que sienten que no están sacando el máximo provecho</strong> a su inversión en automatización.
                   </p>
                   <p>
-                    <strong className="text-foreground">Líderes de equipos o áreas</strong> que buscan introducir la automatización en su organización de forma práctica y sin complicaciones.
+                    <strong className="text-foreground">Gerentes y líderes de operaciones</strong> que buscan optimizar procesos y aumentar la eficiencia de sus equipos.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">Usuarios que quieren conocer las últimas novedades</strong> y mejores prácticas de la plataforma.
                   </p>
                   <p className="mt-4 font-semibold text-primary">
-                    Si trabajas con tareas repetitivas y quieres recuperar tu tiempo, este webinar es para ti.
+                    Si ya usas Ruka y quieres llevar tu operación al siguiente nivel, este webinar es para ti.
                   </p>
                 </div>
               </div>
@@ -260,7 +264,7 @@ export default function Webinar() {
                   <CardDescription className="text-primary-foreground/90 text-center text-base mt-2">
                     {isRegistered 
                       ? "Te hemos enviado todos los detalles a tu correo" 
-                      : "Asegura tu cupo - Jueves 13 de noviembre 2025, 5:30 PM"
+                      : "Asegura tu cupo - Jueves 27 de noviembre 2025, 5:00 PM"
                     }
                   </CardDescription>
                 </CardHeader>
@@ -278,7 +282,7 @@ export default function Webinar() {
                           Recibirás un recordatorio el día del webinar con el enlace de acceso.
                         </p>
                         <p className="text-sm text-muted-foreground/80">
-                          Prepárate para pasar del caos al control total de tu empresa.
+                          Prepárate para llevar tu operación al siguiente nivel con Ruka.ai
                         </p>
                       </div>
                     </div> : <form onSubmit={handleSubmit} className="space-y-6">
