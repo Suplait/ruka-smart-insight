@@ -141,12 +141,12 @@ export default function Webinar() {
             </h1>
             
             <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto font-light">
-              Conoce las nuevas funcionalidades para sacarle el máximo provecho a la plataforma
+              Revisión de nuevas funcionalidades y sesión de feedback con el equipo
             </p>
 
             <div className="bg-primary/5 backdrop-blur-xl border border-primary/10 rounded-3xl p-8 mb-16 max-w-3xl mx-auto shadow-lg">
               <p className="text-foreground text-lg sm:text-xl font-medium">
-                🚀 <strong>Descubre cómo</strong> optimizar tu operación y aprovechar al máximo todas las capacidades de Ruka.ai
+                📋 Repasaremos las últimas actualizaciones de la plataforma y escucharemos tus necesidades
               </p>
             </div>
 
@@ -201,54 +201,76 @@ export default function Webinar() {
             {/* Left Column - What you'll learn */}
             <div>
               <h2 className="text-4xl sm:text-5xl font-bold mb-10 tracking-tight">
-                En este webinar descubrirás
+                Agenda del webinar
               </h2>
               
-              <div className="space-y-6">
-                {[
-                  "Las últimas funcionalidades y mejoras implementadas en la plataforma Ruka.ai",
-                  "Cómo optimizar tus flujos de trabajo actuales para obtener resultados más rápidos y precisos",
-                  "Estrategias avanzadas para maximizar el ROI de tu inversión en automatización",
-                  "Mejores prácticas y casos de uso exitosos de otros clientes que están sacando el máximo provecho a Ruka",
-                  "Respuestas en vivo a tus dudas sobre funcionalidades específicas y casos de uso particulares"
-                ].map((item, index) => (
-                  <div key={index} className="flex items-start group">
-                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/10 flex items-center justify-center mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform">
-                      <CheckCircle className="w-5 h-5 text-green-600" />
-                    </div>
-                    <span className="text-muted-foreground text-lg leading-relaxed">{item}</span>
+              <div className="space-y-8 mb-10">
+                <div>
+                  <h3 className="text-2xl font-semibold mb-4 text-foreground">
+                    Nuevas funcionalidades de la plataforma
+                  </h3>
+                  <div className="space-y-3">
+                    {[
+                      "Módulo de recepción completo",
+                      "Acuse masivo del SII",
+                      "Carga de XMLs",
+                      "Módulo de supplies",
+                      "Panel de control con ventas integradas",
+                      "Programa de referidos"
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-start group">
+                        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform">
+                          <CheckCircle className="w-5 h-5 text-primary" />
+                        </div>
+                        <span className="text-muted-foreground text-lg leading-relaxed">{item}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-semibold mb-4 text-foreground">
+                    Sesión de feedback y necesidades
+                  </h3>
+                  <div className="space-y-3">
+                    {[
+                      "Comentarios sobre la plataforma actual",
+                      "Dolores del día a día que podemos resolver",
+                      "Procesos que necesitas automatizar"
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-start group">
+                        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/10 flex items-center justify-center mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform">
+                          <CheckCircle className="w-5 h-5 text-green-600" />
+                        </div>
+                        <span className="text-muted-foreground text-lg leading-relaxed">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              <div className="mt-10 p-8 bg-primary/5 backdrop-blur-xl border border-primary/10 rounded-3xl shadow-lg">
+              <div className="p-8 bg-primary/5 backdrop-blur-xl border border-primary/10 rounded-3xl shadow-lg">
                 <h3 className="text-2xl font-semibold mb-3">
-                  "Maximiza el valor de tu inversión"
+                  Tu opinión es importante
                 </h3>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Muchos clientes de Ruka tienen la sensación de que podrían estar aprovechando mejor la plataforma. Este webinar te mostrará cómo convertirte en un usuario experto y lograr una operación de alto rendimiento.
+                  Este webinar es también un espacio para escucharte. Queremos entender qué te está funcionando bien, qué mejorarías, y qué nuevas funcionalidades necesitas para tu operación.
                 </p>
               </div>
 
-              <div className="mt-6 p-8 bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-xl border border-primary/20 rounded-3xl shadow-lg">
+              <div className="p-8 bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-xl border border-primary/20 rounded-3xl shadow-lg">
                 <h3 className="text-2xl font-semibold text-primary mb-4">
                   ¿Para quién es este webinar?
                 </h3>
                 <div className="space-y-3 text-foreground/80 text-lg leading-relaxed">
                   <p>
-                    <strong className="text-foreground">Clientes actuales de Ruka.ai</strong> que quieren dominar todas las funcionalidades de la plataforma.
+                    <strong className="text-foreground">Clientes actuales de Ruka.ai</strong> que quieren conocer las últimas funcionalidades.
                   </p>
                   <p>
-                    <strong className="text-foreground">Equipos que sienten que no están sacando el máximo provecho</strong> a su inversión en automatización.
+                    <strong className="text-foreground">Equipos que buscan optimizar</strong> sus procesos y sacarle más provecho a la plataforma.
                   </p>
                   <p>
-                    <strong className="text-foreground">Gerentes y líderes de operaciones</strong> que buscan optimizar procesos y aumentar la eficiencia de sus equipos.
-                  </p>
-                  <p>
-                    <strong className="text-foreground">Usuarios que quieren conocer las últimas novedades</strong> y mejores prácticas de la plataforma.
-                  </p>
-                  <p className="mt-4 font-semibold text-primary">
-                    Si ya usas Ruka y quieres llevar tu operación al siguiente nivel, este webinar es para ti.
+                    <strong className="text-foreground">Usuarios con feedback</strong> sobre cómo mejorar la plataforma según sus necesidades.
                   </p>
                 </div>
               </div>
