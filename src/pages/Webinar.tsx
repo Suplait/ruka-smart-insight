@@ -130,12 +130,12 @@ export default function Webinar() {
               <span className="text-foreground">Webinar Online Gratuito</span>
             </div>
             
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-10 tracking-tight leading-[1.1]">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light mb-10 tracking-tight leading-[1.1]">
               <span className="text-foreground">
                 Claves para una operación de
               </span>
               {" "}
-              <span className="bg-gradient-to-br from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-br from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent font-normal">
                 alto rendimiento
               </span>
             </h1>
@@ -194,13 +194,13 @@ export default function Webinar() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start max-w-6xl mx-auto">
             {/* Left Column - What you'll learn */}
             <div>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-12 tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-light mb-12 tracking-tight">
                 Qué verás en el webinar
               </h2>
               
               <div className="space-y-12 mb-12">
                 <div>
-                  <h3 className="text-xl font-semibold mb-6 text-foreground">
+                  <h3 className="text-lg font-medium mb-6 text-foreground">
                     Nuevas funcionalidades
                   </h3>
                   <div className="space-y-4">
@@ -222,7 +222,7 @@ export default function Webinar() {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold mb-6 text-foreground">
+                  <h3 className="text-lg font-medium mb-6 text-foreground">
                     Sesión de feedback
                   </h3>
                   <div className="space-y-4">
@@ -242,16 +242,18 @@ export default function Webinar() {
                 </div>
               </div>
 
-              <div className="p-8 bg-primary/5 backdrop-blur-sm border border-border/20 rounded-2xl">
-                <p className="text-muted-foreground/80 text-base leading-relaxed">
-                  <strong className="text-foreground font-semibold">Para clientes actuales:</strong> Conoce las últimas funcionalidades y comparte feedback sobre tus necesidades.
-                </p>
-              </div>
+              <div className="space-y-4">
+                <div className="p-6 bg-background/50 backdrop-blur-sm border border-border/20 rounded-xl">
+                  <p className="text-muted-foreground/80 text-sm leading-relaxed">
+                    <strong className="text-foreground font-medium">Para clientes actuales:</strong> Conoce las últimas funcionalidades y comparte feedback sobre tus necesidades.
+                  </p>
+                </div>
 
-              <div className="p-8 bg-primary/5 backdrop-blur-sm border border-border/20 rounded-2xl">
-                <p className="text-muted-foreground/80 text-base leading-relaxed">
-                  <strong className="text-foreground font-semibold">Para nuevos interesados:</strong> Descubre cómo Ruka automatiza tu operación contable y financiera.
-                </p>
+                <div className="p-6 bg-background/50 backdrop-blur-sm border border-border/20 rounded-xl">
+                  <p className="text-muted-foreground/80 text-sm leading-relaxed">
+                    <strong className="text-foreground font-medium">Para nuevos interesados:</strong> Descubre cómo Ruka automatiza tu operación contable y financiera.
+                  </p>
+                </div>
               </div>
             </div>
 
