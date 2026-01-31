@@ -118,7 +118,7 @@ export default function Hoteles() {
         
         <div className="w-full pb-8">
           <div className="container px-4 sm:px-6">
-            <div className="lg:hidden py-8 space-y-6 text-center">
+            <div className="lg:hidden pt-20 pb-8 space-y-6 text-center">
               <motion.div initial={{
               opacity: 0,
               y: 20
