@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X, Hotel, Zap, Bot, Receipt, Package } from "lucide-react";
+import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X, Hotel, Zap, Bot, Receipt, Package, Store } from "lucide-react";
 import SubdomainModal from "./SubdomainModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -195,6 +195,14 @@ export default function Navbar() {
             >
               <Hotel className="h-4 w-4" />
               <span>Hoteles</span>
+            </Link>
+            <Link
+              to="/retail"
+              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
+              onClick={() => setIsOpen(false)}
+            >
+              <Store className="h-4 w-4" />
+              <span>Retail</span>
             </Link>
           </div>
           <div className="flex flex-col gap-2 mt-4">
@@ -568,9 +576,27 @@ export default function Navbar() {
                             </Link>
                           </NavigationMenuLink>
                         </li>
-
-                        <li className="px-2 py-1">
-                          <div className="text-xs text-muted-foreground italic">Más industrias próximamente...</div>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              to="/retail"
+                              className={cn(
+                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
+                                "bg-card hover:bg-accent hover:text-accent-foreground",
+                                "border border-transparent hover:border-border",
+                              )}
+                            >
+                              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                                <Store className="h-5 w-5 text-primary" />
+                              </div>
+                              <div className="grid gap-1">
+                                <div className="text-sm font-medium">Retail</div>
+                                <div className="line-clamp-2 text-xs text-muted-foreground">
+                                  Automatiza compras, facturas y control de inventario sin digitación
+                                </div>
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
                         </li>
                       </ul>
                     </div>

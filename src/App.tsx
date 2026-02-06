@@ -9,6 +9,7 @@ import { extractUTMParams, saveUTMParams } from '@/utils/utmTracker';
 import Index from './pages/Index';
 import Restaurantes from './pages/Restaurantes';
 import Hoteles from './pages/Hoteles';
+import Retail from './pages/Retail';
 import ProductoEjemplo from './pages/ProductoEjemplo';
 import CuentasPorPagar from './pages/CuentasPorPagar';
 import Stock from './pages/Stock';
@@ -40,6 +41,7 @@ function App() {
             <Route path="/" element={<Index />} />
             <Route path="/restaurantes" element={<Restaurantes />} />
             <Route path="/hoteles" element={<Hoteles />} />
+            <Route path="/retail" element={<Retail />} />
             <Route path="/productos/ejemplo" element={<ProductoEjemplo />} />
             <Route path="/productos/panel-control" element={<PanelControl />} />
             <Route path="/productos/cuentas-por-pagar" element={<CuentasPorPagar />} />
