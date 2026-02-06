@@ -364,7 +364,7 @@ export default function Retail() {
                     <TrendingUp className="w-6 h-6 text-green-600" />
                   </div>
                   <h2 className="text-4xl font-bold text-green-900">
-                    Valor visible en menos de 5 días
+                    Valor visible en menos de 15 días
                   </h2>
                   <div className="grid md:grid-cols-3 gap-6">
                     <div className="bg-white p-6 rounded-xl shadow-sm space-y-3">
@@ -376,14 +376,14 @@ export default function Retail() {
                     </div>
                     <div className="bg-white p-6 rounded-xl shadow-sm space-y-3">
                       <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                        Día 3
+                        Día 5
                       </div>
-                      <h3 className="text-xl font-semibold text-green-900">XML desglosado automático</h3>
-                      <p className="text-green-800/70">Cero digitación. Compras ordenadas por proveedor.</p>
+                      <h3 className="text-xl font-semibold text-green-900">Registro de compras</h3>
+                      <p className="text-green-800/70">Compras ordenadas por proveedor.</p>
                     </div>
                     <div className="bg-white p-6 rounded-xl shadow-sm space-y-3">
                       <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                        Día 5
+                        Día 15
                       </div>
                       <h3 className="text-xl font-semibold text-green-900">Alertas de alza de precios</h3>
                       <p className="text-green-800/70">Evidencia para reclamar. Primer ahorro detectado.</p>
@@ -391,7 +391,7 @@ export default function Retail() {
                   </div>
                   <div className="text-center pt-4">
                     <p className="text-xl text-green-700 font-medium">
-                      👉 Primer valor visible: <span className="font-bold">"dejé de digitar facturas"</span>
+                      👉 Primer valor visible: <span className="font-bold">"Conocer Variación de precios sin digitar facturas"</span>
                     </p>
                   </div>
                 </motion.div>
