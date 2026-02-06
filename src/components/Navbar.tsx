@@ -232,7 +232,7 @@ export default function Navbar() {
   );
 
   return (
-    <nav className="fixed top-6 left-6 right-6 z-50 bg-white/70 backdrop-blur-xl border border-gray-200/30 rounded-2xl">
+    <nav className="fixed top-0 left-0 right-0 md:top-6 md:left-6 md:right-6 z-50 bg-white/70 backdrop-blur-xl border-b md:border border-gray-200/30 md:rounded-2xl">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
