@@ -4,17 +4,15 @@ import { motion } from "framer-motion";
 import { 
   ArrowRight, 
   Clock, 
-  FileText, 
   AlertTriangle, 
-  TrendingDown, 
+  TrendingUp, 
   CheckCircle2, 
   XCircle,
   Zap,
   Shield,
-  Users,
-  Package,
   CreditCard,
-  BarChart3
+  BarChart3,
+  FileText
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
@@ -23,87 +21,12 @@ import FAQ from "@/components/FAQ";
 import RegistrationForm from "@/components/restaurant/RegistrationForm";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-const painPoints = [
-  {
-    icon: Clock,
-    title: "2-4 horas al día",
-    description: "digitando facturas o ítems manualmente"
-  },
-  {
-    icon: FileText,
-    title: "Excel que no escala",
-    description: "con el volumen de tu operación"
-  },
-  {
-    icon: AlertTriangle,
-    title: "Alto riesgo de error",
-    description: "humano en cada digitación"
-  },
-  {
-    icon: Users,
-    title: "Todo depende",
-    description: "de una sola persona"
-  }
-];
-
-const consequences = [
-  {
-    icon: TrendingDown,
-    text: "Detectas alzas de precios cuando ya perdiste margen"
-  },
-  {
-    icon: AlertTriangle,
-    text: "Reclamas sin evidencia clara"
-  },
-  {
-    icon: CreditCard,
-    text: "Pagas con ansiedad y doble revisión"
-  },
-  {
-    icon: Package,
-    text: "Tu stock refleja la realidad \"más o menos\""
-  }
-];
-
-const timeline = [
-  {
-    day: "Día 1",
-    title: "Conectas SII o correo",
-    items: ["Las facturas empiezan a entrar solas"]
-  },
-  {
-    day: "Día 3",
-    title: "XML desglosado automático",
-    items: ["Cero digitación", "Compras ordenadas por proveedor"]
-  },
-  {
-    day: "Día 5",
-    title: "Alertas de alza de precios",
-    items: ["Evidencia para reclamar", "Primer ahorro detectado"]
-  }
-];
-
 const benefits = [
-  {
-    icon: Zap,
-    text: "Las facturas se cargan solas"
-  },
-  {
-    icon: TrendingDown,
-    text: "Sabes si un proveedor te cobra más caro"
-  },
-  {
-    icon: CreditCard,
-    text: "Sabes exactamente qué pagar esta semana"
-  },
-  {
-    icon: Package,
-    text: "El stock se actualiza sin doble trabajo"
-  },
-  {
-    icon: Shield,
-    text: "Puedes delegar sin perder control"
-  }
+  "Las facturas se cargan solas",
+  "Sabes si un proveedor te cobra más caro",
+  "Sabes exactamente qué pagar esta semana",
+  "El stock se actualiza sin doble trabajo",
+  "Puedes delegar sin perder control"
 ];
 
 const forWho = {
@@ -244,10 +167,6 @@ export default function Retail() {
                 animate={{ opacity: 1, y: 0 }} 
                 className="space-y-4"
               >
-                <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
-                  <BarChart3 className="w-4 h-4" />
-                  <span>Para negocios con volumen de compras</span>
-                </div>
                 <h1 className="text-3xl sm:text-4xl font-bold leading-tight">
                   Deja de digitar facturas y controla tus compras
                   <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"> sin Excel</span>
@@ -255,6 +174,10 @@ export default function Retail() {
                 <p className="text-lg text-muted-foreground max-w-md mx-auto">
                   Ruka centraliza compras, facturas y precios para que el stock, los pagos y los márgenes se controlen solos.
                 </p>
+                <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
+                  <BarChart3 className="w-4 h-4" />
+                  <span>Para negocios con volumen de compras</span>
+                </div>
               </motion.div>
               
               <motion.div 
@@ -273,7 +196,7 @@ export default function Retail() {
             </div>
 
             <div className="lg:grid lg:grid-cols-[1fr,460px] lg:gap-16">
-              <div className="py-12 lg:py-24 space-y-16 lg:space-y-24">
+              <div className="py-12 lg:py-24 space-y-16 lg:space-y-32">
                 
                 {/* Section 1: Hero (Desktop) */}
                 <motion.header 
@@ -282,245 +205,257 @@ export default function Retail() {
                   transition={{ duration: 0.5 }} 
                   className="space-y-8 hidden lg:block"
                 >
-                  <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
-                    <BarChart3 className="w-4 h-4" />
-                    <span>Para negocios con volumen de compras</span>
-                  </div>
-                  <h1 className="text-5xl sm:text-6xl font-light leading-tight tracking-tight">
+                  <h1 className="text-5xl sm:text-6xl font-bold leading-tight">
                     Deja de digitar facturas y controla tus compras
-                    <span className="font-semibold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"> sin Excel</span>
+                    <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> sin Excel</span>
                   </h1>
-                  <p className="text-2xl text-muted-foreground leading-relaxed font-light">
+                  <p className="text-2xl text-muted-foreground leading-relaxed">
                     Ruka centraliza compras, facturas y precios para que el stock, los pagos y los márgenes se controlen solos, sin Excel ni digitación.
                   </p>
-                  <Button 
-                    size="lg" 
-                    className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105" 
-                    onClick={scrollToForm}
-                  >
-                    Ver si Ruka aplica para mi negocio <ArrowRight className="ml-2" />
-                  </Button>
                 </motion.header>
 
-                {/* Section 2: Pain Points */}
-                <motion.section 
+                {/* Section 2: Pain Points - Red Card */}
+                <motion.div 
                   initial={{ opacity: 0, y: 20 }} 
                   whileInView={{ opacity: 1, y: 0 }} 
                   transition={{ duration: 0.5 }} 
                   viewport={{ once: true }} 
-                  className="space-y-8"
+                  className="relative p-8 rounded-2xl bg-gradient-to-br from-red-50 to-orange-50 border border-red-100 space-y-8"
                 >
-                  <h2 className="text-3xl lg:text-4xl font-light text-center lg:text-left">
+                  <div className="absolute -top-6 right-8 w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                    <Clock className="w-6 h-6 text-red-600" />
+                  </div>
+                  <h2 className="text-4xl font-bold text-red-900">
                     ¿Te suena familiar?
                   </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {painPoints.map((pain, index) => (
-                      <motion.div 
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                        viewport={{ once: true }}
-                        className="p-6 rounded-2xl bg-gradient-to-br from-red-50 to-orange-50 border border-red-100 space-y-3"
-                      >
-                        <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                          <pain.icon className="w-6 h-6 text-red-600" />
-                        </div>
-                        <h3 className="text-xl font-semibold text-red-900">{pain.title}</h3>
-                        <p className="text-red-800/70">{pain.description}</p>
-                      </motion.div>
-                    ))}
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div className="space-y-4">
+                      <p className="flex items-center gap-3 text-xl text-red-800/80">
+                        <span className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600 flex-shrink-0">
+                          <Clock className="w-4 h-4" />
+                        </span>
+                        2-4 horas al día digitando facturas
+                      </p>
+                      <p className="flex items-center gap-3 text-xl text-red-800/80">
+                        <span className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600 flex-shrink-0">
+                          <FileText className="w-4 h-4" />
+                        </span>
+                        Excel que no escala con el volumen
+                      </p>
+                      <p className="flex items-center gap-3 text-xl text-red-800/80">
+                        <span className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600 flex-shrink-0">
+                          <AlertTriangle className="w-4 h-4" />
+                        </span>
+                        Alto riesgo de error humano
+                      </p>
+                      <p className="flex items-center gap-3 text-xl text-red-800/80">
+                        <span className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600 flex-shrink-0">
+                          <AlertTriangle className="w-4 h-4" />
+                        </span>
+                        Todo depende de una sola persona
+                      </p>
+                    </div>
+                    <div className="bg-white p-6 rounded-xl shadow-lg">
+                      <div className="space-y-4">
+                        <div className="h-2 bg-red-200 rounded-full w-full" />
+                        <div className="h-2 bg-red-200 rounded-full w-3/4" />
+                        <div className="h-2 bg-red-200 rounded-full w-1/2" />
+                      </div>
+                      <div className="mt-6 text-center text-red-600 font-semibold">
+                        Horas perdidas cada semana
+                      </div>
+                    </div>
                   </div>
-                </motion.section>
+                </motion.div>
 
-                {/* Section 3: Consequences */}
-                <motion.section 
+                {/* Section 3: Consequences - Amber Card */}
+                <motion.div 
                   initial={{ opacity: 0, y: 20 }} 
                   whileInView={{ opacity: 1, y: 0 }} 
                   transition={{ duration: 0.5 }} 
                   viewport={{ once: true }} 
-                  className="p-8 rounded-2xl bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-100 space-y-6"
+                  className="relative p-8 rounded-2xl bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-100 space-y-8"
                 >
-                  <h2 className="text-3xl lg:text-4xl font-light">
+                  <div className="absolute -top-6 right-8 w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                    <AlertTriangle className="w-6 h-6 text-amber-600" />
+                  </div>
+                  <h2 className="text-4xl font-bold text-amber-900">
                     Y cuando el problema no se resuelve...
                   </h2>
-                  <div className="space-y-4">
-                    {consequences.map((consequence, index) => (
-                      <motion.div 
-                        key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                        viewport={{ once: true }}
-                        className="flex items-center gap-4 p-4 bg-white/60 rounded-xl"
-                      >
-                        <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <consequence.icon className="w-5 h-5 text-amber-700" />
-                        </div>
-                        <p className="text-lg text-amber-900">{consequence.text}</p>
-                      </motion.div>
-                    ))}
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div className="space-y-4">
+                      <p className="text-2xl text-amber-800/80 leading-relaxed">
+                        Detectas alzas de precios cuando ya perdiste margen. Reclamas sin evidencia clara. Pagas con ansiedad y doble revisión.
+                      </p>
+                      <p className="text-xl text-amber-700/70 italic">
+                        Tu stock refleja la realidad "más o menos"...
+                      </p>
+                    </div>
+                    <div className="bg-white p-6 rounded-xl shadow-lg">
+                      <div className="space-y-4">
+                        <div className="h-2 bg-amber-200 rounded-full w-full" />
+                        <div className="h-2 bg-amber-200 rounded-full w-2/3" />
+                        <div className="h-2 bg-amber-200 rounded-full w-1/3" />
+                      </div>
+                      <div className="mt-6 text-center text-amber-600 font-semibold">
+                        Margen perdido sin darte cuenta
+                      </div>
+                    </div>
                   </div>
-                </motion.section>
+                </motion.div>
 
-                {/* Section 4: Value Proposition */}
-                <motion.section 
+                {/* Section 4: Solution - Blue Card with Robot */}
+                <motion.div 
                   initial={{ opacity: 0, y: 20 }} 
                   whileInView={{ opacity: 1, y: 0 }} 
                   transition={{ duration: 0.5 }} 
                   viewport={{ once: true }} 
-                  className="relative"
+                  className="relative p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 border border-primary/20 space-y-8"
                 >
-                  <div className="p-8 lg:p-12 rounded-2xl bg-gradient-to-br from-primary/5 to-purple-50 border border-primary/20 text-center space-y-6">
-                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto">
-                      <img src="/0webclip.jpg" alt="Ruka Logo" className="w-10 h-10 rounded-lg" />
-                    </div>
-                    <blockquote className="text-2xl lg:text-3xl font-light leading-relaxed text-foreground">
-                      "Ruka centraliza compras, facturas y precios para que el stock, los pagos y los márgenes se controlen solos, 
-                      <span className="font-semibold text-primary"> sin Excel ni digitación.</span>"
-                    </blockquote>
+                  <div className="absolute -top-6 right-8 w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
+                    <img src="/0webclip.jpg" alt="Ruka Logo" className="w-8 h-8 rounded-full" />
                   </div>
-                </motion.section>
+                  <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                    Ruka lo hace todo automático
+                  </h2>
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div className="space-y-6 text-xl text-primary/80 leading-relaxed">
+                      <p className="flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
+                        Las facturas se cargan solas
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
+                        Sabes si un proveedor te cobra más caro
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
+                        Sabes exactamente qué pagar esta semana
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
+                        El stock se actualiza sin doble trabajo
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">✓</span>
+                        Puedes delegar sin perder control
+                      </p>
+                    </div>
+                    <div className="relative">
+                      <img src="/robotshero2.png" alt="Robot procesando datos" className="w-full object-contain transform hover:scale-105 transition-transform duration-300" />
+                    </div>
+                  </div>
+                </motion.div>
 
                 {/* Mobile Form Section */}
                 <div id="mobile-form-section" className="lg:hidden w-full">
                   <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} pagePath="/retail" />
                 </div>
 
-                {/* Section 5: Timeline (TTFV) */}
-                <motion.section 
+                {/* Section 5: Timeline (TTFV) - Green Card */}
+                <motion.div 
                   initial={{ opacity: 0, y: 20 }} 
                   whileInView={{ opacity: 1, y: 0 }} 
                   transition={{ duration: 0.5 }} 
                   viewport={{ once: true }} 
-                  className="space-y-8"
+                  className="relative p-8 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 space-y-8"
                 >
-                  <div className="text-center lg:text-left space-y-4">
-                    <h2 className="text-3xl lg:text-4xl font-light">
-                      Valor visible en menos de 5 días
-                    </h2>
-                    <p className="text-xl text-muted-foreground">
-                      Primer resultado: <span className="font-medium text-primary">dejé de digitar facturas</span>
+                  <div className="absolute -top-6 right-8 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-green-600" />
+                  </div>
+                  <h2 className="text-4xl font-bold text-green-900">
+                    Valor visible en menos de 5 días
+                  </h2>
+                  <div className="grid md:grid-cols-3 gap-6">
+                    <div className="bg-white p-6 rounded-xl shadow-sm space-y-3">
+                      <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                        Día 1
+                      </div>
+                      <h3 className="text-xl font-semibold text-green-900">Conectas SII o correo</h3>
+                      <p className="text-green-800/70">Las facturas empiezan a entrar solas</p>
+                    </div>
+                    <div className="bg-white p-6 rounded-xl shadow-sm space-y-3">
+                      <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                        Día 3
+                      </div>
+                      <h3 className="text-xl font-semibold text-green-900">XML desglosado automático</h3>
+                      <p className="text-green-800/70">Cero digitación. Compras ordenadas por proveedor.</p>
+                    </div>
+                    <div className="bg-white p-6 rounded-xl shadow-sm space-y-3">
+                      <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                        Día 5
+                      </div>
+                      <h3 className="text-xl font-semibold text-green-900">Alertas de alza de precios</h3>
+                      <p className="text-green-800/70">Evidencia para reclamar. Primer ahorro detectado.</p>
+                    </div>
+                  </div>
+                  <div className="text-center pt-4">
+                    <p className="text-xl text-green-700 font-medium">
+                      👉 Primer valor visible: <span className="font-bold">"dejé de digitar facturas"</span>
                     </p>
                   </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {timeline.map((step, index) => (
-                      <motion.div 
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.15 }}
-                        viewport={{ once: true }}
-                        className="relative p-6 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 space-y-4"
-                      >
-                        <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                          {step.day}
-                        </div>
-                        <h3 className="text-xl font-semibold text-green-900">{step.title}</h3>
-                        <ul className="space-y-2">
-                          {step.items.map((item, i) => (
-                            <li key={i} className="flex items-center gap-2 text-green-800/80">
-                              <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.section>
+                </motion.div>
 
-                {/* Section 6: Benefits */}
-                <motion.section 
+                {/* Section 6: For Who */}
+                <motion.div 
                   initial={{ opacity: 0, y: 20 }} 
                   whileInView={{ opacity: 1, y: 0 }} 
                   transition={{ duration: 0.5 }} 
                   viewport={{ once: true }} 
                   className="space-y-8"
                 >
-                  <h2 className="text-3xl lg:text-4xl font-light text-center lg:text-left">
-                    Lo que ganas con Ruka
-                  </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {benefits.map((benefit, index) => (
-                      <motion.div 
-                        key={index}
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.08 }}
-                        viewport={{ once: true }}
-                        className="flex items-center gap-4 p-5 rounded-xl bg-card border hover:shadow-md transition-shadow"
-                      >
-                        <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <benefit.icon className="w-5 h-5 text-primary" />
-                        </div>
-                        <p className="text-lg font-medium">{benefit.text}</p>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.section>
-
-                {/* Section 7: For Who */}
-                <motion.section 
-                  initial={{ opacity: 0, y: 20 }} 
-                  whileInView={{ opacity: 1, y: 0 }} 
-                  transition={{ duration: 0.5 }} 
-                  viewport={{ once: true }} 
-                  className="space-y-8"
-                >
-                  <h2 className="text-3xl lg:text-4xl font-light text-center lg:text-left">
+                  <h2 className="text-4xl font-bold text-center lg:text-left">
                     ¿Es para ti?
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="p-6 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 space-y-4">
-                      <h3 className="text-xl font-semibold text-green-900 flex items-center gap-2">
+                      <h3 className="text-xl font-bold text-green-900 flex items-center gap-2">
                         <CheckCircle2 className="w-6 h-6" />
                         Es para negocios que:
                       </h3>
                       <ul className="space-y-3">
                         {forWho.isFor.map((item, index) => (
-                          <li key={index} className="flex items-center gap-3 text-green-800">
-                            <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
+                          <li key={index} className="flex items-center gap-3 text-lg text-green-800">
+                            <span className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">✓</span>
                             <span>{item}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div className="p-6 rounded-2xl bg-gradient-to-br from-gray-50 to-slate-50 border border-gray-200 space-y-4">
-                      <h3 className="text-xl font-semibold text-gray-700 flex items-center gap-2">
+                      <h3 className="text-xl font-bold text-gray-700 flex items-center gap-2">
                         <XCircle className="w-6 h-6" />
                         No es para quienes:
                       </h3>
                       <ul className="space-y-3">
                         {forWho.notFor.map((item, index) => (
-                          <li key={index} className="flex items-center gap-3 text-gray-600">
-                            <XCircle className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                          <li key={index} className="flex items-center gap-3 text-lg text-gray-600">
+                            <span className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 flex-shrink-0">✗</span>
                             <span>{item}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                   </div>
-                </motion.section>
+                </motion.div>
 
-                {/* Section 8: Final CTA */}
-                <motion.section 
+                {/* Section 7: Final CTA */}
+                <motion.div 
                   initial={{ opacity: 0, y: 20 }} 
                   whileInView={{ opacity: 1, y: 0 }} 
                   transition={{ duration: 0.5 }} 
                   viewport={{ once: true }} 
-                  className="text-center space-y-8 bg-gradient-to-br from-primary/10 to-purple-100 p-8 sm:p-12 rounded-3xl"
+                  className="text-center space-y-8 bg-gradient-to-br from-primary/10 to-purple-100 p-6 sm:p-12 rounded-3xl"
                 >
-                  <h2 className="text-3xl lg:text-4xl font-light">
+                  <h2 className="text-4xl font-bold">
                     Evalúa si Ruka aplica para tu empresa
                   </h2>
-                  <p className="text-xl text-muted-foreground max-w-xl mx-auto">
+                  <p className="text-2xl text-gray-700">
                     En 15 minutos te mostramos si te ahorra tiempo y errores
                   </p>
                   <Button 
                     size="lg" 
-                    className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105" 
+                    className="text-lg px-8 py-6 h-auto transition-all duration-300 hover:scale-105 max-w-full" 
                     onClick={scrollToForm}
                   >
                     Ver si aplica para mi negocio <ArrowRight className="ml-2" />
@@ -539,7 +474,7 @@ export default function Retail() {
                       Implementación rápida
                     </span>
                   </div>
-                </motion.section>
+                </motion.div>
 
                 <div className="hidden lg:block">
                   <FAQ />
