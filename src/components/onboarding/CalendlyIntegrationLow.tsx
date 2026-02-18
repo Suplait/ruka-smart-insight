@@ -1,7 +1,8 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar, Clock, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface CalendlyIntegrationLowProps {
   leadData: {
@@ -15,7 +16,11 @@ interface CalendlyIntegrationLowProps {
 }
 
 const CalendlyIntegrationLow = ({ leadData }: CalendlyIntegrationLowProps) => {
+  const [showCalendly, setShowCalendly] = useState(false);
+
   useEffect(() => {
+    if (!showCalendly) return;
+
     // Add event listener for Calendly scheduling events
     const handleCalendlyEvent = (e: MessageEvent) => {
       if (e.data.event === 'calendly.event_scheduled') {
@@ -67,19 +72,21 @@ const CalendlyIntegrationLow = ({ leadData }: CalendlyIntegrationLowProps) => {
         document.head.removeChild(script);
       }
     };
-  }, [leadData]);
+  }, [leadData, showCalendly]);
 
-  const formatInvoiceCount = (count: number) => {
-    if (count >= 1000) return "+1.000";
-    return count.toString();
+  const getInvoiceRangeLabel = (count: number) => {
+    if (count === 75 || count < 150) return "menos de 150";
+    if (count === 225 || count < 300) return "150 a 300";
+    if (count === 450 || count < 600) return "300 a 600";
+    return "más de 600";
   };
 
   return (
     <div className="w-full max-w-2xl mx-auto">
       <div className="text-center mb-6">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2">¡Excelente! Coordinemos tu implementación</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">¡Excelente! Puedes activar tu plataforma de inmediato</h1>
         <p className="text-muted-foreground">
-          Con {formatInvoiceCount(leadData.invoiceCount)} facturas mensuales, podemos configurar tu plataforma de manera eficiente.
+          Tu volumen de {getInvoiceRangeLabel(leadData.invoiceCount)} facturas mensuales califica para activación inmediata.
         </p>
       </div>
 
@@ -90,37 +97,75 @@ const CalendlyIntegrationLow = ({ leadData }: CalendlyIntegrationLowProps) => {
               <Calendar className="w-6 h-6 text-primary" />
             </div>
             <div>
-              <CardTitle>Agenda tu sesión de configuración</CardTitle>
-              <CardDescription>Te ayudaremos a configurar y optimizar tu plataforma</CardDescription>
+              <CardTitle>Activa tu cuenta ahora</CardTitle>
+              <CardDescription>Puedes levantar tu plataforma sin esperar una llamada</CardDescription>
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-            <div className="flex items-center gap-2 p-3 bg-green-50 rounded-lg">
-              <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
-              <span className="text-xs sm:text-sm font-medium">Configuración guiada</span>
-            </div>
-            <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg">
-              <Clock className="w-4 h-4 text-blue-600 flex-shrink-0" />
-              <span className="text-xs sm:text-sm font-medium">Solo 20 minutos</span>
-            </div>
-            <div className="flex items-center gap-2 p-3 bg-purple-50 rounded-lg">
-              <Calendar className="w-4 h-4 text-purple-600 flex-shrink-0" />
-              <span className="text-xs sm:text-sm font-medium">Sin compromiso</span>
-            </div>
-          </div>
+          {!showCalendly ? (
+            <div className="space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="flex items-center gap-2 p-3 bg-green-50 rounded-lg">
+                  <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm font-medium">Activación inmediata</span>
+                </div>
+                <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg">
+                  <Clock className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm font-medium">Empiezas hoy</span>
+                </div>
+              </div>
 
-          <div className="bg-white rounded-lg border shadow-sm overflow-hidden">
-            <div 
-              id="calendly-embed-element-low"
-              style={{ minWidth: '320px', width: '100%', height: '700px' }}
-            ></div>
-          </div>
+              <Button asChild className="w-full h-11 text-base">
+                <a href="https://onboarding.ruka.ai" target="_blank" rel="noopener noreferrer">
+                  Levantar mi plataforma de inmediato
+                </a>
+              </Button>
 
-          <div className="text-center text-sm text-muted-foreground mt-4">
-            <p>¿Prefieres continuar sin agendar? <a href="/" className="text-primary hover:underline">Volver al inicio</a></p>
-          </div>
+              <div className="text-center">
+                <button
+                  type="button"
+                  onClick={() => setShowCalendly(true)}
+                  className="text-xs text-muted-foreground hover:text-primary hover:underline transition-colors"
+                >
+                  o agendar una llamada
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+                <div className="flex items-center gap-2 p-3 bg-green-50 rounded-lg">
+                  <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm font-medium">Configuración guiada</span>
+                </div>
+                <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg">
+                  <Clock className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm font-medium">Solo 20 minutos</span>
+                </div>
+                <div className="flex items-center gap-2 p-3 bg-purple-50 rounded-lg">
+                  <Calendar className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm font-medium">Sin compromiso</span>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg border shadow-sm overflow-hidden">
+                <div
+                  id="calendly-embed-element-low"
+                  style={{ minWidth: '320px', width: '100%', height: '700px' }}
+                ></div>
+              </div>
+
+              <div className="text-center text-sm text-muted-foreground mt-4">
+                <p>
+                  ¿Prefieres activar de inmediato?{" "}
+                  <a href="https://onboarding.ruka.ai" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                    Ir a onboarding.ruka.ai
+                  </a>
+                </p>
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>

@@ -69,9 +69,11 @@ const CalendlyIntegration = ({ leadData }: CalendlyIntegrationProps) => {
     };
   }, [leadData]);
 
-  const formatInvoiceCount = (count: number) => {
-    if (count >= 1000) return "+1.000";
-    return count.toString();
+  const getInvoiceRangeLabel = (count: number) => {
+    if (count === 75 || count < 150) return "menos de 150";
+    if (count === 225 || count < 300) return "150 a 300";
+    if (count === 450 || count < 600) return "300 a 600";
+    return "más de 600";
   };
 
   return (
@@ -79,7 +81,7 @@ const CalendlyIntegration = ({ leadData }: CalendlyIntegrationProps) => {
       <div className="text-center mb-6">
         <h1 className="text-2xl md:text-3xl font-bold mb-2">¡Perfecto! Agendemos una llamada</h1>
         <p className="text-muted-foreground">
-          Con {formatInvoiceCount(leadData.invoiceCount)} facturas mensuales, te ayudaremos a configurar tu plataforma de manera personalizada.
+          Con un volumen de {getInvoiceRangeLabel(leadData.invoiceCount)} facturas mensuales, te ayudaremos a configurar tu plataforma de manera personalizada.
         </p>
       </div>
 

@@ -281,9 +281,10 @@ const OnboardingSuccess = () => {
                 <div className="w-auto h-10 relative mb-6">
                   <img src="/logo.png" alt="Ruka.ai" className="h-10 w-auto object-contain object-left" />
                 </div>
-                <h2 className="text-2xl xl:text-3xl font-bold mb-4">¡Excelente! Configuremos tu plataforma</h2>
+                <h2 className="text-2xl xl:text-3xl font-bold mb-4">¡Excelente! Ya puedes activar tu plataforma</h2>
                 <p className="text-slate-600 mb-6 text-sm xl:text-base">
-                  Tu volumen de facturas es perfecto para una configuración rápida y eficiente. Te ayudaremos a aprovechar al máximo todas las funcionalidades.
+                  Con este volumen puedes levantar tu cuenta de inmediato en onboarding.ruka.ai.
+                  Si prefieres, también puedes agendar una llamada como alternativa.
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
@@ -291,8 +292,8 @@ const OnboardingSuccess = () => {
                       <CheckCircle2 className="h-5 w-5 text-green-600" />
                     </div>
                     <div>
-                      <h3 className="font-medium text-lg">Configuración guiada</h3>
-                      <p className="text-slate-600 text-sm">Te guiamos paso a paso para optimizar tu configuración.</p>
+                      <h3 className="font-medium text-lg">Activación inmediata</h3>
+                      <p className="text-slate-600 text-sm">Puedes empezar hoy mismo sin esperar una reunión.</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -300,8 +301,8 @@ const OnboardingSuccess = () => {
                       <Clock className="h-5 w-5 text-blue-600" />
                     </div>
                     <div>
-                      <h3 className="font-medium text-lg">Proceso eficiente</h3>
-                      <p className="text-slate-600 text-sm">Solo necesitamos 20 minutos para dejarlo todo funcionando.</p>
+                      <h3 className="font-medium text-lg">Llamada opcional</h3>
+                      <p className="text-slate-600 text-sm">Si necesitas apoyo, puedes agendar una llamada en segundo plano.</p>
                     </div>
                   </div>
                 </div>
@@ -390,4 +391,3 @@ const OnboardingSuccess = () => {
 };
 
 export default OnboardingSuccess;
-
