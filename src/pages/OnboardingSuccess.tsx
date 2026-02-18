@@ -351,35 +351,35 @@ const OnboardingSuccess = () => {
       <Helmet>
         <title>Configura tu cuenta | Ruka.ai</title>
       </Helmet>
-      <main className="min-h-screen flex flex-col md:flex-row relative">
+      <main className="relative min-h-screen flex flex-col md:h-screen md:flex-row md:overflow-hidden">
         {debugBanner}
-        <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col overflow-hidden">
+        <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-primary/[0.08] via-white to-primary/[0.02] p-6 xl:p-8 flex-col overflow-hidden border-r border-primary/10">
           <div className="max-w-md mx-auto flex-1">
             <InvoiceVolumeInfo />
           </div>
         </div>
-        <div className="flex-1 flex items-center justify-center p-6 md:p-12 bg-white">
-          <div className="w-full max-w-md">
-            <div className="md:hidden mb-8 flex flex-col items-center text-center">
-              <img src="/logo.png" alt="Ruka.ai" className="h-10 mb-4" />
-              <h1 className="text-2xl font-bold mb-2">Configura tu cuenta</h1>
-              <p className="text-slate-600 text-sm mb-6">Indícanos tu volumen mensual de facturas para enviarte al calendario correcto.</p>
+        <div className="flex-1 flex items-center justify-center p-4 md:p-7 bg-white">
+          <div className="w-full max-w-[29rem]">
+            <div className="md:hidden mb-5 flex flex-col items-center text-center">
+              <img src="/logo.png" alt="Ruka.ai" className="h-9 mb-3" />
+              <h1 className="text-xl font-semibold tracking-tight mb-1.5">Configura tu cuenta</h1>
+              <p className="text-slate-600 text-sm mb-2">Indícanos tu volumen mensual para activar tu flujo ideal.</p>
             </div>
-            <Card className="border shadow-md">
-              <CardHeader>
+            <Card className="border border-primary/15 rounded-2xl shadow-[0_24px_42px_-30px_rgba(77,104,235,0.65)]">
+              <CardHeader className="pb-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Receipt className="w-6 h-6 text-primary" />
+                  <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Receipt className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <CardTitle>Volumen de facturas</CardTitle>
-                    <CardDescription>Selecciona cuántas facturas de compra recibes cada mes</CardDescription>
+                    <CardTitle className="text-[1.35rem] tracking-tight">Volumen de facturas</CardTitle>
+                    <CardDescription>Selecciona cuántas facturas de compra recibes por mes</CardDescription>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="pb-8">
+              <CardContent className="pb-6 pt-0">
                 <InvoiceCountSelector selectedCount={invoiceCount} onChange={setInvoiceCount} />
-                <Button id="next-button-step-0" onClick={handleContinue} disabled={isLoading} className="w-full mt-8 gap-2">
+                <Button id="next-button-step-0" onClick={handleContinue} disabled={isLoading} className="w-full mt-6 gap-2 h-11">
                   {!isLoading ? (
                     "Continuar"
                   ) : (
@@ -389,7 +389,7 @@ const OnboardingSuccess = () => {
                     </span>
                   )}
                 </Button>
-                <div className="mt-8 text-center">
+                <div className="mt-5 text-center">
                   <a
                     href="https://wa.me/56981213314"
                     target="_blank"

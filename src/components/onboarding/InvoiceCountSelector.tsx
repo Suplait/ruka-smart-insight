@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Info } from 'lucide-react';
+import { Info, Sparkles } from 'lucide-react';
 import { Slider } from "@/components/ui/slider";
+import { cn } from "@/lib/utils";
 
 interface InvoiceCountSelectorProps {
   selectedCount: number;
@@ -32,41 +33,58 @@ const InvoiceCountSelector = ({
 
   const currentRangeIndex = getCurrentRangeIndex(selectedCount);
   const displayIndex = currentRangeIndex >= 0 ? currentRangeIndex : 0;
+  const compactRangeLabels = ["<150", "150-300", "300-600", ">600"];
 
   return (
-    <div className="space-y-6">
-      <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
+    <div className="space-y-4">
+      <div className="rounded-2xl border border-primary/20 bg-primary/[0.06] p-3.5">
         <div className="flex gap-3">
-          <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
+          <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-white text-primary shadow-sm">
+            <Info className="h-4 w-4" />
+          </div>
           <div>
-            <h4 className="font-medium text-blue-700 mb-1">¿Por qué necesitamos esto?</h4>
-            <p className="text-sm text-blue-600">
-              El volumen de facturas determina la configuración óptima de tu plataforma. 
+            <h4 className="mb-1 text-sm font-semibold text-slate-900">¿Por qué te pedimos este dato?</h4>
+            <p className="text-[13px] leading-relaxed text-slate-600">
+              El volumen de facturas determina la configuración ideal de tu plataforma.
               Si no estás seguro del número exacto, puedes poner un aproximado.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_18px_35px_-28px_rgba(77,104,235,0.55)]">
         <div className="text-center">
-          <h3 className="text-xl font-semibold mb-2">{ranges[displayIndex].label}</h3>
+          <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-primary">
+            <Sparkles className="h-3.5 w-3.5" />
+            Selección actual
+          </div>
+          <h3 className="mb-1 text-xl font-semibold tracking-tight text-slate-900">{ranges[displayIndex].label}</h3>
+          <p className="text-xs text-slate-500">Mueve el selector para ajustar tu rango mensual.</p>
         </div>
 
-        <div className="px-4">
-          <Slider 
-            value={[displayIndex]} 
-            onValueChange={handleSliderChange} 
-            max={3} 
-            min={0} 
-            step={1} 
-            className="w-full" 
+        <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3.5">
+          <Slider
+            value={[displayIndex]}
+            onValueChange={handleSliderChange}
+            max={3}
+            min={0}
+            step={1}
+            className="w-full"
           />
-          <div className="flex justify-between text-xs text-muted-foreground mt-2">
-            <span>&lt;150</span>
-            <span>150-300</span>
-            <span>300-600</span>
-            <span>&gt;600</span>
+          <div className="mt-3.5 grid grid-cols-4 gap-1.5 text-center">
+            {compactRangeLabels.map((label, index) => (
+              <div
+                key={label}
+                className={cn(
+                  "rounded-lg border px-2 py-1.5 text-[11px] font-medium transition-colors",
+                  displayIndex === index
+                    ? "border-primary/30 bg-primary/10 text-primary"
+                    : "border-slate-200 bg-white text-slate-500"
+                )}
+              >
+                {label}
+              </div>
+            ))}
           </div>
         </div>
       </div>
