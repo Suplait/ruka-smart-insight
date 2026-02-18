@@ -23,20 +23,22 @@ import InvoiceVolumeInfo from "@/components/onboarding/InvoiceVolumeInfo";
 import WhatsappButton from "@/components/WhatsappButton";
 import { saveFormData, validateSiiCredentials, generateSubdomain } from "@/services/onboardingService";
 import { supabase } from "@/integrations/supabase/client";
+import { ONBOARDING_DEBUG_QUERY_PARAM, isOnboardingDebugEnabledFromSearch } from "@/utils/onboardingDebug";
 
 const SLIDE_INTERVAL = 2500;
 
 const OnboardingSuccess = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const isDebugMode = Boolean(location.state?.debugMode || isOnboardingDebugEnabledFromSearch(location.search));
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
   const [showCalendlyLow, setShowCalendlyLow] = useState(false);
   const totalSteps = 4; // invoices, billing, subdomain, sii
-  const restaurantName = location.state?.restaurantName || '';
-  const leadId = location.state?.leadId;
+  const restaurantName = location.state?.restaurantName || (isDebugMode ? 'demo-empresa' : '');
+  const leadId = location.state?.leadId || (isDebugMode ? 'debug-ux' : undefined);
   
   // Extract user information from location state
   const firstName = location.state?.firstName || '';
@@ -58,6 +60,17 @@ const OnboardingSuccess = () => {
   // Fetch the lead data from Supabase if we have a leadId but missing user info
   useEffect(() => {
     const fetchLeadData = async () => {
+      if (isDebugMode) {
+        setLeadData({
+          firstName,
+          lastName,
+          email,
+          ciudad,
+          whatsapp,
+          nombreRestaurante: restaurantName
+        });
+        return;
+      }
       if (leadId) {
         try {
           console.log("Fetching lead data from Supabase in OnboardingSuccess for leadId:", leadId);
@@ -129,17 +142,18 @@ const OnboardingSuccess = () => {
     };
     
     fetchLeadData();
-  }, [leadId, firstName, lastName, email, ciudad, whatsapp, restaurantName]);
+  }, [isDebugMode, leadId, firstName, lastName, email, ciudad, whatsapp, restaurantName]);
   
   useEffect(() => {
     pushToDataLayer('onboarding_page_view', { 
       leadId: leadId,
-      restaurantName: restaurantName 
+      restaurantName: restaurantName,
+      debug_mode: isDebugMode
     });
-  }, [leadId, restaurantName]);
+  }, [leadId, restaurantName, isDebugMode]);
 
   useEffect(() => {
-    if (!leadId) {
+    if (!leadId && !isDebugMode) {
       toast({
         title: "Error",
         description: "Error al cargar los datos. Por favor intenta registrarte nuevamente.",
@@ -151,7 +165,7 @@ const OnboardingSuccess = () => {
 
     // Debug console log para verificar los datos recibidos del location state
     console.log("Location state in onboarding:", location.state);
-  }, [leadId, navigate, location.state]);
+  }, [leadId, isDebugMode, navigate, location.state]);
 
   const suggestedSubdomain = generateSubdomain(restaurantName);
 
@@ -187,6 +201,17 @@ const OnboardingSuccess = () => {
 
   const saveInvoiceData = async (currentStep: number, invoiceCount: number) => {
     try {
+      if (isDebugMode) {
+        await new Promise(resolve => setTimeout(resolve, 250));
+        pushToDataLayer('onboarding_step_1_invoices_debug', {
+          leadId: 'debug-ux',
+          step: currentStep + 1,
+          stepName: 'invoice-count-selected',
+          facturas_compra_mes: invoiceCount,
+          requires_calendly: invoiceCount >= 150
+        });
+        return true;
+      }
       if (!leadId) return false;
 
       const updateData = {
@@ -249,6 +274,23 @@ const OnboardingSuccess = () => {
     }
   };
 
+  const saveStepData = async (stepToSave: number) => {
+    if (isDebugMode) {
+      await new Promise(resolve => setTimeout(resolve, 250));
+      pushToDataLayer('onboarding_step_debug_saved', {
+        leadId: 'debug-ux',
+        step: stepToSave + 1,
+        sistema_facturacion: formData.sistema,
+        sistema_custom: formData.sistemaCustom,
+        subdominio: formData.subdominio,
+        rut: formData.rut,
+        facturas_compra_mes: formData.facturas
+      });
+      return true;
+    }
+    return saveFormData(leadId, stepToSave, formData, restaurantName);
+  };
+
   const handleNext = async () => {
     setIsLoading(true);
     
@@ -268,7 +310,7 @@ const OnboardingSuccess = () => {
     
     if (currentStep === 1) {
       // Billing system step (now second step)
-      const saved = await saveFormData(leadId, currentStep, formData, restaurantName);
+      const saved = await saveStepData(currentStep);
       setIsLoading(false);
       if (saved) {
         // Si tiene menos de 150 facturas, mostrar Calendly para volumen bajo
@@ -293,7 +335,7 @@ const OnboardingSuccess = () => {
         return;
       }
       
-      const saved = await saveFormData(leadId, currentStep, formData, restaurantName);
+      const saved = await saveStepData(currentStep);
       setIsLoading(false);
       if (saved) {
         setCurrentStep(prev => prev + 1);
@@ -325,26 +367,28 @@ const OnboardingSuccess = () => {
       }
       
       try {
-        const validationResult = await validateSiiCredentials(formData.rut, formData.clave);
-        if (!validationResult.success) {
-          setIsLoading(false);
-          toast({
-            title: "Credenciales inválidas",
-            description: "Las credenciales del SII no son válidas. Por favor verifica e intenta nuevamente.",
-            variant: "destructive"
-          });
-          return;
+        if (!isDebugMode) {
+          const validationResult = await validateSiiCredentials(formData.rut, formData.clave);
+          if (!validationResult.success) {
+            setIsLoading(false);
+            toast({
+              title: "Credenciales inválidas",
+              description: "Las credenciales del SII no son válidas. Por favor verifica e intenta nuevamente.",
+              variant: "destructive"
+            });
+            return;
+          }
         }
         
-        const saved = await saveFormData(leadId, currentStep, formData, restaurantName);
+        const saved = await saveStepData(currentStep);
         if (!saved) {
           setIsLoading(false);
           return;
         }
         
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, isDebugMode ? 400 : 2000));
         
-        if (leadId) {
+        if (!isDebugMode && leadId) {
           const numericLeadId = Number(leadId);
           const leadDataForSlack: Partial<Lead> = {
             sistema_facturacion: formData.sistema,
@@ -363,6 +407,13 @@ const OnboardingSuccess = () => {
             ...leadDataForSlack
           });
         }
+        if (isDebugMode) {
+          pushToDataLayer('onboarding_completed_debug', {
+            leadId: 'debug-ux',
+            restaurantName: restaurantName,
+            subdomain: formData.subdominio
+          });
+        }
         
         // Create a complete state object with all user data to pass to the success page
         setIsComplete(true);
@@ -377,6 +428,8 @@ const OnboardingSuccess = () => {
           ciudad: leadData.ciudad,
           whatsapp: leadData.whatsapp,
           restaurantName: leadData.nombreRestaurante,
+          leadId: leadId || 'debug-ux',
+          debugMode: isDebugMode,
           formData: {
             ...formData,
             siiConnected: true
@@ -386,7 +439,7 @@ const OnboardingSuccess = () => {
         console.log("Navigating to success with complete user data:", completeUserData);
         
         // Navigate with the complete data
-        navigate('/onboarding-success', { 
+        navigate(isDebugMode ? `/onboarding-success?${ONBOARDING_DEBUG_QUERY_PARAM}=1` : '/onboarding-success', { 
           state: completeUserData,
           replace: true
         });
@@ -411,6 +464,12 @@ const OnboardingSuccess = () => {
   const handleContinueFromCalendlyLow = () => {
     setShowCalendlyLow(false);
     setCurrentStep(2); // Continuar al paso de subdominio
+  };
+
+  const handleContinueWithoutCalendlyDebug = () => {
+    setShowCalendly(false);
+    setShowCalendlyLow(false);
+    setCurrentStep(2);
   };
 
   const getLeftSideContent = () => {
@@ -480,6 +539,11 @@ const OnboardingSuccess = () => {
         </Helmet>
         
         <main className="min-h-screen flex flex-col lg:flex-row relative">
+          {isDebugMode && (
+            <div className="fixed top-4 left-4 z-50 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-800">
+              Modo Debug UX: sin guardar en base de datos
+            </div>
+          )}
           <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-6 xl:p-8 flex-col overflow-hidden">
             <div className="max-w-md mx-auto flex-1">
               <div className="h-full flex flex-col justify-center">
@@ -522,6 +586,16 @@ const OnboardingSuccess = () => {
           
           <div className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8 xl:p-12 bg-white overflow-auto">
             <div className="w-full max-w-4xl">
+              {isDebugMode && (
+                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3">
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="text-sm text-amber-800">Modo debug activo: puedes continuar sin agendar para seguir probando UX.</p>
+                    <Button variant="outline" onClick={handleContinueWithoutCalendlyDebug}>
+                      Continuar flujo
+                    </Button>
+                  </div>
+                </div>
+              )}
               <CalendlyIntegration 
                 leadData={{
                   firstName: leadData.firstName,
@@ -547,6 +621,11 @@ const OnboardingSuccess = () => {
         </Helmet>
         
         <main className="min-h-screen flex flex-col lg:flex-row relative">
+          {isDebugMode && (
+            <div className="fixed top-4 left-4 z-50 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-800">
+              Modo Debug UX: sin guardar en base de datos
+            </div>
+          )}
           <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-6 xl:p-8 flex-col overflow-hidden">
             <div className="max-w-md mx-auto flex-1">
               <div className="h-full flex flex-col justify-center">
@@ -599,6 +678,16 @@ const OnboardingSuccess = () => {
           
           <div className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8 xl:p-12 bg-white overflow-auto">
             <div className="w-full max-w-4xl">
+              {isDebugMode && (
+                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3">
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="text-sm text-amber-800">Modo debug activo: puedes continuar sin agendar para seguir probando UX.</p>
+                    <Button variant="outline" onClick={handleContinueWithoutCalendlyDebug}>
+                      Continuar flujo
+                    </Button>
+                  </div>
+                </div>
+              )}
               <CalendlyIntegrationLow 
                 leadData={{
                   firstName: leadData.firstName,
@@ -623,6 +712,11 @@ const OnboardingSuccess = () => {
       </Helmet>
       
       <main className="min-h-screen flex flex-col md:flex-row relative">
+        {isDebugMode && (
+          <div className="fixed top-4 left-4 z-50 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-800">
+            Modo Debug UX: sin guardar en base de datos
+          </div>
+        )}
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex-col overflow-hidden">
           <div className="max-w-md mx-auto flex-1">
             <AnimatePresence mode="wait">

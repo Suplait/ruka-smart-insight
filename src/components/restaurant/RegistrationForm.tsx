@@ -10,6 +10,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { supabase } from "@/integrations/supabase/client";
 import { pushToDataLayer, trackFormSubmission, trackRegistration } from "@/utils/dataLayer";
 import { getStoredUTMParams } from "@/utils/utmTracker";
+import { ONBOARDING_DEBUG_QUERY_PARAM, isOnboardingDebugEnabledFromSearch } from "@/utils/onboardingDebug";
 interface FormData {
   firstName: string;
   lastName: string;
@@ -42,12 +43,13 @@ export default function RegistrationForm({
     acceptTerms: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isDebugMode = isOnboardingDebugEnabledFromSearch(window.location.search);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     pushToDataLayer('registration_form_submit_attempt', {
       has_terms_accepted: formData.acceptTerms
     });
-    if (!formData.acceptTerms) {
+    if (!formData.acceptTerms && !isDebugMode) {
       pushToDataLayer('registration_validation_error', {
         error_type: 'terms_not_accepted'
       });
@@ -60,6 +62,25 @@ export default function RegistrationForm({
     }
     try {
       setIsSubmitting(true);
+      if (isDebugMode) {
+        pushToDataLayer('registration_debug_mode_start', {
+          page_path: pagePath || window.location.pathname,
+          restaurant_name: formData.nombreRestaurante
+        });
+        navigate(`/onboarding-success?${ONBOARDING_DEBUG_QUERY_PARAM}=1`, {
+          state: {
+            restaurantName: formData.nombreRestaurante,
+            leadId: 'debug-ux',
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            ciudad: formData.ciudad,
+            whatsapp: formData.whatsapp.replace(/^\+56/, ''),
+            debugMode: true
+          }
+        });
+        return;
+      }
       const whatsappNumber = formData.whatsapp ? `+56${formData.whatsapp.replace(/^\+56/, '')}` : '';
       trackFormSubmission('restaurant_registration', {
         email_domain: formData.email.split('@')[1],
@@ -247,10 +268,10 @@ export default function RegistrationForm({
 
       <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Input id="registration-first-name" name="firstName" placeholder="Nombre" value={formData.firstName} onChange={handleChange} required className="h-10" disabled={isSubmitting} />
-          <Input id="registration-last-name" name="lastName" placeholder="Apellido" value={formData.lastName} onChange={handleChange} required className="h-10" disabled={isSubmitting} />
+          <Input id="registration-first-name" name="firstName" placeholder="Nombre" value={formData.firstName} onChange={handleChange} required={!isDebugMode} className="h-10" disabled={isSubmitting} />
+          <Input id="registration-last-name" name="lastName" placeholder="Apellido" value={formData.lastName} onChange={handleChange} required={!isDebugMode} className="h-10" disabled={isSubmitting} />
         </div>
-        <Input id="registration-email" name="email" type="email" placeholder="Email" value={formData.email} onChange={handleChange} required className="h-10" disabled={isSubmitting} />
+        <Input id="registration-email" name="email" type="email" placeholder="Email" value={formData.email} onChange={handleChange} required={!isDebugMode} className="h-10" disabled={isSubmitting} />
         <div className="relative">
           <TooltipProvider>
             <Tooltip>
@@ -269,8 +290,8 @@ export default function RegistrationForm({
             </Tooltip>
           </TooltipProvider>
         </div>
-        <Input id="registration-city" name="ciudad" placeholder="Ciudad" value={formData.ciudad} onChange={handleChange} required className="h-10" disabled={isSubmitting} />
-        <Input id="registration-restaurant-name" name="nombreRestaurante" placeholder="Nombre de tu Empresa" value={formData.nombreRestaurante} onChange={handleChange} required className="h-10" disabled={isSubmitting} />
+        <Input id="registration-city" name="ciudad" placeholder="Ciudad" value={formData.ciudad} onChange={handleChange} required={!isDebugMode} className="h-10" disabled={isSubmitting} />
+        <Input id="registration-restaurant-name" name="nombreRestaurante" placeholder="Nombre de tu Empresa" value={formData.nombreRestaurante} onChange={handleChange} required={!isDebugMode} className="h-10" disabled={isSubmitting} />
         
         <div className="relative">
           <TooltipProvider>
@@ -306,7 +327,7 @@ export default function RegistrationForm({
         </div>
         
         <div className="space-y-3">
-          <Button id="registration-submit" type="submit" className="w-full gap-2 h-10 text-base" disabled={!formData.acceptTerms || isSubmitting}>
+          <Button id="registration-submit" type="submit" className="w-full gap-2 h-10 text-base" disabled={(!formData.acceptTerms && !isDebugMode) || isSubmitting}>
             {isSubmitting ? <>Procesando...</> : <>
                 Agendar Llamada <ArrowRight className="w-4 h-4" />
               </>}
