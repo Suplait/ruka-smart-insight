@@ -353,25 +353,28 @@ const OnboardingSuccess = () => {
       </Helmet>
       <main className="relative min-h-screen flex flex-col md:h-screen md:flex-row md:overflow-hidden">
         {debugBanner}
-        <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-primary/[0.08] via-white to-primary/[0.02] p-6 xl:p-8 flex-col overflow-hidden border-r border-primary/10">
+        <div className="hidden md:flex md:w-1/2 relative bg-[linear-gradient(165deg,#f2f6ff_0%,#f8faff_55%,#ffffff_100%)] p-6 xl:p-8 flex-col overflow-hidden border-r border-primary/12">
           <div className="max-w-md mx-auto flex-1">
             <InvoiceVolumeInfo />
           </div>
         </div>
-        <div className="flex-1 flex items-center justify-center p-4 md:p-7 bg-white">
+        <div className="flex-1 flex items-center justify-center p-4 md:p-7 bg-[linear-gradient(180deg,#f9fbff_0%,#ffffff_32%)]">
           <div className="w-full max-w-[29rem]">
             <div className="md:hidden mb-5 flex flex-col items-center text-center">
               <img src="/logo.png" alt="Ruka.ai" className="h-9 mb-3" />
               <h1 className="text-xl font-semibold tracking-tight mb-1.5">Configura tu cuenta</h1>
               <p className="text-slate-600 text-sm mb-2">Indícanos tu volumen mensual para activar tu flujo ideal.</p>
             </div>
-            <Card className="border border-primary/15 rounded-2xl shadow-[0_24px_42px_-30px_rgba(77,104,235,0.65)]">
+            <Card className="border border-primary/15 rounded-2xl shadow-[0_26px_44px_-30px_rgba(77,104,235,0.65)]">
               <CardHeader className="pb-4">
                 <div className="flex items-center gap-4">
                   <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
                     <Receipt className="w-5 h-5 text-primary" />
                   </div>
                   <div>
+                    <span className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary mb-1">
+                      Zona de acción
+                    </span>
                     <CardTitle className="text-[1.35rem] tracking-tight">Volumen de facturas</CardTitle>
                     <CardDescription>Selecciona cuántas facturas de compra recibes por mes</CardDescription>
                   </div>
