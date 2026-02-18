@@ -31,6 +31,7 @@ const OnboardingSuccess = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showCalendlyHigh, setShowCalendlyHigh] = useState(false);
   const [showCalendlyLow, setShowCalendlyLow] = useState(false);
+  const [showLowCalendlyCall, setShowLowCalendlyCall] = useState(false);
   const [invoiceCount, setInvoiceCount] = useState(75);
 
   const restaurantName = location.state?.restaurantName || (isDebugMode ? "demo-empresa" : "");
@@ -198,6 +199,7 @@ const OnboardingSuccess = () => {
       return;
     }
 
+    setShowLowCalendlyCall(false);
     setShowCalendlyLow(true);
   };
 
@@ -275,7 +277,23 @@ const OnboardingSuccess = () => {
         </Helmet>
         <main className="min-h-screen flex flex-col lg:flex-row relative">
           {debugBanner}
-          <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-6 xl:p-8 flex-col overflow-hidden">
+          <div className="lg:w-1/2 flex items-center justify-center p-4 md:p-6 lg:p-8 xl:p-12 bg-white overflow-auto">
+            <div className="w-full max-w-4xl">
+              <CalendlyIntegrationLow
+                leadData={{
+                  firstName: leadData.firstName,
+                  lastName: leadData.lastName,
+                  email: leadData.email,
+                  restaurantName: leadData.nombreRestaurante,
+                  invoiceCount,
+                  whatsapp: leadData.whatsapp,
+                }}
+                showCalendly={showLowCalendlyCall}
+                imageSrc="/rukito-bienvenida-v2.jpg"
+              />
+            </div>
+          </div>
+          <div className="lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-6 xl:p-8 flex flex-col overflow-hidden border-t lg:border-t-0 lg:border-l border-slate-200/60">
             <div className="max-w-md mx-auto flex-1">
               <div className="h-full flex flex-col justify-center">
                 <div className="w-auto h-10 relative mb-6">
@@ -283,8 +301,7 @@ const OnboardingSuccess = () => {
                 </div>
                 <h2 className="text-2xl xl:text-3xl font-bold mb-4">¡Excelente! Ya puedes activar tu plataforma</h2>
                 <p className="text-slate-600 mb-6 text-sm xl:text-base">
-                  Con este volumen puedes levantar tu cuenta de inmediato en onboarding.ruka.ai.
-                  Si prefieres, también puedes agendar una llamada como alternativa.
+                  Tu cuenta está lista para activación inmediata.
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
@@ -296,31 +313,32 @@ const OnboardingSuccess = () => {
                       <p className="text-slate-600 text-sm">Puedes empezar hoy mismo sin esperar una reunión.</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                      <Clock className="h-5 w-5 text-blue-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-lg">Llamada opcional</h3>
-                      <p className="text-slate-600 text-sm">Si necesitas apoyo, puedes agendar una llamada en segundo plano.</p>
-                    </div>
-                  </div>
+                </div>
+                <div className="mt-8 space-y-3">
+                  <Button asChild size="lg" className="w-full h-12 rounded-xl text-base font-semibold">
+                    <a href="https://onboarding.ruka.ai">
+                      Levantar mi plataforma ahora
+                    </a>
+                  </Button>
+                  {!showLowCalendlyCall ? (
+                    <button
+                      type="button"
+                      onClick={() => setShowLowCalendlyCall(true)}
+                      className="w-full text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors"
+                    >
+                      o agendar una llamada de apoyo
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setShowLowCalendlyCall(false)}
+                      className="w-full text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors"
+                    >
+                      ocultar agenda
+                    </button>
+                  )}
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8 xl:p-12 bg-white overflow-auto">
-            <div className="w-full max-w-4xl">
-              <CalendlyIntegrationLow
-                leadData={{
-                  firstName: leadData.firstName,
-                  lastName: leadData.lastName,
-                  email: leadData.email,
-                  restaurantName: leadData.nombreRestaurante,
-                  invoiceCount,
-                  whatsapp: leadData.whatsapp,
-                }}
-              />
             </div>
           </div>
         </main>
