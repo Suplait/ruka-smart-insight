@@ -77,16 +77,16 @@ const CalendlyIntegration = ({ leadData }: CalendlyIntegrationProps) => {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <div className="text-center mb-6">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2">¡Perfecto! Agendemos una llamada</h1>
+    <div className="w-full max-w-2xl mx-auto lg:h-full lg:flex lg:flex-col">
+      <div className="text-center mb-4">
+        <h1 className="text-xl md:text-2xl font-bold mb-1.5">¡Perfecto! Agendemos una llamada</h1>
         <p className="text-muted-foreground">
           Con un volumen de {getInvoiceRangeLabel(leadData.invoiceCount)} facturas mensuales, te ayudaremos a configurar tu plataforma de manera personalizada.
         </p>
       </div>
 
-      <Card className="border shadow-md mb-6">
-        <CardHeader>
+      <Card className="border shadow-md mb-4 lg:mb-0 lg:flex-1 lg:min-h-0">
+        <CardHeader className="pb-4">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
               <Calendar className="w-6 h-6 text-primary" />
@@ -97,30 +97,30 @@ const CalendlyIntegration = ({ leadData }: CalendlyIntegrationProps) => {
             </div>
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-            <div className="flex items-center gap-2 p-3 bg-green-50 rounded-lg">
+        <CardContent className="lg:flex-1 lg:min-h-0 lg:flex lg:flex-col">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-4">
+            <div className="flex items-center gap-2 p-2.5 bg-green-50 rounded-lg">
               <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
-              <span className="text-xs sm:text-sm font-medium">Configuración personalizada</span>
+              <span className="text-xs font-medium">Configuración personalizada</span>
             </div>
-            <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg">
+            <div className="flex items-center gap-2 p-2.5 bg-blue-50 rounded-lg">
               <Clock className="w-4 h-4 text-blue-600 flex-shrink-0" />
-              <span className="text-xs sm:text-sm font-medium">Solo 30 minutos</span>
+              <span className="text-xs font-medium">Solo 30 minutos</span>
             </div>
-            <div className="flex items-center gap-2 p-3 bg-purple-50 rounded-lg">
+            <div className="flex items-center gap-2 p-2.5 bg-purple-50 rounded-lg">
               <Calendar className="w-4 h-4 text-purple-600 flex-shrink-0" />
-              <span className="text-xs sm:text-sm font-medium">Sin compromiso</span>
+              <span className="text-xs font-medium">Sin compromiso</span>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg border shadow-sm overflow-hidden">
+          <div className="bg-white rounded-lg border shadow-sm overflow-hidden lg:flex-1 lg:min-h-0">
             <div 
               id="calendly-embed-element"
-              style={{ minWidth: '320px', width: '100%', height: '700px' }}
+              style={{ minWidth: '320px', width: '100%', height: 'clamp(360px, 56vh, 560px)' }}
             ></div>
           </div>
 
-          <div className="text-center text-sm text-muted-foreground mt-4">
+          <div className="text-center text-sm text-muted-foreground mt-3">
             <p>¿Prefieres continuar sin agendar? <a href="/" className="text-primary hover:underline">Volver al inicio</a></p>
           </div>
         </CardContent>

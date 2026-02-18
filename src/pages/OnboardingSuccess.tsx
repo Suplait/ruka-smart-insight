@@ -203,6 +203,14 @@ const OnboardingSuccess = () => {
     setShowCalendlyLow(true);
   };
 
+  const selfOnboardingUrl = (() => {
+    const params = new URLSearchParams();
+    if (leadData.email?.trim()) params.set("correo", leadData.email.trim());
+    if (leadData.nombreRestaurante?.trim()) params.set("business_name", leadData.nombreRestaurante.trim());
+    const query = params.toString();
+    return query ? `https://onboarding.ruka.ai/?${query}` : "https://onboarding.ruka.ai";
+  })();
+
   const debugBanner = isDebugMode ? (
     <div className="fixed top-4 left-4 z-50 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-800">
       Modo Debug UX: sin guardar en base de datos
@@ -215,19 +223,19 @@ const OnboardingSuccess = () => {
         <Helmet>
           <title>Agenda tu llamada | Ruka.ai</title>
         </Helmet>
-        <main className="min-h-screen flex flex-col lg:flex-row relative">
+        <main className="relative min-h-screen flex flex-col lg:h-screen lg:flex-row lg:overflow-hidden">
           {debugBanner}
-          <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-6 xl:p-8 flex-col overflow-hidden">
+          <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-5 xl:p-7 flex-col overflow-hidden">
             <div className="max-w-md mx-auto flex-1">
               <div className="h-full flex flex-col justify-center">
-                <div className="w-auto h-10 relative mb-6">
+                <div className="w-auto h-10 relative mb-5">
                   <img src="/logo.png" alt="Ruka.ai" className="h-10 w-auto object-contain object-left" />
                 </div>
-                <h2 className="text-2xl xl:text-3xl font-bold mb-4">¡Perfecto! Tu volumen requiere atención personalizada</h2>
-                <p className="text-slate-600 mb-6 text-sm xl:text-base">
+                <h2 className="text-2xl xl:text-[2rem] font-bold mb-3">¡Perfecto! Tu volumen requiere atención personalizada</h2>
+                <p className="text-slate-600 mb-5 text-sm xl:text-base">
                   Con más de 150 facturas mensuales, necesitas una configuración especializada para obtener el máximo beneficio de nuestra plataforma.
                 </p>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
                       <CheckCircle2 className="h-5 w-5 text-green-600" />
@@ -250,8 +258,8 @@ const OnboardingSuccess = () => {
               </div>
             </div>
           </div>
-          <div className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8 xl:p-12 bg-white overflow-auto">
-            <div className="w-full max-w-4xl">
+          <div className="flex-1 flex items-center justify-center p-3 md:p-4 lg:p-5 xl:p-6 bg-white">
+            <div className="w-full max-w-4xl lg:h-full">
               <CalendlyIntegration
                 leadData={{
                   firstName: leadData.firstName,
@@ -275,10 +283,10 @@ const OnboardingSuccess = () => {
         <Helmet>
           <title>Agenda tu configuración | Ruka.ai</title>
         </Helmet>
-        <main className="min-h-screen flex flex-col lg:flex-row relative">
+        <main className="relative min-h-screen flex flex-col lg:h-screen lg:flex-row lg:overflow-hidden">
           {debugBanner}
-          <div className="lg:w-1/2 flex items-center justify-center p-4 md:p-6 lg:p-8 xl:p-12 bg-white overflow-auto">
-            <div className="w-full max-w-4xl">
+          <div className="lg:w-1/2 flex items-center justify-center p-3 md:p-4 lg:p-5 xl:p-6 bg-white">
+            <div className="w-full max-w-4xl lg:h-full">
               <CalendlyIntegrationLow
                 leadData={{
                   firstName: leadData.firstName,
@@ -293,14 +301,14 @@ const OnboardingSuccess = () => {
               />
             </div>
           </div>
-          <div className="lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-6 xl:p-8 flex flex-col overflow-hidden border-t lg:border-t-0 lg:border-l border-slate-200/60">
+          <div className="lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-5 xl:p-7 flex flex-col overflow-hidden border-t lg:border-t-0 lg:border-l border-slate-200/60">
             <div className="max-w-md mx-auto flex-1">
               <div className="h-full flex flex-col justify-center">
-                <div className="w-auto h-10 relative mb-6">
+                <div className="w-auto h-10 relative mb-5">
                   <img src="/logo.png" alt="Ruka.ai" className="h-10 w-auto object-contain object-left" />
                 </div>
-                <h2 className="text-2xl xl:text-3xl font-bold mb-4">¡Excelente! Ya puedes activar tu plataforma</h2>
-                <p className="text-slate-600 mb-6 text-sm xl:text-base">
+                <h2 className="text-2xl xl:text-[2rem] font-bold mb-3">¡Excelente! Ya puedes activar tu plataforma</h2>
+                <p className="text-slate-600 mb-5 text-sm xl:text-base">
                   Tu cuenta está lista para activación inmediata.
                 </p>
                 <div className="space-y-4">
@@ -314,9 +322,9 @@ const OnboardingSuccess = () => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-8 space-y-3">
+                <div className="mt-6 space-y-3">
                   <Button asChild size="lg" className="w-full h-12 rounded-xl text-base font-semibold">
-                    <a href="https://onboarding.ruka.ai">
+                    <a href={selfOnboardingUrl}>
                       Levantar mi plataforma ahora
                     </a>
                   </Button>

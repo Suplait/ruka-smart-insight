@@ -72,20 +72,20 @@ const CalendlyIntegrationLow = ({ leadData, showCalendly, imageSrc = "/robotsher
   }, [leadData, showCalendly]);
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full max-w-3xl mx-auto lg:h-full lg:flex lg:items-center">
       {!showCalendly ? (
         <div className="rounded-3xl overflow-hidden border border-slate-200/80 shadow-[0_24px_70px_-40px_rgba(15,23,42,0.35)] bg-white">
           <img
             src={imageSrc}
             alt="Ruka onboarding visual"
-            className="w-full h-full object-cover"
+            className="w-full max-h-[66vh] object-contain"
           />
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden w-full">
           <div
             id="calendly-embed-element-low"
-            style={{ minWidth: '320px', width: '100%', height: '700px' }}
+            style={{ minWidth: '320px', width: '100%', height: 'clamp(360px, 56vh, 560px)' }}
           ></div>
         </div>
       )}

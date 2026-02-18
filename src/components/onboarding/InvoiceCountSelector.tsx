@@ -73,17 +73,19 @@ const InvoiceCountSelector = ({
           />
           <div className="mt-3.5 grid grid-cols-4 gap-1.5 text-center">
             {compactRangeLabels.map((label, index) => (
-              <div
+              <button
                 key={label}
+                type="button"
+                onClick={() => onChange(ranges[index].value)}
                 className={cn(
                   "rounded-lg border px-2 py-1.5 text-[11px] font-medium transition-colors",
                   displayIndex === index
                     ? "border-primary/30 bg-primary/10 text-primary"
-                    : "border-slate-200 bg-white text-slate-500"
+                    : "border-slate-200 bg-white text-slate-500 hover:border-primary/25 hover:text-primary"
                 )}
               >
                 {label}
-              </div>
+              </button>
             ))}
           </div>
         </div>
