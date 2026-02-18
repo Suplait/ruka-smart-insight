@@ -278,6 +278,13 @@ const OnboardingSuccess = () => {
   }
 
   if (showCalendlyLow) {
+    const lowCalendlyPaneClasses = showLowCalendlyCall
+      ? "order-1 lg:order-2 flex-1 flex items-center justify-center p-3 md:p-4 lg:p-5 xl:p-6 bg-white"
+      : "lg:w-1/2 flex items-center justify-center p-3 md:p-4 lg:p-5 xl:p-6 bg-white";
+    const lowInfoPaneClasses = showLowCalendlyCall
+      ? "order-2 lg:order-1 lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-5 xl:p-7 flex flex-col overflow-hidden border-t lg:border-t-0 lg:border-r border-slate-200/60"
+      : "lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-5 xl:p-7 flex flex-col overflow-hidden border-t lg:border-t-0 lg:border-l border-slate-200/60";
+
     return (
       <>
         <Helmet>
@@ -285,7 +292,7 @@ const OnboardingSuccess = () => {
         </Helmet>
         <main className="relative min-h-screen flex flex-col lg:h-screen lg:flex-row lg:overflow-hidden">
           {debugBanner}
-          <div className="lg:w-1/2 flex items-center justify-center p-3 md:p-4 lg:p-5 xl:p-6 bg-white">
+          <div className={lowCalendlyPaneClasses}>
             <div className="w-full max-w-4xl lg:h-full">
               <CalendlyIntegrationLow
                 leadData={{
@@ -301,7 +308,7 @@ const OnboardingSuccess = () => {
               />
             </div>
           </div>
-          <div className="lg:w-1/2 bg-gradient-to-br from-slate-50 to-blue-50 p-5 xl:p-7 flex flex-col overflow-hidden border-t lg:border-t-0 lg:border-l border-slate-200/60">
+          <div className={lowInfoPaneClasses}>
             <div className="max-w-md mx-auto flex-1">
               <div className="h-full flex flex-col justify-center">
                 <div className="w-auto h-10 relative mb-5">
