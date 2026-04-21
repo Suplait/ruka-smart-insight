@@ -109,7 +109,7 @@ export default function RegistrationForm({
       const utmParams = getStoredUTMParams();
 
       // Create the lead data object
-      const leadDataToInsert: any = {
+      const leadDataToInsert: Record<string, string | null | undefined> = {
         company_name: formData.nombreRestaurante,
         name: `${formData.firstName} ${formData.lastName}`,
         first_name: formData.firstName,
