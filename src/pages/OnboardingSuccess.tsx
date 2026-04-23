@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Loader, Receipt, Store } from "lucide-react";
+import { ArrowRight, CheckCircle2, Clock, Loader, Receipt } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
@@ -10,13 +10,12 @@ import { pushToDataLayer } from "@/utils/dataLayer";
 import { notifySlackOnboardingStep } from "@/utils/slackNotifier";
 import StepIndicator from "@/components/onboarding/StepIndicator";
 import InvoiceCountSelector from "@/components/onboarding/InvoiceCountSelector";
-import BillingSystemSelector from "@/components/onboarding/BillingSystemSelector";
 import CalendlyIntegration from "@/components/onboarding/CalendlyIntegration";
 import CalendlyIntegrationLow from "@/components/onboarding/CalendlyIntegrationLow";
 import InvoiceVolumeInfo from "@/components/onboarding/InvoiceVolumeInfo";
 
 const HIGH_VOLUME_THRESHOLD = 150;
-const TOTAL_STEPS = 2;
+const TOTAL_STEPS = 1;
 
 type OnboardingLocationState = {
   leadId?: number;
@@ -39,8 +38,6 @@ type LeadData = {
 
 type FormData = {
   facturas: number;
-  sistema: string;
-  sistemaCustom: string;
 };
 
 const OnboardingSuccess = () => {
@@ -48,7 +45,6 @@ const OnboardingSuccess = () => {
   const location = useLocation();
   const locationState = (location.state as OnboardingLocationState | null) ?? {};
   const leadId = locationState.leadId;
-  const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
   const [showCalendlyLow, setShowCalendlyLow] = useState(false);
@@ -61,9 +57,7 @@ const OnboardingSuccess = () => {
     nombreRestaurante: locationState.restaurantName ?? ""
   });
   const [formData, setFormData] = useState<FormData>({
-    facturas: 75,
-    sistema: "sii",
-    sistemaCustom: ""
+    facturas: 75
   });
 
   useEffect(() => {
@@ -181,56 +175,19 @@ const OnboardingSuccess = () => {
     return true;
   };
 
-  const saveBillingData = async () => {
-    const saved = await updateLead({
-      sistema_facturacion: formData.sistema,
-      sistema_custom: formData.sistemaCustom
-    });
-
-    if (!saved || !leadId) return false;
-
-    pushToDataLayer("onboarding_step_1_billing", {
-      leadId: Number(leadId),
-      step: 2,
-      stepName: "billing-system-selected",
-      sistema_facturacion: formData.sistema,
-      sistema_custom: formData.sistemaCustom
-    });
-
-    notifySlackOnboardingStep(Number(leadId), "billing-system-selected", {
-      sistema_facturacion: formData.sistema,
-      sistema_custom: formData.sistemaCustom,
-      facturas_compra_mes: formData.facturas,
-      requires_calendly: formData.facturas >= HIGH_VOLUME_THRESHOLD
-    });
-
-    return true;
-  };
-
   const handleNext = async () => {
     setIsLoading(true);
+    const saved = await saveInvoiceData();
+    setIsLoading(false);
 
-    if (currentStep === 0) {
-      const saved = await saveInvoiceData();
-      setIsLoading(false);
+    if (!saved) return;
 
-      if (!saved) return;
-
-      if (formData.facturas >= HIGH_VOLUME_THRESHOLD) {
-        setShowCalendly(true);
-        return;
-      }
-
-      setCurrentStep(1);
+    if (formData.facturas >= HIGH_VOLUME_THRESHOLD) {
+      setShowCalendly(true);
       return;
     }
 
-    const saved = await saveBillingData();
-    setIsLoading(false);
-
-    if (saved) {
-      setShowCalendlyLow(true);
-    }
+    setShowCalendlyLow(true);
   };
 
   const renderCalendlyLeadData = () => ({
@@ -338,9 +295,9 @@ const OnboardingSuccess = () => {
       </>;
   }
 
-  const stepIcon = currentStep === 0 ? <Receipt className="h-6 w-6 text-primary" /> : <Store className="h-6 w-6 text-primary" />;
-  const stepTitle = currentStep === 0 ? "Volumen de facturas" : "Sistema de facturación";
-  const stepDescription = currentStep === 0 ? "¿Cuántas facturas de compra recibes cada mes?" : "Cuéntanos con qué sistema facturas hoy.";
+  const stepIcon = <Receipt className="h-6 w-6 text-primary" />;
+  const stepTitle = "Volumen de facturas";
+  const stepDescription = "¿Cuántas facturas de compra recibes cada mes?";
 
   return <>
       <Helmet>
@@ -350,15 +307,7 @@ const OnboardingSuccess = () => {
       <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
         <div className="mx-auto flex min-h-screen max-w-7xl flex-col lg:flex-row">
           <div className="hidden lg:flex lg:w-1/2 lg:items-center lg:justify-center lg:p-10">
-            {currentStep === 0 ? <InvoiceVolumeInfo /> : <div className="mx-auto max-w-md text-center">
-                <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500">
-                  <Store className="h-10 w-10 text-white" />
-                </div>
-                <h2 className="mb-4 text-3xl font-bold text-slate-900">Último paso antes del calendario</h2>
-                <p className="text-lg text-slate-600">
-                  Solo necesitamos saber cómo facturas hoy para prepararte mejor la reunión.
-                </p>
-              </div>}
+            <InvoiceVolumeInfo />
           </div>
 
           <div className="flex flex-1 items-center justify-center p-4 md:p-6 lg:p-10">
@@ -369,7 +318,7 @@ const OnboardingSuccess = () => {
                     <img src="/logo.png" alt="Ruka.ai" className="h-9 w-auto object-contain" />
                   </div>
 
-                  <StepIndicator currentStep={currentStep} totalSteps={TOTAL_STEPS} />
+                  <StepIndicator currentStep={0} totalSteps={TOTAL_STEPS} />
 
                   <div className="space-y-3 text-center">
                     <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
@@ -383,15 +332,10 @@ const OnboardingSuccess = () => {
                   </div>
 
                   <div className="mt-8">
-                    {currentStep === 0 ? <InvoiceCountSelector selectedCount={formData.facturas} onChange={count => updateFormData("facturas", count)} /> : <BillingSystemSelector selectedSystem={formData.sistema} onChange={system => updateFormData("sistema", system)} customSystem={formData.sistemaCustom} onCustomChange={value => updateFormData("sistemaCustom", value)} />}
+                    <InvoiceCountSelector selectedCount={formData.facturas} onChange={count => updateFormData("facturas", count)} />
                   </div>
 
-                  <div className="mt-8 flex items-center justify-between gap-3">
-                    {currentStep === 0 ? <div /> : <Button type="button" variant="outline" onClick={() => setCurrentStep(0)} disabled={isLoading} className="gap-2">
-                        <ArrowLeft className="h-4 w-4" />
-                        Volver
-                      </Button>}
-
+                  <div className="mt-8 flex justify-end">
                     <Button type="button" onClick={handleNext} disabled={isLoading} className="gap-2">
                       {isLoading ? <>
                           <Loader className="h-4 w-4 animate-spin" />
