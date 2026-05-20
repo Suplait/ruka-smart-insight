@@ -256,9 +256,10 @@ export default function RegistrationForm({
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="relative">
-                  <Input id="registration-whatsapp" name="whatsapp" placeholder="WhatsApp (opcional)" value={formData.whatsapp} onChange={handleChange} className="h-10 pl-16 pr-10" disabled={isSubmitting} />
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-                    +56
+                  <Input id="registration-whatsapp" name="whatsapp" placeholder="WhatsApp" value={formData.whatsapp} onChange={handleChange} className="h-10 pl-20 pr-10" disabled={isSubmitting} />
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-sm text-muted-foreground">
+                    <span aria-hidden="true">🇨🇱</span>
+                    <span>+56</span>
                   </div>
                   <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 </div>
