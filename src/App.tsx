@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { extractUTMParams, saveUTMParams } from '@/utils/utmTracker';
 
 import Index from './pages/Index';
+import LandingV2 from './pages/LandingV2';
 import Restaurantes from './pages/Restaurantes';
 import Hoteles from './pages/Hoteles';
 import Retail from './pages/Retail';
@@ -39,6 +40,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/v2" element={<LandingV2 />} />
             <Route path="/restaurantes" element={<Restaurantes />} />
             <Route path="/hoteles" element={<Hoteles />} />
             <Route path="/retail" element={<Retail />} />
