@@ -187,7 +187,7 @@
 }
 
 .cover-input-flow path {
-  animation: dashFlow 16s linear infinite;
+  animation: dashFlow 7s linear infinite;
   stroke: rgba(104, 112, 134, 0.32);
   stroke-dasharray: 6 9;
   stroke-linecap: round;
@@ -196,7 +196,9 @@
 }
 
 .cover-output-flow path {
+  animation: dashFlow 7s linear infinite;
   stroke: rgba(78, 102, 233, 0.58);
+  stroke-dasharray: 6 9;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 2.4;
