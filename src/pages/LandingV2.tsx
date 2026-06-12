@@ -438,22 +438,20 @@ function Hero({
 
       <div className="relative z-10 mx-auto mt-12 max-w-7xl sm:mt-16 lg:mt-20">
         <motion.div
-          className="mx-auto max-w-5xl text-center"
+          className="mx-auto max-w-7xl text-center"
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: easeOut }}
         >
           <p className="mx-auto inline-flex items-center gap-2 rounded-full border border-[#dce3f2] bg-white px-4 py-2 text-sm font-semibold text-[#555b6e]">
             <Sparkles className="h-4 w-4 text-primary" />
-            <span className="sm:hidden">Datos reales, acciones claras</span>
-            <span className="hidden sm:inline">Capa operativa sobre tus datos reales</span>
+            <span>Prueba con garantía de 30 días</span>
           </p>
-          <h1 className="mx-auto mt-7 max-w-5xl text-balance text-3xl font-semibold leading-[1.04] tracking-tight text-[#171827] sm:text-5xl lg:text-[3.85rem]">
-            Controla compras, inventario y margen con operadores digitales
+          <h1 className="mx-auto mt-7 max-w-none text-balance text-3xl font-semibold leading-[1.04] tracking-tight text-[#171827] sm:text-5xl lg:whitespace-nowrap lg:text-[3.35rem] xl:text-[3.75rem] 2xl:text-[3.85rem]">
+            Controla tu operación mientras se mueve
           </h1>
           <p className="mx-auto mt-6 max-w-3xl text-pretty text-lg leading-8 text-[#555b6e] sm:text-xl sm:leading-9">
-            <span className="sm:hidden">Ruka conecta fuentes dispersas y activa agentes que alertan antes del cierre.</span>
-            <span className="hidden sm:inline">Ruka conecta las fuentes que hoy no conversan, ordena la información y activa agentes que detectan riesgos, preparan reportes y ayudan a decidir antes del cierre.</span>
+            Ruka conecta compras, proveedores, ventas y gastos para detectar alzas, anomalías y oportunidades de control antes de que impacten tu margen.
           </p>
         </motion.div>
 
@@ -471,10 +469,10 @@ function Hero({
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
           <a
-            href="#problema"
+            href="#plataforma"
             className="hidden h-12 w-full items-center justify-center rounded-full border border-[#dce3f2] bg-white px-5 text-base font-semibold text-[#171827] transition-transform duration-150 ease-out hover:bg-[#f7f9ff] active:scale-[0.97] sm:inline-flex sm:w-auto sm:px-6"
           >
-            Entender el problema
+            Ver Ruka en acción
           </a>
         </motion.div>
 
@@ -492,75 +490,68 @@ function Hero({
 }
 
 function CoverSystemMap({ reduceMotion }: { reduceMotion: boolean | null }) {
-  const lineProps = reduceMotion
-    ? {}
-    : {
-        initial: { pathLength: 0, opacity: 0 },
-        animate: { pathLength: 1, opacity: 1 },
-        transition: { duration: 0.9, ease: easeOut },
-      };
-
   return (
-    <div className="relative mx-auto min-h-[340px] w-full max-w-[1240px] max-[360px]:min-h-[240px] sm:min-h-[380px] lg:h-[320px] lg:min-h-[320px]">
-      <svg className="pointer-events-none absolute inset-0 hidden h-full w-full fill-none lg:block" viewBox="0 0 1240 320" preserveAspectRatio="none" aria-hidden="true">
+    <div className="cover-system-map">
+      <svg className="cover-flow-lines" viewBox="0 0 1240 360" preserveAspectRatio="none" aria-hidden="true">
         <defs>
-          <marker id="v2-input-arrow" markerHeight="10" markerUnits="userSpaceOnUse" markerWidth="12" orient="auto" refX="10" refY="5">
-            <path d="M1 1 L10 5 L1 9" className="stroke-primary/50" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+          <marker
+            id="cover-input-arrow"
+            markerHeight="10"
+            markerUnits="userSpaceOnUse"
+            markerWidth="12"
+            orient="auto"
+            refX="10"
+            refY="5"
+          >
+            <path className="cover-input-arrow-path" d="M1 1 L10 5 L1 9" />
           </marker>
-          <marker id="v2-output-arrow" markerHeight="14" markerUnits="userSpaceOnUse" markerWidth="16" orient="auto" refX="14" refY="7">
-            <path d="M2 2 L14 7 L2 12" className="stroke-primary" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" />
+          <marker
+            id="cover-output-arrow"
+            markerHeight="14"
+            markerUnits="userSpaceOnUse"
+            markerWidth="16"
+            orient="auto"
+            refX="14"
+            refY="7"
+          >
+            <path className="cover-output-arrow-path" d="M2 2 L14 7 L2 12" />
           </marker>
         </defs>
 
-        <g className="stroke-primary/40 [stroke-dasharray:7_8]">
-          {[47, 141, 235].flatMap((y, row) => [
-            <motion.path key={`a-${row}`} markerEnd="url(#v2-input-arrow)" d={`M88 ${y} C188 ${y}, 278 ${130 + row * 14}, 416 ${144 + row * 12}`} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.1" {...lineProps} />,
-            <motion.path key={`b-${row}`} markerEnd="url(#v2-input-arrow)" d={`M222 ${y} C316 ${y}, 334 ${140 + row * 14}, 416 ${152 + row * 12}`} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.1" {...lineProps} />,
-          ])}
+        <g className="cover-input-flow">
+          <path markerEnd="url(#cover-input-arrow)" d="M88 76 C184 76, 276 150, 416 154" />
+          <path markerEnd="url(#cover-input-arrow)" d="M222 76 C308 76, 314 150, 416 164" />
+          <path markerEnd="url(#cover-input-arrow)" d="M88 180 C196 180, 292 176, 416 176" />
+          <path markerEnd="url(#cover-input-arrow)" d="M222 180 C314 180, 326 181, 416 186" />
+          <path markerEnd="url(#cover-input-arrow)" d="M88 284 C196 284, 278 214, 416 198" />
+          <path markerEnd="url(#cover-input-arrow)" d="M222 284 C316 284, 326 218, 416 208" />
         </g>
 
-        <g className="stroke-primary">
-          {[31, 105, 179, 253].map((y, index) => (
-            <motion.path
-              key={y}
-              markerEnd="url(#v2-output-arrow)"
-              d={`M858 ${136 + index * 18} C920 ${136 + index * 18}, ${index % 2 === 0 ? 902 : 908} ${y}, 952 ${y}`}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="3.1"
-              {...lineProps}
-            />
-          ))}
+        <g className="cover-output-flow">
+          <path markerEnd="url(#cover-output-arrow)" d="M858 154 C920 154, 902 58, 952 58" />
+          <path markerEnd="url(#cover-output-arrow)" d="M858 176 C918 176, 908 140, 952 140" />
+          <path markerEnd="url(#cover-output-arrow)" d="M858 198 C918 198, 908 222, 952 222" />
+          <path markerEnd="url(#cover-output-arrow)" d="M858 220 C920 220, 902 304, 952 304" />
         </g>
       </svg>
 
-      <div className="grid grid-cols-3 gap-2.5 sm:gap-3 max-[360px]:hidden lg:absolute lg:left-0 lg:top-[8px] lg:grid-cols-2 lg:gap-x-[46px] lg:gap-y-[16px]">
-        {coverSources.map(([label, Icon], index) => (
-          <motion.div
-            key={label}
-            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.38, delay: index * 0.035, ease: easeOut }}
-          >
+      <div className="cover-sources" aria-label="Fuentes de datos">
+        {coverSources.map(([label, Icon]) => (
+          <div key={label}>
             <SourceTile icon={Icon} label={label} />
-          </motion.div>
+          </div>
         ))}
       </div>
 
-      <div className="mx-auto mt-5 w-full max-w-[284px] sm:mt-8 sm:max-w-[380px] lg:absolute lg:left-[446px] lg:top-4 lg:mt-0 lg:max-w-[380px]">
-        <img src="/assets/ruka-v2-cover-platform.png" alt="" className="h-auto w-full object-contain" aria-hidden="true" />
+      <div className="cover-layer">
+        <img className="cover-platform-asset" src="/assets/ruka-v2-cover-platform.png" alt="" aria-hidden="true" />
       </div>
 
-      <div className="mt-5 hidden grid-cols-2 gap-2.5 sm:mt-8 sm:grid sm:gap-3 lg:absolute lg:right-0 lg:top-0 lg:mt-0 lg:w-[280px] lg:grid-cols-1">
-        {coverOutcomes.map(([label, Icon], index) => (
-          <motion.div
-            key={label}
-            initial={reduceMotion ? false : { opacity: 0, x: 12 }}
-            animate={reduceMotion ? undefined : { opacity: 1, x: 0 }}
-            transition={{ duration: 0.38, delay: 0.14 + index * 0.04, ease: easeOut }}
-          >
+      <div className="cover-outcomes" aria-label="Resultados operativos">
+        {coverOutcomes.map(([label, Icon]) => (
+          <div key={label}>
             <OutcomeTile icon={Icon} label={label} />
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>
@@ -569,18 +560,18 @@ function CoverSystemMap({ reduceMotion }: { reduceMotion: boolean | null }) {
 
 function SourceTile({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
   return (
-    <div className="flex h-[58px] w-full flex-col items-center justify-center gap-1.5 rounded-xl border border-[#dce3f2] bg-white/95 px-2 text-[#171827] sm:h-[70px] lg:h-[78px] lg:w-[88px] lg:gap-2 lg:px-4">
-      <Icon className="h-5 w-5 text-[#6d7489] sm:h-6 sm:w-6 lg:h-7 lg:w-7" strokeWidth={1.9} />
-      <span className="text-[0.62rem] font-semibold uppercase leading-none sm:text-xs lg:text-[0.68rem]">{label}</span>
+    <div className="cover-input">
+      <Icon size={32} />
+      <span>{label}</span>
     </div>
   );
 }
 
 function OutcomeTile({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
   return (
-    <div className="grid min-h-[56px] grid-cols-[20px_1fr] items-center gap-2 rounded-xl border border-[#dce3f2] bg-white/95 px-2.5 py-2 text-[#171827] sm:min-h-[68px] sm:grid-cols-[42px_1fr] sm:gap-4 sm:px-4 sm:py-3 lg:min-h-[62px]">
-      <Icon className="h-[18px] w-[18px] text-[#6d7489] sm:h-8 sm:w-8" strokeWidth={1.9} />
-      <span className="text-xs font-semibold leading-snug sm:text-base sm:leading-tight">{label}</span>
+    <div className="cover-outcome">
+      <Icon size={34} />
+      <span>{label}</span>
     </div>
   );
 }
