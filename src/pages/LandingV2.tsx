@@ -21,7 +21,6 @@ import {
   Clock3,
   Database,
   FileSpreadsheet,
-  FileText,
   Gauge,
   GitBranch,
   Layers3,
@@ -36,7 +35,6 @@ import {
   Sparkles,
   TrendingUp,
   WalletCards,
-  Warehouse,
   Zap,
 } from "lucide-react";
 import {
@@ -58,26 +56,25 @@ const navItems = [
 ];
 
 const coverSources: Array<[string, LucideIcon]> = [
-  ["SII", ReceiptText],
-  ["Facturas", FileText],
+  ["Ventas", BarChart3],
+  ["Compras", ReceiptText],
   ["Banco", Banknote],
   ["Planillas", FileSpreadsheet],
-  ["Bodega", Warehouse],
   ["ERP", Database],
+  ["Otros", Layers3],
 ];
 
 const coverOutcomes: Array<[string, LucideIcon]> = [
-  ["Compras bajo control", BarChart3],
-  ["Margen visible al día", CircleDollarSign],
+  ["Menos trabajo manual", Bot],
+  ["Verdad operacional", ShieldCheck],
   ["Alertas accionables", Zap],
-  ["Reportes en segundos", MessageSquareText],
+  ["Margen visible al día", CircleDollarSign],
 ];
 
 const trustStats = [
-  ["+200", "clientes", "equipos operando con datos más confiables"],
-  ["+3M", "transacciones", "compras, documentos y movimientos digitalizados"],
-  ["+US$350M", "procesados", "datos operacionales convertidos en control"],
-  ["+15 hrs", "ahorro semanal", "menos carga manual por empresa"],
+  ["+250", "empresas operan con Ruka"],
+  ["+5M", "transacciones procesadas"],
+  ["+US$600M", "en datos operacionales"],
 ];
 
 const problemItems = [
@@ -358,10 +355,10 @@ export default function LandingV2() {
 
       <Hero reduceMotion={reduceMotion} navigate={navigate} />
       <TrustStrip />
+      <PlatformPreviewSection />
       <ProblemSection />
       <LeakSection />
       <SolutionSection />
-      <PlatformPreviewSection />
       <AgentShowcase reduceMotion={reduceMotion} />
       <ValueSection />
       <TeamSection />
@@ -578,34 +575,50 @@ function OutcomeTile({ icon: Icon, label }: { icon: LucideIcon; label: string })
 
 function TrustStrip() {
   return (
-    <section id="traccion" className="border-y border-[#dce3f2] bg-white py-10 sm:py-12">
+    <section id="traccion" className="border-y border-[#dce3f2] bg-white py-12 sm:py-14">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
-          <Reveal>
-            <p className="text-sm font-semibold text-primary">Prueba operacional</p>
-            <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-4xl">
-              Datos reales, clientes reales, menos trabajo manual.
+        <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+          <Reveal className="max-w-xl">
+            <p className="text-sm font-semibold text-primary">Tracción real</p>
+            <h2 className="mt-3 text-balance text-3xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-[2.35rem]">
+              Operación real.
+              <br />
+              Respaldo real.
             </h2>
           </Reveal>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {trustStats.map(([value, label, note], index) => (
-              <Reveal key={label} delay={index * 0.035} amount={0.4}>
-                <div className="rounded-2xl border border-[#dce3f2] bg-[#fbfcff] p-5">
-                  <p className="text-2xl font-semibold tracking-tight text-[#171827]">{value}</p>
-                  <p className="mt-2 text-sm font-semibold text-[#171827]">{label}</p>
-                  <p className="mt-2 text-sm leading-6 text-[#555b6e]">{note}</p>
+
+          <div>
+            <Reveal>
+              <div className="grid border-y border-[#dce3f2] sm:grid-cols-3">
+                {trustStats.map(([value, label], index) => (
+                  <div
+                    key={label}
+                    className="border-b border-[#dce3f2] py-6 last:border-b-0 sm:border-b-0 sm:border-r sm:px-6 sm:first:pl-0 sm:last:border-r-0 sm:last:pr-0"
+                  >
+                    <p className="text-[3.1rem] font-semibold leading-none tracking-tight text-[#171827] sm:text-[3.4rem]">{value}</p>
+                    <p className="mt-3 max-w-[12rem] text-sm font-semibold leading-5 text-[#555b6e]">{label}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+
+            <Reveal className="mt-6">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-sm font-semibold text-[#555b6e]">Respaldado por:</p>
+                <div className="grid grid-cols-4 items-center gap-x-6 gap-y-4 opacity-70 sm:flex sm:gap-x-8">
+                  {[
+                    ["/microsoft2.png", "Microsoft"],
+                    ["/openai2.png", "OpenAI"],
+                    ["/500logo.png", "500 Global"],
+                    ["/logocorfo.png", "CORFO"],
+                  ].map(([src, alt]) => (
+                    <img key={alt} src={src} alt={alt} className="max-h-8 w-auto object-contain grayscale" />
+                  ))}
                 </div>
-              </Reveal>
-            ))}
+              </div>
+            </Reveal>
           </div>
         </div>
-
-        <Reveal className="mt-9 flex flex-wrap items-center justify-center gap-x-9 gap-y-5 opacity-75">
-          <img src="/microsoft2.png" alt="Microsoft" className="h-9 w-auto object-contain" />
-          <img src="/openai2.png" alt="OpenAI" className="h-9 w-auto object-contain" />
-          <img src="/500logo.png" alt="500 Global" className="h-9 w-auto object-contain" />
-          <img src="/logocorfo.png" alt="CORFO" className="h-9 w-auto object-contain" />
-        </Reveal>
       </div>
     </section>
   );
@@ -785,7 +798,16 @@ function PlatformPreviewSection() {
   ];
 
   return (
-    <section id="plataforma" ref={sectionRef} className="relative overflow-hidden bg-white py-16 sm:py-24 lg:min-h-[225dvh] lg:overflow-visible lg:py-0">
+    <section
+      id="plataforma"
+      ref={sectionRef}
+      className="relative overflow-hidden bg-[#fbfcff] py-16 sm:py-24 lg:min-h-[225dvh] lg:overflow-visible lg:py-0"
+      style={{
+        backgroundImage:
+          "linear-gradient(90deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px), linear-gradient(180deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px)",
+        backgroundSize: "56px 56px",
+      }}
+    >
       <div className="absolute inset-x-0 top-0 h-px bg-[#dce3f2]" />
       <div className="lg:sticky lg:top-0 lg:flex lg:min-h-[100dvh] lg:items-center lg:overflow-hidden">
         <div className="relative mx-auto w-full max-w-[1540px] px-5 sm:px-8 lg:px-8">
