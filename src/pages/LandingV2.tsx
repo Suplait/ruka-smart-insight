@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -28,6 +28,7 @@ import {
   LockKeyhole,
   MessageSquareText,
   Plug,
+  Play,
   ReceiptText,
   RefreshCw,
   SearchCheck,
@@ -130,32 +131,7 @@ const layerSteps = [
   },
 ];
 
-const platformCallouts = [
-  {
-    icon: BarChart3,
-    title: "Brecha ventas-compras",
-    copy: "La lectura ejecutiva aparece arriba, sin pedir otro archivo.",
-    position: "lg:left-[4vw] lg:top-[56%]",
-  },
-  {
-    icon: TrendingUp,
-    title: "Insumos al alza",
-    copy: "Ruka muestra qué está subiendo y dónde conviene revisar.",
-    position: "lg:right-[4vw] lg:top-[28%]",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Trabajo trazable",
-    copy: "El equipo ve el dato, la señal y la acción sugerida.",
-    position: "lg:right-[13vw] lg:bottom-[9%]",
-  },
-];
-
-const platformSignalDots = [
-  "left-[32%] top-[32%]",
-  "left-[47%] top-[41%]",
-  "left-[72%] top-[25%]",
-];
+const rukaDemoEmbedUrl = "https://prueba.ruka.ai/?embed=1&source=landing-platform";
 
 const teamMoments = [
   {
@@ -766,42 +742,73 @@ function SolutionSection() {
 
 function PlatformPreviewSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const [demoHeight, setDemoHeight] = useState(720);
+  const [isLargeViewport, setIsLargeViewport] = useState(false);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 70,
-    damping: 22,
+    stiffness: 120,
+    damping: 30,
     mass: 0.8,
   });
-  const frameScale = useTransform(smoothProgress, [0, 0.24, 0.76, 1], [0.68, 0.96, 1.08, 0.96]);
-  const frameY = useTransform(smoothProgress, [0, 0.24, 0.76, 1], [250, 72, -22, -110]);
-  const frameRotateX = useTransform(smoothProgress, [0, 0.28, 0.78, 1], [7, 0, 0, -3]);
-  const frameRotateZ = useTransform(smoothProgress, [0, 0.36, 1], [-2.4, 0, 1.2]);
-  const introOpacity = useTransform(smoothProgress, [0, 0.08, 0.22, 0.34], [1, 1, 0.35, 0]);
-  const introY = useTransform(smoothProgress, [0, 0.34], [0, -38]);
-  const glowX = useTransform(smoothProgress, [0, 1], ["-28%", "28%"]);
-  const scanY = useTransform(smoothProgress, [0.16, 0.84], ["12%", "84%"]);
-  const scanOpacity = useTransform(smoothProgress, [0.08, 0.18, 0.84, 0.94], [0, 1, 1, 0]);
-  const firstCalloutOpacity = useTransform(smoothProgress, [0.18, 0.3, 0.72, 0.84], [0, 1, 1, 0]);
-  const secondCalloutOpacity = useTransform(smoothProgress, [0.32, 0.44, 0.78, 0.9], [0, 1, 1, 0]);
-  const thirdCalloutOpacity = useTransform(smoothProgress, [0.5, 0.62, 0.9, 1], [0, 1, 1, 0]);
-  const firstCalloutY = useTransform(smoothProgress, [0.18, 0.32], [26, 0]);
-  const secondCalloutY = useTransform(smoothProgress, [0.32, 0.46], [26, 0]);
-  const thirdCalloutY = useTransform(smoothProgress, [0.5, 0.64], [26, 0]);
-  const calloutStyles = [
-    { opacity: firstCalloutOpacity, y: firstCalloutY },
-    { opacity: secondCalloutOpacity, y: secondCalloutY },
-    { opacity: thirdCalloutOpacity, y: thirdCalloutY },
-  ];
+  const introOpacity = useTransform(smoothProgress, [0, 0.16, 0.34], [1, 1, 0]);
+  const introY = useTransform(smoothProgress, [0, 0.34], [0, -42]);
+  const frameScale = useTransform(smoothProgress, [0, 0.18, 0.42, 0.72, 1], [0.72, 0.9, 1, 1, 0.74]);
+  const frameY = useTransform(smoothProgress, [0, 0.18, 0.42, 0.72, 1], [142, 42, 0, 0, -124]);
+  const frameOpacity = useTransform(smoothProgress, [0, 0.08, 0.82, 1], [0.96, 1, 1, 0.82]);
+  const frameShadow = useTransform(
+    smoothProgress,
+    [0, 0.42, 0.72, 1],
+    [
+      "0 10px 18px rgba(31,43,93,0.05)",
+      "0 28px 72px rgba(31,43,93,0.16)",
+      "0 26px 66px rgba(31,43,93,0.14)",
+      "0 10px 20px rgba(31,43,93,0.06)",
+    ],
+  );
+  const previewVeilOpacity = useTransform(smoothProgress, [0, 0.24, 0.52, 1], [0.2, 0.13, 0.06, 0.12]);
+  const playOpacity = useTransform(smoothProgress, [0, 0.18, 0.55, 0.9, 1], [1, 1, 0.9, 0.9, 0.62]);
+  const playScale = useTransform(smoothProgress, [0, 0.42, 0.72, 1], [1, 1.08, 1, 0.92]);
+
+  useEffect(() => {
+    if (!isDemoOpen) return;
+
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== "https://prueba.ruka.ai") return;
+
+      const data = event.data;
+      if (!data || data.source !== "demo-ruka") return;
+
+      if (data.type === "ruka-demo:resize") {
+        const nextHeight = Number(data.payload?.height);
+        if (Number.isFinite(nextHeight)) {
+          setDemoHeight(Math.max(720, Math.ceil(nextHeight)));
+        }
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [isDemoOpen]);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 1024px)");
+    const updateViewport = () => setIsLargeViewport(media.matches);
+
+    updateViewport();
+    media.addEventListener("change", updateViewport);
+    return () => media.removeEventListener("change", updateViewport);
+  }, []);
 
   return (
     <section
       id="plataforma"
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#fbfcff] py-16 sm:py-24 lg:min-h-[225dvh] lg:overflow-visible lg:py-0"
+      className="relative overflow-hidden bg-[#fbfcff] py-16 sm:py-24 lg:min-h-[240dvh] lg:overflow-visible lg:py-0"
       style={{
         backgroundImage:
           "linear-gradient(90deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px), linear-gradient(180deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px)",
@@ -812,149 +819,85 @@ function PlatformPreviewSection() {
       <div className="lg:sticky lg:top-0 lg:flex lg:min-h-[100dvh] lg:items-center lg:overflow-hidden">
         <div className="relative mx-auto w-full max-w-[1540px] px-5 sm:px-8 lg:px-8">
           <motion.div
-            className="relative z-20 max-w-3xl lg:absolute lg:left-8 lg:top-10 lg:max-w-[560px]"
+            className="relative z-20 max-w-2xl lg:absolute lg:left-8 lg:top-10 lg:max-w-[590px]"
             style={reduceMotion ? undefined : { opacity: introOpacity, y: introY }}
           >
             <p className="text-sm font-semibold text-primary">La plataforma en operación</p>
             <h2 className="mt-3 text-balance text-4xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-5xl">
-              Una pantalla grande, viva y accionable.
+              Ve qué está afectando tu margen antes del cierre.
             </h2>
             <p className="mt-5 max-w-xl text-pretty text-lg leading-8 text-[#555b6e]">
-              La pantalla entra como una mesa de control: ventas, compras, brechas y señales en una vista que el equipo puede leer sin pedir otro archivo.
+              Explora compras, ventas y variaciones en una demo real, con señales listas para decidir sin cruzar planillas.
             </p>
           </motion.div>
 
-          <div
-            className="relative mt-10 hidden min-h-[64dvh] w-full items-center justify-center sm:mt-12 lg:mt-0 lg:flex lg:min-h-[100dvh]"
-            style={{ perspective: 1400 }}
-          >
+          <div className="relative mt-10 flex w-full items-center justify-center sm:mt-12 lg:mt-0 lg:min-h-[100dvh]">
             <motion.div
-              className="pointer-events-none absolute left-1/2 top-1/2 hidden h-[74dvh] w-[86vw] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-[#eef2ff] opacity-80 [filter:blur(54px)] lg:block"
-              style={reduceMotion ? undefined : { x: glowX }}
-              aria-hidden="true"
-            />
-            <motion.div
-              className="pointer-events-none absolute left-1/2 top-1/2 hidden h-[1px] w-[86vw] -translate-x-1/2 bg-primary/40 lg:block"
-              style={reduceMotion ? undefined : { y: scanY, opacity: scanOpacity }}
-              aria-hidden="true"
-            />
-
-            <motion.div
-              className="relative z-10 w-[118vw] max-w-none rounded-2xl bg-[#f6f8ff] p-2 shadow-[0_8px_8px_rgba(31,43,93,0.05)] sm:w-[calc(100vw-4rem)] lg:w-[94vw] lg:max-w-[1540px] [transform-style:preserve-3d]"
-              style={reduceMotion ? undefined : { scale: frameScale, y: frameY, rotateX: frameRotateX, rotateZ: frameRotateZ }}
+              className="relative z-10 w-full overflow-hidden rounded-2xl bg-[#f6f8ff] p-2 lg:w-[calc(100vw-5rem)] lg:max-w-none"
+              style={reduceMotion ? undefined : { scale: frameScale, y: frameY, opacity: frameOpacity, boxShadow: frameShadow }}
               initial={reduceMotion ? false : { opacity: 0 }}
               whileInView={reduceMotion ? undefined : { opacity: 1 }}
               viewport={{ once: true, amount: 0.18 }}
               transition={{ duration: 0.7, ease: easeOut }}
             >
-              <div className="overflow-hidden rounded-xl border border-[#dce3f2] bg-white">
+              <div className="overflow-hidden rounded-xl border border-[#dce3f2] bg-white lg:h-[calc(100dvh-96px)]">
                 <div className="flex h-9 items-center justify-between border-b border-[#e6ebf5] bg-[#fbfcff] px-4">
-                  <div className="flex items-center gap-1.5">
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#ff6b6b]" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#f3c44d]" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#39c780]" />
-                  </div>
-                  <div className="hidden items-center gap-2 text-xs font-semibold text-[#7b8296] sm:flex">
-                    <LockKeyhole className="h-3.5 w-3.5" />
-                    ruka.ai / monitoreo
-                  </div>
-                </div>
-                <div className="relative">
-                  <img
-                    src="/assets/ruka-platform-insights.png"
-                    alt="Pantalla de Ruka con análisis de compras, ventas y variaciones de insumos"
-                    className="h-auto w-full"
-                  />
-                  <motion.div
-                    className="pointer-events-none absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/42 to-transparent"
-                    style={reduceMotion ? undefined : { x: glowX }}
-                  />
-                  <motion.div
-                    className="pointer-events-none absolute inset-x-0 h-px bg-primary/45"
-                    style={reduceMotion ? undefined : { top: scanY, opacity: scanOpacity }}
-                  />
-                  {platformSignalDots.map((position, index) => (
-                    <motion.span
-                      key={position}
-                      className={`pointer-events-none absolute hidden h-3 w-3 rounded-full bg-primary shadow-[0_0_0_6px_rgba(79,92,238,0.16)] sm:block ${position}`}
-                      initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
-                      whileInView={reduceMotion ? undefined : { opacity: 1, scale: [1, 1.24, 1] }}
-                      viewport={{ once: true, amount: 0.45 }}
-                      transition={reduceMotion ? undefined : { duration: 1.8, delay: 0.55 + index * 0.18, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-
-            <div className="pointer-events-none absolute inset-0 z-20 hidden lg:block">
-              {platformCallouts.map((callout, index) => {
-                const Icon = callout.icon;
-                return (
-                  <motion.div
-                    key={callout.title}
-                    className={`absolute w-[254px] rounded-2xl border border-[#dce3f2] bg-white p-4 shadow-[0_8px_8px_rgba(31,43,93,0.05)] ${callout.position}`}
-                    style={reduceMotion ? undefined : calloutStyles[index]}
-                  >
-                    <div className="flex min-w-0 items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <h3 className="min-w-0 text-sm font-semibold leading-5 text-[#171827]">{callout.title}</h3>
-                    </div>
-                    <p className="mt-3 break-words text-sm leading-6 text-[#555b6e]">{callout.copy}</p>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-
-          <Reveal className="mt-10 lg:hidden">
-            <div className="relative left-1/2 w-[118vw] max-w-none -translate-x-1/2 rounded-2xl bg-[#f6f8ff] p-2 shadow-[0_8px_8px_rgba(31,43,93,0.05)]">
-              <div className="overflow-hidden rounded-xl border border-[#dce3f2] bg-white">
-                <div className="flex h-9 items-center justify-between border-b border-[#e6ebf5] bg-[#fbfcff] px-4">
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5" aria-hidden="true">
                     <span className="h-2.5 w-2.5 rounded-full bg-[#ff6b6b]" />
                     <span className="h-2.5 w-2.5 rounded-full bg-[#f3c44d]" />
                     <span className="h-2.5 w-2.5 rounded-full bg-[#39c780]" />
                   </div>
                   <div className="flex items-center gap-2 text-xs font-semibold text-[#7b8296]">
                     <LockKeyhole className="h-3.5 w-3.5" />
-                    ruka.ai
+                    ruka.ai / demo
                   </div>
                 </div>
-                <img
-                  src="/assets/ruka-platform-insights.png"
-                  alt="Pantalla de Ruka con análisis de compras, ventas y variaciones de insumos"
-                  className="h-auto w-full"
-                />
+
+                {isDemoOpen ? (
+                  <iframe
+                    src={rukaDemoEmbedUrl}
+                    title="Demo interactiva Ruka"
+                    loading="lazy"
+                    allow="clipboard-write"
+                    className="block w-full border-0"
+                    style={{ height: isLargeViewport ? "calc(100dvh - 132px)" : `${demoHeight}px` }}
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    className="group relative block w-full overflow-hidden bg-[#eef2ff] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    onClick={() => setIsDemoOpen(true)}
+                    aria-label="Abrir demo interactiva de Ruka"
+                  >
+                    <img
+                      src="/assets/ruka-platform-insights.png"
+                      alt="Pantalla de Ruka con análisis de compras, ventas y variaciones de insumos"
+                      className="h-auto w-full transition-transform duration-500 ease-out group-hover:scale-[1.015] lg:h-[calc(100dvh-132px)] lg:object-cover"
+                    />
+                    <motion.span
+                      className="absolute inset-0 bg-[#171827] transition-colors duration-200 group-hover:bg-[#171827]"
+                      style={reduceMotion ? { opacity: 0.12 } : { opacity: previewVeilOpacity }}
+                    />
+                    <motion.span
+                      className="absolute inset-0 flex items-center justify-center p-6"
+                      style={reduceMotion ? undefined : { opacity: playOpacity, scale: playScale }}
+                    >
+                      <span className="flex h-20 w-20 items-center justify-center rounded-full bg-white text-primary shadow-[0_8px_8px_rgba(31,43,93,0.08)] ring-1 ring-white/70 transition-transform duration-200 ease-out group-hover:scale-[1.06] sm:h-24 sm:w-24">
+                        <Play className="ml-1 h-8 w-8 fill-current sm:h-9 sm:w-9" />
+                      </span>
+                    </motion.span>
+                  </button>
+                )}
               </div>
-            </div>
-          </Reveal>
+            </motion.div>
+          </div>
 
           <div className="mt-5 grid gap-3 lg:hidden">
-            {platformCallouts.map((callout, index) => {
-              const Icon = callout.icon;
-              return (
-                <Reveal key={callout.title} delay={index * 0.04}>
-                  <div className="rounded-2xl border border-[#dce3f2] bg-[#fbfcff] p-4">
-                    <div className="flex min-w-0 items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <h3 className="min-w-0 text-sm font-semibold leading-5 text-[#171827]">{callout.title}</h3>
-                    </div>
-                    <p className="mt-3 text-sm leading-6 text-[#555b6e]">{callout.copy}</p>
-                  </div>
-                </Reveal>
-              );
-            })}
-
             {teamMoments.map((moment, index) => {
               const Icon = moment.icon;
               return (
-                <Reveal key={moment.title} delay={0.12 + index * 0.04}>
-                  <div className="grid gap-3 rounded-2xl border border-[#dce3f2] bg-white p-4">
+                <Reveal key={moment.title} delay={0.14 + index * 0.04}>
+                  <div className="grid h-full gap-3 rounded-2xl border border-[#dce3f2] bg-white p-4">
                     <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#f7f9ff] text-primary">
                       <Icon className="h-5 w-5" />
                     </div>
