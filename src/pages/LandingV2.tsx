@@ -418,13 +418,13 @@ function Hero({
         >
           <p className="mx-auto inline-flex items-center gap-2 rounded-full border border-[#dce3f2] bg-white px-4 py-2 text-sm font-semibold text-[#555b6e]">
             <Sparkles className="h-4 w-4 text-primary" />
-            <span>Prueba con garantía de 30 días</span>
+            <span>Operadores digitales para tu operación</span>
           </p>
-          <h1 className="mx-auto mt-7 max-w-none text-balance text-3xl font-semibold leading-[1.04] tracking-tight text-[#171827] sm:text-5xl lg:whitespace-nowrap lg:text-[3.35rem] xl:text-[3.75rem] 2xl:text-[3.85rem]">
-            Controla tu operación mientras se mueve
+          <h1 className="mx-auto mt-7 max-w-6xl text-balance text-3xl font-semibold leading-[1.04] tracking-tight text-[#171827] sm:text-5xl lg:text-[3.35rem] xl:text-[3.75rem] 2xl:text-[3.85rem]">
+            Tu empresa ya tiene los sistemas. Ruka hace el trabajo que queda entre medio.
           </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-pretty text-lg leading-8 text-[#555b6e] sm:text-xl sm:leading-9">
-            Ruka conecta compras, proveedores, ventas y gastos para detectar alzas, anomalías y oportunidades de control antes de que impacten tu margen.
+          <p className="mx-auto mt-6 max-w-4xl text-pretty text-lg leading-8 text-[#555b6e] sm:text-xl sm:leading-9">
+            Ruka conecta la información de tu SII, ERP, POS, bancos y otras plataformas para automatizar el trabajo operativo que tu equipo todavía hace manualmente.
           </p>
         </motion.div>
 
@@ -517,7 +517,7 @@ function CoverSystemMap({ reduceMotion }: { reduceMotion: boolean | null }) {
       </div>
 
       <div className="cover-layer">
-        <img className="cover-platform-asset" src="/assets/ruka-v2-cover-platform.png" alt="" aria-hidden="true" />
+        <img className="cover-platform-asset" src="/assets/ruka-digital-operator-hero.webp" alt="" aria-hidden="true" />
       </div>
 
       <div className="cover-outcomes" aria-label="Resultados operativos">
