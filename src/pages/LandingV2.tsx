@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
+import OperationalGapSection from "@/components/landing-v2/OperationalGapSection";
 
 const CTA_LABEL = "Encontrar mi primer operador digital";
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -61,8 +62,6 @@ const coverOutcomes: Array<[string, LucideIcon]> = [
   ["Alertas accionables", Zap],
   ["Margen visible al día", CircleDollarSign],
 ];
-
-const manualFlow = ["SII", "Persona", "Excel", "Persona", "ERP", "Persona", "Banco"];
 
 const workflows = [
   {
@@ -228,7 +227,7 @@ export default function LandingV2() {
       />
       <Hero reduceMotion={reduceMotion} navigate={navigate} />
       <SocialProofSection />
-      <PainRevealSection reduceMotion={reduceMotion} />
+      <OperationalGapSection />
       <WorkSection reduceMotion={reduceMotion} navigate={navigate} />
       <ResultsSection reduceMotion={reduceMotion} />
       <IntegrationsSection />
@@ -443,96 +442,6 @@ function CustomerLogoPlaceholder({ index, decorative = false }: { index: number;
         <span className="social-proof-logo-line social-proof-logo-line-secondary" />
       </span>
     </div>
-  );
-}
-
-function PainRevealSection({ reduceMotion }: { reduceMotion: boolean | null }) {
-  return (
-    <section id="problema" className="scroll-mt-24 bg-[#f4f6fb] py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:text-6xl">
-            No te falta software. Te sobra trabajo entre tus sistemas.
-          </h2>
-          <p className="mx-auto mt-6 max-w-3xl text-pretty text-lg leading-8 text-[#555b6e]">
-            El SII tiene una parte. Tu ERP otra. El banco otra. El POS otra. Y alguien de tu equipo termina descargando, copiando, revisando y cruzando todo.
-          </p>
-        </div>
-
-        <div className="mt-14 grid gap-5">
-          <motion.div
-            className="rounded-2xl border border-[#d7ddea] bg-white p-5 sm:p-8"
-            initial={reduceMotion ? false : { opacity: 0.55, y: 18 }}
-            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.55, ease: easeOut }}
-          >
-            <div className="flex items-center justify-between gap-4">
-              <h3 className="text-xl font-semibold tracking-[-0.02em] text-[#171827]">Sin Ruka</h3>
-              <p className="text-sm font-medium text-[#6a7184]">El equipo hace de integración</p>
-            </div>
-            <div className="mt-7 flex flex-col items-center justify-between gap-2 sm:flex-row sm:gap-1">
-              {manualFlow.map((item, index) => (
-                <Fragment key={`${item}-${index}`}>
-                  <div
-                    className={
-                      item === "Persona"
-                        ? "flex min-h-14 w-full items-center justify-center rounded-xl bg-[#fff5ed] px-3 text-sm font-semibold text-[#9a4f19] sm:w-auto sm:min-w-[6.5rem]"
-                        : "flex min-h-14 w-full items-center justify-center rounded-xl bg-[#eef1f7] px-3 text-sm font-semibold text-[#303547] sm:w-auto sm:min-w-[5.5rem]"
-                    }
-                  >
-                    {item}
-                  </div>
-                  {index < manualFlow.length - 1 && (
-                    <ChevronRight className="h-5 w-5 flex-none rotate-90 text-[#9ba2b3] sm:rotate-0" aria-hidden="true" />
-                  )}
-                </Fragment>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="rounded-2xl bg-[#171827] p-5 text-white sm:p-8"
-            initial={reduceMotion ? false : { opacity: 0.55, y: 18 }}
-            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: easeOut }}
-          >
-            <div className="flex items-center justify-between gap-4">
-              <h3 className="text-xl font-semibold tracking-[-0.02em]">Con Ruka</h3>
-              <p className="text-sm font-medium text-white/[0.64]">Los sistemas entregan. Ruka ejecuta.</p>
-            </div>
-            <div className="mt-8 grid items-center gap-5 sm:grid-cols-[1fr_auto_1.05fr_auto_0.8fr]">
-              <div className="grid grid-cols-2 gap-2">
-                {["SII", "ERP", "POS", "Banco"].map((source) => (
-                  <div key={source} className="rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 py-3 text-center text-sm font-semibold">
-                    {source}
-                  </div>
-                ))}
-              </div>
-              <ArrowRight className="mx-auto h-6 w-6 rotate-90 text-white/[0.44] sm:rotate-0" aria-hidden="true" />
-              <motion.div
-                className="flex min-h-28 items-center justify-center rounded-2xl bg-primary px-6 text-center text-2xl font-semibold tracking-[-0.03em]"
-                whileInView={reduceMotion ? undefined : { scale: [0.96, 1.02, 1] }}
-                viewport={{ once: true, amount: 0.7 }}
-                transition={{ duration: 0.6, delay: 0.28, ease: easeOut }}
-              >
-                Ruka
-              </motion.div>
-              <ArrowRight className="mx-auto h-6 w-6 rotate-90 text-white/[0.44] sm:rotate-0" aria-hidden="true" />
-              <div className="flex min-h-28 flex-col items-center justify-center rounded-2xl bg-white px-5 text-center text-[#171827]">
-                <CheckCircle2 className="h-8 w-8 text-primary" />
-                <p className="mt-2 font-semibold">Hecho</p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        <p className="mx-auto mt-12 max-w-3xl text-center text-balance text-2xl font-semibold leading-tight tracking-[-0.025em] text-[#171827] sm:text-3xl">
-          No hagas más rápido el trabajo manual. Deja de hacerlo.
-        </p>
-      </div>
-    </section>
   );
 }
 
