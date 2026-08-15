@@ -1,16 +1,21 @@
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
+  BookOpenCheck,
   Bot,
   Check,
   Database,
   FileCode2,
   FileSpreadsheet,
+  FileText,
+  Mail,
   ReceiptText,
+  Store,
   UserRound,
 } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -25,7 +30,7 @@ type SourceDocument = {
 const sourceDocuments: SourceDocument[] = [
   {
     label: "SII",
-    detail: "Registro",
+    detail: "Registro tributario",
     image: "/logosii.png",
     position: "left-0 top-8 -rotate-[4deg]",
   },
@@ -36,15 +41,50 @@ const sourceDocuments: SourceDocument[] = [
     position: "right-0 top-0 rotate-[3deg]",
   },
   {
+    label: "PDF",
+    detail: "Documento digital",
+    icon: FileText,
+    position: "left-1/2 top-[4.6rem] z-10 -translate-x-1/2 -rotate-[1deg]",
+  },
+  {
+    label: "Correo",
+    detail: "Adjuntos y respaldos",
+    icon: Mail,
+    position: "bottom-1 left-0 -rotate-[3deg]",
+  },
+  {
     label: "Factura física",
     detail: "Registro manual",
     icon: ReceiptText,
-    position: "bottom-0 left-1/2 z-10 -translate-x-1/2 rotate-[1deg]",
+    position: "bottom-0 right-0 z-20 rotate-[2deg]",
   },
+];
+
+const manualTasks = ["Descargar", "Ingresar", "Cruzar", "Corregir"] as const;
+
+const destinations: Array<{ label: string; shortLabel: string; icon: LucideIcon }> = [
+  { label: "ERP", shortLabel: "ERP", icon: Database },
+  { label: "POS", shortLabel: "POS", icon: Store },
+  { label: "Planilla", shortLabel: "Planilla", icon: FileSpreadsheet },
+  { label: "Sistema contable", shortLabel: "Sistema contable", icon: BookOpenCheck },
 ];
 
 export default function OperationalGapSection() {
   const reduceMotion = useReducedMotion();
+  const [activeDestination, setActiveDestination] = useState(0);
+
+  useEffect(() => {
+    if (reduceMotion) {
+      setActiveDestination(0);
+      return undefined;
+    }
+
+    const interval = window.setInterval(() => {
+      setActiveDestination((current) => (current + 1) % destinations.length);
+    }, 3000);
+
+    return () => window.clearInterval(interval);
+  }, [reduceMotion]);
 
   return (
     <section id="problema" className="scroll-mt-24 bg-[#f3f5fa] py-20 sm:py-28">
@@ -54,7 +94,7 @@ export default function OperationalGapSection() {
             No te falta software. Te sobra trabajo entre tus sistemas.
           </h2>
           <p className="mt-6 max-w-3xl text-pretty text-lg leading-8 text-[#4e5569]">
-            La información llega desde el SII, XML, planillas y documentos físicos. Hoy una persona todavía debe unirla para cerrar el Registro de Compras.
+            La información ya existe. El trabajo aparece cuando alguien todavía tiene que leerla, ordenarla y moverla entre los sistemas de tu empresa.
           </p>
         </div>
 
@@ -71,10 +111,10 @@ export default function OperationalGapSection() {
               id="purchase-register-title"
               className="text-balance text-xl font-semibold tracking-[-0.02em] text-[#171827] sm:text-2xl"
             >
-              Un ejemplo real: Registro de Compras
+              Un ejemplo: registro de compras
             </h3>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-[#626a7d] sm:text-base">
-              Las mismas fuentes. Dos formas muy distintas de operarlas.
+              La misma información. Sin trabajo manual entre medio.
             </p>
           </header>
 
@@ -84,24 +124,19 @@ export default function OperationalGapSection() {
             <div className="min-w-0 bg-white">
               <ComparisonLane
                 label="Hoy"
-                description="Tu equipo sostiene el proceso"
+                description="Tu equipo hace el registro"
                 icon={UserRound}
                 tone="manual"
                 reduceMotion={reduceMotion}
               >
-                <ProcessNode
-                  icon={FileSpreadsheet}
-                  title="Tu equipo"
-                  detail="Descarga, digita, cruza y corrige"
-                  tone="manual"
-                />
+                <ManualWorkNode reduceMotion={reduceMotion} />
                 <FlowConnector tone="manual" reduceMotion={reduceMotion} />
-                <ProcessNode icon={Database} title="ERP" detail="Carga manual" tone="destination" />
+                <DestinationNode activeDestination={activeDestination} reduceMotion={reduceMotion} />
               </ComparisonLane>
 
               <ComparisonLane
                 label="Con Ruka"
-                description="Tu equipo revisa excepciones"
+                description="Ruka hace el registro"
                 icon={Bot}
                 tone="ruka"
                 reduceMotion={reduceMotion}
@@ -109,16 +144,11 @@ export default function OperationalGapSection() {
                 <ProcessNode
                   icon={Bot}
                   title="Ruka"
-                  detail="Lee, conecta y aplica tus reglas"
+                  detail="Lee, cruza y aplica tus reglas."
                   tone="ruka"
                 />
                 <FlowConnector tone="ruka" reduceMotion={reduceMotion} />
-                <ProcessNode
-                  icon={Check}
-                  title="Registro listo"
-                  detail="ERP actualizado. Excepciones separadas."
-                  tone="result"
-                />
+                <ResultNode activeDestination={activeDestination} reduceMotion={reduceMotion} />
               </ComparisonLane>
             </div>
           </div>
@@ -126,7 +156,7 @@ export default function OperationalGapSection() {
 
         <div className="mx-auto mt-12 max-w-4xl border-t border-[#d9deea] pt-9 text-center">
           <p className="text-balance text-2xl font-semibold leading-tight tracking-[-0.025em] text-[#171827] sm:text-3xl">
-            No hagas más rápido el trabajo manual. Deja de hacerlo.
+            Tus sistemas siguen siendo los mismos. Ruka hace el trabajo entre ellos.
           </p>
         </div>
       </div>
@@ -138,13 +168,13 @@ function SourcePanel({ reduceMotion }: { reduceMotion: boolean | null }) {
   return (
     <aside className="relative overflow-hidden bg-[#1b1c2d] px-5 py-7 text-white sm:px-8 sm:py-9 xl:min-h-[29rem] xl:px-7">
       <div className="max-w-md">
-        <h4 className="text-xl font-semibold tracking-[-0.02em]">La información llega repartida.</h4>
-        <p className="mt-2 text-sm leading-6 text-white/65">SII, archivos digitales y documentos físicos.</p>
+        <h4 className="text-xl font-semibold tracking-[-0.02em]">Las compras llegan por todos lados.</h4>
+        <p className="mt-2 text-sm leading-6 text-white/65">SII, XML, PDFs, correos, planillas y documentos físicos.</p>
       </div>
 
       <motion.div
-        className="relative mx-auto mt-7 h-52 w-full max-w-[17rem] sm:mt-8"
-        aria-label="Fuentes del Registro de Compras: SII, XML y factura física"
+        className="relative mx-auto mt-7 h-64 w-full max-w-[17rem] sm:mt-8 xl:h-60"
+        aria-label="Fuentes de una compra: SII, XML, PDF, correo, planilla y factura física"
         initial={reduceMotion ? false : { opacity: 0.88, y: 10 }}
         whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
@@ -155,9 +185,9 @@ function SourcePanel({ reduceMotion }: { reduceMotion: boolean | null }) {
         ))}
       </motion.div>
 
-      <div className="mt-7 border-t border-white/10 pt-5 xl:mt-8">
-        <p className="text-sm font-semibold text-white">Un solo punto de partida.</p>
-        <p className="mt-1 text-sm leading-6 text-white/60">Lo que cambia es quién sostiene los traspasos.</p>
+      <div className="mt-7 border-t border-white/10 pt-5 xl:mt-6">
+        <p className="text-sm font-semibold text-white">Recibir la información no es el problema.</p>
+        <p className="mt-1 text-sm leading-6 text-white/60">El problema es quién hace el trabajo entre medio.</p>
       </div>
     </aside>
   );
@@ -168,23 +198,127 @@ function SourceDocumentCard({ document }: { document: SourceDocument }) {
 
   return (
     <div
-      className={`absolute w-44 rounded-xl bg-[#fbfcff] p-3.5 text-[#252837] shadow-[0_6px_12px_rgba(7,10,28,0.22)] ${document.position}`}
+      className={`absolute w-36 rounded-xl bg-[#fbfcff] p-2.5 text-[#252837] shadow-[0_6px_12px_rgba(7,10,28,0.22)] ${document.position}`}
     >
-      <div className="flex items-center gap-2.5">
-        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#eef1f6] text-[#5b6377]">
+      <div className="flex items-center gap-2">
+        <span className="flex h-8 w-8 flex-none items-center justify-center rounded-lg bg-[#eef1f6] text-[#5b6377]">
           {document.image ? (
-            <img src={document.image} alt="" className="h-7 w-7 object-contain" aria-hidden="true" />
+            <img src={document.image} alt="" className="h-6 w-6 object-contain" aria-hidden="true" />
           ) : Icon ? (
             <Icon className="h-4.5 w-4.5" strokeWidth={1.8} aria-hidden="true" />
           ) : null}
         </span>
         <span className="min-w-0">
-          <span className="block whitespace-nowrap text-sm font-semibold">{document.label}</span>
+          <span className="block whitespace-nowrap text-xs font-semibold sm:text-[13px]">{document.label}</span>
           <span className="mt-0.5 hidden truncate text-[11px] font-medium text-[#6b7284] sm:block">{document.detail}</span>
         </span>
       </div>
-      <span className="mt-3 block h-1.5 w-full rounded-full bg-[#e8ebf2]" aria-hidden="true" />
+      <span className="mt-2.5 block h-1.5 w-full rounded-full bg-[#e8ebf2]" aria-hidden="true" />
       <span className="mt-1.5 block h-1.5 w-2/3 rounded-full bg-[#eef0f5]" aria-hidden="true" />
+    </div>
+  );
+}
+
+function ManualWorkNode({ reduceMotion }: { reduceMotion: boolean | null }) {
+  return (
+    <div className="w-full min-w-0 lg:flex-1">
+      <div className="mb-2 flex flex-wrap gap-1.5 lg:gap-1" aria-label="Trabajo manual: descargar, ingresar, cruzar y corregir">
+        {manualTasks.map((task, index) => (
+          <motion.span
+            key={task}
+            className="rounded-md bg-[#f0f2f6] px-2 py-1 text-sm font-semibold text-[#61697b] lg:px-1.5 lg:text-[11px]"
+            initial={reduceMotion ? false : { opacity: 0.65, y: 4 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.3, delay: reduceMotion ? 0 : 0.08 + index * 0.05, ease: easeOut }}
+          >
+            {task}
+          </motion.span>
+        ))}
+      </div>
+      <ProcessNode icon={FileSpreadsheet} title="Tu equipo" detail="Lee, ingresa, cruza y corrige." tone="manual" />
+    </div>
+  );
+}
+
+function DestinationNode({
+  activeDestination,
+  reduceMotion,
+}: {
+  activeDestination: number;
+  reduceMotion: boolean | null;
+}) {
+  const destination = destinations[activeDestination];
+  const DestinationIcon = destination.icon;
+
+  return (
+    <div
+      className="flex min-h-[7.5rem] w-full min-w-0 flex-col justify-center overflow-hidden rounded-xl bg-[#fbfcff] px-4 py-4 text-[#252837] ring-1 ring-[#d6dbe6] lg:flex-1"
+      aria-label="Dónde la necesitas: ERP, POS, planilla o sistema contable"
+    >
+      <span className="text-sm font-semibold leading-5 sm:text-base">Dónde la necesitas</span>
+      <div className="mt-3 flex h-10 items-center" aria-hidden="true">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={destination.label}
+            className="flex items-center gap-2.5"
+            initial={reduceMotion ? false : { opacity: 0, y: 6, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -6, filter: "blur(4px)" }}
+            transition={{ duration: reduceMotion ? 0 : 0.28, ease: easeOut }}
+          >
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#edf0f7] text-primary">
+              <DestinationIcon className="h-4.5 w-4.5" strokeWidth={1.9} />
+            </span>
+            <span className="text-lg font-semibold tracking-[-0.02em] text-[#303547]">{destination.label}</span>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
+function ResultNode({
+  activeDestination,
+  reduceMotion,
+}: {
+  activeDestination: number;
+  reduceMotion: boolean | null;
+}) {
+  return (
+    <div className="w-full min-w-0 lg:flex-1">
+      <div className="flex items-start gap-3">
+        <span className="flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-primary text-white">
+          <Check className="h-5 w-5" strokeWidth={2.4} aria-hidden="true" />
+        </span>
+        <span className="min-w-0">
+          <span className="block text-base font-semibold leading-5 text-[#252837]">Registro listo</span>
+          <span className="mt-1 block text-sm font-medium leading-5 text-[#586078]">Actualizado donde lo necesitas.</span>
+        </span>
+      </div>
+
+      <div className="mt-3 flex flex-wrap gap-1.5" aria-label="Destinos: ERP, POS, planilla o sistema contable">
+        {destinations.map((item, index) => {
+          const isActive = index === activeDestination;
+
+          return (
+            <motion.span
+              key={item.shortLabel}
+              className={`rounded-md px-2 py-1 text-sm font-semibold transition-[background-color,color,box-shadow] lg:text-xs ${
+                reduceMotion ? "duration-0" : "duration-300"
+              } ${
+                isActive
+                  ? "bg-[#e9edff] text-primary ring-1 ring-primary/35 shadow-[0_2px_7px_rgba(63,82,213,0.16)]"
+                  : "bg-white/80 text-[#58628a] ring-1 ring-[#d6dcf4]"
+              }`}
+              animate={{ scale: isActive ? 1.02 : 1 }}
+              transition={{ duration: reduceMotion ? 0 : 0.28, ease: easeOut }}
+            >
+              {item.shortLabel}
+            </motion.span>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -209,10 +343,18 @@ function ComparisonLane({
   return (
     <section
       aria-label={label}
-      className={`px-5 py-7 sm:px-8 sm:py-9 lg:grid lg:grid-cols-[12rem_minmax(0,1fr)] lg:items-center lg:gap-7 xl:min-h-[14.5rem] xl:grid-cols-[10.5rem_minmax(0,1fr)] xl:px-7 ${
+      className={`relative px-5 py-7 sm:px-8 sm:py-9 lg:grid lg:grid-cols-[12rem_minmax(0,1fr)] lg:items-center lg:gap-7 xl:min-h-[14.5rem] xl:grid-cols-[10.5rem_minmax(0,1fr)] xl:px-7 ${
         isRuka ? "bg-[#f0f2ff]" : "border-b border-[#e0e4ed] bg-white"
       }`}
     >
+      <span
+        className={`absolute -left-3 top-1/2 hidden h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full xl:flex ${
+          isRuka ? "bg-primary text-white" : "bg-[#eef1f6] text-[#697184]"
+        }`}
+        aria-hidden="true"
+      >
+        <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
+      </span>
       <div className="flex items-center gap-3">
         <span
           className={`flex h-11 w-11 flex-none items-center justify-center rounded-xl ${
@@ -284,23 +426,18 @@ function ProcessNode({
   icon: LucideIcon;
   title: string;
   detail: string;
-  tone: "manual" | "ruka" | "destination" | "result";
+  tone: "manual" | "ruka";
 }) {
   const styles = {
     manual: "bg-[#202130] text-white",
     ruka: "bg-primary text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_5px_8px_rgba(61,77,184,0.2)]",
-    destination: "bg-[#fbfcff] text-[#252837] ring-1 ring-[#d6dbe6]",
-    result: "bg-white text-[#252837] ring-1 ring-[#b9c4f6]",
   }[tone];
 
-  const iconStyles =
-    tone === "manual" || tone === "ruka" ? "bg-white/10 text-white" : "bg-[#edf0f7] text-primary";
-  const detailStyles =
-    tone === "ruka" ? "text-white/85" : tone === "manual" ? "text-white/75" : "text-[#626a7d]";
+  const detailStyles = tone === "ruka" ? "text-white/85" : "text-white/75";
 
   return (
     <div className={`flex min-h-[5.5rem] w-full min-w-0 items-center gap-3 rounded-xl px-4 py-4 lg:flex-1 ${styles}`}>
-      <span className={`flex h-10 w-10 flex-none items-center justify-center rounded-lg ${iconStyles}`}>
+      <span className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-white/10 text-white">
         <Icon className="h-5 w-5" strokeWidth={1.9} aria-hidden="true" />
       </span>
       <span className="min-w-0">
