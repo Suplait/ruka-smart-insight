@@ -97,6 +97,118 @@
   background: linear-gradient(to bottom right, rgba(77, 104, 235, 0.1), rgba(243, 243, 251, 0.1));
 }
 
+@keyframes socialProofMarquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.social-proof-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(23, 24, 39, 1) 7%,
+    rgba(23, 24, 39, 1) 93%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(23, 24, 39, 1) 7%,
+    rgba(23, 24, 39, 1) 93%,
+    transparent
+  );
+}
+
+.social-proof-track,
+.social-proof-logo-group {
+  display: flex;
+  width: max-content;
+}
+
+.social-proof-track {
+  animation: socialProofMarquee 48s linear infinite;
+  will-change: transform;
+}
+
+.social-proof-logo-group {
+  gap: 14px;
+  padding-right: 14px;
+}
+
+.social-proof-logo {
+  align-items: center;
+  background: #f4f6fb;
+  border: 1px solid #e2e6f0;
+  border-radius: 12px;
+  display: flex;
+  flex: 0 0 176px;
+  gap: 12px;
+  height: 76px;
+  padding: 0 18px;
+}
+
+.social-proof-logo-mark {
+  background: #aeb6ca;
+  border-radius: 9px;
+  display: block;
+  flex: 0 0 30px;
+  height: 30px;
+}
+
+.social-proof-logo-wordmark {
+  display: grid;
+  flex: 1;
+  gap: 6px;
+}
+
+.social-proof-logo-line {
+  background: #9ca6bc;
+  border-radius: 999px;
+  display: block;
+  height: 6px;
+}
+
+.social-proof-logo-line-primary {
+  width: 100%;
+}
+
+.social-proof-logo-line-secondary {
+  background: #c5cad7;
+  height: 5px;
+  width: 58%;
+}
+
+.social-proof-logo:nth-child(4n + 1) .social-proof-logo-mark {
+  border-radius: 999px;
+}
+
+.social-proof-logo:nth-child(4n + 2) .social-proof-logo-mark {
+  border-radius: 4px 12px 4px 12px;
+}
+
+.social-proof-logo:nth-child(4n + 3) .social-proof-logo-mark {
+  border-radius: 999px;
+  height: 22px;
+  width: 36px;
+}
+
+.social-proof-logo:nth-child(3n + 2) .social-proof-logo-line-primary {
+  width: 82%;
+}
+
+.social-proof-logo:nth-child(5n + 3) .social-proof-logo-line-secondary {
+  width: 78%;
+}
+
+.social-proof-marquee:hover .social-proof-track {
+  animation-play-state: paused;
+}
+
 .pricing-range {
   -webkit-appearance: none;
   appearance: none;
@@ -254,6 +366,23 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .social-proof-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .social-proof-track {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
+
+  .social-proof-logo-group[aria-hidden="true"] {
+    display: none;
+  }
+
   .cover-input-flow path,
   .cover-output-flow path {
     animation: none;

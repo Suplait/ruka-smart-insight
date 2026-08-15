@@ -134,6 +134,8 @@ const integrations: Integration[] = [
   { name: "Bancos", exchange: "Pagos, cartolas y conciliaciones", icon: Landmark },
 ];
 
+const customerLogoPlaceholders = Array.from({ length: 18 }, (_, index) => index + 1);
+
 const plans = [
   {
     name: "Start",
@@ -373,38 +375,74 @@ function OutcomeTile({ icon: Icon, label }: { icon: LucideIcon; label: string })
 
 function SocialProofSection() {
   return (
-    <section className="border-y border-[#dce3f2] bg-white py-12 sm:py-16">
+    <section aria-labelledby="social-proof-title" className="border-y border-[#dce3f2] bg-white py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <p className="text-center text-sm font-semibold text-[#555b6e]">Empresas que ya operan con Ruka</p>
-        <div className="mt-7 grid grid-cols-1 items-center gap-5 border-b border-[#dce3f2] pb-9 text-center sm:grid-cols-3">
-          <p className="text-xl font-semibold tracking-[-0.025em] text-[#303547]">Barbazul</p>
-          <p className="text-xl font-black tracking-[-0.04em] text-[#303547]">OTTOBURGUER</p>
-          <p className="text-xl font-medium tracking-[-0.02em] text-[#303547]">Grupo Melting Cook</p>
-        </div>
+        <h2
+          id="social-proof-title"
+          className="mx-auto max-w-4xl text-balance text-center text-3xl font-semibold leading-[1.12] tracking-[-0.035em] text-[#171827] sm:text-4xl"
+        >
+          Ruka ya procesa millones de transacciones para cientos de empresas.
+        </h2>
+      </div>
 
-        <div className="mt-9 grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
-          <div className="grid grid-cols-2 divide-x divide-[#dce3f2]">
-            <div className="pr-5 sm:pr-8">
-              <p className="text-4xl font-semibold tracking-[-0.035em] text-[#171827] sm:text-5xl">+300</p>
-              <p className="mt-2 text-sm font-semibold leading-5 text-[#555b6e]">empresas</p>
-            </div>
-            <div className="pl-5 sm:pl-8">
-              <p className="text-4xl font-semibold tracking-[-0.035em] text-[#171827] sm:text-5xl">+5M</p>
-              <p className="mt-2 text-sm font-semibold leading-5 text-[#555b6e]">transacciones procesadas</p>
-            </div>
+      <div className="social-proof-marquee mt-9">
+        <div className="social-proof-track">
+          <div className="social-proof-logo-group">
+            {customerLogoPlaceholders.map((index) => (
+              <CustomerLogoPlaceholder key={index} index={index} />
+            ))}
           </div>
-          <figure className="border-l-2 border-primary pl-5 sm:pl-7">
-            <blockquote className="text-pretty text-lg font-medium leading-8 text-[#303547] sm:text-xl">
+          <div className="social-proof-logo-group" aria-hidden="true">
+            {customerLogoPlaceholders.map((index) => (
+              <CustomerLogoPlaceholder key={`duplicate-${index}`} index={index} decorative />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto mt-10 max-w-7xl px-5 sm:px-8">
+        <div className="grid border-y border-[#dce3f2] lg:grid-cols-[1.38fr_0.62fr]">
+          <figure className="flex min-h-72 flex-col justify-between py-8 sm:py-10 lg:border-r lg:border-[#dce3f2] lg:pr-12">
+            <blockquote className="max-w-4xl text-pretty text-2xl font-semibold leading-[1.35] tracking-[-0.025em] text-[#171827] sm:text-3xl">
               “Información inmediata de volúmenes de compra, evolución de precios y control de pagos. Ahorro de HH en planillas.”
             </blockquote>
-            <figcaption className="mt-4 text-sm font-semibold text-[#555b6e]">
-              Hernan Sugg
-              <span className="ml-2 font-normal">Socio, Barbazul</span>
+            <figcaption className="mt-9 flex items-center gap-4 text-sm">
+              <span className="h-px w-9 flex-none bg-primary" aria-hidden="true" />
+              <span className="grid gap-0.5">
+                <strong className="font-semibold text-[#171827]">Hernan Sugg</strong>
+                <span className="font-medium text-[#555b6e]">Socio, Barbazul</span>
+              </span>
             </figcaption>
           </figure>
+          <dl className="grid grid-cols-2 border-t border-[#dce3f2] lg:grid-cols-1 lg:border-t-0">
+            <div className="flex min-h-36 flex-col justify-center py-7 pr-5 sm:min-h-40 sm:py-8 lg:pl-10 lg:pr-0">
+              <dd className="text-4xl font-semibold tracking-[-0.04em] text-primary sm:text-5xl">+300</dd>
+              <dt className="mt-2 max-w-40 text-sm font-semibold leading-5 text-[#555b6e]">empresas operando con Ruka</dt>
+            </div>
+            <div className="flex min-h-36 flex-col justify-center border-l border-[#dce3f2] py-7 pl-5 sm:min-h-40 sm:py-8 lg:border-l-0 lg:border-t lg:pl-10">
+              <dd className="text-4xl font-semibold tracking-[-0.04em] text-primary sm:text-5xl">+5M</dd>
+              <dt className="mt-2 max-w-40 text-sm font-semibold leading-5 text-[#555b6e]">transacciones procesadas</dt>
+            </div>
+          </dl>
         </div>
       </div>
     </section>
+  );
+}
+
+function CustomerLogoPlaceholder({ index, decorative = false }: { index: number; decorative?: boolean }) {
+  return (
+    <div
+      className="social-proof-logo"
+      role={decorative ? undefined : "img"}
+      aria-label={decorative ? undefined : `Logo de cliente ${String(index).padStart(2, "0")} (placeholder)`}
+    >
+      <span className="social-proof-logo-mark" aria-hidden="true" />
+      <span className="social-proof-logo-wordmark" aria-hidden="true">
+        <span className="social-proof-logo-line social-proof-logo-line-primary" />
+        <span className="social-proof-logo-line social-proof-logo-line-secondary" />
+      </span>
+    </div>
   );
 }
 
