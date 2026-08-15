@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { LogIn, ArrowRight, ChevronDown, UtensilsCrossed, Menu, X, Hotel, Zap, Bot, Receipt, Package, Store } from "lucide-react";
+import { LogIn, ArrowRight, UtensilsCrossed, Menu, Hotel, Zap, Bot, Receipt, Package, Store } from "lucide-react";
 import SubdomainModal from "./SubdomainModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -13,19 +13,30 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-export default function Navbar() {
+export type NavbarSectionLink = {
+  id: string;
+  label: string;
+};
+
+type NavbarProps = {
+  sectionLinks?: readonly NavbarSectionLink[];
+  sectionPath?: string;
+};
+
+export default function Navbar({ sectionLinks, sectionPath = "/" }: NavbarProps) {
   const [showSubdomainModal, setShowSubdomainModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
+  const hasSectionLinks = Boolean(sectionLinks?.length);
 
   const scrollToSection = (id: string) => {
-    if (location.pathname !== "/") {
-      navigate(`/#${id}`);
+    const targetPath = hasSectionLinks ? sectionPath : "/";
+
+    if (location.pathname.toLowerCase() !== targetPath.toLowerCase()) {
+      navigate(`${targetPath}#${id}`);
     } else {
       navigate(`#${id}`, { replace: true });
       const element = document.getElementById(id);
@@ -45,8 +56,24 @@ export default function Navbar() {
       </SheetTrigger>
       <SheetContent side="right" className="w-[280px] sm:w-[350px]">
         <nav className="flex flex-col gap-4">
-          <div className="space-y-2">
-            <p className="text-xs text-muted-foreground px-2">Productos</p>
+          {sectionLinks ? (
+            <div className="space-y-1 pt-4">
+              <p className="px-2 pb-2 text-xs text-muted-foreground">Secciones</p>
+              {sectionLinks.map(({ id, label }) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => scrollToSection(id)}
+                  className="w-full rounded-lg px-2 py-3 text-left text-lg font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <>
+              <div className="space-y-2">
+                <p className="text-xs text-muted-foreground px-2">Productos</p>
             {location.pathname === "/" ? (
               <TooltipProvider>
                 <Tooltip>
@@ -178,33 +205,35 @@ export default function Navbar() {
           >
             Testimonios
           </button>
-          <div className="space-y-2">
-            <p className="text-xs text-muted-foreground px-2">Industrias</p>
-            <Link
-              to="/restaurantes"
-              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
-              onClick={() => setIsOpen(false)}
-            >
-              <UtensilsCrossed className="h-4 w-4" />
-              <span>Restaurantes</span>
-            </Link>
-            <Link
-              to="/hoteles"
-              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
-              onClick={() => setIsOpen(false)}
-            >
-              <Hotel className="h-4 w-4" />
-              <span>Hoteles</span>
-            </Link>
-            <Link
-              to="/retail"
-              className="flex items-center space-x-2 text-left text-base font-medium pl-4"
-              onClick={() => setIsOpen(false)}
-            >
-              <Store className="h-4 w-4" />
-              <span>Retail</span>
-            </Link>
-          </div>
+              <div className="space-y-2">
+                <p className="text-xs text-muted-foreground px-2">Industrias</p>
+                <Link
+                  to="/restaurantes"
+                  className="flex items-center space-x-2 text-left text-base font-medium pl-4"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <UtensilsCrossed className="h-4 w-4" />
+                  <span>Restaurantes</span>
+                </Link>
+                <Link
+                  to="/hoteles"
+                  className="flex items-center space-x-2 text-left text-base font-medium pl-4"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <Hotel className="h-4 w-4" />
+                  <span>Hoteles</span>
+                </Link>
+                <Link
+                  to="/retail"
+                  className="flex items-center space-x-2 text-left text-base font-medium pl-4"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <Store className="h-4 w-4" />
+                  <span>Retail</span>
+                </Link>
+              </div>
+            </>
+          )}
           <div className="flex flex-col gap-2 mt-4">
             <Button
               variant="outline"
@@ -242,7 +271,20 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center space-x-8">
-            <NavigationMenu>
+            {sectionLinks ? (
+              sectionLinks.map(({ id, label }) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => scrollToSection(id)}
+                  className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+                >
+                  {label}
+                </button>
+              ))
+            ) : (
+              <>
+                <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent border-0">
@@ -501,7 +543,7 @@ export default function Navbar() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               </NavigationMenuList>
-            </NavigationMenu>
+                </NavigationMenu>
 
             <button
               onClick={() => scrollToSection("pricing")}
@@ -522,7 +564,7 @@ export default function Navbar() {
               Testimonios
             </button>
 
-            <NavigationMenu>
+                <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent border-0">
@@ -603,7 +645,9 @@ export default function Navbar() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               </NavigationMenuList>
-            </NavigationMenu>
+                </NavigationMenu>
+              </>
+            )}
           </div>
 
           <div className="flex items-center gap-3">

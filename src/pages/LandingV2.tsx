@@ -45,16 +45,17 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import Navbar from "@/components/Navbar";
 
 const easeOut: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 const navItems = [
-  ["Problema", "#problema"],
-  ["Solución", "#solucion"],
-  ["Plataforma", "#plataforma"],
-  ["Agentes", "#agentes"],
-  ["Valor", "#valor"],
-];
+  { label: "Problema", id: "problema" },
+  { label: "Solución", id: "solucion" },
+  { label: "Plataforma", id: "plataforma" },
+  { label: "Agentes", id: "agentes" },
+  { label: "Valor", id: "valor" },
+] as const;
 
 const coverSources: Array<[string, LucideIcon]> = [
   ["Ventas", BarChart3],
@@ -329,6 +330,7 @@ export default function LandingV2() {
         <link rel="canonical" href="https://ruka.ai/v2" />
       </Helmet>
 
+      <Navbar sectionLinks={navItems} sectionPath="/v2" />
       <Hero reduceMotion={reduceMotion} navigate={navigate} />
       <TrustStrip />
       <PlatformPreviewSection />
@@ -383,33 +385,14 @@ function Hero({
 }) {
   return (
     <section
-      className="relative overflow-hidden bg-[#fbfcff] px-5 pb-14 pt-5 max-[360px]:pb-8 sm:px-8 sm:pb-24 lg:min-h-[100dvh] lg:pb-20"
+      className="relative overflow-hidden bg-[#fbfcff] px-5 pb-14 pt-[7.75rem] max-[360px]:pb-8 sm:px-8 sm:pb-24 sm:pt-[8.75rem] md:pt-[9.75rem] lg:min-h-[100dvh] lg:pb-20"
       style={{
         backgroundImage:
           "linear-gradient(90deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px), linear-gradient(180deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px)",
         backgroundSize: "56px 56px",
       }}
     >
-      <nav className="relative z-20 mx-auto flex h-14 max-w-7xl items-center justify-between">
-        <Link to="/" className="flex items-center gap-3" aria-label="Ruka.ai">
-          <img src="/logo.png" alt="Ruka.ai" className="h-9 w-auto" />
-        </Link>
-        <div className="hidden items-center gap-7 text-sm font-semibold text-[#555b6e] md:flex">
-          {navItems.map(([label, href]) => (
-            <a key={href} href={href} className="transition-colors duration-150 hover:text-[#171827]">
-              {label}
-            </a>
-          ))}
-        </div>
-        <Button
-          className="h-11 rounded-full bg-primary px-5 text-sm font-semibold text-white shadow-none transition-transform duration-150 ease-out hover:bg-primary/90 active:scale-[0.97]"
-          onClick={() => navigate("/register")}
-        >
-          Regístrate
-        </Button>
-      </nav>
-
-      <div className="relative z-10 mx-auto mt-12 max-w-7xl sm:mt-16 lg:mt-20">
+      <div className="relative z-10 mx-auto max-w-7xl">
         <motion.div
           className="mx-auto max-w-7xl text-center"
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
@@ -421,7 +404,8 @@ function Hero({
             <span>Operadores digitales para tu operación</span>
           </p>
           <h1 className="mx-auto mt-7 max-w-6xl text-balance text-3xl font-semibold leading-[1.04] tracking-tight text-[#171827] sm:text-5xl lg:text-[3.35rem] xl:text-[3.75rem] 2xl:text-[3.85rem]">
-            Tu empresa ya tiene los sistemas. Ruka hace el trabajo que queda entre medio.
+            <span className="block">Tu empresa ya tiene los sistemas.</span>
+            <span className="block">Ruka hace el trabajo que queda entre medio.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-4xl text-pretty text-lg leading-8 text-[#555b6e] sm:text-xl sm:leading-9">
             Ruka conecta la información de tu SII, ERP, POS, bancos y otras plataformas para automatizar el trabajo operativo que tu equipo todavía hace manualmente.
@@ -602,7 +586,7 @@ function TrustStrip() {
 
 function ProblemSection() {
   return (
-    <section id="problema" className="bg-[#fbfcff] py-16 sm:py-24">
+    <section id="problema" className="scroll-mt-24 bg-[#fbfcff] py-16 sm:py-24 md:scroll-mt-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <Reveal>
@@ -683,7 +667,7 @@ function LeakSection() {
 
 function SolutionSection() {
   return (
-    <section id="solucion" className="bg-[#fbfcff] py-16 sm:py-24">
+    <section id="solucion" className="scroll-mt-24 bg-[#fbfcff] py-16 sm:py-24 md:scroll-mt-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <Reveal className="max-w-4xl">
           <p className="text-sm font-semibold text-primary">La solución</p>
@@ -808,7 +792,7 @@ function PlatformPreviewSection() {
     <section
       id="plataforma"
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#fbfcff] py-16 sm:py-24 lg:min-h-[240dvh] lg:overflow-visible lg:py-0"
+      className="relative scroll-mt-24 overflow-hidden bg-[#fbfcff] py-16 sm:py-24 md:scroll-mt-28 lg:min-h-[240dvh] lg:overflow-visible lg:py-0"
       style={{
         backgroundImage:
           "linear-gradient(90deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px), linear-gradient(180deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px)",
@@ -940,7 +924,7 @@ function AgentShowcase({ reduceMotion }: { reduceMotion: boolean | null }) {
   const active = agentModules[activeAgent];
 
   return (
-    <section id="agentes" ref={sectionRef} className="bg-white py-16 sm:py-24">
+    <section id="agentes" ref={sectionRef} className="scroll-mt-24 bg-white py-16 sm:py-24 md:scroll-mt-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <Reveal className="mx-auto max-w-4xl text-center">
           <p className="text-sm font-semibold text-primary">Operadores digitales</p>
@@ -1017,7 +1001,7 @@ function ValueSection() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="valor" className="bg-[#fbfcff] py-16 sm:py-24">
+    <section id="valor" className="scroll-mt-24 bg-[#fbfcff] py-16 sm:py-24 md:scroll-mt-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
           <Reveal>
