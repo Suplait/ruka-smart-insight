@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import type { CSSProperties } from "react";
 import type { LucideIcon } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
@@ -135,29 +136,41 @@ const integrations: Integration[] = [
 
 const plans = [
   {
-    name: "Core",
-    price: "$249.990",
-    suffix: "/ mes",
-    copy: "Para comenzar a automatizar procesos recurrentes.",
-    features: ["Un primer operador digital", "Procesos recurrentes", "Onboarding guiado"],
-    layout: "lg:col-span-4",
+    name: "Start",
+    volume: "Hasta 200 documentos / mes",
+    price: "$99.990",
+    pricePrefix: "",
+    copy: "Para operaciones pequeñas que quieren sacar la digitación del día a día.",
+    features: ["Hasta 200 documentos al mes", "Un flujo recurrente", "Onboarding guiado"],
+    sampleVolume: 150,
   },
   {
-    name: "Scale",
-    price: "$449.990",
-    suffix: "/ mes",
-    copy: "Para operaciones de mayor volumen, múltiples locales o sociedades.",
-    features: ["Mayor volumen operativo", "Múltiples entidades", "Automatizaciones coordinadas"],
-    layout: "lg:col-span-5",
+    name: "Core",
+    volume: "201 - 500 documentos / mes",
+    price: "$249.990",
+    pricePrefix: "",
+    copy: "Para equipos con un flujo constante de documentos y procesos recurrentes.",
+    features: ["Hasta 500 documentos al mes", "Reglas y homologaciones", "Seguimiento operativo"],
+    sampleVolume: 350,
     featured: true,
   },
   {
-    name: "A medida",
-    price: "Cotización",
-    suffix: "según proceso",
-    copy: "Para automatizar un proceso específico de alto impacto.",
-    features: ["Diseño del operador", "Implementación dedicada", "Operación mensual"],
-    layout: "lg:col-span-3",
+    name: "Scale",
+    volume: "501 - 1.200 documentos / mes",
+    price: "$449.990",
+    pricePrefix: "",
+    copy: "Para operaciones de mayor volumen, múltiples locales o sociedades.",
+    features: ["Hasta 1.200 documentos al mes", "Múltiples locales o sociedades", "Automatizaciones coordinadas"],
+    sampleVolume: 850,
+  },
+  {
+    name: "Enterprise",
+    volume: "1.200+ documentos / mes o flujo complejo",
+    price: "$699.990",
+    pricePrefix: "Desde",
+    copy: "Para volúmenes superiores o procesos que requieren un diseño a medida.",
+    features: ["Volumen superior o flujo complejo", "Integraciones dedicadas", "Alcance definido con tu equipo"],
+    sampleVolume: 1_350,
   },
 ] as const;
 
@@ -691,8 +704,13 @@ function PricingSection({
   reduceMotion: boolean | null;
   navigate: (path: string) => void;
 }) {
+  const [documentVolume, setDocumentVolume] = useState(350);
   const [people, setPeople] = useState(3);
   const [weeklyHours, setWeeklyHours] = useState(15);
+  const selectedPlanIndex = documentVolume <= 200 ? 0 : documentVolume <= 500 ? 1 : documentVolume <= 1_200 ? 2 : 3;
+  const activePlan = plans[selectedPlanIndex];
+  const formattedDocumentVolume = documentVolume.toLocaleString("es-CL");
+  const volumeProgress = ((documentVolume - 1) / (1_500 - 1)) * 100;
   const monthlyHours = people * weeklyHours * 4;
   const workDays = Math.round(monthlyHours / 8);
 
@@ -700,48 +718,140 @@ function PricingSection({
     <section id="precios" className="scroll-mt-24 bg-[#f4f6fb] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <h2 className="max-w-3xl text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
-          Empieza por el trabajo que más tiempo te cuesta.
+          El plan correcto para tu volumen.
         </h2>
-        <div className="mt-12 grid gap-5 lg:grid-cols-12 lg:items-stretch">
-          {plans.map((plan) => (
-            <article
-              key={plan.name}
-              className={`flex min-h-[27rem] flex-col rounded-2xl p-6 sm:p-7 ${plan.layout} ${
-                plan.featured ? "bg-[#171827] text-white" : "border border-[#d7ddea] bg-white text-[#171827]"
-              }`}
+        <p className="mt-5 max-w-2xl text-lg leading-8 text-[#555b6e]">
+          El volumen define el punto de partida. Si tu proceso es más complejo, lo diseñamos contigo.
+        </p>
+
+        <div className="mt-12 overflow-hidden rounded-2xl border border-[#d7ddea] bg-white">
+          <div className="grid grid-cols-2 gap-px bg-[#d7ddea] lg:grid-cols-4" role="group" aria-label="Planes disponibles">
+            {plans.map((plan, index) => {
+              const isActive = selectedPlanIndex === index;
+
+              return (
+                <button
+                  key={plan.name}
+                  type="button"
+                  aria-pressed={isActive}
+                  onClick={() => setDocumentVolume(plan.sampleVolume)}
+                  className={`relative min-h-40 p-4 text-left transition-colors duration-200 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary active:scale-[0.99] sm:p-5 ${
+                    isActive ? "bg-[#eef1ff]" : "bg-white hover:bg-[#f8f9fd]"
+                  }`}
+                >
+                  <span className="flex min-h-7 items-center justify-between gap-2">
+                    <span className="text-base font-semibold text-[#171827] sm:text-lg">{plan.name}</span>
+                    {plan.featured && (
+                      <span className="inline-flex items-center gap-1 text-[0.68rem] font-semibold text-primary sm:text-xs">
+                        <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                        Más elegido
+                      </span>
+                    )}
+                  </span>
+                  <span className="mt-3 block text-sm font-medium text-[#555b6e]">{plan.volume}</span>
+                  <span className="mt-5 flex flex-wrap items-baseline gap-x-1.5 text-[#171827]">
+                    {plan.pricePrefix && <span className="text-xs font-semibold text-[#6a7184]">{plan.pricePrefix}</span>}
+                    <span className="text-xl font-semibold tracking-[-0.03em] sm:text-2xl">{plan.price}</span>
+                    <span className="text-xs font-medium text-[#6a7184]">/ mes</span>
+                  </span>
+                  <span
+                    className={`absolute inset-x-0 bottom-0 h-1 origin-left bg-primary transition-transform duration-200 ${
+                      isActive ? "scale-x-100" : "scale-x-0"
+                    }`}
+                    aria-hidden="true"
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="grid border-t border-[#d7ddea] lg:grid-cols-[0.92fr_1.08fr]">
+            <motion.div
+              key={activePlan.name}
+              className="flex min-h-[29rem] flex-col bg-primary p-6 text-white sm:p-9 lg:p-10"
+              initial={reduceMotion ? false : { opacity: 0.72, y: 12 }}
+              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.28, ease: easeOut }}
             >
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="text-xl font-semibold">{plan.name}</h3>
-                {plan.featured && <span className="rounded-full bg-primary px-3 py-1 text-xs font-semibold text-white">Más elegido</span>}
+              <div className="flex items-center gap-2 text-sm font-semibold text-white/[0.78]">
+                <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+                Recomendado para {formattedDocumentVolume} documentos
+              </div>
+              <div className="mt-8 flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">{activePlan.name}</h3>
+                  <p className="mt-3 text-base font-medium text-white/[0.76]">{activePlan.volume}</p>
+                </div>
+                {activePlan.featured && (
+                  <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-primary">Más elegido</span>
+                )}
               </div>
               <div className="mt-8">
-                <p className={`font-semibold tracking-[-0.035em] ${plan.name === "A medida" ? "text-3xl" : "text-4xl"}`}>{plan.price}</p>
-                <p className={`mt-2 text-sm ${plan.featured ? "text-white/60" : "text-[#6a7184]"}`}>{plan.suffix}</p>
+                <p className="text-sm font-semibold text-white/[0.68]">Precio de lista</p>
+                <p className="mt-2 flex flex-wrap items-baseline gap-x-2">
+                  {activePlan.pricePrefix && <span className="text-lg font-semibold text-white/[0.78]">{activePlan.pricePrefix}</span>}
+                  <span className="text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">{activePlan.price}</span>
+                  <span className="text-base font-medium text-white/[0.72]">/ mes</span>
+                </p>
               </div>
-              <p className={`mt-6 text-base leading-7 ${plan.featured ? "text-white/[0.72]" : "text-[#555b6e]"}`}>{plan.copy}</p>
-              <ul className="mt-7 grid gap-3">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3 text-sm font-medium leading-6">
-                    <Check className="mt-1 h-4 w-4 flex-none text-primary" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
+              <p className="mt-6 max-w-lg text-base leading-7 text-white/[0.82]">{activePlan.copy}</p>
+              <Button
+                className="mt-auto h-12 w-full whitespace-nowrap rounded-full bg-white px-5 font-semibold text-[#171827] shadow-none hover:bg-[#f5f6ff] active:scale-[0.98] sm:w-fit sm:px-7"
+                onClick={() => navigate("/register")}
+              >
+                {CTA_LABEL}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </motion.div>
 
-        <div className="mt-5 flex flex-col items-start justify-between gap-4 rounded-2xl border border-[#d7ddea] bg-white p-5 sm:flex-row sm:items-center sm:px-7">
-          <p className="font-semibold text-[#171827]">
-            ¿Una operación más pequeña? <span className="text-primary">Planes desde $99.990 / mes</span>
-          </p>
-          <Button
-            className="h-11 w-full rounded-full bg-primary px-6 font-semibold text-white shadow-none hover:bg-primary/90 active:scale-[0.97] sm:w-auto"
-            onClick={() => navigate("/register")}
-          >
-            {CTA_LABEL}
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+            <div className="p-6 sm:p-9 lg:p-10">
+              <label htmlFor="document-volume" className="block text-sm font-semibold text-[#303547]">
+                Documentos que procesa tu empresa al mes
+              </label>
+              <div className="mt-3 flex items-end justify-between gap-4">
+                <output htmlFor="document-volume" className="text-4xl font-semibold tracking-[-0.035em] text-[#171827] sm:text-5xl" aria-live="polite">
+                  {formattedDocumentVolume}
+                </output>
+                <span className="pb-1 text-sm font-medium text-[#6a7184]">documentos / mes</span>
+              </div>
+              <input
+                id="document-volume"
+                type="range"
+                min="1"
+                max="1500"
+                step="1"
+                value={documentVolume}
+                onInput={(event) => setDocumentVolume(Number(event.currentTarget.value))}
+                className="pricing-range mt-8 w-full cursor-pointer focus-visible:outline-none"
+                style={{ "--range-progress": `${volumeProgress}%` } as CSSProperties}
+                aria-describedby="document-volume-help"
+              />
+              <div className="relative mt-4 h-5 text-[0.68rem] font-semibold text-[#6a7184] sm:text-xs" aria-hidden="true">
+                <span className="absolute left-0">1</span>
+                <span className="absolute left-[13.3%] -translate-x-1/2">200</span>
+                <span className="absolute left-[33.3%] -translate-x-1/2">500</span>
+                <span className="absolute left-[80%] -translate-x-1/2">1.200</span>
+                <span className="absolute right-0">1.500</span>
+              </div>
+              <p id="document-volume-help" className="mt-4 text-sm leading-6 text-[#555b6e]">
+                Mueve el selector o elige uno de los planes de arriba para comparar.
+              </p>
+
+              <div className="mt-8 border-t border-[#d7ddea] pt-7">
+                <h4 className="text-base font-semibold text-[#171827]">Este plan está pensado para</h4>
+                <ul className="mt-5 grid gap-4">
+                  {activePlan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3 text-sm font-medium leading-6 text-[#303547] sm:text-base">
+                      <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-[#eef1ff] text-primary">
+                        <Check className="h-3.5 w-3.5" aria-hidden="true" />
+                      </span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div id="roi" className="mt-10 grid scroll-mt-24 overflow-hidden rounded-2xl border border-[#d7ddea] bg-white lg:grid-cols-[0.95fr_1.05fr]">

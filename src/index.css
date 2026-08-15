@@ -97,6 +97,55 @@
   background: linear-gradient(to bottom right, rgba(77, 104, 235, 0.1), rgba(243, 243, 251, 0.1));
 }
 
+.pricing-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(
+    to right,
+    hsl(var(--primary)) 0%,
+    hsl(var(--primary)) var(--range-progress),
+    #d7ddea var(--range-progress),
+    #d7ddea 100%
+  );
+  border-radius: 999px;
+  height: 0.5rem;
+}
+
+.pricing-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #fff;
+  border: 5px solid hsl(var(--primary));
+  border-radius: 999px;
+  cursor: grab;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.pricing-range::-moz-range-thumb {
+  background: #fff;
+  border: 5px solid hsl(var(--primary));
+  border-radius: 999px;
+  cursor: grab;
+  height: 0.875rem;
+  width: 0.875rem;
+}
+
+.pricing-range:active::-webkit-slider-thumb,
+.pricing-range:active::-moz-range-thumb {
+  cursor: grabbing;
+}
+
+.pricing-range:focus-visible::-webkit-slider-thumb {
+  outline: 3px solid rgba(78, 102, 233, 0.24);
+  outline-offset: 3px;
+}
+
+.pricing-range:focus-visible::-moz-range-thumb {
+  outline: 3px solid rgba(78, 102, 233, 0.24);
+  outline-offset: 3px;
+}
+
 @keyframes float {
   0% {
     transform: translateY(0px);
