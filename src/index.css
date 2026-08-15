@@ -204,6 +204,13 @@
   stroke-width: 2.4;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .cover-input-flow path,
+  .cover-output-flow path {
+    animation: none;
+  }
+}
+
 .cover-input-arrow-path {
   fill: none;
   stroke: rgba(85, 91, 110, 0.34);

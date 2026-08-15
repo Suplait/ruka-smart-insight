@@ -1,41 +1,29 @@
-import type { ReactNode } from "react";
+import { Fragment, useState } from "react";
 import type { LucideIcon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  motion,
-  useMotionValueEvent,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   Banknote,
   BarChart3,
   Bot,
+  Check,
   CheckCircle2,
+  ChevronRight,
   CircleDollarSign,
   Clock3,
   Database,
   FileSpreadsheet,
-  Gauge,
-  GitBranch,
   Layers3,
-  LineChart,
-  LockKeyhole,
-  MessageSquareText,
-  Plug,
-  Play,
+  Landmark,
+  PackageCheck,
   ReceiptText,
   RefreshCw,
-  SearchCheck,
   ShieldCheck,
   Sparkles,
-  TrendingUp,
-  WalletCards,
+  Store,
+  UsersRound,
   Zap,
 } from "lucide-react";
 import {
@@ -47,14 +35,14 @@ import {
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 
-const easeOut: [number, number, number, number] = [0.23, 1, 0.32, 1];
+const CTA_LABEL = "Encontrar mi primer operador digital";
+const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const navItems = [
-  { label: "Problema", id: "problema" },
-  { label: "Solución", id: "solucion" },
-  { label: "Plataforma", id: "plataforma" },
-  { label: "Agentes", id: "agentes" },
-  { label: "Valor", id: "valor" },
+  { label: "Trabajo", id: "trabajo" },
+  { label: "Casos", id: "casos" },
+  { label: "Integraciones", id: "integraciones" },
+  { label: "Precios", id: "precios" },
 ] as const;
 
 const coverSources: Array<[string, LucideIcon]> = [
@@ -73,247 +61,133 @@ const coverOutcomes: Array<[string, LucideIcon]> = [
   ["Margen visible al día", CircleDollarSign],
 ];
 
-const trustStats = [
-  ["+250", "empresas operan con Ruka"],
-  ["+5M", "transacciones procesadas"],
-  ["+US$600M", "en datos operacionales"],
-];
+const manualFlow = ["SII", "Persona", "Excel", "Persona", "ERP", "Persona", "Banco"];
 
-const problemItems = [
-  {
-    icon: FileSpreadsheet,
-    title: "La operación vive en demasiadas planillas",
-    copy: "Compras, facturas, pagos, inventario y ventas se revisan en herramientas distintas. La foto completa aparece tarde.",
-  },
-  {
-    icon: Clock3,
-    title: "El margen se entiende cuando ya pasó",
-    copy: "Las alzas de precio, compras fuera de norma y diferencias de proveedor suelen aparecer en el cierre, no cuando todavía se puede actuar.",
-  },
-  {
-    icon: SearchCheck,
-    title: "El equipo monitorea a mano una parte mínima",
-    copy: "Con cientos de documentos y miles de ítems, la revisión humana termina enfocándose solo en urgencias visibles.",
-  },
-  {
-    icon: RefreshCw,
-    title: "Cada reporte depende de alguien juntando piezas",
-    copy: "Las preguntas importantes requieren descargar archivos, cruzar columnas y pedir contexto antes de llegar a una respuesta útil.",
-  },
-];
-
-const leakRows = [
-  ["Precio", "Un insumo sube 12% y nadie lo ve hasta el cierre."],
-  ["Proveedor", "Se compra fuera del acuerdo porque el dato no estaba a mano."],
-  ["Documento", "Una factura queda sin clasificar y rompe el análisis mensual."],
-  ["Pago", "La nómina bancaria se arma tarde y con doble revisión manual."],
-];
-
-const layerSteps = [
-  {
-    icon: Plug,
-    title: "Conecta lo que ya existe",
-    copy: "Ruka se monta sobre facturas, POS, ERP, bancos, planillas, correos y cargas manuales sin forzar un cambio de sistema.",
-  },
-  {
-    icon: GitBranch,
-    title: "Ordena una capa canónica",
-    copy: "Proveedores, documentos, ítems, centros, pagos y ventas quedan normalizados para que el dato tenga una sola lectura.",
-  },
-  {
-    icon: Bot,
-    title: "Activa operadores digitales",
-    copy: "Agentes clasifican, reconcilian, detectan anomalías, preparan reportes y levantan tareas antes de que el problema escale.",
-  },
-  {
-    icon: Gauge,
-    title: "Entrega decisión y ejecución",
-    copy: "El equipo recibe alertas, dashboards, chat y automatizaciones para actuar con contexto, no con intuición.",
-  },
-];
-
-const rukaDemoEmbedUrl = "https://prueba.ruka.ai/?embed=1&source=landing-platform";
-
-const teamMoments = [
-  {
-    icon: SearchCheck,
-    title: "Operaciones deja de perseguir datos",
-    copy: "La información llega ordenada: compras, proveedores, precios y anomalías en una lectura común.",
-  },
-  {
-    icon: WalletCards,
-    title: "Finanzas revisa con contexto",
-    copy: "Pagos, documentos y diferencias dejan de ser una cadena de mensajes sueltos antes del cierre.",
-  },
-  {
-    icon: MessageSquareText,
-    title: "Gerencia pregunta y decide",
-    copy: "La plataforma responde con evidencia, no con una promesa abstracta de automatización.",
-  },
-];
-
-const agentModules = [
+const workflows = [
   {
     icon: ReceiptText,
-    title: "Registro automático de compras",
-    copy: "Digitaliza documentos, extrae ítems y deja la información disponible sin digitación manual.",
+    title: "Facturas de proveedores",
+    copy: "Deja de ingresar y ordenar facturas manualmente.",
+    steps: ["Recibir", "Leer", "Homologar", "Actualizar"],
     video: "/robot_facturas.mp4",
-  },
-  {
-    icon: Layers3,
-    title: "Maestro inteligente de insumos",
-    copy: "Agrupa nombres distintos para el mismo producto y reduce el ruido de proveedores, formatos y cargas.",
-    video: "/robot_cajas.mp4",
-  },
-  {
-    icon: TrendingUp,
-    title: "Monitoreo continuo de precios",
-    copy: "Detecta variaciones, compara periodos y muestra qué cambios tienen impacto real en la operación.",
-    video: "/robot_grafico2.mp4",
-  },
-  {
-    icon: Zap,
-    title: "Alertas antes del cierre",
-    copy: "Levanta señales cuando un precio se dispara, aparece un proveedor nuevo o una compra sale de patrón.",
-    video: "/robot_alerta.mp4",
-  },
-  {
-    icon: WalletCards,
-    title: "Cuentas por pagar ordenadas",
-    copy: "Prepara pagos, conciliaciones y nóminas con trazabilidad para que finanzas revise menos y controle más.",
-    video: "/robot_dinero.mp4",
+    layout: "lg:col-span-7",
   },
   {
     icon: RefreshCw,
-    title: "Sincronización con sistemas actuales",
-    copy: "Envía datos limpios a inventario, BI, contabilidad o cualquier herramienta donde el equipo ya trabaja.",
+    title: "Conciliaciones",
+    copy: "Deja de cruzar información entre tus sistemas.",
+    steps: ["Cruzar", "Conciliar", "Detectar", "Escalar"],
+    video: "/robot_dinero.mp4",
+    layout: "lg:col-span-5",
+  },
+  {
+    icon: PackageCheck,
+    title: "Costos e inventario",
+    copy: "Deja de mantener costos y stock manualmente.",
+    steps: ["Actualizar", "Comparar", "Alertar"],
     video: "/robot_inventario.mp4",
+    layout: "lg:col-span-5",
   },
+] as const;
+
+const customerCases = [
+  {
+    company: "Barbazul",
+    result: "Horas de planilla recuperadas",
+    before: "Cruzar compras, precios y pagos antes de poder revisar la operación.",
+    after: "Información inmediata de volúmenes, evolución de precios y control de pagos.",
+    person: "Hernan Sugg, socio",
+  },
+  {
+    company: "Ottoburguer",
+    result: "Control de precios al instante",
+    before: "Revisar facturas y compras por proveedor de forma manual.",
+    after: "Facturas y compras mensuales visibles para detectar cobros fuera de rango.",
+    person: "Esteban Hojas, socio",
+  },
+  {
+    company: "Grupo Melting Cook",
+    result: "Ruka dentro de la operación",
+    before: "Procesos recurrentes dependientes del seguimiento del equipo.",
+    after: "Una operación acompañada por Ruka y soporte cercano cuando aparece una excepción.",
+    person: "Alphonse Reynes, gerencia",
+  },
+] as const;
+
+type Integration = {
+  name: string;
+  exchange: string;
+  image?: string;
+  icon?: LucideIcon;
+  mark?: string;
+};
+
+const integrations: Integration[] = [
+  { name: "SII", exchange: "Facturas y documentos tributarios", image: "/logosii.png" },
+  { name: "Toteat", exchange: "Ventas, productos y locales", image: "/toteat-logo.png" },
+  { name: "Fudo", exchange: "Ventas y catálogo del POS", image: "/fudo-logo.png" },
+  { name: "Justo", exchange: "Pedidos, ventas y productos", image: "/justo-logo.png" },
+  { name: "Defontana", exchange: "Compras, inventario y contabilidad", mark: "D" },
+  { name: "Nubox", exchange: "Contabilidad y documentos", mark: "N" },
+  { name: "Bsale", exchange: "Ventas, stock y documentos", icon: Store },
+  { name: "Bancos", exchange: "Pagos, cartolas y conciliaciones", icon: Landmark },
 ];
 
-const valueCards = [
+const plans = [
   {
-    title: "Menos horas de back office",
-    value: "15+",
-    unit: "hrs / semana",
-    copy: "La digitación y cruce manual se convierten en revisión asistida.",
+    name: "Core",
+    price: "$249.990",
+    suffix: "/ mes",
+    copy: "Para comenzar a automatizar procesos recurrentes.",
+    features: ["Un primer operador digital", "Procesos recurrentes", "Onboarding guiado"],
+    layout: "lg:col-span-4",
   },
   {
-    title: "Más velocidad de reacción",
-    value: "24/7",
-    unit: "monitoreo",
-    copy: "Los cambios relevantes aparecen cuando ocurren, no cuando alguien arma un reporte.",
+    name: "Scale",
+    price: "$449.990",
+    suffix: "/ mes",
+    copy: "Para operaciones de mayor volumen, múltiples locales o sociedades.",
+    features: ["Mayor volumen operativo", "Múltiples entidades", "Automatizaciones coordinadas"],
+    layout: "lg:col-span-5",
+    featured: true,
   },
   {
-    title: "Más control de margen",
-    value: "día a día",
-    unit: "visibilidad",
-    copy: "Compras, precios y proveedores se leen con contexto operativo.",
+    name: "A medida",
+    price: "Cotización",
+    suffix: "según proceso",
+    copy: "Para automatizar un proceso específico de alto impacto.",
+    features: ["Diseño del operador", "Implementación dedicada", "Operación mensual"],
+    layout: "lg:col-span-3",
   },
-];
-
-const workflowMoments = [
-  {
-    time: "Lunes 08:40",
-    title: "El equipo llega con prioridades claras",
-    copy: "Ruka ya revisó documentos, variaciones y proveedores antes de la primera reunión.",
-  },
-  {
-    time: "Durante el día",
-    title: "Las alertas llegan con contexto",
-    copy: "No dice solo que algo cambió: muestra cuánto, dónde y qué dato lo respalda.",
-  },
-  {
-    time: "Antes del cierre",
-    title: "Menos reconstrucción, más decisión",
-    copy: "Compras, pagos y margen se revisan sobre una historia común, no sobre versiones sueltas.",
-  },
-];
-
-const conversationSnippets = [
-  "¿Qué insumos subieron más este mes?",
-  "Muéstrame proveedores con compras fuera de patrón.",
-  "Prepara el resumen de brecha ventas-compras.",
-];
-
-const beforeAfter = [
-  {
-    label: "Antes",
-    tone: "border-[#f0c8c8] bg-[#fffafa]",
-    icon: Clock3,
-    points: [
-      "Registro manual de documentos",
-      "Datos desactualizados entre sistemas",
-      "Revisión parcial de proveedores e ítems",
-      "Reportes que dependen de cierres y planillas",
-      "Margen visible cuando ya hay poco margen de acción",
-    ],
-  },
-  {
-    label: "Con Ruka",
-    tone: "border-[#c8d2ff] bg-[#fbfcff]",
-    icon: CheckCircle2,
-    points: [
-      "Compras clasificadas automáticamente",
-      "Datos consistentes para operación y finanzas",
-      "Monitoreo continuo de precio, proveedor y gasto",
-      "Reportes y preguntas en lenguaje natural",
-      "Alertas para actuar antes de perder margen",
-    ],
-  },
-];
-
-const adoptionSteps = [
-  ["01", "Mapeo de fuentes", "Identificamos dónde vive la información y qué decisiones se quieren mejorar primero."],
-  ["02", "Conexión y normalización", "Ruka trae datos, agrupa entidades y deja trazabilidad entre documentos, ítems y proveedores."],
-  ["03", "Activación de operadores", "Configuramos alertas, reportes y automatizaciones para los dolores de mayor impacto."],
-  ["04", "Mejora continua", "El sistema aprende reglas del negocio y expande módulos sin desordenar la operación."],
-];
-
-const testimonials = [
-  {
-    name: "Hernan Sugg",
-    role: "Socio, Barbazul",
-    quote: "Información inmediata de volúmenes de compra, evolución de precios y control de pagos. Ahorro de HH en planillas.",
-  },
-  {
-    name: "Esteban Hojas",
-    role: "Socio, Ottoburguer",
-    quote: "Me ayuda a saber la cantidad de facturas y compras mensuales por proveedor. Ahora puedo saber de una si me están cobrando de más.",
-  },
-  {
-    name: "Alphonse Reynes",
-    role: "Gerencia, Grupo Melting Cook",
-    quote: "Ruka es fundamental en nuestra operación. Además, tienen un servicio al cliente de otro nivel.",
-  },
-];
+] as const;
 
 const faqItems = [
   {
-    question: "¿Qué problema resuelve Ruka primero?",
-    answer: "Parte por ordenar compras, documentos, proveedores, pagos y señales de margen. Desde esa base activa alertas, reportes y automatizaciones según el dolor de mayor impacto.",
+    question: "¿Tengo que cambiar mi ERP?",
+    answer:
+      "No. Ruka se conecta con los sistemas que ya usa tu empresa y opera entre ellos. La idea es aprovechar tu infraestructura actual, no reemplazarla.",
   },
   {
-    question: "¿Tengo que cambiar mi ERP, POS o facturador?",
-    answer: "No. Ruka se conecta sobre las fuentes actuales y crea una capa operativa unificada. La idea es aprovechar lo que ya tienes, no obligarte a migrar.",
+    question: "¿Pueden automatizar un proceso distinto?",
+    answer:
+      "Sí. Partimos entendiendo el flujo, sus reglas y las excepciones. Si el proceso usa información disponible y pasos repetibles, podemos diseñar un operador para ejecutarlo.",
   },
   {
-    question: "¿Qué tan compleja es la integración?",
-    answer: "Depende de las fuentes disponibles, pero el enfoque es progresivo: partir con las integraciones o cargas más rápidas, mostrar valor y luego ampliar la cobertura.",
+    question: "¿Cuánto demora implementar?",
+    answer:
+      "Depende de las fuentes y del proceso. Comenzamos con un alcance acotado, conectamos lo necesario y mostramos el primer resultado antes de ampliar la automatización.",
   },
   {
-    question: "¿Cuándo se ven resultados?",
-    answer: "Los primeros resultados suelen aparecer al normalizar documentos y compras: menos digitación, más trazabilidad y alertas sobre variaciones relevantes.",
+    question: "¿Con qué sistemas funciona?",
+    answer:
+      "Ruka trabaja con SII, ERP, POS, bancos, planillas y otras plataformas. También podemos habilitar conexiones para sistemas propios o flujos que hoy funcionan por correo y archivos.",
   },
   {
-    question: "¿Mis datos están seguros?",
-    answer: "Sí. Ruka trabaja con controles de acceso, buenas prácticas de seguridad y trazabilidad para que los datos operacionales se usen con cuidado.",
+    question: "¿Qué pasa cuando Ruka no puede resolver algo?",
+    answer:
+      "Ruka identifica la excepción y la escala con contexto para que una persona decida. El objetivo no es esconder los casos difíciles, sino reducir todo el trabajo que no necesita intervención humana.",
   },
-  {
-    question: "¿Qué pasa si no me acomoda?",
-    answer: "Tienes garantía de devolución durante los primeros 30 días. La promesa es simple: si no ves valor, no seguimos empujando algo que no te sirve.",
-  },
-];
+] as const;
 
 export default function LandingV2() {
   const navigate = useNavigate();
@@ -322,57 +196,30 @@ export default function LandingV2() {
   return (
     <main className="min-h-[100dvh] bg-[#fbfcff] text-[#171827]">
       <Helmet>
-        <title>Ruka.ai | Operadores digitales para compras, inventario y margen</title>
+        <title>Ruka.ai | Operadores digitales para tu empresa</title>
         <meta
           name="description"
-          content="Ruka conecta tus fuentes operacionales, ordena compras y activa operadores digitales para controlar margen, pagos y decisiones del día a día."
+          content="Ruka conecta SII, ERP, POS, bancos y otras plataformas para automatizar el trabajo operativo que tu equipo todavía hace manualmente."
         />
         <link rel="canonical" href="https://ruka.ai/v2" />
       </Helmet>
 
-      <Navbar sectionLinks={navItems} sectionPath="/v2" />
+      <Navbar
+        sectionLinks={navItems}
+        sectionPath="/v2"
+        logoPath="/v2"
+        primaryAction={{ label: CTA_LABEL, path: "/register" }}
+        showLogin={false}
+      />
       <Hero reduceMotion={reduceMotion} navigate={navigate} />
-      <TrustStrip />
-      <PlatformPreviewSection />
-      <ProblemSection />
-      <LeakSection />
-      <SolutionSection />
-      <AgentShowcase reduceMotion={reduceMotion} />
-      <ValueSection />
-      <TeamSection />
-      <BeforeAfterSection />
-      <AdoptionSection />
-      <TestimonialsSection />
-      <PricingGuaranteeSection navigate={navigate} />
-      <FAQSection />
-      <FinalCTA navigate={navigate} />
+      <SocialProofSection />
+      <PainRevealSection reduceMotion={reduceMotion} />
+      <WorkSection reduceMotion={reduceMotion} navigate={navigate} />
+      <ResultsSection reduceMotion={reduceMotion} />
+      <IntegrationsSection />
+      <PricingSection reduceMotion={reduceMotion} navigate={navigate} />
+      <FAQAndCTASection navigate={navigate} />
     </main>
-  );
-}
-
-function Reveal({
-  children,
-  className,
-  delay = 0,
-  amount = 0.2,
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-  amount?: number;
-}) {
-  const reduceMotion = useReducedMotion();
-
-  return (
-    <motion.div
-      className={className}
-      initial={reduceMotion ? false : { opacity: 0, y: 18, filter: "blur(6px)" }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, amount }}
-      transition={{ duration: 0.46, delay, ease: easeOut }}
-    >
-      {children}
-    </motion.div>
   );
 }
 
@@ -385,7 +232,7 @@ function Hero({
 }) {
   return (
     <section
-      className="relative overflow-hidden bg-[#fbfcff] px-5 pb-14 pt-[7.75rem] max-[360px]:pb-8 sm:px-8 sm:pb-24 sm:pt-[8.75rem] md:pt-[9.75rem] lg:min-h-[100dvh] lg:pb-20"
+      className="relative overflow-hidden bg-[#fbfcff] px-5 pb-14 pt-24 sm:px-8 sm:pb-20 lg:min-h-[100dvh] lg:pb-16"
       style={{
         backgroundImage:
           "linear-gradient(90deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px), linear-gradient(180deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px)",
@@ -403,7 +250,7 @@ function Hero({
             <Sparkles className="h-4 w-4 text-primary" />
             <span>Operadores digitales para tu operación</span>
           </p>
-          <h1 className="mx-auto mt-7 max-w-6xl text-balance text-3xl font-semibold leading-[1.04] tracking-tight text-[#171827] sm:text-5xl lg:text-[3.35rem] xl:text-[3.75rem] 2xl:text-[3.85rem]">
+          <h1 className="mx-auto mt-7 max-w-6xl text-balance text-3xl font-semibold leading-[1.04] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:text-[3.35rem] xl:text-[3.75rem] 2xl:text-[3.85rem]">
             <span className="block">Tu empresa ya tiene los sistemas.</span>
             <span className="block">Ruka hace el trabajo que queda entre medio.</span>
           </h1>
@@ -413,64 +260,48 @@ function Hero({
         </motion.div>
 
         <motion.div
-          className="mx-auto mt-10 flex max-w-7xl flex-col items-center justify-center gap-3 sm:flex-row"
+          className="mx-auto mt-9 flex max-w-7xl flex-col items-center justify-center gap-3 sm:flex-row"
           initial={reduceMotion ? false : { opacity: 0, y: 12 }}
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.46, delay: 0.12, ease: easeOut }}
         >
           <Button
-            className="h-12 w-full rounded-full bg-primary px-5 text-base font-semibold text-white shadow-none transition-transform duration-150 ease-out hover:bg-primary/90 active:scale-[0.97] sm:w-auto sm:px-6"
+            className="h-12 w-full rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none transition-transform duration-150 ease-out hover:bg-primary/90 active:scale-[0.97] sm:w-auto sm:px-6 sm:text-base"
             onClick={() => navigate("/register")}
           >
-            Ver si aplica a mi operación
+            {CTA_LABEL}
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
           <a
-            href="#plataforma"
-            className="hidden h-12 w-full items-center justify-center rounded-full border border-[#dce3f2] bg-white px-5 text-base font-semibold text-[#171827] transition-transform duration-150 ease-out hover:bg-[#f7f9ff] active:scale-[0.97] sm:inline-flex sm:w-auto sm:px-6"
+            href="#trabajo"
+            className="inline-flex h-12 w-full items-center justify-center rounded-full border border-[#dce3f2] bg-white px-6 text-base font-semibold text-[#171827] transition-transform duration-150 ease-out hover:bg-[#f7f9ff] active:scale-[0.97] sm:w-auto"
           >
             Ver Ruka en acción
           </a>
         </motion.div>
 
         <motion.div
-          className="mt-12 sm:mt-16"
+          className="mt-10 sm:mt-14"
           initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.16, ease: easeOut }}
         >
-          <CoverSystemMap reduceMotion={reduceMotion} />
+          <CoverSystemMap />
         </motion.div>
       </div>
     </section>
   );
 }
 
-function CoverSystemMap({ reduceMotion }: { reduceMotion: boolean | null }) {
+function CoverSystemMap() {
   return (
     <div className="cover-system-map">
       <svg className="cover-flow-lines" viewBox="0 0 1240 360" preserveAspectRatio="none" aria-hidden="true">
         <defs>
-          <marker
-            id="cover-input-arrow"
-            markerHeight="10"
-            markerUnits="userSpaceOnUse"
-            markerWidth="12"
-            orient="auto"
-            refX="10"
-            refY="5"
-          >
+          <marker id="cover-input-arrow" markerHeight="10" markerUnits="userSpaceOnUse" markerWidth="12" orient="auto" refX="10" refY="5">
             <path className="cover-input-arrow-path" d="M1 1 L10 5 L1 9" />
           </marker>
-          <marker
-            id="cover-output-arrow"
-            markerHeight="14"
-            markerUnits="userSpaceOnUse"
-            markerWidth="16"
-            orient="auto"
-            refX="14"
-            refY="7"
-          >
+          <marker id="cover-output-arrow" markerHeight="14" markerUnits="userSpaceOnUse" markerWidth="16" orient="auto" refX="14" refY="7">
             <path className="cover-output-arrow-path" d="M2 2 L14 7 L2 12" />
           </marker>
         </defs>
@@ -494,21 +325,15 @@ function CoverSystemMap({ reduceMotion }: { reduceMotion: boolean | null }) {
 
       <div className="cover-sources" aria-label="Fuentes de datos">
         {coverSources.map(([label, Icon]) => (
-          <div key={label}>
-            <SourceTile icon={Icon} label={label} />
-          </div>
+          <SourceTile key={label} icon={Icon} label={label} />
         ))}
       </div>
-
       <div className="cover-layer">
         <img className="cover-platform-asset" src="/assets/ruka-digital-operator-hero.webp" alt="" aria-hidden="true" />
       </div>
-
       <div className="cover-outcomes" aria-label="Resultados operativos">
         {coverOutcomes.map(([label, Icon]) => (
-          <div key={label}>
-            <OutcomeTile icon={Icon} label={label} />
-          </div>
+          <OutcomeTile key={label} icon={Icon} label={label} />
         ))}
       </div>
     </div>
@@ -533,816 +358,517 @@ function OutcomeTile({ icon: Icon, label }: { icon: LucideIcon; label: string })
   );
 }
 
-function TrustStrip() {
+function SocialProofSection() {
   return (
-    <section id="traccion" className="border-y border-[#dce3f2] bg-white py-12 sm:py-14">
+    <section className="border-y border-[#dce3f2] bg-white py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
-          <Reveal className="max-w-xl">
-            <p className="text-sm font-semibold text-primary">Tracción real</p>
-            <h2 className="mt-3 text-balance text-3xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-[2.35rem]">
-              Operación real.
-              <br />
-              Respaldo real.
-            </h2>
-          </Reveal>
+        <p className="text-center text-sm font-semibold text-[#555b6e]">Empresas que ya operan con Ruka</p>
+        <div className="mt-7 grid grid-cols-1 items-center gap-5 border-b border-[#dce3f2] pb-9 text-center sm:grid-cols-3">
+          <p className="text-xl font-semibold tracking-[-0.025em] text-[#303547]">Barbazul</p>
+          <p className="text-xl font-black tracking-[-0.04em] text-[#303547]">OTTOBURGUER</p>
+          <p className="text-xl font-medium tracking-[-0.02em] text-[#303547]">Grupo Melting Cook</p>
+        </div>
 
-          <div>
-            <Reveal>
-              <div className="grid border-y border-[#dce3f2] sm:grid-cols-3">
-                {trustStats.map(([value, label], index) => (
-                  <div
-                    key={label}
-                    className="border-b border-[#dce3f2] py-6 last:border-b-0 sm:border-b-0 sm:border-r sm:px-6 sm:first:pl-0 sm:last:border-r-0 sm:last:pr-0"
-                  >
-                    <p className="text-[3.1rem] font-semibold leading-none tracking-tight text-[#171827] sm:text-[3.4rem]">{value}</p>
-                    <p className="mt-3 max-w-[12rem] text-sm font-semibold leading-5 text-[#555b6e]">{label}</p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-
-            <Reveal className="mt-6">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm font-semibold text-[#555b6e]">Respaldado por:</p>
-                <div className="grid grid-cols-4 items-center gap-x-6 gap-y-4 opacity-70 sm:flex sm:gap-x-8">
-                  {[
-                    ["/microsoft2.png", "Microsoft"],
-                    ["/openai2.png", "OpenAI"],
-                    ["/500logo.png", "500 Global"],
-                    ["/logocorfo.png", "CORFO"],
-                  ].map(([src, alt]) => (
-                    <img key={alt} src={src} alt={alt} className="max-h-8 w-auto object-contain grayscale" />
-                  ))}
-                </div>
-              </div>
-            </Reveal>
+        <div className="mt-9 grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
+          <div className="grid grid-cols-2 divide-x divide-[#dce3f2]">
+            <div className="pr-5 sm:pr-8">
+              <p className="text-4xl font-semibold tracking-[-0.035em] text-[#171827] sm:text-5xl">+300</p>
+              <p className="mt-2 text-sm font-semibold leading-5 text-[#555b6e]">empresas</p>
+            </div>
+            <div className="pl-5 sm:pl-8">
+              <p className="text-4xl font-semibold tracking-[-0.035em] text-[#171827] sm:text-5xl">+5M</p>
+              <p className="mt-2 text-sm font-semibold leading-5 text-[#555b6e]">transacciones procesadas</p>
+            </div>
           </div>
+          <figure className="border-l-2 border-primary pl-5 sm:pl-7">
+            <blockquote className="text-pretty text-lg font-medium leading-8 text-[#303547] sm:text-xl">
+              “Información inmediata de volúmenes de compra, evolución de precios y control de pagos. Ahorro de HH en planillas.”
+            </blockquote>
+            <figcaption className="mt-4 text-sm font-semibold text-[#555b6e]">
+              Hernan Sugg
+              <span className="ml-2 font-normal">Socio, Barbazul</span>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
   );
 }
 
-function ProblemSection() {
+function PainRevealSection({ reduceMotion }: { reduceMotion: boolean | null }) {
   return (
-    <section id="problema" className="scroll-mt-24 bg-[#fbfcff] py-16 sm:py-24 md:scroll-mt-28">
+    <section id="problema" className="scroll-mt-24 bg-[#f4f6fb] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-          <Reveal>
-            <p className="text-sm font-semibold text-primary">El problema</p>
-            <h2 className="mt-3 max-w-2xl text-balance text-4xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-5xl">
-              No falta información. Falta una operación que entienda esa información a tiempo.
-            </h2>
-            <p className="mt-5 max-w-xl text-pretty text-lg leading-8 text-[#555b6e]">
-              Las empresas ya tienen facturas, ventas, pagos, inventario y reportes. El dolor aparece cuando todo vive separado y nadie alcanza a cruzarlo antes de decidir.
-            </p>
-          </Reveal>
-
-          <div className="grid gap-3">
-            {problemItems.map((item, index) => (
-              <Reveal key={item.title} delay={index * 0.04}>
-                <div className="grid gap-4 rounded-2xl border border-[#dce3f2] bg-white p-5 sm:grid-cols-[3.25rem_1fr] sm:p-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <item.icon className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold tracking-tight text-[#171827]">{item.title}</h3>
-                    <p className="mt-2 text-base leading-7 text-[#555b6e]">{item.copy}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function LeakSection() {
-  return (
-    <section className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold text-primary">Lo que se pierde entre medio</p>
-          <h2 className="mt-3 text-balance text-4xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-5xl">
-            El margen se fuga en detalles pequeños que llegan tarde.
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:text-6xl">
+            No te falta software. Te sobra trabajo entre tus sistemas.
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555b6e]">
-            Una operación puede verse estable y aun así estar perdiendo dinero por señales que nadie alcanzó a conectar.
+          <p className="mx-auto mt-6 max-w-3xl text-pretty text-lg leading-8 text-[#555b6e]">
+            El SII tiene una parte. Tu ERP otra. El banco otra. El POS otra. Y alguien de tu equipo termina descargando, copiando, revisando y cruzando todo.
           </p>
-        </Reveal>
-
-        <div className="mt-12 overflow-hidden rounded-2xl border border-[#dce3f2] bg-[#171827] text-white">
-          <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
-            <Reveal className="p-6 sm:p-9 lg:p-11">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10">
-                <LineChart className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="mt-7 max-w-xl text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
-                La diferencia no está en mirar más dashboards. Está en que alguien mire por ti todo el tiempo.
-              </h3>
-              <p className="mt-5 max-w-xl text-lg leading-8 text-white/72">
-                Ruka convierte ruido operacional en señales: qué cambió, por qué importa y qué debería hacer el equipo ahora.
-              </p>
-            </Reveal>
-
-            <div className="border-t border-white/10 lg:border-l lg:border-t-0">
-              {leakRows.map(([label, copy], index) => (
-                <Reveal key={label} delay={index * 0.04} className="border-b border-white/10 last:border-b-0">
-                  <div className="grid gap-3 p-5 sm:grid-cols-[7rem_1fr] sm:p-6">
-                    <p className="text-sm font-semibold text-primary">{label}</p>
-                    <p className="text-base leading-7 text-white/82">{copy}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function SolutionSection() {
-  return (
-    <section id="solucion" className="scroll-mt-24 bg-[#fbfcff] py-16 sm:py-24 md:scroll-mt-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <Reveal className="max-w-4xl">
-          <p className="text-sm font-semibold text-primary">La solución</p>
-          <h2 className="mt-3 text-balance text-4xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-5xl">
-            Una capa operativa entre tus sistemas y las decisiones del negocio.
-          </h2>
-          <p className="mt-5 max-w-3xl text-pretty text-lg leading-8 text-[#555b6e]">
-            Ruka no es otro tablero para mirar. Es una capa que conecta, entiende, alerta y ejecuta trabajo repetitivo para que el equipo tome decisiones con contexto.
-          </p>
-        </Reveal>
-
-        <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-[#dce3f2] bg-[#dce3f2] lg:grid-cols-4">
-          {layerSteps.map((step, index) => {
-            const Icon = step.icon;
-            return (
-              <Reveal key={step.title} delay={index * 0.04} amount={0.35}>
-                <div className="h-full bg-white p-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#dce3f2] bg-[#fbfcff] text-primary">
-                    <Icon className="h-6 w-6" />
-                  </div>
-                  <p className="mt-7 text-sm font-semibold text-primary">0{index + 1}</p>
-                  <h3 className="mt-2 text-xl font-semibold tracking-tight text-[#171827]">{step.title}</h3>
-                  <p className="mt-3 text-base leading-7 text-[#555b6e]">{step.copy}</p>
-                </div>
-              </Reveal>
-            );
-          })}
         </div>
 
-        <Reveal className="mt-12 rounded-2xl border border-[#dce3f2] bg-white p-5 sm:p-7 lg:p-8">
-          <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <div>
-              <p className="text-sm font-semibold text-primary">Arquitectura práctica</p>
-              <h3 className="mt-2 text-balance text-2xl font-semibold tracking-tight text-[#171827] sm:text-3xl">
-                Empieza por las fuentes disponibles y escala desde el valor.
-              </h3>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              {["Captura", "Criterio", "Acción"].map((item, index) => (
-                <div key={item} className="rounded-xl border border-[#dce3f2] bg-[#fbfcff] p-4">
-                  <p className="text-sm font-semibold text-primary">{item}</p>
-                  <p className="mt-2 text-sm leading-6 text-[#555b6e]">
-                    {index === 0 && "Traer datos sin pedirle más carga al equipo."}
-                    {index === 1 && "Ordenar reglas, entidades y excepciones."}
-                    {index === 2 && "Alertar, responder y preparar trabajo."}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-function PlatformPreviewSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isDemoOpen, setIsDemoOpen] = useState(false);
-  const [demoHeight, setDemoHeight] = useState(720);
-  const [isLargeViewport, setIsLargeViewport] = useState(false);
-  const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
-    mass: 0.8,
-  });
-  const introOpacity = useTransform(smoothProgress, [0, 0.16, 0.34], [1, 1, 0]);
-  const introY = useTransform(smoothProgress, [0, 0.34], [0, -42]);
-  const frameScale = useTransform(smoothProgress, [0, 0.18, 0.42, 0.72, 1], [0.72, 0.9, 1, 1, 0.74]);
-  const frameY = useTransform(smoothProgress, [0, 0.18, 0.42, 0.72, 1], [142, 42, 0, 0, -124]);
-  const frameOpacity = useTransform(smoothProgress, [0, 0.08, 0.82, 1], [0.96, 1, 1, 0.82]);
-  const frameShadow = useTransform(
-    smoothProgress,
-    [0, 0.42, 0.72, 1],
-    [
-      "0 10px 18px rgba(31,43,93,0.05)",
-      "0 28px 72px rgba(31,43,93,0.16)",
-      "0 26px 66px rgba(31,43,93,0.14)",
-      "0 10px 20px rgba(31,43,93,0.06)",
-    ],
-  );
-  const previewVeilOpacity = useTransform(smoothProgress, [0, 0.24, 0.52, 1], [0.2, 0.13, 0.06, 0.12]);
-  const playOpacity = useTransform(smoothProgress, [0, 0.18, 0.55, 0.9, 1], [1, 1, 0.9, 0.9, 0.62]);
-  const playScale = useTransform(smoothProgress, [0, 0.42, 0.72, 1], [1, 1.08, 1, 0.92]);
-
-  useEffect(() => {
-    if (!isDemoOpen) return;
-
-    const handleMessage = (event: MessageEvent) => {
-      if (event.origin !== "https://prueba.ruka.ai") return;
-
-      const data = event.data;
-      if (!data || data.source !== "demo-ruka") return;
-
-      if (data.type === "ruka-demo:resize") {
-        const nextHeight = Number(data.payload?.height);
-        if (Number.isFinite(nextHeight)) {
-          setDemoHeight(Math.max(720, Math.ceil(nextHeight)));
-        }
-      }
-    };
-
-    window.addEventListener("message", handleMessage);
-    return () => window.removeEventListener("message", handleMessage);
-  }, [isDemoOpen]);
-
-  useEffect(() => {
-    const media = window.matchMedia("(min-width: 1024px)");
-    const updateViewport = () => setIsLargeViewport(media.matches);
-
-    updateViewport();
-    media.addEventListener("change", updateViewport);
-    return () => media.removeEventListener("change", updateViewport);
-  }, []);
-
-  return (
-    <section
-      id="plataforma"
-      ref={sectionRef}
-      className="relative scroll-mt-24 overflow-hidden bg-[#fbfcff] py-16 sm:py-24 md:scroll-mt-28 lg:min-h-[240dvh] lg:overflow-visible lg:py-0"
-      style={{
-        backgroundImage:
-          "linear-gradient(90deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px), linear-gradient(180deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px)",
-        backgroundSize: "56px 56px",
-      }}
-    >
-      <div className="absolute inset-x-0 top-0 h-px bg-[#dce3f2]" />
-      <div className="lg:sticky lg:top-0 lg:flex lg:min-h-[100dvh] lg:items-center lg:overflow-hidden">
-        <div className="relative mx-auto w-full max-w-[1540px] px-5 sm:px-8 lg:px-8">
+        <div className="mt-14 grid gap-5">
           <motion.div
-            className="relative z-20 max-w-2xl lg:absolute lg:left-8 lg:top-10 lg:max-w-[590px]"
-            style={reduceMotion ? undefined : { opacity: introOpacity, y: introY }}
+            className="rounded-2xl border border-[#d7ddea] bg-white p-5 sm:p-8"
+            initial={reduceMotion ? false : { opacity: 0.55, y: 18 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.55, ease: easeOut }}
           >
-            <p className="text-sm font-semibold text-primary">La plataforma en operación</p>
-            <h2 className="mt-3 text-balance text-4xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-5xl">
-              Ve qué está afectando tu margen antes del cierre.
-            </h2>
-            <p className="mt-5 max-w-xl text-pretty text-lg leading-8 text-[#555b6e]">
-              Explora compras, ventas y variaciones en una demo real, con señales listas para decidir sin cruzar planillas.
-            </p>
+            <div className="flex items-center justify-between gap-4">
+              <h3 className="text-xl font-semibold tracking-[-0.02em] text-[#171827]">Sin Ruka</h3>
+              <p className="text-sm font-medium text-[#6a7184]">El equipo hace de integración</p>
+            </div>
+            <div className="mt-7 flex flex-col items-center justify-between gap-2 sm:flex-row sm:gap-1">
+              {manualFlow.map((item, index) => (
+                <Fragment key={`${item}-${index}`}>
+                  <div
+                    className={
+                      item === "Persona"
+                        ? "flex min-h-14 w-full items-center justify-center rounded-xl bg-[#fff5ed] px-3 text-sm font-semibold text-[#9a4f19] sm:w-auto sm:min-w-[6.5rem]"
+                        : "flex min-h-14 w-full items-center justify-center rounded-xl bg-[#eef1f7] px-3 text-sm font-semibold text-[#303547] sm:w-auto sm:min-w-[5.5rem]"
+                    }
+                  >
+                    {item}
+                  </div>
+                  {index < manualFlow.length - 1 && (
+                    <ChevronRight className="h-5 w-5 flex-none rotate-90 text-[#9ba2b3] sm:rotate-0" aria-hidden="true" />
+                  )}
+                </Fragment>
+              ))}
+            </div>
           </motion.div>
 
-          <div className="relative mt-10 flex w-full items-center justify-center sm:mt-12 lg:mt-0 lg:min-h-[100dvh]">
-            <motion.div
-              className="relative z-10 w-full overflow-hidden rounded-2xl bg-[#f6f8ff] p-2 lg:w-[calc(100vw-5rem)] lg:max-w-none"
-              style={reduceMotion ? undefined : { scale: frameScale, y: frameY, opacity: frameOpacity, boxShadow: frameShadow }}
-              initial={reduceMotion ? false : { opacity: 0 }}
-              whileInView={reduceMotion ? undefined : { opacity: 1 }}
-              viewport={{ once: true, amount: 0.18 }}
-              transition={{ duration: 0.7, ease: easeOut }}
-            >
-              <div className="overflow-hidden rounded-xl border border-[#dce3f2] bg-white lg:h-[calc(100dvh-96px)]">
-                <div className="flex h-9 items-center justify-between border-b border-[#e6ebf5] bg-[#fbfcff] px-4">
-                  <div className="flex items-center gap-1.5" aria-hidden="true">
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#ff6b6b]" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#f3c44d]" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#39c780]" />
+          <motion.div
+            className="rounded-2xl bg-[#171827] p-5 text-white sm:p-8"
+            initial={reduceMotion ? false : { opacity: 0.55, y: 18 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: easeOut }}
+          >
+            <div className="flex items-center justify-between gap-4">
+              <h3 className="text-xl font-semibold tracking-[-0.02em]">Con Ruka</h3>
+              <p className="text-sm font-medium text-white/[0.64]">Los sistemas entregan. Ruka ejecuta.</p>
+            </div>
+            <div className="mt-8 grid items-center gap-5 sm:grid-cols-[1fr_auto_1.05fr_auto_0.8fr]">
+              <div className="grid grid-cols-2 gap-2">
+                {["SII", "ERP", "POS", "Banco"].map((source) => (
+                  <div key={source} className="rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 py-3 text-center text-sm font-semibold">
+                    {source}
                   </div>
-                  <div className="flex items-center gap-2 text-xs font-semibold text-[#7b8296]">
-                    <LockKeyhole className="h-3.5 w-3.5" />
-                    ruka.ai / demo
-                  </div>
-                </div>
-
-                {isDemoOpen ? (
-                  <iframe
-                    src={rukaDemoEmbedUrl}
-                    title="Demo interactiva Ruka"
-                    loading="lazy"
-                    allow="clipboard-write"
-                    className="block w-full border-0"
-                    style={{ height: isLargeViewport ? "calc(100dvh - 132px)" : `${demoHeight}px` }}
-                  />
-                ) : (
-                  <button
-                    type="button"
-                    className="group relative block w-full overflow-hidden bg-[#eef2ff] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                    onClick={() => setIsDemoOpen(true)}
-                    aria-label="Abrir demo interactiva de Ruka"
-                  >
-                    <img
-                      src="/assets/ruka-platform-insights.png"
-                      alt="Pantalla de Ruka con análisis de compras, ventas y variaciones de insumos"
-                      className="h-auto w-full transition-transform duration-500 ease-out group-hover:scale-[1.015] lg:h-[calc(100dvh-132px)] lg:object-cover"
-                    />
-                    <motion.span
-                      className="absolute inset-0 bg-[#171827] transition-colors duration-200 group-hover:bg-[#171827]"
-                      style={reduceMotion ? { opacity: 0.12 } : { opacity: previewVeilOpacity }}
-                    />
-                    <motion.span
-                      className="absolute inset-0 flex items-center justify-center p-6"
-                      style={reduceMotion ? undefined : { opacity: playOpacity, scale: playScale }}
-                    >
-                      <span className="flex h-20 w-20 items-center justify-center rounded-full bg-white text-primary shadow-[0_8px_8px_rgba(31,43,93,0.08)] ring-1 ring-white/70 transition-transform duration-200 ease-out group-hover:scale-[1.06] sm:h-24 sm:w-24">
-                        <Play className="ml-1 h-8 w-8 fill-current sm:h-9 sm:w-9" />
-                      </span>
-                    </motion.span>
-                  </button>
-                )}
-              </div>
-            </motion.div>
-          </div>
-
-          <div className="mt-5 grid gap-3 lg:hidden">
-            {teamMoments.map((moment, index) => {
-              const Icon = moment.icon;
-              return (
-                <Reveal key={moment.title} delay={0.14 + index * 0.04}>
-                  <div className="grid h-full gap-3 rounded-2xl border border-[#dce3f2] bg-white p-4">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#f7f9ff] text-primary">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-semibold text-[#171827]">{moment.title}</h3>
-                      <p className="mt-1 text-sm leading-6 text-[#555b6e]">{moment.copy}</p>
-                    </div>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function AgentShowcase({ reduceMotion }: { reduceMotion: boolean | null }) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
-  const [activeAgent, setActiveAgent] = useState(0);
-  const { scrollYProgress } = useScroll({
-    target: listRef,
-    offset: ["start center", "end center"],
-  });
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 24,
-    mass: 0.8,
-  });
-  const imageY = useTransform(smoothProgress, [0, 1], [0, -18]);
-
-  useMotionValueEvent(smoothProgress, "change", (latest) => {
-    if (reduceMotion || !Number.isFinite(latest)) return;
-    const next = Math.min(agentModules.length - 1, Math.max(0, Math.floor(latest * agentModules.length)));
-    setActiveAgent((current) => (current === next ? current : next));
-  });
-
-  const active = agentModules[activeAgent];
-
-  return (
-    <section id="agentes" ref={sectionRef} className="scroll-mt-24 bg-white py-16 sm:py-24 md:scroll-mt-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <Reveal className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-semibold text-primary">Operadores digitales</p>
-          <h2 className="mt-3 text-balance text-4xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-5xl">
-            Agentes que hacen trabajo operativo, no solo responden preguntas.
-          </h2>
-          <p className="mx-auto mt-5 max-w-3xl text-pretty text-lg leading-8 text-[#555b6e]">
-            Cada operador tiene un rol concreto: registrar, clasificar, monitorear, alertar, conciliar o sincronizar. El valor está en que trabajan sobre datos del negocio.
-          </p>
-        </Reveal>
-
-        <div className="mt-12 grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-          <div ref={listRef} className="grid gap-3 lg:pb-24">
-            {agentModules.map((agent, index) => {
-              const Icon = agent.icon;
-              const isActive = index === activeAgent;
-              return (
-                <motion.button
-                  key={agent.title}
-                  type="button"
-                  className={`group w-full rounded-2xl border p-5 text-left transition-colors duration-200 active:scale-[0.99] ${
-                    isActive
-                      ? "border-primary/45 bg-[#f7f9ff]"
-                      : "border-[#dce3f2] bg-white hover:bg-[#fbfcff]"
-                  }`}
-                  onMouseEnter={() => setActiveAgent(index)}
-                  onFocus={() => setActiveAgent(index)}
-                  initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-                  whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.35 }}
-                  transition={{ duration: 0.36, delay: index * 0.035, ease: easeOut }}
-                >
-                  <div className="grid gap-4 sm:grid-cols-[3.25rem_1fr]">
-                    <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${isActive ? "bg-primary text-white" : "bg-[#f1f4fb] text-[#6d7489]"}`}>
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold tracking-tight text-[#171827]">{agent.title}</h3>
-                      <p className="mt-2 text-base leading-7 text-[#555b6e]">{agent.copy}</p>
-                    </div>
-                  </div>
-                </motion.button>
-              );
-            })}
-          </div>
-
-          <div className="lg:sticky lg:top-24">
-            <motion.div
-              className="overflow-hidden rounded-2xl border border-[#dce3f2] bg-[#f7f9ff]"
-              style={reduceMotion ? undefined : { y: imageY }}
-              initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
-              whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, ease: easeOut }}
-            >
-              <div className="border-b border-[#dce3f2] bg-white px-5 py-4">
-                <p className="text-sm font-semibold text-primary">Ahora trabajando</p>
-                <p className="mt-1 text-lg font-semibold tracking-tight text-[#171827]">{active.title}</p>
-              </div>
-              <div className="aspect-[1.1] bg-[#eef2ff]">
-                <video key={active.video} autoPlay loop muted playsInline preload="metadata" className="h-full w-full object-cover">
-                  <source src={active.video} type="video/mp4" />
-                </video>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ValueSection() {
-  const reduceMotion = useReducedMotion();
-
-  return (
-    <section id="valor" className="scroll-mt-24 bg-[#fbfcff] py-16 sm:py-24 md:scroll-mt-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
-          <Reveal>
-            <p className="text-sm font-semibold text-primary">Valor para el negocio</p>
-            <h2 className="mt-3 max-w-2xl text-balance text-4xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-5xl">
-              Menos fricción operativa. Más control sobre lo que afecta el margen.
-            </h2>
-          </Reveal>
-          <Reveal>
-            <p className="max-w-2xl text-pretty text-lg leading-8 text-[#555b6e]">
-              La promesa no es tener otro reporte bonito. Es que compras, pagos, proveedores e insumos dejen de consumir horas del equipo y empiecen a generar señales útiles.
-            </p>
-          </Reveal>
-        </div>
-
-        <div className="mt-12 grid gap-4 lg:grid-cols-3">
-          {valueCards.map((card, index) => (
-            <Reveal key={card.title} delay={index * 0.04}>
-              <motion.div
-                className="h-full rounded-2xl border border-[#dce3f2] bg-white p-6 transition-colors duration-200 hover:border-primary/35"
-                whileHover={reduceMotion ? undefined : { y: -4 }}
-                transition={{ duration: 0.2, ease: easeOut }}
-              >
-                <p className="text-sm font-semibold text-primary">{card.title}</p>
-                <div className="mt-8 flex items-end gap-3">
-                  <p className="text-5xl font-semibold tracking-tight text-[#171827]">{card.value}</p>
-                  <p className="pb-1 text-sm font-semibold text-[#555b6e]">{card.unit}</p>
-                </div>
-                <p className="mt-5 text-base leading-7 text-[#555b6e]">{card.copy}</p>
-              </motion.div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function TeamSection() {
-  const reduceMotion = useReducedMotion();
-
-  return (
-    <section className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-          <Reveal>
-            <div className="rounded-2xl border border-[#dce3f2] bg-[#171827] p-6 text-white sm:p-8 lg:p-10">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10">
-                <MessageSquareText className="h-6 w-6 text-white" />
-              </div>
-              <h2 className="mt-7 max-w-2xl text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-                La tecnología se siente útil cuando baja la ansiedad del equipo.
-              </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-white/72">
-                Ruka no reemplaza el criterio de operaciones o finanzas. Les quita trabajo invisible, deja evidencia a mano y hace que las conversaciones partan más arriba.
-              </p>
-
-              <div className="mt-8 grid gap-3">
-                {conversationSnippets.map((snippet, index) => (
-                  <motion.div
-                    key={snippet}
-                    className="rounded-2xl border border-white/10 bg-white/[0.055] p-4 text-sm font-semibold leading-6 text-white/86"
-                    initial={reduceMotion ? false : { opacity: 0, x: -16 }}
-                    whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }}
-                    viewport={{ once: true, amount: 0.45 }}
-                    transition={{ duration: 0.38, delay: index * 0.08, ease: easeOut }}
-                  >
-                    "{snippet}"
-                  </motion.div>
                 ))}
               </div>
+              <ArrowRight className="mx-auto h-6 w-6 rotate-90 text-white/[0.44] sm:rotate-0" aria-hidden="true" />
+              <motion.div
+                className="flex min-h-28 items-center justify-center rounded-2xl bg-primary px-6 text-center text-2xl font-semibold tracking-[-0.03em]"
+                whileInView={reduceMotion ? undefined : { scale: [0.96, 1.02, 1] }}
+                viewport={{ once: true, amount: 0.7 }}
+                transition={{ duration: 0.6, delay: 0.28, ease: easeOut }}
+              >
+                Ruka
+              </motion.div>
+              <ArrowRight className="mx-auto h-6 w-6 rotate-90 text-white/[0.44] sm:rotate-0" aria-hidden="true" />
+              <div className="flex min-h-28 flex-col items-center justify-center rounded-2xl bg-white px-5 text-center text-[#171827]">
+                <CheckCircle2 className="h-8 w-8 text-primary" />
+                <p className="mt-2 font-semibold">Hecho</p>
+              </div>
             </div>
-          </Reveal>
-
-          <div className="grid gap-4">
-            {workflowMoments.map((moment, index) => (
-              <Reveal key={moment.title} delay={index * 0.05}>
-                <div className="grid gap-4 rounded-2xl border border-[#dce3f2] bg-[#fbfcff] p-5 sm:grid-cols-[7.5rem_1fr] sm:p-6">
-                  <p className="text-sm font-semibold text-primary">{moment.time}</p>
-                  <div>
-                    <h3 className="text-xl font-semibold tracking-tight text-[#171827]">{moment.title}</h3>
-                    <p className="mt-2 text-base leading-7 text-[#555b6e]">{moment.copy}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          </motion.div>
         </div>
+
+        <p className="mx-auto mt-12 max-w-3xl text-center text-balance text-2xl font-semibold leading-tight tracking-[-0.025em] text-[#171827] sm:text-3xl">
+          No hagas más rápido el trabajo manual. Deja de hacerlo.
+        </p>
       </div>
     </section>
   );
 }
 
-function BeforeAfterSection() {
+function WorkSection({
+  reduceMotion,
+  navigate,
+}: {
+  reduceMotion: boolean | null;
+  navigate: (path: string) => void;
+}) {
   return (
-    <section className="bg-white py-16 sm:py-24">
+    <section id="trabajo" className="scroll-mt-24 bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold text-primary">Antes y después</p>
-          <h2 className="mt-3 text-balance text-4xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-5xl">
-            El cambio se siente en la rutina del equipo.
-          </h2>
-        </Reveal>
+        <h2 className="max-w-3xl text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
+          Trabajo que puedes sacar de tu equipo.
+        </h2>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-2">
-          {beforeAfter.map((column, index) => {
-            const Icon = column.icon;
-            return (
-              <Reveal key={column.label} delay={index * 0.05}>
-                <div className={`h-full rounded-2xl border p-6 sm:p-7 ${column.tone}`}>
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white">
-                      <Icon className="h-5 w-5 text-primary" />
-                    </div>
-                    <h3 className="text-2xl font-semibold tracking-tight text-[#171827]">{column.label}</h3>
-                  </div>
-                  <div className="mt-7 grid gap-3">
-                    {column.points.map((point) => (
-                      <div key={point} className="flex items-start gap-3 rounded-xl bg-white/80 p-4">
-                        <CheckCircle2 className="mt-0.5 h-5 w-5 flex-none text-primary" />
-                        <p className="text-base leading-7 text-[#333849]">{point}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </Reveal>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function AdoptionSection() {
-  return (
-    <section className="bg-[#fbfcff] py-16 sm:py-24">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-          <Reveal>
-            <p className="text-sm font-semibold text-primary">Cómo se empieza</p>
-            <h2 className="mt-3 max-w-2xl text-balance text-4xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-5xl">
-              Implementación progresiva, enfocada en valor visible.
-            </h2>
-            <p className="mt-5 max-w-xl text-pretty text-lg leading-8 text-[#555b6e]">
-              No necesitas resolver todo el mapa operacional el primer día. Ruka parte por las fuentes que generan impacto y crece desde ahí.
-            </p>
-          </Reveal>
-
-          <div className="rounded-2xl border border-[#dce3f2] bg-white">
-            {adoptionSteps.map(([number, title, copy], index) => (
-              <Reveal key={title} delay={index * 0.04} className="border-b border-[#e7ecf5] last:border-b-0">
-                <div className="grid gap-4 p-5 sm:grid-cols-[4.5rem_1fr] sm:p-6">
-                  <p className="text-2xl font-semibold tracking-tight text-primary">{number}</p>
-                  <div>
-                    <h3 className="text-xl font-semibold tracking-tight text-[#171827]">{title}</h3>
-                    <p className="mt-2 text-base leading-7 text-[#555b6e]">{copy}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function TestimonialsSection() {
-  return (
-    <section className="bg-white py-16 sm:py-24">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold text-primary">Clientes</p>
-          <h2 className="mt-3 text-balance text-4xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-5xl">
-            Equipos que ya usan Ruka para ordenar la operación.
-          </h2>
-        </Reveal>
-
-        <div className="mt-12 grid gap-4 lg:grid-cols-3">
-          {testimonials.map((testimonial, index) => (
-            <Reveal key={testimonial.name} delay={index * 0.05}>
-              <figure className="h-full rounded-2xl border border-[#dce3f2] bg-[#fbfcff] p-6">
-                <div className="flex gap-1 text-primary" aria-hidden="true">
-                  {Array.from({ length: 5 }).map((_, star) => (
-                    <Sparkles key={star} className="h-4 w-4 fill-primary" />
+        <div className="mt-12 grid gap-5 lg:grid-cols-12">
+          {workflows.map((workflow) => (
+            <article key={workflow.title} className={`grid min-h-[28rem] overflow-hidden rounded-2xl border border-[#dce3f2] bg-[#fbfcff] ${workflow.layout}`}>
+              <div className="p-6 sm:p-8">
+                <workflow.icon className="h-7 w-7 text-primary" strokeWidth={1.8} />
+                <h3 className="mt-6 text-2xl font-semibold tracking-[-0.025em] text-[#171827] sm:text-3xl">{workflow.title}</h3>
+                <p className="mt-3 max-w-lg text-lg leading-8 text-[#555b6e]">{workflow.copy}</p>
+                <div className="mt-7 flex flex-wrap items-center gap-x-2 gap-y-3 text-sm font-semibold text-[#303547]">
+                  {workflow.steps.map((step, index) => (
+                    <Fragment key={step}>
+                      <span>{step}</span>
+                      {index < workflow.steps.length - 1 && <ChevronRight className="h-4 w-4 text-primary" aria-hidden="true" />}
+                    </Fragment>
                   ))}
                 </div>
-                <blockquote className="mt-6 text-lg leading-8 text-[#333849]">
-                  "{testimonial.quote}"
-                </blockquote>
-                <figcaption className="mt-7 border-t border-[#dce3f2] pt-5">
-                  <p className="font-semibold text-[#171827]">{testimonial.name}</p>
-                  <p className="mt-1 text-sm leading-6 text-[#555b6e]">{testimonial.role}</p>
-                </figcaption>
-              </figure>
-            </Reveal>
+              </div>
+              <div className="mt-auto min-h-48 overflow-hidden border-t border-[#dce3f2] bg-[#f1f3fb]">
+                <video
+                  className="h-full max-h-64 w-full object-cover"
+                  autoPlay={!reduceMotion}
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  aria-label={`Demostración de Ruka para ${workflow.title.toLowerCase()}`}
+                >
+                  <source src={workflow.video} type="video/mp4" />
+                </video>
+              </div>
+            </article>
+          ))}
+
+          <article className="relative flex min-h-[28rem] flex-col justify-between overflow-hidden rounded-2xl bg-primary p-6 text-white lg:col-span-7 sm:p-8">
+            <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full border border-white/[0.12]" aria-hidden="true" />
+            <div className="absolute -bottom-32 right-16 h-72 w-72 rounded-full border border-white/10" aria-hidden="true" />
+            <div className="relative">
+              <Bot className="h-8 w-8" strokeWidth={1.8} />
+              <h3 className="mt-8 max-w-xl text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] sm:text-4xl">¿Otro proceso manual?</h3>
+              <p className="mt-4 max-w-xl text-lg leading-8 text-white/[0.82]">
+                Creamos un operador para tu flujo, sobre los sistemas y reglas que ya usa tu empresa.
+              </p>
+            </div>
+            <Button
+              className="relative mt-10 h-12 w-full rounded-full bg-white px-4 text-sm font-semibold text-primary shadow-none hover:bg-white/[0.92] active:scale-[0.97] sm:w-fit sm:px-6 sm:text-base"
+              onClick={() => navigate("/register")}
+            >
+              {CTA_LABEL}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </article>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ResultsSection({ reduceMotion }: { reduceMotion: boolean | null }) {
+  const [activeCase, setActiveCase] = useState(0);
+  const selectedCase = customerCases[activeCase];
+
+  return (
+    <section id="casos" className="scroll-mt-24 bg-[#f4f6fb] py-20 sm:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <h2 className="max-w-3xl text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
+          Ruka ya está haciendo la pega.
+        </h2>
+        <div className="mt-12 grid gap-5 lg:grid-cols-[0.38fr_0.62fr]">
+          <div className="grid gap-3" role="tablist" aria-label="Casos de clientes">
+            {customerCases.map((customerCase, index) => (
+              <button
+                key={customerCase.company}
+                type="button"
+                role="tab"
+                aria-selected={activeCase === index}
+                aria-controls="customer-case-panel"
+                onClick={() => setActiveCase(index)}
+                className={`rounded-2xl p-5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:p-6 ${
+                  activeCase === index ? "bg-[#171827] text-white" : "border border-[#d7ddea] bg-white text-[#171827] hover:border-primary/40"
+                }`}
+              >
+                <span className={`text-sm font-semibold ${activeCase === index ? "text-white/60" : "text-[#6a7184]"}`}>{customerCase.company}</span>
+                <span className="mt-2 block text-xl font-semibold tracking-[-0.02em]">{customerCase.result}</span>
+              </button>
+            ))}
+          </div>
+
+          <motion.article
+            id="customer-case-panel"
+            key={selectedCase.company}
+            role="tabpanel"
+            className="rounded-2xl border border-[#d7ddea] bg-white p-6 sm:p-9"
+            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.28, ease: easeOut }}
+          >
+            <div className="flex flex-col gap-3 border-b border-[#dce3f2] pb-7 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-sm font-semibold text-primary">{selectedCase.company}</p>
+                <h3 className="mt-2 text-balance text-3xl font-semibold tracking-[-0.03em] text-[#171827] sm:text-4xl">{selectedCase.result}</h3>
+              </div>
+              <p className="text-sm font-medium text-[#6a7184]">{selectedCase.person}</p>
+            </div>
+            <div className="mt-8 grid gap-6 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
+              <div>
+                <p className="text-sm font-semibold text-[#6a7184]">Antes</p>
+                <p className="mt-3 text-lg leading-8 text-[#303547]">{selectedCase.before}</p>
+              </div>
+              <ArrowRight className="h-6 w-6 rotate-90 text-primary sm:rotate-0" aria-hidden="true" />
+              <div>
+                <p className="text-sm font-semibold text-primary">Con Ruka</p>
+                <p className="mt-3 text-lg font-medium leading-8 text-[#171827]">{selectedCase.after}</p>
+              </div>
+            </div>
+          </motion.article>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function IntegrationsSection() {
+  return (
+    <section id="integraciones" className="scroll-mt-24 bg-white py-20 sm:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
+            No cambies tus sistemas. Pon Ruka entre ellos.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555b6e]">
+            Conectamos la información que ya existe y usamos las reglas con las que tu empresa ya opera.
+          </p>
+        </div>
+        <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
+          {integrations.map((integration) => (
+            <IntegrationTile key={integration.name} integration={integration} />
           ))}
         </div>
+        <ol className="mt-14 grid gap-5 md:grid-cols-3">
+          {[
+            ["1", "Muéstranos el proceso", "Vemos dónde se pierde tiempo, qué reglas existen y qué excepciones importan."],
+            ["2", "Conectamos tus sistemas", "Accedemos solo a las fuentes necesarias y ordenamos la información para operar."],
+            ["3", "Ruka empieza a hacerlo", "El operador ejecuta, registra lo que hizo y escala los casos que requieren decisión."],
+          ].map(([number, title, copy]) => (
+            <li key={number} className="border-t-2 border-primary pt-5">
+              <span className="text-sm font-semibold text-primary">{number}</span>
+              <h3 className="mt-4 text-2xl font-semibold tracking-[-0.025em] text-[#171827]">{title}</h3>
+              <p className="mt-3 text-base leading-7 text-[#555b6e]">{copy}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
 }
 
-function PricingGuaranteeSection({ navigate }: { navigate: (path: string) => void }) {
+function IntegrationTile({ integration }: { integration: Integration }) {
+  const Icon = integration.icon;
   return (
-    <section className="bg-[#fbfcff] py-16 sm:py-24">
+    <button
+      type="button"
+      className="group relative flex min-h-28 items-center justify-center overflow-hidden rounded-xl border border-[#dce3f2] bg-[#fbfcff] p-4 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      aria-label={`${integration.name}: ${integration.exchange}`}
+    >
+      <div className="transition duration-200 group-hover:-translate-y-3 group-hover:opacity-20 group-focus-visible:-translate-y-3 group-focus-visible:opacity-20">
+        {integration.image ? (
+          <img src={integration.image} alt={integration.name} className="mx-auto max-h-10 w-auto max-w-[5.5rem] object-contain" />
+        ) : Icon ? (
+          <div className="flex flex-col items-center gap-2">
+            <Icon className="h-7 w-7 text-[#303547]" strokeWidth={1.8} />
+            <span className="text-sm font-semibold text-[#303547]">{integration.name}</span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">{integration.mark}</span>
+            <span className="text-sm font-semibold text-[#303547]">{integration.name}</span>
+          </div>
+        )}
+      </div>
+      <span className="pointer-events-none absolute inset-x-3 top-1/2 -translate-y-1/2 translate-y-3 text-xs font-semibold leading-5 text-[#303547] opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+        {integration.exchange}
+      </span>
+    </button>
+  );
+}
+
+function PricingSection({
+  reduceMotion,
+  navigate,
+}: {
+  reduceMotion: boolean | null;
+  navigate: (path: string) => void;
+}) {
+  const [people, setPeople] = useState(3);
+  const [weeklyHours, setWeeklyHours] = useState(15);
+  const monthlyHours = people * weeklyHours * 4;
+  const workDays = Math.round(monthlyHours / 8);
+
+  return (
+    <section id="precios" className="scroll-mt-24 bg-[#f4f6fb] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid gap-5 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
-          <Reveal>
-            <div className="h-full rounded-2xl border border-[#dce3f2] bg-white p-6 sm:p-8 lg:p-10">
-              <p className="text-sm font-semibold text-primary">Precio claro</p>
-              <h2 className="mt-3 max-w-2xl text-balance text-4xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-5xl">
-                Más capacidad operativa sin aumentar el back office.
-              </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-[#555b6e]">
-                Ruka automatiza trabajo repetitivo y deja al equipo enfocado en revisión, negociación y decisiones. Es software, pero se siente como sumar manos al equipo.
-              </p>
-
-              <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                {["Digitación y clasificación automática", "Alertas y reportes ilimitados", "Onboarding guiado", "Soporte cercano por WhatsApp"].map((item) => (
-                  <div key={item} className="flex items-start gap-3 rounded-xl border border-[#dce3f2] bg-[#fbfcff] p-4">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-none text-primary" />
-                    <p className="text-sm font-semibold leading-6 text-[#171827]">{item}</p>
-                  </div>
+        <h2 className="max-w-3xl text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
+          Empieza por el trabajo que más tiempo te cuesta.
+        </h2>
+        <div className="mt-12 grid gap-5 lg:grid-cols-12 lg:items-stretch">
+          {plans.map((plan) => (
+            <article
+              key={plan.name}
+              className={`flex min-h-[27rem] flex-col rounded-2xl p-6 sm:p-7 ${plan.layout} ${
+                plan.featured ? "bg-[#171827] text-white" : "border border-[#d7ddea] bg-white text-[#171827]"
+              }`}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="text-xl font-semibold">{plan.name}</h3>
+                {plan.featured && <span className="rounded-full bg-primary px-3 py-1 text-xs font-semibold text-white">Más elegido</span>}
+              </div>
+              <div className="mt-8">
+                <p className={`font-semibold tracking-[-0.035em] ${plan.name === "A medida" ? "text-3xl" : "text-4xl"}`}>{plan.price}</p>
+                <p className={`mt-2 text-sm ${plan.featured ? "text-white/60" : "text-[#6a7184]"}`}>{plan.suffix}</p>
+              </div>
+              <p className={`mt-6 text-base leading-7 ${plan.featured ? "text-white/[0.72]" : "text-[#555b6e]"}`}>{plan.copy}</p>
+              <ul className="mt-7 grid gap-3">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3 text-sm font-medium leading-6">
+                    <Check className="mt-1 h-4 w-4 flex-none text-primary" />
+                    <span>{feature}</span>
+                  </li>
                 ))}
-              </div>
-            </div>
-          </Reveal>
+              </ul>
+            </article>
+          ))}
+        </div>
 
-          <Reveal delay={0.05}>
-            <div className="h-full rounded-2xl border border-[#dce3f2] bg-[#171827] p-6 text-white sm:p-8 lg:p-10">
-              <p className="text-sm font-semibold text-primary">Planes desde</p>
-              <div className="mt-4 flex flex-wrap items-end gap-x-3 gap-y-1">
-                <p className="text-5xl font-semibold tracking-tight">$40.990</p>
-                <p className="pb-1 text-base text-white/60">CLP / mes</p>
-              </div>
-              <p className="mt-5 text-base leading-7 text-white/72">
-                Precio de lanzamiento para equipos que quieren reemplazar tareas manuales por operadores digitales.
+        <div className="mt-5 flex flex-col items-start justify-between gap-4 rounded-2xl border border-[#d7ddea] bg-white p-5 sm:flex-row sm:items-center sm:px-7">
+          <p className="font-semibold text-[#171827]">
+            ¿Una operación más pequeña? <span className="text-primary">Planes desde $99.990 / mes</span>
+          </p>
+          <Button
+            className="h-11 w-full rounded-full bg-primary px-6 font-semibold text-white shadow-none hover:bg-primary/90 active:scale-[0.97] sm:w-auto"
+            onClick={() => navigate("/register")}
+          >
+            {CTA_LABEL}
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+
+        <div id="roi" className="mt-10 grid scroll-mt-24 overflow-hidden rounded-2xl border border-[#d7ddea] bg-white lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="p-6 sm:p-9">
+            <h3 className="max-w-xl text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] text-[#171827]">
+              ¿Cuántas horas dedica hoy tu equipo?
+            </h3>
+            <p className="mt-4 max-w-xl text-base leading-7 text-[#555b6e]">
+              Ajusta los valores para dimensionar el trabajo manual que hoy existe entre tus sistemas.
+            </p>
+            <div className="mt-9 grid gap-8">
+              <label className="grid gap-3 text-sm font-semibold text-[#303547]">
+                <span className="flex items-center justify-between gap-4">
+                  Personas
+                  <output className="text-lg text-primary">{people}</output>
+                </span>
+                <input
+                  type="range"
+                  min="1"
+                  max="10"
+                  step="1"
+                  value={people}
+                  onInput={(event) => setPeople(Number(event.currentTarget.value))}
+                  className="h-2 w-full cursor-pointer accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+                />
+              </label>
+              <label className="grid gap-3 text-sm font-semibold text-[#303547]">
+                <span className="flex items-center justify-between gap-4">
+                  Horas por semana, por persona
+                  <output className="text-lg text-primary">{weeklyHours}</output>
+                </span>
+                <input
+                  type="range"
+                  min="1"
+                  max="40"
+                  step="1"
+                  value={weeklyHours}
+                  onInput={(event) => setWeeklyHours(Number(event.currentTarget.value))}
+                  className="h-2 w-full cursor-pointer accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center bg-primary p-6 text-white sm:p-9">
+            <div className="flex items-center gap-3 text-white/[0.74]">
+              <Clock3 className="h-5 w-5" />
+              <p className="text-sm font-semibold">Trabajo manual detectado</p>
+            </div>
+            <motion.p
+              key={monthlyHours}
+              className="mt-6 text-5xl font-semibold leading-none tracking-[-0.04em] sm:text-6xl"
+              initial={reduceMotion ? false : { opacity: 0.5, y: 8 }}
+              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.22, ease: easeOut }}
+              aria-live="polite"
+            >
+              {monthlyHours} horas
+            </motion.p>
+            <p className="mt-3 text-xl font-medium text-white/[0.76]">por mes</p>
+            <div className="mt-8 border-t border-white/[0.18] pt-6">
+              <p className="text-lg leading-8 text-white/[0.84]">
+                Equivale a <strong className="text-white">{workDays} jornadas completas</strong> dedicadas a mover información y revisar pasos repetitivos.
               </p>
-
-              <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-                <div className="flex items-center gap-3">
-                  <ShieldCheck className="h-6 w-6 text-primary" />
-                  <p className="font-semibold">Garantía de 30 días</p>
-                </div>
-                <p className="mt-3 text-sm leading-6 text-white/68">
-                  Si no ves valor en el primer mes, te devolvemos el dinero sin letra chica.
-                </p>
-              </div>
-
-              <Button
-                className="mt-8 h-12 w-full rounded-full bg-white px-5 text-base font-semibold text-[#171827] shadow-none transition-transform duration-150 ease-out hover:bg-white/92 active:scale-[0.97]"
-                onClick={() => navigate("/register")}
-              >
-                Regístrate ahora
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+              <p className="mt-4 text-sm font-semibold text-white">Ese es el espacio que vale la pena automatizar primero.</p>
             </div>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function FAQSection() {
+function FAQAndCTASection({ navigate }: { navigate: (path: string) => void }) {
   return (
-    <section id="faq" className="bg-white py-16 sm:py-24">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-        <Reveal>
-          <p className="text-sm font-semibold text-primary">Preguntas frecuentes</p>
-          <h2 className="mt-3 max-w-xl text-balance text-4xl font-semibold leading-tight tracking-tight text-[#171827] sm:text-5xl">
-            Lo esencial antes de hablar con el equipo.
-          </h2>
-          <p className="mt-5 max-w-xl text-lg leading-8 text-[#555b6e]">
-            La idea es que llegues a la conversación sabiendo exactamente qué hace Ruka y cómo puede empezar a generar valor.
-          </p>
-        </Reveal>
-
-        <Reveal>
+    <section id="faq" className="bg-white py-20 sm:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+          <div>
+            <h2 className="max-w-lg text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
+              Lo esencial antes de partir.
+            </h2>
+            <p className="mt-5 max-w-lg text-lg leading-8 text-[#555b6e]">Cinco respuestas para saber si Ruka puede operar sobre tu proceso actual.</p>
+          </div>
           <Accordion type="single" collapsible className="grid gap-3">
             {faqItems.map((item, index) => (
               <AccordionItem key={item.question} value={`faq-${index}`} className="rounded-2xl border border-[#dce3f2] bg-[#fbfcff] px-5">
                 <AccordionTrigger className="text-left text-base font-semibold text-[#171827] hover:text-primary hover:no-underline sm:text-lg">
                   {item.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-base leading-7 text-[#555b6e]">
-                  {item.answer}
-                </AccordionContent>
+                <AccordionContent className="text-base leading-7 text-[#555b6e]">{item.answer}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
+        </div>
 
-function FinalCTA({ navigate }: { navigate: (path: string) => void }) {
-  return (
-    <section className="bg-[#171827] px-5 py-16 text-white sm:px-8 sm:py-20">
-      <div className="mx-auto max-w-7xl">
-        <Reveal>
-          <div className="grid gap-8 rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center lg:p-10">
+        <div className="mt-16 overflow-hidden rounded-2xl bg-[#eef1ff] p-6 sm:p-10 lg:p-14">
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
-              <p className="text-sm font-semibold text-primary">Siguiente paso</p>
-              <h2 className="mt-3 max-w-3xl text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-                Veamos qué parte de tu operación puede empezar a trabajar sola.
+              <h2 className="max-w-4xl text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
+                ¿Qué trabajo sigue haciendo manualmente tu equipo?
               </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-white/72">
-                Partimos por un dolor concreto: compras, pagos, proveedores, margen o reportes. Si hay datos, Ruka puede convertirlos en control.
-              </p>
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-[#555b6e]">Muéstranos el proceso. Te mostramos cómo lo operaría Ruka.</p>
             </div>
-
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+            <div className="flex flex-col items-start gap-3 lg:items-end">
               <Button
-                className="h-12 rounded-full bg-white px-6 text-base font-semibold text-[#171827] shadow-none transition-transform duration-150 ease-out hover:bg-white/92 active:scale-[0.97]"
+              className="h-12 w-full rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none hover:bg-primary/90 active:scale-[0.97] sm:w-auto sm:px-6 sm:text-base"
                 onClick={() => navigate("/register")}
               >
-                Agendar revisión
+                {CTA_LABEL}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              <a
-                href="#solucion"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-white/16 px-6 text-base font-semibold text-white transition-transform duration-150 ease-out hover:bg-white/8 active:scale-[0.97]"
-              >
-                Volver a la solución
-              </a>
+              <p className="flex items-center gap-2 text-sm font-semibold text-[#555b6e]">
+                <UsersRound className="h-4 w-4 text-primary" />
+                20 min · Sin preparación
+              </p>
             </div>
           </div>
-        </Reveal>
+        </div>
 
-        <footer className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-white/56 sm:flex-row sm:items-center sm:justify-between">
-          <Link to="/" className="inline-flex items-center gap-3">
-            <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto brightness-0 invert" />
+        <footer className="mt-10 flex flex-col gap-5 border-t border-[#dce3f2] pt-7 text-sm text-[#6a7184] sm:flex-row sm:items-center sm:justify-between">
+          <Link to="/v2" aria-label="Volver al inicio de Ruka">
+            <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto" />
           </Link>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
-            <Link to="/privacy" className="hover:text-white">Privacidad</Link>
-            <Link to="/terms" className="hover:text-white">Términos</Link>
-            <Link to="/register" className="hover:text-white">Registro</Link>
+            <Link to="/privacy" className="hover:text-[#171827]">Privacidad</Link>
+            <Link to="/terms" className="hover:text-[#171827]">Términos</Link>
           </div>
         </footer>
       </div>

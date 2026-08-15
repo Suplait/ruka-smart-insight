@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 export type NavbarSectionLink = {
   id: string;
@@ -23,9 +23,21 @@ export type NavbarSectionLink = {
 type NavbarProps = {
   sectionLinks?: readonly NavbarSectionLink[];
   sectionPath?: string;
+  logoPath?: string;
+  primaryAction?: {
+    label: string;
+    path: string;
+  };
+  showLogin?: boolean;
 };
 
-export default function Navbar({ sectionLinks, sectionPath = "/" }: NavbarProps) {
+export default function Navbar({
+  sectionLinks,
+  sectionPath = "/",
+  logoPath = "/",
+  primaryAction = { label: "Regístrate", path: "/register" },
+  showLogin = true,
+}: NavbarProps) {
   const [showSubdomainModal, setShowSubdomainModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -50,11 +62,13 @@ export default function Navbar({ sectionLinks, sectionPath = "/" }: NavbarProps)
   const MobileMenu = () => (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="md:hidden">
+        <Button variant="ghost" size="icon" className="md:hidden" aria-label="Abrir menú">
           <Menu className="h-6 w-6" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-[280px] sm:w-[350px]">
+      <SheetContent side="right" className="w-[340px] max-w-[92vw] sm:w-[350px]">
+        <SheetTitle className="sr-only">Navegación principal</SheetTitle>
+        <SheetDescription className="sr-only">Accede a las secciones principales y al siguiente paso.</SheetDescription>
         <nav className="flex flex-col gap-4">
           {sectionLinks ? (
             <div className="space-y-1 pt-4">
@@ -235,24 +249,26 @@ export default function Navbar({ sectionLinks, sectionPath = "/" }: NavbarProps)
             </>
           )}
           <div className="flex flex-col gap-2 mt-4">
+            {showLogin && (
+              <Button
+                variant="outline"
+                className="w-full justify-start gap-2"
+                onClick={() => {
+                  setShowSubdomainModal(true);
+                  setIsOpen(false);
+                }}
+              >
+                Iniciar Sesión <LogIn className="w-4 h-4" />
+              </Button>
+            )}
             <Button
-              variant="outline"
-              className="w-full justify-start gap-2"
+              className="h-11 w-full justify-center gap-2 rounded-full bg-primary px-4 text-sm font-medium hover:bg-primary/90"
               onClick={() => {
-                setShowSubdomainModal(true);
+                navigate(primaryAction.path);
                 setIsOpen(false);
               }}
             >
-              Iniciar Sesión <LogIn className="w-4 h-4" />
-            </Button>
-            <Button
-              className="w-full justify-start gap-2 h-10 px-6 text-sm font-medium bg-primary hover:bg-primary/90 rounded-full"
-              onClick={() => {
-                navigate("/register");
-                setIsOpen(false);
-              }}
-            >
-              Regístrate <ArrowRight className="w-4 h-4" />
+              {primaryAction.label} <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
         </nav>
@@ -265,7 +281,7 @@ export default function Navbar({ sectionLinks, sectionPath = "/" }: NavbarProps)
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link to="/">
+            <Link to={logoPath}>
               <img src="/logo.png" alt="Ruka.ai" className="h-8 hover:opacity-80 transition-opacity" />
             </Link>
           </div>
@@ -652,20 +668,22 @@ export default function Navbar({ sectionLinks, sectionPath = "/" }: NavbarProps)
 
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-3">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-10 px-4 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100/50 rounded-full"
-                onClick={() => setShowSubdomainModal(true)}
-              >
-                Iniciar Sesión
-              </Button>
+              {showLogin && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-10 px-4 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100/50 rounded-full"
+                  onClick={() => setShowSubdomainModal(true)}
+                >
+                  Iniciar Sesión
+                </Button>
+              )}
               <Button
                 size="sm"
                 className="h-10 px-6 text-sm font-medium bg-primary hover:bg-primary/90 rounded-full"
-                onClick={() => navigate("/register")}
+                onClick={() => navigate(primaryAction.path)}
               >
-                Regístrate
+                {primaryAction.label}
               </Button>
             </div>
             <MobileMenu />
