@@ -71,7 +71,7 @@ export default function OperationalGapSection() {
               id="purchase-register-title"
               className="text-balance text-xl font-semibold tracking-[-0.02em] text-[#171827] sm:text-2xl"
             >
-              Registro de Compras
+              Un ejemplo real: Registro de Compras
             </h3>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-[#626a7d] sm:text-base">
               Las mismas fuentes. Dos formas muy distintas de operarlas.
