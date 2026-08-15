@@ -408,7 +408,7 @@ function Hero({
             <span className="block">Ruka hace el trabajo que queda entre medio.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-4xl text-pretty text-lg leading-8 text-[#555b6e] sm:text-xl sm:leading-9">
-            Ruka conecta la información de tu SII, ERP, POS, bancos y otras plataformas para automatizar el trabajo operativo que tu equipo todavía hace manualmente.
+            Conecta la información de tu SII, ERP, POS, bancos y otras plataformas para automatizar el trabajo operativo que tu equipo todavía hace manualmente.
           </p>
         </motion.div>
 
