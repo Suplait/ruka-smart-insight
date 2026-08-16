@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
-import type { CSSProperties } from "react";
 import type { LucideIcon } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
+  ArrowDown,
   ArrowRight,
   Banknote,
-  Check,
   CheckCircle2,
-  Clock3,
   Database,
   FileSpreadsheet,
   Layers3,
-  Landmark,
   LoaderCircle,
+  LockKeyhole,
+  Play,
   ReceiptText,
   Sparkles,
   Store,
@@ -36,10 +35,12 @@ const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const navItems = [
   { label: "Trabajo", id: "trabajo" },
-  { label: "Casos", id: "casos" },
+  { label: "Demo", id: "demo" },
   { label: "Integraciones", id: "integraciones" },
   { label: "Precios", id: "precios" },
 ] as const;
+
+const rukaDemoEmbedUrl = "https://prueba.ruka.ai/?embed=1&source=landing-v2";
 
 const coverSources: Array<[string, LucideIcon]> = [
   ["SII", ReceiptText],
@@ -64,48 +65,65 @@ const coverOutputPaths = [
   "M858 220 C920 220, 902 304, 952 304",
 ] as const;
 
-const customerCases = [
-  {
-    company: "Barbazul",
-    result: "Horas de planilla recuperadas",
-    before: "Cruzar compras, precios y pagos antes de poder revisar la operación.",
-    after: "Información inmediata de volúmenes, evolución de precios y control de pagos.",
-    person: "Hernan Sugg, socio",
-  },
-  {
-    company: "Ottoburguer",
-    result: "Control de precios al instante",
-    before: "Revisar facturas y compras por proveedor de forma manual.",
-    after: "Facturas y compras mensuales visibles para detectar cobros fuera de rango.",
-    person: "Esteban Hojas, socio",
-  },
-  {
-    company: "Grupo Melting Cook",
-    result: "Ruka dentro de la operación",
-    before: "Procesos recurrentes dependientes del seguimiento del equipo.",
-    after: "Una operación acompañada por Ruka y soporte cercano cuando aparece una excepción.",
-    person: "Alphonse Reynes, gerencia",
-  },
-] as const;
-
-type Integration = {
+type EcosystemItem = {
   name: string;
-  exchange: string;
   image?: string;
-  icon?: LucideIcon;
   mark?: string;
 };
 
-const integrations: Integration[] = [
-  { name: "SII", exchange: "Facturas y documentos tributarios", image: "/logosii.png" },
-  { name: "Toteat", exchange: "Ventas, productos y locales", image: "/toteat-logo.png" },
-  { name: "Fudo", exchange: "Ventas y catálogo del POS", image: "/fudo-logo.png" },
-  { name: "Justo", exchange: "Pedidos, ventas y productos", image: "/justo-logo.png" },
-  { name: "Defontana", exchange: "Compras, inventario y contabilidad", mark: "D" },
-  { name: "Nubox", exchange: "Contabilidad y documentos", mark: "N" },
-  { name: "Bsale", exchange: "Ventas, stock y documentos", icon: Store },
-  { name: "Bancos", exchange: "Pagos, cartolas y conciliaciones", icon: Landmark },
-];
+type EcosystemGroup = {
+  category: string;
+  description: string;
+  items: readonly EcosystemItem[];
+};
+
+const ecosystemGroups: readonly EcosystemGroup[] = [
+  {
+    category: "Facturación y documentos",
+    description: "Emisión, recepción y descarga de documentos tributarios.",
+    items: [
+      { name: "SII", image: "/logosii.png" },
+      { name: "Ingefactura", mark: "IN" },
+      { name: "eBill", mark: "eB" },
+      { name: "iDTECloud", mark: "iD" },
+      { name: "DTEiGlobal", mark: "DT" },
+      { name: "Facturacion.cl", mark: "F." },
+    ],
+  },
+  {
+    category: "Gestión y contabilidad",
+    description: "Información contable, compras, pagos y gestión operacional.",
+    items: [
+      { name: "Defontana", mark: "D" },
+      { name: "Nubox", mark: "N" },
+      { name: "Chipax", mark: "C" },
+      { name: "Bancos", mark: "$" },
+      { name: "ERP propio", mark: "ERP" },
+    ],
+  },
+  {
+    category: "Ventas y POS",
+    description: "Ventas, productos, locales, precios y movimientos de stock.",
+    items: [
+      { name: "Toteat", image: "/toteat-logo.png" },
+      { name: "Fudo", image: "/fudo-logo.png" },
+      { name: "Justo", image: "/justo-logo.png" },
+      { name: "Bsale", mark: "B" },
+    ],
+  },
+  {
+    category: "Archivos y sistemas propios",
+    description: "Fuentes que hoy viven fuera de una integración estándar.",
+    items: [
+      { name: "Excel", mark: "XLS" },
+      { name: "CSV", mark: "CSV" },
+      { name: "XML", mark: "XML" },
+      { name: "PDF", mark: "PDF" },
+      { name: "Email", mark: "@" },
+      { name: "API", mark: "API" },
+    ],
+  },
+] as const;
 
 const customerLogoPlaceholders = Array.from({ length: 18 }, (_, index) => index + 1);
 
@@ -114,57 +132,68 @@ const plans = [
     name: "Start",
     volume: "Hasta 200 documentos / mes",
     price: "$99.990",
-    pricePrefix: "",
-    copy: "Para operaciones pequeñas que quieren sacar la digitación del día a día.",
-    features: ["Hasta 200 documentos al mes", "Un flujo recurrente", "Onboarding guiado"],
-    sampleVolume: 150,
+    copy: "Para operaciones con un flujo recurrente de menor volumen.",
   },
   {
     name: "Core",
-    volume: "201 - 500 documentos / mes",
+    volume: "Hasta 500 documentos / mes",
     price: "$249.990",
-    pricePrefix: "",
-    copy: "Para equipos con un flujo constante de documentos y procesos recurrentes.",
-    features: ["Hasta 500 documentos al mes", "Reglas y homologaciones", "Seguimiento operativo"],
-    sampleVolume: 350,
+    copy: "Para equipos con un volumen constante de compras y procesos operativos.",
     featured: true,
   },
   {
     name: "Scale",
-    volume: "501 - 1.200 documentos / mes",
+    volume: "Hasta 1.200 documentos / mes",
     price: "$449.990",
-    pricePrefix: "",
     copy: "Para operaciones de mayor volumen, múltiples locales o sociedades.",
-    features: ["Hasta 1.200 documentos al mes", "Múltiples locales o sociedades", "Automatizaciones coordinadas"],
-    sampleVolume: 850,
   },
 ] as const;
 
 const faqItems = [
   {
-    question: "¿Tengo que cambiar mi ERP?",
+    question: "¿Tengo que cambiar mi ERP, POS o sistema actual?",
     answer:
-      "No. Ruka se conecta con los sistemas que ya usa tu empresa y opera entre ellos. La idea es aprovechar tu infraestructura actual, no reemplazarla.",
+      "No. Ruka está diseñada para trabajar sobre las herramientas que ya usa tu empresa. Conectamos las fuentes necesarias y dejamos la información actualizada donde corresponda.",
   },
   {
-    question: "¿Pueden automatizar un proceso distinto?",
+    question: "¿Qué tipo de procesos puede automatizar Ruka?",
     answer:
-      "Sí. Partimos entendiendo el flujo, sus reglas y las excepciones. Si el proceso usa información disponible y pasos repetibles, podemos diseñar un operador para ejecutarlo.",
+      "Procesos repetitivos que implican recibir, leer, cruzar, validar, registrar o actualizar información entre sistemas. Por ejemplo: registro de compras, conciliaciones, actualización de costos, inventario, cálculo de margen y registro en otras plataformas.",
   },
   {
-    question: "¿Cuánto demora implementar?",
+    question: "¿Pueden automatizar un proceso que no aparece en esta página?",
     answer:
-      "Depende de las fuentes y del proceso. Comenzamos con un alcance acotado, conectamos lo necesario y mostramos el primer resultado antes de ampliar la automatización.",
+      "Sí. Revisamos cómo funciona hoy, qué información utiliza, qué reglas tiene y qué acciones debe ejecutar. Si tiene suficiente estructura y podemos acceder a las fuentes necesarias, podemos evaluar un operador específico para ese flujo.",
   },
   {
-    question: "¿Con qué sistemas funciona?",
+    question: "¿Con qué sistemas se puede conectar Ruka?",
     answer:
-      "Ruka trabaja con SII, ERP, POS, bancos, planillas y otras plataformas. También podemos habilitar conexiones para sistemas propios o flujos que hoy funcionan por correo y archivos.",
+      "Ruka ya trabaja con SII, POS, ERP, bancos, sistemas contables y otras plataformas. También puede operar con información proveniente de Excel, CSV, XML, PDF, correo, APIs y sistemas propios, dependiendo del caso.",
   },
   {
-    question: "¿Qué pasa cuando Ruka no puede resolver algo?",
+    question: "¿Cuánto demora empezar a usar Ruka?",
     answer:
-      "Ruka identifica la excepción y la escala con contexto para que una persona decida. El objetivo no es esconder los casos difíciles, sino reducir todo el trabajo que no necesita intervención humana.",
+      "Depende del proceso y de las conexiones necesarias. Partimos por un alcance concreto y buscamos llegar al primer flujo funcionando lo antes posible antes de ampliar la automatización.",
+  },
+  {
+    question: "¿Ruka funciona sola o mi equipo tiene que aprobar lo que hace?",
+    answer:
+      "Depende del proceso. Algunas acciones pueden ejecutarse automáticamente y otras pueden requerir validación. Definimos esas reglas según cómo opera tu empresa.",
+  },
+  {
+    question: "¿Qué pasa si Ruka encuentra información que no coincide?",
+    answer:
+      "El flujo se configura para manejar los casos conocidos y separar aquellos que requieren una decisión. El objetivo es que tu equipo deje de revisar todo y concentre su tiempo donde realmente hace falta.",
+  },
+  {
+    question: "¿Cuánto cuesta Ruka?",
+    answer:
+      "Los planes estándar parten en $99.990 mensuales y cambian según volumen. Si necesitas un proceso o integración específica, evaluamos el alcance y cotizamos su implementación y operación.",
+  },
+  {
+    question: "¿Cómo sé si Ruka tiene sentido para mi empresa?",
+    answer:
+      "Si tu equipo dedica horas todas las semanas a mover información, registrar documentos, cruzar sistemas, mantener planillas o revisar datos manualmente, probablemente hay un proceso que vale la pena evaluar.",
   },
 ] as const;
 
@@ -194,9 +223,9 @@ export default function LandingV2() {
       <SocialProofSection />
       <OperationalGapSection />
       <WorkSection reduceMotion={reduceMotion} ctaLabel={CTA_LABEL} onPrimaryAction={() => navigate("/register")} />
-      <ResultsSection reduceMotion={reduceMotion} />
+      <ProductDemoSection reduceMotion={reduceMotion} />
       <IntegrationsSection />
-      <PricingSection reduceMotion={reduceMotion} navigate={navigate} />
+      <PricingSection navigate={navigate} />
       <FAQAndCTASection navigate={navigate} />
     </main>
   );
@@ -252,10 +281,11 @@ function Hero({
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
           <a
-            href="#trabajo"
+            href="#demo"
             className="inline-flex h-12 w-full items-center justify-center rounded-full border border-[#dce3f2] bg-white px-6 text-base font-semibold text-[#171827] transition-transform duration-150 ease-out hover:bg-[#f7f9ff] active:scale-[0.97] sm:w-auto"
           >
-            Ver cómo funciona
+            Probar Ruka
+            <ArrowDown className="ml-2 h-4 w-4" aria-hidden="true" />
           </a>
         </motion.div>
 
@@ -460,65 +490,75 @@ function CustomerLogoPlaceholder({ index, decorative = false }: { index: number;
   );
 }
 
-function ResultsSection({ reduceMotion }: { reduceMotion: boolean | null }) {
-  const [activeCase, setActiveCase] = useState(0);
-  const selectedCase = customerCases[activeCase];
+function ProductDemoSection({ reduceMotion }: { reduceMotion: boolean | null }) {
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
 
   return (
-    <section id="casos" className="scroll-mt-24 bg-[#f4f6fb] py-20 sm:py-28">
+    <section id="demo" className="scroll-mt-24 bg-[#f4f6fb] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <h2 className="max-w-3xl text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
-          Ruka ya está haciendo la pega.
-        </h2>
-        <div className="mt-12 grid gap-5 lg:grid-cols-[0.38fr_0.62fr]">
-          <div className="grid gap-3" role="tablist" aria-label="Casos de clientes">
-            {customerCases.map((customerCase, index) => (
-              <button
-                key={customerCase.company}
-                type="button"
-                role="tab"
-                aria-selected={activeCase === index}
-                aria-controls="customer-case-panel"
-                onClick={() => setActiveCase(index)}
-                className={`rounded-2xl p-5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:p-6 ${
-                  activeCase === index ? "bg-[#171827] text-white" : "border border-[#d7ddea] bg-white text-[#171827] hover:border-primary/40"
-                }`}
-              >
-                <span className={`text-sm font-semibold ${activeCase === index ? "text-white/60" : "text-[#6a7184]"}`}>{customerCase.company}</span>
-                <span className="mt-2 block text-xl font-semibold tracking-[-0.02em]">{customerCase.result}</span>
-              </button>
-            ))}
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold text-primary">Ruka en acción</p>
+          <h2 className="mt-3 text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
+            No te lo imagines. Pruébalo.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555b6e]">
+            Explora una operación de ejemplo y ve cómo Ruka organiza compras, costos, proveedores y otra información operacional.
+          </p>
+        </div>
+
+        <motion.div
+          className="mt-10 overflow-hidden rounded-2xl bg-white ring-1 ring-[#d7ddea] sm:mt-12"
+          initial={reduceMotion ? false : { opacity: 0.92, y: 18 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.12 }}
+          transition={{ duration: 0.55, ease: easeOut }}
+        >
+          <div className="flex h-11 items-center justify-between border-b border-[#e3e7f0] bg-[#fafbfe] px-4 sm:px-5">
+            <div className="flex items-center gap-1.5" aria-hidden="true">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#ff6b6b]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#f3c44d]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#39c780]" />
+            </div>
+            <div className="flex items-center gap-2 text-xs font-semibold text-[#6a7184]">
+              <LockKeyhole className="h-3.5 w-3.5" aria-hidden="true" />
+              prueba.ruka.ai
+            </div>
           </div>
 
-          <motion.article
-            id="customer-case-panel"
-            key={selectedCase.company}
-            role="tabpanel"
-            className="rounded-2xl border border-[#d7ddea] bg-white p-6 sm:p-9"
-            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.28, ease: easeOut }}
-          >
-            <div className="flex flex-col gap-3 border-b border-[#dce3f2] pb-7 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="text-sm font-semibold text-primary">{selectedCase.company}</p>
-                <h3 className="mt-2 text-balance text-3xl font-semibold tracking-[-0.03em] text-[#171827] sm:text-4xl">{selectedCase.result}</h3>
-              </div>
-              <p className="text-sm font-medium text-[#6a7184]">{selectedCase.person}</p>
-            </div>
-            <div className="mt-8 grid gap-6 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
-              <div>
-                <p className="text-sm font-semibold text-[#6a7184]">Antes</p>
-                <p className="mt-3 text-lg leading-8 text-[#303547]">{selectedCase.before}</p>
-              </div>
-              <ArrowRight className="h-6 w-6 rotate-90 text-primary sm:rotate-0" aria-hidden="true" />
-              <div>
-                <p className="text-sm font-semibold text-primary">Con Ruka</p>
-                <p className="mt-3 text-lg font-medium leading-8 text-[#171827]">{selectedCase.after}</p>
-              </div>
-            </div>
-          </motion.article>
-        </div>
+          <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#eef1ff]">
+            {isDemoOpen ? (
+              <iframe
+                src={rukaDemoEmbedUrl}
+                title="Demo interactiva de Ruka"
+                loading="lazy"
+                allow="clipboard-write"
+                className="absolute inset-0 h-full w-full border-0 bg-white"
+              />
+            ) : (
+              <button
+                type="button"
+                className="group absolute inset-0 block h-full w-full overflow-hidden bg-[#eef1ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+                onClick={() => setIsDemoOpen(true)}
+                aria-label="Abrir demo interactiva de Ruka"
+              >
+                <img
+                  src="/assets/ruka-platform-insights.png"
+                  alt="Vista de una operación de ejemplo dentro de Ruka"
+                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.01]"
+                />
+                <span className="absolute inset-0 bg-[#171827]/20 transition-colors duration-300 group-hover:bg-[#171827]/14" aria-hidden="true" />
+                <span className="absolute inset-0 flex items-center justify-center p-5">
+                  <span className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-white px-5 text-sm font-semibold text-[#171827] shadow-[0_6px_8px_rgba(23,24,39,0.12)] transition-transform duration-200 group-hover:scale-[1.03] sm:px-7 sm:text-base">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
+                      <Play className="ml-0.5 h-4 w-4 fill-current" aria-hidden="true" />
+                    </span>
+                    Abrir demo interactiva
+                  </span>
+                </span>
+              </button>
+            )}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -526,326 +566,130 @@ function ResultsSection({ reduceMotion }: { reduceMotion: boolean | null }) {
 
 function IntegrationsSection() {
   return (
-    <section id="integraciones" className="scroll-mt-24 bg-white py-20 sm:py-28">
+    <section id="integraciones" className="scroll-mt-24 overflow-hidden bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mx-auto max-w-4xl text-center">
+        <div className="max-w-4xl">
           <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
-            No cambies tus sistemas. Pon Ruka entre ellos.
+            Trabajamos donde ya vive tu operación.
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555b6e]">
-            Conectamos la información que ya existe y usamos las reglas con las que tu empresa ya opera.
+          <p className="mt-5 max-w-3xl text-pretty text-lg leading-8 text-[#555b6e]">
+            Sistemas de gestión, facturadores, POS, bancos, archivos o desarrollos propios. Conectamos las fuentes que necesita cada proceso, sin obligarte a cambiar tu stack.
           </p>
         </div>
-        <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
-          {integrations.map((integration) => (
-            <IntegrationTile key={integration.name} integration={integration} />
+
+        <div className="mt-12 border-y border-[#dce1eb]">
+          {ecosystemGroups.map((group, index) => (
+            <EcosystemRail key={group.category} group={group} reverse={index % 2 === 1} />
           ))}
         </div>
-        <ol className="mt-14 grid gap-5 md:grid-cols-3">
-          {[
-            ["1", "Muéstranos el proceso", "Vemos dónde se pierde tiempo, qué reglas existen y qué excepciones importan."],
-            ["2", "Conectamos tus sistemas", "Accedemos solo a las fuentes necesarias y ordenamos la información para operar."],
-            ["3", "Ruka empieza a hacerlo", "El operador ejecuta, registra lo que hizo y escala los casos que requieren decisión."],
-          ].map(([number, title, copy]) => (
-            <li key={number} className="border-t-2 border-primary pt-5">
-              <span className="text-sm font-semibold text-primary">{number}</span>
-              <h3 className="mt-4 text-2xl font-semibold tracking-[-0.025em] text-[#171827]">{title}</h3>
-              <p className="mt-3 text-base leading-7 text-[#555b6e]">{copy}</p>
-            </li>
-          ))}
-        </ol>
+
+        <p className="mt-7 text-sm font-medium text-[#555b6e]">
+          <span className="font-semibold text-[#171827]">¿No aparece tu sistema?</span> Revisamos cómo acceder a su información.
+        </p>
       </div>
     </section>
   );
 }
 
-function IntegrationTile({ integration }: { integration: Integration }) {
-  const Icon = integration.icon;
+function EcosystemRail({ group, reverse }: { group: EcosystemGroup; reverse: boolean }) {
+  const repeatedItems = [...group.items, ...group.items];
+
   return (
-    <button
-      type="button"
-      className="group relative flex min-h-28 items-center justify-center overflow-hidden rounded-xl border border-[#dce3f2] bg-[#fbfcff] p-4 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-      aria-label={`${integration.name}: ${integration.exchange}`}
-    >
-      <div className="transition duration-200 group-hover:-translate-y-3 group-hover:opacity-20 group-focus-visible:-translate-y-3 group-focus-visible:opacity-20">
-        {integration.image ? (
-          <img src={integration.image} alt={integration.name} className="mx-auto max-h-10 w-auto max-w-[5.5rem] object-contain" />
-        ) : Icon ? (
-          <div className="flex flex-col items-center gap-2">
-            <Icon className="h-7 w-7 text-[#303547]" strokeWidth={1.8} />
-            <span className="text-sm font-semibold text-[#303547]">{integration.name}</span>
-          </div>
-        ) : (
-          <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">{integration.mark}</span>
-            <span className="text-sm font-semibold text-[#303547]">{integration.name}</span>
-          </div>
-        )}
+    <div className="grid border-b border-[#dce1eb] last:border-b-0 lg:grid-cols-[18rem_minmax(0,1fr)]">
+      <div className="flex flex-col justify-center bg-[#f7f8fc] px-5 py-5 sm:px-7 lg:min-h-32 lg:border-r lg:border-[#dce1eb]">
+        <h3 className="text-lg font-semibold tracking-[-0.015em] text-[#171827]">{group.category}</h3>
+        <p className="mt-1.5 max-w-xs text-sm leading-6 text-[#646b7d]">{group.description}</p>
       </div>
-      <span className="pointer-events-none absolute inset-x-3 top-1/2 -translate-y-1/2 translate-y-3 text-xs font-semibold leading-5 text-[#303547] opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
-        {integration.exchange}
-      </span>
-    </button>
+      <div
+        className="integration-rail relative flex min-h-24 items-center overflow-hidden bg-white py-4 lg:min-h-32"
+        role="group"
+        aria-label={`${group.category}: ${group.items.map((item) => item.name).join(", ")}`}
+      >
+        <div className={`integration-rail-track ${reverse ? "integration-rail-track-reverse" : ""}`} aria-hidden="true">
+          {repeatedItems.map((item, index) => (
+            <div
+              key={`${group.category}-${item.name}-${index}`}
+              className={`integration-chip ${index >= group.items.length ? "integration-chip-duplicate" : ""}`}
+              aria-hidden={index >= group.items.length || undefined}
+            >
+              {item.image ? (
+                <img src={item.image} alt="" className="max-h-7 w-auto max-w-24 object-contain" />
+              ) : (
+                <span className="integration-chip-mark" aria-hidden="true">{item.mark}</span>
+              )}
+              <span>{item.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
-function PricingSection({
-  reduceMotion,
-  navigate,
-}: {
-  reduceMotion: boolean | null;
-  navigate: (path: string) => void;
-}) {
-  const [documentVolume, setDocumentVolume] = useState(350);
-  const [people, setPeople] = useState(3);
-  const [weeklyHours, setWeeklyHours] = useState(15);
-  const selectedPlanIndex = documentVolume <= 200 ? 0 : documentVolume <= 500 ? 1 : 2;
-  const activePlan = plans[selectedPlanIndex];
-  const formattedDocumentVolume = documentVolume.toLocaleString("es-CL");
-  const volumeProgress = ((documentVolume - 1) / (1_200 - 1)) * 100;
-  const monthlyHours = people * weeklyHours * 4;
-  const workDays = Math.round(monthlyHours / 8);
-
+function PricingSection({ navigate }: { navigate: (path: string) => void }) {
   return (
     <section id="precios" className="scroll-mt-24 bg-[#f4f6fb] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <h2 className="max-w-4xl text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
-          Primero dimensiona el trabajo. Después elige cómo sacarlo de tu equipo.
-        </h2>
-        <p className="mt-5 max-w-2xl text-lg leading-8 text-[#555b6e]">
-          Puedes partir con Ruka estándar o desplegar un operador diseñado para tu proceso.
-        </p>
-
-        <div id="roi" className="mt-12 grid scroll-mt-24 overflow-hidden rounded-2xl border border-[#d7ddea] bg-white lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="p-6 sm:p-9">
-            <h3 className="max-w-xl text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] text-[#171827]">
-              ¿Cuántas horas dedica hoy tu equipo?
-            </h3>
-            <p className="mt-4 max-w-xl text-base leading-7 text-[#555b6e]">
-              Ajusta los valores para dimensionar el trabajo manual que hoy existe entre tus sistemas.
-            </p>
-            <div className="mt-9 grid gap-8">
-              <label className="grid gap-3 text-sm font-semibold text-[#303547]">
-                <span className="flex items-center justify-between gap-4">
-                  Personas
-                  <output className="text-lg text-primary">{people}</output>
-                </span>
-                <input
-                  type="range"
-                  min="1"
-                  max="10"
-                  step="1"
-                  value={people}
-                  onInput={(event) => setPeople(Number(event.currentTarget.value))}
-                  className="h-2 w-full cursor-pointer accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
-                />
-              </label>
-              <label className="grid gap-3 text-sm font-semibold text-[#303547]">
-                <span className="flex items-center justify-between gap-4">
-                  Horas por semana, por persona
-                  <output className="text-lg text-primary">{weeklyHours}</output>
-                </span>
-                <input
-                  type="range"
-                  min="1"
-                  max="40"
-                  step="1"
-                  value={weeklyHours}
-                  onInput={(event) => setWeeklyHours(Number(event.currentTarget.value))}
-                  className="h-2 w-full cursor-pointer accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
-                />
-              </label>
-            </div>
-          </div>
-
-          <div className="flex flex-col justify-center bg-primary p-6 text-white sm:p-9">
-            <div className="flex items-center gap-3 text-white/[0.74]">
-              <Clock3 className="h-5 w-5" aria-hidden="true" />
-              <p className="text-sm font-semibold">Trabajo manual detectado</p>
-            </div>
-            <motion.p
-              key={monthlyHours}
-              className="mt-6 text-5xl font-semibold leading-none tracking-[-0.04em] sm:text-6xl"
-              initial={reduceMotion ? false : { opacity: 0.5, y: 8 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.22, ease: easeOut }}
-              aria-live="polite"
-            >
-              {monthlyHours} horas
-            </motion.p>
-            <p className="mt-3 text-xl font-medium text-white/[0.76]">por mes</p>
-            <div className="mt-8 border-t border-white/[0.18] pt-6">
-              <p className="text-lg leading-8 text-white/[0.84]">
-                Equivale a <strong className="text-white">{workDays} jornadas completas</strong> dedicadas a mover información y revisar pasos repetitivos.
-              </p>
-              <p className="mt-4 text-sm font-semibold text-white">Ese es el espacio que vale la pena automatizar primero.</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-16 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-base font-semibold text-primary">Ruka estándar</p>
-            <h3 className="mt-2 text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] text-[#171827] sm:text-4xl">
-              Workflows conocidos. Precio por volumen.
-            </h3>
-          </div>
-          <p className="max-w-md text-base leading-7 text-[#555b6e] sm:text-right">
-            Self-onboarding para automatizar procesos recurrentes con una implementación simple.
+        <div className="max-w-3xl">
+          <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
+            Planes según el volumen de tu operación.
+          </h2>
+          <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555b6e]">
+            Elige según la cantidad de documentos que procesas cada mes. Si necesitas más volumen o un proceso especial, armamos una propuesta para tu operación.
           </p>
         </div>
 
-        <div className="mt-8 overflow-hidden rounded-2xl border border-[#d7ddea] bg-white">
-          <div className="grid grid-cols-1 gap-px bg-[#d7ddea] sm:grid-cols-3" role="group" aria-label="Planes de Ruka estándar">
-            {plans.map((plan, index) => {
-              const isActive = selectedPlanIndex === index;
+        <div className="mt-12 grid gap-4 lg:grid-cols-3 lg:items-stretch">
+          {plans.map((plan) => {
+            const isFeatured = "featured" in plan && plan.featured === true;
 
-              return (
-                <button
-                  key={plan.name}
-                  type="button"
-                  aria-pressed={isActive}
-                  onClick={() => setDocumentVolume(plan.sampleVolume)}
-                  className={`relative min-h-40 p-4 text-left transition-colors duration-200 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary active:scale-[0.99] sm:p-5 ${
-                    isActive ? "bg-[#eef1ff]" : "bg-white hover:bg-[#f8f9fd]"
-                  }`}
-                >
-                  <span className="flex min-h-7 items-center justify-between gap-2">
-                    <span className="text-base font-semibold text-[#171827] sm:text-lg">{plan.name}</span>
-                    {plan.featured && (
-                      <span className="inline-flex items-center gap-1 text-[0.68rem] font-semibold text-primary sm:text-xs">
-                        <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                        Más elegido
-                      </span>
-                    )}
-                  </span>
-                  <span className="mt-3 block text-sm font-medium text-[#555b6e]">{plan.volume}</span>
-                  <span className="mt-5 flex flex-wrap items-baseline gap-x-1.5 text-[#171827]">
-                    {plan.pricePrefix && <span className="text-xs font-semibold text-[#6a7184]">{plan.pricePrefix}</span>}
-                    <span className="text-xl font-semibold tracking-[-0.03em] sm:text-2xl">{plan.price}</span>
-                    <span className="text-xs font-medium text-[#6a7184]">/ mes</span>
-                  </span>
-                  <span
-                    className={`absolute inset-x-0 bottom-0 h-1 origin-left bg-primary transition-transform duration-200 ${
-                      isActive ? "scale-x-100" : "scale-x-0"
-                    }`}
-                    aria-hidden="true"
-                  />
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="grid border-t border-[#d7ddea] lg:grid-cols-[0.92fr_1.08fr]">
-            <motion.div
-              key={activePlan.name}
-              className="flex min-h-[29rem] flex-col bg-primary p-6 text-white sm:p-9 lg:p-10"
-              initial={reduceMotion ? false : { opacity: 0.72, y: 12 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.28, ease: easeOut }}
-            >
-              <div className="flex items-center gap-2 text-sm font-semibold text-white/[0.78]">
-                <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-                Recomendado para {formattedDocumentVolume} documentos
-              </div>
-              <div className="mt-8 flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">{activePlan.name}</h3>
-                  <p className="mt-3 text-base font-medium text-white/[0.76]">{activePlan.volume}</p>
-                </div>
-                {activePlan.featured && (
-                  <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-primary">Más elegido</span>
-                )}
-              </div>
-              <div className="mt-8">
-                <p className="text-sm font-semibold text-white/[0.68]">Precio de lista</p>
-                <p className="mt-2 flex flex-wrap items-baseline gap-x-2">
-                  {activePlan.pricePrefix && <span className="text-lg font-semibold text-white/[0.78]">{activePlan.pricePrefix}</span>}
-                  <span className="text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">{activePlan.price}</span>
-                  <span className="text-base font-medium text-white/[0.72]">/ mes</span>
-                </p>
-              </div>
-              <p className="mt-6 max-w-lg text-base leading-7 text-white/[0.82]">{activePlan.copy}</p>
-              <Button
-                className="mt-auto h-12 w-full whitespace-nowrap rounded-full bg-white px-5 font-semibold text-[#171827] shadow-none hover:bg-[#f5f6ff] active:scale-[0.98] sm:w-fit sm:px-7"
-                onClick={() => navigate("/register")}
+            return (
+              <article
+                key={plan.name}
+                className={`relative flex min-h-[20rem] flex-col rounded-2xl p-6 sm:p-8 ${
+                  isFeatured
+                    ? "bg-primary text-white ring-1 ring-primary"
+                    : "border border-[#d7ddea] bg-white text-[#171827]"
+                }`}
               >
-                {CTA_LABEL}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </motion.div>
+                <div className="flex min-h-8 items-center justify-between gap-3">
+                  <h3 className="text-xl font-semibold tracking-[-0.02em]">{plan.name}</h3>
+                  {isFeatured && (
+                    <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-primary">Más elegido</span>
+                  )}
+                </div>
 
-            <div className="p-6 sm:p-9 lg:p-10">
-              <label htmlFor="document-volume" className="block text-sm font-semibold text-[#303547]">
-                Documentos que procesa tu empresa al mes
-              </label>
-              <div className="mt-3 flex items-end justify-between gap-4">
-                <output htmlFor="document-volume" className="text-4xl font-semibold tracking-[-0.035em] text-[#171827] sm:text-5xl" aria-live="polite">
-                  {formattedDocumentVolume}
-                </output>
-                <span className="pb-1 text-sm font-medium text-[#6a7184]">documentos / mes</span>
-              </div>
-              <input
-                id="document-volume"
-                type="range"
-                min="1"
-                max="1200"
-                step="1"
-                value={documentVolume}
-                onInput={(event) => setDocumentVolume(Number(event.currentTarget.value))}
-                className="pricing-range mt-8 w-full cursor-pointer focus-visible:outline-none"
-                style={{ "--range-progress": `${volumeProgress}%` } as CSSProperties}
-                aria-describedby="document-volume-help"
-              />
-              <div className="relative mt-4 h-5 text-[0.68rem] font-semibold text-[#6a7184] sm:text-xs" aria-hidden="true">
-                <span className="absolute left-0">1</span>
-                <span className="absolute left-[16.6%] -translate-x-1/2">200</span>
-                <span className="absolute left-[41.6%] -translate-x-1/2">500</span>
-                <span className="absolute right-0">1.200</span>
-              </div>
-              <p id="document-volume-help" className="mt-4 text-sm leading-6 text-[#555b6e]">
-                Mueve el selector o elige uno de los planes de arriba para comparar.
-              </p>
+                <p className="mt-9 flex flex-wrap items-baseline gap-x-2">
+                  <span className="text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">{plan.price}</span>
+                  <span className={`text-sm font-medium ${isFeatured ? "text-white/[0.72]" : "text-[#6a7184]"}`}>/ mes</span>
+                </p>
 
-              <div className="mt-8 border-t border-[#d7ddea] pt-7">
-                <h4 className="text-base font-semibold text-[#171827]">Este plan está pensado para</h4>
-                <ul className="mt-5 grid gap-4">
-                  {activePlan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3 text-sm font-medium leading-6 text-[#303547] sm:text-base">
-                      <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-[#eef1ff] text-primary">
-                        <Check className="h-3.5 w-3.5" aria-hidden="true" />
-                      </span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
+                <div className={`mt-8 border-t pt-6 ${isFeatured ? "border-white/[0.2]" : "border-[#dce1eb]"}`}>
+                  <p className="text-base font-semibold">{plan.volume}</p>
+                  <p className={`mt-4 text-base leading-7 ${isFeatured ? "text-white/[0.78]" : "text-[#555b6e]"}`}>{plan.copy}</p>
+                </div>
+              </article>
+            );
+          })}
         </div>
 
-        <div className="mt-10 overflow-hidden rounded-2xl bg-[#171a29] text-white">
-          <div className="grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:p-12">
-            <div>
-              <p className="text-base font-semibold text-[#9ba9ff]">¿Tu proceso es distinto?</p>
-              <h3 className="mt-3 max-w-2xl text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] sm:text-4xl">
-                Desplegamos un operador a medida.
-              </h3>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-white/[0.72]">
-                Diseñamos un operador sobre tus sistemas, reglas y flujo actual.
-              </p>
-            </div>
-            <div className="flex flex-col items-start gap-5 lg:items-end">
-              <p className="text-sm font-semibold text-white/[0.68]">Implementación + operación mensual</p>
-              <Button
-                className="h-12 w-full rounded-full bg-white px-6 font-semibold text-[#171827] shadow-none hover:bg-[#f1f3ff] active:scale-[0.98] sm:w-fit"
-                onClick={() => navigate("/register")}
-              >
-                Cuéntanos el proceso
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-              </Button>
-            </div>
+        <div className="mt-8 flex flex-col gap-5 border-t border-[#cfd5e2] pt-7 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="text-balance text-xl font-semibold tracking-[-0.02em] text-[#171827]">
+              ¿Más de 1.200 documentos o un proceso distinto?
+            </h3>
+            <p className="mt-2 max-w-3xl text-base leading-7 text-[#555b6e]">
+              Podemos adaptar el alcance según el volumen, las integraciones y el proceso que quieras automatizar.
+            </p>
           </div>
+          <Button
+            variant="ghost"
+            className="h-11 w-fit flex-none justify-start rounded-full px-0 font-semibold text-primary hover:bg-transparent hover:text-primary/80"
+            onClick={() => navigate("/register")}
+          >
+            Hablemos
+            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+          </Button>
         </div>
       </div>
     </section>
@@ -859,9 +703,11 @@ function FAQAndCTASection({ navigate }: { navigate: (path: string) => void }) {
         <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
           <div>
             <h2 className="max-w-lg text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
-              Lo esencial antes de partir.
+              Preguntas antes de poner Ruka a trabajar.
             </h2>
-            <p className="mt-5 max-w-lg text-lg leading-8 text-[#555b6e]">Cinco respuestas para saber si Ruka puede operar sobre tu proceso actual.</p>
+            <p className="mt-5 max-w-lg text-lg leading-8 text-[#555b6e]">
+              Lo que normalmente nos preguntan antes de automatizar un proceso.
+            </p>
           </div>
           <Accordion type="single" collapsible className="grid gap-3">
             {faqItems.map((item, index) => (
