@@ -65,11 +65,10 @@ const workflows: readonly Workflow[] = [
 
 type WorkSectionProps = {
   reduceMotion: boolean | null;
-  ctaLabel: string;
   onPrimaryAction: () => void;
 };
 
-export function WorkSection({ reduceMotion, ctaLabel, onPrimaryAction }: WorkSectionProps) {
+export function WorkSection({ reduceMotion, onPrimaryAction }: WorkSectionProps) {
   const [activeWorkflow, setActiveWorkflow] = useState(0);
   const selectedWorkflow = workflows[activeWorkflow];
 
@@ -142,8 +141,7 @@ export function WorkSection({ reduceMotion, ctaLabel, onPrimaryAction }: WorkSec
               className="h-12 min-w-0 w-full whitespace-nowrap rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none hover:bg-primary/90 active:scale-[0.98] sm:w-fit sm:px-6 sm:text-base"
               onClick={onPrimaryAction}
             >
-              <span className="min-[360px]:hidden">Encontrar mi operador</span>
-              <span className="hidden min-[360px]:inline">{ctaLabel}</span>
+              Cuéntanos tu proceso
               <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
             </Button>
           </aside>

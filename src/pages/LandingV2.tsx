@@ -30,7 +30,7 @@ import Navbar from "@/components/Navbar";
 import OperationalGapSection from "@/components/landing-v2/OperationalGapSection";
 import { WorkSection } from "@/components/landing-v2/WorkSection";
 
-const CTA_LABEL = "Ver Ruka en mi operación";
+const CTA_LABEL = "Agendar 20 min";
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const navItems = [
@@ -222,8 +222,8 @@ export default function LandingV2() {
       <Hero reduceMotion={reduceMotion} navigate={navigate} />
       <SocialProofSection />
       <OperationalGapSection />
-      <WorkSection reduceMotion={reduceMotion} ctaLabel={CTA_LABEL} onPrimaryAction={() => navigate("/register")} />
-      <ProductDemoSection reduceMotion={reduceMotion} />
+      <WorkSection reduceMotion={reduceMotion} onPrimaryAction={() => navigate("/register")} />
+      <ProductDemoSection reduceMotion={reduceMotion} navigate={navigate} />
       <IntegrationsSection />
       <PricingSection navigate={navigate} />
       <FAQAndCTASection navigate={navigate} />
@@ -268,18 +268,21 @@ function Hero({
         </motion.div>
 
         <motion.div
-          className="mx-auto mt-9 flex max-w-7xl flex-col items-center justify-center gap-3 sm:flex-row"
+          className="mx-auto mt-9 flex max-w-7xl flex-col items-center justify-center gap-3 sm:flex-row sm:items-start"
           initial={reduceMotion ? false : { opacity: 0, y: 12 }}
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.46, delay: 0.12, ease: easeOut }}
         >
-          <Button
-            className="h-12 w-full rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none transition-transform duration-150 ease-out hover:bg-primary/90 active:scale-[0.97] sm:w-auto sm:px-6 sm:text-base"
-            onClick={() => navigate("/register")}
-          >
-            {CTA_LABEL}
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+          <div className="flex w-full flex-col items-center gap-2 sm:w-auto">
+            <Button
+              className="h-12 w-full rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none transition-transform duration-150 ease-out hover:bg-primary/90 active:scale-[0.97] sm:w-auto sm:px-6 sm:text-base"
+              onClick={() => navigate("/register")}
+            >
+              {CTA_LABEL}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+            <p className="text-xs font-medium text-[#6a7184]">Cuéntanos tu proceso · Sin preparación</p>
+          </div>
           <a
             href="#demo"
             className="inline-flex h-12 w-full items-center justify-center rounded-full border border-[#dce3f2] bg-white px-6 text-base font-semibold text-[#171827] transition-transform duration-150 ease-out hover:bg-[#f7f9ff] active:scale-[0.97] sm:w-auto"
@@ -490,7 +493,13 @@ function CustomerLogoPlaceholder({ index, decorative = false }: { index: number;
   );
 }
 
-function ProductDemoSection({ reduceMotion }: { reduceMotion: boolean | null }) {
+function ProductDemoSection({
+  reduceMotion,
+  navigate,
+}: {
+  reduceMotion: boolean | null;
+  navigate: (path: string) => void;
+}) {
   const [isDemoOpen, setIsDemoOpen] = useState(false);
 
   return (
@@ -559,6 +568,21 @@ function ProductDemoSection({ reduceMotion }: { reduceMotion: boolean | null }) 
             )}
           </div>
         </motion.div>
+
+        <div className="mt-7 flex flex-col gap-4 border-t border-[#dce1eb] pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="text-lg font-semibold tracking-[-0.015em] text-[#171827]">¿Te imaginas Ruka sobre tu propia operación?</h3>
+            <p className="mt-1 text-sm leading-6 text-[#555b6e]">Cuéntanos qué proceso quieres sacar de tu equipo.</p>
+          </div>
+          <Button
+            variant="ghost"
+            className="h-11 w-fit flex-none justify-start rounded-full px-0 font-semibold text-primary hover:bg-transparent hover:text-primary/80"
+            onClick={() => navigate("/register")}
+          >
+            {CTA_LABEL}
+            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+          </Button>
+        </div>
       </div>
     </section>
   );
@@ -673,6 +697,17 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
           })}
         </div>
 
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-base leading-7 text-[#555b6e]">Te ayudamos a confirmar el plan según tu volumen y proceso.</p>
+          <Button
+            className="h-12 w-full rounded-full bg-primary px-6 font-semibold text-white shadow-none hover:bg-primary/90 active:scale-[0.98] sm:w-fit"
+            onClick={() => navigate("/register")}
+          >
+            {CTA_LABEL}
+            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+          </Button>
+        </div>
+
         <div className="mt-8 flex flex-col gap-5 border-t border-[#cfd5e2] pt-7 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h3 className="text-balance text-xl font-semibold tracking-[-0.02em] text-[#171827]">
@@ -687,7 +722,7 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
             className="h-11 w-fit flex-none justify-start rounded-full px-0 font-semibold text-primary hover:bg-transparent hover:text-primary/80"
             onClick={() => navigate("/register")}
           >
-            Hablemos
+            Cuéntanos tu proceso
             <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
