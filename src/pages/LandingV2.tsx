@@ -682,10 +682,10 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="max-w-3xl">
           <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
-            Planes según el volumen de tu operación.
+            Planes para procesos recurrentes.
           </h2>
           <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555b6e]">
-            Elige según la cantidad de documentos que procesas cada mes. Si necesitas más volumen o un proceso especial, armamos una propuesta para tu operación.
+            El plan depende principalmente del volumen que procesa tu operación. Si necesitas más volumen, integraciones o un proceso especial, armamos una propuesta contigo.
           </p>
         </div>
 

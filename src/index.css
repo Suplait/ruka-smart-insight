@@ -205,8 +205,10 @@
   width: 78%;
 }
 
-.social-proof-marquee:hover .social-proof-track {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .social-proof-marquee:hover .social-proof-track {
+    animation-play-state: paused;
+  }
 }
 
 .integration-rail::before,
@@ -243,8 +245,10 @@
   animation-duration: 48s;
 }
 
-.integration-rail:hover .integration-rail-track {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .integration-rail:hover .integration-rail-track {
+    animation-play-state: paused;
+  }
 }
 
 .integration-chip {
@@ -687,6 +691,25 @@ body {
   
   * {
     max-width: 100%;
+  }
+
+  .social-proof-track,
+  .social-proof-logo-group,
+  .integration-rail-track,
+  .integration-chip {
+    max-width: none;
+  }
+
+  .social-proof-track {
+    animation-duration: 34s;
+  }
+
+  .integration-rail-track {
+    animation-duration: 28s;
+  }
+
+  .integration-rail-track-reverse {
+    animation-duration: 32s;
   }
 }
 
