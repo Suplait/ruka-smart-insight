@@ -286,6 +286,14 @@
   object-fit: contain;
 }
 
+.integration-logo-image-medium {
+  width: 5.75rem;
+}
+
+.integration-logo-image-compact {
+  width: 3.5rem;
+}
+
 .integration-logo-surface-dark {
   display: inline-flex;
   min-height: 2.25rem;

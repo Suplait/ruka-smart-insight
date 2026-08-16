@@ -75,6 +75,7 @@ type EcosystemItem = {
   image?: string;
   icon?: LucideIcon;
   logoSurface?: "dark";
+  logoSize?: "compact" | "medium";
   showName?: boolean;
 };
 
@@ -89,21 +90,23 @@ const ecosystemGroups: readonly EcosystemGroup[] = [
     category: "Facturación y documentos",
     description: "Emisión, recepción y descarga de documentos tributarios.",
     items: [
-      { name: "SII", image: "/integrations/sii.jpg" },
-      { name: "Ingefactura", image: "/integrations/ingefactura.png" },
-      { name: "eBill", image: "/integrations/ebill.png" },
-      { name: "iDTECloud", image: "/integrations/idtecloud.png", logoSurface: "dark" },
-      { name: "DTEiGlobal", image: "/integrations/dteiglobal.png", showName: true },
-      { name: "Facturacion.cl", image: "/integrations/facturacion.png" },
+      { name: "SII", image: "/integrations/sii.jpg?v=2" },
+      { name: "Ingefactura", image: "/integrations/ingefactura.png?v=2" },
+      { name: "eBill", image: "/integrations/ebill.png?v=2", showName: true },
+      { name: "iDTECloud", image: "/integrations/idtecloud.png?v=2", logoSurface: "dark" },
+      { name: "DTEiGlobal", image: "/integrations/dteiglobal.png?v=2", showName: true },
+      { name: "Facturacion.cl", image: "/integrations/facturacion.png?v=2" },
     ],
   },
   {
     category: "Gestión y contabilidad",
     description: "Información contable, compras, pagos y gestión operacional.",
     items: [
-      { name: "Defontana", image: "/integrations/defontana.svg" },
-      { name: "Nubox", image: "/integrations/nubox.svg" },
-      { name: "Chipax", image: "/integrations/chipax.png" },
+      { name: "Defontana", image: "/integrations/defontana.svg?v=2" },
+      { name: "Nubox", image: "/integrations/nubox.svg?v=2" },
+      { name: "Chipax", image: "/integrations/chipax.png?v=2" },
+      { name: "KAME", image: "/integrations/kame.png?v=1" },
+      { name: "SAP", image: "/integrations/sap.svg?v=1", logoSize: "compact" },
       { name: "Bancos", icon: Landmark },
       { name: "ERP propio", icon: Database },
     ],
@@ -112,10 +115,10 @@ const ecosystemGroups: readonly EcosystemGroup[] = [
     category: "Ventas y POS",
     description: "Ventas, productos, locales, precios y movimientos de stock.",
     items: [
-      { name: "Toteat", image: "/integrations/toteat.svg" },
-      { name: "Fudo", image: "/integrations/fudo.svg" },
-      { name: "Justo", image: "/integrations/justo.svg" },
-      { name: "Bsale", image: "/integrations/bsale.png" },
+      { name: "Toteat", image: "/integrations/toteat.svg?v=2", logoSize: "medium" },
+      { name: "Fudo", image: "/integrations/fudo.svg?v=2" },
+      { name: "Justo", image: "/integrations/justo.svg?v=2" },
+      { name: "Bsale", image: "/integrations/bsale.png?v=3" },
     ],
   },
   {
@@ -659,7 +662,18 @@ function EcosystemRail({ group, reverse }: { group: EcosystemGroup; reverse: boo
                 {item.image ? (
                   <>
                     <span className={item.logoSurface === "dark" ? "integration-logo-surface-dark" : undefined}>
-                      <img src={item.image} alt={`${item.name} logo`} className="integration-logo-image" loading="lazy" />
+                      <img
+                        src={item.image}
+                        alt={`${item.name} logo`}
+                        className={`integration-logo-image ${
+                          item.logoSize === "medium"
+                            ? "integration-logo-image-medium"
+                            : item.logoSize === "compact"
+                              ? "integration-logo-image-compact"
+                              : ""
+                        }`}
+                        decoding="async"
+                      />
                     </span>
                     {item.showName && <span className="integration-product-label">{item.name}</span>}
                   </>
