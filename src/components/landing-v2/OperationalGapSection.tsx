@@ -32,31 +32,31 @@ const sourceDocuments: SourceDocument[] = [
     label: "SII",
     detail: "Registro tributario",
     image: "/logosii.png",
-    position: "left-0 top-8 -rotate-[4deg]",
+    position: "left-0 top-8 -rotate-[2deg]",
   },
   {
     label: "XML",
     detail: "Detalle de ítems",
     icon: FileCode2,
-    position: "right-0 top-0 rotate-[3deg]",
+    position: "right-0 top-0 rotate-[2deg]",
   },
   {
     label: "PDF",
     detail: "Documento digital",
     icon: FileText,
-    position: "left-1/2 top-[4.6rem] z-10 -translate-x-1/2 -rotate-[1deg]",
+    position: "left-1/2 top-[4.6rem] z-10 -translate-x-1/2 -rotate-[0.5deg]",
   },
   {
     label: "Correo",
     detail: "Adjuntos y respaldos",
     icon: Mail,
-    position: "bottom-1 left-0 -rotate-[3deg]",
+    position: "bottom-1 left-0 -rotate-[1.5deg]",
   },
   {
     label: "Factura física",
     detail: "Registro manual",
     icon: ReceiptText,
-    position: "bottom-0 right-0 z-20 rotate-[2deg]",
+    position: "bottom-0 right-0 z-20 rotate-[1.5deg]",
   },
 ];
 
@@ -87,7 +87,7 @@ export default function OperationalGapSection() {
   }, [reduceMotion]);
 
   return (
-    <section id="problema" className="scroll-mt-24 bg-[#f3f5fa] py-20 sm:py-28">
+    <section id="problema" className="scroll-mt-24 bg-[#f4f6fa] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="max-w-4xl">
           <h2 className="text-balance text-4xl font-semibold leading-[1.06] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:text-6xl">
@@ -100,13 +100,13 @@ export default function OperationalGapSection() {
 
         <motion.article
           aria-labelledby="purchase-register-title"
-          className="mt-12 overflow-hidden rounded-2xl bg-white shadow-[0_8px_24px_rgba(42,53,94,0.08)]"
+          className="mt-12 overflow-hidden rounded-[14px] border border-[#dfe3ec] bg-white shadow-[0_6px_8px_rgba(42,53,94,0.05)]"
           initial={reduceMotion ? false : { opacity: 0.9, y: 16 }}
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.12 }}
           transition={{ duration: 0.58, ease: easeOut }}
         >
-          <header className="border-b border-[#e0e4ed] px-5 py-6 sm:px-8 sm:py-7">
+          <header className="border-b border-[#e0e4ed] bg-[#fbfcfe] px-5 py-6 sm:px-8 sm:py-7">
             <h3
               id="purchase-register-title"
               className="text-balance text-xl font-semibold tracking-[-0.02em] text-[#171827] sm:text-2xl"
@@ -118,7 +118,7 @@ export default function OperationalGapSection() {
             </p>
           </header>
 
-          <div className="xl:grid xl:grid-cols-[19rem_minmax(0,1fr)]">
+          <div className="xl:grid xl:grid-cols-[20rem_minmax(0,1fr)]">
             <SourcePanel reduceMotion={reduceMotion} />
 
             <div className="min-w-0 bg-white xl:grid xl:grid-rows-2">
@@ -166,10 +166,10 @@ export default function OperationalGapSection() {
 
 function SourcePanel({ reduceMotion }: { reduceMotion: boolean | null }) {
   return (
-    <aside className="relative overflow-hidden bg-[#1b1c2d] px-5 py-7 text-white sm:px-8 sm:py-9 xl:min-h-[29rem] xl:px-7">
+    <aside className="relative overflow-hidden bg-[#171a29] px-5 py-7 text-white sm:px-8 sm:py-9 xl:min-h-[29rem] xl:px-8 xl:py-10">
       <div className="max-w-md">
-        <h4 className="text-xl font-semibold tracking-[-0.02em]">Las compras llegan por todos lados.</h4>
-        <p className="mt-2 text-sm leading-6 text-white/65">SII, XML, PDFs, correos, planillas y documentos físicos.</p>
+        <h4 className="text-xl font-semibold leading-[1.25] tracking-[-0.02em]">Las compras llegan por todos lados.</h4>
+        <p className="mt-2 text-sm leading-6 text-white/[0.68]">SII, XML, PDFs, correos, planillas y documentos físicos.</p>
       </div>
 
       <motion.div
@@ -185,9 +185,9 @@ function SourcePanel({ reduceMotion }: { reduceMotion: boolean | null }) {
         ))}
       </motion.div>
 
-      <div className="mt-7 border-t border-white/10 pt-5 xl:mt-6">
+      <div className="mt-7 border-t border-white/[0.15] pt-5 xl:mt-6">
         <p className="text-sm font-semibold text-white">Recibir la información no es el problema.</p>
-        <p className="mt-1 text-sm leading-6 text-white/60">El problema es quién hace el trabajo entre medio.</p>
+        <p className="mt-1 text-sm leading-6 text-white/[0.64]">El problema es quién hace el trabajo entre medio.</p>
       </div>
     </aside>
   );
@@ -198,14 +198,14 @@ function SourceDocumentCard({ document }: { document: SourceDocument }) {
 
   return (
     <div
-      className={`absolute w-36 rounded-xl bg-[#fbfcff] p-2.5 text-[#252837] shadow-[0_6px_12px_rgba(7,10,28,0.22)] ${document.position}`}
+      className={`absolute w-36 rounded-[10px] border border-white/80 bg-[#fbfcff] p-2.5 text-[#252837] shadow-[0_5px_8px_rgba(7,10,28,0.2)] ${document.position}`}
     >
       <div className="flex items-center gap-2">
-        <span className="flex h-8 w-8 flex-none items-center justify-center rounded-lg bg-[#eef1f6] text-[#5b6377]">
+        <span className="flex h-8 w-8 flex-none items-center justify-center rounded-md bg-[#edf0f5] text-[#535c70]">
           {document.image ? (
             <img src={document.image} alt="" className="h-6 w-6 object-contain" aria-hidden="true" />
           ) : Icon ? (
-            <Icon className="h-4.5 w-4.5" strokeWidth={1.8} aria-hidden="true" />
+            <Icon className="h-[18px] w-[18px]" strokeWidth={1.8} aria-hidden="true" />
           ) : null}
         </span>
         <span className="min-w-0">
@@ -213,8 +213,8 @@ function SourceDocumentCard({ document }: { document: SourceDocument }) {
           <span className="mt-0.5 hidden truncate text-[11px] font-medium text-[#6b7284] sm:block">{document.detail}</span>
         </span>
       </div>
-      <span className="mt-2.5 block h-1.5 w-full rounded-full bg-[#e8ebf2]" aria-hidden="true" />
-      <span className="mt-1.5 block h-1.5 w-2/3 rounded-full bg-[#eef0f5]" aria-hidden="true" />
+      <span className="mt-2.5 block h-px w-full bg-[#dce1e9]" aria-hidden="true" />
+      <span className="mt-1.5 block h-px w-2/3 bg-[#e5e8ee]" aria-hidden="true" />
     </div>
   );
 }
@@ -222,11 +222,14 @@ function SourceDocumentCard({ document }: { document: SourceDocument }) {
 function ManualWorkNode({ reduceMotion }: { reduceMotion: boolean | null }) {
   return (
     <div className="w-full min-w-0 lg:flex-1">
-      <div className="mb-2 flex flex-wrap gap-1.5 lg:gap-1" aria-label="Trabajo manual: descargar, ingresar, cruzar y corregir">
+      <div
+        className="mb-3 inline-flex max-w-full overflow-hidden rounded-[7px] border border-[#dce1ea] bg-[#f8f9fb]"
+        aria-label="Trabajo manual: descargar, ingresar, cruzar y corregir"
+      >
         {manualTasks.map((task, index) => (
           <motion.span
             key={task}
-            className="rounded-md bg-[#f0f2f6] px-2 py-1 text-sm font-semibold text-[#61697b] lg:px-1.5 lg:text-[11px]"
+            className="border-r border-[#dce1ea] px-2.5 py-1.5 text-[13px] font-medium text-[#5f6779] last:border-r-0 lg:px-2 lg:text-[11px]"
             initial={reduceMotion ? false : { opacity: 0.65, y: 4 }}
             whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.8 }}
@@ -253,24 +256,22 @@ function DestinationNode({
 
   return (
     <div
-      className="flex min-h-[7.5rem] w-full min-w-0 flex-col justify-center overflow-hidden rounded-xl bg-[#fbfcff] px-4 py-4 text-[#252837] ring-1 ring-[#d6dbe6] lg:flex-1"
+      className="w-full min-w-0 border-t border-[#cfd5e0] pt-4 text-[#252837] lg:flex-1"
       aria-label="Dónde la necesitas: ERP, POS, planilla o sistema contable"
     >
-      <span className="text-sm font-semibold leading-5 sm:text-base">Dónde la necesitas</span>
-      <div className="mt-3 flex h-10 items-center" aria-hidden="true">
-        <AnimatePresence mode="wait" initial={false}>
+      <span className="text-[13px] font-semibold leading-5 text-[#656d80] sm:text-sm">Dónde la necesitas</span>
+      <div className="relative mt-2.5 h-10 overflow-hidden" aria-hidden="true">
+        <AnimatePresence initial={false}>
           <motion.div
             key={destination.label}
-            className="flex items-center gap-2.5"
-            initial={reduceMotion ? false : { opacity: 0, y: 6, filter: "blur(4px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={reduceMotion ? undefined : { opacity: 0, y: -6, filter: "blur(4px)" }}
-            transition={{ duration: reduceMotion ? 0 : 0.28, ease: easeOut }}
+            className="absolute inset-y-0 left-0 flex items-center gap-2.5"
+            initial={reduceMotion ? false : { opacity: 0, x: 6 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, x: -6 }}
+            transition={{ duration: reduceMotion ? 0 : 0.22, ease: easeOut }}
           >
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#edf0f7] text-primary">
-              <DestinationIcon className="h-4.5 w-4.5" strokeWidth={1.9} />
-            </span>
-            <span className="text-lg font-semibold tracking-[-0.02em] text-[#303547]">{destination.label}</span>
+              <DestinationIcon className="h-5 w-5 text-primary" strokeWidth={1.8} />
+            <span className="text-lg font-semibold tracking-[-0.02em] text-[#2b3040]">{destination.label}</span>
           </motion.div>
         </AnimatePresence>
       </div>
@@ -286,10 +287,10 @@ function ResultNode({
   reduceMotion: boolean | null;
 }) {
   return (
-    <div className="w-full min-w-0 lg:flex-1">
+    <div className="w-full min-w-0 border-t border-[#cbd3f4] pt-4 lg:flex-1">
       <div className="flex items-start gap-3">
-        <span className="flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-primary text-white">
-          <Check className="h-5 w-5" strokeWidth={2.4} aria-hidden="true" />
+        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-primary text-white">
+          <Check className="h-[18px] w-[18px]" strokeWidth={2.4} aria-hidden="true" />
         </span>
         <span className="min-w-0">
           <span className="block text-base font-semibold leading-5 text-[#252837]">Registro listo</span>
@@ -302,20 +303,18 @@ function ResultNode({
           const isActive = index === activeDestination;
 
           return (
-            <motion.span
+            <span
               key={item.shortLabel}
-              className={`rounded-md px-2 py-1 text-sm font-semibold transition-[background-color,color,box-shadow] lg:text-xs ${
+              className={`rounded-[6px] border px-2 py-1 text-sm font-semibold transition-[background-color,border-color,color] lg:text-xs ${
                 reduceMotion ? "duration-0" : "duration-300"
               } ${
                 isActive
-                  ? "bg-[#e9edff] text-primary ring-1 ring-primary/35 shadow-[0_2px_7px_rgba(63,82,213,0.16)]"
-                  : "bg-white/80 text-[#58628a] ring-1 ring-[#d6dcf4]"
+                  ? "border-primary/[0.35] bg-white text-primary"
+                  : "border-[#d6dcf4] bg-white/50 text-[#626b89]"
               }`}
-              animate={{ scale: isActive ? 1.02 : 1 }}
-              transition={{ duration: reduceMotion ? 0 : 0.28, ease: easeOut }}
             >
               {item.shortLabel}
-            </motion.span>
+            </span>
           );
         })}
       </div>
@@ -344,12 +343,12 @@ function ComparisonLane({
     <section
       aria-label={label}
       className={`relative px-5 py-7 sm:px-8 sm:py-9 lg:grid lg:grid-cols-[12rem_minmax(0,1fr)] lg:items-center lg:gap-7 xl:min-h-[14.5rem] xl:grid-cols-[10.5rem_minmax(0,1fr)] xl:px-7 ${
-        isRuka ? "bg-[#f0f2ff]" : "border-b border-[#e0e4ed] bg-white"
+        isRuka ? "bg-[#eef1fb]" : "border-b border-[#dfe3eb] bg-white"
       }`}
     >
       <span
-        className={`absolute -left-3 top-1/2 hidden h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full xl:flex ${
-          isRuka ? "bg-primary text-white" : "bg-[#eef1f6] text-[#697184]"
+        className={`absolute -left-3.5 top-1/2 hidden h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border xl:flex ${
+          isRuka ? "border-primary bg-primary text-white" : "border-[#d9dee8] bg-[#f8f9fb] text-[#697184]"
         }`}
         aria-hidden="true"
       >
@@ -357,15 +356,15 @@ function ComparisonLane({
       </span>
       <div className="flex items-center gap-3">
         <span
-          className={`flex h-11 w-11 flex-none items-center justify-center rounded-xl ${
-            isRuka ? "bg-primary text-white" : "bg-[#edf0f5] text-[#50586b]"
+          className={`flex h-10 w-10 flex-none items-center justify-center rounded-full border ${
+            isRuka ? "border-primary bg-primary text-white" : "border-[#d9dee8] bg-white text-[#50586b]"
           }`}
         >
-          <Icon className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+          <Icon className="h-[18px] w-[18px]" strokeWidth={1.8} aria-hidden="true" />
         </span>
         <span className="min-w-0">
-          <span className={`block text-base font-semibold ${isRuka ? "text-primary" : "text-[#252837]"}`}>{label}</span>
-          <span className={`mt-0.5 block text-sm font-medium leading-5 lg:text-xs ${isRuka ? "text-[#536097]" : "text-[#687084]"}`}>
+          <span className={`block text-base font-semibold tracking-[-0.015em] ${isRuka ? "text-primary" : "text-[#252837]"}`}>{label}</span>
+          <span className={`mt-0.5 block text-sm font-medium leading-5 lg:text-[13px] ${isRuka ? "text-[#536097]" : "text-[#687084]"}`}>
             {description}
           </span>
         </span>
@@ -429,18 +428,20 @@ function ProcessNode({
   tone: "manual" | "ruka";
 }) {
   const styles = {
-    manual: "bg-[#202130] text-white",
-    ruka: "bg-primary text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_5px_8px_rgba(61,77,184,0.2)]",
+    manual: "border-[#2f3345] bg-[#202332] text-white",
+    ruka:
+      "border-[#4056d6] bg-primary text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_5px_8px_rgba(61,77,184,0.16)]",
   }[tone];
 
   const detailStyles = tone === "ruka" ? "text-white/85" : "text-white/75";
+  const dividerStyles = tone === "ruka" ? "border-white/[0.16]" : "border-white/[0.12]";
 
   return (
-    <div className={`flex min-h-[5.5rem] w-full min-w-0 items-center gap-3 rounded-xl px-4 py-4 lg:flex-1 ${styles}`}>
-      <span className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-white/10 text-white">
+    <div className={`grid min-h-[5.75rem] w-full min-w-0 grid-cols-[3rem_minmax(0,1fr)] overflow-hidden rounded-[10px] border lg:flex-1 ${styles}`}>
+      <span className={`flex items-center justify-center border-r text-white ${dividerStyles}`}>
         <Icon className="h-5 w-5" strokeWidth={1.9} aria-hidden="true" />
       </span>
-      <span className="min-w-0">
+      <span className="min-w-0 px-4 py-4">
         <span className="block text-sm font-semibold leading-5 sm:text-base">{title}</span>
         <span className={`mt-1 block text-sm font-medium leading-5 ${detailStyles}`}>{detail}</span>
       </span>
