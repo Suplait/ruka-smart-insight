@@ -53,9 +53,9 @@ const coverSources: Array<[string, LucideIcon]> = [
 
 const coverOutcomes = [
   "Compras registradas",
-  "Pagos conciliados",
-  "Costos actualizados",
-  "Datos listos donde corresponden",
+  "Conciliaciones ejecutadas",
+  "Margen al día",
+  "Sistemas actualizados",
 ] as const;
 
 const coverOutputPaths = [
@@ -237,7 +237,7 @@ function Hero({
         >
           <p className="mx-auto inline-flex items-center gap-2 rounded-full border border-[#dce3f2] bg-white px-4 py-2 text-sm font-semibold text-[#555b6e]">
             <Sparkles className="h-4 w-4 text-primary" />
-            <span>Operadores digitales para tu operación</span>
+            <span>Operadores digitales</span>
           </p>
           <h1 className="mx-auto mt-7 max-w-6xl text-balance text-3xl font-semibold leading-[1.04] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:text-[3.35rem] xl:text-[3.75rem] 2xl:text-[3.85rem]">
             <span className="block">Tu empresa ya tiene los sistemas.</span>

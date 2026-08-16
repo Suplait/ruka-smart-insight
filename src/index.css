@@ -486,6 +486,8 @@
   font-size: 1.02rem;
   font-weight: 600;
   line-height: 1.1;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 1023px) {
@@ -540,6 +542,14 @@
     right: auto;
     top: auto;
     width: 100%;
+  }
+}
+
+@media (min-width: 361px) and (max-width: 480px) {
+  .cover-outcomes {
+    grid-auto-rows: 84px;
+    height: 180px;
+    min-height: 180px;
   }
 }
 
