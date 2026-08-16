@@ -7,7 +7,6 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   Banknote,
-  BarChart3,
   Check,
   CheckCircle2,
   Clock3,
@@ -43,11 +42,11 @@ const navItems = [
 ] as const;
 
 const coverSources: Array<[string, LucideIcon]> = [
-  ["Ventas", BarChart3],
-  ["Compras", ReceiptText],
+  ["SII", ReceiptText],
+  ["POS", Store],
   ["Banco", Banknote],
-  ["Planillas", FileSpreadsheet],
   ["ERP", Database],
+  ["Planillas", FileSpreadsheet],
   ["Otros", Layers3],
 ];
 
@@ -138,15 +137,6 @@ const plans = [
     copy: "Para operaciones de mayor volumen, múltiples locales o sociedades.",
     features: ["Hasta 1.200 documentos al mes", "Múltiples locales o sociedades", "Automatizaciones coordinadas"],
     sampleVolume: 850,
-  },
-  {
-    name: "Enterprise",
-    volume: "1.200+ documentos / mes o flujo complejo",
-    price: "$699.990",
-    pricePrefix: "Desde",
-    copy: "Para volúmenes superiores o procesos que requieren un diseño a medida.",
-    features: ["Volumen superior o flujo complejo", "Integraciones dedicadas", "Alcance definido con tu equipo"],
-    sampleVolume: 1_350,
   },
 ] as const;
 
@@ -609,25 +599,104 @@ function PricingSection({
   const [documentVolume, setDocumentVolume] = useState(350);
   const [people, setPeople] = useState(3);
   const [weeklyHours, setWeeklyHours] = useState(15);
-  const selectedPlanIndex = documentVolume <= 200 ? 0 : documentVolume <= 500 ? 1 : documentVolume <= 1_200 ? 2 : 3;
+  const selectedPlanIndex = documentVolume <= 200 ? 0 : documentVolume <= 500 ? 1 : 2;
   const activePlan = plans[selectedPlanIndex];
   const formattedDocumentVolume = documentVolume.toLocaleString("es-CL");
-  const volumeProgress = ((documentVolume - 1) / (1_500 - 1)) * 100;
+  const volumeProgress = ((documentVolume - 1) / (1_200 - 1)) * 100;
   const monthlyHours = people * weeklyHours * 4;
   const workDays = Math.round(monthlyHours / 8);
 
   return (
     <section id="precios" className="scroll-mt-24 bg-[#f4f6fb] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <h2 className="max-w-3xl text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
-          El plan correcto para tu volumen.
+        <h2 className="max-w-4xl text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
+          Primero dimensiona el trabajo. Después elige cómo sacarlo de tu equipo.
         </h2>
         <p className="mt-5 max-w-2xl text-lg leading-8 text-[#555b6e]">
-          El volumen define el punto de partida. Si tu proceso es más complejo, lo diseñamos contigo.
+          Puedes partir con Ruka estándar o desplegar un operador diseñado para tu proceso.
         </p>
 
-        <div className="mt-12 overflow-hidden rounded-2xl border border-[#d7ddea] bg-white">
-          <div className="grid grid-cols-2 gap-px bg-[#d7ddea] lg:grid-cols-4" role="group" aria-label="Planes disponibles">
+        <div id="roi" className="mt-12 grid scroll-mt-24 overflow-hidden rounded-2xl border border-[#d7ddea] bg-white lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="p-6 sm:p-9">
+            <h3 className="max-w-xl text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] text-[#171827]">
+              ¿Cuántas horas dedica hoy tu equipo?
+            </h3>
+            <p className="mt-4 max-w-xl text-base leading-7 text-[#555b6e]">
+              Ajusta los valores para dimensionar el trabajo manual que hoy existe entre tus sistemas.
+            </p>
+            <div className="mt-9 grid gap-8">
+              <label className="grid gap-3 text-sm font-semibold text-[#303547]">
+                <span className="flex items-center justify-between gap-4">
+                  Personas
+                  <output className="text-lg text-primary">{people}</output>
+                </span>
+                <input
+                  type="range"
+                  min="1"
+                  max="10"
+                  step="1"
+                  value={people}
+                  onInput={(event) => setPeople(Number(event.currentTarget.value))}
+                  className="h-2 w-full cursor-pointer accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+                />
+              </label>
+              <label className="grid gap-3 text-sm font-semibold text-[#303547]">
+                <span className="flex items-center justify-between gap-4">
+                  Horas por semana, por persona
+                  <output className="text-lg text-primary">{weeklyHours}</output>
+                </span>
+                <input
+                  type="range"
+                  min="1"
+                  max="40"
+                  step="1"
+                  value={weeklyHours}
+                  onInput={(event) => setWeeklyHours(Number(event.currentTarget.value))}
+                  className="h-2 w-full cursor-pointer accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center bg-primary p-6 text-white sm:p-9">
+            <div className="flex items-center gap-3 text-white/[0.74]">
+              <Clock3 className="h-5 w-5" aria-hidden="true" />
+              <p className="text-sm font-semibold">Trabajo manual detectado</p>
+            </div>
+            <motion.p
+              key={monthlyHours}
+              className="mt-6 text-5xl font-semibold leading-none tracking-[-0.04em] sm:text-6xl"
+              initial={reduceMotion ? false : { opacity: 0.5, y: 8 }}
+              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.22, ease: easeOut }}
+              aria-live="polite"
+            >
+              {monthlyHours} horas
+            </motion.p>
+            <p className="mt-3 text-xl font-medium text-white/[0.76]">por mes</p>
+            <div className="mt-8 border-t border-white/[0.18] pt-6">
+              <p className="text-lg leading-8 text-white/[0.84]">
+                Equivale a <strong className="text-white">{workDays} jornadas completas</strong> dedicadas a mover información y revisar pasos repetitivos.
+              </p>
+              <p className="mt-4 text-sm font-semibold text-white">Ese es el espacio que vale la pena automatizar primero.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-base font-semibold text-primary">Ruka estándar</p>
+            <h3 className="mt-2 text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] text-[#171827] sm:text-4xl">
+              Workflows conocidos. Precio por volumen.
+            </h3>
+          </div>
+          <p className="max-w-md text-base leading-7 text-[#555b6e] sm:text-right">
+            Self-onboarding para automatizar procesos recurrentes con una implementación simple.
+          </p>
+        </div>
+
+        <div className="mt-8 overflow-hidden rounded-2xl border border-[#d7ddea] bg-white">
+          <div className="grid grid-cols-1 gap-px bg-[#d7ddea] sm:grid-cols-3" role="group" aria-label="Planes de Ruka estándar">
             {plans.map((plan, index) => {
               const isActive = selectedPlanIndex === index;
 
@@ -720,7 +789,7 @@ function PricingSection({
                 id="document-volume"
                 type="range"
                 min="1"
-                max="1500"
+                max="1200"
                 step="1"
                 value={documentVolume}
                 onInput={(event) => setDocumentVolume(Number(event.currentTarget.value))}
@@ -730,10 +799,9 @@ function PricingSection({
               />
               <div className="relative mt-4 h-5 text-[0.68rem] font-semibold text-[#6a7184] sm:text-xs" aria-hidden="true">
                 <span className="absolute left-0">1</span>
-                <span className="absolute left-[13.3%] -translate-x-1/2">200</span>
-                <span className="absolute left-[33.3%] -translate-x-1/2">500</span>
-                <span className="absolute left-[80%] -translate-x-1/2">1.200</span>
-                <span className="absolute right-0">1.500</span>
+                <span className="absolute left-[16.6%] -translate-x-1/2">200</span>
+                <span className="absolute left-[41.6%] -translate-x-1/2">500</span>
+                <span className="absolute right-0">1.200</span>
               </div>
               <p id="document-volume-help" className="mt-4 text-sm leading-6 text-[#555b6e]">
                 Mueve el selector o elige uno de los planes de arriba para comparar.
@@ -756,69 +824,26 @@ function PricingSection({
           </div>
         </div>
 
-        <div id="roi" className="mt-10 grid scroll-mt-24 overflow-hidden rounded-2xl border border-[#d7ddea] bg-white lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="p-6 sm:p-9">
-            <h3 className="max-w-xl text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] text-[#171827]">
-              ¿Cuántas horas dedica hoy tu equipo?
-            </h3>
-            <p className="mt-4 max-w-xl text-base leading-7 text-[#555b6e]">
-              Ajusta los valores para dimensionar el trabajo manual que hoy existe entre tus sistemas.
-            </p>
-            <div className="mt-9 grid gap-8">
-              <label className="grid gap-3 text-sm font-semibold text-[#303547]">
-                <span className="flex items-center justify-between gap-4">
-                  Personas
-                  <output className="text-lg text-primary">{people}</output>
-                </span>
-                <input
-                  type="range"
-                  min="1"
-                  max="10"
-                  step="1"
-                  value={people}
-                  onInput={(event) => setPeople(Number(event.currentTarget.value))}
-                  className="h-2 w-full cursor-pointer accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
-                />
-              </label>
-              <label className="grid gap-3 text-sm font-semibold text-[#303547]">
-                <span className="flex items-center justify-between gap-4">
-                  Horas por semana, por persona
-                  <output className="text-lg text-primary">{weeklyHours}</output>
-                </span>
-                <input
-                  type="range"
-                  min="1"
-                  max="40"
-                  step="1"
-                  value={weeklyHours}
-                  onInput={(event) => setWeeklyHours(Number(event.currentTarget.value))}
-                  className="h-2 w-full cursor-pointer accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
-                />
-              </label>
-            </div>
-          </div>
-
-          <div className="flex flex-col justify-center bg-primary p-6 text-white sm:p-9">
-            <div className="flex items-center gap-3 text-white/[0.74]">
-              <Clock3 className="h-5 w-5" />
-              <p className="text-sm font-semibold">Trabajo manual detectado</p>
-            </div>
-            <motion.p
-              key={monthlyHours}
-              className="mt-6 text-5xl font-semibold leading-none tracking-[-0.04em] sm:text-6xl"
-              initial={reduceMotion ? false : { opacity: 0.5, y: 8 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.22, ease: easeOut }}
-              aria-live="polite"
-            >
-              {monthlyHours} horas
-            </motion.p>
-            <p className="mt-3 text-xl font-medium text-white/[0.76]">por mes</p>
-            <div className="mt-8 border-t border-white/[0.18] pt-6">
-              <p className="text-lg leading-8 text-white/[0.84]">
-                Equivale a <strong className="text-white">{workDays} jornadas completas</strong> dedicadas a mover información y revisar pasos repetitivos.
+        <div className="mt-10 overflow-hidden rounded-2xl bg-[#171a29] text-white">
+          <div className="grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:p-12">
+            <div>
+              <p className="text-base font-semibold text-[#9ba9ff]">¿Tu proceso es distinto?</p>
+              <h3 className="mt-3 max-w-2xl text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] sm:text-4xl">
+                Desplegamos un operador a medida.
+              </h3>
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-white/[0.72]">
+                Diseñamos un operador sobre tus sistemas, reglas y flujo actual.
               </p>
-              <p className="mt-4 text-sm font-semibold text-white">Ese es el espacio que vale la pena automatizar primero.</p>
+            </div>
+            <div className="flex flex-col items-start gap-5 lg:items-end">
+              <p className="text-sm font-semibold text-white/[0.68]">Implementación + operación mensual</p>
+              <Button
+                className="h-12 w-full rounded-full bg-white px-6 font-semibold text-[#171827] shadow-none hover:bg-[#f1f3ff] active:scale-[0.98] sm:w-fit"
+                onClick={() => navigate("/register")}
+              >
+                Cuéntanos el proceso
+                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+              </Button>
             </div>
           </div>
         </div>

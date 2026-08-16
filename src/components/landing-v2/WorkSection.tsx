@@ -3,10 +3,8 @@ import type { LucideIcon } from "lucide-react";
 import {
   ArrowLeftRight,
   ArrowRight,
-  BadgeAlert,
   Bot,
   ChevronRight,
-  Layers3,
   ReceiptText,
   RefreshCw,
   TrendingUp,
@@ -28,58 +26,40 @@ type Workflow = {
 
 const workflows: readonly Workflow[] = [
   {
-    id: "facturas",
+    id: "registro-compras",
     icon: ReceiptText,
-    title: "Facturas de proveedores",
-    navCopy: "Leer y registrar",
-    copy: "Ruka lee cada factura, ordena sus datos y la registra donde corresponde, venga del SII, XML, PDF o papel.",
-    steps: ["Recibir", "Leer", "Registrar", "Actualizar"],
+    title: "Registro de compras",
+    navCopy: "Leer, ordenar y registrar",
+    copy: "Ruka recibe compras desde SII, XML, PDF o papel; lee, homologa y registra la información donde corresponde.",
+    steps: ["Recibir", "Leer", "Homologar", "Registrar"],
     video: "/robot_facturas.mp4",
-  },
-  {
-    id: "homologacion",
-    icon: Layers3,
-    title: "Homologación de insumos",
-    navCopy: "Unificar nombres y categorías",
-    copy: "Ruka reconoce nombres distintos para el mismo ítem, los agrupa y mantiene limpio tu maestro de insumos.",
-    steps: ["Detectar", "Comparar", "Homologar", "Mantener"],
-    video: "/robot_cajas.mp4",
-  },
-  {
-    id: "monitoreo",
-    icon: TrendingUp,
-    title: "Monitoreo de precios",
-    navCopy: "Revisar todas las variaciones",
-    copy: "Ruka revisa los precios y las variaciones de todos tus insumos, todos los días.",
-    steps: ["Consolidar", "Comparar", "Monitorear", "Detectar"],
-    video: "/robot_grafico2.mp4",
-  },
-  {
-    id: "alertas",
-    icon: BadgeAlert,
-    title: "Alertas y anomalías",
-    navCopy: "Detectar lo que se sale de regla",
-    copy: "Ruka avisa cuando un precio se dispara, cambia el proveedor o aparece una compra fuera de tus reglas.",
-    steps: ["Vigilar", "Detectar", "Alertar", "Actuar"],
-    video: "/robot_alerta.mp4",
   },
   {
     id: "conciliaciones",
     icon: ArrowLeftRight,
     title: "Conciliaciones",
-    navCopy: "Cruzar información antes de pagar",
-    copy: "Ruka concilia información entre sistemas. Por ejemplo, facturas con órdenes de compra y recepciones para validar qué corresponde pagar.",
-    steps: ["Cruzar", "Conciliar", "Validar", "Preparar"],
+    navCopy: "Cruzar facturas, OC y pagos",
+    copy: "Ruka cruza facturas, órdenes de compra, recepciones y pagos para validar coincidencias y alertar diferencias.",
+    steps: ["Cruzar", "Validar", "Conciliar", "Alertar"],
     video: "/robot_dinero.mp4",
   },
   {
     id: "actualizacion",
     icon: RefreshCw,
     title: "Actualización entre sistemas",
-    navCopy: "Registrar en otras plataformas",
-    copy: "Ruka registra compras y actualiza stock, costos o insumos en tu ERP, POS, inventario, recetario u otra herramienta.",
-    steps: ["Preparar", "Conectar", "Registrar", "Confirmar"],
+    navCopy: "Mantener tus herramientas al día",
+    copy: "Ruka mueve y actualiza información entre tu ERP, POS, planillas, inventario, recetario u otras herramientas.",
+    steps: ["Preparar", "Conectar", "Actualizar", "Confirmar"],
     video: "/robot_inventario.mp4",
+  },
+  {
+    id: "costos-margen",
+    icon: TrendingUp,
+    title: "Costos y margen",
+    navCopy: "Monitorear cambios y resultados",
+    copy: "Ruka homologa insumos, monitorea cambios de costo y mantiene el margen calculado con información al día.",
+    steps: ["Homologar", "Monitorear", "Calcular", "Alertar"],
+    video: "/robot_grafico2.mp4",
   },
 ] as const;
 
@@ -104,7 +84,7 @@ export function WorkSection({ reduceMotion, ctaLabel, onPrimaryAction }: WorkSec
             Trabajo que puedes sacar de tu equipo.
           </h2>
           <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555d70]">
-            Desde que llega una compra hasta que queda registrada, conciliada, monitoreada o lista para pagar.
+            Ruka registra, concilia, actualiza y calcula sobre los sistemas que tu operación ya usa.
           </p>
         </div>
 
