@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import type { LucideIcon } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   Banknote,
@@ -56,6 +56,13 @@ const coverOutcomes = [
   "Pagos conciliados",
   "Costos actualizados",
   "Datos listos donde corresponden",
+] as const;
+
+const coverOutputPaths = [
+  "M858 154 C920 154, 902 58, 952 58",
+  "M858 176 C918 176, 908 140, 952 140",
+  "M858 198 C918 198, 908 222, 952 222",
+  "M858 220 C920 220, 902 304, 952 304",
 ] as const;
 
 const customerCases = [
@@ -276,22 +283,23 @@ function Hero({
 }
 
 function CoverSystemMap({ reduceMotion }: { reduceMotion: boolean | null }) {
-  const [animationStep, setAnimationStep] = useState(coverOutcomes.length * 2 - 1);
+  const [animationStep, setAnimationStep] = useState(1);
 
   useEffect(() => {
     if (reduceMotion) return undefined;
 
-    const isProcessing = animationStep % 2 === 0;
-    const isLastCompleteStep = animationStep === coverOutcomes.length * 2 - 1;
+    const finalStep = coverOutcomes.length * 2;
+    const isProcessing = animationStep % 2 === 1;
     const timeout = window.setTimeout(
-      () => setAnimationStep((current) => (current + 1) % (coverOutcomes.length * 2)),
-      isProcessing ? 600 : isLastCompleteStep ? 1600 : 900,
+      () => setAnimationStep((current) => (current === finalStep ? 0 : current + 1)),
+      animationStep === 0 ? 450 : isProcessing ? 650 : animationStep === finalStep ? 1600 : 750,
     );
 
     return () => window.clearTimeout(timeout);
   }, [animationStep, reduceMotion]);
 
-  const processingIndex = !reduceMotion && animationStep % 2 === 0 ? animationStep / 2 : -1;
+  const visibleCount = reduceMotion ? coverOutcomes.length : Math.ceil(animationStep / 2);
+  const processingIndex = !reduceMotion && animationStep % 2 === 1 ? Math.floor(animationStep / 2) : -1;
 
   return (
     <div className="cover-system-map">
@@ -315,10 +323,14 @@ function CoverSystemMap({ reduceMotion }: { reduceMotion: boolean | null }) {
         </g>
 
         <g className="cover-output-flow">
-          <path markerEnd="url(#cover-output-arrow)" d="M858 154 C920 154, 902 58, 952 58" />
-          <path markerEnd="url(#cover-output-arrow)" d="M858 176 C918 176, 908 140, 952 140" />
-          <path markerEnd="url(#cover-output-arrow)" d="M858 198 C918 198, 908 222, 952 222" />
-          <path markerEnd="url(#cover-output-arrow)" d="M858 220 C920 220, 902 304, 952 304" />
+          {coverOutputPaths.map((path, index) => (
+            <path
+              key={path}
+              className={index < visibleCount ? "is-visible" : undefined}
+              markerEnd="url(#cover-output-arrow)"
+              d={path}
+            />
+          ))}
         </g>
       </svg>
 
@@ -331,9 +343,11 @@ function CoverSystemMap({ reduceMotion }: { reduceMotion: boolean | null }) {
         <img className="cover-platform-asset" src="/assets/ruka-digital-operator-hero.webp" alt="" aria-hidden="true" />
       </div>
       <div className="cover-outcomes" aria-label="Trabajo completado por Ruka">
-        {coverOutcomes.map((label, index) => (
-          <OutcomeTile key={label} isProcessing={processingIndex === index} label={label} reduceMotion={reduceMotion} />
-        ))}
+        <AnimatePresence initial={false}>
+          {coverOutcomes.slice(0, visibleCount).map((label, index) => (
+            <OutcomeTile key={label} isProcessing={processingIndex === index} label={label} reduceMotion={reduceMotion} />
+          ))}
+        </AnimatePresence>
       </div>
     </div>
   );
@@ -358,7 +372,14 @@ function OutcomeTile({
   reduceMotion: boolean | null;
 }) {
   return (
-    <div className={`cover-outcome${isProcessing ? " is-processing" : ""}`} aria-label={label}>
+    <motion.div
+      className={`cover-outcome${isProcessing ? " is-processing" : ""}`}
+      aria-label={isProcessing ? `Procesando: ${label}` : label}
+      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
+      transition={{ duration: reduceMotion ? 0 : 0.22, ease: easeOut }}
+    >
       <span className="cover-outcome-status" aria-hidden="true">
         {isProcessing ? <LoaderCircle className="cover-outcome-spinner" size={24} /> : <CheckCircle2 size={24} />}
       </span>
@@ -372,7 +393,7 @@ function OutcomeTile({
       >
         {isProcessing ? "Procesando..." : label}
       </motion.span>
-    </div>
+    </motion.div>
   );
 }
 
