@@ -146,68 +146,33 @@
   border: 1px solid #e2e6f0;
   border-radius: 12px;
   display: flex;
-  flex: 0 0 176px;
-  gap: 12px;
-  height: 76px;
-  padding: 0 18px;
+  flex: 0 0 188px;
+  height: 80px;
+  justify-content: center;
+  padding: 0 16px;
 }
 
-.social-proof-logo-mark {
-  background: #aeb6ca;
-  border-radius: 9px;
+.social-proof-logo-image {
   display: block;
-  flex: 0 0 30px;
-  height: 30px;
+  filter: grayscale(1);
+  height: auto;
+  object-fit: contain;
+  opacity: 0.45;
+  transition: opacity 200ms ease-out;
+  width: auto;
 }
 
-.social-proof-logo-wordmark {
-  display: grid;
-  flex: 1;
-  gap: 6px;
-}
-
-.social-proof-logo-line {
-  background: #9ca6bc;
-  border-radius: 999px;
-  display: block;
-  height: 6px;
-}
-
-.social-proof-logo-line-primary {
-  width: 100%;
-}
-
-.social-proof-logo-line-secondary {
-  background: #c5cad7;
-  height: 5px;
-  width: 58%;
-}
-
-.social-proof-logo:nth-child(4n + 1) .social-proof-logo-mark {
-  border-radius: 999px;
-}
-
-.social-proof-logo:nth-child(4n + 2) .social-proof-logo-mark {
-  border-radius: 4px 12px 4px 12px;
-}
-
-.social-proof-logo:nth-child(4n + 3) .social-proof-logo-mark {
-  border-radius: 999px;
-  height: 22px;
-  width: 36px;
-}
-
-.social-proof-logo:nth-child(3n + 2) .social-proof-logo-line-primary {
-  width: 82%;
-}
-
-.social-proof-logo:nth-child(5n + 3) .social-proof-logo-line-secondary {
-  width: 78%;
+.social-proof-logo-image--solid {
+  filter: brightness(0);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .social-proof-marquee:hover .social-proof-track {
     animation-play-state: paused;
+  }
+
+  .social-proof-logo:hover .social-proof-logo-image {
+    opacity: 0.68;
   }
 }
 
