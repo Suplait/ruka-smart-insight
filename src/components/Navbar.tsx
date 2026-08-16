@@ -21,7 +21,7 @@ type NavbarProps = {
   sectionLinks?: readonly NavbarSectionLink[];
   sectionPath?: string;
   logoPath?: string;
-  primaryAction?: { label: string; path: string };
+  primaryAction?: { label: string; path: string; onClick?: () => void };
   showLogin?: boolean;
 };
 
@@ -48,7 +48,11 @@ export default function Navbar({
   };
 
   const runPrimaryAction = () => {
-    navigate(primaryAction.path);
+    if (primaryAction.onClick) {
+      primaryAction.onClick();
+    } else {
+      navigate(primaryAction.path);
+    }
     setIsOpen(false);
   };
 
