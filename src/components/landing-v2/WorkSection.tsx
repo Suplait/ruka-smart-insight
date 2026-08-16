@@ -9,7 +9,7 @@ import {
   RefreshCw,
   TrendingUp,
 } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -75,7 +75,7 @@ export function WorkSection({ reduceMotion, onPrimaryAction }: WorkSectionProps)
   return (
     <section id="trabajo" className="scroll-mt-24 bg-white py-20 sm:py-28 lg:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="max-w-3xl">
+        <motion.div className="max-w-3xl" initial={reduceMotion ? false : { opacity: 0.82, y: 18, filter: "blur(4px)" }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true, amount: 0.35 }} transition={{ duration: 0.56, ease: easeOut }}>
           <h2
             id="work-section-title"
             className="text-balance text-4xl font-semibold leading-[1.06] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:text-6xl"
@@ -85,7 +85,7 @@ export function WorkSection({ reduceMotion, onPrimaryAction }: WorkSectionProps)
           <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555d70]">
             Ruka registra, concilia, actualiza y calcula sobre los sistemas que tu operación ya usa.
           </p>
-        </div>
+        </motion.div>
 
         <motion.div
           aria-labelledby="work-section-title"
@@ -127,9 +127,9 @@ export function WorkSection({ reduceMotion, onPrimaryAction }: WorkSectionProps)
             </div>
           </div>
 
-          <aside className="grid min-w-0 items-center gap-5 border-t border-[#dce1eb] bg-[#fbfcfe] px-6 py-7 sm:px-8 lg:grid-cols-[0.85fr_1.2fr_auto] lg:gap-8">
+          <motion.aside className="grid min-w-0 items-center gap-5 border-t border-[#dce1eb] bg-[#fbfcfe] px-6 py-7 sm:px-8 lg:grid-cols-[0.85fr_1.2fr_auto] lg:gap-8" initial={reduceMotion ? false : { opacity: 0.78, y: 10 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.6 }} transition={{ duration: 0.44, ease: easeOut }}>
             <div className="flex min-w-0 items-center gap-4">
-              <Bot className="h-7 w-7 flex-none text-primary" strokeWidth={1.8} aria-hidden="true" />
+              <motion.span whileHover={reduceMotion ? undefined : { rotate: 8, scale: 1.1 }} transition={{ duration: 0.2, ease: easeOut }}><Bot className="h-7 w-7 flex-none text-primary" strokeWidth={1.8} aria-hidden="true" /></motion.span>
               <h3 className="min-w-0 text-balance text-2xl font-semibold leading-tight tracking-[-0.025em] text-[#171827]">
                 ¿Otro proceso manual?
               </h3>
@@ -138,13 +138,13 @@ export function WorkSection({ reduceMotion, onPrimaryAction }: WorkSectionProps)
               Creamos un operador para tu flujo, sobre los sistemas y reglas que ya usa tu empresa.
             </p>
             <Button
-              className="h-12 min-w-0 w-full whitespace-nowrap rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none hover:bg-primary/90 active:scale-[0.98] sm:w-fit sm:px-6 sm:text-base"
+              className="group h-12 min-w-0 w-full whitespace-nowrap rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none transition-transform duration-150 hover:-translate-y-0.5 hover:bg-primary/90 active:scale-[0.98] sm:w-fit sm:px-6 sm:text-base"
               onClick={onPrimaryAction}
             >
               Cuéntanos tu proceso
-              <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
             </Button>
-          </aside>
+          </motion.aside>
         </motion.div>
       </div>
     </section>
@@ -161,9 +161,10 @@ function WorkflowSelector({
   onSelect: () => void;
 }) {
   const Icon = workflow.icon;
+  const reduceMotion = useReducedMotion();
 
   return (
-    <button
+    <motion.button
       type="button"
       aria-pressed={selected}
       aria-controls="workflow-panel"
@@ -173,6 +174,9 @@ function WorkflowSelector({
       onClick={onSelect}
       onMouseEnter={onSelect}
       onFocus={onSelect}
+      whileHover={reduceMotion ? undefined : { x: selected ? 0 : 3 }}
+      whileTap={reduceMotion ? undefined : { scale: 0.99 }}
+      transition={{ duration: 0.18, ease: easeOut }}
     >
       <span className="flex min-w-0 items-start gap-3">
         <Icon
@@ -193,18 +197,19 @@ function WorkflowSelector({
           aria-hidden="true"
         />
       </span>
-    </button>
+    </motion.button>
   );
 }
 
 function WorkflowDetail({ workflow }: { workflow: Workflow }) {
   const Icon = workflow.icon;
+  const reduceMotion = useReducedMotion();
 
   return (
     <div className="flex min-w-0 flex-col justify-between bg-[#171a29] p-6 text-white sm:p-8 md:col-span-2 lg:p-10">
       <div>
         <div className="flex items-start gap-3">
-          <Icon className="mt-1 h-6 w-6 flex-none text-[#8ea0ff]" strokeWidth={1.8} aria-hidden="true" />
+          <motion.span initial={reduceMotion ? false : { opacity: 0.7, rotate: -8 }} animate={{ opacity: 1, rotate: 0 }} transition={{ duration: reduceMotion ? 0 : 0.3, ease: easeOut }}><Icon className="mt-1 h-6 w-6 flex-none text-[#8ea0ff]" strokeWidth={1.8} aria-hidden="true" /></motion.span>
           <h3 className="text-balance text-3xl font-semibold leading-[1.08] tracking-[-0.03em] sm:text-4xl">
             {workflow.title}
           </h3>
@@ -218,18 +223,20 @@ function WorkflowDetail({ workflow }: { workflow: Workflow }) {
 }
 
 function WorkflowSteps({ steps }: { steps: readonly string[] }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <div
       className="mt-14 flex flex-wrap items-center gap-x-1 gap-y-3 text-[13px] font-semibold text-white/[0.88]"
       aria-label={steps.join(", ")}
     >
       {steps.map((step, index) => (
-        <span key={step} className="inline-flex items-center gap-1 whitespace-nowrap">
+        <motion.span key={step} className="inline-flex items-center gap-1 whitespace-nowrap" initial={reduceMotion ? false : { opacity: 0.55, x: -5 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: reduceMotion ? 0 : 0.28, delay: reduceMotion ? 0 : index * 0.055, ease: easeOut }}>
           <span>{step}</span>
           {index < steps.length - 1 && (
             <ChevronRight className="h-3 w-3 text-[#8ea0ff]" strokeWidth={2} aria-hidden="true" />
           )}
-        </span>
+        </motion.span>
       ))}
     </div>
   );
@@ -269,7 +276,7 @@ function WorkflowVideo({ workflow, reduceMotion }: { workflow: Workflow; reduceM
   }, [reduceMotion, workflow.id]);
 
   return (
-    <div className="relative aspect-square min-h-0 overflow-hidden bg-white md:col-span-3 md:aspect-auto md:min-h-full">
+    <motion.div className="relative aspect-square min-h-0 overflow-hidden bg-white md:col-span-3 md:aspect-auto md:min-h-full" initial={reduceMotion ? false : { opacity: 0.85, scale: 0.985 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: reduceMotion ? 0 : 0.4, ease: easeOut }}>
       <div className="absolute inset-x-0 top-1/2 aspect-square w-full -translate-y-1/2 overflow-hidden">
         <video
           ref={videoRef}
@@ -283,6 +290,6 @@ function WorkflowVideo({ workflow, reduceMotion }: { workflow: Workflow; reduceM
           <source src={workflow.video} type="video/mp4" />
         </video>
       </div>
-    </div>
+    </motion.div>
   );
 }

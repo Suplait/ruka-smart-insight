@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import {
   ArrowDown,
   ArrowRight,
@@ -37,6 +38,48 @@ import { WorkSection } from "@/components/landing-v2/WorkSection";
 
 const CTA_LABEL = "Agendar 20 min";
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+function ScrollProgress() {
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 150, damping: 28, mass: 0.22 });
+
+  if (reduceMotion) return null;
+
+  return (
+    <motion.div
+      className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-primary"
+      style={{ scaleX }}
+      aria-hidden="true"
+    />
+  );
+}
+
+function Reveal({
+  children,
+  className,
+  delay = 0,
+  distance = 18,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+  distance?: number;
+}) {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className={className}
+      initial={reduceMotion ? false : { opacity: 0.82, y: distance, filter: "blur(4px)" }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.24 }}
+      transition={{ duration: 0.56, delay, ease: easeOut }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 const navItems = [
   { label: "Trabajo", id: "trabajo" },
@@ -229,6 +272,7 @@ export default function LandingV2() {
 
   return (
     <main className="min-h-[100dvh] bg-[#fbfcff] text-[#171827]">
+      <ScrollProgress />
       <Helmet>
         <title>Ruka.ai | Agentes IA para automatizar procesos operativos</title>
         <meta
@@ -281,13 +325,17 @@ function Hero({
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: easeOut }}
         >
-          <p className="mx-auto inline-flex items-center gap-2 rounded-full border border-[#dce3f2] bg-white px-4 py-2 text-sm font-semibold text-[#555b6e]">
-            <Sparkles className="h-4 w-4 text-primary" />
+          <motion.p
+            className="group mx-auto inline-flex items-center gap-2 rounded-full border border-[#dce3f2] bg-white px-4 py-2 text-sm font-semibold text-[#555b6e]"
+            whileHover={reduceMotion ? undefined : { y: -2, borderColor: "rgba(78,102,233,0.38)" }}
+            transition={{ duration: 0.2, ease: easeOut }}
+          >
+            <Sparkles className="h-4 w-4 text-primary transition-transform duration-200 group-hover:rotate-12 group-hover:scale-110" />
             <span>Agentes IA que trabajan sobre tus sistemas</span>
-          </p>
+          </motion.p>
           <h1 className="mx-auto mt-7 max-w-6xl text-balance text-3xl font-semibold leading-[1.04] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:text-[3.35rem] xl:text-[3.75rem] 2xl:text-[3.85rem]">
-            <span className="block">Tu empresa ya tiene los sistemas.</span>
-            <span className="block">Ruka hace el trabajo que queda entre medio.</span>
+            <motion.span className="block" initial={reduceMotion ? false : { opacity: 0.65, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.52, delay: 0.05, ease: easeOut }}>Tu empresa ya tiene los sistemas.</motion.span>
+            <motion.span className="block" initial={reduceMotion ? false : { opacity: 0.65, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.52, delay: 0.13, ease: easeOut }}>Ruka hace el trabajo que queda entre medio.</motion.span>
           </h1>
           <p className="mx-auto mt-6 max-w-4xl text-pretty text-lg leading-8 text-[#555b6e] sm:text-xl sm:leading-9">
             Conecta la información de tu SII, ERP, POS, bancos y otras plataformas para automatizar el trabajo operativo que tu equipo todavía hace manualmente.
@@ -300,7 +348,7 @@ function Hero({
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.46, delay: 0.12, ease: easeOut }}
         >
-          <div className="flex w-full flex-col items-center gap-2 sm:w-auto">
+          <motion.div className="flex w-full flex-col items-center gap-2 sm:w-auto" whileHover={reduceMotion ? undefined : { y: -2 }} whileTap={reduceMotion ? undefined : { scale: 0.98 }}>
             <Button
               className="h-12 w-full rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none transition-transform duration-150 ease-out hover:bg-primary/90 active:scale-[0.97] sm:w-auto sm:px-6 sm:text-base"
               onClick={() => navigate("/register")}
@@ -309,13 +357,13 @@ function Hero({
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <p className="text-xs font-medium text-[#6a7184]">Cuéntanos tu proceso · Sin preparación</p>
-          </div>
+          </motion.div>
           <a
             href="#demo"
-            className="inline-flex h-12 w-full items-center justify-center rounded-full border border-[#dce3f2] bg-white px-6 text-base font-semibold text-[#171827] transition-transform duration-150 ease-out hover:bg-[#f7f9ff] active:scale-[0.97] sm:w-auto"
+            className="group inline-flex h-12 w-full items-center justify-center rounded-full border border-[#dce3f2] bg-white px-6 text-base font-semibold text-[#171827] transition-[transform,background-color,border-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-primary/30 hover:bg-[#f7f9ff] active:scale-[0.97] sm:w-auto"
           >
             Probar Ruka
-            <ArrowDown className="ml-2 h-4 w-4" aria-hidden="true" />
+            <ArrowDown className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-y-1" aria-hidden="true" />
           </a>
         </motion.div>
 
@@ -385,8 +433,8 @@ function CoverSystemMap({ reduceMotion }: { reduceMotion: boolean | null }) {
       </svg>
 
       <div className="cover-sources" aria-label="Fuentes de datos">
-        {coverSources.map(([label, Icon]) => (
-          <SourceTile key={label} icon={Icon} label={label} />
+        {coverSources.map(([label, Icon], index) => (
+          <SourceTile key={label} icon={Icon} label={label} index={index} reduceMotion={reduceMotion} />
         ))}
       </div>
       <div className="cover-layer">
@@ -403,12 +451,12 @@ function CoverSystemMap({ reduceMotion }: { reduceMotion: boolean | null }) {
   );
 }
 
-function SourceTile({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
+function SourceTile({ icon: Icon, label, index, reduceMotion }: { icon: LucideIcon; label: string; index: number; reduceMotion: boolean | null }) {
   return (
-    <div className="cover-input">
+    <motion.div className="cover-input" initial={reduceMotion ? false : { opacity: 0.7, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} whileHover={reduceMotion ? undefined : { y: -4, scale: 1.03 }} transition={{ duration: 0.36, delay: reduceMotion ? 0 : 0.18 + index * 0.045, ease: easeOut }}>
       <Icon size={32} />
       <span>{label}</span>
-    </div>
+    </motion.div>
   );
 }
 
@@ -448,16 +496,18 @@ function OutcomeTile({
 }
 
 function SocialProofSection() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section aria-labelledby="social-proof-title" className="border-y border-[#dce3f2] bg-white py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+      <Reveal className="mx-auto max-w-7xl px-5 sm:px-8">
         <h2
           id="social-proof-title"
           className="mx-auto max-w-4xl text-balance text-center text-3xl font-semibold leading-[1.12] tracking-[-0.035em] text-[#171827] sm:text-4xl"
         >
           Ruka ya procesa millones de transacciones para cientos de empresas.
         </h2>
-      </div>
+      </Reveal>
 
       <div className="social-proof-marquee mt-9">
         <div className="social-proof-track">
@@ -476,27 +526,27 @@ function SocialProofSection() {
 
       <div className="mx-auto mt-10 max-w-7xl px-5 sm:px-8">
         <div className="grid border-y border-[#dce3f2] lg:grid-cols-[1.38fr_0.62fr]">
-          <figure className="flex min-h-72 flex-col justify-between py-8 sm:py-10 lg:border-r lg:border-[#dce3f2] lg:pr-12">
+          <motion.figure className="flex min-h-72 flex-col justify-between py-8 sm:py-10 lg:border-r lg:border-[#dce3f2] lg:pr-12" initial={reduceMotion ? false : { opacity: 0.82, x: -12 }} whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ duration: 0.5, ease: easeOut }}>
             <blockquote className="max-w-4xl text-pretty text-2xl font-semibold leading-[1.35] tracking-[-0.025em] text-[#171827] sm:text-3xl">
               “Información inmediata de volúmenes de compra, evolución de precios y control de pagos. Ahorro de HH en planillas.”
             </blockquote>
             <figcaption className="mt-9 flex items-center gap-4 text-sm">
-              <span className="h-px w-9 flex-none bg-primary" aria-hidden="true" />
+              <motion.span className="h-px w-9 flex-none origin-left bg-primary" aria-hidden="true" initial={reduceMotion ? false : { scaleX: 0 }} whileInView={reduceMotion ? undefined : { scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 0.45, delay: 0.12, ease: easeOut }} />
               <span className="grid gap-0.5">
                 <strong className="font-semibold text-[#171827]">Hernan Sugg</strong>
                 <span className="font-medium text-[#555b6e]">Socio, Barbazul</span>
               </span>
             </figcaption>
-          </figure>
+          </motion.figure>
           <dl className="grid grid-cols-2 border-t border-[#dce3f2] lg:grid-cols-1 lg:border-t-0">
-            <div className="flex min-h-36 flex-col justify-center py-7 pr-5 sm:min-h-40 sm:py-8 lg:pl-10 lg:pr-0">
+            <motion.div className="flex min-h-36 flex-col justify-center py-7 pr-5 sm:min-h-40 sm:py-8 lg:pl-10 lg:pr-0" initial={reduceMotion ? false : { opacity: 0.7, y: 10 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45, delay: 0.08, ease: easeOut }}>
               <dd className="text-4xl font-semibold tracking-[-0.04em] text-primary sm:text-5xl">+300</dd>
               <dt className="mt-2 max-w-40 text-sm font-semibold leading-5 text-[#555b6e]">empresas operando con Ruka</dt>
-            </div>
-            <div className="flex min-h-36 flex-col justify-center border-l border-[#dce3f2] py-7 pl-5 sm:min-h-40 sm:py-8 lg:border-l-0 lg:border-t lg:pl-10">
+            </motion.div>
+            <motion.div className="flex min-h-36 flex-col justify-center border-l border-[#dce3f2] py-7 pl-5 sm:min-h-40 sm:py-8 lg:border-l-0 lg:border-t lg:pl-10" initial={reduceMotion ? false : { opacity: 0.7, y: 10 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45, delay: 0.16, ease: easeOut }}>
               <dd className="text-4xl font-semibold tracking-[-0.04em] text-primary sm:text-5xl">+5M</dd>
               <dt className="mt-2 max-w-40 text-sm font-semibold leading-5 text-[#555b6e]">transacciones procesadas</dt>
-            </div>
+            </motion.div>
           </dl>
         </div>
       </div>
@@ -505,10 +555,14 @@ function SocialProofSection() {
 }
 
 function CustomerLogo({ logo, decorative = false }: { logo: (typeof customerLogos)[number]; decorative?: boolean }) {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <div
+    <motion.div
       className="social-proof-logo"
       title={decorative ? undefined : logo.name}
+      whileHover={decorative || reduceMotion ? undefined : { y: -4, scale: 1.04 }}
+      transition={{ duration: 0.2, ease: easeOut }}
     >
       <img
         src={logo.image}
@@ -516,7 +570,7 @@ function CustomerLogo({ logo, decorative = false }: { logo: (typeof customerLogo
         loading="eager"
         className={`social-proof-logo-image ${logo.className}`}
       />
-    </div>
+    </motion.div>
   );
 }
 
@@ -532,7 +586,7 @@ function ProductDemoSection({
   return (
     <section id="demo" className="scroll-mt-24 bg-[#f4f6fb] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+        <Reveal className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold text-primary">Ruka en acción</p>
           <h2 className="mt-3 text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
             No te lo imagines. Pruébalo.
@@ -540,7 +594,7 @@ function ProductDemoSection({
           <p className="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555b6e]">
             Explora una operación de ejemplo y ve cómo Ruka organiza compras, costos, proveedores y otra información operacional.
           </p>
-        </div>
+        </Reveal>
 
         <motion.div
           className="mt-10 overflow-hidden rounded-2xl bg-white ring-1 ring-[#d7ddea] sm:mt-12"
@@ -548,12 +602,13 @@ function ProductDemoSection({
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.12 }}
           transition={{ duration: 0.55, ease: easeOut }}
+          whileHover={reduceMotion || isDemoOpen ? undefined : { y: -4 }}
         >
           <div className="flex h-11 items-center justify-between border-b border-[#e3e7f0] bg-[#fafbfe] px-4 sm:px-5">
             <div className="flex items-center gap-1.5" aria-hidden="true">
-              <span className="h-2.5 w-2.5 rounded-full bg-[#ff6b6b]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#f3c44d]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#39c780]" />
+              {["#ff6b6b", "#f3c44d", "#39c780"].map((color, index) => (
+                <motion.span key={color} className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: color }} whileHover={reduceMotion ? undefined : { scale: 1.35 }} transition={{ duration: 0.16, delay: index * 0.02 }} />
+              ))}
             </div>
             <div className="flex items-center gap-2 text-xs font-semibold text-[#6a7184]">
               <LockKeyhole className="h-3.5 w-3.5" aria-hidden="true" />
@@ -593,7 +648,7 @@ function ProductDemoSection({
                 <span className="absolute inset-0 bg-[#171827]/20 transition-colors duration-300 group-hover:bg-[#171827]/14" aria-hidden="true" />
                 <span className="absolute inset-0 flex items-center justify-center p-5">
                   <span className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-white px-5 text-sm font-semibold text-[#171827] shadow-[0_6px_8px_rgba(23,24,39,0.12)] transition-transform duration-200 group-hover:scale-[1.03] sm:px-7 sm:text-base">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white transition-transform duration-200 group-hover:scale-110">
                       <Play className="ml-0.5 h-4 w-4 fill-current" aria-hidden="true" />
                     </span>
                     Abrir demo interactiva
@@ -604,37 +659,39 @@ function ProductDemoSection({
           </div>
         </motion.div>
 
-        <div className="mt-7 flex flex-col gap-4 border-t border-[#dce1eb] pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <Reveal className="mt-7 flex flex-col gap-4 border-t border-[#dce1eb] pt-6 sm:flex-row sm:items-center sm:justify-between" delay={0.08} distance={10}>
           <div>
             <h3 className="text-lg font-semibold tracking-[-0.015em] text-[#171827]">¿Te imaginas Ruka sobre tu propia operación?</h3>
             <p className="mt-1 text-sm leading-6 text-[#555b6e]">Cuéntanos qué proceso quieres sacar de tu equipo.</p>
           </div>
           <Button
             variant="ghost"
-            className="h-11 w-fit flex-none justify-start rounded-full px-0 font-semibold text-primary hover:bg-transparent hover:text-primary/80"
+            className="group h-11 w-fit flex-none justify-start rounded-full px-0 font-semibold text-primary hover:bg-transparent hover:text-primary/80"
             onClick={() => navigate("/register")}
           >
             {CTA_LABEL}
-            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+            <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
           </Button>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
 }
 
 function IntegrationsSection() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section id="integraciones" className="scroll-mt-24 overflow-hidden bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="max-w-4xl">
+        <Reveal className="max-w-4xl">
           <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
             Trabajamos donde ya vive tu operación.
           </h2>
           <p className="mt-5 max-w-3xl text-pretty text-lg leading-8 text-[#555b6e]">
             Sistemas de gestión, facturadores, POS, bancos, archivos o desarrollos propios. Conectamos lo que Ruka necesita sin pedirte que cambies los sistemas que ya usas.
           </p>
-        </div>
+        </Reveal>
 
         <div className="mt-12 border-y border-[#dce1eb]">
           {ecosystemGroups.map((group, index) => (
@@ -642,19 +699,20 @@ function IntegrationsSection() {
           ))}
         </div>
 
-        <p className="mt-7 text-sm font-medium text-[#555b6e]">
+        <motion.p className="mt-7 text-sm font-medium text-[#555b6e]" initial={reduceMotion ? false : { opacity: 0.75, x: -8 }} whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.42, ease: easeOut }}>
           <span className="font-semibold text-[#171827]">¿No aparece tu sistema?</span> Probablemente también podamos conectarlo.
-        </p>
+        </motion.p>
       </div>
     </section>
   );
 }
 
 function EcosystemRail({ group, reverse }: { group: EcosystemGroup; reverse: boolean }) {
+  const reduceMotion = useReducedMotion();
   const repeatedItems = [...group.items, ...group.items];
 
   return (
-    <div className="grid border-b border-[#dce1eb] last:border-b-0 lg:grid-cols-[18rem_minmax(0,1fr)]">
+    <motion.div className="grid border-b border-[#dce1eb] last:border-b-0 lg:grid-cols-[18rem_minmax(0,1fr)]" initial={reduceMotion ? false : { opacity: 0.82, x: reverse ? 14 : -14 }} whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ duration: 0.48, ease: easeOut }}>
       <div className="flex flex-col justify-center bg-[#f7f8fc] px-5 py-5 sm:px-7 lg:min-h-32 lg:border-r lg:border-[#dce1eb]">
         <h3 className="text-lg font-semibold tracking-[-0.015em] text-[#171827]">{group.category}</h3>
         <p className="mt-1.5 max-w-xs text-sm leading-6 text-[#646b7d]">{group.description}</p>
@@ -703,35 +761,42 @@ function EcosystemRail({ group, reverse }: { group: EcosystemGroup; reverse: boo
           })}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 function PricingSection({ navigate }: { navigate: (path: string) => void }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section id="precios" className="scroll-mt-24 bg-[#f4f6fb] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="max-w-3xl">
+        <Reveal className="max-w-3xl">
           <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
             El plan depende de tu volumen.
           </h2>
           <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555b6e]">
             Todos los planes tienen las mismas capacidades. Lo que cambia es cuánto procesa Ruka cada mes.
           </p>
-        </div>
+        </Reveal>
 
         <div className="mt-12 grid gap-4 lg:grid-cols-3 lg:items-stretch">
           {plans.map((plan) => {
             const isFeatured = "featured" in plan && plan.featured === true;
 
             return (
-              <article
+              <motion.article
                 key={plan.name}
                 className={`relative flex min-h-[17rem] flex-col rounded-2xl p-6 sm:p-8 ${
                   isFeatured
                     ? "bg-primary text-white ring-1 ring-primary"
                     : "border border-[#d7ddea] bg-white text-[#171827]"
                 }`}
+                initial={reduceMotion ? false : { opacity: 0.78, y: 22 }}
+                whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                whileHover={reduceMotion ? undefined : { y: -6, scale: 1.01 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.46, delay: reduceMotion ? 0 : plans.indexOf(plan) * 0.07, ease: easeOut }}
               >
                 <div className="flex min-h-8 items-center justify-between gap-3">
                   <h3 className="text-xl font-semibold tracking-[-0.02em]">{plan.name}</h3>
@@ -748,7 +813,7 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
                 <div className={`mt-8 border-t pt-6 ${isFeatured ? "border-white/[0.2]" : "border-[#dce1eb]"}`}>
                   <p className="text-base font-semibold">{plan.volume}</p>
                 </div>
-              </article>
+              </motion.article>
             );
           })}
         </div>
@@ -757,15 +822,15 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
           <p className="flex-none text-sm font-semibold text-[#171827]">Todos incluyen</p>
           <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-[#555b6e]" aria-label="Capacidades incluidas en todos los planes">
             {["Procesamiento de documentos", "Integraciones", "Reglas y homologación"].map((capability) => (
-              <li key={capability} className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
+              <motion.li key={capability} className="flex items-center gap-2" initial={reduceMotion ? false : { opacity: 0.65, x: -6 }} whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.34, delay: reduceMotion ? 0 : 0.05 + ["Procesamiento de documentos", "Integraciones", "Reglas y homologación"].indexOf(capability) * 0.06, ease: easeOut }}>
+                <motion.span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" initial={reduceMotion ? false : { scale: 0 }} whileInView={reduceMotion ? undefined : { scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.24, ease: easeOut }} />
                 {capability}
-              </li>
+              </motion.li>
             ))}
           </ul>
         </div>
 
-        <div className="mt-12 overflow-hidden rounded-2xl bg-[#171a29] text-white">
+        <motion.div className="mt-12 overflow-hidden rounded-2xl bg-[#171a29] text-white" initial={reduceMotion ? false : { opacity: 0.85, y: 18 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ duration: 0.5, ease: easeOut }}>
           <div className="grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:p-12">
             <div>
               <p className="text-sm font-semibold text-[#9ba9ff]">¿Necesitas algo distinto?</p>
@@ -778,15 +843,15 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
             </div>
             <div className="flex flex-col items-start lg:items-end">
               <Button
-                className="h-12 w-full rounded-full bg-white px-6 font-semibold text-[#171827] shadow-none hover:bg-[#f1f3ff] active:scale-[0.98] sm:w-fit"
+                className="group h-12 w-full rounded-full bg-white px-6 font-semibold text-[#171827] shadow-none transition-transform duration-150 hover:-translate-y-0.5 hover:bg-[#f1f3ff] active:scale-[0.98] sm:w-fit"
                 onClick={() => navigate("/register")}
               >
                 Cuéntanos tu proceso
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
               </Button>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -816,28 +881,35 @@ const supporters = [
 ] as const;
 
 function SupportersSection() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section id="apoyo" aria-labelledby="supporters-title" className="border-y border-[#e3e7f0] bg-white py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <h2 id="supporters-title" className="text-center text-lg font-medium tracking-[-0.01em] text-[#555b6e] sm:text-xl">
+        <motion.h2 id="supporters-title" className="text-center text-lg font-medium tracking-[-0.01em] text-[#555b6e] sm:text-xl" initial={reduceMotion ? false : { opacity: 0.65, y: 8 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.42, ease: easeOut }}>
           Con el apoyo de
-        </h2>
+        </motion.h2>
 
         <ul className="mx-auto mt-10 grid max-w-6xl grid-cols-1 items-center sm:mt-12 lg:grid-cols-4" aria-label="Organizaciones que apoyan a Ruka">
           {supporters.map((supporter, index) => (
-            <li
+            <motion.li
               key={supporter.name}
               className={`flex min-h-28 items-center justify-center px-6 py-7 sm:min-h-32 sm:py-8 ${
                 index > 0 ? "border-t border-[#e8ebf2] lg:border-l lg:border-t-0" : ""
               }`}
+              initial={reduceMotion ? false : { opacity: 0.55, y: 10 }}
+              whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              whileHover={reduceMotion ? undefined : { y: -3 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.38, delay: reduceMotion ? 0 : index * 0.06, ease: easeOut }}
             >
               <img
                 src={supporter.logo}
                 alt={supporter.name}
                 loading="lazy"
-                className={`h-auto max-h-20 object-contain grayscale opacity-45 transition-opacity duration-200 hover:opacity-65 ${supporter.className}`}
+                className={`h-auto max-h-20 object-contain grayscale opacity-45 transition-[opacity,transform] duration-200 hover:scale-[1.03] hover:opacity-65 ${supporter.className}`}
               />
-            </li>
+            </motion.li>
           ))}
         </ul>
       </div>
@@ -846,31 +918,35 @@ function SupportersSection() {
 }
 
 function FAQAndCTASection({ navigate }: { navigate: (path: string) => void }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section id="faq" className="bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
-          <div>
+          <Reveal>
             <h2 className="max-w-lg text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
               Preguntas antes de poner Ruka a trabajar.
             </h2>
             <p className="mt-5 max-w-lg text-lg leading-8 text-[#555b6e]">
               Lo que normalmente nos preguntan antes de automatizar un proceso.
             </p>
-          </div>
+          </Reveal>
           <Accordion type="single" collapsible className="grid gap-3">
             {faqItems.map((item, index) => (
-              <AccordionItem key={item.question} value={`faq-${index}`} className="rounded-2xl border border-[#dce3f2] bg-[#fbfcff] px-5">
-                <AccordionTrigger className="text-left text-base font-semibold text-[#171827] hover:text-primary hover:no-underline sm:text-lg">
-                  {item.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-base leading-7 text-[#555b6e]">{item.answer}</AccordionContent>
-              </AccordionItem>
+              <motion.div key={item.question} initial={reduceMotion ? false : { opacity: 0.72, x: 12 }} whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.55 }} transition={{ duration: 0.36, delay: reduceMotion ? 0 : Math.min(index, 4) * 0.04, ease: easeOut }} whileHover={reduceMotion ? undefined : { x: 3 }}>
+                <AccordionItem value={`faq-${index}`} className="rounded-2xl border border-[#dce3f2] bg-[#fbfcff] px-5 transition-colors duration-200 hover:border-primary/25 hover:bg-white">
+                  <AccordionTrigger className="text-left text-base font-semibold text-[#171827] hover:text-primary hover:no-underline sm:text-lg">
+                    {item.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-base leading-7 text-[#555b6e]">{item.answer}</AccordionContent>
+                </AccordionItem>
+              </motion.div>
             ))}
           </Accordion>
         </div>
 
-        <div className="mt-16 overflow-hidden rounded-2xl bg-[#eef1ff] p-6 sm:p-10 lg:p-14">
+        <motion.div className="mt-16 overflow-hidden rounded-2xl bg-[#eef1ff] p-6 sm:p-10 lg:p-14" initial={reduceMotion ? false : { opacity: 0.82, y: 18 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ duration: 0.52, ease: easeOut }}>
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <h2 className="max-w-4xl text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
@@ -880,11 +956,11 @@ function FAQAndCTASection({ navigate }: { navigate: (path: string) => void }) {
             </div>
             <div className="flex flex-col items-start gap-3 lg:items-end">
               <Button
-              className="h-12 w-full rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none hover:bg-primary/90 active:scale-[0.97] sm:w-auto sm:px-6 sm:text-base"
+              className="group h-12 w-full rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none transition-transform duration-150 hover:-translate-y-0.5 hover:bg-primary/90 active:scale-[0.97] sm:w-auto sm:px-6 sm:text-base"
                 onClick={() => navigate("/register")}
               >
                 {CTA_LABEL}
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
               </Button>
               <p className="flex items-center gap-2 text-sm font-semibold text-[#555b6e]">
                 <UsersRound className="h-4 w-4 text-primary" />
@@ -892,9 +968,9 @@ function FAQAndCTASection({ navigate }: { navigate: (path: string) => void }) {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <footer className="mt-10 flex flex-col gap-5 border-t border-[#dce3f2] pt-7 text-sm text-[#6a7184] sm:flex-row sm:items-center sm:justify-between">
+        <motion.footer className="mt-10 flex flex-col gap-5 border-t border-[#dce3f2] pt-7 text-sm text-[#6a7184] sm:flex-row sm:items-center sm:justify-between" initial={reduceMotion ? false : { opacity: 0.7 }} whileInView={reduceMotion ? undefined : { opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.4 }}>
           <Link to="/v2" aria-label="Volver al inicio de Ruka">
             <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto" />
           </Link>
@@ -902,7 +978,7 @@ function FAQAndCTASection({ navigate }: { navigate: (path: string) => void }) {
             <Link to="/privacy" className="hover:text-[#171827]">Privacidad</Link>
             <Link to="/terms" className="hover:text-[#171827]">Términos</Link>
           </div>
-        </footer>
+        </motion.footer>
       </div>
     </section>
   );

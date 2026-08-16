@@ -89,14 +89,14 @@ export default function OperationalGapSection() {
   return (
     <section id="problema" className="scroll-mt-24 bg-[#f4f6fa] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="max-w-4xl">
+        <motion.div className="max-w-4xl" initial={reduceMotion ? false : { opacity: 0.82, y: 18, filter: "blur(4px)" }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true, amount: 0.35 }} transition={{ duration: 0.56, ease: easeOut }}>
           <h2 className="text-balance text-4xl font-semibold leading-[1.06] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:text-6xl">
             No te falta software. Te sobra trabajo entre tus sistemas.
           </h2>
           <p className="mt-6 max-w-3xl text-pretty text-lg leading-8 text-[#4e5569]">
             La información ya existe. El trabajo aparece cuando alguien todavía tiene que leerla, ordenarla y moverla entre los sistemas de tu empresa.
           </p>
-        </div>
+        </motion.div>
 
         <motion.article
           aria-labelledby="purchase-register-title"
@@ -154,11 +154,11 @@ export default function OperationalGapSection() {
           </div>
         </motion.article>
 
-        <div className="mx-auto mt-12 max-w-4xl border-t border-[#d9deea] pt-9 text-center">
+        <motion.div className="mx-auto mt-12 max-w-4xl border-t border-[#d9deea] pt-9 text-center" initial={reduceMotion ? false : { opacity: 0.72, y: 10 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.46, ease: easeOut }}>
           <p className="text-balance text-2xl font-semibold leading-tight tracking-[-0.025em] text-[#171827] sm:text-3xl">
             Tus sistemas siguen siendo los mismos. Ruka hace el trabajo entre ellos.
           </p>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -180,8 +180,8 @@ function SourcePanel({ reduceMotion }: { reduceMotion: boolean | null }) {
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.52, delay: reduceMotion ? 0 : 0.08, ease: easeOut }}
       >
-        {sourceDocuments.map((document) => (
-          <SourceDocumentCard key={document.label} document={document} />
+        {sourceDocuments.map((document, index) => (
+          <SourceDocumentCard key={document.label} document={document} index={index} reduceMotion={reduceMotion} />
         ))}
       </motion.div>
 
@@ -193,12 +193,17 @@ function SourcePanel({ reduceMotion }: { reduceMotion: boolean | null }) {
   );
 }
 
-function SourceDocumentCard({ document }: { document: SourceDocument }) {
+function SourceDocumentCard({ document, index, reduceMotion }: { document: SourceDocument; index: number; reduceMotion: boolean | null }) {
   const Icon = document.icon;
 
   return (
-    <div
+    <motion.div
       className={`absolute w-36 rounded-[10px] border border-white/80 bg-[#fbfcff] p-2.5 text-[#252837] shadow-[0_5px_8px_rgba(7,10,28,0.2)] ${document.position}`}
+      initial={reduceMotion ? false : { opacity: 0.7, y: 10, scale: 0.97 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
+      whileHover={reduceMotion ? undefined : { y: -5, rotate: 0, scale: 1.03, zIndex: 30 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.38, delay: reduceMotion ? 0 : 0.08 + index * 0.055, ease: easeOut }}
     >
       <div className="flex items-center gap-2">
         <span className="flex h-8 w-8 flex-none items-center justify-center rounded-md bg-[#edf0f5] text-[#535c70]">
@@ -215,7 +220,7 @@ function SourceDocumentCard({ document }: { document: SourceDocument }) {
       </div>
       <span className="mt-2.5 block h-px w-full bg-[#dce1e9]" aria-hidden="true" />
       <span className="mt-1.5 block h-px w-2/3 bg-[#e5e8ee]" aria-hidden="true" />
-    </div>
+    </motion.div>
   );
 }
 
@@ -289,9 +294,9 @@ function ResultNode({
   return (
     <div className="w-full min-w-0 border-t border-[#cbd3f4] pt-4 lg:flex-1">
       <div className="flex items-start gap-3">
-        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-primary text-white">
+        <motion.span key={activeDestination} className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-primary text-white" initial={reduceMotion ? false : { scale: 0.82 }} animate={{ scale: 1 }} transition={{ duration: reduceMotion ? 0 : 0.24, ease: easeOut }}>
           <Check className="h-[18px] w-[18px]" strokeWidth={2.4} aria-hidden="true" />
-        </span>
+        </motion.span>
         <span className="min-w-0">
           <span className="block text-base font-semibold leading-5 text-[#252837]">Registro listo</span>
           <span className="mt-1 block text-sm font-medium leading-5 text-[#586078]">Actualizado donde lo necesitas.</span>
@@ -303,7 +308,7 @@ function ResultNode({
           const isActive = index === activeDestination;
 
           return (
-            <span
+            <motion.span
               key={item.shortLabel}
               className={`rounded-[6px] border px-2 py-1 text-sm font-semibold transition-[background-color,border-color,color] lg:text-xs ${
                 reduceMotion ? "duration-0" : "duration-300"
@@ -312,9 +317,11 @@ function ResultNode({
                   ? "border-primary/[0.35] bg-white text-primary"
                   : "border-[#d6dcf4] bg-white/50 text-[#626b89]"
               }`}
+              animate={reduceMotion ? undefined : { y: isActive ? -2 : 0, scale: isActive ? 1.03 : 1 }}
+              transition={{ duration: 0.22, ease: easeOut }}
             >
               {item.shortLabel}
-            </span>
+            </motion.span>
           );
         })}
       </div>
@@ -340,11 +347,15 @@ function ComparisonLane({
   const isRuka = tone === "ruka";
 
   return (
-    <section
+    <motion.section
       aria-label={label}
       className={`relative px-5 py-7 sm:px-8 sm:py-9 lg:grid lg:grid-cols-[12rem_minmax(0,1fr)] lg:items-center lg:gap-7 xl:min-h-[14.5rem] xl:grid-cols-[10.5rem_minmax(0,1fr)] xl:px-7 ${
         isRuka ? "bg-[#eef1fb]" : "border-b border-[#dfe3eb] bg-white"
       }`}
+      initial={reduceMotion ? false : { opacity: 0.82, x: isRuka ? 14 : -14 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.35 }}
+      transition={{ duration: 0.48, delay: reduceMotion ? 0 : isRuka ? 0.12 : 0.04, ease: easeOut }}
     >
       <span
         className={`absolute -left-3.5 top-1/2 hidden h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border xl:flex ${
@@ -379,7 +390,7 @@ function ComparisonLane({
       >
         {children}
       </motion.div>
-    </section>
+    </motion.section>
   );
 }
 
@@ -427,6 +438,7 @@ function ProcessNode({
   detail: string;
   tone: "manual" | "ruka";
 }) {
+  const reduceMotion = useReducedMotion();
   const styles = {
     manual: "border-[#2f3345] bg-[#202332] text-white",
     ruka:
@@ -437,7 +449,7 @@ function ProcessNode({
   const dividerStyles = tone === "ruka" ? "border-white/[0.16]" : "border-white/[0.12]";
 
   return (
-    <div className={`grid min-h-[5.75rem] w-full min-w-0 grid-cols-[3rem_minmax(0,1fr)] overflow-hidden rounded-[10px] border lg:flex-1 ${styles}`}>
+    <motion.div className={`grid min-h-[5.75rem] w-full min-w-0 grid-cols-[3rem_minmax(0,1fr)] overflow-hidden rounded-[10px] border lg:flex-1 ${styles}`} whileHover={reduceMotion ? undefined : { y: -3, scale: 1.01 }} transition={{ duration: 0.2, ease: easeOut }}>
       <span className={`flex items-center justify-center border-r text-white ${dividerStyles}`}>
         <Icon className="h-5 w-5" strokeWidth={1.9} aria-hidden="true" />
       </span>
@@ -445,6 +457,6 @@ function ProcessNode({
         <span className="block text-sm font-semibold leading-5 sm:text-base">{title}</span>
         <span className={`mt-1 block text-sm font-medium leading-5 ${detailStyles}`}>{detail}</span>
       </span>
-    </div>
+    </motion.div>
   );
 }
