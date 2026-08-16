@@ -233,6 +233,7 @@ export default function LandingV2() {
       <ProductDemoSection reduceMotion={reduceMotion} navigate={navigate} />
       <IntegrationsSection />
       <PricingSection navigate={navigate} />
+      <SupportersSection />
       <FAQAndCTASection navigate={navigate} />
     </main>
   );
@@ -767,6 +768,59 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
             </div>
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+const supporters = [
+  {
+    name: "Microsoft",
+    logo: "/microsoft2.png",
+    className: "w-[13rem] sm:w-[15rem]",
+  },
+  {
+    name: "500 Global",
+    logo: "/500logo.png",
+    className: "w-[4.75rem] sm:w-[5.25rem]",
+  },
+  {
+    name: "Start-Up Chile",
+    logo: "/supporters/startup-chile.svg",
+    className: "w-[13.5rem] sm:w-[15rem]",
+  },
+  {
+    name: "CORFO",
+    logo: "/logocorfo.png",
+    className: "w-[12.5rem] sm:w-[14rem]",
+  },
+] as const;
+
+function SupportersSection() {
+  return (
+    <section id="apoyo" aria-labelledby="supporters-title" className="border-y border-[#e3e7f0] bg-white py-16 sm:py-20">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <h2 id="supporters-title" className="text-center text-lg font-medium tracking-[-0.01em] text-[#555b6e] sm:text-xl">
+          Con el apoyo de
+        </h2>
+
+        <ul className="mx-auto mt-10 grid max-w-6xl grid-cols-1 items-center sm:mt-12 lg:grid-cols-4" aria-label="Organizaciones que apoyan a Ruka">
+          {supporters.map((supporter, index) => (
+            <li
+              key={supporter.name}
+              className={`flex min-h-28 items-center justify-center px-6 py-7 sm:min-h-32 sm:py-8 ${
+                index > 0 ? "border-t border-[#e8ebf2] lg:border-l lg:border-t-0" : ""
+              }`}
+            >
+              <img
+                src={supporter.logo}
+                alt={supporter.name}
+                loading="lazy"
+                className={`h-auto max-h-20 object-contain grayscale opacity-45 transition-opacity duration-200 hover:opacity-65 ${supporter.className}`}
+              />
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
