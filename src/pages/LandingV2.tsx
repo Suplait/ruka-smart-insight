@@ -142,20 +142,17 @@ const plans = [
     name: "Start",
     volume: "Hasta 200 documentos / mes",
     price: "$99.990",
-    copy: "Para operaciones con un flujo recurrente de menor volumen.",
   },
   {
     name: "Core",
     volume: "Hasta 500 documentos / mes",
     price: "$249.990",
-    copy: "Para equipos con un volumen constante de compras y procesos operativos.",
     featured: true,
   },
   {
     name: "Scale",
     volume: "Hasta 1.200 documentos / mes",
     price: "$449.990",
-    copy: "Para operaciones de mayor volumen, múltiples locales o sociedades.",
   },
 ] as const;
 
@@ -250,7 +247,7 @@ function Hero({
 }) {
   return (
     <section
-      className="relative overflow-hidden bg-[#fbfcff] px-5 pb-14 pt-24 sm:px-8 sm:pb-20 lg:min-h-[100dvh] lg:pb-16"
+      className="relative overflow-hidden bg-[#fbfcff] px-5 pb-14 pt-28 sm:px-8 sm:pb-20 md:pt-32 lg:min-h-[100dvh] lg:pb-16"
       style={{
         backgroundImage:
           "linear-gradient(90deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px), linear-gradient(180deg, rgba(23, 24, 39, 0.018) 1px, transparent 1px)",
@@ -615,7 +612,7 @@ function IntegrationsSection() {
             Trabajamos donde ya vive tu operación.
           </h2>
           <p className="mt-5 max-w-3xl text-pretty text-lg leading-8 text-[#555b6e]">
-            Sistemas de gestión, facturadores, POS, bancos, archivos o desarrollos propios. Conectamos las fuentes que necesita cada proceso, sin obligarte a cambiar tu stack.
+            Sistemas de gestión, facturadores, POS, bancos, archivos o desarrollos propios. Conectamos lo que Ruka necesita sin pedirte que cambies los sistemas que ya usas.
           </p>
         </div>
 
@@ -626,7 +623,7 @@ function IntegrationsSection() {
         </div>
 
         <p className="mt-7 text-sm font-medium text-[#555b6e]">
-          <span className="font-semibold text-[#171827]">¿No aparece tu sistema?</span> Revisamos cómo acceder a su información.
+          <span className="font-semibold text-[#171827]">¿No aparece tu sistema?</span> Probablemente también podamos conectarlo.
         </p>
       </div>
     </section>
@@ -696,10 +693,10 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="max-w-3xl">
           <h2 className="text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
-            Planes para procesos recurrentes.
+            El plan depende de tu volumen.
           </h2>
           <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555b6e]">
-            El plan depende principalmente del volumen que procesa tu operación. Si necesitas más volumen, integraciones o un proceso especial, armamos una propuesta contigo.
+            Todos los planes tienen las mismas capacidades. Lo que cambia es cuánto procesa Ruka cada mes.
           </p>
         </div>
 
@@ -710,7 +707,7 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
             return (
               <article
                 key={plan.name}
-                className={`relative flex min-h-[20rem] flex-col rounded-2xl p-6 sm:p-8 ${
+                className={`relative flex min-h-[17rem] flex-col rounded-2xl p-6 sm:p-8 ${
                   isFeatured
                     ? "bg-primary text-white ring-1 ring-primary"
                     : "border border-[#d7ddea] bg-white text-[#171827]"
@@ -730,7 +727,6 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
 
                 <div className={`mt-8 border-t pt-6 ${isFeatured ? "border-white/[0.2]" : "border-[#dce1eb]"}`}>
                   <p className="text-base font-semibold">{plan.volume}</p>
-                  <p className={`mt-4 text-base leading-7 ${isFeatured ? "text-white/[0.78]" : "text-[#555b6e]"}`}>{plan.copy}</p>
                 </div>
               </article>
             );
@@ -738,9 +734,9 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
         </div>
 
         <div className="mt-5 flex flex-col gap-4 rounded-xl border border-[#d7ddea] bg-white px-5 py-4 lg:flex-row lg:items-center">
-          <p className="flex-none text-sm font-semibold text-[#171827]">Todos los planes incluyen</p>
+          <p className="flex-none text-sm font-semibold text-[#171827]">Todos incluyen</p>
           <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-[#555b6e]" aria-label="Capacidades incluidas en todos los planes">
-            {["Procesamiento de documentos", "Conexión con tus fuentes", "Reglas y homologaciones", "Seguimiento operativo"].map((capability) => (
+            {["Procesamiento de documentos", "Integraciones", "Reglas y homologación"].map((capability) => (
               <li key={capability} className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
                 {capability}
@@ -749,30 +745,18 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
           </ul>
         </div>
 
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-base leading-7 text-[#555b6e]">Te ayudamos a confirmar el plan según tu volumen y proceso.</p>
-          <Button
-            className="h-12 w-full rounded-full bg-primary px-6 font-semibold text-white shadow-none hover:bg-primary/90 active:scale-[0.98] sm:w-fit"
-            onClick={() => navigate("/register")}
-          >
-            {CTA_LABEL}
-            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-          </Button>
-        </div>
-
         <div className="mt-12 overflow-hidden rounded-2xl bg-[#171a29] text-white">
           <div className="grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:p-12">
             <div>
-              <p className="text-sm font-semibold text-[#9ba9ff]">Más volumen o un flujo distinto</p>
+              <p className="text-sm font-semibold text-[#9ba9ff]">¿Necesitas algo distinto?</p>
               <h3 className="mt-3 max-w-3xl text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] sm:text-4xl">
-                ¿Tu proceso no cabe en un plan? Lo diseñamos contigo.
+                Si tu proceso no cabe acá, lo armamos contigo.
               </h3>
               <p className="mt-5 max-w-2xl text-lg leading-8 text-white/[0.72]">
-                Integraciones, reglas y operación según tu flujo.
+                Más volumen, otra integración o un flujo propio de tu empresa.
               </p>
             </div>
-            <div className="flex flex-col items-start gap-4 lg:items-end">
-              <p className="text-sm font-medium text-white/[0.6]">Sin precio público · Alcance definido contigo</p>
+            <div className="flex flex-col items-start lg:items-end">
               <Button
                 className="h-12 w-full rounded-full bg-white px-6 font-semibold text-[#171827] shadow-none hover:bg-[#f1f3ff] active:scale-[0.98] sm:w-fit"
                 onClick={() => navigate("/register")}
