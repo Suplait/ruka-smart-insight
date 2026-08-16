@@ -9,10 +9,15 @@ import {
   Banknote,
   CheckCircle2,
   Database,
+  FileCode2,
   FileSpreadsheet,
+  FileText,
+  Braces,
   Layers3,
+  Landmark,
   LoaderCircle,
   LockKeyhole,
+  Mail,
   Play,
   ReceiptText,
   Sparkles,
@@ -68,7 +73,9 @@ const coverOutputPaths = [
 type EcosystemItem = {
   name: string;
   image?: string;
-  mark?: string;
+  icon?: LucideIcon;
+  logoSurface?: "dark";
+  showName?: boolean;
 };
 
 type EcosystemGroup = {
@@ -82,45 +89,45 @@ const ecosystemGroups: readonly EcosystemGroup[] = [
     category: "Facturación y documentos",
     description: "Emisión, recepción y descarga de documentos tributarios.",
     items: [
-      { name: "SII", image: "/logosii.png" },
-      { name: "Ingefactura", mark: "IN" },
-      { name: "eBill", mark: "eB" },
-      { name: "iDTECloud", mark: "iD" },
-      { name: "DTEiGlobal", mark: "DT" },
-      { name: "Facturacion.cl", mark: "F." },
+      { name: "SII", image: "/integrations/sii.jpg" },
+      { name: "Ingefactura", image: "/integrations/ingefactura.png" },
+      { name: "eBill", image: "/integrations/ebill.png" },
+      { name: "iDTECloud", image: "/integrations/idtecloud.png", logoSurface: "dark" },
+      { name: "DTEiGlobal", image: "/integrations/dteiglobal.png", showName: true },
+      { name: "Facturacion.cl", image: "/integrations/facturacion.png" },
     ],
   },
   {
     category: "Gestión y contabilidad",
     description: "Información contable, compras, pagos y gestión operacional.",
     items: [
-      { name: "Defontana", mark: "D" },
-      { name: "Nubox", mark: "N" },
-      { name: "Chipax", mark: "C" },
-      { name: "Bancos", mark: "$" },
-      { name: "ERP propio", mark: "ERP" },
+      { name: "Defontana", image: "/integrations/defontana.svg" },
+      { name: "Nubox", image: "/integrations/nubox.svg" },
+      { name: "Chipax", image: "/integrations/chipax.png" },
+      { name: "Bancos", icon: Landmark },
+      { name: "ERP propio", icon: Database },
     ],
   },
   {
     category: "Ventas y POS",
     description: "Ventas, productos, locales, precios y movimientos de stock.",
     items: [
-      { name: "Toteat", image: "/toteat-logo.png" },
-      { name: "Fudo", image: "/fudo-logo.png" },
-      { name: "Justo", image: "/justo-logo.png" },
-      { name: "Bsale", mark: "B" },
+      { name: "Toteat", image: "/integrations/toteat.svg" },
+      { name: "Fudo", image: "/integrations/fudo.svg" },
+      { name: "Justo", image: "/integrations/justo.svg" },
+      { name: "Bsale", image: "/integrations/bsale.png" },
     ],
   },
   {
     category: "Archivos y sistemas propios",
     description: "Fuentes que hoy viven fuera de una integración estándar.",
     items: [
-      { name: "Excel", mark: "XLS" },
-      { name: "CSV", mark: "CSV" },
-      { name: "XML", mark: "XML" },
-      { name: "PDF", mark: "PDF" },
-      { name: "Email", mark: "@" },
-      { name: "API", mark: "API" },
+      { name: "Excel", icon: FileSpreadsheet },
+      { name: "CSV", icon: FileSpreadsheet },
+      { name: "XML", icon: FileCode2 },
+      { name: "PDF", icon: FileText },
+      { name: "Email", icon: Mail },
+      { name: "API", icon: Braces },
     ],
   },
 ] as const;
@@ -204,7 +211,7 @@ export default function LandingV2() {
   return (
     <main className="min-h-[100dvh] bg-[#fbfcff] text-[#171827]">
       <Helmet>
-        <title>Ruka.ai | Operadores digitales para tu empresa</title>
+        <title>Ruka.ai | Agentes IA para automatizar procesos operativos</title>
         <meta
           name="description"
           content="Ruka conecta SII, ERP, POS, bancos y otras plataformas para automatizar el trabajo operativo que tu equipo todavía hace manualmente."
@@ -534,7 +541,15 @@ function ProductDemoSection({
             </div>
           </div>
 
-          <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#eef1ff]">
+          <div
+            className={`relative w-full overflow-hidden bg-[#eef1ff] ${
+              reduceMotion ? "" : "transition-[height] duration-500 ease-out"
+            } ${
+              isDemoOpen
+                ? "h-[75dvh] min-h-[32rem] max-h-[48rem] md:h-[75dvh] md:min-h-[700px] md:max-h-[750px]"
+                : "aspect-[16/10]"
+            }`}
+          >
             {isDemoOpen ? (
               <iframe
                 src={rukaDemoEmbedUrl}
@@ -630,20 +645,31 @@ function EcosystemRail({ group, reverse }: { group: EcosystemGroup; reverse: boo
         aria-label={`${group.category}: ${group.items.map((item) => item.name).join(", ")}`}
       >
         <div className={`integration-rail-track ${reverse ? "integration-rail-track-reverse" : ""}`} aria-hidden="true">
-          {repeatedItems.map((item, index) => (
-            <div
-              key={`${group.category}-${item.name}-${index}`}
-              className={`integration-chip ${index >= group.items.length ? "integration-chip-duplicate" : ""}`}
-              aria-hidden={index >= group.items.length || undefined}
-            >
-              {item.image ? (
-                <img src={item.image} alt="" className="max-h-7 w-auto max-w-24 object-contain" />
-              ) : (
-                <span className="integration-chip-mark" aria-hidden="true">{item.mark}</span>
-              )}
-              <span>{item.name}</span>
-            </div>
-          ))}
+          {repeatedItems.map((item, index) => {
+            const ItemIcon = item.icon;
+
+            return (
+              <div
+                key={`${group.category}-${item.name}-${index}`}
+                className={`integration-chip ${ItemIcon ? "integration-chip-generic" : "integration-chip-product"} ${
+                  index >= group.items.length ? "integration-chip-duplicate" : ""
+                }`}
+                aria-hidden={index >= group.items.length || undefined}
+              >
+                {item.image ? (
+                  <>
+                    <span className={item.logoSurface === "dark" ? "integration-logo-surface-dark" : undefined}>
+                      <img src={item.image} alt={`${item.name} logo`} className="integration-logo-image" loading="lazy" />
+                    </span>
+                    {item.showName && <span className="integration-product-label">{item.name}</span>}
+                  </>
+                ) : ItemIcon ? (
+                  <ItemIcon className="integration-chip-icon" strokeWidth={1.7} aria-hidden="true" />
+                ) : null}
+                {ItemIcon && <span>{item.name}</span>}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -697,7 +723,19 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
           })}
         </div>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-5 flex flex-col gap-4 rounded-xl border border-[#d7ddea] bg-white px-5 py-4 lg:flex-row lg:items-center">
+          <p className="flex-none text-sm font-semibold text-[#171827]">Todos los planes incluyen</p>
+          <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-[#555b6e]" aria-label="Capacidades incluidas en todos los planes">
+            {["Procesamiento de documentos", "Conexión con tus fuentes", "Reglas y homologaciones", "Seguimiento operativo"].map((capability) => (
+              <li key={capability} className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
+                {capability}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-base leading-7 text-[#555b6e]">Te ayudamos a confirmar el plan según tu volumen y proceso.</p>
           <Button
             className="h-12 w-full rounded-full bg-primary px-6 font-semibold text-white shadow-none hover:bg-primary/90 active:scale-[0.98] sm:w-fit"
@@ -708,23 +746,28 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
           </Button>
         </div>
 
-        <div className="mt-8 flex flex-col gap-5 border-t border-[#cfd5e2] pt-7 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h3 className="text-balance text-xl font-semibold tracking-[-0.02em] text-[#171827]">
-              ¿Más de 1.200 documentos o un proceso distinto?
-            </h3>
-            <p className="mt-2 max-w-3xl text-base leading-7 text-[#555b6e]">
-              Podemos adaptar el alcance según el volumen, las integraciones y el proceso que quieras automatizar.
-            </p>
+        <div className="mt-12 overflow-hidden rounded-2xl bg-[#171a29] text-white">
+          <div className="grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:p-12">
+            <div>
+              <p className="text-sm font-semibold text-[#9ba9ff]">Más volumen o un flujo distinto</p>
+              <h3 className="mt-3 max-w-3xl text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] sm:text-4xl">
+                ¿Tu proceso no cabe en un plan? Lo diseñamos contigo.
+              </h3>
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-white/[0.72]">
+                Integraciones, reglas y operación según tu flujo.
+              </p>
+            </div>
+            <div className="flex flex-col items-start gap-4 lg:items-end">
+              <p className="text-sm font-medium text-white/[0.6]">Sin precio público · Alcance definido contigo</p>
+              <Button
+                className="h-12 w-full rounded-full bg-white px-6 font-semibold text-[#171827] shadow-none hover:bg-[#f1f3ff] active:scale-[0.98] sm:w-fit"
+                onClick={() => navigate("/register")}
+              >
+                Cuéntanos tu proceso
+                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+              </Button>
+            </div>
           </div>
-          <Button
-            variant="ghost"
-            className="h-11 w-fit flex-none justify-start rounded-full px-0 font-semibold text-primary hover:bg-transparent hover:text-primary/80"
-            onClick={() => navigate("/register")}
-          >
-            Cuéntanos tu proceso
-            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-          </Button>
         </div>
       </div>
     </section>

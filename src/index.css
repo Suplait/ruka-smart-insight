@@ -268,19 +268,57 @@
   background: #f8f9ff;
 }
 
-.integration-chip-mark {
+.integration-chip-product {
+  min-width: 8.5rem;
+  justify-content: center;
+}
+
+.integration-logo-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 7.5rem;
+  max-height: 2rem;
+  object-fit: contain;
+}
+
+.integration-logo-surface-dark {
   display: inline-flex;
-  height: 2rem;
-  min-width: 2rem;
+  min-height: 2.25rem;
   align-items: center;
   justify-content: center;
-  border-radius: 0.5rem;
-  background: #eef1ff;
-  padding-inline: 0.375rem;
-  color: hsl(var(--primary));
-  font-size: 0.6875rem;
-  font-weight: 750;
-  letter-spacing: -0.01em;
+  border-radius: 0.45rem;
+  background: #161a29;
+  padding: 0.4rem 0.6rem;
+}
+
+.integration-logo-surface-dark .integration-logo-image {
+  max-height: 1.3rem;
+}
+
+.integration-product-label {
+  color: #242735;
+  font-size: 0.875rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.integration-chip-generic {
+  border-color: #e1e4eb;
+  background: #f7f8fa;
+  color: #4f5565;
+  font-weight: 600;
+}
+
+.integration-chip-generic:hover {
+  border-color: #cdd2dc;
+  background: #f2f3f6;
+}
+
+.integration-chip-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: #737989;
 }
 
 @keyframes integrationRail {

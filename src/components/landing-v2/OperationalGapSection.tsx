@@ -81,7 +81,7 @@ export default function OperationalGapSection() {
 
     const interval = window.setInterval(() => {
       setActiveDestination((current) => (current + 1) % destinations.length);
-    }, 1500);
+    }, 2600);
 
     return () => window.clearInterval(interval);
   }, [reduceMotion]);
