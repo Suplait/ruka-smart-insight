@@ -4,7 +4,7 @@ import LandingV2 from "@/pages/LandingV2";
 
 export function renderLandingV2() {
   return renderToString(
-    <StaticRouter location="/v2">
+    <StaticRouter location="/">
       <LandingV2 />
     </StaticRouter>,
   );

@@ -13,7 +13,11 @@ const structuredData = {
         "@type": "ImageObject",
         url: "https://www.ruka.ai/logo.png",
       },
-      sameAs: ["https://www.linkedin.com/company/ruka-ai"],
+      sameAs: [
+        "https://www.linkedin.com/company/rukaai/",
+        "https://www.instagram.com/ruka__ai/",
+        "https://x.com/ruka__ai",
+      ],
     },
     {
       "@type": "WebSite",

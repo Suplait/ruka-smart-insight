@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from "@/components/theme-provider"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from "@/components/ui/toaster"
@@ -39,8 +39,9 @@ function App() {
       <ThemeProvider defaultTheme="light" storageKey="ruka-theme">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/v2" element={<LandingV2 />} />
+            <Route path="/" element={<LandingV2 />} />
+            <Route path="/v2" element={<Navigate to="/" replace />} />
+            <Route path="/home-anterior" element={<Index />} />
             <Route path="/restaurantes" element={<Restaurantes />} />
             <Route path="/hoteles" element={<Hoteles />} />
             <Route path="/retail" element={<Retail />} />

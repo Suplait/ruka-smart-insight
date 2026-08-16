@@ -45,23 +45,23 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link 
-                  to="/#value-showcase" 
+                  to="/#trabajo"
                   className="text-gray-600 hover:text-primary transition-colors font-light"
                 >
-                  Valor
+                  Trabajo
                 </Link>
               </li>
               <li>
                 <Link 
-                  to="/#features" 
+                  to="/#integraciones"
                   className="text-gray-600 hover:text-primary transition-colors font-light"
                 >
-                  Features
+                  Integraciones
                 </Link>
               </li>
               <li>
                 <Link 
-                  to="/#product-showcase" 
+                  to="/#demo"
                   className="text-gray-600 hover:text-primary transition-colors font-light"
                 >
                   Demo
@@ -119,7 +119,7 @@ export default function Footer() {
                   to="/register"
                   className="inline-flex items-center h-10 px-6 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-full transition-colors"
                 >
-                  Regístrate
+                  Agendar 20 min
                 </Link>
               </li>
             </ul>

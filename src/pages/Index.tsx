@@ -1,6 +1,7 @@
 
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
@@ -35,6 +36,11 @@ export default function Index() {
 
   return (
     <main className="min-h-screen">
+      <Helmet>
+        <title>Home anterior | Ruka.ai</title>
+        <meta name="robots" content="noindex, nofollow, noarchive" />
+        <meta name="googlebot" content="noindex, nofollow, noarchive" />
+      </Helmet>
       <Navbar />
       <Hero />
       <Partners />

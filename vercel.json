@@ -17,10 +17,25 @@
           "value": "1; mode=block"
         }
       ]
+    },
+    {
+      "source": "/home-anterior",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/v2/:path*",
+      "destination": "/",
+      "permanent": true
     }
   ],
   "rewrites": [
-    { "source": "/v2", "destination": "/v2/index.html" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }

@@ -1,4 +1,4 @@
-import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -32,7 +32,11 @@ const structuredData = {
       name: "Ruka.ai",
       url: seo.canonicalUrl,
       logo: { "@type": "ImageObject", url: "https://www.ruka.ai/logo.png" },
-      sameAs: ["https://www.linkedin.com/company/ruka-ai"],
+      sameAs: [
+        "https://www.linkedin.com/company/rukaai/",
+        "https://www.instagram.com/ruka__ai/",
+        "https://x.com/ruka__ai",
+      ],
     },
     {
       "@type": "WebSite",
@@ -117,9 +121,7 @@ const v2Html = withoutDefaultSeo
   .replace('<div id="root"></div>', `<div id="root">${prerenderedApp}</div>`)
   .replace("</head>", `${metadata}  </head>`);
 
-const outputDirectory = path.join(projectRoot, "dist", "v2");
-await mkdir(outputDirectory, { recursive: true });
-await writeFile(path.join(outputDirectory, "index.html"), v2Html, "utf8");
+await writeFile(distIndexPath, v2Html, "utf8");
 await rm(ssrDirectory, { recursive: true, force: true });
 
-console.log("Generated dist/v2/index.html with prerendered content and crawler metadata.");
+console.log("Generated dist/index.html with the prerendered Landing V2 home and crawler metadata.");

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import {
   ArrowDown,
@@ -223,7 +223,21 @@ const faqItems = landingV2Seo.faq;
 
 export default function LandingV2() {
   const navigate = useNavigate();
+  const location = useLocation();
   const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (!location.hash) {
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: "smooth" });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [location.hash]);
 
   return (
     <main className="min-h-[100dvh] bg-[#fbfcff] text-[#171827]">
@@ -232,8 +246,8 @@ export default function LandingV2() {
 
       <Navbar
         sectionLinks={navItems}
-        sectionPath="/v2"
-        logoPath="/v2"
+        sectionPath="/"
+        logoPath="/"
         primaryAction={{ label: CTA_LABEL, path: "/register" }}
         showLogin={false}
       />
@@ -919,7 +933,7 @@ function FAQAndCTASection({ navigate }: { navigate: (path: string) => void }) {
         </motion.div>
 
         <motion.footer className="mt-10 flex flex-col gap-5 border-t border-[#dce3f2] pt-7 text-sm text-[#6a7184] sm:flex-row sm:items-center sm:justify-between" initial={reduceMotion ? false : { opacity: 0.7 }} whileInView={reduceMotion ? undefined : { opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.4 }}>
-          <Link to="/v2" aria-label="Volver al inicio de Ruka">
+          <Link to="/" aria-label="Volver al inicio de Ruka">
             <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto" />
           </Link>
           <div className="flex flex-wrap gap-x-5 gap-y-2">

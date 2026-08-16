@@ -2,12 +2,11 @@
   "title": "Agentes IA para automatizar procesos operativos | Ruka",
   "description": "Ruka conecta tu SII, ERP, POS, bancos y otras plataformas para registrar compras, ejecutar conciliaciones y mantener tus sistemas actualizados.",
   "canonicalUrl": "https://www.ruka.ai/",
-  "stagingUrl": "https://www.ruka.ai/v2",
   "imageUrl": "https://www.ruka.ai/ruka-agentes-ia-og.png",
   "imageAlt": "Ruka conecta los sistemas de una empresa y ejecuta el trabajo operativo entre ellos",
   "siteName": "Ruka.ai",
   "locale": "es_CL",
-  "robots": "noindex, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
   "faq": [
     {
       "question": "¿Tengo que cambiar mi ERP, POS o sistema actual?",

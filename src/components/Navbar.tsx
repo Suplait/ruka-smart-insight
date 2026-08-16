@@ -1,692 +1,151 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { LogIn, ArrowRight, UtensilsCrossed, Menu, Hotel, Zap, Bot, Receipt, Package, Store } from "lucide-react";
-import SubdomainModal from "./SubdomainModal";
+import { ArrowRight, LogIn, Menu } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import SubdomainModal from "./SubdomainModal";
 
 export type NavbarSectionLink = {
   id: string;
   label: string;
 };
 
+const defaultSectionLinks: readonly NavbarSectionLink[] = [
+  { label: "Trabajo", id: "trabajo" },
+  { label: "Demo", id: "demo" },
+  { label: "Integraciones", id: "integraciones" },
+  { label: "Precios", id: "precios" },
+];
+
 type NavbarProps = {
   sectionLinks?: readonly NavbarSectionLink[];
   sectionPath?: string;
   logoPath?: string;
-  primaryAction?: {
-    label: string;
-    path: string;
-  };
+  primaryAction?: { label: string; path: string };
   showLogin?: boolean;
 };
 
 export default function Navbar({
-  sectionLinks,
+  sectionLinks = defaultSectionLinks,
   sectionPath = "/",
   logoPath = "/",
-  primaryAction = { label: "Regístrate", path: "/register" },
-  showLogin = true,
+  primaryAction = { label: "Agendar 20 min", path: "/register" },
+  showLogin = false,
 }: NavbarProps) {
   const [showSubdomainModal, setShowSubdomainModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const hasSectionLinks = Boolean(sectionLinks?.length);
 
   const scrollToSection = (id: string) => {
-    const targetPath = hasSectionLinks ? sectionPath : "/";
-
-    if (location.pathname.toLowerCase() !== targetPath.toLowerCase()) {
-      navigate(`${targetPath}#${id}`);
+    if (location.pathname.toLowerCase() !== sectionPath.toLowerCase()) {
+      navigate(`${sectionPath}#${id}`);
     } else {
       navigate(`#${id}`, { replace: true });
-      const element = document.getElementById(id);
-      element?.scrollIntoView({
-        behavior: "smooth",
-      });
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     }
     setIsOpen(false);
   };
 
-  const MobileMenu = () => (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="md:hidden" aria-label="Abrir menú">
-          <Menu className="h-6 w-6" />
-        </Button>
-      </SheetTrigger>
-      <SheetContent side="right" className="w-[340px] max-w-[92vw] sm:w-[350px]">
-        <SheetTitle className="sr-only">Navegación principal</SheetTitle>
-        <SheetDescription className="sr-only">Accede a las secciones principales y al siguiente paso.</SheetDescription>
-        <nav className="flex flex-col gap-4">
-          {sectionLinks ? (
-            <div className="space-y-1 pt-4">
-              <p className="px-2 pb-2 text-xs text-muted-foreground">Secciones</p>
-              {sectionLinks.map(({ id, label }) => (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => scrollToSection(id)}
-                  className="w-full rounded-lg px-2 py-3 text-left text-lg font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          ) : (
-            <>
-              <div className="space-y-2">
-                <p className="text-xs text-muted-foreground px-2">Productos</p>
-            {location.pathname === "/" ? (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Link
-                      to="/"
-                      className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <Bot className="h-4 w-4" />
-                      <span>Gestión y Analítica</span>
-                    </Link>
-                  </TooltipTrigger>
-                  <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                    Estás aquí
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            ) : (
-              <Link
-                to="/"
-                className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
-                onClick={() => setIsOpen(false)}
-              >
-                <Bot className="h-4 w-4" />
-                <span>Gestión y Analítica</span>
-              </Link>
-            )}
-            {location.pathname === "/productos/cuentas-por-pagar" ? (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Link
-                      to="/productos/cuentas-por-pagar"
-                      className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <Receipt className="h-4 w-4" />
-                      <span>Cuentas por Pagar</span>
-                    </Link>
-                  </TooltipTrigger>
-                  <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                    Estás aquí
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            ) : (
-              <Link
-                to="/productos/cuentas-por-pagar"
-                className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
-                onClick={() => setIsOpen(false)}
-              >
-                <Receipt className="h-4 w-4" />
-                <span>Cuentas por Pagar</span>
-              </Link>
-            )}
-            {location.pathname === "/productos/panel-control" ? (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Link
-                      to="/productos/panel-control"
-                      className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <Zap className="h-4 w-4" />
-                      <span>Panel de Control</span>
-                    </Link>
-                  </TooltipTrigger>
-                  <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                    Estás aquí
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            ) : (
-              <Link
-                to="/productos/panel-control"
-                className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
-                onClick={() => setIsOpen(false)}
-              >
-                <Zap className="h-4 w-4" />
-                <span>Panel de Control</span>
-              </Link>
-            )}
-            {location.pathname === "/productos/stock" ? (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Link
-                      to="/productos/stock"
-                      className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <Package className="h-4 w-4" />
-                      <span>Gestión de Inventario</span>
-                    </Link>
-                  </TooltipTrigger>
-                  <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                    Estás aquí
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            ) : (
-              <Link
-                to="/productos/stock"
-                className="flex items-center space-x-2 text-left text-base font-medium pl-4 pr-2"
-                onClick={() => setIsOpen(false)}
-              >
-                <Package className="h-4 w-4" />
-                <span>Gestión de Inventario</span>
-              </Link>
-            )}
-          </div>
-          <button
-            onClick={() => scrollToSection("pricing")}
-            className="flex items-center space-x-2 text-left text-lg font-medium"
-          >
-            Precio
-          </button>
-          <button
-            onClick={() => scrollToSection("guarantee")}
-            className="flex items-center space-x-2 text-left text-lg font-medium"
-          >
-            Garantía
-          </button>
-          <button
-            onClick={() => scrollToSection("testimonials")}
-            className="flex items-center space-x-2 text-left text-lg font-medium"
-          >
-            Testimonios
-          </button>
-              <div className="space-y-2">
-                <p className="text-xs text-muted-foreground px-2">Industrias</p>
-                <Link
-                  to="/restaurantes"
-                  className="flex items-center space-x-2 text-left text-base font-medium pl-4"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <UtensilsCrossed className="h-4 w-4" />
-                  <span>Restaurantes</span>
-                </Link>
-                <Link
-                  to="/hoteles"
-                  className="flex items-center space-x-2 text-left text-base font-medium pl-4"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <Hotel className="h-4 w-4" />
-                  <span>Hoteles</span>
-                </Link>
-                <Link
-                  to="/retail"
-                  className="flex items-center space-x-2 text-left text-base font-medium pl-4"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <Store className="h-4 w-4" />
-                  <span>Retail</span>
-                </Link>
-              </div>
-            </>
-          )}
-          <div className="flex flex-col gap-2 mt-4">
-            {showLogin && (
-              <Button
-                variant="outline"
-                className="w-full justify-start gap-2"
-                onClick={() => {
-                  setShowSubdomainModal(true);
-                  setIsOpen(false);
-                }}
-              >
-                Iniciar Sesión <LogIn className="w-4 h-4" />
-              </Button>
-            )}
-            <Button
-              className="h-11 w-full justify-center gap-2 rounded-full bg-primary px-4 text-sm font-medium hover:bg-primary/90"
-              onClick={() => {
-                navigate(primaryAction.path);
-                setIsOpen(false);
-              }}
-            >
-              {primaryAction.label} <ArrowRight className="w-4 h-4" />
-            </Button>
-          </div>
-        </nav>
-      </SheetContent>
-    </Sheet>
-  );
+  const runPrimaryAction = () => {
+    navigate(primaryAction.path);
+    setIsOpen(false);
+  };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 md:top-6 md:left-6 md:right-6 z-50 bg-white/70 backdrop-blur-xl border-b md:border border-gray-200/30 md:rounded-2xl">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <Link to={logoPath}>
-              <img src="/logo.png" alt="Ruka.ai" className="h-8 hover:opacity-80 transition-opacity" />
-            </Link>
-          </div>
+    <nav
+      aria-label="Navegación principal"
+      className="fixed left-0 right-0 top-0 z-50 border-b border-gray-200/30 bg-white/70 backdrop-blur-xl md:left-6 md:right-6 md:top-6 md:rounded-2xl md:border"
+    >
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          <Link to={logoPath} aria-label="Ir al inicio de Ruka">
+            <img src="/logo.png" alt="Ruka.ai" className="h-8 transition-opacity hover:opacity-80" />
+          </Link>
 
-          <div className="hidden md:flex items-center space-x-8">
-            {sectionLinks ? (
-              sectionLinks.map(({ id, label }) => (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => scrollToSection(id)}
-                  className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
-                >
-                  {label}
-                </button>
-              ))
-            ) : (
-              <>
-                <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent border-0">
-                    Productos
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="w-[280px] p-4 bg-white rounded-lg shadow-lg border">
-                      <p className="text-sm font-medium text-muted-foreground mb-3 px-2">Nuestros Productos</p>
-                      <ul className="grid gap-2">
-                        {location.pathname === "/" ? (
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <li>
-                                  <NavigationMenuLink asChild>
-                                    <Link
-                                      to="/"
-                                      className={cn(
-                                        "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                        "bg-card hover:bg-accent hover:text-accent-foreground",
-                                        "border border-transparent hover:border-border",
-                                      )}
-                                    >
-                                      <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                        <Bot className="h-5 w-5 text-primary" />
-                                      </div>
-                                      <div className="grid gap-1 flex-1">
-                                        <div className="text-sm font-medium">
-                                          Gestión y Analítica
-                                        </div>
-                                        <div className="line-clamp-2 text-xs text-muted-foreground">
-                                          Agentes con IA para automatizar tu gestión de compras
-                                        </div>
-                                      </div>
-                                    </Link>
-                                  </NavigationMenuLink>
-                                </li>
-                              </TooltipTrigger>
-                              <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                                Estás aquí
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        ) : (
-                          <li>
-                            <NavigationMenuLink asChild>
-                              <Link
-                                to="/"
-                                className={cn(
-                                  "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                  "bg-card hover:bg-accent hover:text-accent-foreground",
-                                  "border border-transparent hover:border-border",
-                                )}
-                              >
-                                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                  <Bot className="h-5 w-5 text-primary" />
-                                </div>
-                                <div className="grid gap-1 flex-1">
-                                  <div className="text-sm font-medium">
-                                    Gestión y Analítica
-                                  </div>
-                                  <div className="line-clamp-2 text-xs text-muted-foreground">
-                                    Agentes con IA para automatizar tu gestión de compras
-                                  </div>
-                                </div>
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                        )}
-                        {location.pathname === "/productos/cuentas-por-pagar" ? (
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <li>
-                                  <NavigationMenuLink asChild>
-                                    <Link
-                                      to="/productos/cuentas-por-pagar"
-                                      className={cn(
-                                        "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                        "bg-card hover:bg-accent hover:text-accent-foreground",
-                                        "border border-transparent hover:border-border",
-                                      )}
-                                    >
-                                      <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                        <Receipt className="h-5 w-5 text-primary" />
-                                      </div>
-                                      <div className="grid gap-1 flex-1">
-                                        <div className="text-sm font-medium">
-                                          Cuentas por Pagar
-                                        </div>
-                                        <div className="line-clamp-2 text-xs text-muted-foreground">
-                                          Automatiza pagos, gestiona recepción y genera planillas bancarias
-                                        </div>
-                                      </div>
-                                    </Link>
-                                  </NavigationMenuLink>
-                                </li>
-                              </TooltipTrigger>
-                              <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                                Estás aquí
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        ) : (
-                          <li>
-                            <NavigationMenuLink asChild>
-                              <Link
-                                to="/productos/cuentas-por-pagar"
-                                className={cn(
-                                  "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                  "bg-card hover:bg-accent hover:text-accent-foreground",
-                                  "border border-transparent hover:border-border",
-                                )}
-                              >
-                                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                  <Receipt className="h-5 w-5 text-primary" />
-                                </div>
-                                <div className="grid gap-1 flex-1">
-                                  <div className="text-sm font-medium">
-                                    Cuentas por Pagar
-                                  </div>
-                                  <div className="line-clamp-2 text-xs text-muted-foreground">
-                                    Automatiza pagos, gestiona recepción y genera planillas bancarias
-                                  </div>
-                                </div>
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                        )}
-                        {location.pathname === "/productos/panel-control" ? (
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <li>
-                                  <NavigationMenuLink asChild>
-                                    <Link
-                                      to="/productos/panel-control"
-                                      className={cn(
-                                        "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                        "bg-card hover:bg-accent hover:text-accent-foreground",
-                                        "border border-transparent hover:border-border",
-                                      )}
-                                    >
-                                      <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                        <Zap className="h-5 w-5 text-primary" />
-                                      </div>
-                                      <div className="grid gap-1 flex-1">
-                                        <div className="text-sm font-medium">
-                                          Panel de Control
-                                        </div>
-                                        <div className="line-clamp-2 text-xs text-muted-foreground">
-                                          Decisiones inteligentes en tiempo real
-                                        </div>
-                                      </div>
-                                    </Link>
-                                  </NavigationMenuLink>
-                                </li>
-                              </TooltipTrigger>
-                              <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                                Estás aquí
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        ) : (
-                          <li>
-                            <NavigationMenuLink asChild>
-                              <Link
-                                to="/productos/panel-control"
-                                className={cn(
-                                  "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                  "bg-card hover:bg-accent hover:text-accent-foreground",
-                                  "border border-transparent hover:border-border",
-                                )}
-                              >
-                                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                  <Zap className="h-5 w-5 text-primary" />
-                                </div>
-                                <div className="grid gap-1 flex-1">
-                                  <div className="text-sm font-medium">
-                                    Panel de Control
-                                  </div>
-                                  <div className="line-clamp-2 text-xs text-muted-foreground">
-                                    Decisiones inteligentes en tiempo real
-                                  </div>
-                                </div>
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                        )}
-                        {location.pathname === "/productos/stock" ? (
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <li>
-                                  <NavigationMenuLink asChild>
-                                    <Link
-                                      to="/productos/stock"
-                                      className={cn(
-                                        "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                        "bg-card hover:bg-accent hover:text-accent-foreground",
-                                        "border border-transparent hover:border-border",
-                                      )}
-                                    >
-                                      <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                        <Package className="h-5 w-5 text-primary" />
-                                      </div>
-                                      <div className="grid gap-1 flex-1">
-                                        <div className="text-sm font-medium">
-                                          Gestión de Inventario
-                                        </div>
-                                        <div className="line-clamp-2 text-xs text-muted-foreground">
-                                          Inventario automático, múltiples bodegas y control de traspasos
-                                        </div>
-                                      </div>
-                                    </Link>
-                                  </NavigationMenuLink>
-                                </li>
-                              </TooltipTrigger>
-                              <TooltipContent side="right" className="bg-gray-900 text-white font-semibold">
-                                Estás aquí
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        ) : (
-                          <li>
-                            <NavigationMenuLink asChild>
-                              <Link
-                                to="/productos/stock"
-                                className={cn(
-                                  "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                  "bg-card hover:bg-accent hover:text-accent-foreground",
-                                  "border border-transparent hover:border-border",
-                                )}
-                              >
-                                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                  <Package className="h-5 w-5 text-primary" />
-                                </div>
-                                <div className="grid gap-1 flex-1">
-                                  <div className="text-sm font-medium">
-                                    Gestión de Inventario
-                                  </div>
-                                  <div className="line-clamp-2 text-xs text-muted-foreground">
-                                    Inventario automático, múltiples bodegas y control de traspasos
-                                  </div>
-                                </div>
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                        )}
-
-                        <li className="px-2 py-1">
-                          <div className="text-xs text-muted-foreground italic">Más productos próximamente...</div>
-                        </li>
-                      </ul>
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-                </NavigationMenu>
-
-            <button
-              onClick={() => scrollToSection("pricing")}
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Pricing
-            </button>
-            <button
-              onClick={() => scrollToSection("guarantee")}
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Garantía
-            </button>
-            <button
-              onClick={() => scrollToSection("testimonials")}
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Testimonios
-            </button>
-
-                <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent border-0">
-                    Industrias
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="w-[280px] p-4 bg-white rounded-lg shadow-lg border">
-                      <p className="text-sm font-medium text-muted-foreground mb-3 px-2">Soluciones por Industria</p>
-                      <ul className="grid gap-2">
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link
-                              to="/restaurantes"
-                              className={cn(
-                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                "bg-card hover:bg-accent hover:text-accent-foreground",
-                                "border border-transparent hover:border-border",
-                              )}
-                            >
-                              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                <UtensilsCrossed className="h-5 w-5 text-primary" />
-                              </div>
-                              <div className="grid gap-1">
-                                <div className="text-sm font-medium">Restaurantes</div>
-                                <div className="line-clamp-2 text-xs text-muted-foreground">
-                                  Automatiza el registro, seguimiento de precios y monitoreo de foodcost
-                                </div>
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link
-                              to="/hoteles"
-                              className={cn(
-                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                "bg-card hover:bg-accent hover:text-accent-foreground",
-                                "border border-transparent hover:border-border",
-                              )}
-                            >
-                              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                <Hotel className="h-5 w-5 text-primary" />
-                              </div>
-                              <div className="grid gap-1">
-                                <div className="text-sm font-medium">Hoteles</div>
-                                <div className="line-clamp-2 text-xs text-muted-foreground">
-                                  Optimiza tus costos operativos y gestiona tus proveedores eficientemente
-                                </div>
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link
-                              to="/retail"
-                              className={cn(
-                                "flex items-center gap-3 rounded-lg p-3 leading-none no-underline outline-none transition-colors",
-                                "bg-card hover:bg-accent hover:text-accent-foreground",
-                                "border border-transparent hover:border-border",
-                              )}
-                            >
-                              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                                <Store className="h-5 w-5 text-primary" />
-                              </div>
-                              <div className="grid gap-1">
-                                <div className="text-sm font-medium">Retail</div>
-                                <div className="line-clamp-2 text-xs text-muted-foreground">
-                                  Automatiza compras, facturas y control de inventario sin digitación
-                                </div>
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                      </ul>
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-                </NavigationMenu>
-              </>
-            )}
+          <div className="hidden items-center gap-8 md:flex">
+            {sectionLinks.map(({ id, label }) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => scrollToSection(id)}
+                className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+              >
+                {label}
+              </button>
+            ))}
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden items-center gap-3 md:flex">
               {showLogin && (
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-10 px-4 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100/50 rounded-full"
+                  className="h-10 rounded-full px-4 text-sm font-medium text-gray-600 hover:bg-gray-100/50 hover:text-gray-900"
                   onClick={() => setShowSubdomainModal(true)}
                 >
-                  Iniciar Sesión
+                  Iniciar sesión
                 </Button>
               )}
               <Button
                 size="sm"
-                className="h-10 px-6 text-sm font-medium bg-primary hover:bg-primary/90 rounded-full"
-                onClick={() => navigate(primaryAction.path)}
+                className="h-10 rounded-full bg-primary px-6 text-sm font-medium hover:bg-primary/90"
+                onClick={runPrimaryAction}
               >
                 {primaryAction.label}
               </Button>
             </div>
-            <MobileMenu />
+
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="md:hidden" aria-label="Abrir menú">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[340px] max-w-[92vw] sm:w-[350px]">
+                <SheetTitle className="sr-only">Navegación principal</SheetTitle>
+                <SheetDescription className="sr-only">
+                  Accede a las secciones principales de Ruka y agenda una conversación.
+                </SheetDescription>
+                <div className="flex h-full flex-col pt-8">
+                  <div className="space-y-1">
+                    <p className="px-2 pb-2 text-xs text-muted-foreground">Secciones</p>
+                    {sectionLinks.map(({ id, label }) => (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => scrollToSection(id)}
+                        className="w-full rounded-lg px-2 py-3 text-left text-lg font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="mt-auto flex flex-col gap-2 pb-4">
+                    {showLogin && (
+                      <Button
+                        variant="outline"
+                        className="h-11 w-full justify-start gap-2 rounded-full"
+                        onClick={() => {
+                          setShowSubdomainModal(true);
+                          setIsOpen(false);
+                        }}
+                      >
+                        Iniciar sesión <LogIn className="h-4 w-4" />
+                      </Button>
+                    )}
+                    <Button
+                      className="h-11 w-full justify-center gap-2 rounded-full bg-primary px-4 text-sm font-medium hover:bg-primary/90"
+                      onClick={runPrimaryAction}
+                    >
+                      {primaryAction.label} <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
