@@ -1,49 +1,87 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
+  BadgeAlert,
   Bot,
   ChevronRight,
-  PackageCheck,
+  CreditCard,
+  Layers3,
   ReceiptText,
   RefreshCw,
+  TrendingUp,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 type Workflow = {
+  id: string;
   icon: LucideIcon;
   title: string;
+  navCopy: string;
   copy: string;
   steps: readonly string[];
   video: string;
 };
 
-const workflows = {
-  invoices: {
+const workflows: readonly Workflow[] = [
+  {
+    id: "facturas",
     icon: ReceiptText,
     title: "Facturas de proveedores",
-    copy: "Deja de ingresar y ordenar facturas manualmente.",
-    steps: ["Recibir", "Leer", "Homologar", "Actualizar"],
+    navCopy: "Leer y registrar",
+    copy: "Ruka lee cada factura, ordena sus datos y la registra donde corresponde, venga del SII, XML, PDF o papel.",
+    steps: ["Recibir", "Leer", "Registrar", "Actualizar"],
     video: "/robot_facturas.mp4",
   },
-  reconciliations: {
-    icon: RefreshCw,
-    title: "Conciliaciones",
-    copy: "Deja de cruzar información entre tus sistemas.",
-    steps: ["Cruzar", "Conciliar", "Detectar", "Escalar"],
+  {
+    id: "homologacion",
+    icon: Layers3,
+    title: "Homologación de insumos",
+    navCopy: "Unificar nombres y categorías",
+    copy: "Ruka reconoce nombres distintos para el mismo ítem, los agrupa y mantiene limpio tu maestro de insumos.",
+    steps: ["Detectar", "Comparar", "Homologar", "Mantener"],
+    video: "/robot_cajas.mp4",
+  },
+  {
+    id: "monitoreo",
+    icon: TrendingUp,
+    title: "Monitoreo de precios",
+    navCopy: "Revisar todas las variaciones",
+    copy: "Ruka revisa los precios y las variaciones de todos tus insumos, todos los días.",
+    steps: ["Consolidar", "Comparar", "Monitorear", "Detectar"],
+    video: "/robot_grafico2.mp4",
+  },
+  {
+    id: "alertas",
+    icon: BadgeAlert,
+    title: "Alertas y anomalías",
+    navCopy: "Detectar lo que se sale de regla",
+    copy: "Ruka avisa cuando un precio se dispara, cambia el proveedor o aparece una compra fuera de tus reglas.",
+    steps: ["Vigilar", "Detectar", "Alertar", "Actuar"],
+    video: "/robot_alerta.mp4",
+  },
+  {
+    id: "cuentas-por-pagar",
+    icon: CreditCard,
+    title: "Cuentas por pagar",
+    navCopy: "Cruzar y preparar pagos",
+    copy: "Ruka cruza facturas con órdenes de compra y recepciones, ordena vencimientos y prepara la nómina bancaria.",
+    steps: ["Cruzar", "Validar", "Preparar", "Exportar"],
     video: "/robot_dinero.mp4",
   },
-  inventory: {
-    icon: PackageCheck,
-    title: "Costos e inventario",
-    copy: "Deja de mantener costos y stock manualmente.",
-    steps: ["Actualizar", "Comparar", "Alertar"],
+  {
+    id: "actualizacion",
+    icon: RefreshCw,
+    title: "Actualización entre sistemas",
+    navCopy: "Registrar en otras plataformas",
+    copy: "Ruka registra compras y actualiza stock, costos o insumos en tu ERP, POS, inventario, recetario u otra herramienta.",
+    steps: ["Preparar", "Conectar", "Registrar", "Confirmar"],
     video: "/robot_inventario.mp4",
   },
-} satisfies Record<string, Workflow>;
+] as const;
 
 type WorkSectionProps = {
   reduceMotion: boolean | null;
@@ -52,70 +90,76 @@ type WorkSectionProps = {
 };
 
 export function WorkSection({ reduceMotion, ctaLabel, onPrimaryAction }: WorkSectionProps) {
-  const invoices = workflows.invoices;
-  const reconciliations = workflows.reconciliations;
-  const inventory = workflows.inventory;
+  const [activeWorkflow, setActiveWorkflow] = useState(0);
+  const selectedWorkflow = workflows[activeWorkflow];
 
   return (
     <section id="trabajo" className="scroll-mt-24 bg-white py-20 sm:py-28 lg:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <h2
-          id="work-section-title"
-          className="max-w-3xl text-balance text-4xl font-semibold leading-[1.06] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:text-6xl"
-        >
-          Trabajo que puedes sacar de tu equipo.
-        </h2>
+        <div className="max-w-3xl">
+          <h2
+            id="work-section-title"
+            className="text-balance text-4xl font-semibold leading-[1.06] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:text-6xl"
+          >
+            Trabajo que puedes sacar de tu equipo.
+          </h2>
+          <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555d70]">
+            Desde que llega una compra hasta que queda registrada, monitoreada o lista para pagar.
+          </p>
+        </div>
 
         <motion.div
           aria-labelledby="work-section-title"
-          className="mt-12 overflow-hidden rounded-[14px] border border-[#dce1eb] bg-[#f7f8fc] sm:mt-14"
+          className="mt-12 overflow-hidden rounded-[14px] border border-[#dce1eb] bg-white sm:mt-14"
           initial={reduceMotion ? false : { opacity: 0.92, y: 18 }}
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.08 }}
           transition={{ duration: 0.58, ease: easeOut }}
         >
-          <article className="grid min-h-[34rem] bg-[#eef1fb] lg:grid-cols-[0.82fr_1.18fr]">
-            <WorkflowCopy workflow={invoices} tone="dark" featured />
-            <WorkflowMedia
-              workflow={invoices}
-              reduceMotion={reduceMotion}
-              blendTopEdge
-              className="min-h-[22rem] lg:min-h-[34rem]"
-            />
-          </article>
+          <div className="lg:grid lg:grid-cols-12">
+            <nav
+              className="grid grid-cols-2 gap-px border-b border-[#dce1eb] bg-[#dce1eb] lg:col-span-3 lg:grid-cols-1 lg:border-b-0 lg:border-r"
+              aria-label="Trabajos que Ruka puede automatizar"
+            >
+              {workflows.map((workflow, index) => (
+                <WorkflowSelector
+                  key={workflow.id}
+                  workflow={workflow}
+                  selected={activeWorkflow === index}
+                  onSelect={() => setActiveWorkflow(index)}
+                />
+              ))}
+            </nav>
 
-          <div className="grid border-t border-[#dce1eb] lg:grid-cols-12">
-            <article className="grid min-h-[29rem] bg-white sm:grid-cols-[0.92fr_1.08fr] lg:col-span-7">
-              <WorkflowCopy workflow={reconciliations} tone="light" />
-              <WorkflowMedia
-                workflow={reconciliations}
-                reduceMotion={reduceMotion}
-                className="min-h-[20rem] border-t border-[#dce1eb] sm:min-h-full sm:border-l sm:border-t-0"
-              />
-            </article>
-
-            <article className="grid min-h-[29rem] border-t border-[#dce1eb] bg-[#edf0ff] lg:col-span-5 lg:border-l lg:border-t-0">
-              <WorkflowCopy workflow={inventory} tone="tinted" />
-              <WorkflowMedia
-                workflow={inventory}
-                reduceMotion={reduceMotion}
-                className="min-h-[19rem] border-t border-[#d8def3]"
-              />
-            </article>
+            <div className="min-w-0 lg:col-span-9" id="workflow-panel" aria-live="polite">
+              <AnimatePresence initial={false} mode="wait">
+                <motion.article
+                  key={selectedWorkflow.id}
+                  className="grid min-h-[38rem] md:grid-cols-5"
+                  initial={reduceMotion ? false : { opacity: 0.7, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={reduceMotion ? undefined : { opacity: 0, x: -8 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.24, ease: easeOut }}
+                >
+                  <WorkflowDetail workflow={selectedWorkflow} />
+                  <WorkflowVideo workflow={selectedWorkflow} reduceMotion={reduceMotion} />
+                </motion.article>
+              </AnimatePresence>
+            </div>
           </div>
 
-          <aside className="grid min-w-0 items-center gap-6 border-t border-primary/70 bg-primary px-6 py-7 text-white sm:px-8 sm:py-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-x-10 lg:gap-y-5 xl:grid-cols-[0.8fr_1.25fr_auto] xl:gap-10">
-            <div className="flex min-w-0 items-center gap-4 lg:row-span-2 xl:row-auto">
-              <Bot className="h-7 w-7 flex-none" strokeWidth={1.8} aria-hidden="true" />
-              <h3 className="min-w-0 text-balance text-2xl font-semibold leading-tight tracking-[-0.025em] sm:text-3xl">
+          <aside className="grid min-w-0 items-center gap-5 border-t border-[#dce1eb] bg-[#fbfcfe] px-6 py-7 sm:px-8 lg:grid-cols-[0.85fr_1.2fr_auto] lg:gap-8">
+            <div className="flex min-w-0 items-center gap-4">
+              <Bot className="h-7 w-7 flex-none text-primary" strokeWidth={1.8} aria-hidden="true" />
+              <h3 className="min-w-0 text-balance text-2xl font-semibold leading-tight tracking-[-0.025em] text-[#171827]">
                 ¿Otro proceso manual?
               </h3>
             </div>
-            <p className="min-w-0 max-w-2xl text-base leading-7 text-white sm:text-lg">
+            <p className="min-w-0 max-w-2xl text-base leading-7 text-[#555d70]">
               Creamos un operador para tu flujo, sobre los sistemas y reglas que ya usa tu empresa.
             </p>
             <Button
-              className="h-12 min-w-0 w-full whitespace-nowrap rounded-full bg-white px-4 text-sm font-semibold text-primary shadow-none hover:bg-white/[0.92] active:scale-[0.98] sm:w-fit sm:px-6 sm:text-base lg:justify-self-start"
+              className="h-12 min-w-0 w-full whitespace-nowrap rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none hover:bg-primary/90 active:scale-[0.98] sm:w-fit sm:px-6 sm:text-base"
               onClick={onPrimaryAction}
             >
               <span className="min-[360px]:hidden">Encontrar mi operador</span>
@@ -129,66 +173,83 @@ export function WorkSection({ reduceMotion, ctaLabel, onPrimaryAction }: WorkSec
   );
 }
 
-function WorkflowCopy({
+function WorkflowSelector({
   workflow,
-  tone,
-  featured = false,
+  selected,
+  onSelect,
 }: {
   workflow: Workflow;
-  tone: "dark" | "light" | "tinted";
-  featured?: boolean;
+  selected: boolean;
+  onSelect: () => void;
 }) {
   const Icon = workflow.icon;
-  const isDark = tone === "dark";
 
   return (
-    <div
-      className={`flex min-w-0 flex-col justify-between p-6 sm:p-8 ${featured ? "lg:p-10 xl:p-12" : "lg:p-8"} ${
-        isDark ? "bg-[#171a29] text-white" : tone === "tinted" ? "bg-[#edf0ff] text-[#171827]" : "bg-white text-[#171827]"
+    <button
+      type="button"
+      aria-pressed={selected}
+      aria-controls="workflow-panel"
+      className={`group min-h-[6rem] min-w-0 px-4 py-4 text-left transition-[background-color,color] duration-200 focus-visible:relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset sm:px-5 lg:min-h-[6.35rem] lg:px-6 ${
+        selected ? "bg-primary text-white" : "bg-[#f8f9fc] text-[#202333] hover:bg-white"
       }`}
+      onClick={onSelect}
+      onMouseEnter={onSelect}
+      onFocus={onSelect}
     >
+      <span className="flex min-w-0 items-start gap-3">
+        <Icon
+          className={`mt-0.5 h-5 w-5 flex-none ${selected ? "text-white" : "text-primary"}`}
+          strokeWidth={1.8}
+          aria-hidden="true"
+        />
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-semibold leading-5 sm:text-[15px]">{workflow.title}</span>
+          <span className={`mt-1 block text-xs leading-[1.45] sm:text-[13px] ${selected ? "text-white/[0.78]" : "text-[#6a7184]"}`}>
+            {workflow.navCopy}
+          </span>
+        </span>
+        <ChevronRight
+          className={`mt-1 hidden h-4 w-4 flex-none transition-transform duration-200 lg:block ${
+            selected ? "translate-x-0 text-white" : "-translate-x-1 text-[#a3aabd] group-hover:translate-x-0"
+          }`}
+          aria-hidden="true"
+        />
+      </span>
+    </button>
+  );
+}
+
+function WorkflowDetail({ workflow }: { workflow: Workflow }) {
+  const Icon = workflow.icon;
+
+  return (
+    <div className="flex min-w-0 flex-col justify-between bg-[#171a29] p-6 text-white sm:p-8 md:col-span-2 lg:p-10">
       <div>
-        <div className="flex items-center gap-3">
-          <Icon
-            className={`h-6 w-6 flex-none ${isDark ? "text-[#8ea0ff]" : "text-primary"}`}
-            strokeWidth={1.8}
-            aria-hidden="true"
-          />
-          <h3
-            className={`text-balance font-semibold leading-[1.1] tracking-[-0.03em] ${
-              featured ? "text-3xl sm:text-4xl xl:text-[2.7rem]" : "text-2xl sm:text-3xl"
-            }`}
-          >
+        <div className="flex items-start gap-3">
+          <Icon className="mt-1 h-6 w-6 flex-none text-[#8ea0ff]" strokeWidth={1.8} aria-hidden="true" />
+          <h3 className="text-balance text-3xl font-semibold leading-[1.08] tracking-[-0.03em] sm:text-4xl">
             {workflow.title}
           </h3>
         </div>
-        <p className={`mt-5 max-w-md text-lg leading-8 ${isDark ? "text-white/[0.68]" : "text-[#555d70]"}`}>
-          {workflow.copy}
-        </p>
+        <p className="mt-6 max-w-md text-pretty text-lg leading-8 text-white/[0.76]">{workflow.copy}</p>
       </div>
 
-      <WorkflowSteps steps={workflow.steps} dark={isDark} className={featured ? "mt-16" : "mt-12"} />
+      <WorkflowSteps steps={workflow.steps} />
     </div>
   );
 }
 
-function WorkflowSteps({ steps, dark, className }: { steps: readonly string[]; dark: boolean; className?: string }) {
+function WorkflowSteps({ steps }: { steps: readonly string[] }) {
   return (
     <div
-      className={`flex flex-wrap items-center gap-x-1 gap-y-3 text-[13px] font-semibold ${
-        dark ? "text-white/[0.86]" : "text-[#303547]"
-      } ${className ?? ""}`}
+      className="mt-14 flex flex-wrap items-center gap-x-1 gap-y-3 text-[13px] font-semibold text-white/[0.88]"
       aria-label={steps.join(", ")}
     >
       {steps.map((step, index) => (
         <span key={step} className="inline-flex items-center gap-1 whitespace-nowrap">
           <span>{step}</span>
           {index < steps.length - 1 && (
-            <ChevronRight
-              className={`h-3 w-3 ${dark ? "text-[#8ea0ff]" : "text-primary"}`}
-              strokeWidth={2}
-              aria-hidden="true"
-            />
+            <ChevronRight className="h-3 w-3 text-[#8ea0ff]" strokeWidth={2} aria-hidden="true" />
           )}
         </span>
       ))}
@@ -196,17 +257,7 @@ function WorkflowSteps({ steps, dark, className }: { steps: readonly string[]; d
   );
 }
 
-function WorkflowMedia({
-  workflow,
-  reduceMotion,
-  blendTopEdge = false,
-  className,
-}: {
-  workflow: Workflow;
-  reduceMotion: boolean | null;
-  blendTopEdge?: boolean;
-  className?: string;
-}) {
+function WorkflowVideo({ workflow, reduceMotion }: { workflow: Workflow; reduceMotion: boolean | null }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -237,27 +288,23 @@ function WorkflowMedia({
       observer.disconnect();
       video.pause();
     };
-  }, [reduceMotion]);
+  }, [reduceMotion, workflow.id]);
 
   return (
-    <div className={`relative overflow-hidden bg-[#f4f5fb] ${className ?? ""}`}>
-      <video
-        ref={videoRef}
-        className="absolute inset-0 h-full w-full scale-[1.07] object-contain mix-blend-multiply"
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        aria-label={`Demostración de Ruka para ${workflow.title.toLowerCase()}`}
-      >
-        <source src={workflow.video} type="video/mp4" />
-      </video>
-      {blendTopEdge && (
-        <span
-          className="pointer-events-none absolute inset-x-0 top-0 h-9 bg-gradient-to-b from-[#f4f5fb] via-[#f4f5fb]/95 to-transparent"
-          aria-hidden="true"
-        />
-      )}
+    <div className="relative aspect-square min-h-0 overflow-hidden bg-white md:col-span-3 md:aspect-auto md:min-h-full">
+      <div className="absolute inset-x-0 top-1/2 aspect-square w-full -translate-y-1/2 overflow-hidden">
+        <video
+          ref={videoRef}
+          className="absolute inset-0 h-full w-full object-contain mix-blend-multiply"
+          loop
+          muted
+          playsInline
+          preload="auto"
+          aria-label={`Demostración de Ruka: ${workflow.title.toLowerCase()}`}
+        >
+          <source src={workflow.video} type="video/mp4" />
+        </video>
+      </div>
     </div>
   );
 }
