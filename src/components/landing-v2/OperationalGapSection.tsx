@@ -121,7 +121,7 @@ export default function OperationalGapSection() {
           <div className="xl:grid xl:grid-cols-[19rem_minmax(0,1fr)]">
             <SourcePanel reduceMotion={reduceMotion} />
 
-            <div className="min-w-0 bg-white">
+            <div className="min-w-0 bg-white xl:grid xl:grid-rows-2">
               <ComparisonLane
                 label="Hoy"
                 description="Tu equipo hace el registro"
