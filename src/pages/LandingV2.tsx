@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import type { CSSProperties } from "react";
 import type { LucideIcon } from "lucide-react";
 import { Helmet } from "react-helmet";
@@ -11,16 +11,13 @@ import {
   Bot,
   Check,
   CheckCircle2,
-  ChevronRight,
   CircleDollarSign,
   Clock3,
   Database,
   FileSpreadsheet,
   Layers3,
   Landmark,
-  PackageCheck,
   ReceiptText,
-  RefreshCw,
   ShieldCheck,
   Sparkles,
   Store,
@@ -36,6 +33,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import OperationalGapSection from "@/components/landing-v2/OperationalGapSection";
+import { WorkSection } from "@/components/landing-v2/WorkSection";
 
 const CTA_LABEL = "Encontrar mi primer operador digital";
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -62,33 +60,6 @@ const coverOutcomes: Array<[string, LucideIcon]> = [
   ["Alertas accionables", Zap],
   ["Margen visible al día", CircleDollarSign],
 ];
-
-const workflows = [
-  {
-    icon: ReceiptText,
-    title: "Facturas de proveedores",
-    copy: "Deja de ingresar y ordenar facturas manualmente.",
-    steps: ["Recibir", "Leer", "Homologar", "Actualizar"],
-    video: "/robot_facturas.mp4",
-    layout: "lg:col-span-7",
-  },
-  {
-    icon: RefreshCw,
-    title: "Conciliaciones",
-    copy: "Deja de cruzar información entre tus sistemas.",
-    steps: ["Cruzar", "Conciliar", "Detectar", "Escalar"],
-    video: "/robot_dinero.mp4",
-    layout: "lg:col-span-5",
-  },
-  {
-    icon: PackageCheck,
-    title: "Costos e inventario",
-    copy: "Deja de mantener costos y stock manualmente.",
-    steps: ["Actualizar", "Comparar", "Alertar"],
-    video: "/robot_inventario.mp4",
-    layout: "lg:col-span-5",
-  },
-] as const;
 
 const customerCases = [
   {
@@ -228,7 +199,7 @@ export default function LandingV2() {
       <Hero reduceMotion={reduceMotion} navigate={navigate} />
       <SocialProofSection />
       <OperationalGapSection />
-      <WorkSection reduceMotion={reduceMotion} navigate={navigate} />
+      <WorkSection reduceMotion={reduceMotion} ctaLabel={CTA_LABEL} onPrimaryAction={() => navigate("/register")} />
       <ResultsSection reduceMotion={reduceMotion} />
       <IntegrationsSection />
       <PricingSection reduceMotion={reduceMotion} navigate={navigate} />
@@ -442,76 +413,6 @@ function CustomerLogoPlaceholder({ index, decorative = false }: { index: number;
         <span className="social-proof-logo-line social-proof-logo-line-secondary" />
       </span>
     </div>
-  );
-}
-
-function WorkSection({
-  reduceMotion,
-  navigate,
-}: {
-  reduceMotion: boolean | null;
-  navigate: (path: string) => void;
-}) {
-  return (
-    <section id="trabajo" className="scroll-mt-24 bg-white py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <h2 className="max-w-3xl text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-5xl">
-          Trabajo que puedes sacar de tu equipo.
-        </h2>
-
-        <div className="mt-12 grid gap-5 lg:grid-cols-12">
-          {workflows.map((workflow) => (
-            <article key={workflow.title} className={`grid min-h-[28rem] overflow-hidden rounded-2xl border border-[#dce3f2] bg-[#fbfcff] ${workflow.layout}`}>
-              <div className="p-6 sm:p-8">
-                <workflow.icon className="h-7 w-7 text-primary" strokeWidth={1.8} />
-                <h3 className="mt-6 text-2xl font-semibold tracking-[-0.025em] text-[#171827] sm:text-3xl">{workflow.title}</h3>
-                <p className="mt-3 max-w-lg text-lg leading-8 text-[#555b6e]">{workflow.copy}</p>
-                <div className="mt-7 flex flex-wrap items-center gap-x-2 gap-y-3 text-sm font-semibold text-[#303547]">
-                  {workflow.steps.map((step, index) => (
-                    <Fragment key={step}>
-                      <span>{step}</span>
-                      {index < workflow.steps.length - 1 && <ChevronRight className="h-4 w-4 text-primary" aria-hidden="true" />}
-                    </Fragment>
-                  ))}
-                </div>
-              </div>
-              <div className="mt-auto min-h-48 overflow-hidden border-t border-[#dce3f2] bg-[#f1f3fb]">
-                <video
-                  className="h-full max-h-64 w-full object-cover"
-                  autoPlay={!reduceMotion}
-                  loop
-                  muted
-                  playsInline
-                  preload="metadata"
-                  aria-label={`Demostración de Ruka para ${workflow.title.toLowerCase()}`}
-                >
-                  <source src={workflow.video} type="video/mp4" />
-                </video>
-              </div>
-            </article>
-          ))}
-
-          <article className="relative flex min-h-[28rem] flex-col justify-between overflow-hidden rounded-2xl bg-primary p-6 text-white lg:col-span-7 sm:p-8">
-            <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full border border-white/[0.12]" aria-hidden="true" />
-            <div className="absolute -bottom-32 right-16 h-72 w-72 rounded-full border border-white/10" aria-hidden="true" />
-            <div className="relative">
-              <Bot className="h-8 w-8" strokeWidth={1.8} />
-              <h3 className="mt-8 max-w-xl text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] sm:text-4xl">¿Otro proceso manual?</h3>
-              <p className="mt-4 max-w-xl text-lg leading-8 text-white/[0.82]">
-                Creamos un operador para tu flujo, sobre los sistemas y reglas que ya usa tu empresa.
-              </p>
-            </div>
-            <Button
-              className="relative mt-10 h-12 w-full rounded-full bg-white px-4 text-sm font-semibold text-primary shadow-none hover:bg-white/[0.92] active:scale-[0.97] sm:w-fit sm:px-6 sm:text-base"
-              onClick={() => navigate("/register")}
-            >
-              {CTA_LABEL}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </article>
-        </div>
-      </div>
-    </section>
   );
 }
 
