@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import type { LucideIcon } from "lucide-react";
 import { Helmet } from "react-helmet";
@@ -8,21 +8,18 @@ import {
   ArrowRight,
   Banknote,
   BarChart3,
-  Bot,
   Check,
   CheckCircle2,
-  CircleDollarSign,
   Clock3,
   Database,
   FileSpreadsheet,
   Layers3,
   Landmark,
+  LoaderCircle,
   ReceiptText,
-  ShieldCheck,
   Sparkles,
   Store,
   UsersRound,
-  Zap,
 } from "lucide-react";
 import {
   Accordion,
@@ -35,7 +32,7 @@ import Navbar from "@/components/Navbar";
 import OperationalGapSection from "@/components/landing-v2/OperationalGapSection";
 import { WorkSection } from "@/components/landing-v2/WorkSection";
 
-const CTA_LABEL = "Encontrar mi primer operador digital";
+const CTA_LABEL = "Ver Ruka en mi operación";
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const navItems = [
@@ -54,12 +51,12 @@ const coverSources: Array<[string, LucideIcon]> = [
   ["Otros", Layers3],
 ];
 
-const coverOutcomes: Array<[string, LucideIcon]> = [
-  ["Menos trabajo manual", Bot],
-  ["Verdad operacional", ShieldCheck],
-  ["Alertas accionables", Zap],
-  ["Margen visible al día", CircleDollarSign],
-];
+const coverOutcomes = [
+  "Compras registradas",
+  "Pagos conciliados",
+  "Costos actualizados",
+  "Datos listos donde corresponden",
+] as const;
 
 const customerCases = [
   {
@@ -261,7 +258,7 @@ function Hero({
             href="#trabajo"
             className="inline-flex h-12 w-full items-center justify-center rounded-full border border-[#dce3f2] bg-white px-6 text-base font-semibold text-[#171827] transition-transform duration-150 ease-out hover:bg-[#f7f9ff] active:scale-[0.97] sm:w-auto"
           >
-            Ver Ruka en acción
+            Ver cómo funciona
           </a>
         </motion.div>
 
@@ -271,14 +268,31 @@ function Hero({
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.16, ease: easeOut }}
         >
-          <CoverSystemMap />
+          <CoverSystemMap reduceMotion={reduceMotion} />
         </motion.div>
       </div>
     </section>
   );
 }
 
-function CoverSystemMap() {
+function CoverSystemMap({ reduceMotion }: { reduceMotion: boolean | null }) {
+  const [animationStep, setAnimationStep] = useState(coverOutcomes.length * 2 - 1);
+
+  useEffect(() => {
+    if (reduceMotion) return undefined;
+
+    const isProcessing = animationStep % 2 === 0;
+    const isLastCompleteStep = animationStep === coverOutcomes.length * 2 - 1;
+    const timeout = window.setTimeout(
+      () => setAnimationStep((current) => (current + 1) % (coverOutcomes.length * 2)),
+      isProcessing ? 600 : isLastCompleteStep ? 1600 : 900,
+    );
+
+    return () => window.clearTimeout(timeout);
+  }, [animationStep, reduceMotion]);
+
+  const processingIndex = !reduceMotion && animationStep % 2 === 0 ? animationStep / 2 : -1;
+
   return (
     <div className="cover-system-map">
       <svg className="cover-flow-lines" viewBox="0 0 1240 360" preserveAspectRatio="none" aria-hidden="true">
@@ -316,9 +330,9 @@ function CoverSystemMap() {
       <div className="cover-layer">
         <img className="cover-platform-asset" src="/assets/ruka-digital-operator-hero.webp" alt="" aria-hidden="true" />
       </div>
-      <div className="cover-outcomes" aria-label="Resultados operativos">
-        {coverOutcomes.map(([label, Icon]) => (
-          <OutcomeTile key={label} icon={Icon} label={label} />
+      <div className="cover-outcomes" aria-label="Trabajo completado por Ruka">
+        {coverOutcomes.map((label, index) => (
+          <OutcomeTile key={label} isProcessing={processingIndex === index} label={label} reduceMotion={reduceMotion} />
         ))}
       </div>
     </div>
@@ -334,11 +348,30 @@ function SourceTile({ icon: Icon, label }: { icon: LucideIcon; label: string }) 
   );
 }
 
-function OutcomeTile({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
+function OutcomeTile({
+  label,
+  isProcessing,
+  reduceMotion,
+}: {
+  label: string;
+  isProcessing: boolean;
+  reduceMotion: boolean | null;
+}) {
   return (
-    <div className="cover-outcome">
-      <Icon size={34} />
-      <span>{label}</span>
+    <div className={`cover-outcome${isProcessing ? " is-processing" : ""}`} aria-label={label}>
+      <span className="cover-outcome-status" aria-hidden="true">
+        {isProcessing ? <LoaderCircle className="cover-outcome-spinner" size={24} /> : <CheckCircle2 size={24} />}
+      </span>
+      <motion.span
+        key={isProcessing ? "processing" : label}
+        className="cover-outcome-label"
+        aria-hidden="true"
+        initial={reduceMotion ? false : { opacity: 0, y: 4 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: reduceMotion ? 0 : 0.2, ease: easeOut }}
+      >
+        {isProcessing ? "Procesando..." : label}
+      </motion.span>
     </div>
   );
 }

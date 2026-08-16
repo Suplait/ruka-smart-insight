@@ -285,6 +285,12 @@
   }
 }
 
+@keyframes coverOutcomeSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .cover-system-map {
   height: 360px;
   justify-self: center;
@@ -384,7 +390,8 @@
   }
 
   .cover-input-flow path,
-  .cover-output-flow path {
+  .cover-output-flow path,
+  .cover-outcome-spinner {
     animation: none;
   }
 }
@@ -435,14 +442,38 @@
 
 .cover-outcome {
   align-items: center;
+  box-shadow: none;
   display: grid;
   gap: 15px;
   grid-template-columns: 42px 1fr;
   min-height: 68px;
   padding: 10px 14px;
+  transition: background-color 200ms ease-out, border-color 200ms ease-out;
 }
 
-.cover-outcome span {
+.cover-outcome.is-processing {
+  background: #f7f8ff;
+  border-color: #bdc8ff;
+}
+
+.cover-outcome-status {
+  align-items: center;
+  color: #4e66e9;
+  display: flex;
+  height: 42px;
+  justify-content: center;
+  width: 42px;
+}
+
+.cover-outcome-status svg {
+  color: #4e66e9;
+}
+
+.cover-outcome-spinner {
+  animation: coverOutcomeSpin 750ms linear infinite;
+}
+
+.cover-outcome-label {
   color: #171827;
   display: block;
   font-size: 1.02rem;
@@ -452,7 +483,8 @@
 
 @media (max-width: 1023px) {
   .cover-system-map {
-    min-height: 340px;
+    height: auto;
+    min-height: 0;
   }
 
   .cover-flow-lines {
@@ -503,9 +535,12 @@
 }
 
 @media (max-width: 360px) {
-  .cover-sources,
+  .cover-sources {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .cover-outcomes {
-    display: none;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
