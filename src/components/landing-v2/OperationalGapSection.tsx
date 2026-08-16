@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
+import type { MotionValue } from "framer-motion";
 import {
   ArrowRight,
   BookOpenCheck,
@@ -15,7 +16,7 @@ import {
   Store,
   UserRound,
 } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -25,6 +26,7 @@ type SourceDocument = {
   icon?: LucideIcon;
   image?: string;
   position: string;
+  enter: { x: number; y: number; rotate: number };
 };
 
 const sourceDocuments: SourceDocument[] = [
@@ -33,30 +35,35 @@ const sourceDocuments: SourceDocument[] = [
     detail: "Registro tributario",
     image: "/logosii.png",
     position: "left-0 top-8 -rotate-[2deg]",
+    enter: { x: -84, y: -34, rotate: -8 },
   },
   {
     label: "XML",
     detail: "Detalle de ítems",
     icon: FileCode2,
     position: "right-0 top-0 rotate-[2deg]",
+    enter: { x: 82, y: -48, rotate: 9 },
   },
   {
     label: "PDF",
     detail: "Documento digital",
     icon: FileText,
     position: "left-1/2 top-[4.6rem] z-10 -translate-x-1/2 -rotate-[0.5deg]",
+    enter: { x: 0, y: -86, rotate: 5 },
   },
   {
     label: "Correo",
     detail: "Adjuntos y respaldos",
     icon: Mail,
     position: "bottom-1 left-0 -rotate-[1.5deg]",
+    enter: { x: -92, y: 42, rotate: -10 },
   },
   {
     label: "Factura física",
     detail: "Registro manual",
     icon: ReceiptText,
     position: "bottom-0 right-0 z-20 rotate-[1.5deg]",
+    enter: { x: 88, y: 56, rotate: 10 },
   },
 ];
 
@@ -71,25 +78,35 @@ const destinations: Array<{ label: string; shortLabel: string; icon: LucideIcon 
 
 export default function OperationalGapSection() {
   const reduceMotion = useReducedMotion();
+  const storyRef = useRef<HTMLDivElement>(null);
   const [activeDestination, setActiveDestination] = useState(0);
+  const { scrollYProgress } = useScroll({
+    target: storyRef,
+    offset: ["start 78%", "end 24%"],
+  });
+  const manualOpacity = useTransform(scrollYProgress, [0.18, 0.34, 0.48, 0.68], [0.62, 1, 1, 0.38]);
+  const manualScale = useTransform(scrollYProgress, [0.18, 0.34, 0.5, 0.68], [0.985, 1.012, 1, 0.98]);
+  const rukaOpacity = useTransform(scrollYProgress, [0.3, 0.46, 0.62, 0.72], [0.35, 0.55, 1, 1]);
+  const rukaScale = useTransform(scrollYProgress, [0.3, 0.46, 0.62, 0.76], [0.98, 0.99, 1.015, 1.015]);
+  const closingOpacity = useTransform(scrollYProgress, [0.58, 0.76, 0.9], [0.48, 1, 1]);
+  const progressScale = useTransform(scrollYProgress, [0.12, 0.88], [0, 1]);
 
-  useEffect(() => {
-    if (reduceMotion) {
-      setActiveDestination(0);
-      return undefined;
-    }
-
-    const interval = window.setInterval(() => {
-      setActiveDestination((current) => (current + 1) % destinations.length);
-    }, 2600);
-
-    return () => window.clearInterval(interval);
-  }, [reduceMotion]);
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    if (reduceMotion) return;
+    const nextDestination = Math.min(destinations.length - 1, Math.max(0, Math.floor(progress * destinations.length)));
+    setActiveDestination((current) => (current === nextDestination ? current : nextDestination));
+  });
 
   return (
     <section id="problema" className="scroll-mt-24 bg-[#f4f6fa] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <motion.div className="max-w-4xl" initial={reduceMotion ? false : { opacity: 0.82, y: 18, filter: "blur(4px)" }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true, amount: 0.35 }} transition={{ duration: 0.56, ease: easeOut }}>
+        <motion.div
+          className="max-w-4xl"
+          initial={reduceMotion ? false : { opacity: 0.82, filter: "blur(4px)" }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, filter: "blur(0px)" }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.56, ease: easeOut }}
+        >
           <h2 className="text-balance text-4xl font-semibold leading-[1.06] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:text-6xl">
             No te falta software. Te sobra trabajo entre tus sistemas.
           </h2>
@@ -98,15 +115,21 @@ export default function OperationalGapSection() {
           </p>
         </motion.div>
 
-        <motion.article
-          aria-labelledby="purchase-register-title"
-          className="mt-12 overflow-hidden rounded-[14px] border border-[#dfe3ec] bg-white shadow-[0_6px_8px_rgba(42,53,94,0.05)]"
-          initial={reduceMotion ? false : { opacity: 0.9, y: 16 }}
-          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.12 }}
-          transition={{ duration: 0.58, ease: easeOut }}
-        >
-          <header className="border-b border-[#e0e4ed] bg-[#fbfcfe] px-5 py-6 sm:px-8 sm:py-7">
+        <div ref={storyRef} className="mt-12 xl:h-[210vh]">
+          <motion.article
+            aria-labelledby="purchase-register-title"
+            className="relative overflow-hidden rounded-[14px] border border-[#dfe3ec] bg-white shadow-[0_6px_8px_rgba(42,53,94,0.05)] xl:sticky xl:top-24"
+            initial={reduceMotion ? false : { opacity: 0.9 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1 }}
+            viewport={{ once: true, amount: 0.12 }}
+            transition={{ duration: 0.58, ease: easeOut }}
+          >
+          <motion.span
+            className="pointer-events-none absolute inset-y-0 left-0 z-30 w-[3px] origin-top bg-primary"
+            style={reduceMotion ? undefined : { scaleY: progressScale }}
+            aria-hidden="true"
+          />
+            <header className="border-b border-[#e0e4ed] bg-[#fbfcfe] px-5 py-6 sm:px-8 sm:py-7 xl:py-5">
             <h3
               id="purchase-register-title"
               className="text-balance text-xl font-semibold tracking-[-0.02em] text-[#171827] sm:text-2xl"
@@ -116,45 +139,60 @@ export default function OperationalGapSection() {
             <p className="mt-2 max-w-2xl text-sm leading-6 text-[#626a7d] sm:text-base">
               La misma información. Sin trabajo manual entre medio.
             </p>
-          </header>
+            </header>
 
-          <div className="xl:grid xl:grid-cols-[20rem_minmax(0,1fr)]">
-            <SourcePanel reduceMotion={reduceMotion} />
+            <div className="xl:grid xl:grid-cols-[20rem_minmax(0,1fr)]">
+            <SourcePanel
+              reduceMotion={reduceMotion}
+              scrollProgress={scrollYProgress}
+            />
 
-            <div className="min-w-0 bg-white xl:grid xl:grid-rows-2">
-              <ComparisonLane
-                label="Hoy"
-                description="Tu equipo hace el registro"
-                icon={UserRound}
-                tone="manual"
-                reduceMotion={reduceMotion}
-              >
-                <ManualWorkNode reduceMotion={reduceMotion} />
-                <FlowConnector tone="manual" reduceMotion={reduceMotion} />
-                <DestinationNode activeDestination={activeDestination} reduceMotion={reduceMotion} />
-              </ComparisonLane>
+              <div className="min-w-0 bg-white xl:grid xl:grid-rows-2">
+                <ComparisonLane
+                  label="Hoy"
+                  description="Tu equipo hace el registro"
+                  icon={UserRound}
+                  tone="manual"
+                  reduceMotion={reduceMotion}
+                  scrollOpacity={manualOpacity}
+                  scrollScale={manualScale}
+                >
+                  <ManualWorkNode reduceMotion={reduceMotion} />
+                  <FlowConnector tone="manual" reduceMotion={reduceMotion} />
+                  <DestinationNode activeDestination={activeDestination} reduceMotion={reduceMotion} />
+                </ComparisonLane>
 
-              <ComparisonLane
-                label="Con Ruka"
-                description="Ruka hace el registro"
-                icon={Bot}
-                tone="ruka"
-                reduceMotion={reduceMotion}
-              >
-                <ProcessNode
+                <ComparisonLane
+                  label="Con Ruka"
+                  description="Ruka hace el registro"
                   icon={Bot}
-                  title="Ruka"
-                  detail="Lee, cruza y aplica tus reglas."
                   tone="ruka"
-                />
-                <FlowConnector tone="ruka" reduceMotion={reduceMotion} />
-                <ResultNode activeDestination={activeDestination} reduceMotion={reduceMotion} />
-              </ComparisonLane>
+                  reduceMotion={reduceMotion}
+                  scrollOpacity={rukaOpacity}
+                  scrollScale={rukaScale}
+                >
+                  <ProcessNode
+                    icon={Bot}
+                    title="Ruka"
+                    detail="Lee, cruza y aplica tus reglas."
+                    tone="ruka"
+                  />
+                  <FlowConnector tone="ruka" reduceMotion={reduceMotion} />
+                  <ResultNode activeDestination={activeDestination} reduceMotion={reduceMotion} />
+                </ComparisonLane>
+              </div>
             </div>
-          </div>
-        </motion.article>
+          </motion.article>
+        </div>
 
-        <motion.div className="mx-auto mt-12 max-w-4xl border-t border-[#d9deea] pt-9 text-center" initial={reduceMotion ? false : { opacity: 0.72, y: 10 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.46, ease: easeOut }}>
+        <motion.div
+          className="mx-auto mt-12 max-w-4xl border-t border-[#d9deea] pt-9 text-center"
+          style={reduceMotion ? undefined : { opacity: closingOpacity }}
+          initial={reduceMotion ? false : { opacity: 0.72 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.46, ease: easeOut }}
+        >
           <p className="text-balance text-2xl font-semibold leading-tight tracking-[-0.025em] text-[#171827] sm:text-3xl">
             Tus sistemas siguen siendo los mismos. Ruka hace el trabajo entre ellos.
           </p>
@@ -164,16 +202,24 @@ export default function OperationalGapSection() {
   );
 }
 
-function SourcePanel({ reduceMotion }: { reduceMotion: boolean | null }) {
+function SourcePanel({
+  reduceMotion,
+  scrollProgress,
+}: {
+  reduceMotion: boolean | null;
+  scrollProgress: MotionValue<number>;
+}) {
   return (
-    <aside className="relative overflow-hidden bg-[#171a29] px-5 py-7 text-white sm:px-8 sm:py-9 xl:min-h-[29rem] xl:px-8 xl:py-10">
+    <motion.aside
+      className="relative overflow-hidden bg-[#171a29] px-5 py-7 text-white sm:px-8 sm:py-9 xl:min-h-[25rem] xl:px-8 xl:py-8"
+    >
       <div className="max-w-md">
         <h4 className="text-xl font-semibold leading-[1.25] tracking-[-0.02em]">Las compras llegan por todos lados.</h4>
         <p className="mt-2 text-sm leading-6 text-white/[0.68]">SII, XML, PDFs, correos, planillas y documentos físicos.</p>
       </div>
 
       <motion.div
-        className="relative mx-auto mt-7 h-64 w-full max-w-[17rem] sm:mt-8 xl:h-60"
+        className="relative mx-auto mt-7 h-64 w-full max-w-[17rem] sm:mt-8 xl:mt-6 xl:h-52"
         aria-label="Fuentes de una compra: SII, XML, PDF, correo, planilla y factura física"
         initial={reduceMotion ? false : { opacity: 0.88, y: 10 }}
         whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -181,45 +227,70 @@ function SourcePanel({ reduceMotion }: { reduceMotion: boolean | null }) {
         transition={{ duration: 0.52, delay: reduceMotion ? 0 : 0.08, ease: easeOut }}
       >
         {sourceDocuments.map((document, index) => (
-          <SourceDocumentCard key={document.label} document={document} index={index} reduceMotion={reduceMotion} />
+          <SourceDocumentCard
+            key={document.label}
+            document={document}
+            index={index}
+            reduceMotion={reduceMotion}
+            scrollProgress={scrollProgress}
+          />
         ))}
       </motion.div>
 
-      <div className="mt-7 border-t border-white/[0.15] pt-5 xl:mt-6">
+      <div className="mt-7 border-t border-white/[0.15] pt-5 xl:mt-5">
         <p className="text-sm font-semibold text-white">Recibir la información no es el problema.</p>
         <p className="mt-1 text-sm leading-6 text-white/[0.64]">El problema es quién hace el trabajo entre medio.</p>
       </div>
-    </aside>
+    </motion.aside>
   );
 }
 
-function SourceDocumentCard({ document, index, reduceMotion }: { document: SourceDocument; index: number; reduceMotion: boolean | null }) {
+function SourceDocumentCard({
+  document,
+  index,
+  reduceMotion,
+  scrollProgress,
+}: {
+  document: SourceDocument;
+  index: number;
+  reduceMotion: boolean | null;
+  scrollProgress: MotionValue<number>;
+}) {
   const Icon = document.icon;
+  const enterStart = 0.08 + index * 0.022;
+  const enterEnd = 0.25 + index * 0.022;
+  const x = useTransform(scrollProgress, [enterStart, enterEnd], [document.enter.x, 0]);
+  const y = useTransform(scrollProgress, [enterStart, enterEnd], [document.enter.y, 0]);
+  const rotate = useTransform(scrollProgress, [enterStart, enterEnd], [document.enter.rotate, 0]);
+  const opacity = useTransform(scrollProgress, [enterStart, enterEnd], [0, 1]);
+  const scale = useTransform(scrollProgress, [enterStart, enterEnd], [0.9, 1]);
 
   return (
     <motion.div
-      className={`absolute w-36 rounded-[10px] border border-white/80 bg-[#fbfcff] p-2.5 text-[#252837] shadow-[0_5px_8px_rgba(7,10,28,0.2)] ${document.position}`}
-      initial={reduceMotion ? false : { opacity: 0.7, y: 10, scale: 0.97 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
-      whileHover={reduceMotion ? undefined : { y: -5, rotate: 0, scale: 1.03, zIndex: 30 }}
-      viewport={{ once: true, amount: 0.5 }}
-      transition={{ duration: 0.38, delay: reduceMotion ? 0 : 0.08 + index * 0.055, ease: easeOut }}
+      className={`absolute w-36 ${document.position}`}
+      style={reduceMotion ? undefined : { x, y, rotate, opacity, scale }}
     >
-      <div className="flex items-center gap-2">
-        <span className="flex h-8 w-8 flex-none items-center justify-center rounded-md bg-[#edf0f5] text-[#535c70]">
-          {document.image ? (
-            <img src={document.image} alt="" className="h-6 w-6 object-contain" aria-hidden="true" />
-          ) : Icon ? (
-            <Icon className="h-[18px] w-[18px]" strokeWidth={1.8} aria-hidden="true" />
-          ) : null}
-        </span>
-        <span className="min-w-0">
-          <span className="block whitespace-nowrap text-xs font-semibold sm:text-[13px]">{document.label}</span>
-          <span className="mt-0.5 hidden truncate text-[11px] font-medium text-[#6b7284] sm:block">{document.detail}</span>
-        </span>
-      </div>
-      <span className="mt-2.5 block h-px w-full bg-[#dce1e9]" aria-hidden="true" />
-      <span className="mt-1.5 block h-px w-2/3 bg-[#e5e8ee]" aria-hidden="true" />
+      <motion.div
+        className="rounded-[10px] border border-white/80 bg-[#fbfcff] p-2.5 text-[#252837] shadow-[0_5px_8px_rgba(7,10,28,0.2)]"
+        whileHover={reduceMotion ? undefined : { y: -5, scale: 1.03 }}
+        transition={{ duration: 0.2, ease: easeOut }}
+      >
+        <div className="flex items-center gap-2">
+          <span className="flex h-8 w-8 flex-none items-center justify-center rounded-md bg-[#edf0f5] text-[#535c70]">
+            {document.image ? (
+              <img src={document.image} alt="" className="h-6 w-6 object-contain" aria-hidden="true" />
+            ) : Icon ? (
+              <Icon className="h-[18px] w-[18px]" strokeWidth={1.8} aria-hidden="true" />
+            ) : null}
+          </span>
+          <span className="min-w-0">
+            <span className="block whitespace-nowrap text-xs font-semibold sm:text-[13px]">{document.label}</span>
+            <span className="mt-0.5 hidden truncate text-[11px] font-medium text-[#6b7284] sm:block">{document.detail}</span>
+          </span>
+        </div>
+        <span className="mt-2.5 block h-px w-full bg-[#dce1e9]" aria-hidden="true" />
+        <span className="mt-1.5 block h-px w-2/3 bg-[#e5e8ee]" aria-hidden="true" />
+      </motion.div>
     </motion.div>
   );
 }
@@ -335,6 +406,8 @@ function ComparisonLane({
   icon: Icon,
   tone,
   reduceMotion,
+  scrollOpacity,
+  scrollScale,
   children,
 }: {
   label: string;
@@ -342,6 +415,8 @@ function ComparisonLane({
   icon: LucideIcon;
   tone: "manual" | "ruka";
   reduceMotion: boolean | null;
+  scrollOpacity: MotionValue<number>;
+  scrollScale: MotionValue<number>;
   children: ReactNode;
 }) {
   const isRuka = tone === "ruka";
@@ -349,11 +424,12 @@ function ComparisonLane({
   return (
     <motion.section
       aria-label={label}
-      className={`relative px-5 py-7 sm:px-8 sm:py-9 lg:grid lg:grid-cols-[12rem_minmax(0,1fr)] lg:items-center lg:gap-7 xl:min-h-[14.5rem] xl:grid-cols-[10.5rem_minmax(0,1fr)] xl:px-7 ${
+      className={`relative px-5 py-7 sm:px-8 sm:py-9 lg:grid lg:grid-cols-[12rem_minmax(0,1fr)] lg:items-center lg:gap-7 xl:min-h-[12.5rem] xl:grid-cols-[10.5rem_minmax(0,1fr)] xl:px-7 ${
         isRuka ? "bg-[#eef1fb]" : "border-b border-[#dfe3eb] bg-white"
       }`}
-      initial={reduceMotion ? false : { opacity: 0.82, x: isRuka ? 14 : -14 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }}
+      style={reduceMotion ? undefined : { opacity: scrollOpacity, scale: scrollScale }}
+      initial={reduceMotion ? false : { opacity: 0.82 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1 }}
       viewport={{ once: true, amount: 0.35 }}
       transition={{ duration: 0.48, delay: reduceMotion ? 0 : isRuka ? 0.12 : 0.04, ease: easeOut }}
     >
