@@ -97,6 +97,214 @@
   background: linear-gradient(to bottom right, rgba(77, 104, 235, 0.1), rgba(243, 243, 251, 0.1));
 }
 
+@keyframes socialProofMarquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.social-proof-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(23, 24, 39, 1) 7%,
+    rgba(23, 24, 39, 1) 93%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(23, 24, 39, 1) 7%,
+    rgba(23, 24, 39, 1) 93%,
+    transparent
+  );
+}
+
+.social-proof-track,
+.social-proof-logo-group {
+  display: flex;
+  width: max-content;
+}
+
+.social-proof-track {
+  animation: socialProofMarquee 48s linear infinite;
+  will-change: transform;
+}
+
+.social-proof-logo-group {
+  gap: 14px;
+  padding-right: 14px;
+}
+
+.social-proof-logo {
+  align-items: center;
+  display: flex;
+  flex: 0 0 188px;
+  height: 80px;
+  justify-content: center;
+  padding: 0 16px;
+}
+
+.social-proof-logo-image {
+  display: block;
+  filter: grayscale(1);
+  height: auto;
+  object-fit: contain;
+  opacity: 0.45;
+  transition: opacity 200ms ease-out;
+  width: auto;
+}
+
+.social-proof-logo-image--solid {
+  filter: brightness(0);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .social-proof-marquee:hover .social-proof-track {
+    animation-play-state: paused;
+  }
+
+  .social-proof-logo:hover .social-proof-logo-image {
+    opacity: 0.68;
+  }
+}
+
+.integration-rail::before,
+.integration-rail::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  z-index: 1;
+  width: clamp(1rem, 5vw, 4rem);
+  pointer-events: none;
+}
+
+.integration-rail::before {
+  left: 0;
+  background: linear-gradient(90deg, #fff 16%, rgba(255, 255, 255, 0));
+}
+
+.integration-rail::after {
+  right: 0;
+  background: linear-gradient(270deg, #fff 16%, rgba(255, 255, 255, 0));
+}
+
+.integration-rail-track {
+  display: flex;
+  width: max-content;
+  gap: 0.75rem;
+  padding-inline: 0.375rem;
+  animation: integrationRail 42s linear infinite;
+  will-change: transform;
+}
+
+.integration-rail-track-reverse {
+  animation-direction: reverse;
+  animation-duration: 48s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .integration-rail:hover .integration-rail-track {
+    animation-play-state: paused;
+  }
+}
+
+.integration-chip {
+  display: inline-flex;
+  min-height: 3.5rem;
+  min-width: max-content;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid #dce1eb;
+  border-radius: 0.75rem;
+  background: #fff;
+  padding: 0.625rem 1rem;
+  color: #252838;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), border-color 180ms ease, background-color 180ms ease;
+}
+
+.integration-chip:hover {
+  border-color: rgba(78, 102, 233, 0.42);
+  background: #f8f9ff;
+  transform: translateY(-3px);
+}
+
+.integration-chip-product {
+  min-width: 8.5rem;
+  justify-content: center;
+}
+
+.integration-logo-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 7.5rem;
+  max-height: 2rem;
+  object-fit: contain;
+}
+
+.integration-logo-image-medium {
+  width: 5.75rem;
+}
+
+.integration-logo-image-compact {
+  width: 3.5rem;
+}
+
+.integration-logo-surface-dark {
+  display: inline-flex;
+  min-height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.45rem;
+  background: #161a29;
+  padding: 0.4rem 0.6rem;
+}
+
+.integration-logo-surface-dark .integration-logo-image {
+  max-height: 1.3rem;
+}
+
+.integration-product-label {
+  color: #242735;
+  font-size: 0.875rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.integration-chip-generic {
+  border-color: #e1e4eb;
+  background: #f7f8fa;
+  color: #4f5565;
+  font-weight: 600;
+}
+
+.integration-chip-generic:hover {
+  border-color: #cdd2dc;
+  background: #f2f3f6;
+}
+
+.integration-chip-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: #737989;
+}
+
+@keyframes integrationRail {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -121,6 +329,12 @@
 @keyframes dashFlow {
   to {
     stroke-dashoffset: -220;
+  }
+}
+
+@keyframes coverOutcomeSpin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -163,6 +377,12 @@
   justify-content: center;
   text-transform: uppercase;
   width: 88px;
+  transition: border-color 180ms ease-out, box-shadow 180ms ease-out;
+}
+
+.cover-input:hover {
+  border-color: rgba(78, 102, 233, 0.35);
+  box-shadow: 0 6px 8px rgba(20, 30, 60, 0.08);
 }
 
 .cover-input svg,
@@ -197,11 +417,66 @@
 
 .cover-output-flow path {
   animation: dashFlow 7s linear infinite;
+  opacity: 0;
   stroke: rgba(78, 102, 233, 0.58);
   stroke-dasharray: 6 9;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 2.4;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cover-output-flow path.is-visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social-proof-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .social-proof-track {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
+
+  .social-proof-logo-group[aria-hidden="true"] {
+    display: none;
+  }
+
+  .integration-rail {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .integration-rail::before,
+  .integration-rail::after,
+  .integration-chip-duplicate {
+    display: none;
+  }
+
+  .integration-rail-track {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
+
+  .cover-input-flow path,
+  .cover-output-flow path,
+  .cover-outcome-spinner {
+    animation: none;
+  }
+
+  .cover-input,
+  .cover-outcome,
+  .integration-chip,
+  .social-proof-logo-image {
+    transition-duration: 0.01ms;
+  }
 }
 
 .cover-input-arrow-path {
@@ -241,6 +516,7 @@
   align-content: start;
   display: grid;
   gap: 14px;
+  min-height: 314px;
   position: absolute;
   right: 0;
   top: 24px;
@@ -250,24 +526,55 @@
 
 .cover-outcome {
   align-items: center;
+  box-shadow: none;
   display: grid;
   gap: 15px;
   grid-template-columns: 42px 1fr;
   min-height: 68px;
   padding: 10px 14px;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), background-color 200ms ease-out, border-color 200ms ease-out;
 }
 
-.cover-outcome span {
+.cover-outcome:hover {
+  transform: translateX(4px);
+}
+
+.cover-outcome.is-processing {
+  background: #f7f8ff;
+  border-color: #bdc8ff;
+}
+
+.cover-outcome-status {
+  align-items: center;
+  color: #4e66e9;
+  display: flex;
+  height: 42px;
+  justify-content: center;
+  width: 42px;
+}
+
+.cover-outcome-status svg {
+  color: #4e66e9;
+}
+
+.cover-outcome-spinner {
+  animation: coverOutcomeSpin 750ms linear infinite;
+}
+
+.cover-outcome-label {
   color: #171827;
   display: block;
   font-size: 1.02rem;
   font-weight: 600;
   line-height: 1.1;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 1023px) {
   .cover-system-map {
-    min-height: 340px;
+    height: auto;
+    min-height: 0;
   }
 
   .cover-flow-lines {
@@ -308,8 +615,10 @@
     display: grid;
     gap: 0.75rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: 156px;
     margin: 2rem auto 0;
     max-width: 620px;
+    min-height: 156px;
     position: relative;
     right: auto;
     top: auto;
@@ -317,10 +626,23 @@
   }
 }
 
-@media (max-width: 360px) {
-  .cover-sources,
+@media (min-width: 361px) and (max-width: 480px) {
   .cover-outcomes {
-    display: none;
+    grid-auto-rows: 84px;
+    height: 180px;
+    min-height: 180px;
+  }
+}
+
+@media (max-width: 360px) {
+  .cover-sources {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cover-outcomes {
+    grid-template-columns: minmax(0, 1fr);
+    height: 308px;
+    min-height: 308px;
   }
 }
 
@@ -358,8 +680,41 @@ body {
   * {
     max-width: 100%;
   }
+
+  .social-proof-track,
+  .social-proof-logo-group,
+  .integration-rail-track,
+  .integration-chip {
+    max-width: none;
+  }
+
+  .social-proof-track {
+    animation-duration: 34s;
+  }
+
+  .integration-rail-track {
+    animation-duration: 28s;
+  }
+
+  .integration-rail-track-reverse {
+    animation-duration: 32s;
+  }
 }
 
 * {
   box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
