@@ -36,6 +36,14 @@
     }
   ],
   "rewrites": [
+    { "source": "/register", "destination": "/register/index.html" },
+    { "source": "/register/", "destination": "/register/index.html" },
+    { "source": "/restaurantes", "destination": "/restaurantes/index.html" },
+    { "source": "/restaurantes/", "destination": "/restaurantes/index.html" },
+    { "source": "/hoteles", "destination": "/hoteles/index.html" },
+    { "source": "/hoteles/", "destination": "/hoteles/index.html" },
+    { "source": "/retail", "destination": "/retail/index.html" },
+    { "source": "/retail/", "destination": "/retail/index.html" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }

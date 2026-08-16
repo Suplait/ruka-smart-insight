@@ -1,0 +1,11 @@
+/v2          /                         301!
+/v2/*        /                         301!
+/register    /register/index.html      200
+/register/   /register/index.html      200
+/restaurantes  /restaurantes/index.html  200
+/restaurantes/ /restaurantes/index.html  200
+/hoteles     /hoteles/index.html       200
+/hoteles/    /hoteles/index.html       200
+/retail      /retail/index.html        200
+/retail/     /retail/index.html        200
+/*           /index.html               200

@@ -1,0 +1,34 @@
+[
+  {
+    "question": "¿Tengo que cambiar mi ERP, POS o sistema actual?",
+    "answer": "No. Ruka trabaja sobre las herramientas que ya usa tu empresa. Conectamos las fuentes necesarias y dejamos la información actualizada donde corresponde."
+  },
+  {
+    "question": "¿Qué tipo de procesos puede automatizar Ruka?",
+    "answer": "Procesos repetitivos que implican recibir, leer, cruzar, validar, registrar o actualizar información entre sistemas. Por ejemplo: registro de compras, conciliaciones, actualización de costos, inventario, cálculo de margen y registro en otras plataformas."
+  },
+  {
+    "question": "¿Pueden automatizar un proceso que no aparece en esta página?",
+    "answer": "Sí. Revisamos cómo funciona hoy, qué información utiliza, qué reglas tiene y qué acciones debe ejecutar. Si podemos acceder a las fuentes necesarias y el proceso tiene suficiente estructura, podemos evaluar cómo operarlo con Ruka."
+  },
+  {
+    "question": "¿Con qué sistemas se puede conectar Ruka?",
+    "answer": "Ruka ya trabaja con SII, POS, ERP, bancos, sistemas contables y otras plataformas. También puede operar con Excel, CSV, XML, PDF, correo, APIs y sistemas propios, dependiendo del caso."
+  },
+  {
+    "question": "¿Cuánto demora empezar?",
+    "answer": "Depende del proceso y de las conexiones necesarias. Partimos por un alcance concreto y buscamos tener el primer flujo funcionando lo antes posible."
+  },
+  {
+    "question": "¿Ruka funciona sola o mi equipo tiene que aprobar lo que hace?",
+    "answer": "Depende del proceso. Algunas acciones pueden ejecutarse automáticamente y otras pueden requerir validación. Las reglas se definen según cómo opera cada empresa."
+  },
+  {
+    "question": "¿Qué pasa si Ruka encuentra información que no coincide?",
+    "answer": "El flujo puede separar esos casos para revisión. La idea es que tu equipo deje de revisar todo y se concentre solo donde realmente hace falta una decisión."
+  },
+  {
+    "question": "¿Cómo se cobra Ruka?",
+    "answer": "Ruka tiene planes según volumen. Si necesitas más volumen, integraciones adicionales o un proceso distinto, definimos una propuesta según el alcance."
+  }
+]

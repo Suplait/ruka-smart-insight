@@ -1,0 +1,30 @@
+{
+  "register": {
+    "title": "Agentes IA para automatizar trabajo operativo | Ruka",
+    "description": "Cuéntanos qué trabajo manual quieres sacar de tu equipo. Revisamos el proceso, los sistemas que toca y qué parte puede ejecutar Ruka.",
+    "canonicalUrl": "https://www.ruka.ai/register",
+    "pageName": "Habla con Ruka sobre tu proceso operativo",
+    "features": ["Registro de compras", "Conciliaciones", "Actualización entre sistemas"]
+  },
+  "restaurantes": {
+    "title": "Agentes IA para automatizar operaciones de restaurantes | Ruka",
+    "description": "Ruka registra compras, cruza costos, ejecuta conciliaciones y mantiene tus sistemas al día sin reemplazar tu POS o ERP.",
+    "canonicalUrl": "https://www.ruka.ai/restaurantes",
+    "pageName": "Ruka para restaurantes",
+    "features": ["Registro de compras", "Costos y margen", "Conciliaciones", "Actualización entre sistemas"]
+  },
+  "hoteles": {
+    "title": "Agentes IA para automatizar procesos en hoteles | Ruka",
+    "description": "Ruka conecta compras, contabilidad y operación para registrar, conciliar y actualizar información entre los sistemas que tu hotel ya usa.",
+    "canonicalUrl": "https://www.ruka.ai/hoteles",
+    "pageName": "Ruka para hoteles",
+    "features": ["Registro de compras", "Conciliaciones", "Costos y proveedores", "Actualización entre sistemas"]
+  },
+  "retail": {
+    "title": "Agentes IA para automatizar compras y operaciones de retail | Ruka",
+    "description": "Ruka registra compras, sigue precios, ejecuta conciliaciones y mantiene stock y sistemas actualizados para operaciones de retail.",
+    "canonicalUrl": "https://www.ruka.ai/retail",
+    "pageName": "Ruka para retail",
+    "features": ["Registro de compras", "Seguimiento de precios", "Conciliaciones", "Actualización entre sistemas"]
+  }
+}
