@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
+  ArrowLeftRight,
   ArrowRight,
   BadgeAlert,
   Bot,
   ChevronRight,
-  CreditCard,
   Layers3,
   ReceiptText,
   RefreshCw,
@@ -64,12 +64,12 @@ const workflows: readonly Workflow[] = [
     video: "/robot_alerta.mp4",
   },
   {
-    id: "cuentas-por-pagar",
-    icon: CreditCard,
-    title: "Cuentas por pagar",
-    navCopy: "Cruzar y preparar pagos",
-    copy: "Ruka cruza facturas con órdenes de compra y recepciones, ordena vencimientos y prepara la nómina bancaria.",
-    steps: ["Cruzar", "Validar", "Preparar", "Exportar"],
+    id: "conciliaciones",
+    icon: ArrowLeftRight,
+    title: "Conciliaciones",
+    navCopy: "Cruzar información antes de pagar",
+    copy: "Ruka concilia información entre sistemas. Por ejemplo, facturas con órdenes de compra y recepciones para validar qué corresponde pagar.",
+    steps: ["Cruzar", "Conciliar", "Validar", "Preparar"],
     video: "/robot_dinero.mp4",
   },
   {
@@ -104,7 +104,7 @@ export function WorkSection({ reduceMotion, ctaLabel, onPrimaryAction }: WorkSec
             Trabajo que puedes sacar de tu equipo.
           </h2>
           <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555d70]">
-            Desde que llega una compra hasta que queda registrada, monitoreada o lista para pagar.
+            Desde que llega una compra hasta que queda registrada, conciliada, monitoreada o lista para pagar.
           </p>
         </div>
 
@@ -118,7 +118,7 @@ export function WorkSection({ reduceMotion, ctaLabel, onPrimaryAction }: WorkSec
         >
           <div className="lg:grid lg:grid-cols-12">
             <nav
-              className="grid grid-cols-2 gap-px border-b border-[#dce1eb] bg-[#dce1eb] lg:col-span-3 lg:grid-cols-1 lg:border-b-0 lg:border-r"
+              className="grid grid-cols-1 gap-px border-b border-[#dce1eb] bg-[#dce1eb] min-[360px]:grid-cols-2 lg:col-span-3 lg:grid-cols-1 lg:border-b-0 lg:border-r"
               aria-label="Trabajos que Ruka puede automatizar"
             >
               {workflows.map((workflow, index) => (
