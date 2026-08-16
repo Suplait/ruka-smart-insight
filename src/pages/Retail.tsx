@@ -108,18 +108,18 @@ export default function Retail() {
         <meta name="keywords" content="software retail, automatización compras, control de inventario, gestión de facturas, software empresas, automatización facturas, control de costos, gestión de proveedores" />
         
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ruka.ai/retail" />
+        <meta property="og:url" content="https://www.ruka.ai/retail" />
         <meta property="og:title" content="Ruka.ai | Automatización de Compras para Retail" />
         <meta property="og:description" content="Deja de digitar facturas y controla tus compras sin Excel. Ruka centraliza compras, facturas y precios para que el stock, los pagos y los márgenes se controlen solos." />
         <meta property="og:image" content="/robotshero2.png" />
 
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://ruka.ai/retail" />
+        <meta property="twitter:url" content="https://www.ruka.ai/retail" />
         <meta property="twitter:title" content="Ruka.ai | Automatización de Compras para Retail" />
         <meta property="twitter:description" content="Deja de digitar facturas y controla tus compras sin Excel. Ruka centraliza compras, facturas y precios para que el stock, los pagos y los márgenes se controlen solos." />
         <meta property="twitter:image" content="/robotshero2.png" />
 
-        <link rel="canonical" href="https://ruka.ai/retail" />
+        <link rel="canonical" href="https://www.ruka.ai/retail" />
 
         <script type="application/ld+json">
           {`

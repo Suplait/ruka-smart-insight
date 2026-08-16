@@ -106,9 +106,9 @@ export default function Stock() {
         <meta property="og:title" content="Gestión de Stock e Inventario Automatizada | Ruka" />
         <meta property="og:description" content="Ingreso automático de stock, múltiples bodegas, traspasos con aprobaciones y roles configurables. Ahorra 15+ horas semanales automatizando tu inventario." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ruka.cl/productos/stock" />
-        <meta property="og:image" content="https://ruka.cl/stock-inventario.png" />
-        <meta property="og:image:secure_url" content="https://ruka.cl/stock-inventario.png" />
+        <meta property="og:url" content="https://www.ruka.ai/productos/stock" />
+        <meta property="og:image" content="https://www.ruka.ai/stock-inventario.png" />
+        <meta property="og:image:secure_url" content="https://www.ruka.ai/stock-inventario.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Interfaz del sistema de gestión de stock e inventario de Ruka - Vista de inventario en bodega central" />
@@ -120,13 +120,13 @@ export default function Stock() {
         <meta name="twitter:site" content="@ruka_ai" />
         <meta name="twitter:title" content="Gestión de Stock e Inventario Automatizada | Ruka" />
         <meta name="twitter:description" content="Ingreso automático de stock, múltiples bodegas, traspasos con aprobaciones. Ahorra 15+ horas/semana automatizando tu inventario." />
-        <meta name="twitter:image" content="https://ruka.cl/stock-inventario.png" />
+        <meta name="twitter:image" content="https://www.ruka.ai/stock-inventario.png" />
         <meta name="twitter:image:alt" content="Interfaz del sistema de gestión de stock e inventario de Ruka" />
         
         {/* Additional SEO Tags */}
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <meta name="author" content="Ruka" />
-        <link rel="canonical" href="https://ruka.cl/productos/stock" />
+        <link rel="canonical" href="https://www.ruka.ai/productos/stock" />
         
         {/* Structured Data */}
         <script type="application/ld+json">

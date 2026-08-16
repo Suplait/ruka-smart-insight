@@ -139,7 +139,7 @@ const PanelControl = () => {
     "provider": {
       "@type": "Organization",
       "name": "Ruka",
-      "url": "https://ruka.cl"
+      "url": "https://www.ruka.ai"
     }
   };
 
@@ -163,9 +163,9 @@ const PanelControl = () => {
         <meta property="og:title" content="Panel de Control Empresarial | Ruka" />
         <meta property="og:description" content="Conecta automáticamente tus ventas, compras e inventario. Visualiza tu negocio en tiempo real sin planillas. Integración con Toteat, Justo, Fudo y más." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ruka.cl/productos/panel-control" />
-        <meta property="og:image" content="https://ruka.cl/panel-control-og.png" />
-        <meta property="og:image:secure_url" content="https://ruka.cl/panel-control-og.png" />
+        <meta property="og:url" content="https://www.ruka.ai/productos/panel-control" />
+        <meta property="og:image" content="https://www.ruka.ai/panel-control-og.png" />
+        <meta property="og:image:secure_url" content="https://www.ruka.ai/panel-control-og.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Panel de Control de Ruka - Dashboard de ventas y estado de resultados en tiempo real" />
@@ -177,13 +177,13 @@ const PanelControl = () => {
         <meta name="twitter:site" content="@ruka_ai" />
         <meta name="twitter:title" content="Panel de Control Empresarial | Ruka" />
         <meta name="twitter:description" content="Conecta tus ventas, compras e inventario. Decisiones en tiempo real sin planillas. Integración con principales POS chilenos." />
-        <meta name="twitter:image" content="https://ruka.cl/panel-control-og.png" />
+        <meta name="twitter:image" content="https://www.ruka.ai/panel-control-og.png" />
         <meta name="twitter:image:alt" content="Panel de Control de Ruka - Dashboard empresarial" />
         
         {/* Additional SEO Tags */}
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <meta name="author" content="Ruka" />
-        <link rel="canonical" href="https://ruka.cl/productos/panel-control" />
+        <link rel="canonical" href="https://www.ruka.ai/productos/panel-control" />
         
         {/* Structured Data */}
         <script type="application/ld+json">

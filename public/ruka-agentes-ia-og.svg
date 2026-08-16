@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+  </defs>
+  <rect width="1200" height="630" fill="#f5f7ff"/>
+  <circle cx="1080" cy="80" r="260" fill="#dfe4ff" opacity=".65"/>
+  <circle cx="100" cy="640" r="230" fill="#eef0ff"/>
+
+  <g transform="translate(72 70)">
+    <rect x="0" y="0" width="40" height="40" rx="13" fill="#5268ef"/>
+    <path d="M12 29 26 15c5-5 13 3 8 8L20 37c-5 5-13-3-8-8Z" fill="#fff"/>
+    <circle cx="38" cy="35" r="6" fill="#171827"/>
+    <text x="58" y="34" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700" fill="#171827">Ruka.ai</text>
+  </g>
+
+  <text x="72" y="208" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing="1.5" fill="#5268ef">AGENTES IA PARA EMPRESAS</text>
+  <text x="72" y="276" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="700" fill="#171827">
+    <tspan x="72" dy="0">Tus sistemas siguen siendo</tspan>
+    <tspan x="72" dy="62">los mismos.</tspan>
+  </text>
+  <text x="72" y="424" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="500" fill="#555b6e">
+    <tspan x="72" dy="0">Ruka hace el trabajo entre ellos.</tspan>
+  </text>
+  <text x="72" y="520" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#6b7185">Compras · Conciliaciones · Costos · Sistemas actualizados</text>
+
+  <rect x="789" y="174" width="337" height="331" rx="70" fill="#cbd2f0" opacity=".35"/>
+  <g transform="translate(805 158)">
+    <rect x="0" y="0" width="305" height="315" rx="56" fill="#5268ef"/>
+    <rect x="30" y="30" width="245" height="164" rx="39" fill="#fff"/>
+    <path d="M97 86h110c13 0 23 10 23 23v27c0 13-10 23-23 23H97c-13 0-23-10-23-23v-27c0-13 10-23 23-23Z" fill="#f1f3ff" stroke="#7384ff" stroke-width="5"/>
+    <circle cx="127" cy="122" r="8" fill="#6377ff"/>
+    <circle cx="177" cy="122" r="8" fill="#6377ff"/>
+    <path d="M107 172c25 19 65 19 90 0" fill="none" stroke="#6377ff" stroke-width="6" stroke-linecap="round"/>
+    <path d="M132 241 171 202c12-12 31 7 19 19l-39 39c-12 12-31-7-19-19Z" fill="#fff"/>
+    <circle cx="194" cy="265" r="15" fill="#fff"/>
+  </g>
+
+  <g fill="none" stroke="#8190f4" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 10" opacity=".8">
+    <path d="M730 220h54"/>
+    <path d="M730 316h54"/>
+    <path d="M730 412h54"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#555b6e">
+    <rect x="620" y="191" width="112" height="58" rx="18" fill="#fff" stroke="#d8ddea"/><text x="676" y="227" text-anchor="middle">SII</text>
+    <rect x="620" y="287" width="112" height="58" rx="18" fill="#fff" stroke="#d8ddea"/><text x="676" y="323" text-anchor="middle">ERP</text>
+    <rect x="620" y="383" width="112" height="58" rx="18" fill="#fff" stroke="#d8ddea"/><text x="676" y="419" text-anchor="middle">BANCO</text>
+  </g>
+</svg>

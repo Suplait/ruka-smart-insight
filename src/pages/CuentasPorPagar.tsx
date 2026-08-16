@@ -107,7 +107,7 @@ export default function CuentasPorPagar() {
         <meta property="og:title" content="Cuentas por Pagar - Automatiza Pagos a Proveedores | Ruka" />
         <meta property="og:description" content="Automatiza tu proceso de cuentas por pagar. Genera planillas bancarias en 1 click, gestiona discrepancias y ahorra +10 horas semanales." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ruka.cl/productos/cuentas-por-pagar" />
+        <meta property="og:url" content="https://www.ruka.ai/productos/cuentas-por-pagar" />
         <meta property="og:image" content={cuentasPorPagarInterface} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="675" />
@@ -121,7 +121,7 @@ export default function CuentasPorPagar() {
         <meta name="twitter:image:alt" content="Interfaz de Cuentas por Pagar - Sistema de gestión automática de facturas y pagos" />
         
         {/* Canonical URL */}
-        <link rel="canonical" href="https://ruka.cl/productos/cuentas-por-pagar" />
+        <link rel="canonical" href="https://www.ruka.ai/productos/cuentas-por-pagar" />
         
         {/* Structured Data */}
         <script type="application/ld+json">

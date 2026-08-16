@@ -1,0 +1,49 @@
+{
+  "title": "Agentes IA para automatizar procesos operativos | Ruka",
+  "description": "Ruka conecta tu SII, ERP, POS, bancos y otras plataformas para registrar compras, ejecutar conciliaciones y mantener tus sistemas actualizados.",
+  "canonicalUrl": "https://www.ruka.ai/",
+  "stagingUrl": "https://www.ruka.ai/v2",
+  "imageUrl": "https://www.ruka.ai/ruka-agentes-ia-og.png",
+  "imageAlt": "Ruka conecta los sistemas de una empresa y ejecuta el trabajo operativo entre ellos",
+  "siteName": "Ruka.ai",
+  "locale": "es_CL",
+  "robots": "noindex, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "faq": [
+    {
+      "question": "¿Tengo que cambiar mi ERP, POS o sistema actual?",
+      "answer": "No. Ruka está diseñada para trabajar sobre las herramientas que ya usa tu empresa. Conectamos las fuentes necesarias y dejamos la información actualizada donde corresponda."
+    },
+    {
+      "question": "¿Qué tipo de procesos puede automatizar Ruka?",
+      "answer": "Procesos repetitivos que implican recibir, leer, cruzar, validar, registrar o actualizar información entre sistemas. Por ejemplo: registro de compras, conciliaciones, actualización de costos, inventario, cálculo de margen y registro en otras plataformas."
+    },
+    {
+      "question": "¿Pueden automatizar un proceso que no aparece en esta página?",
+      "answer": "Sí. Revisamos cómo funciona hoy, qué información utiliza, qué reglas tiene y qué acciones debe ejecutar. Si tiene suficiente estructura y podemos acceder a las fuentes necesarias, podemos evaluar un operador específico para ese flujo."
+    },
+    {
+      "question": "¿Con qué sistemas se puede conectar Ruka?",
+      "answer": "Ruka ya trabaja con SII, POS, ERP, bancos, sistemas contables y otras plataformas. También puede operar con información proveniente de Excel, CSV, XML, PDF, correo, APIs y sistemas propios, dependiendo del caso."
+    },
+    {
+      "question": "¿Cuánto demora empezar a usar Ruka?",
+      "answer": "Depende del proceso y de las conexiones necesarias. Partimos por un alcance concreto y buscamos llegar al primer flujo funcionando lo antes posible antes de ampliar la automatización."
+    },
+    {
+      "question": "¿Ruka funciona sola o mi equipo tiene que aprobar lo que hace?",
+      "answer": "Depende del proceso. Algunas acciones pueden ejecutarse automáticamente y otras pueden requerir validación. Definimos esas reglas según cómo opera tu empresa."
+    },
+    {
+      "question": "¿Qué pasa si Ruka encuentra información que no coincide?",
+      "answer": "El flujo se configura para manejar los casos conocidos y separar aquellos que requieren una decisión. El objetivo es que tu equipo deje de revisar todo y concentre su tiempo donde realmente hace falta."
+    },
+    {
+      "question": "¿Cuánto cuesta Ruka?",
+      "answer": "Los planes estándar parten en $99.990 mensuales y cambian según volumen. Si necesitas un proceso o integración específica, evaluamos el alcance y cotizamos su implementación y operación."
+    },
+    {
+      "question": "¿Cómo sé si Ruka tiene sentido para mi empresa?",
+      "answer": "Si tu equipo dedica horas todas las semanas a mover información, registrar documentos, cruzar sistemas, mantener planillas o revisar datos manualmente, probablemente hay un proceso que vale la pena evaluar."
+    }
+  ]
+}

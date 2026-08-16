@@ -77,18 +77,18 @@ export default function Register() {
         <meta name="keywords" content="software empresarial, gestión de facturas, automatización empresarial, control de costos, gestión financiera, facturas automáticas, software contable, digitalización facturas" />
         
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ruka.ai/register" />
+        <meta property="og:url" content="https://www.ruka.ai/register" />
         <meta property="og:title" content="Ruka.ai | Automatiza la Gestión de Facturas para tu Empresa" />
         <meta property="og:description" content="Software de gestión de facturas empresarial. Automatiza el procesamiento de facturas, monitorea costos y optimiza la gestión financiera en tiempo real. ¡Prueba gratis!" />
         <meta property="og:image" content="/robotshero2.png" />
 
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://ruka.ai/register" />
+        <meta property="twitter:url" content="https://www.ruka.ai/register" />
         <meta property="twitter:title" content="Ruka.ai | Automatiza la Gestión de Facturas para tu Empresa" />
         <meta property="twitter:description" content="Software de gestión de facturas empresarial. Automatiza el procesamiento de facturas, monitorea costos y optimiza la gestión financiera en tiempo real. ¡Prueba gratis!" />
         <meta property="twitter:image" content="/robotshero2.png" />
 
-        <link rel="canonical" href="https://ruka.ai/register" />
+        <link rel="canonical" href="https://www.ruka.ai/register" />
 
         <script type="application/ld+json">
           {`

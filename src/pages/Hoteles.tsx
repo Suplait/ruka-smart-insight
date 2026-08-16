@@ -66,18 +66,18 @@ export default function Hoteles() {
         <meta name="keywords" content="software hoteles, control de costos hotel, gestión hotelera, sistema para hoteles, facturas hotel, automatización hotelera, software hotelería, control de insumos hotel, costos hoteleros" />
         
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ruka.ai/hoteles" />
+        <meta property="og:url" content="https://www.ruka.ai/hoteles" />
         <meta property="og:title" content="Ruka.ai | Control de Costos y Gestión para Hoteles" />
         <meta property="og:description" content="Software de gestión de costos para hoteles. Automatiza el procesamiento de facturas, monitorea precios de insumos y optimiza tus costos operativos en tiempo real. ¡Prueba gratis!" />
         <meta property="og:image" content="/robotshero2.png" />
 
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://ruka.ai/hoteles" />
+        <meta property="twitter:url" content="https://www.ruka.ai/hoteles" />
         <meta property="twitter:title" content="Ruka.ai | Control de Costos y Gestión para Hoteles" />
         <meta property="twitter:description" content="Software de gestión de costos para hoteles. Automatiza el procesamiento de facturas, monitorea precios de insumos y optimiza tus costos operativos en tiempo real. ¡Prueba gratis!" />
         <meta property="twitter:image" content="/robotshero2.png" />
 
-        <link rel="canonical" href="https://ruka.ai/hoteles" />
+        <link rel="canonical" href="https://www.ruka.ai/hoteles" />
 
         <script type="application/ld+json">
           {`

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
-import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import {
@@ -35,6 +34,8 @@ import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import OperationalGapSection from "@/components/landing-v2/OperationalGapSection";
 import { WorkSection } from "@/components/landing-v2/WorkSection";
+import { LandingV2Seo } from "@/components/seo/LandingV2Seo";
+import landingV2Seo from "@/content/landingV2Seo.json";
 
 const CTA_LABEL = "Agendar 20 min";
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -218,53 +219,7 @@ const plans = [
   },
 ] as const;
 
-const faqItems = [
-  {
-    question: "¿Tengo que cambiar mi ERP, POS o sistema actual?",
-    answer:
-      "No. Ruka está diseñada para trabajar sobre las herramientas que ya usa tu empresa. Conectamos las fuentes necesarias y dejamos la información actualizada donde corresponda.",
-  },
-  {
-    question: "¿Qué tipo de procesos puede automatizar Ruka?",
-    answer:
-      "Procesos repetitivos que implican recibir, leer, cruzar, validar, registrar o actualizar información entre sistemas. Por ejemplo: registro de compras, conciliaciones, actualización de costos, inventario, cálculo de margen y registro en otras plataformas.",
-  },
-  {
-    question: "¿Pueden automatizar un proceso que no aparece en esta página?",
-    answer:
-      "Sí. Revisamos cómo funciona hoy, qué información utiliza, qué reglas tiene y qué acciones debe ejecutar. Si tiene suficiente estructura y podemos acceder a las fuentes necesarias, podemos evaluar un operador específico para ese flujo.",
-  },
-  {
-    question: "¿Con qué sistemas se puede conectar Ruka?",
-    answer:
-      "Ruka ya trabaja con SII, POS, ERP, bancos, sistemas contables y otras plataformas. También puede operar con información proveniente de Excel, CSV, XML, PDF, correo, APIs y sistemas propios, dependiendo del caso.",
-  },
-  {
-    question: "¿Cuánto demora empezar a usar Ruka?",
-    answer:
-      "Depende del proceso y de las conexiones necesarias. Partimos por un alcance concreto y buscamos llegar al primer flujo funcionando lo antes posible antes de ampliar la automatización.",
-  },
-  {
-    question: "¿Ruka funciona sola o mi equipo tiene que aprobar lo que hace?",
-    answer:
-      "Depende del proceso. Algunas acciones pueden ejecutarse automáticamente y otras pueden requerir validación. Definimos esas reglas según cómo opera tu empresa.",
-  },
-  {
-    question: "¿Qué pasa si Ruka encuentra información que no coincide?",
-    answer:
-      "El flujo se configura para manejar los casos conocidos y separar aquellos que requieren una decisión. El objetivo es que tu equipo deje de revisar todo y concentre su tiempo donde realmente hace falta.",
-  },
-  {
-    question: "¿Cuánto cuesta Ruka?",
-    answer:
-      "Los planes estándar parten en $99.990 mensuales y cambian según volumen. Si necesitas un proceso o integración específica, evaluamos el alcance y cotizamos su implementación y operación.",
-  },
-  {
-    question: "¿Cómo sé si Ruka tiene sentido para mi empresa?",
-    answer:
-      "Si tu equipo dedica horas todas las semanas a mover información, registrar documentos, cruzar sistemas, mantener planillas o revisar datos manualmente, probablemente hay un proceso que vale la pena evaluar.",
-  },
-] as const;
+const faqItems = landingV2Seo.faq;
 
 export default function LandingV2() {
   const navigate = useNavigate();
@@ -273,14 +228,7 @@ export default function LandingV2() {
   return (
     <main className="min-h-[100dvh] bg-[#fbfcff] text-[#171827]">
       <ScrollProgress />
-      <Helmet>
-        <title>Ruka.ai | Agentes IA para automatizar procesos operativos</title>
-        <meta
-          name="description"
-          content="Ruka conecta SII, ERP, POS, bancos y otras plataformas para automatizar el trabajo operativo que tu equipo todavía hace manualmente."
-        />
-        <link rel="canonical" href="https://ruka.ai/v2" />
-      </Helmet>
+      <LandingV2Seo />
 
       <Navbar
         sectionLinks={navItems}

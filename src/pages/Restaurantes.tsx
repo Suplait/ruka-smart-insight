@@ -82,18 +82,18 @@ export default function Restaurantes() {
         <meta name="keywords" content="software restaurantes, control de costos restaurante, food cost, gestión de restaurantes, sistema para restaurantes, facturas restaurante, automatización restaurantes, software cocina, control de insumos restaurante, costos restaurante" />
         
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ruka.ai/restaurantes" />
+        <meta property="og:url" content="https://www.ruka.ai/restaurantes" />
         <meta property="og:title" content="Ruka.ai | Control de Food Cost y Gastos para Restaurantes" />
         <meta property="og:description" content="Software de gestión de costos para restaurantes. Automatiza el procesamiento de facturas, monitorea precios de insumos y optimiza tu food cost en tiempo real. ¡Prueba gratis!" />
         <meta property="og:image" content="/robotshero2.png" />
 
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://ruka.ai/restaurantes" />
+        <meta property="twitter:url" content="https://www.ruka.ai/restaurantes" />
         <meta property="twitter:title" content="Ruka.ai | Control de Food Cost y Gastos para Restaurantes" />
         <meta property="twitter:description" content="Software de gestión de costos para restaurantes. Automatiza el procesamiento de facturas, monitorea precios de insumos y optimiza tu food cost en tiempo real. ¡Prueba gratis!" />
         <meta property="twitter:image" content="/robotshero2.png" />
 
-        <link rel="canonical" href="https://ruka.ai/restaurantes" />
+        <link rel="canonical" href="https://www.ruka.ai/restaurantes" />
 
         <script type="application/ld+json">
           {`

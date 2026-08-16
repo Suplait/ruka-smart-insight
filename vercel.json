@@ -20,6 +20,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/v2", "destination": "/v2/index.html" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }
