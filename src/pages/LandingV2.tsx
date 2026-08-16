@@ -136,6 +136,12 @@ const ecosystemGroups: readonly EcosystemGroup[] = [
 ] as const;
 
 const customerLogos = [
+  { name: "Tom Bar", image: "/customer-logos/13-tom-bar.webp", className: "max-h-14 max-w-[5rem]" },
+  { name: "Roof Burger", image: "/customer-logos/14-roof-burger.webp", className: "max-h-14 max-w-[6rem]" },
+  { name: "Distribuidora Milagros", image: "/customer-logos/15-distribuidora-milagros.svg", className: "max-h-11 max-w-[9rem]" },
+  { name: "MIT", image: "/customer-logos/16-mit.webp", className: "max-h-10 max-w-[8rem]" },
+  { name: "Toni Lautaro", image: "/customer-logos/17-toni-lautaro.webp", className: "max-h-14 max-w-[5rem]" },
+  { name: "Rocoto", image: "/customer-logos/18-rocoto.webp", className: "max-h-11 max-w-[9rem]" },
   { name: "La Virgen", image: "/customer-logos/01-la-virgen.webp", className: "max-h-9 max-w-[9rem]" },
   { name: "Asfaltos del Maule", image: "/customer-logos/02-asfaltos-del-maule.webp", className: "max-h-11 max-w-[9rem]" },
   { name: "Barbazul", image: "/customer-logos/03-barbazul.webp", className: "max-h-14 max-w-[7.5rem]" },
@@ -148,12 +154,6 @@ const customerLogos = [
   { name: "Ferreléctrica", image: "/customer-logos/10-ferrelectrica.webp", className: "max-h-10 max-w-[9rem]" },
   { name: "Delivery Gourmet", image: "/customer-logos/11-delivery-gourmet.webp", className: "max-h-10 max-w-[9rem]" },
   { name: "Casanova Group", image: "/customer-logos/12-customer-mark.webp", className: "social-proof-logo-image--solid max-h-8 max-w-[9rem]" },
-  { name: "Tom Bar", image: "/customer-logos/13-tom-bar.webp", className: "max-h-14 max-w-[5rem]" },
-  { name: "Roof Burger", image: "/customer-logos/14-roof-burger.webp", className: "max-h-14 max-w-[6rem]" },
-  { name: "Distribuidora Milagros", image: "/customer-logos/15-distribuidora-milagros.svg", className: "max-h-11 max-w-[9rem]" },
-  { name: "MIT", image: "/customer-logos/16-mit.webp", className: "max-h-10 max-w-[8rem]" },
-  { name: "Toni Lautaro", image: "/customer-logos/17-toni-lautaro.webp", className: "max-h-14 max-w-[5rem]" },
-  { name: "Rocoto", image: "/customer-logos/18-rocoto.webp", className: "max-h-11 max-w-[9rem]" },
 ] as const;
 
 const plans = [

@@ -1,6 +1,6 @@
 # Customer logo sources and order
 
-The source files were supplied locally in `/Users/camilosilva/Downloads/logos-buyers` on 2026-08-16. The numeric order below is preserved in the Landing V2 social-proof marquee.
+The source files were supplied locally in `/Users/camilosilva/Downloads/logos-buyers` on 2026-08-16. The list below records the original numeric source order. The Landing V2 marquee rotates it by six positions and displays `13–18`, followed by `1–12`.
 
 1. La Virgen — `1.png`
 2. Asfaltos del Maule — `2.png`
