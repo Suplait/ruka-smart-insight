@@ -12,8 +12,8 @@ export type FounderProfile = {
 export const founders: readonly FounderProfile[] = [
   {
     name: "Camilo Silva",
-    role: "CEO & Co-founder",
-    bio: "Ingeniero Civil de la UC. Antes de Ruka cofundó y lideró Etiner, Etiner Labs y Suplait, trabajando en producto, growth y construcción de negocios tecnológicos en Latinoamérica y Estados Unidos.",
+    role: "CEO · Cofundador",
+    bio: "Soy Ingeniero Civil de la UC. Antes de Ruka cofundé y lideré Etiner, Etiner Labs y Suplait. He trabajado principalmente en producto, growth y construcción de negocios tecnológicos en Latinoamérica y Estados Unidos.",
     expertise: ["Producto", "Growth", "Negocios tecnológicos"],
     image: "/about/founders/camilo.webp",
     imageWidth: 600,
@@ -22,8 +22,8 @@ export const founders: readonly FounderProfile[] = [
   },
   {
     name: "Enzo Zerega",
-    role: "CTO & Co-founder",
-    bio: "Ingeniero Civil con major y magíster en Computer Science de la UC. Programa desde los 13 años y ha construido plataformas de alta concurrencia desde los primeros días de Etiner.",
+    role: "CTO · Cofundador",
+    bio: "Soy Ingeniero Civil con major y magíster en Computer Science de la UC. Programo desde los 13 años y, desde los primeros días de Etiner, he construido la arquitectura y tecnología detrás de nuestros productos.",
     expertise: ["Software", "Arquitectura", "Datos"],
     image: "/about/founders/enzo.webp",
     imageWidth: 1200,
@@ -32,8 +32,8 @@ export const founders: readonly FounderProfile[] = [
   },
   {
     name: "Lorenzo Verdugo",
-    role: "CGO & Co-founder",
-    bio: "Ingeniero Civil Industrial UDD con formación en innovación vinculada a Stanford Technology Ventures Program. Ha liderado operaciones y growth desde Etiner hasta Ruka.",
+    role: "CGO · Cofundador",
+    bio: "Soy Ingeniero Civil Industrial de la UDD y también me formé en innovación en un programa vinculado a Stanford Technology Ventures Program. Desde Etiner he trabajado principalmente en operaciones y growth.",
     expertise: ["Growth", "Operaciones", "Go-to-market"],
     image: "/about/founders/lorenzo.webp",
     imageWidth: 600,
@@ -42,8 +42,8 @@ export const founders: readonly FounderProfile[] = [
   },
   {
     name: "Benjamín Vega",
-    role: "CFO & Co-founder",
-    bio: "Ingeniero Civil Industrial UDD, emprendedor y parte del equipo fundador desde Etiner. Lidera finanzas, estructura y operación para que Ruka pueda crecer con disciplina.",
+    role: "CFO · Cofundador",
+    bio: "Soy Ingeniero Civil Industrial de la UDD y emprendedor. Soy parte del equipo fundador desde Etiner y, desde entonces, he trabajado principalmente en finanzas, operación y estructura.",
     expertise: ["Finanzas", "Operaciones", "Estrategia"],
     image: "/about/founders/benjamin.webp",
     imageWidth: 1200,

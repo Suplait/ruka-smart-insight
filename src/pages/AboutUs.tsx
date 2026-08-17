@@ -13,17 +13,17 @@ const principles = [
   {
     number: "01",
     title: "Ir al problema",
-    copy: "Las mejores decisiones casi siempre aparecieron hablando con usuarios o trabajando directamente donde ocurría el problema.",
+    copy: "Nuestras mejores decisiones aparecieron hablando con usuarios o metiéndonos directamente donde ocurría el problema.",
   },
   {
     number: "02",
     title: "No enamorarnos de la solución",
-    copy: "PortSalud murió. Etiner tuvo que detenerse. Suplait no crecía. Cambiar de dirección a tiempo también es parte del trabajo.",
+    copy: "PortSalud murió. Etiner tuvo que detenerse. Suplait no estaba creciendo. Aprendimos que cambiar de dirección a tiempo también es parte del trabajo.",
   },
   {
     number: "03",
     title: "La tecnología tiene que hacer trabajo",
-    copy: "Agregar una herramienta más no basta. Lo que nos interesa es sacar trabajo manual de los equipos.",
+    copy: "No queremos agregar otra herramienta a los sistemas de una empresa. Queremos sacar trabajo manual del equipo.",
   },
 ] as const;
 
@@ -39,32 +39,35 @@ const operatingWords = ["REGISTRAR", "CRUZAR", "CONCILIAR", "ACTUALIZAR", "CALCU
 function HeroCollage() {
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
-  const photoY = useTransform(scrollYProgress, [0, 0.22], [0, -34]);
+  const rukaPhotoY = useTransform(scrollYProgress, [0, 0.22], [0, -22]);
+  const etinerPhotoY = useTransform(scrollYProgress, [0, 0.22], [0, -34]);
 
   return (
-    <motion.div className="relative min-h-[29rem] sm:min-h-[38rem] lg:min-h-[39rem]" style={{ y: reduceMotion ? 0 : photoY }}>
-      <EditorialImage
-        src="/about/story/founders-ruka.webp"
-        alt="Camilo, Enzo, Lorenzo y Benjamín, los cuatro fundadores de Ruka"
-        caption="Ruka · hoy"
-        width={1000}
-        height={1000}
-        loading="eager"
-        className="absolute right-0 top-0 z-10 w-[78%] sm:w-[72%]"
-        imageClassName="aspect-square h-full w-full object-cover"
-      />
-      <EditorialImage
-        src="/about/story/etiner-founders.webp"
-        alt="Los cuatro fundadores de Ruka presentando Etiner"
-        caption="Etiner · el equipo fundador"
-        width={1024}
-        height={632}
-        loading="eager"
-        className="absolute bottom-2 left-0 z-20 w-[61%] sm:bottom-0 sm:w-[56%]"
-        imageClassName="aspect-[16/10] h-full w-full object-cover"
-        delay={0.12}
-      />
-    </motion.div>
+    <div className="relative min-h-[29rem] sm:min-h-[38rem] lg:min-h-[39rem]">
+      <motion.div className="absolute right-0 top-0 z-10 w-[78%] sm:w-[72%]" style={{ y: reduceMotion ? 0 : rukaPhotoY }}>
+        <EditorialImage
+          src="/about/story/founders-ruka.webp"
+          alt="Camilo, Enzo, Lorenzo y Benjamín, los cuatro fundadores de Ruka"
+          caption="Ruka · hoy"
+          width={1000}
+          height={1000}
+          loading="eager"
+          imageClassName="aspect-square h-full w-full object-cover"
+        />
+      </motion.div>
+      <motion.div className="absolute bottom-2 left-0 z-20 w-[61%] sm:bottom-0 sm:w-[56%]" style={{ y: reduceMotion ? 0 : etinerPhotoY }}>
+        <EditorialImage
+          src="/about/story/etiner-founders.webp"
+          alt="Los cuatro fundadores de Ruka presentando Etiner"
+          caption="Etiner · ahí ya estábamos los cuatro"
+          width={1024}
+          height={632}
+          loading="eager"
+          imageClassName="aspect-[16/10] h-full w-full object-cover"
+          delay={0.12}
+        />
+      </motion.div>
+    </div>
   );
 }
 
@@ -78,7 +81,7 @@ function AboutHero() {
             <p className="text-xs font-semibold tracking-[0.16em] text-primary">QUIÉNES SOMOS</p>
           </AboutReveal>
           <AboutReveal delay={0.05}>
-            <h1 className="mt-6 text-[clamp(3.7rem,7vw,7.4rem)] font-semibold leading-[0.88] tracking-[-0.055em] text-[#171827]">
+            <h1 className="mt-6 text-[clamp(3.7rem,7vw,6rem)] font-semibold leading-[0.92] tracking-[-0.04em] text-[#171827]">
               No empezamos con Ruka.
             </h1>
           </AboutReveal>
@@ -89,7 +92,7 @@ function AboutHero() {
           </AboutReveal>
           <AboutReveal delay={0.15}>
             <p className="mt-7 max-w-xl text-[1.0625rem] leading-8 text-[#5b6275]">
-              Somos el equipo detrás de Ruka. Antes hubo turismo, marketplaces, una pandemia, una agencia, Suplait y más de una decisión difícil. Cada etapa dejó algo dentro de lo que construimos hoy.
+              Somos los cuatro fundadores detrás de Ruka. Antes hubo turismo, una pandemia, una agencia, Suplait y más de una vez en que tuvimos que cambiar de dirección. Cada etapa dejó algo dentro de lo que construimos hoy.
             </p>
           </AboutReveal>
           <AboutReveal delay={0.2} className="mt-10">
@@ -117,19 +120,19 @@ function EditorialIntro() {
             <h2 id="intro-heading" className="text-5xl font-semibold leading-[0.98] tracking-[-0.045em] text-[#171827] sm:text-7xl">
               Los productos cambiaron.
               <br />
-              <span className="text-primary">El equipo fundador no.</span>
+              <span className="text-primary">Nosotros seguimos juntos.</span>
             </h2>
           </AboutReveal>
           <AboutReveal delay={0.08} className="lg:self-end">
             <p className="text-lg leading-8 text-[#50576a]">
-              Camilo, Lorenzo, Benja y Enzo comenzaron a construir juntos mientras todavía estaban terminando la universidad. Desde entonces cambiaron de industria, producto, modelo de negocio y país más de una vez.
+              Nuestra historia como equipo empezó antes de que existiera Ruka. Cambiamos de industria, producto, modelo de negocio y país más de una vez. Los cuatro seguimos acá.
             </p>
           </AboutReveal>
         </div>
 
         <AboutReveal className="grid gap-6 border-b border-[#ccd3e1] py-7 text-xs font-semibold uppercase tracking-[0.12em] text-[#656c7f] sm:grid-cols-3 sm:items-center">
           <span>Casi una década construyendo juntos</span>
-          <span>4 founders</span>
+          <span>4 fundadores</span>
           <span>Producto · Tecnología · Growth · Operaciones · Finanzas</span>
         </AboutReveal>
       </div>
@@ -172,7 +175,7 @@ function OrganizationSection() {
           <AboutReveal>
             <p className="text-xs font-semibold tracking-[0.14em] text-primary">RUKA.AI</p>
             <h2 id="organization-heading" className="mt-5 text-4xl font-semibold tracking-[-0.04em] text-[#171827] sm:text-5xl">
-              Una compañía hecha para automatizar trabajo operativo real.
+              Desde Santiago estamos construyendo Ruka para automatizar trabajo operativo real.
             </h2>
           </AboutReveal>
           <AboutReveal delay={0.08} className="grid gap-8 sm:grid-cols-2">
@@ -232,7 +235,8 @@ function ClosingSection() {
             </h2>
             <div className="mt-7 max-w-2xl space-y-4 text-lg leading-8 text-[#596073]">
               <p>Las empresas ya tienen software, datos y sistemas.</p>
-              <p>Aun así, una enorme cantidad de trabajo sigue ocurriendo manualmente entre ellos. Eso es lo que estamos construyendo Ruka para resolver.</p>
+              <p>Aun así, una enorme cantidad de trabajo sigue ocurriendo manualmente entre ellos.</p>
+              <p>Para eso estamos construyendo Ruka.</p>
             </div>
           </AboutReveal>
 
@@ -253,7 +257,7 @@ function ClosingSection() {
         </div>
 
         <AboutReveal className="mt-24 border-y border-[#cbd3e2] py-14 sm:mt-32 sm:py-20">
-          <p className="max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-[#171827] sm:text-7xl lg:text-8xl">
+          <p className="max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.04em] text-[#171827] sm:text-7xl lg:text-[6rem]">
             Tu empresa ya tiene los sistemas.
             <br />
             <span className="text-primary">Ruka hace el trabajo que queda entre medio.</span>
@@ -262,8 +266,8 @@ function ClosingSection() {
 
         <AboutReveal className="mt-16 grid gap-8 bg-[#eef1ff] px-6 py-10 sm:px-10 sm:py-12 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
-            <p className="text-xs font-semibold tracking-[0.14em] text-primary">AHORA SABES DE DÓNDE VENIMOS</p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.035em] text-[#171827] sm:text-4xl">Mira lo que estamos construyendo hoy.</h2>
+            <p className="text-xs font-semibold tracking-[0.14em] text-primary">ESTA ES LA HISTORIA QUE NOS TRAJO HASTA ACÁ</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.035em] text-[#171827] sm:text-4xl">Esto es lo que estamos construyendo ahora.</h2>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link

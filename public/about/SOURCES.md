@@ -8,6 +8,11 @@ Las imágenes de esta carpeta se descargaron y optimizaron localmente para evita
 - `story/etiner-validation.webp`: captura de la publicación usada para validar itinerarios antes de construir Etiner. Fuente: “Our Story”.
 - `story/etiner-founders.webp`: los cuatro fundadores en un stand de Etiner. Fuente: “Our Story”.
 - `story/etiner-latin-america.webp`: registro fotográfico de viajes y operación de Etiner en Latinoamérica. Fuente: “Our Story”.
+- `story/etiner-conversational-concept.webp`: concepto de producto de 2017 que proponía crear itinerarios conversacionales a partir de datos compartidos por viajeros. Fuente: “Our Story”, Year 2017.
+- `story/etiner-san-pedro-2017.webp`: fundadores trabajando con sus computadores desde San Pedro de Atacama durante la etapa de validación en terreno. Fuente: “Our Story”, Year 2017.
+- `story/etiner-itinerary-sheet.webp`: Google Sheet real con el calendario usado para operar un itinerario de experiencias en San Pedro. Fuente: “Our Story”, Year 2017.
+- `story/etiner-platform-2018.webp`: primera plataforma propia de Etiner con experiencias organizadas dentro de un itinerario. Fuente: “Our Story”, Year 2018.
+- `story/etiner-500-mexico.webp`: fundadores de Etiner en las oficinas de 500 Startups en México. Fuente: “Our Story”, Year 2019.
 - `story/pandemic-2020.webp`: registro del regreso durante el cierre del turismo en marzo de 2020. Fuente: “Our Story”.
 - `story/suplait-platform.webp`: captura de la plataforma original de Suplait. Fuente: “Our Story”.
 - `story/suplait-categorization.webp`: captura de las herramientas de categorización de compras que precedieron a Ruka. Fuente: “Our Story”.

@@ -223,7 +223,7 @@ for (const question of faqSchema?.mainEntity ?? []) {
 const aboutHtml = await readFile(routeFile("/about"), "utf8");
 const aboutVisibleText = textContent(aboutHtml);
 for (const requiredText of [
-  "Los productos cambiaron. El equipo fundador no.",
+  "Los productos cambiaron. Nosotros seguimos juntos.",
   "Antes de saber construir una startup, ya estábamos construyendo una.",
   "Un jueves nuestras ventas llegaron a cero.",
   "Ruka apareció cuando dejamos de defender la idea que teníamos.",

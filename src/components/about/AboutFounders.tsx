@@ -38,7 +38,7 @@ function Founder({ person, index }: { person: FounderProfile; index: number }) {
           loading="eager"
           decoding="async"
           className="h-full w-full object-cover object-top grayscale contrast-[0.96]"
-          whileHover={motionEnabled ? { scale: 1.02 } : undefined}
+          whileHover={motionEnabled ? { scale: 1.015 } : undefined}
           transition={{ duration: 0.55, ease: easeOut }}
         />
       </div>
@@ -71,12 +71,12 @@ export function AboutFounders() {
     <section id="founders" aria-labelledby="founders-heading" className="bg-[#f4f5f8] py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <AboutReveal className="max-w-3xl">
-          <p className="text-xs font-semibold tracking-[0.14em] text-primary">FOUNDERS</p>
+          <p className="text-xs font-semibold tracking-[0.14em] text-primary">FUNDADORES</p>
           <h2
             id="founders-heading"
             className="mt-5 text-4xl font-semibold leading-[1.06] tracking-[-0.04em] text-[#171827] sm:text-6xl"
           >
-            Los cuatro que empezaron esto.
+            Seguimos siendo los cuatro que empezamos esto.
           </h2>
           <p className="mt-5 text-lg leading-8 text-[#596073]">
             Casi una década después, seguimos construyendo juntos.
