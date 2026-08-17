@@ -18,7 +18,7 @@ export default function CuentasPorPagar() {
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
-      let target = new Date();
+      const target = new Date();
       target.setHours(12, 0, 0, 0);
       if (now.getHours() >= 12) {
         target.setDate(target.getDate() + 1);
@@ -101,14 +101,14 @@ export default function CuentasPorPagar() {
       <Helmet>
         <title>Cuentas por Pagar - Automatiza Pagos a Proveedores | Ruka</title>
         <meta name="description" content="Automatiza tu proceso de cuentas por pagar. Genera planillas bancarias en 1 click, gestiona discrepancias y ahorra +10 horas semanales. Desde $39.990/mes." />
-        <meta name="keywords" content="cuentas por pagar, automatización pagos, planilla bancaria, gestión proveedores, recepción inteligente, control facturas, software contabilidad" />
         
         {/* Open Graph */}
         <meta property="og:title" content="Cuentas por Pagar - Automatiza Pagos a Proveedores | Ruka" />
         <meta property="og:description" content="Automatiza tu proceso de cuentas por pagar. Genera planillas bancarias en 1 click, gestiona discrepancias y ahorra +10 horas semanales." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.ruka.ai/productos/cuentas-por-pagar" />
-        <meta property="og:image" content={cuentasPorPagarInterface} />
+        <meta property="og:image" content="https://www.ruka.ai/ruka-agentes-ia-og.png" />
+        <meta property="og:image:secure_url" content="https://www.ruka.ai/ruka-agentes-ia-og.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="675" />
         <meta property="og:image:alt" content="Interfaz de Cuentas por Pagar - Sistema de gestión automática de facturas y pagos" />
@@ -117,9 +117,13 @@ export default function CuentasPorPagar() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Cuentas por Pagar - Automatiza Pagos a Proveedores | Ruka" />
         <meta name="twitter:description" content="Automatiza tu proceso de cuentas por pagar. Genera planillas bancarias en 1 click y ahorra +10 horas semanales." />
-        <meta name="twitter:image" content={cuentasPorPagarInterface} />
+        <meta name="twitter:image" content="https://www.ruka.ai/ruka-agentes-ia-og.png" />
         <meta name="twitter:image:alt" content="Interfaz de Cuentas por Pagar - Sistema de gestión automática de facturas y pagos" />
         
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta property="og:site_name" content="Ruka.ai" />
+        <meta property="og:locale" content="es_CL" />
+
         {/* Canonical URL */}
         <link rel="canonical" href="https://www.ruka.ai/productos/cuentas-por-pagar" />
         

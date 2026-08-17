@@ -1,0 +1,35 @@
+{
+  "id": "https://www.ruka.ai/#organization",
+  "name": "Ruka.ai",
+  "legalNames": ["Suplait SpA", "Suplait LLC"],
+  "url": "https://www.ruka.ai/",
+  "logo": "https://www.ruka.ai/logo.png",
+  "description": "Agentes IA que ejecutan trabajo operativo entre los sistemas que una empresa ya usa.",
+  "sameAs": [
+    "https://www.linkedin.com/company/rukaai/",
+    "https://www.instagram.com/ruka__ai/",
+    "https://x.com/ruka__ai"
+  ],
+  "contactPoint": {
+    "contactType": "sales",
+    "url": "https://www.ruka.ai/register",
+    "availableLanguage": ["Spanish"]
+  },
+  "addresses": [
+    {
+      "label": "Santiago, Chile",
+      "streetAddress": "General del Canto 50",
+      "addressLocality": "Providencia",
+      "addressRegion": "Región Metropolitana",
+      "addressCountry": "CL"
+    },
+    {
+      "label": "Delaware, USA",
+      "streetAddress": "1209 Orange St.",
+      "addressLocality": "Wilmington",
+      "addressRegion": "Delaware",
+      "postalCode": "19801",
+      "addressCountry": "US"
+    }
+  ]
+}

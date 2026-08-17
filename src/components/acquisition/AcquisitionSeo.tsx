@@ -1,5 +1,12 @@
 import { Helmet } from "react-helmet";
 import acquisitionFaq from "@/content/acquisitionFaq.json";
+import {
+  createOrganizationSchema,
+  createSoftwareSchema,
+  createWebsiteSchema,
+  softwareId,
+  websiteId,
+} from "@/utils/structuredData";
 
 type AcquisitionSeoProps = {
   title: string;
@@ -20,24 +27,8 @@ export function AcquisitionSeo({
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://www.ruka.ai/#organization",
-        name: "Ruka.ai",
-        url: "https://www.ruka.ai/",
-        logo: {
-          "@type": "ImageObject",
-          url: "https://www.ruka.ai/logo.png",
-        },
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.ruka.ai/#website",
-        url: "https://www.ruka.ai/",
-        name: "Ruka.ai",
-        inLanguage: "es-CL",
-        publisher: { "@id": "https://www.ruka.ai/#organization" },
-      },
+      createOrganizationSchema(),
+      createWebsiteSchema(),
       {
         "@type": "WebPage",
         "@id": `${canonicalUrl}#webpage`,
@@ -45,20 +36,11 @@ export function AcquisitionSeo({
         name: pageName,
         description,
         inLanguage: "es-CL",
-        isPartOf: { "@id": "https://www.ruka.ai/#website" },
-        about: { "@id": "https://www.ruka.ai/#software" },
+        isPartOf: { "@id": websiteId },
+        about: { "@id": softwareId },
       },
       {
-        "@type": "SoftwareApplication",
-        "@id": "https://www.ruka.ai/#software",
-        name: "Ruka",
-        url: "https://www.ruka.ai/",
-        description:
-          "Agentes IA que ejecutan trabajo operativo sobre los sistemas que ya usa una empresa.",
-        applicationCategory: "BusinessApplication",
-        operatingSystem: "Web",
-        inLanguage: "es-CL",
-        publisher: { "@id": "https://www.ruka.ai/#organization" },
+        ...createSoftwareSchema(),
         featureList: features,
       },
       {

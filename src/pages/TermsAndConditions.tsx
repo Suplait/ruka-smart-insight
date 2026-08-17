@@ -12,7 +12,13 @@ export default function TermsAndConditions() {
     <div className="min-h-screen flex flex-col">
       <Helmet>
         <title>Términos y Condiciones | Ruka.ai</title>
-        <meta name="description" content="Términos y condiciones de uso de la plataforma Ruka.ai" />
+        <meta name="description" content="Revisa los términos y condiciones aplicables al uso de los servicios y la plataforma de Ruka.ai." />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.ruka.ai/terms" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Términos y Condiciones | Ruka.ai" />
+        <meta property="og:description" content="Términos y condiciones aplicables al uso de los servicios de Ruka.ai." />
+        <meta property="og:url" content="https://www.ruka.ai/terms" />
       </Helmet>
       
       <Navbar />

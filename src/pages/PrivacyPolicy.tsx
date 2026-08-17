@@ -12,7 +12,13 @@ export default function PrivacyPolicy() {
     <div className="min-h-screen flex flex-col">
       <Helmet>
         <title>Política de Privacidad | Ruka.ai</title>
-        <meta name="description" content="Política de privacidad de la plataforma Ruka.ai" />
+        <meta name="description" content="Conoce cómo Ruka.ai recopila, usa, protege y conserva la información de clientes y usuarios de su plataforma." />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.ruka.ai/privacy" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Política de Privacidad | Ruka.ai" />
+        <meta property="og:description" content="Cómo Ruka.ai recopila, usa y protege la información de clientes y usuarios." />
+        <meta property="og:url" content="https://www.ruka.ai/privacy" />
       </Helmet>
       
       <Navbar />

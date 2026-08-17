@@ -157,15 +157,14 @@ const PanelControl = () => {
       <Helmet>
         <title>Panel de Control Empresarial - Decisiones en Tiempo Real | Ruka</title>
         <meta name="description" content="Transforma tus datos de ventas, compras e inventario en decisiones inteligentes. Panel de control con integración automática a Toteat, Justo, Fudo y más POS. Desde $99.990/mes IVA incluido." />
-        <meta name="keywords" content="panel de control empresarial, dashboard ventas, estado de resultados automatizado, integración POS chile, toteat, justo, fudo, análisis ventas, indicadores financieros, business intelligence, KPI dashboard" />
         
         {/* Open Graph */}
         <meta property="og:title" content="Panel de Control Empresarial | Ruka" />
         <meta property="og:description" content="Conecta automáticamente tus ventas, compras e inventario. Visualiza tu negocio en tiempo real sin planillas. Integración con Toteat, Justo, Fudo y más." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.ruka.ai/productos/panel-control" />
-        <meta property="og:image" content="https://www.ruka.ai/panel-control-og.png" />
-        <meta property="og:image:secure_url" content="https://www.ruka.ai/panel-control-og.png" />
+        <meta property="og:image" content="https://www.ruka.ai/ruka-agentes-ia-og.png" />
+        <meta property="og:image:secure_url" content="https://www.ruka.ai/ruka-agentes-ia-og.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Panel de Control de Ruka - Dashboard de ventas y estado de resultados en tiempo real" />
@@ -174,10 +173,10 @@ const PanelControl = () => {
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@ruka_ai" />
+        <meta name="twitter:site" content="@ruka__ai" />
         <meta name="twitter:title" content="Panel de Control Empresarial | Ruka" />
         <meta name="twitter:description" content="Conecta tus ventas, compras e inventario. Decisiones en tiempo real sin planillas. Integración con principales POS chilenos." />
-        <meta name="twitter:image" content="https://www.ruka.ai/panel-control-og.png" />
+        <meta name="twitter:image" content="https://www.ruka.ai/ruka-agentes-ia-og.png" />
         <meta name="twitter:image:alt" content="Panel de Control de Ruka - Dashboard empresarial" />
         
         {/* Additional SEO Tags */}

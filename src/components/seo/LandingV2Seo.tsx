@@ -1,43 +1,21 @@
 import { Helmet } from "react-helmet";
 import seo from "@/content/landingV2Seo.json";
+import {
+  createOrganizationSchema,
+  createSoftwareSchema,
+  createWebsiteSchema,
+  organizationId,
+  softwareId,
+} from "@/utils/structuredData";
 
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
+    createOrganizationSchema(),
+    createWebsiteSchema(),
     {
-      "@type": "Organization",
-      "@id": `${seo.canonicalUrl}#organization`,
-      name: "Ruka.ai",
-      url: seo.canonicalUrl,
-      logo: {
-        "@type": "ImageObject",
-        url: "https://www.ruka.ai/logo.png",
-      },
-      sameAs: [
-        "https://www.linkedin.com/company/rukaai/",
-        "https://www.instagram.com/ruka__ai/",
-        "https://x.com/ruka__ai",
-      ],
-    },
-    {
-      "@type": "WebSite",
-      "@id": `${seo.canonicalUrl}#website`,
-      url: seo.canonicalUrl,
-      name: seo.siteName,
-      inLanguage: "es-CL",
-      publisher: { "@id": `${seo.canonicalUrl}#organization` },
-    },
-    {
-      "@type": "SoftwareApplication",
-      "@id": `${seo.canonicalUrl}#software`,
-      name: "Ruka",
-      url: seo.canonicalUrl,
-      description: seo.description,
+      ...createSoftwareSchema(seo.description),
       image: seo.imageUrl,
-      applicationCategory: "BusinessApplication",
-      operatingSystem: "Web",
-      inLanguage: "es-CL",
-      publisher: { "@id": `${seo.canonicalUrl}#organization` },
       offers: {
         "@type": "AggregateOffer",
         priceCurrency: "CLP",
@@ -63,6 +41,17 @@ const structuredData = {
           text: item.answer,
         },
       })),
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${seo.canonicalUrl}#webpage`,
+      url: seo.canonicalUrl,
+      name: seo.title,
+      description: seo.description,
+      inLanguage: "es-CL",
+      isPartOf: { "@id": "https://www.ruka.ai/#website" },
+      about: { "@id": softwareId },
+      publisher: { "@id": organizationId },
     },
   ],
 };

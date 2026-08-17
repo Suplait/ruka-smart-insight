@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="relative bg-[#f2f4f8] border-t border-gray-200/60 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
           {/* Columna 1: Logo e info */}
           <div className="space-y-4 lg:col-span-2">
             <Link to="/">
@@ -87,6 +87,36 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+
+          <div>
+            <h4 className="font-medium mb-4 text-gray-900">Compañía</h4>
+            <ul className="space-y-3">
+              <li>
+                <Link
+                  to="/about"
+                  className="text-gray-600 hover:text-primary transition-colors font-light"
+                >
+                  Quiénes somos
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/privacy"
+                  className="text-gray-600 hover:text-primary transition-colors font-light"
+                >
+                  Privacidad
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/terms"
+                  className="text-gray-600 hover:text-primary transition-colors font-light"
+                >
+                  Términos
+                </Link>
+              </li>
+            </ul>
+          </div>
           
           {/* Columna 4: Contacto y Direcciones */}
           <div>
@@ -132,7 +162,13 @@ export default function Footer() {
             <p className="text-sm text-gray-600 font-light order-2 md:order-1">
               &copy; {new Date().getFullYear()} Ruka.ai. Todos los derechos reservados.
             </p>
-            <div className="flex gap-6 order-1 md:order-2">
+            <div className="flex items-center gap-5 order-1 md:order-2">
+              <Link to="/privacy" className="text-sm text-gray-600 transition-colors hover:text-primary">
+                Privacidad
+              </Link>
+              <Link to="/terms" className="text-sm text-gray-600 transition-colors hover:text-primary">
+                Términos
+              </Link>
               <a 
                 href="https://www.linkedin.com/company/rukaai/" 
                 target="_blank" 
