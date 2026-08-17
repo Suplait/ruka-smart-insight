@@ -67,21 +67,24 @@ export default function Navbar({
             <img src="/logo.png" alt="Ruka.ai" className="h-8 transition-opacity hover:opacity-80" />
           </Link>
 
-          <div className="hidden items-center gap-8 md:flex">
+          <div className="hidden items-center gap-8 lg:flex">
             {sectionLinks.map(({ id, label }) => (
-              <button
+              <a
                 key={id}
-                type="button"
-                onClick={() => scrollToSection(id)}
+                href={`${sectionPath}#${id}`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  scrollToSection(id);
+                }}
                 className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
               >
                 {label}
-              </button>
+              </a>
             ))}
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="hidden items-center gap-3 md:flex">
+            <div className="hidden items-center gap-3 lg:flex">
               {showLogin && (
                 <Button
                   variant="ghost"
@@ -103,7 +106,7 @@ export default function Navbar({
 
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden" aria-label="Abrir menú">
+                <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Abrir menú">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
@@ -116,14 +119,17 @@ export default function Navbar({
                   <div className="space-y-1">
                     <p className="px-2 pb-2 text-xs text-muted-foreground">Secciones</p>
                     {sectionLinks.map(({ id, label }) => (
-                      <button
+                      <a
                         key={id}
-                        type="button"
-                        onClick={() => scrollToSection(id)}
+                        href={`${sectionPath}#${id}`}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          scrollToSection(id);
+                        }}
                         className="w-full rounded-lg px-2 py-3 text-left text-lg font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                       >
                         {label}
-                      </button>
+                      </a>
                     ))}
                   </div>
 

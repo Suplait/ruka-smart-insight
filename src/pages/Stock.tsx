@@ -19,7 +19,7 @@ export default function Stock() {
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
-      let target = new Date();
+      const target = new Date();
       target.setHours(12, 0, 0, 0);
       if (now.getHours() >= 12) {
         target.setDate(target.getDate() + 1);
@@ -100,7 +100,6 @@ export default function Stock() {
       <Helmet>
         <title>Gestión de Stock e Inventario Automatizada - Ahorra 15+ horas/semana | Ruka</title>
         <meta name="description" content="Automatiza tu gestión de inventario con Ruka. Ingreso automático desde compras, múltiples bodegas, traspasos con aprobaciones y control de roles. Desde $99.990/mes IVA incluido." />
-        <meta name="keywords" content="gestión de stock, inventario automatizado, control de bodegas, traspasos entre bodegas, inventarios periódicos, software inventario chile, control stock restaurante, gestión inventario retail, sistema de bodegas" />
         
         {/* Open Graph */}
         <meta property="og:title" content="Gestión de Stock e Inventario Automatizada | Ruka" />
@@ -117,7 +116,7 @@ export default function Stock() {
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@ruka_ai" />
+        <meta name="twitter:site" content="@ruka__ai" />
         <meta name="twitter:title" content="Gestión de Stock e Inventario Automatizada | Ruka" />
         <meta name="twitter:description" content="Ingreso automático de stock, múltiples bodegas, traspasos con aprobaciones. Ahorra 15+ horas/semana automatizando tu inventario." />
         <meta name="twitter:image" content="https://www.ruka.ai/stock-inventario.png" />

@@ -2,26 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.ruka.ai/</loc>
+    <lastmod>2026-08-16</lastmod>
+  </url>
+  <url>
+    <loc>https://www.ruka.ai/about</loc>
+    <lastmod>2026-08-16</lastmod>
   </url>
   <url>
     <loc>https://www.ruka.ai/register</loc>
+    <lastmod>2026-08-16</lastmod>
   </url>
   <url>
     <loc>https://www.ruka.ai/restaurantes</loc>
+    <lastmod>2026-08-16</lastmod>
   </url>
   <url>
     <loc>https://www.ruka.ai/hoteles</loc>
+    <lastmod>2026-08-16</lastmod>
   </url>
   <url>
     <loc>https://www.ruka.ai/retail</loc>
+    <lastmod>2026-08-16</lastmod>
   </url>
   <url>
     <loc>https://www.ruka.ai/productos/panel-control</loc>
+    <lastmod>2026-08-16</lastmod>
   </url>
   <url>
     <loc>https://www.ruka.ai/productos/cuentas-por-pagar</loc>
+    <lastmod>2026-08-16</lastmod>
   </url>
   <url>
     <loc>https://www.ruka.ai/productos/stock</loc>
+    <lastmod>2026-08-16</lastmod>
+  </url>
+  <url>
+    <loc>https://www.ruka.ai/privacy</loc>
+    <lastmod>2026-08-16</lastmod>
+  </url>
+  <url>
+    <loc>https://www.ruka.ai/terms</loc>
+    <lastmod>2026-08-16</lastmod>
   </url>
 </urlset>

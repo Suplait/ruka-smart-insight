@@ -26,6 +26,38 @@
           "value": "noindex, nofollow, noarchive"
         }
       ]
+    },
+    {
+      "source": "/onboarding-success",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    },
+    {
+      "source": "/calendly-success",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    },
+    {
+      "source": "/whatsapp",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    },
+    {
+      "source": "/webinar",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    },
+    {
+      "source": "/productos/ejemplo",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }]
+    },
+    {
+      "source": "/llms.txt",
+      "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }]
     }
   ],
   "redirects": [
@@ -36,6 +68,8 @@
     }
   ],
   "rewrites": [
+    { "source": "/about", "destination": "/about/index.html" },
+    { "source": "/about/", "destination": "/about/index.html" },
     { "source": "/register", "destination": "/register/index.html" },
     { "source": "/register/", "destination": "/register/index.html" },
     { "source": "/restaurantes", "destination": "/restaurantes/index.html" },
@@ -44,6 +78,22 @@
     { "source": "/hoteles/", "destination": "/hoteles/index.html" },
     { "source": "/retail", "destination": "/retail/index.html" },
     { "source": "/retail/", "destination": "/retail/index.html" },
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/productos/ejemplo", "destination": "/productos/ejemplo/index.html" },
+    { "source": "/productos/ejemplo/", "destination": "/productos/ejemplo/index.html" },
+    { "source": "/productos/panel-control", "destination": "/productos/panel-control/index.html" },
+    { "source": "/productos/panel-control/", "destination": "/productos/panel-control/index.html" },
+    { "source": "/productos/cuentas-por-pagar", "destination": "/productos/cuentas-por-pagar/index.html" },
+    { "source": "/productos/cuentas-por-pagar/", "destination": "/productos/cuentas-por-pagar/index.html" },
+    { "source": "/productos/stock", "destination": "/productos/stock/index.html" },
+    { "source": "/productos/stock/", "destination": "/productos/stock/index.html" },
+    { "source": "/privacy", "destination": "/privacy/index.html" },
+    { "source": "/privacy/", "destination": "/privacy/index.html" },
+    { "source": "/terms", "destination": "/terms/index.html" },
+    { "source": "/terms/", "destination": "/terms/index.html" },
+    { "source": "/home-anterior", "destination": "/index.html" },
+    { "source": "/onboarding-success", "destination": "/index.html" },
+    { "source": "/calendly-success", "destination": "/index.html" },
+    { "source": "/whatsapp", "destination": "/index.html" },
+    { "source": "/webinar", "destination": "/index.html" }
   ]
 }

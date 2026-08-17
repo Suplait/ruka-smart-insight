@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductRegistrationForm from "@/components/product/ProductRegistrationForm";
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 export default function ProductoEjemplo() {
   const [highlightForm, setHighlightForm] = useState(false);
@@ -13,7 +14,7 @@ export default function ProductoEjemplo() {
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
-      let target = new Date();
+      const target = new Date();
       target.setHours(12, 0, 0, 0);
       if (now.getHours() >= 12) {
         target.setDate(target.getDate() + 1);
@@ -57,6 +58,11 @@ export default function ProductoEjemplo() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <Helmet>
+        <title>Página de producto de ejemplo | Ruka.ai</title>
+        <meta name="robots" content="noindex, nofollow, noarchive" />
+        <link rel="canonical" href="https://www.ruka.ai/productos/ejemplo" />
+      </Helmet>
       <Navbar />
       
       {/* Hero Section */}

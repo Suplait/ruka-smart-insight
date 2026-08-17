@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vite build --ssr src/entry-v2-ssr.tsx --outDir .seo-ssr && node scripts/generate-v2-html.mjs && vite build --ssr src/entry-acquisition-ssr.tsx --outDir .acquisition-ssr && node scripts/generate-acquisition-html.mjs",
+    "build": "vite build && vite build --ssr src/entry-prerender-ssr.tsx --outDir .prerender-ssr && node scripts/generate-prerendered-html.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "validate:seo": "node scripts/validate-seo.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
