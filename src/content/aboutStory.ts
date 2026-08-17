@@ -197,8 +197,8 @@ export const storyChapters: readonly StoryChapter[] = [
         type: "copy",
         paragraphs: [
           "En la segunda mitad de 2018 hicimos nuestra primera contratación. Elegimos Cusco como siguiente destino, armamos las maletas y vivimos más de seis meses en Perú para volver a aprender la industria desde adentro mientras mejorábamos el producto.",
-          "A comienzos de 2019, después de postular tres veces, entramos a 500 Startups. Nos fuimos a México por un año, abrimos nuevos destinos y terminamos operando en cinco países.",
-          "Más de 10.000 personas compraron a través de Etiner. Lo que había empezado como planificación gratuita ya era una operación regional.",
+          "A comienzos de 2019, después de postular tres veces, entramos a 500 Startups. Nos fuimos a México por un año y desde ahí seguimos abriendo destinos por la región.",
+          "Para comienzos de 2020 habíamos procesado cerca de 10.000 reservas en 19 destinos de Chile, Perú y Bolivia, y empezábamos a abrir México y Colombia. Lo que había empezado como planificación gratuita ya era una operación regional.",
         ],
       },
       {
@@ -216,8 +216,8 @@ export const storyChapters: readonly StoryChapter[] = [
         type: "metrics",
         items: [
           { value: "US$100k", label: "primeras ventas acumuladas" },
-          { value: "5", label: "países" },
-          { value: "+10.000", label: "clientes" },
+          { value: "19", label: "destinos activos" },
+          { value: "+10.000", label: "reservas procesadas" },
         ],
       },
     ],
@@ -226,25 +226,48 @@ export const storyChapters: readonly StoryChapter[] = [
     id: "volver-a-empezar",
     number: "03",
     eyebrow: "03 · VOLVER A EMPEZAR",
-    title: "Un jueves nuestras ventas llegaron a cero.",
+    title: "En cuatro días, las ventas de Etiner llegaron a cero.",
     dark: true,
     blocks: [
       {
         type: "copy",
         lead: true,
         paragraphs: [
-          "En marzo de 2020 estábamos en México y Etiner venía creciendo. Viajábamos para abrir destinos, seguíamos sumando personas y escuchábamos noticias sobre un virus en China sin imaginar lo que significaría para el turismo.",
+          "El miércoles 11 de marzo de 2020, Camilo volvió de Puerto Escondido a Ciudad de México para trabajar desde las oficinas de 500 Startups. Etiner venía creciendo y el plan era seguir al menos seis meses más en México. Benja aterrizó ese mismo día para instalarse.",
         ],
+      },
+      {
+        type: "image",
+        image: {
+          src: "/about/story/etiner-puerto-escondido-2020.webp",
+          alt: "Tres escenas de trabajo y vida junto al mar en Puerto Escondido durante la expansión de Etiner",
+          caption: "Puerto Escondido · trabajando mientras Etiner seguía expandiéndose por la región",
+          width: 1262,
+          height: 856,
+          aspect: "natural",
+        },
       },
       { type: "metrics", items: [{ value: "$0", label: "ventas de Etiner al comenzar la pandemia" }] },
       {
         type: "timeline",
         items: [
-          { date: "Miércoles 11", text: "Benja llegó a México para quedarse los siguientes seis meses." },
-          { date: "Jueves 12", text: "Las ventas cayeron a cero de un día para otro." },
-          { date: "Sábado 14", text: "Seguíamos en cero y 500 Startups cerró sus oficinas indefinidamente." },
-          { date: "Domingo 15", text: "Chile anunció que cerraría sus fronteras en 48 horas." },
-          { date: "Lunes 16", text: "A las siete de la mañana tomamos el primer vuelo de regreso a Chile." },
+          {
+            date: "Miércoles 11",
+            text: "Volvimos a Ciudad de México. La caída de las ventas ya se empezaba a notar.",
+          },
+          { date: "Viernes 13", text: "500 Startups cerró sus oficinas en México." },
+          {
+            date: "Domingo 15",
+            text: "Chile anunció que cerraría sus fronteras en 48 horas. Ese día, por primera vez, vendimos $0.",
+          },
+          {
+            date: "Lunes 16",
+            text: "Tomamos el primer vuelo disponible de regreso a Chile. Benja llevaba menos de una semana en México.",
+          },
+          {
+            date: "Miércoles 18",
+            text: "Ya en cuarentena, completamos el cuarto día con ventas en cero y sin señales de recuperación.",
+          },
         ],
       },
       {
@@ -253,9 +276,9 @@ export const storyChapters: readonly StoryChapter[] = [
           src: "/about/story/pandemic-2020.webp",
           alt: "Registro del regreso a Chile al comenzar la pandemia en marzo de 2020",
           caption: "Marzo de 2020 · el vuelo de regreso y la incertidumbre que venía después",
-          width: 951,
-          height: 535,
-          aspect: "wide",
+          width: 1262,
+          height: 856,
+          aspect: "natural",
         },
       },
       {
@@ -266,9 +289,27 @@ export const storyChapters: readonly StoryChapter[] = [
       {
         type: "copy",
         paragraphs: [
-          "La pregunta dejó de ser cómo hacer crecer Etiner. Teníamos un mes y once días para encontrar una forma de sostener a las personas que dependían de la empresa. Nos preguntamos qué podíamos construir con lo que ya sabíamos hacer.",
-          "Pausamos Etiner y creamos Etiner Labs para aplicar nuestra experiencia en growth, producto y tecnología a problemas de otras compañías. Fue la primera vez que hicimos un cambio de dirección realmente difícil.",
-          "Terminamos creciendo hasta cerca de 20 personas y trabajamos con organizaciones como P&G, Crystal Lagoons y Rappi. Con Rappi participamos durante casi dos años en la transformación del modelo de adquisición de restaurantes.",
+          "La pregunta dejó de ser cómo hacer crecer Etiner. Teníamos un mes y once días —hasta que terminara abril— para encontrar ingresos y sostener al equipo durante los nueve meses siguientes sin consumir el dinero de la empresa. Evaluamos cambiar el modelo, buscar otra oportunidad en turismo o incluso empezar desde cero en otra industria.",
+          "La primera oportunidad apareció en la Región del Maule. Mientras cerraban calles y comercios, el gobierno regional necesitaba dar presencia digital al comercio local. Propusimos diseñar el producto, convocar a los negocios y lanzarlo. Market Maule pasó de idea a plataforma funcionando en menos de tres semanas y se estrenó con más de 1.000 comercios inscritos.",
+        ],
+      },
+      {
+        type: "image",
+        image: {
+          src: "/about/story/market-maule-2020.webp",
+          alt: "Plataforma Market Maule mostrando su vitrina digital para comercios de la Región del Maule",
+          caption: "Market Maule · más de 2.000 comercios inscritos antes de cumplir dos meses",
+          width: 1325,
+          height: 629,
+          presentation: "document",
+          aspect: "natural",
+        },
+      },
+      {
+        type: "copy",
+        paragraphs: [
+          "Esa primera prueba nos mostró que podíamos usar lo aprendido en producto, growth y tecnología para resolver problemas de otras organizaciones. Así nació Etiner Labs. En sus primeros dos meses generó caja suficiente para llegar a febrero sin tocar el dinero reservado para Etiner.",
+          "Con el tiempo Etiner Labs creció hasta cerca de 20 personas y trabajó con organizaciones como P&G, Crystal Lagoons y Rappi. Con Rappi participamos durante casi dos años en la transformación del modelo de adquisición de restaurantes.",
           "Ese trabajo llegó a nueve países, redujo el costo de adquisición cerca de 87% y, en su punto más alto, incorporó más de 10.000 restaurantes al mes. No era el negocio que habíamos imaginado, pero nos permitió seguir construyendo y aprender a operar tecnología a gran escala.",
         ],
       },

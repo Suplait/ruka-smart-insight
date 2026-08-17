@@ -327,7 +327,7 @@ function StoryChapter({ chapter }: { chapter: StoryChapterType }) {
       <article
         id={chapter.id}
         data-story-chapter={chapter.number}
-        className="relative -mx-6 my-20 scroll-mt-28 overflow-hidden bg-[#171827] px-6 py-20 sm:-mx-8 sm:px-8 sm:py-28 lg:mx-0 lg:my-28 lg:px-12 lg:py-32"
+        className="relative -mx-6 my-20 w-screen max-w-none scroll-mt-28 overflow-hidden bg-[#171827] px-6 py-20 sm:-mx-8 sm:px-8 sm:py-28 lg:mx-0 lg:my-28 lg:w-auto lg:px-12 lg:py-32"
       >
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/10" aria-hidden="true" />
         {content}

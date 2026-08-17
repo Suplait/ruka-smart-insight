@@ -225,7 +225,7 @@ const aboutVisibleText = textContent(aboutHtml);
 for (const requiredText of [
   "Los productos cambiaron. Nosotros seguimos juntos.",
   "Antes de saber construir una startup, ya estábamos construyendo una.",
-  "Un jueves nuestras ventas llegaron a cero.",
+  "En cuatro días, las ventas de Etiner llegaron a cero.",
   "Ruka apareció cuando dejamos de defender la idea que teníamos.",
   "Camilo Silva",
   "Enzo Zerega",
