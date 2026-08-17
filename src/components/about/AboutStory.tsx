@@ -91,7 +91,10 @@ function StoryChapter({ chapter }: { chapter: StoryChapterType }) {
             {...image}
             delay={index * 0.08}
             className={index % 2 === 1 ? "md:mt-16" : ""}
-            imageClassName={`h-full w-full object-cover ${chapter.images.length > 1 ? "aspect-[4/3]" : "aspect-[16/9]"}`}
+            mediaClassName={image.presentation === "document" ? "border border-[#d7deea] bg-[#e9edf5]" : undefined}
+            imageClassName={`h-full w-full ${
+              image.presentation === "document" ? "object-contain p-3 sm:p-5" : "object-cover"
+            } ${chapter.images.length > 1 ? "aspect-[4/3]" : "aspect-[16/9]"}`}
           />
         ))}
       </div>

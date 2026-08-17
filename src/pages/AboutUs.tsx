@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowRight, ArrowUpRight, Building2, MapPin } from "lucide-react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
-import { AboutPeople } from "@/components/about/AboutPeople";
+import { AboutFounders } from "@/components/about/AboutFounders";
 import { AboutReveal, EditorialImage } from "@/components/about/AboutMotion";
 import { AboutStory } from "@/components/about/AboutStory";
 import Footer from "@/components/Footer";
@@ -306,7 +306,7 @@ export default function AboutUs() {
         <EditorialIntro />
         <AboutStory />
         <Principles />
-        <AboutPeople />
+        <AboutFounders />
         <OrganizationSection />
         <ClosingSection />
       </main>

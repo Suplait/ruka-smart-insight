@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 import aboutSeo from "@/content/aboutSeo.json";
-import { founders } from "@/content/aboutTeam";
+import { founders } from "@/content/aboutFounders";
 import {
   createOrganizationSchema,
   createWebsiteSchema,

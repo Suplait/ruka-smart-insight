@@ -15,9 +15,8 @@ Las imágenes de esta carpeta se descargaron y optimizaron localmente para evita
 
 Fuente pública principal: <https://rukaai.notion.site/Our-Story-5791ec7e515149b1b591b5a06c7e946e>
 
-## Founders y equipo
+## Founders
 
 - `founders/camilo.webp`, `founders/enzo.webp`, `founders/lorenzo.webp`, `founders/benjamin.webp`: retratos publicados en los perfiles públicos del data room de Ruka (septiembre de 2025).
-- `team/jose.webp`, `team/miguel.webp`: retratos publicados en los perfiles públicos del equipo de Ruka.
 
-No se generaron rostros ni se descargaron fotos desde resultados de Google Images. Para integrantes sin una foto propia verificable se usa un tratamiento tipográfico.
+No se generaron rostros ni se descargaron fotos desde resultados de Google Images.

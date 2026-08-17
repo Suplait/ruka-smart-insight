@@ -20,8 +20,8 @@ export function AboutReveal({
   return (
     <motion.div
       className={className}
-      initial={motionEnabled ? { opacity: 0, y: distance } : false}
-      whileInView={motionEnabled ? { opacity: 1, y: 0 } : undefined}
+      initial={motionEnabled ? { y: distance } : false}
+      whileInView={motionEnabled ? { y: 0 } : undefined}
       viewport={{ once: true, amount: 0.18 }}
       transition={{ duration: 0.72, delay, ease: easeOut }}
     >
@@ -35,16 +35,18 @@ export function EditorialImage({
   alt,
   caption,
   className,
+  mediaClassName,
   imageClassName,
   delay = 0,
   width,
   height,
-  loading = "lazy",
+  loading = "eager",
 }: {
   src: string;
   alt: string;
   caption: string;
   className?: string;
+  mediaClassName?: string;
   imageClassName?: string;
   delay?: number;
   width: number;
@@ -57,12 +59,12 @@ export function EditorialImage({
   return (
     <motion.figure
       className={className}
-      initial={motionEnabled ? { opacity: 0, y: 26, rotate: -0.4 } : false}
-      whileInView={motionEnabled ? { opacity: 1, y: 0, rotate: 0 } : undefined}
+      initial={motionEnabled ? { y: 26, rotate: -0.4 } : false}
+      whileInView={motionEnabled ? { y: 0, rotate: 0 } : undefined}
       viewport={{ once: true, amount: 0.22 }}
       transition={{ duration: 0.78, delay, ease: easeOut }}
     >
-      <div className="overflow-hidden bg-[#e8ebf3]">
+      <div className={`overflow-hidden bg-[#e8ebf3] ${mediaClassName ?? ""}`}>
         <motion.img
           src={src}
           alt={alt}

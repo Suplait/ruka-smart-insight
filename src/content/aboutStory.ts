@@ -4,6 +4,7 @@ export type StoryImage = {
   caption: string;
   width: number;
   height: number;
+  presentation?: "photo" | "document";
 };
 
 export type StoryMetric = {
@@ -48,6 +49,7 @@ export const storyChapters: readonly StoryChapter[] = [
         caption: "Validar antes de construir",
         width: 948,
         height: 509,
+        presentation: "document",
       },
     ],
     metrics: [{ value: "640", label: "comentarios en una tarde. Validamos interés antes de construir producto." }],
@@ -77,6 +79,7 @@ export const storyChapters: readonly StoryChapter[] = [
         caption: "Aprender turismo viviéndolo",
         width: 1024,
         height: 647,
+        presentation: "document",
       },
     ],
     metrics: [
@@ -131,6 +134,7 @@ export const storyChapters: readonly StoryChapter[] = [
         caption: "Suplait · volver a producto",
         width: 1024,
         height: 559,
+        presentation: "document",
       },
       {
         src: "/about/story/suplait-categorization.webp",
@@ -138,6 +142,7 @@ export const storyChapters: readonly StoryChapter[] = [
         caption: "La señal que cambió la dirección",
         width: 999,
         height: 621,
+        presentation: "document",
       },
     ],
     metrics: [{ value: "+15.000", label: "proveedores reunidos en la red de Suplait" }],

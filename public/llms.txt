@@ -7,7 +7,7 @@ Ruka conecta información de plataformas como SII, ERP, POS, bancos, planillas, 
 ## Páginas principales
 
 - [Inicio](https://www.ruka.ai/): propuesta de valor, demostración de producto, integraciones, precios y preguntas frecuentes.
-- [Quiénes somos](https://www.ruka.ai/about): historia verificable de la compañía, fundadores, equipo actual y origen de la tesis de producto.
+- [Quiénes somos](https://www.ruka.ai/about): historia verificable de la compañía, sus fundadores y el origen de la tesis de producto.
 - [Hablar con Ruka](https://www.ruka.ai/register): formulario para revisar un proceso operativo con el equipo.
 - [Ruka para restaurantes](https://www.ruka.ai/restaurantes): automatización de compras y operación para restaurantes.
 - [Ruka para hoteles](https://www.ruka.ai/hoteles): automatización de procesos operativos para hoteles.
