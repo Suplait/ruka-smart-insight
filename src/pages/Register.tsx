@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,13 +10,15 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { AcquisitionFAQ } from "@/components/acquisition/AcquisitionFAQ";
 import { AcquisitionSeo } from "@/components/acquisition/AcquisitionSeo";
 import acquisitionSeo from "@/content/acquisitionSeo.json";
+import { ReviewRegistrationForm } from "@/components/onboarding-v2/ReviewRegistrationForm";
+import { isOnboardingDebugEnabledFromSearch } from "@/utils/onboardingDebug";
 import {
   AcquisitionHero,
   AcquisitionProcessSection,
   AcquisitionSystemNote,
 } from "@/components/acquisition/AcquisitionSections";
 
-export default function Register() {
+function RegisterProduction() {
   const [highlightForm, setHighlightForm] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
   const [showScrollToForm, setShowScrollToForm] = useState(false);
@@ -150,4 +153,14 @@ export default function Register() {
       </main>
     </>
   );
+}
+
+export default function Register() {
+  const location = useLocation();
+
+  if (isOnboardingDebugEnabledFromSearch(location.search)) {
+    return <ReviewRegistrationForm />;
+  }
+
+  return <RegisterProduction />;
 }
