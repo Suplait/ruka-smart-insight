@@ -237,12 +237,12 @@ export default function RegistrationForm({
                 </div>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="max-w-[200px] p-3">
-                <p>Implementación completa en menos de 48 horas</p>
+                <p>En 30 minutos revisamos tu proceso y cómo podría ayudarte Ruka.</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </div>
-        <p className="text-base text-muted-foreground font-medium">Te ayudaremos a tener IA trabajando en tu negocio en menos de 48hrs.</p>
+        <p className="text-base text-muted-foreground font-medium">Cuéntanos tu proceso. En la llamada revisamos qué trabajo puede tomar Ruka y cómo partir.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
@@ -320,7 +320,7 @@ export default function RegistrationForm({
             </div>
             <div className="flex items-center gap-1.5 text-xs text-gray-500">
               <Clock4 className="w-3.5 h-3.5" />
-              <span>Implementación 48hrs</span>
+              <span>Sin preparación</span>
             </div>
             <div className="flex items-center gap-1.5 text-xs text-gray-500">
               <CreditCard className="w-3.5 h-3.5" />
