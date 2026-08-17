@@ -41,7 +41,7 @@ import { WorkSection } from "@/components/landing-v2/WorkSection";
 import { LandingV2Seo } from "@/components/seo/LandingV2Seo";
 import landingV2Seo from "@/content/landingV2Seo.json";
 
-const CTA_LABEL = "Agendar 20 min";
+const CTA_LABEL = "Agendar 30 min";
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 function ScrollProgress() {
@@ -930,7 +930,7 @@ function FAQAndCTASection({ navigate }: { navigate: (path: string) => void }) {
               </Button>
               <p className="flex items-center gap-2 text-sm font-semibold text-[#555b6e]">
                 <UsersRound className="h-4 w-4 text-primary" />
-                20 min · Sin preparación
+                30 min · Sin preparación
               </p>
             </div>
           </div>

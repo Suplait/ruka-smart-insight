@@ -72,7 +72,7 @@ export default function Hoteles() {
       <AcquisitionSeo {...acquisitionSeo.hoteles} />
 
       <main className="min-h-screen bg-[#f7f8fc] text-[#171827]">
-        <Navbar primaryAction={{ label: "Agendar 20 min", path: "/register", onClick: scrollToForm }} />
+        <Navbar primaryAction={{ label: "Agendar 30 min", path: "/register", onClick: scrollToForm }} />
 
         <div className="w-full pb-16 pt-24 sm:pt-28">
           <div className="container px-4 sm:px-6">

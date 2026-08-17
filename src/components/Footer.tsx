@@ -119,7 +119,7 @@ export default function Footer() {
                   to="/register"
                   className="inline-flex items-center h-10 px-6 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-full transition-colors"
                 >
-                  Agendar 20 min
+                  Agendar 30 min
                 </Link>
               </li>
             </ul>

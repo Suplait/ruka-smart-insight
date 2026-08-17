@@ -29,7 +29,7 @@ export default function Navbar({
   sectionLinks = defaultSectionLinks,
   sectionPath = "/",
   logoPath = "/",
-  primaryAction = { label: "Agendar 20 min", path: "/register" },
+  primaryAction = { label: "Agendar 30 min", path: "/register" },
   showLogin = false,
 }: NavbarProps) {
   const [showSubdomainModal, setShowSubdomainModal] = useState(false);
