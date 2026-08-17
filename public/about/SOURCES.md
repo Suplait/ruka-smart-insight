@@ -11,7 +11,7 @@ Las imágenes de esta carpeta se descargaron y optimizaron localmente para evita
 - `story/pandemic-2020.webp`: registro del regreso durante el cierre del turismo en marzo de 2020. Fuente: “Our Story”.
 - `story/suplait-platform.webp`: captura de la plataforma original de Suplait. Fuente: “Our Story”.
 - `story/suplait-categorization.webp`: captura de las herramientas de categorización de compras que precedieron a Ruka. Fuente: “Our Story”.
-- `story/founders-office.webp`: foto real del equipo fundador trabajando. Fuente: “Our Story”; se usa en el collage editorial del hero.
+- `story/founders-ruka.webp`: foto actual de los cuatro fundadores con poleras de Ruka. Fuente: asset entregado por el equipo de Ruka; se usa como imagen principal del hero.
 
 Fuente pública principal: <https://rukaai.notion.site/Our-Story-5791ec7e515149b1b591b5a06c7e946e>
 

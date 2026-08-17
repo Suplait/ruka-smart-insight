@@ -5,6 +5,7 @@ export type StoryImage = {
   width: number;
   height: number;
   presentation?: "photo" | "document";
+  aspect?: "portrait" | "landscape" | "wide";
 };
 
 export type StoryMetric = {
@@ -20,6 +21,7 @@ export type StoryChapter = {
   paragraphs: readonly string[];
   images: readonly StoryImage[];
   metrics?: readonly StoryMetric[];
+  galleryVariant?: "balanced" | "portrait-document";
   dark?: boolean;
 };
 
@@ -42,6 +44,7 @@ export const storyChapters: readonly StoryChapter[] = [
         caption: "PortSalud · 2015",
         width: 432,
         height: 537,
+        aspect: "portrait",
       },
       {
         src: "/about/story/etiner-validation.webp",
@@ -50,8 +53,10 @@ export const storyChapters: readonly StoryChapter[] = [
         width: 948,
         height: 509,
         presentation: "document",
+        aspect: "wide",
       },
     ],
+    galleryVariant: "portrait-document",
     metrics: [{ value: "640", label: "comentarios en una tarde. Validamos interés antes de construir producto." }],
   },
   {
@@ -72,6 +77,7 @@ export const storyChapters: readonly StoryChapter[] = [
         caption: "Etiner · construir desde terreno",
         width: 1024,
         height: 632,
+        aspect: "landscape",
       },
       {
         src: "/about/story/etiner-latin-america.webp",
@@ -80,8 +86,10 @@ export const storyChapters: readonly StoryChapter[] = [
         width: 1024,
         height: 647,
         presentation: "document",
+        aspect: "landscape",
       },
     ],
+    galleryVariant: "balanced",
     metrics: [
       { value: "US$100k", label: "primeras ventas acumuladas" },
       { value: "5", label: "países" },
@@ -106,6 +114,7 @@ export const storyChapters: readonly StoryChapter[] = [
         caption: "Marzo de 2020 · volver a Chile",
         width: 951,
         height: 535,
+        aspect: "wide",
       },
     ],
     metrics: [
@@ -135,6 +144,7 @@ export const storyChapters: readonly StoryChapter[] = [
         width: 1024,
         height: 559,
         presentation: "document",
+        aspect: "wide",
       },
       {
         src: "/about/story/suplait-categorization.webp",
@@ -143,8 +153,10 @@ export const storyChapters: readonly StoryChapter[] = [
         width: 999,
         height: 621,
         presentation: "document",
+        aspect: "landscape",
       },
     ],
+    galleryVariant: "balanced",
     metrics: [{ value: "+15.000", label: "proveedores reunidos en la red de Suplait" }],
   },
 ] as const;

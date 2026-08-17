@@ -42,7 +42,17 @@ function HeroCollage() {
   const photoY = useTransform(scrollYProgress, [0, 0.22], [0, -34]);
 
   return (
-    <motion.div className="relative min-h-[34rem] sm:min-h-[42rem] lg:min-h-[39rem]" style={{ y: reduceMotion ? 0 : photoY }}>
+    <motion.div className="relative min-h-[29rem] sm:min-h-[38rem] lg:min-h-[39rem]" style={{ y: reduceMotion ? 0 : photoY }}>
+      <EditorialImage
+        src="/about/story/founders-ruka.webp"
+        alt="Camilo, Enzo, Lorenzo y Benjamín, los cuatro fundadores de Ruka"
+        caption="Ruka · hoy"
+        width={1000}
+        height={1000}
+        loading="eager"
+        className="absolute right-0 top-0 z-10 w-[78%] sm:w-[72%]"
+        imageClassName="aspect-square h-full w-full object-cover"
+      />
       <EditorialImage
         src="/about/story/etiner-founders.webp"
         alt="Los cuatro fundadores de Ruka presentando Etiner"
@@ -50,30 +60,9 @@ function HeroCollage() {
         width={1024}
         height={632}
         loading="eager"
-        className="absolute left-0 top-8 z-10 w-[78%] sm:w-[72%]"
-        imageClassName="aspect-[4/3] h-full w-full object-cover"
-      />
-      <EditorialImage
-        src="/about/story/port-salud-2015.webp"
-        alt="Camilo Silva y Lorenzo Verdugo presentando PortSalud en 2015"
-        caption="PortSalud · 2015"
-        width={432}
-        height={537}
-        loading="eager"
-        className="absolute bottom-3 right-0 z-20 w-[43%] sm:w-[38%]"
-        imageClassName="aspect-[4/5] h-full w-full object-cover"
+        className="absolute bottom-2 left-0 z-20 w-[61%] sm:bottom-0 sm:w-[56%]"
+        imageClassName="aspect-[16/10] h-full w-full object-cover"
         delay={0.12}
-      />
-      <EditorialImage
-        src="/about/story/founders-office.webp"
-        alt="El equipo fundador trabajando junto en una oficina"
-        caption="Seguir construyendo juntos"
-        width={1024}
-        height={576}
-        loading="eager"
-        className="absolute right-0 top-0 z-30 w-[44%] sm:w-[40%]"
-        imageClassName="aspect-[4/3] h-full w-full object-cover"
-        delay={0.2}
       />
     </motion.div>
   );

@@ -44,6 +44,17 @@ function StoryMetrics({ chapter }: { chapter: StoryChapterType }) {
 function StoryChapter({ chapter }: { chapter: StoryChapterType }) {
   const reduceMotion = useReducedMotion();
   const motionEnabled = typeof window !== "undefined" && !reduceMotion;
+  const galleryClass =
+    chapter.galleryVariant === "portrait-document"
+      ? "md:grid-cols-[0.78fr_1.22fr] md:items-start"
+      : chapter.images.length > 1
+        ? "md:grid-cols-2 md:items-start"
+        : "";
+  const aspectClass = {
+    portrait: "aspect-[4/5]",
+    landscape: "aspect-[16/10]",
+    wide: "aspect-video",
+  } as const;
   const content = (
     <div className={chapter.dark ? "mx-auto max-w-4xl" : ""}>
       <AboutReveal>
@@ -84,17 +95,23 @@ function StoryChapter({ chapter }: { chapter: StoryChapterType }) {
 
       <StoryMetrics chapter={chapter} />
 
-      <div className={`mt-12 grid gap-8 ${chapter.images.length > 1 ? "md:grid-cols-2" : ""}`}>
+      <div className={`mt-12 grid gap-8 ${galleryClass}`}>
         {chapter.images.map((image, index) => (
           <EditorialImage
             key={image.src}
             {...image}
             delay={index * 0.08}
-            className={index % 2 === 1 ? "md:mt-16" : ""}
+            className={
+              index === 1
+                ? chapter.galleryVariant === "portrait-document"
+                  ? "md:mt-20"
+                  : "md:mt-12"
+                : ""
+            }
             mediaClassName={image.presentation === "document" ? "border border-[#d7deea] bg-[#e9edf5]" : undefined}
             imageClassName={`h-full w-full ${
               image.presentation === "document" ? "object-contain p-3 sm:p-5" : "object-cover"
-            } ${chapter.images.length > 1 ? "aspect-[4/3]" : "aspect-[16/9]"}`}
+            } ${aspectClass[image.aspect ?? "landscape"]}`}
           />
         ))}
       </div>

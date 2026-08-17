@@ -37,7 +37,7 @@ function Founder({ person, index }: { person: FounderProfile; index: number }) {
           height={person.imageHeight}
           loading="eager"
           decoding="async"
-          className="h-full w-full object-cover object-top grayscale-[0.12]"
+          className="h-full w-full object-cover object-top grayscale contrast-[0.96]"
           whileHover={motionEnabled ? { scale: 1.02 } : undefined}
           transition={{ duration: 0.55, ease: easeOut }}
         />
