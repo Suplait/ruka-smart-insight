@@ -39,6 +39,7 @@ import Navbar from "@/components/Navbar";
 import OperationalGapSection from "@/components/landing-v2/OperationalGapSection";
 import { WorkSection } from "@/components/landing-v2/WorkSection";
 import { LandingV2Seo } from "@/components/seo/LandingV2Seo";
+import { customerLogos } from "@/content/customerLogos";
 import landingV2Seo from "@/content/landingV2Seo.json";
 
 const CTA_LABEL = "Agendar 30 min";
@@ -181,27 +182,6 @@ const ecosystemGroups: readonly EcosystemGroup[] = [
       { name: "API", icon: Braces },
     ],
   },
-] as const;
-
-const customerLogos = [
-  { name: "Tom Bar", image: "/customer-logos/13-tom-bar.webp", className: "max-h-14 max-w-[5rem]" },
-  { name: "Roof Burger", image: "/customer-logos/14-roof-burger.webp", className: "max-h-14 max-w-[6rem]" },
-  { name: "Distribuidora Milagros", image: "/customer-logos/15-distribuidora-milagros.svg", className: "max-h-11 max-w-[9rem]" },
-  { name: "MIT", image: "/customer-logos/16-mit.webp", className: "max-h-10 max-w-[8rem]" },
-  { name: "Toni Lautaro", image: "/customer-logos/17-toni-lautaro.webp", className: "max-h-14 max-w-[5rem]" },
-  { name: "Rocoto", image: "/customer-logos/18-rocoto.webp", className: "max-h-11 max-w-[9rem]" },
-  { name: "La Virgen", image: "/customer-logos/01-la-virgen.webp", className: "max-h-9 max-w-[9rem]" },
-  { name: "Asfaltos del Maule", image: "/customer-logos/02-asfaltos-del-maule.webp", className: "max-h-11 max-w-[9rem]" },
-  { name: "Barbazul", image: "/customer-logos/03-barbazul.webp", className: "max-h-14 max-w-[7.5rem]" },
-  { name: "Uncle Fletch", image: "/customer-logos/04-uncle-fletch.webp", className: "max-h-14 max-w-[6rem]" },
-  { name: "Tus Mascotas", image: "/customer-logos/05-tus-mascotas.webp", className: "max-h-12 max-w-[9rem]" },
-  { name: "Chicken Love You", image: "/customer-logos/06-chicken-love-you.webp", className: "max-h-14 max-w-[6.5rem]" },
-  { name: "Piedra Verde", image: "/customer-logos/07-piedra-verde.webp", className: "max-h-12 max-w-[9rem]" },
-  { name: "Cervecería Kross", image: "/customer-logos/08-cerveceria-kross.svg", className: "max-h-14 max-w-[4.5rem]" },
-  { name: "Street Wrap", image: "/customer-logos/09-street-wrap.webp", className: "max-h-10 max-w-[9rem]" },
-  { name: "Ferreléctrica", image: "/customer-logos/10-ferrelectrica.webp", className: "max-h-10 max-w-[9rem]" },
-  { name: "Delivery Gourmet", image: "/customer-logos/11-delivery-gourmet.webp", className: "max-h-10 max-w-[9rem]" },
-  { name: "Casanova Group", image: "/customer-logos/12-customer-mark.webp", className: "social-proof-logo-image--solid max-h-8 max-w-[9rem]" },
 ] as const;
 
 const plans = [

@@ -63,7 +63,7 @@ export function MarketingWhatsAppButton() {
         aria-hidden="true"
         className="h-7 w-7 shrink-0"
       />
-      <span className="hidden sm:inline">WhatsApp</span>
+      <span className="hidden sm:inline">Conversemos</span>
     </motion.a>
   );
 }

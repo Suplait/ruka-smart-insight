@@ -1,6 +1,5 @@
 import { useEffect, type ReactNode } from "react";
 import { Check, Clock3 } from "lucide-react";
-import { PricingSummary } from "@/components/onboarding-v2/PricingSummary";
 import { ReviewBanner } from "@/components/onboarding-v2/ReviewBanner";
 
 type CalendlyStageViewProps = {
@@ -64,10 +63,6 @@ export function CalendlyStageView({ volumeLabel, children, isReview = false, rev
                 ))}
               </ul>
             </section>
-
-            <div className="mt-5 sm:mt-6">
-              <PricingSummary compact />
-            </div>
           </aside>
 
           <section aria-label="Calendario para agendar" className="min-w-0 overflow-hidden rounded-2xl border border-[#dce3f2] bg-white">
