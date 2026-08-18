@@ -1,25 +1,53 @@
 export const VOLUME_OPTIONS = [
-  { label: "Menos de 150 facturas", value: 75 },
-  { label: "150 a 300 facturas", value: 225 },
-  { label: "300 a 600 facturas", value: 450 },
-  { label: "Más de 600 facturas", value: 750 },
+  {
+    plan: "Start",
+    label: "Start · Hasta 200 facturas",
+    volume: "Hasta 200 facturas de compra / mes",
+    price: "$99.990",
+    priceDetail: "/ mes",
+    value: 75,
+  },
+  {
+    plan: "Core",
+    label: "Core · Hasta 500 facturas",
+    volume: "Hasta 500 facturas de compra / mes",
+    price: "$249.990",
+    priceDetail: "/ mes",
+    value: 225,
+    featured: true,
+  },
+  {
+    plan: "Scale",
+    label: "Scale · Hasta 1.200 facturas",
+    volume: "Hasta 1.200 facturas de compra / mes",
+    price: "$449.990",
+    priceDetail: "/ mes",
+    value: 450,
+  },
+  {
+    plan: "A medida",
+    label: "A medida · Más de 1.200 facturas",
+    volume: "Más de 1.200 facturas de compra / mes",
+    price: "Hablemos",
+    value: 750,
+  },
 ] as const;
 
 export const PRICING_PLANS = [
   {
     name: "Start",
     price: "$99.990",
-    capacity: "Hasta 200 documentos / mes",
+    capacity: "Hasta 200 facturas de compra / mes",
   },
   {
     name: "Core",
     price: "$249.990",
-    capacity: "Hasta 500 documentos / mes",
+    capacity: "Hasta 500 facturas de compra / mes",
   },
   {
     name: "Scale",
     price: "$449.990",
-    capacity: "Hasta 1.200 documentos / mes",
+    capacity: "Hasta 1.200 facturas de compra / mes",
   },
 ] as const;
 

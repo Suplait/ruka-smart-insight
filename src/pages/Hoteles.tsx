@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import RegistrationForm from "@/components/restaurant/RegistrationForm";
 import { AcquisitionFAQ } from "@/components/acquisition/AcquisitionFAQ";
 import { AcquisitionSeo } from "@/components/acquisition/AcquisitionSeo";
+import { AcquisitionSocialProof } from "@/components/acquisition/AcquisitionSocialProof";
 import acquisitionSeo from "@/content/acquisitionSeo.json";
 import {
   AcquisitionHero,
@@ -87,13 +88,15 @@ export default function Hoteles() {
                     onCtaClick={scrollToForm}
                   />
 
+                  <AcquisitionSocialProof />
+
                   <div className="lg:hidden w-full sm:px-4 mb-8">
                     <RegistrationForm highlightForm={highlightForm} timeLeft={timeLeft} pagePath="/hoteles" />
                   </div>
                 </div>
 
                 <AcquisitionWorkSection
-                  title="Trabajo que puedes sacar de tu equipo"
+                  title="Recupera horas que hoy se van en trabajo manual."
                   items={[
                     {
                       title: "Registro de compras",

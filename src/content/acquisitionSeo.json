@@ -1,7 +1,7 @@
 {
   "register": {
     "title": "Agentes IA para automatizar trabajo operativo | Ruka",
-    "description": "Cuéntanos qué trabajo manual quieres sacar de tu equipo. Revisamos el proceso, los sistemas que toca y qué parte puede ejecutar Ruka.",
+    "description": "Cuéntanos qué trabajo manual quieres dejar de hacer. Revisamos el proceso, los sistemas que toca y qué parte puede ejecutar Ruka.",
     "canonicalUrl": "https://www.ruka.ai/register",
     "pageName": "Habla con Ruka sobre tu proceso operativo",
     "features": ["Registro de compras", "Conciliaciones", "Actualización entre sistemas"]

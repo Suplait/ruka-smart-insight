@@ -117,10 +117,10 @@ const OnboardingProductionFlow = () => {
   };
 
   const getRangeLabel = (count: number) => {
-    if (count === 75) return "Menos de 150 facturas";
-    if (count === 225) return "150 a 300 facturas";
-    if (count === 450) return "300 a 600 facturas";
-    if (count === 750) return "Más de 600 facturas";
+    if (count === 75) return "Start · Hasta 200 facturas";
+    if (count === 225) return "Core · Hasta 500 facturas";
+    if (count === 450) return "Scale · Hasta 1.200 facturas";
+    if (count === 750) return "A medida · Más de 1.200 facturas";
     return `${count} facturas`;
   };
 

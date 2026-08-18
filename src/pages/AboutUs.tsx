@@ -23,7 +23,7 @@ const principles = [
   {
     number: "03",
     title: "La tecnología tiene que hacer trabajo",
-    copy: "No queremos agregar otra herramienta a los sistemas de una empresa. Queremos sacar trabajo manual del equipo.",
+    copy: "No queremos agregar otra herramienta a los sistemas de una empresa. Queremos reducir el trabajo manual del equipo.",
   },
 ] as const;
 

@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from "@/components/theme-provider"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from "@/components/ui/toaster"
+import { MarketingWhatsAppButton } from '@/components/MarketingWhatsAppButton';
 import { extractUTMParams, saveUTMParams } from '@/utils/utmTracker';
 
 import Index from './pages/Index';
@@ -59,6 +60,7 @@ function App() {
             <Route path="/webinar" element={<Webinar />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <MarketingWhatsAppButton />
         </BrowserRouter>
         <Toaster />
       </ThemeProvider>

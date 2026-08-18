@@ -471,7 +471,7 @@ function SocialProofSection() {
           id="social-proof-title"
           className="mx-auto max-w-4xl text-balance text-center text-3xl font-semibold leading-[1.12] tracking-[-0.035em] text-[#171827] sm:text-4xl"
         >
-          Ruka ya procesa millones de transacciones para cientos de empresas.
+          Ruka ya procesa millones de registros operativos para cientos de empresas.
         </h2>
       </Reveal>
 
@@ -511,7 +511,7 @@ function SocialProofSection() {
             </motion.div>
             <motion.div className="flex min-h-36 flex-col justify-center border-l border-[#dce3f2] py-7 pl-5 sm:min-h-40 sm:py-8 lg:border-l-0 lg:border-t lg:pl-10" initial={reduceMotion ? false : { opacity: 0.7, y: 10 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45, delay: 0.16, ease: easeOut }}>
               <dd className="text-4xl font-semibold tracking-[-0.04em] text-primary sm:text-5xl">+5M</dd>
-              <dt className="mt-2 max-w-40 text-sm font-semibold leading-5 text-[#555b6e]">transacciones procesadas</dt>
+              <dt className="mt-2 max-w-40 text-sm font-semibold leading-5 text-[#555b6e]">registros operativos procesados</dt>
             </motion.div>
           </dl>
         </div>
@@ -628,7 +628,7 @@ function ProductDemoSection({
         <Reveal className="mt-7 flex flex-col gap-4 border-t border-[#dce1eb] pt-6 sm:flex-row sm:items-center sm:justify-between" delay={0.08} distance={10}>
           <div>
             <h3 className="text-lg font-semibold tracking-[-0.015em] text-[#171827]">¿Te imaginas Ruka sobre tu propia operación?</h3>
-            <p className="mt-1 text-sm leading-6 text-[#555b6e]">Cuéntanos qué proceso quieres sacar de tu equipo.</p>
+            <p className="mt-1 text-sm leading-6 text-[#555b6e]">Cuéntanos qué proceso manual quieres dejar de hacer.</p>
           </div>
           <Button
             variant="ghost"

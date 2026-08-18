@@ -8,6 +8,7 @@ import RegistrationForm from "@/components/restaurant/RegistrationForm";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { AcquisitionFAQ } from "@/components/acquisition/AcquisitionFAQ";
 import { AcquisitionSeo } from "@/components/acquisition/AcquisitionSeo";
+import { AcquisitionSocialProof } from "@/components/acquisition/AcquisitionSocialProof";
 import acquisitionSeo from "@/content/acquisitionSeo.json";
 import {
   AcquisitionHero,
@@ -98,8 +99,10 @@ export default function Retail() {
                   onCtaClick={scrollToForm}
                 />
 
+                <AcquisitionSocialProof />
+
                 <AcquisitionWorkSection
-                  title="Trabajo que puedes sacar de tu equipo"
+                  title="Recupera horas que hoy se van en trabajo manual."
                   items={[
                     {
                       title: "Registro de compras",
