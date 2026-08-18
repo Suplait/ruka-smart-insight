@@ -9,6 +9,7 @@ import RegistrationForm from "@/components/restaurant/RegistrationForm";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { AcquisitionFAQ } from "@/components/acquisition/AcquisitionFAQ";
 import { AcquisitionSeo } from "@/components/acquisition/AcquisitionSeo";
+import { AcquisitionSocialProof } from "@/components/acquisition/AcquisitionSocialProof";
 import acquisitionSeo from "@/content/acquisitionSeo.json";
 import { ReviewRegistrationForm } from "@/components/onboarding-v2/ReviewRegistrationForm";
 import { isOnboardingDebugEnabledFromSearch } from "@/utils/onboardingDebug";
@@ -89,7 +90,7 @@ function RegisterProduction() {
               <div className="space-y-20 py-10 sm:py-14 lg:space-y-28 lg:py-20">
                 <AcquisitionHero
                   eyebrow="Agentes IA para trabajo operativo"
-                  title="Cuéntanos qué trabajo quieres sacar de tu equipo."
+                  title="Cuéntanos qué trabajo manual quieres dejar de hacer."
                   description="Revisamos el proceso, los sistemas que toca y dónde Ruka puede hacerse cargo del trabajo manual."
                   outcomes={[
                     { label: "Compras registradas" },
@@ -98,6 +99,8 @@ function RegisterProduction() {
                   ]}
                   onCtaClick={scrollToForm}
                 />
+
+                <AcquisitionSocialProof />
 
                 <AcquisitionProcessSection
                   title="Qué revisamos contigo"

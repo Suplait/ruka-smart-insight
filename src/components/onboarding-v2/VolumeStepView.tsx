@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { ArrowRight, LoaderCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { PricingSummary } from "@/components/onboarding-v2/PricingSummary";
 import { ReviewBanner } from "@/components/onboarding-v2/ReviewBanner";
 import { VolumeSelector } from "@/components/onboarding-v2/VolumeSelector";
 
@@ -22,31 +21,27 @@ export function VolumeStepView({ selectedCount, onChange, onContinue, isLoading,
     <main className="min-h-[100dvh] bg-[#fbfcff] text-[#171827]">
       {isReview ? <ReviewBanner detail="Paso de volumen" /> : null}
 
-      <div className="mx-auto flex min-h-[calc(100dvh-42px)] max-w-7xl flex-col px-5 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
+      <div className="mx-auto flex min-h-[calc(100dvh-42px)] max-w-6xl flex-col px-5 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
         <header>
           <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto sm:h-9" />
         </header>
 
-        <div className="my-auto grid gap-6 py-8 lg:grid-cols-[minmax(0,1.12fr)_minmax(360px,0.88fr)] lg:grid-rows-[auto_auto] lg:gap-x-12 lg:gap-y-7 xl:gap-x-16">
-          <section className="lg:col-start-1 lg:row-start-1">
+        <div className="my-auto py-9 sm:py-12 lg:py-14">
+          <section>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Antes de agendar</p>
-            <h1 className="mt-4 text-balance text-4xl font-semibold leading-[1.02] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:max-w-xl lg:text-[3.35rem]">
+            <h1 className="mt-4 max-w-3xl text-balance text-4xl font-semibold leading-[1.02] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:text-[3.35rem]">
               Cuéntanos tu volumen.
             </h1>
             <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-[#555d72] sm:text-lg sm:leading-8">
-              Una aproximación está bien. Lo usamos para entender el tamaño de tu operación antes de mostrarte los horarios disponibles.
+              Una aproximación está bien. Elige el tramo que mejor representa tu operación antes de ver los horarios disponibles.
             </p>
 
-            <div className="mt-8 max-w-2xl">
+            <div className="mt-9 max-w-5xl">
               <VolumeSelector selectedCount={selectedCount} onChange={onChange} />
             </div>
           </section>
 
-          <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
-            <PricingSummary />
-          </div>
-
-          <div className="lg:col-start-1 lg:row-start-2">
+          <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5">
             <Button
               type="button"
               onClick={onContinue}
@@ -65,7 +60,7 @@ export function VolumeStepView({ selectedCount, onChange, onContinue, isLoading,
                 </>
               )}
             </Button>
-            <p className="mt-3 text-sm text-[#687086]">El siguiente paso es elegir una hora.</p>
+            <p className="text-sm text-[#687086]">El siguiente paso es elegir una hora.</p>
           </div>
         </div>
       </div>

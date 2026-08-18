@@ -1,6 +1,5 @@
 import { useEffect, type ReactNode } from "react";
 import { Check, Clock3 } from "lucide-react";
-import { PricingSummary } from "@/components/onboarding-v2/PricingSummary";
 import { ReviewBanner } from "@/components/onboarding-v2/ReviewBanner";
 
 type CalendlyStageViewProps = {
@@ -38,7 +37,7 @@ export function CalendlyStageView({ volumeLabel, children, isReview = false, rev
               Elige una hora para revisar tu proceso.
             </h1>
             <p className="mt-5 max-w-xl text-pretty text-sm leading-6 text-[#555d72] sm:text-base sm:leading-7">
-              Ya tenemos tu volumen. En 30 minutos revisamos qué trabajo quieres sacar de tu equipo, los sistemas que toca y qué plan tiene sentido para tu operación.
+              Ya tenemos tu volumen. En 30 minutos revisamos qué trabajo manual quieres dejar de hacer, los sistemas que toca y qué plan tiene sentido para tu operación.
             </p>
 
             <div className="mt-5 border-y border-[#dce3f2] py-4 sm:mt-6">
@@ -64,10 +63,6 @@ export function CalendlyStageView({ volumeLabel, children, isReview = false, rev
                 ))}
               </ul>
             </section>
-
-            <div className="mt-5 sm:mt-6">
-              <PricingSummary compact />
-            </div>
           </aside>
 
           <section aria-label="Calendario para agendar" className="min-w-0 overflow-hidden rounded-2xl border border-[#dce3f2] bg-white">

@@ -68,7 +68,7 @@ export function AcquisitionHero({ eyebrow, title, description, outcomes, onCtaCl
         >
           Agendar 30 min <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
-        <span className="text-sm text-[#7a8190]">Cuéntanos tu proceso · Sin preparación</span>
+        <span className="text-sm text-[#7a8190]">Cuéntanos tu proceso · Sin compromiso</span>
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-[#dde2ed] bg-white shadow-[0_18px_55px_rgba(24,30,52,0.055)]">

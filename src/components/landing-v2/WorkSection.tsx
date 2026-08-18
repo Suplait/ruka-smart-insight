@@ -80,7 +80,7 @@ export function WorkSection({ reduceMotion, onPrimaryAction }: WorkSectionProps)
             id="work-section-title"
             className="text-balance text-4xl font-semibold leading-[1.06] tracking-[-0.035em] text-[#171827] sm:text-5xl lg:text-6xl"
           >
-            Trabajo que puedes sacar de tu equipo.
+            Recupera horas que hoy se van en trabajo manual.
           </h2>
           <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555d70]">
             Ruka registra, concilia, actualiza y calcula sobre los sistemas que tu operación ya usa.
