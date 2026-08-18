@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import type { MotionValue } from "framer-motion";
@@ -16,7 +16,7 @@ import {
   Store,
   UserRound,
 } from "lucide-react";
-import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -91,11 +91,13 @@ export default function OperationalGapSection() {
   const closingOpacity = useTransform(scrollYProgress, [0.58, 0.76, 0.9], [0.48, 1, 1]);
   const progressScale = useTransform(scrollYProgress, [0.12, 0.88], [0, 1]);
 
-  useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    if (reduceMotion) return;
-    const nextDestination = Math.min(destinations.length - 1, Math.max(0, Math.floor(progress * destinations.length)));
-    setActiveDestination((current) => (current === nextDestination ? current : nextDestination));
-  });
+  useEffect(() => {
+    const destinationTimer = window.setInterval(() => {
+      setActiveDestination((current) => (current + 1) % destinations.length);
+    }, 1500);
+
+    return () => window.clearInterval(destinationTimer);
+  }, []);
 
   return (
     <section id="problema" className="scroll-mt-24 bg-[#f4f6fa] py-20 sm:py-28">
