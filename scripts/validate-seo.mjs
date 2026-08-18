@@ -24,7 +24,7 @@ const routes = [
     path: "/register",
     title: "Agentes IA para automatizar trabajo operativo | Ruka",
     canonical: `${siteOrigin}/register`,
-    h1: "Cuéntanos qué trabajo quieres sacar de tu equipo.",
+    h1: "Cuéntanos qué trabajo manual quieres dejar de hacer.",
     schema: ["Organization", "WebSite", "WebPage", "SoftwareApplication", "FAQPage"],
   },
   {
@@ -81,6 +81,13 @@ const routes = [
     canonical: `${siteOrigin}/terms`,
     h1: "Términos y Condiciones",
   },
+  {
+    path: "/works",
+    title: "Ruka Works | Automatiza procesos que tu software no resuelve",
+    canonical: `${siteOrigin}/works`,
+    h1: "Tu operación tiene procesos que el software estándar no resuelve de punta a punta.",
+    schema: ["Organization", "WebSite", "Service", "WebPage"],
+  },
 ];
 
 const noIndexRoutes = [
@@ -89,6 +96,12 @@ const noIndexRoutes = [
     title: "Página de producto de ejemplo | Ruka.ai",
     canonical: `${siteOrigin}/productos/ejemplo`,
     h1: "Lorem Ipsum Dolor Sit Amet",
+  },
+  {
+    path: "/works/contacto",
+    title: "Cuéntanos tu proceso | Ruka Works",
+    canonical: `${siteOrigin}/works/contacto`,
+    h1: "Cuéntanos qué quieres dejar de operar manualmente.",
   },
 ];
 

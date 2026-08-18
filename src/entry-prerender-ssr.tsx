@@ -14,6 +14,8 @@ import Restaurantes from "@/pages/Restaurantes";
 import Retail from "@/pages/Retail";
 import Stock from "@/pages/Stock";
 import TermsAndConditions from "@/pages/TermsAndConditions";
+import Works from "@/pages/Works";
+import WorksContact from "@/pages/WorksContact";
 
 const pages: Record<string, ComponentType> = {
   "/": LandingV2,
@@ -28,6 +30,8 @@ const pages: Record<string, ComponentType> = {
   "/productos/stock": Stock,
   "/privacy": PrivacyPolicy,
   "/terms": TermsAndConditions,
+  "/works": Works,
+  "/works/contacto": WorksContact,
 };
 
 export const prerenderPaths = Object.keys(pages);

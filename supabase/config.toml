@@ -6,3 +6,9 @@ verify_jwt = false
 
 [functions.notify-slack]
 verify_jwt = false
+
+[functions.create-works-lead]
+verify_jwt = false
+
+[functions.notify-works-slack]
+verify_jwt = false

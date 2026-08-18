@@ -48,6 +48,10 @@
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
     },
     {
+      "source": "/works/contacto",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
       "source": "/robots.txt",
       "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }]
     },
@@ -90,6 +94,10 @@
     { "source": "/privacy/", "destination": "/privacy/index.html" },
     { "source": "/terms", "destination": "/terms/index.html" },
     { "source": "/terms/", "destination": "/terms/index.html" },
+    { "source": "/works", "destination": "/works/index.html" },
+    { "source": "/works/", "destination": "/works/index.html" },
+    { "source": "/works/contacto", "destination": "/works/contacto/index.html" },
+    { "source": "/works/contacto/", "destination": "/works/contacto/index.html" },
     { "source": "/home-anterior", "destination": "/index.html" },
     { "source": "/onboarding-success", "destination": "/index.html" },
     { "source": "/calendly-success", "destination": "/index.html" },
