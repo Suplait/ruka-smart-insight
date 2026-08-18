@@ -302,7 +302,7 @@ function Hero({
               {CTA_LABEL}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <p className="text-xs font-medium text-[#6a7184]">Cuéntanos tu proceso · Sin preparación</p>
+            <p className="text-xs font-medium text-[#6a7184]">Cuéntanos tu proceso · Sin compromiso</p>
           </motion.div>
           <a
             href="#demo"
@@ -910,7 +910,7 @@ function FAQAndCTASection({ navigate }: { navigate: (path: string) => void }) {
               </Button>
               <p className="flex items-center gap-2 text-sm font-semibold text-[#555b6e]">
                 <UsersRound className="h-4 w-4 text-primary" />
-                30 min · Sin preparación
+                30 min · Sin compromiso
               </p>
             </div>
           </div>

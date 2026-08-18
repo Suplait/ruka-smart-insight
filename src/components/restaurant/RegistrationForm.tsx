@@ -320,7 +320,7 @@ export default function RegistrationForm({
             </div>
             <div className="flex items-center gap-1.5 text-xs text-gray-500">
               <Clock4 className="w-3.5 h-3.5" />
-              <span>Sin preparación</span>
+              <span>Sin compromiso</span>
             </div>
             <div className="flex items-center gap-1.5 text-xs text-gray-500">
               <CreditCard className="w-3.5 h-3.5" />
