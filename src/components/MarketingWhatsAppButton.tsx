@@ -77,7 +77,7 @@ export function MarketingWhatsAppButton() {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       whileHover={reduceMotion ? undefined : { y: -2 }}
       transition={{ duration: reduceMotion ? 0 : 0.22, ease: "easeOut" }}
-      className={`fixed right-5 z-[60] flex h-[52px] w-[52px] items-center justify-center rounded-full border border-[#dce3f2] bg-white text-sm font-semibold text-[#202231] shadow-[0_14px_38px_rgba(23,24,39,0.16)] outline-none transition-[border-color,box-shadow] hover:border-[#b9c1d2] hover:shadow-[0_16px_42px_rgba(23,24,39,0.2)] focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 sm:w-auto sm:gap-2.5 sm:px-4 ${
+      className={`fixed right-5 z-40 flex h-[52px] w-[52px] items-center justify-center rounded-full border border-[#dce3f2] bg-white text-sm font-semibold text-[#202231] shadow-[0_14px_38px_rgba(23,24,39,0.16)] outline-none transition-[border-color,box-shadow] hover:border-[#b9c1d2] hover:shadow-[0_16px_42px_rgba(23,24,39,0.2)] focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 sm:w-auto sm:gap-2.5 sm:px-4 ${
         isAcquisitionRoute ? "bottom-[6.5rem] lg:bottom-8 lg:right-8" : "bottom-5 sm:bottom-8 sm:right-8"
       }`}
     >

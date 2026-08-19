@@ -38,10 +38,25 @@ export function WorksMethod() {
           </div>
         </div>
 
-        <div className="mt-14 border-y border-[#dfe3ea] bg-white">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4">
+        <motion.div
+          className="mt-16 grid gap-5 border-y border-[#dfe3ea] bg-white py-8 sm:py-9 lg:grid-cols-[0.92fr_1.08fr] lg:items-start lg:gap-14"
+          initial={reduceMotion ? false : { opacity: 0.82, y: 14 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.45 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <h3 className="max-w-xl text-balance text-[30px] font-semibold leading-[1.12] tracking-[-0.03em] text-[#202230] sm:text-[36px]">
+            {worksContent.method.technology.title}
+          </h3>
+          <p className="max-w-2xl text-pretty text-base leading-7 text-[#646b7b] sm:text-lg sm:leading-8">
+            {worksContent.method.technology.copy}
+          </p>
+        </motion.div>
+
+        <div className="mt-8 overflow-hidden rounded-xl border border-[#dfe3ea] bg-white">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5">
             {worksContent.method.rail.map((item, index) => (
-              <div key={item} className={`flex items-center gap-3 px-4 py-4 text-sm font-semibold text-[#454a59] sm:px-5 ${index % 2 === 0 ? "sm:border-r sm:border-[#e1e4ea]" : ""} ${index < 2 ? "border-b border-[#e1e4ea] lg:border-b-0" : ""} ${index > 0 ? "lg:border-l lg:border-[#e1e4ea]" : ""}`}>
+              <div key={item} className={`flex items-center gap-3 px-4 py-4 text-sm font-semibold text-[#454a59] sm:px-5 ${index < worksContent.method.rail.length - 1 ? "border-b border-[#e1e4ea] lg:border-b-0 lg:border-r" : ""}`}>
                 <Check className="h-4 w-4 shrink-0 text-[#5369eb]" /> {item}
               </div>
             ))}

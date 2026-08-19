@@ -3,6 +3,7 @@ import { ArrowLeft, Clock3, Handshake, UsersRound } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { WorksCalendly } from "@/components/works/WorksCalendly";
 import { WorksContactForm } from "@/components/works/WorksContactForm";
+import { WorksExecutionStack } from "@/components/works/WorksExecutionStack";
 import { WorksReviewBanner } from "@/components/works/WorksReviewBanner";
 import { WorksContactSeo } from "@/components/works/WorksSeo";
 import { WorksSuccess } from "@/components/works/WorksSuccess";
@@ -112,7 +113,7 @@ export default function WorksContact() {
       {isDebug ? <WorksReviewBanner stage={stage} onStageChange={goToStage} /> : null}
       <header className="border-b border-[#e3e6ed] bg-white/90 px-5 py-4 backdrop-blur-xl sm:px-8">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-6">
-          <Link to={WORKS_PATH} aria-label={`Volver a ${WORKS_NAME}`}><img src="/logo.png" alt="Ruka.ai" className="h-8" /></Link>
+          <Link to="/" aria-label="Ir al inicio de Ruka"><img src="/logo.png" alt="Ruka.ai" className="h-8" /></Link>
           <Link to={WORKS_PATH} className="inline-flex items-center gap-2 text-sm font-semibold text-[#62697b] transition hover:text-[#5369eb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5369eb] focus-visible:ring-offset-4"><ArrowLeft className="h-4 w-4" /> Volver a {WORKS_NAME}</Link>
         </div>
       </header>
@@ -120,8 +121,8 @@ export default function WorksContact() {
       <main className="px-5 py-9 sm:px-8 sm:py-12 lg:py-14">
         <div className="mx-auto max-w-6xl">
           {stage === "form" ? (
-            <div className="grid items-start gap-9 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-              <div className="lg:pt-3">
+            <div className="grid items-start gap-9 lg:grid-cols-[0.92fr_1.08fr] lg:gap-x-16 lg:gap-y-0">
+              <div className="lg:col-start-1 lg:row-start-1 lg:pt-3">
                 <p className="text-[11px] font-semibold tracking-[0.18em] text-[#5369eb]">{worksContent.contact.eyebrow}</p>
                 <h1 className="mt-4 max-w-xl text-balance text-[clamp(2.5rem,4.8vw,4.7rem)] font-semibold leading-[0.96] tracking-[-0.055em] text-[#171827]">{worksContent.contact.title}</h1>
                 <p className="mt-5 max-w-lg text-pretty text-base leading-7 text-[#676e80] sm:text-lg sm:leading-8">{worksContent.contact.lead}</p>
@@ -131,11 +132,16 @@ export default function WorksContact() {
                   <p className="flex items-center gap-3"><UsersRound className="h-4 w-4 text-[#5369eb]" /> Conversación con el equipo de Ruka</p>
                 </div>
               </div>
-              <WorksContactForm value={lead} onChange={setLead} onContinue={handleContinue} />
+              <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
+                <WorksContactForm value={lead} onChange={setLead} onContinue={handleContinue} />
+              </div>
+              <div className="lg:col-start-1 lg:row-start-2">
+                <WorksExecutionStack />
+              </div>
             </div>
           ) : stage === "calendar" ? (
             <div>
-              <p className="text-[11px] font-semibold tracking-[0.18em] text-[#5369eb]">REVISIÓN DE CASO</p>
+              <p className="text-[11px] font-semibold tracking-[0.18em] text-[#5369eb]">RUKA WORKS</p>
               <h1 className="mt-4 max-w-4xl text-balance text-[clamp(2.5rem,4.8vw,4.7rem)] font-semibold leading-[0.96] tracking-[-0.055em] text-[#171827]">{worksContent.contact.calendarTitle}</h1>
               <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-[#676e80] sm:text-lg sm:leading-8">{worksContent.contact.calendarLead}</p>
               <div className="mt-7">

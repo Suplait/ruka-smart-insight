@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ReviewBanner } from "@/components/onboarding-v2/ReviewBanner";
@@ -47,7 +47,9 @@ export function ReviewRegistrationForm() {
       <ReviewBanner detail="Formulario seguro de prueba" />
       <div className="mx-auto grid min-h-[calc(100dvh-42px)] max-w-6xl items-center gap-10 px-5 py-10 sm:px-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,1.1fr)] lg:px-10">
         <section>
-          <img src="/logo.png" alt="Ruka.ai" className="h-9 w-auto" />
+          <Link to="/" aria-label="Ir al inicio de Ruka" className="inline-flex">
+            <img src="/logo.png" alt="Ruka.ai" className="h-9 w-auto" />
+          </Link>
           <p className="mt-10 text-xs font-semibold uppercase tracking-[0.16em] text-primary">Revisión del journey</p>
           <h1 className="mt-4 max-w-xl text-balance text-4xl font-semibold leading-[1.03] tracking-[-0.035em] sm:text-5xl">
             Entra al onboarding sin crear un lead.

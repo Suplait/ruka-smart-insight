@@ -24,7 +24,6 @@ function DebugCalendar({ lead, onScheduled, onBack }: WorksCalendlyProps) {
             <p className="text-xs font-semibold text-[#343746]">Datos precargados</p>
             <p className="mt-3 text-sm font-medium text-[#555b6d]">{lead.name}</p>
             <p className="mt-1 text-sm text-[#7c8292]">{lead.email}</p>
-            <p className="mt-1 text-sm text-[#7c8292]">{lead.company}</p>
           </div>
         </div>
         <div className="p-6 lg:p-8">
@@ -76,7 +75,6 @@ export function WorksCalendly(props: WorksCalendlyProps) {
         prefill: {
           name: lead.name,
           email: lead.email,
-          customAnswers: { a1: lead.company },
         },
       });
     };
@@ -98,7 +96,7 @@ export function WorksCalendly(props: WorksCalendlyProps) {
       script?.removeEventListener("load", initialize);
       mountNode.replaceChildren();
     };
-  }, [isDebug, lead.company, lead.email, lead.name]);
+  }, [isDebug, lead.email, lead.name]);
 
   if (props.isDebug) return <DebugCalendar {...props} />;
 

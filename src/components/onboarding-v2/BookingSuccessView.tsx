@@ -25,7 +25,9 @@ export function BookingSuccessView({ isReview = false }: BookingSuccessViewProps
 
       <div className="mx-auto flex min-h-[calc(100dvh-42px)] max-w-6xl flex-col px-5 py-7 sm:px-8 sm:py-9 lg:px-10">
         <header>
-          <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto sm:h-9" />
+          <Link to="/" aria-label="Ir al inicio de Ruka" className="inline-flex">
+            <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto sm:h-9" />
+          </Link>
         </header>
 
         <div className="my-auto grid items-center gap-10 py-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(330px,0.85fr)] lg:gap-16">

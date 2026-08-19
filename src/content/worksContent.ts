@@ -3,11 +3,6 @@ export const WORKS_PATH = "/works";
 export const WORKS_CONTACT_PATH = "/works/contacto";
 
 export const worksContent = {
-  navigation: [
-    { id: "como-funciona", label: "Cómo funciona" },
-    { id: "como-trabajamos", label: "Cómo trabajamos" },
-    { id: "preguntas", label: "FAQ" },
-  ],
   hero: {
     eyebrow: WORKS_NAME.toUpperCase(),
     title: "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
@@ -108,12 +103,11 @@ export const worksContent = {
         output: "Cada vez menos trabajo manual",
       },
     ],
-    rail: [
-      "Sobre tus sistemas actuales",
-      "Con tus reglas",
-      "Humano cuando hace falta",
-      "Trazabilidad de cada acción",
-    ],
+    technology: {
+      title: "Agentes IA donde aportan. Reglas y controles donde importan.",
+      copy: "Cada flujo puede combinar agentes IA, integraciones, reglas de negocio y revisión humana. Usamos el nivel de autonomía adecuado para cada parte del proceso.",
+    },
+    rail: ["Agentes IA", "Integraciones", "Reglas de negocio", "Revisión humana", "Trazabilidad"],
     statement: "El proceso puede ser específico. La tecnología debajo no parte de cero.",
     supporting: "Ruka reutiliza una base común para conectar sistemas, entender información, ejecutar reglas, actualizar datos y registrar lo que ocurrió.",
   },
@@ -155,7 +149,7 @@ export const worksContent = {
     title: "Veamos si Ruka puede hacerse cargo.",
     lead: "Déjanos tus datos y elige una hora. En la reunión partimos desde el proceso real.",
     calendarTitle: "Elige una hora.",
-    calendarLead: "En 30 minutos vemos cómo funciona el proceso, qué sistemas toca y si tiene sentido que Ruka se haga cargo de parte del trabajo.",
+    calendarLead: "En 30 minutos vemos cómo funciona ese proceso y si tiene sentido abordarlo con Ruka.",
     successTitle: "Listo. Nos vemos en la reunión.",
     successCopy: "Partiremos entendiendo cómo funciona hoy el proceso y dónde está el trabajo manual.",
   },
