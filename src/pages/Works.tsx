@@ -2,15 +2,15 @@ import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { BeforeAfter } from "@/components/works/BeforeAfter";
-import { PainPatterns } from "@/components/works/PainPatterns";
-import { UseCases } from "@/components/works/UseCases";
-import { WorksDifference } from "@/components/works/WorksDifference";
+import { FamiliarPatterns } from "@/components/works/FamiliarPatterns";
+import { WorksFaq } from "@/components/works/WorksFaq";
 import { WorksFinalCta } from "@/components/works/WorksFinalCta";
 import { WorksFooter } from "@/components/works/WorksFooter";
 import { WorksHero } from "@/components/works/WorksHero";
 import { WorksMethod } from "@/components/works/WorksMethod";
 import { WorksSeo } from "@/components/works/WorksSeo";
 import { WorksSocialProof } from "@/components/works/WorksSocialProof";
+import { WorksTestimonial } from "@/components/works/WorksTestimonial";
 import { captureWorksAttribution } from "@/utils/worksAttribution";
 import { isWorksDebugEnabled } from "@/utils/worksDebug";
 import { trackWorksEvent } from "@/utils/worksTracking";
@@ -35,16 +35,16 @@ export default function Works() {
         sectionLinks={worksContent.navigation}
         sectionPath={WORKS_PATH}
         logoPath={WORKS_PATH}
-        primaryAction={{ label: "Cuéntanos el proceso", path: WORKS_CONTACT_PATH }}
+        primaryAction={{ label: "Revisar mi caso", path: WORKS_CONTACT_PATH }}
       />
       <main>
         <WorksHero />
-        <PainPatterns />
-        <UseCases />
+        <WorksSocialProof />
+        <FamiliarPatterns />
         <BeforeAfter />
         <WorksMethod />
-        <WorksDifference />
-        <WorksSocialProof />
+        <WorksTestimonial />
+        <WorksFaq />
         <WorksFinalCta />
       </main>
       <WorksFooter />

@@ -14,7 +14,7 @@ const worksSchema = {
       url: worksContent.seo.canonical,
       description: worksContent.seo.description,
       provider: { "@id": organizationId },
-      serviceType: "Automatización de procesos operativos",
+      serviceType: "Automatización de procesos empresariales",
       areaServed: "CL",
     },
     {
@@ -50,12 +50,12 @@ export function WorksSeo() {
       <meta property="og:image:type" content="image/png" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content={`${WORKS_NAME} ejecutando un proceso de validación operacional`} />
+      <meta property="og:image:alt" content={`${WORKS_NAME} ejecutando un proceso empresarial sobre los sistemas existentes`} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={worksContent.seo.title} />
       <meta name="twitter:description" content={worksContent.seo.description} />
       <meta name="twitter:image" content={worksContent.seo.image} />
-      <meta name="twitter:image:alt" content={`${WORKS_NAME} ejecutando un proceso de validación operacional`} />
+      <meta name="twitter:image:alt" content={`${WORKS_NAME} ejecutando un proceso empresarial sobre los sistemas existentes`} />
       <script type="application/ld+json">{JSON.stringify(worksSchema)}</script>
     </Helmet>
   );

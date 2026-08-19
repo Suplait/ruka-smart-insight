@@ -8,17 +8,14 @@ export async function createWorksLead(
   lead: WorksLeadData,
   attribution: WorksAttribution,
   landingPath: string,
+  submissionId: string,
 ) {
   const { data, error } = await supabase.functions.invoke<CreateWorksLeadResponse>("create-works-lead", {
     body: {
       name: lead.name.trim(),
       company: lead.company.trim(),
       email: lead.email.trim(),
-      whatsapp: lead.whatsapp.trim() || null,
-      process_description: lead.processDescription.trim(),
-      systems: lead.systems.trim() || null,
-      frequency: lead.frequency,
-      manual_hours: lead.manualHours,
+      submission_id: submissionId,
       landing_path: landingPath,
       ...attribution,
     },
@@ -26,9 +23,4 @@ export async function createWorksLead(
 
   if (error || !data?.lead_id) throw new Error("No pudimos guardar el proceso. Inténtalo nuevamente.");
   return data.lead_id;
-}
-
-export async function notifyWorksLead(leadId: string) {
-  const { error } = await supabase.functions.invoke("notify-works-slack", { body: { lead_id: leadId } });
-  if (error) throw error;
 }

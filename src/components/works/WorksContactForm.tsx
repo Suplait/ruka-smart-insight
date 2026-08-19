@@ -1,23 +1,15 @@
 import { useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  worksFrequencyOptions,
-  worksManualHoursOptions,
-  type WorksLeadData,
-  type WorksFrequency,
-  type WorksManualHours,
-} from "@/content/worksContent";
+import type { WorksLeadData } from "@/content/worksContent";
 
 type FieldErrors = Partial<Record<keyof WorksLeadData | "form", string>>;
 
 function FieldError({ id, error }: { id: string; error?: string }) {
-  return error ? <p id={id} role="alert" className="mt-2 text-sm font-medium text-[#b44355]">{error}</p> : null;
+  return error ? <p id={id} role="alert" className="mt-2 text-sm font-medium text-[#a53d50]">{error}</p> : null;
 }
 
-const inputClass = "h-12 rounded-xl border-[#d9dde7] bg-white px-4 text-base shadow-none placeholder:text-[#a0a5b2] focus-visible:ring-[#5369eb]";
+const inputClass = "mt-2 h-12 rounded-lg border-[#cfd4df] bg-white px-4 text-base text-[#242634] shadow-none placeholder:text-[#747b8b] focus-visible:ring-[#5369eb]";
 
 export function WorksContactForm({
   value,
@@ -38,9 +30,6 @@ export function WorksContactForm({
 
   const validate = () => {
     const next: FieldErrors = {};
-    if (value.processDescription.trim().length < 20) next.processDescription = "Cuéntanos un poco más sobre el proceso.";
-    if (!value.frequency) next.frequency = "Selecciona una frecuencia.";
-    if (!value.manualHours) next.manualHours = "Selecciona una alternativa.";
     if (value.name.trim().length < 2) next.name = "Ingresa tu nombre.";
     if (value.company.trim().length < 2) next.company = "Ingresa el nombre de tu empresa.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.email.trim())) next.email = "Ingresa un email de trabajo válido.";
@@ -57,108 +46,38 @@ export function WorksContactForm({
     } catch (error) {
       setErrors((current) => ({
         ...current,
-        form: error instanceof Error ? error.message : "No pudimos guardar el proceso. Inténtalo nuevamente.",
+        form: error instanceof Error ? error.message : "No pudimos guardar tus datos. Inténtalo nuevamente.",
       }));
       setSubmitting(false);
     }
   };
 
   return (
-    <form id="works-contact-form" onSubmit={handleSubmit} noValidate className="rounded-[22px] border border-[#dfe3eb] bg-white p-5 shadow-[0_24px_70px_rgba(30,34,56,0.09)] sm:p-8 lg:p-10">
-      <div>
-        <label htmlFor="works-process" className="text-base font-semibold text-[#252736]">¿Cómo funciona hoy? <span className="text-[#5369eb]">*</span></label>
-        <p className="mt-1 text-sm text-[#7a8090]">Descríbelo como se lo explicarías a una persona nueva del equipo.</p>
-        <Textarea
-          id="works-process"
-          value={value.processDescription}
-          onChange={(event) => update("processDescription", event.target.value)}
-          placeholder="Por ejemplo: recibimos facturas por correo, buscamos la orden en SAP, revisamos si la recepción coincide y después actualizamos el ERP manualmente."
-          maxLength={5000}
-          aria-invalid={Boolean(errors.processDescription)}
-          aria-describedby={errors.processDescription ? "works-process-error" : undefined}
-          className="mt-3 min-h-[170px] resize-y rounded-xl border-[#d9dde7] bg-white p-4 text-base leading-7 placeholder:text-[#a0a5b2] focus-visible:ring-[#5369eb]"
-        />
-        <FieldError id="works-process-error" error={errors.processDescription} />
-      </div>
-
-      <div className="mt-7">
-        <label htmlFor="works-systems" className="text-base font-semibold text-[#252736]">¿Qué sistemas intervienen?</label>
-        <p className="mt-1 text-sm text-[#7a8090]">Opcional. Incluye archivos, correo o sistemas internos si corresponde.</p>
-        <Input
-          id="works-systems"
-          value={value.systems}
-          onChange={(event) => update("systems", event.target.value)}
-          placeholder="SAP, SII, correo, Excel..."
-          maxLength={1000}
-          className={`mt-3 ${inputClass}`}
-        />
-      </div>
-
-      <fieldset className="mt-8">
-        <legend className="text-base font-semibold text-[#252736]">¿Con qué frecuencia ocurre? <span className="text-[#5369eb]">*</span></legend>
-        <RadioGroup
-          value={value.frequency}
-          onValueChange={(next) => update("frequency", next as WorksFrequency)}
-          className="mt-3 grid gap-2 sm:grid-cols-2"
-          aria-describedby={errors.frequency ? "works-frequency-error" : undefined}
-        >
-          {worksFrequencyOptions.map((option) => (
-            <label key={option} className="flex cursor-pointer items-center gap-3 rounded-xl border border-[#dfe3eb] bg-[#fbfcff] px-4 py-3.5 text-sm font-medium text-[#4a4e5f] transition hover:border-[#c5cdf7] has-[[data-state=checked]]:border-[#8999ef] has-[[data-state=checked]]:bg-[#f3f5ff]">
-              <RadioGroupItem value={option} /> {option}
-            </label>
-          ))}
-        </RadioGroup>
-        <FieldError id="works-frequency-error" error={errors.frequency} />
-      </fieldset>
-
-      <fieldset className="mt-8">
-        <legend className="text-base font-semibold text-[#252736]">¿Cuánto trabajo manual requiere hoy? <span className="text-[#5369eb]">*</span></legend>
-        <RadioGroup
-          value={value.manualHours}
-          onValueChange={(next) => update("manualHours", next as WorksManualHours)}
-          className="mt-3 grid gap-2 sm:grid-cols-2"
-          aria-describedby={errors.manualHours ? "works-hours-error" : undefined}
-        >
-          {worksManualHoursOptions.map((option) => (
-            <label key={option} className="flex cursor-pointer items-center gap-3 rounded-xl border border-[#dfe3eb] bg-[#fbfcff] px-4 py-3.5 text-sm font-medium text-[#4a4e5f] transition hover:border-[#c5cdf7] has-[[data-state=checked]]:border-[#8999ef] has-[[data-state=checked]]:bg-[#f3f5ff]">
-              <RadioGroupItem value={option} /> {option}
-            </label>
-          ))}
-        </RadioGroup>
-        <FieldError id="works-hours-error" error={errors.manualHours} />
-      </fieldset>
-
-      <div className="mt-9 border-t border-[#e4e7ee] pt-8">
-        <p className="text-[11px] font-semibold tracking-[0.16em] text-[#5369eb]">TUS DATOS</p>
-        <div className="mt-5 grid gap-5 sm:grid-cols-2">
-          <div>
-            <label htmlFor="works-name" className="text-sm font-semibold text-[#303241]">Nombre <span className="text-[#5369eb]">*</span></label>
-            <Input id="works-name" autoComplete="name" value={value.name} onChange={(event) => update("name", event.target.value)} maxLength={120} aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "works-name-error" : undefined} className={`mt-2 ${inputClass}`} />
-            <FieldError id="works-name-error" error={errors.name} />
-          </div>
-          <div>
-            <label htmlFor="works-company" className="text-sm font-semibold text-[#303241]">Empresa <span className="text-[#5369eb]">*</span></label>
-            <Input id="works-company" autoComplete="organization" value={value.company} onChange={(event) => update("company", event.target.value)} maxLength={160} aria-invalid={Boolean(errors.company)} aria-describedby={errors.company ? "works-company-error" : undefined} className={`mt-2 ${inputClass}`} />
-            <FieldError id="works-company-error" error={errors.company} />
-          </div>
-          <div>
-            <label htmlFor="works-email" className="text-sm font-semibold text-[#303241]">Email de trabajo <span className="text-[#5369eb]">*</span></label>
-            <Input id="works-email" type="email" autoComplete="email" value={value.email} onChange={(event) => update("email", event.target.value)} maxLength={254} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "works-email-error" : undefined} className={`mt-2 ${inputClass}`} />
-            <FieldError id="works-email-error" error={errors.email} />
-          </div>
-          <div>
-            <label htmlFor="works-whatsapp" className="text-sm font-semibold text-[#303241]">WhatsApp <span className="font-normal text-[#8a90a0]">(opcional)</span></label>
-            <Input id="works-whatsapp" type="tel" autoComplete="tel" value={value.whatsapp} onChange={(event) => update("whatsapp", event.target.value)} maxLength={40} className={`mt-2 ${inputClass}`} />
-          </div>
+    <form id="works-contact-form" onSubmit={handleSubmit} noValidate className="rounded-2xl border border-[#d8dde6] bg-white p-5 sm:p-7 lg:p-8">
+      <div className="grid gap-5">
+        <div>
+          <label htmlFor="works-name" className="text-sm font-semibold text-[#303241]">Nombre <span className="text-[#5369eb]">*</span></label>
+          <Input id="works-name" autoComplete="name" value={value.name} onChange={(event) => update("name", event.target.value)} maxLength={120} placeholder="Tu nombre" aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "works-name-error" : undefined} className={inputClass} />
+          <FieldError id="works-name-error" error={errors.name} />
+        </div>
+        <div>
+          <label htmlFor="works-company" className="text-sm font-semibold text-[#303241]">Empresa <span className="text-[#5369eb]">*</span></label>
+          <Input id="works-company" autoComplete="organization" value={value.company} onChange={(event) => update("company", event.target.value)} maxLength={160} placeholder="Nombre de la empresa" aria-invalid={Boolean(errors.company)} aria-describedby={errors.company ? "works-company-error" : undefined} className={inputClass} />
+          <FieldError id="works-company-error" error={errors.company} />
+        </div>
+        <div>
+          <label htmlFor="works-email" className="text-sm font-semibold text-[#303241]">Email de trabajo <span className="text-[#5369eb]">*</span></label>
+          <Input id="works-email" type="email" autoComplete="email" value={value.email} onChange={(event) => update("email", event.target.value)} maxLength={254} placeholder="tu@empresa.com" aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "works-email-error" : undefined} className={inputClass} />
+          <FieldError id="works-email-error" error={errors.email} />
         </div>
       </div>
 
-      {errors.form ? <div role="alert" className="mt-6 rounded-xl border border-[#efcfd5] bg-[#fff7f8] p-4 text-sm font-medium text-[#9f3547]">{errors.form}</div> : null}
+      {errors.form ? <div role="alert" className="mt-5 rounded-lg border border-[#e7c9cf] bg-[#fff7f8] p-4 text-sm font-medium text-[#913548]">{errors.form}</div> : null}
 
       <button
         type="submit"
         disabled={submitting}
-        className="mt-8 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#5369eb] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(83,105,235,0.22)] transition hover:bg-[#455adb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5369eb] focus-visible:ring-offset-4 disabled:cursor-not-allowed disabled:opacity-65 sm:w-auto"
+        className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#5369eb] px-6 text-sm font-semibold text-white transition-[background-color,transform] duration-150 hover:bg-[#465bda] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5369eb] focus-visible:ring-offset-4 disabled:cursor-not-allowed disabled:opacity-65 sm:w-auto"
       >
         {submitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Guardando...</> : <>Ver horarios <ArrowRight className="h-4 w-4" /></>}
       </button>

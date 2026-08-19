@@ -16,7 +16,7 @@ export function WorksFooter() {
           <nav aria-label={`Navegación de ${WORKS_NAME}`}>
             <p className="text-xs font-semibold text-[#282a39]">{WORKS_NAME}</p>
             <ul className="mt-4 space-y-3 text-sm text-[#6c7283]">
-              <li><Link to={WORKS_CONTACT_PATH} className="transition hover:text-[#5369eb]">Cuéntanos el proceso</Link></li>
+              <li><Link to={WORKS_CONTACT_PATH} className="transition hover:text-[#5369eb]">Revisar mi caso</Link></li>
               <li><Link to="/about" className="transition hover:text-[#5369eb]">Quiénes somos</Link></li>
               <li><Link to="/" className="transition hover:text-[#5369eb]">Ruka estándar</Link></li>
             </ul>

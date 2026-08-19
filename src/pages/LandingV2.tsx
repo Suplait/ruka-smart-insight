@@ -238,7 +238,7 @@ export default function LandingV2() {
       <Hero reduceMotion={reduceMotion} navigate={navigate} />
       <SocialProofSection />
       <OperationalGapSection />
-      <WorkSection reduceMotion={reduceMotion} onPrimaryAction={() => navigate("/register")} />
+      <WorkSection reduceMotion={reduceMotion} primaryPath="/works" />
       <ProductDemoSection reduceMotion={reduceMotion} navigate={navigate} />
       <IntegrationsSection />
       <PricingSection navigate={navigate} />

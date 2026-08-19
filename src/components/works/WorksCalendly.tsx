@@ -13,15 +13,15 @@ const calendarUrl = import.meta.env.VITE_RUKA_WORKS_CALENDLY_URL?.trim();
 
 function DebugCalendar({ lead, onScheduled, onBack }: WorksCalendlyProps) {
   return (
-    <div id="works-debug-calendar" className="overflow-hidden rounded-[20px] border border-[#dfe3eb] bg-white shadow-[0_24px_70px_rgba(30,34,56,0.09)]">
+    <div id="works-debug-calendar" className="overflow-hidden rounded-2xl border border-[#dfe3eb] bg-white">
       <div className="grid min-h-[610px] lg:grid-cols-[0.72fr_1.28fr]">
         <div className="border-b border-[#e3e6ed] bg-[#f8f9fc] p-6 lg:border-b-0 lg:border-r lg:p-8">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef1ff] text-[#5369eb]"><CalendarDays className="h-5 w-5" /></div>
           <p className="mt-6 text-xs font-semibold tracking-[0.15em] text-[#5369eb]">RUKA WORKS</p>
-          <h3 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-[#202231]">Revisión de proceso</h3>
+          <h3 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-[#202231]">Revisión de caso</h3>
           <div className="mt-4 flex items-center gap-2 text-sm text-[#6e7485]"><Clock3 className="h-4 w-4" /> 30 min</div>
           <div className="mt-8 border-t border-[#dfe3eb] pt-6">
-            <p className="text-xs font-semibold text-[#343746]">Datos prefilled</p>
+            <p className="text-xs font-semibold text-[#343746]">Datos precargados</p>
             <p className="mt-3 text-sm font-medium text-[#555b6d]">{lead.name}</p>
             <p className="mt-1 text-sm text-[#7c8292]">{lead.email}</p>
             <p className="mt-1 text-sm text-[#7c8292]">{lead.company}</p>
@@ -76,7 +76,6 @@ export function WorksCalendly(props: WorksCalendlyProps) {
         prefill: {
           name: lead.name,
           email: lead.email,
-          textReminderNumber: lead.whatsapp || undefined,
           customAnswers: { a1: lead.company },
         },
       });
@@ -99,19 +98,19 @@ export function WorksCalendly(props: WorksCalendlyProps) {
       script?.removeEventListener("load", initialize);
       mountNode.replaceChildren();
     };
-  }, [isDebug, lead.company, lead.email, lead.name, lead.whatsapp]);
+  }, [isDebug, lead.company, lead.email, lead.name]);
 
   if (props.isDebug) return <DebugCalendar {...props} />;
 
   if (!calendarUrl) {
     return (
-      <div className="rounded-[20px] border border-[#dfe3eb] bg-white p-8 text-center shadow-[0_24px_70px_rgba(30,34,56,0.09)] sm:p-14">
+      <div className="rounded-2xl border border-[#dfe3eb] bg-white p-8 text-center sm:p-14">
         <CalendarDays className="mx-auto h-9 w-9 text-[#5369eb]" />
         <h3 className="mt-5 text-xl font-semibold text-[#252736]">Calendario pendiente de configuración</h3>
-        <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#6c7283]">El proceso ya quedó guardado. Falta configurar `VITE_RUKA_WORKS_CALENDLY_URL` para habilitar los horarios de {WORKS_NAME}.</p>
+        <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#6c7283]">Tus datos ya quedaron guardados. Falta configurar el calendario independiente de {WORKS_NAME}.</p>
       </div>
     );
   }
 
-  return <div ref={mountRef} id="works-calendly-embed" className="min-h-[720px] w-full overflow-hidden rounded-[20px] border border-[#dfe3eb] bg-white shadow-[0_24px_70px_rgba(30,34,56,0.09)]" />;
+  return <div ref={mountRef} id="works-calendly-embed" className="min-h-[720px] w-full overflow-hidden rounded-2xl border border-[#dfe3eb] bg-white" />;
 }

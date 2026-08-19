@@ -5,251 +5,182 @@ export const WORKS_CONTACT_PATH = "/works/contacto";
 export const worksContent = {
   navigation: [
     { id: "como-funciona", label: "Cómo funciona" },
-    { id: "casos", label: "Casos" },
     { id: "como-trabajamos", label: "Cómo trabajamos" },
+    { id: "preguntas", label: "FAQ" },
   ],
   hero: {
     eyebrow: WORKS_NAME.toUpperCase(),
-    title: "Tu operación tiene procesos que el software estándar no resuelve de punta a punta.",
+    title: "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
     lead: "Ruka los convierte en flujos que se ejecutan sobre tus sistemas, reglas y datos actuales.",
-    body: "Diseñamos y operamos flujos específicos para trabajo que hoy requiere personas moviendo información, aplicando reglas y coordinando varios sistemas.",
-    primaryAction: "Cuéntanos el proceso",
+    body: "Si para que algo funcione alguien tiene que buscar, cruzar, validar, decidir y actualizar, queremos verlo.",
+    primaryAction: "Revisar mi caso",
     secondaryAction: "Ver cómo funciona",
     microcopy: "30 min · Sin compromiso",
   },
-  pain: {
-    eyebrow: "DÓNDE APARECE EL PROBLEMA",
-    title: "El trabajo más difícil suele quedar entre sistemas.",
-    lead: "El software resuelve piezas. El equipo termina operando todo lo que queda entre ellas.",
+  proof: {
+    title: "Ruka ya procesa millones de registros operativos para cientos de empresas.",
+  },
+  familiar: {
+    eyebrow: "TRABAJO QUE EL SOFTWARE NO TERMINÓ DE RESOLVER",
+    title: "Si esto te suena familiar, estamos hablando de lo mismo.",
     patterns: [
       {
         number: "01",
-        title: "Cruza varios sistemas",
-        copy: "La información nace en una herramienta, se consulta en otra y termina registrada en una tercera. Entre medio, alguien mueve y transforma datos manualmente.",
-        diagram: ["Origen", "Persona", "Destino"],
+        title: "Cada cierto tiempo alguien junta información de varios sistemas.",
+        copy: "El dato existe. El trabajo está en buscarlo, cruzarlo y dejarlo donde corresponde.",
+        kind: "converge",
       },
       {
         number: "02",
-        title: "Tiene reglas propias",
-        copy: "El proceso depende de condiciones, tolerancias, excepciones, aprobaciones o criterios que son específicos de tu empresa.",
-        diagram: ["Condición", "Regla", "Decisión"],
+        title: "Cuando cambia algo, alguien tiene que replicarlo en otros lugares.",
+        copy: "La operación termina dependiendo de que una persona mantenga dos o tres sistemas consistentes.",
+        kind: "replicate",
       },
       {
         number: "03",
-        title: "Se repite constantemente",
-        copy: "Ocurre cada día, cada semana o cada cierre. El trabajo vuelve aunque el caso cambie.",
-        diagram: ["Hoy", "Mañana", "Cierre"],
+        title: "Una excepción se resuelve porque alguien conoce la regla de memoria.",
+        copy: "El criterio existe, pero todavía vive en personas, mensajes o planillas.",
+        kind: "rule",
       },
       {
         number: "04",
-        title: "Depende de una persona",
-        copy: "El proceso avanza porque alguien sabe qué mirar, dónde buscar y qué hacer cuando algo no coincide.",
-        diagram: ["Buscar", "Entender", "Resolver"],
+        title: "Si esa persona no está, el proceso espera.",
+        copy: "El sistema funciona. El flujo completo, no necesariamente.",
+        kind: "waiting",
       },
     ],
-    statement: "Si tu equipo puede mostrarnos el proceso paso a paso, podemos evaluar cuánto de ese trabajo puede operar Ruka.",
-  },
-  cases: {
-    eyebrow: "ALGUNOS EJEMPLOS",
-    title: "No construimos otro dashboard. Tomamos un proceso.",
-    lead: "El flujo puede cambiar completamente según la empresa. Estos son ejemplos del tipo de trabajo que Ruka puede operar.",
-    items: [
-      {
-        id: "conciliar",
-        label: "01 · CONCILIAR ANTES DE PAGAR",
-        title: "Revisar una factura antes de aprobarla.",
-        problem: "Antes de pagar, alguien necesita comprobar información que puede estar repartida entre:",
-        inputs: ["Factura", "Orden de compra", "Recepción", "Condiciones comerciales", "Registros previos", "Pagos"],
-        execution: "Ruka obtiene la información desde los sistemas correspondientes, cruza documentos, aplica las reglas del negocio y separa solamente los casos que realmente necesitan revisión.",
-        result: "El equipo deja de revisar todo. Se concentra en las diferencias.",
-      },
-      {
-        id: "sincronizar",
-        label: "02 · MANTENER SISTEMAS SINCRONIZADOS",
-        title: "Cuando una operación termina en un sistema, pero el trabajo sigue en otro.",
-        problem: "Un cambio ocurre en un sistema, pero después alguien debe buscar contexto, transformar información y reflejarla manualmente en otro.",
-        inputs: ["ERP → POS", "SII → ERP", "Excel → sistema interno", "Correo → ERP"],
-        execution: "Ruka detecta el cambio, obtiene los datos necesarios, aplica las transformaciones y reglas, actualiza el sistema destino y registra qué ocurrió.",
-        result: "No automatizamos solamente A → B. Operamos el trabajo que existe entre A y B.",
-      },
-      {
-        id: "cierre",
-        label: "03 · PREPARAR UN CIERRE",
-        title: "Juntar, validar y dejar listo lo que hoy se arma manualmente.",
-        problem: "Al final de un período, distintas personas reúnen información desde ERP, bancos, POS, planillas, emails u otros sistemas para confirmar que la operación esté completa.",
-        inputs: ["ERP", "Bancos", "POS", "Planillas", "Emails"],
-        execution: "Ruka obtiene la información, identifica faltantes, cruza movimientos, ejecuta validaciones y deja las excepciones listas para revisión.",
-        result: "El cierre deja de empezar con horas de preparación manual.",
-      },
-    ],
-    interruption: {
-      title: "Probablemente tu proceso no está en esta página.",
-      lead: "Mejor. Muéstranos cómo funciona hoy.",
-      action: "Cuéntanos el proceso",
+    transition: {
+      title: "No necesitas llegar con la solución.",
+      copy: "Solo con la parte de tu operación que todavía depende de trabajo manual.",
+      action: "Revisar mi caso",
     },
   },
   comparison: {
-    eyebrow: "ANTES / DESPUÉS",
-    title: "No se trata de automatizar un paso. Se trata de cambiar quién opera el proceso.",
-    lead: "Hoy una persona empuja cada caso de principio a fin. Con Ruka, el flujo corre y el equipo entra cuando realmente necesita decidir.",
+    title: "La diferencia no es automatizar un paso. Es quién empuja el proceso.",
+    lead: "Hoy una persona mueve cada caso de principio a fin. Con Ruka, el flujo corre y el equipo entra cuando realmente necesita decidir.",
     without: {
       label: "SIN RUKA",
+      input: "Entrada",
       steps: [
-        ["Factura llega por correo", "Entrada"],
-        ["abre documento", "PERSONA"],
-        ["busca OC en ERP", "PERSONA"],
-        ["compara montos", "PERSONA"],
-        ["revisa recepción", "PERSONA"],
-        ["corrige o decide", "PERSONA"],
-        ["actualiza ERP", "PERSONA"],
-        ["avisa que terminó", "PERSONA"],
+        "Busca contexto",
+        "Copia información",
+        "Cruza datos",
+        "Aplica una regla",
+        "Pide aprobación",
+        "Actualiza sistema",
+        "Deja evidencia",
       ],
-      close: "El proceso vive en el tiempo y en la cabeza de una persona.",
+      close: "El proceso avanza porque una persona lo empuja.",
     },
     with: {
       label: "CON RUKA",
-      input: "Factura recibida",
-      steps: ["Obtiene información", "Cruza sistemas", "Aplica reglas"],
+      input: "Entrada",
+      steps: ["Busca contexto", "Cruza información", "Aplica reglas", "Ejecuta acciones"],
       decision: "¿Hay una excepción?",
-      normal: ["Actualiza sistemas", "Registra evidencia", "Proceso completado"],
-      exception: ["Revisión humana", "Ruka continúa y registra el resultado"],
-      close: "Tu equipo supervisa resultados y resuelve excepciones.",
+      normal: "Ruka continúa",
+      exception: "Decisión humana",
+      finish: ["Actualiza sistemas", "Registra evidencia", "COMPLETADO"],
+      close: "Tu equipo deja de operar cada caso. Entra cuando realmente necesita decidir.",
     },
   },
   method: {
-    eyebrow: "CÓMO TRABAJAMOS",
-    title: "Del proceso que existe hoy a un flujo operando con Ruka.",
+    title: "Así pasamos del trabajo manual a un flujo operando.",
     steps: [
       {
         number: "01",
-        verb: "MAPEAR",
-        title: "Entendemos cómo funciona hoy.",
-        copy: "Recorremos el proceso real: qué lo inicia, qué información necesita, qué sistemas toca, qué reglas aplica el equipo y qué excepciones aparecen.",
-        output: "Mapa del proceso",
+        verb: "ENTENDER",
+        title: "Vemos cómo funciona hoy.",
+        copy: "Recorremos qué activa el proceso, qué sistemas toca, qué reglas usa el equipo y dónde aparecen excepciones.",
+        output: "Proceso entendido",
       },
       {
         number: "02",
-        verb: "DISEÑAR",
-        title: "Definimos qué opera Ruka y qué sigue siendo humano.",
-        copy: "Separamos los pasos repetibles de las decisiones que todavía requieren revisión, y acordamos inputs, outputs, reglas y excepciones.",
-        output: "Alcance claro",
+        verb: "PONERLO A OPERAR",
+        title: "Convertimos ese trabajo en un flujo real.",
+        copy: "Conectamos sistemas, reglas y acciones, y lo probamos con casos reales antes de dejarlo operando.",
+        output: "Flujo en producción",
       },
       {
         number: "03",
-        verb: "IMPLEMENTAR",
-        title: "Lo conectamos con tu operación.",
-        copy: "Construimos el flujo sobre tus sistemas actuales y lo probamos con casos reales, incluyendo errores, excepciones y datos incompletos.",
-        output: "Proceso en producción",
-      },
-      {
-        number: "04",
-        verb: "OPERAR",
-        title: "Medimos y mejoramos.",
-        copy: "Seguimos ejecución, excepciones y resultados para ajustar reglas y reducir cada vez más el trabajo manual.",
-        output: "Operación mejorando",
+        verb: "MEJORAR",
+        title: "Medimos lo que ocurre y reducimos excepciones.",
+        copy: "Vemos qué ejecutó Ruka, dónde necesitó intervención y qué partes pueden automatizarse después.",
+        output: "Cada vez menos trabajo manual",
       },
     ],
-  },
-  difference: {
-    eyebrow: "POR QUÉ RUKA",
-    title: "No es una automatización aislada ni software hecho desde cero.",
-    items: [
-      {
-        number: "01",
-        title: "Llegamos hasta la ejecución.",
-        copy: "No nos quedamos en mostrar datos, generar una alerta o recomendar una acción. Ruka consulta, cruza, actualiza y deja el trabajo terminado dentro de tus sistemas.",
-      },
-      {
-        number: "02",
-        title: "Trabajamos con las reglas de tu operación.",
-        copy: "Tolerancias, proveedores especiales, condiciones, aprobaciones y excepciones pueden formar parte del flujo.",
-      },
-      {
-        number: "03",
-        title: "Construimos sobre una base común.",
-        copy: "Cada proceso puede ser distinto, pero no partimos desde cero. Reutilizamos la misma base para conectar sistemas, leer documentos, estructurar datos, ejecutar acciones y registrar evidencia.",
-      },
+    rail: [
+      "Sobre tus sistemas actuales",
+      "Con tus reglas",
+      "Humano cuando hace falta",
+      "Trazabilidad de cada acción",
     ],
     statement: "El proceso puede ser específico. La tecnología debajo no parte de cero.",
+    supporting: "Ruka reutiliza una base común para conectar sistemas, entender información, ejecutar reglas, actualizar datos y registrar lo que ocurrió.",
   },
-  proof: {
-    title: "Ruka ya procesa millones de registros operativos para cientos de empresas.",
+  testimonial: {
     quote: "Información inmediata de volúmenes de compra, evolución de precios y control de pagos. Ahorro de HH en planillas.",
     author: "Hernán Sugg",
     role: "Socio, Barbazul",
   },
+  faq: {
+    title: "Preguntas antes de revisar un proceso.",
+    items: [
+      {
+        question: "¿Qué procesos puede operar Ruka?",
+        answer: "Ruka funciona mejor en procesos repetitivos que cruzan sistemas, documentos, reglas y decisiones. El punto de partida no es una lista cerrada de casos, sino entender cómo funciona hoy el proceso.",
+      },
+      {
+        question: "¿Tengo que cambiar mi ERP o mis sistemas actuales?",
+        answer: "No. Ruka se construye sobre los sistemas que tu empresa ya usa y ejecuta el trabajo entre ellos cuando es técnicamente posible integrarlos o interactuar con ellos.",
+      },
+      {
+        question: "¿Qué pasa cuando Ruka encuentra una excepción?",
+        answer: "El flujo puede detenerse, escalar el caso a una persona con el contexto necesario y continuar después de la decisión. La intervención humana forma parte del diseño cuando hace falta.",
+      },
+      {
+        question: "¿Esto es desarrollo de software a medida?",
+        answer: "No partimos desde cero para cada proceso. Usamos una base tecnológica común de Ruka y la configuramos para los sistemas, reglas y excepciones de cada operación.",
+      },
+    ],
+  },
   finalCta: {
-    eyebrow: "TU PROCESO",
-    title: "Muéstranos cómo funciona hoy.",
-    copy: "En 30 minutos revisamos el proceso, los sistemas que toca y qué tendría que pasar para que Ruka pueda operarlo.",
-    action: "Cuéntanos el proceso",
+    title: "¿Hay una parte de tu operación que depende demasiado de una persona?",
+    statement: "Revisémosla.",
+    copy: "En 30 minutos vemos cómo funciona hoy y si tiene sentido que Ruka se haga cargo de parte del trabajo.",
+    action: "Revisar mi caso",
     microcopy: "30 min · Sin compromiso",
   },
   contact: {
-    eyebrow: "REVISIÓN DE PROCESO",
-    title: "Cuéntanos qué quieres dejar de operar manualmente.",
-    lead: "No necesitas definir la solución. Queremos entender cómo funciona hoy.",
-    calendarTitle: "Revisemos el proceso juntos.",
-    calendarLead: "En 30 minutos recorremos cómo funciona hoy, qué podría operar Ruka y qué necesitaríamos para implementarlo.",
-    successTitle: "Listo. Ya tenemos el contexto.",
-    successCopy: "En la reunión partiremos desde el proceso que nos contaste, así podemos ir directo a entender qué parte puede operar Ruka.",
+    eyebrow: "REVISIÓN DE CASO",
+    title: "Veamos si Ruka puede hacerse cargo.",
+    lead: "Déjanos tus datos y elige una hora. En la reunión partimos desde el proceso real.",
+    calendarTitle: "Elige una hora.",
+    calendarLead: "En 30 minutos vemos cómo funciona el proceso, qué sistemas toca y si tiene sentido que Ruka se haga cargo de parte del trabajo.",
+    successTitle: "Listo. Nos vemos en la reunión.",
+    successCopy: "Partiremos entendiendo cómo funciona hoy el proceso y dónde está el trabajo manual.",
   },
   seo: {
-    title: `${WORKS_NAME} | Automatiza procesos que tu software no resuelve`,
-    description: "Ruka convierte procesos operativos específicos en flujos que se ejecutan sobre los sistemas, reglas y datos que tu empresa ya usa.",
+    title: "Automatización de procesos empresariales | Ruka.ai",
+    description: "Automatiza procesos que cruzan ERP, SII, correo, planillas y sistemas internos. Ruka ejecuta reglas, maneja excepciones y actualiza tus sistemas sin reemplazarlos.",
     canonical: "https://www.ruka.ai/works",
     image: "https://www.ruka.ai/ruka-works-og.png",
   },
 } as const;
 
-export const worksFrequencyOptions = [
-  "Varias veces al día",
-  "Todos los días",
-  "Todas las semanas",
-  "Todos los meses",
-  "Otro",
-] as const;
-
-export const worksManualHoursOptions = [
-  "Menos de 5 h / semana",
-  "5-20 h / semana",
-  "20-50 h / semana",
-  "Más de 50 h / semana",
-  "No sé",
-] as const;
-
-export type WorksFrequency = (typeof worksFrequencyOptions)[number];
-export type WorksManualHours = (typeof worksManualHoursOptions)[number];
-
 export type WorksLeadData = {
-  processDescription: string;
-  systems: string;
-  frequency: WorksFrequency | "";
-  manualHours: WorksManualHours | "";
   name: string;
   company: string;
   email: string;
-  whatsapp: string;
 };
 
 export const emptyWorksLead: WorksLeadData = {
-  processDescription: "",
-  systems: "",
-  frequency: "",
-  manualHours: "",
   name: "",
   company: "",
   email: "",
-  whatsapp: "",
 };
 
 export const worksDebugLead: WorksLeadData = {
-  processDescription: "Recibimos facturas por correo, buscamos la orden en SAP, revisamos si la recepción coincide y actualizamos el ERP manualmente.",
-  systems: "SAP, SII, correo",
-  frequency: "Todos los días",
-  manualHours: "20-50 h / semana",
   name: "María Operaciones",
   company: "Empresa de ejemplo",
   email: "maria@empresa.cl",
-  whatsapp: "+56 9 1234 5678",
 };

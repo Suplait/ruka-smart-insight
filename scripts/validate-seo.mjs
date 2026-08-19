@@ -83,9 +83,9 @@ const routes = [
   },
   {
     path: "/works",
-    title: "Ruka Works | Automatiza procesos que tu software no resuelve",
+    title: "Automatización de procesos empresariales | Ruka.ai",
     canonical: `${siteOrigin}/works`,
-    h1: "Tu operación tiene procesos que el software estándar no resuelve de punta a punta.",
+    h1: "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
     schema: ["Organization", "WebSite", "Service", "WebPage"],
   },
 ];
@@ -101,7 +101,7 @@ const noIndexRoutes = [
     path: "/works/contacto",
     title: "Cuéntanos tu proceso | Ruka Works",
     canonical: `${siteOrigin}/works/contacto`,
-    h1: "Cuéntanos qué quieres dejar de operar manualmente.",
+    h1: "Veamos si Ruka puede hacerse cargo.",
   },
 ];
 
@@ -232,6 +232,30 @@ for (const question of faqSchema?.mainEntity ?? []) {
   assert(homeHtml.includes(question.name), `/: pregunta FAQ ausente del HTML visible: ${question.name}`);
   assert(homeHtml.includes(question.acceptedAnswer?.text), `/: respuesta FAQ ausente del HTML visible: ${question.name}`);
 }
+assert(homeHtml.includes('href="/works"'), "/: falta enlace HTML crawleable hacia /works");
+assert(homeHtml.includes("Ver Ruka Works"), "/: falta copy contextual del enlace hacia Ruka Works");
+
+const worksHtml = await readFile(routeFile("/works"), "utf8");
+const worksVisibleText = textContent(worksHtml);
+for (const requiredText of [
+  "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
+  "Ruka ya procesa millones de registros operativos para cientos de empresas.",
+  "¿Qué procesos puede operar Ruka?",
+  "Ruka funciona mejor en procesos repetitivos que cruzan sistemas, documentos, reglas y decisiones.",
+]) {
+  assert(worksVisibleText.includes(requiredText), `/works: falta contenido esencial prerenderizado (${requiredText})`);
+}
+assert(
+  getTagAttribute(worksHtml, "name", "description", "content") ===
+    "Automatiza procesos que cruzan ERP, SII, correo, planillas y sistemas internos. Ruka ejecuta reglas, maneja excepciones y actualiza tus sistemas sin reemplazarlos.",
+  "/works: meta description inesperada",
+);
+const worksSchemaValues = parseSchema(worksHtml, "/works").values.flatMap((schema) => schema["@graph"] ?? [schema]);
+const worksService = worksSchemaValues.find((schema) => schema?.["@type"] === "Service");
+assert(
+  worksService?.serviceType === "Automatización de procesos empresariales",
+  "/works: serviceType no representa automatización de procesos empresariales",
+);
 
 const aboutHtml = await readFile(routeFile("/about"), "utf8");
 const aboutVisibleText = textContent(aboutHtml);
