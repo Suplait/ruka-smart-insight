@@ -2,16 +2,21 @@ import { Instagram, Linkedin, MapPin, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const productLinks = [
-  { label: "Trabajo", to: "/#trabajo" },
+  { label: "Ruka", to: "/" },
   { label: "Demo", to: "/#demo" },
   { label: "Integraciones", to: "/#integraciones" },
   { label: "Precios", to: "/#precios" },
 ] as const;
 
 const worksLinks = [
-  { label: "Qué es Ruka Works", to: "/works" },
-  { label: "Cómo funciona", to: "/works#como-funciona" },
+  { label: "Ruka Works", to: "/works" },
   { label: "Revisar mi caso", to: "/works/contacto" },
+] as const;
+
+const industryLinks = [
+  { label: "Restaurantes", to: "/restaurantes" },
+  { label: "Hoteles", to: "/hoteles" },
+  { label: "Retail", to: "/retail" },
 ] as const;
 
 const companyLinks = [
@@ -30,9 +35,9 @@ export default function Footer() {
   return (
     <footer className="border-t border-[#dce3f2] bg-[#f5f7fb] px-5 text-[#60687a] sm:px-8">
       <div className="mx-auto max-w-7xl py-12 sm:py-14">
-        <div className="grid gap-11 sm:grid-cols-2 lg:grid-cols-[1.35fr_0.7fr_0.8fr_0.72fr] lg:gap-12">
+        <div className="grid gap-x-8 gap-y-11 sm:grid-cols-2 lg:grid-cols-[1.45fr_0.72fr_0.76fr_0.76fr_0.72fr] lg:gap-x-10">
           <div>
-            <Link to="/" aria-label="Ir al inicio de Ruka" className="inline-flex">
+            <Link to="/" aria-label="Ir al inicio de Ruka" className="inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4">
               <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto transition-opacity hover:opacity-75" />
             </Link>
             <p className="mt-5 max-w-sm text-base leading-7 text-[#555d70]">
@@ -56,6 +61,7 @@ export default function Footer() {
 
           <FooterGroup title="Producto" links={productLinks} />
           <FooterGroup title="Ruka Works" links={worksLinks} />
+          <FooterGroup title="Industrias" links={industryLinks} />
           <FooterGroup title="Compañía" links={companyLinks} />
         </div>
 

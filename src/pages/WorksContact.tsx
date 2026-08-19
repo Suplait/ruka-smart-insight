@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { ArrowLeft, Clock3, Handshake, UsersRound } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { WorksCalendly } from "@/components/works/WorksCalendly";
 import { WorksContactForm } from "@/components/works/WorksContactForm";
-import { WorksExecutionStack } from "@/components/works/WorksExecutionStack";
 import { WorksReviewBanner } from "@/components/works/WorksReviewBanner";
 import { WorksContactSeo } from "@/components/works/WorksSeo";
 import { WorksSuccess } from "@/components/works/WorksSuccess";
+import type { WorksSculptureState } from "@/components/works/WorksComputationalSculpture";
 import { createWorksLead } from "@/services/worksLeads";
 import {
   emptyWorksLead,
@@ -19,6 +19,11 @@ import {
 import { captureWorksAttribution, type WorksAttribution } from "@/utils/worksAttribution";
 import { getWorksDebugStage, isWorksDebugEnabled, type WorksDebugStage } from "@/utils/worksDebug";
 import { trackWorksEvent } from "@/utils/worksTracking";
+
+const WorksComputationalSculpture = lazy(async () => {
+  const module = await import("@/components/works/WorksComputationalSculpture");
+  return { default: module.WorksComputationalSculpture };
+});
 
 const emptyAttribution: WorksAttribution = {
   utm_source: null,
@@ -46,6 +51,7 @@ export default function WorksContact() {
   const queryStage = getWorksDebugStage(location.search);
   const [stage, setStage] = useState<WorksDebugStage>(() => (isDebug ? queryStage : "form"));
   const [lead, setLead] = useState<WorksLeadData>(() => (isDebug ? worksDebugLead : emptyWorksLead));
+  const [sculptureState, setSculptureState] = useState<WorksSculptureState>(() => isDebug ? "valid" : "idle");
   const [leadId, setLeadId] = useState<string | null>(isDebug ? "debug-works-lead" : null);
   const attributionRef = useRef<WorksAttribution>(emptyAttribution);
   const submissionIdRef = useRef<string | null>(null);
@@ -108,7 +114,7 @@ export default function WorksContact() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fbfcff] text-[#171827]">
+    <div className="min-h-[100dvh] bg-[#fbfcff] text-[#171827]">
       <WorksContactSeo />
       {isDebug ? <WorksReviewBanner stage={stage} onStageChange={goToStage} /> : null}
       <header className="border-b border-[#e3e6ed] bg-white/90 px-5 py-4 backdrop-blur-xl sm:px-8">
@@ -121,10 +127,16 @@ export default function WorksContact() {
       <main className="px-5 py-9 sm:px-8 sm:py-12 lg:py-14">
         <div className="mx-auto max-w-6xl">
           {stage === "form" ? (
-            <div className="grid items-start gap-9 lg:grid-cols-[0.92fr_1.08fr] lg:gap-x-16 lg:gap-y-0">
-              <div className="lg:col-start-1 lg:row-start-1 lg:pt-3">
+            <div className="grid items-start gap-9 lg:grid-cols-[0.96fr_1.04fr] lg:grid-rows-[290px_auto] lg:gap-x-16 lg:gap-y-0">
+              <div className="order-3 h-[230px] sm:h-[280px] lg:order-none lg:col-start-1 lg:row-start-1 lg:h-[310px]">
+                <Suspense fallback={<SculptureLoadFallback />}>
+                  <WorksComputationalSculpture state={sculptureState} />
+                </Suspense>
+              </div>
+
+              <div className="order-1 lg:order-none lg:col-start-1 lg:row-start-2 lg:-mt-1">
                 <p className="text-[11px] font-semibold tracking-[0.18em] text-[#5369eb]">{worksContent.contact.eyebrow}</p>
-                <h1 className="mt-4 max-w-xl text-balance text-[clamp(2.5rem,4.8vw,4.7rem)] font-semibold leading-[0.96] tracking-[-0.055em] text-[#171827]">{worksContent.contact.title}</h1>
+                <h1 className="mt-4 max-w-xl text-balance text-[clamp(2.5rem,4.8vw,4.45rem)] font-semibold leading-[0.96] tracking-[-0.04em] text-[#171827]">{worksContent.contact.title}</h1>
                 <p className="mt-5 max-w-lg text-pretty text-base leading-7 text-[#676e80] sm:text-lg sm:leading-8">{worksContent.contact.lead}</p>
                 <div className="mt-7 grid gap-3 border-t border-[#dfe3eb] pt-6 text-sm text-[#596072] sm:grid-cols-3 lg:grid-cols-1">
                   <p className="flex items-center gap-3"><Clock3 className="h-4 w-4 text-[#5369eb]" /> 30 minutos</p>
@@ -132,11 +144,13 @@ export default function WorksContact() {
                   <p className="flex items-center gap-3"><UsersRound className="h-4 w-4 text-[#5369eb]" /> Conversación con el equipo de Ruka</p>
                 </div>
               </div>
-              <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
-                <WorksContactForm value={lead} onChange={setLead} onContinue={handleContinue} />
-              </div>
-              <div className="lg:col-start-1 lg:row-start-2">
-                <WorksExecutionStack />
+              <div className="order-2 lg:order-none lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:pt-3">
+                <WorksContactForm
+                  value={lead}
+                  onChange={setLead}
+                  onContinue={handleContinue}
+                  onVisualStateChange={setSculptureState}
+                />
               </div>
             </div>
           ) : stage === "calendar" ? (
@@ -154,5 +168,17 @@ export default function WorksContact() {
         </div>
       </main>
     </div>
+  );
+}
+
+function SculptureLoadFallback() {
+  return (
+    <div
+      aria-hidden="true"
+      className="h-full w-full [mask-image:linear-gradient(to_bottom,transparent_0%,black_12%,black_88%,transparent_100%)]"
+      style={{
+        background: "radial-gradient(ellipse at 50% 48%, rgba(83,105,235,0.11), rgba(251,252,255,0) 66%)",
+      }}
+    />
   );
 }

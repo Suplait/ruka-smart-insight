@@ -104,8 +104,8 @@ export const worksContent = {
       },
     ],
     technology: {
-      title: "Agentes IA donde aportan. Reglas y controles donde importan.",
-      copy: "Cada flujo puede combinar agentes IA, integraciones, reglas de negocio y revisión humana. Usamos el nivel de autonomía adecuado para cada parte del proceso.",
+      title: "La tecnología se adapta al proceso, no al revés.",
+      copy: "Cada flujo puede combinar agentes IA, integraciones, reglas de negocio y revisión humana según lo que necesite cada parte.",
     },
     rail: ["Agentes IA", "Integraciones", "Reglas de negocio", "Revisión humana", "Trazabilidad"],
     statement: "El proceso puede ser específico. La tecnología debajo no parte de cero.",
@@ -126,6 +126,10 @@ export const worksContent = {
       {
         question: "¿Tengo que cambiar mi ERP o mis sistemas actuales?",
         answer: "No. Ruka se construye sobre los sistemas que tu empresa ya usa y ejecuta el trabajo entre ellos cuando es técnicamente posible integrarlos o interactuar con ellos.",
+      },
+      {
+        question: "¿Ruka usa agentes IA?",
+        answer: "Sí. Dependiendo del proceso, Ruka puede combinar agentes IA con integraciones, reglas determinísticas y revisión humana. El objetivo no es usar IA en cada paso, sino elegir el nivel de autonomía adecuado para que el proceso funcione de forma confiable.",
       },
       {
         question: "¿Qué pasa cuando Ruka encuentra una excepción?",

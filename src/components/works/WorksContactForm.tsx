@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import type { WorksLeadData } from "@/content/worksContent";
+import type { WorksSculptureState } from "@/components/works/WorksComputationalSculpture";
 
 type FieldErrors = Partial<Record<keyof WorksLeadData | "form", string>>;
 
@@ -15,13 +16,26 @@ export function WorksContactForm({
   value,
   onChange,
   onContinue,
+  onVisualStateChange,
 }: {
   value: WorksLeadData;
   onChange: React.Dispatch<React.SetStateAction<WorksLeadData>>;
   onContinue: (value: WorksLeadData) => Promise<void>;
+  onVisualStateChange?: (state: WorksSculptureState) => void;
 }) {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
+  const [focusedField, setFocusedField] = useState<keyof WorksLeadData | null>(null);
+
+  useEffect(() => {
+    const valid = value.name.trim().length >= 2
+      && value.company.trim().length >= 2
+      && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.email.trim());
+
+    if (valid) onVisualStateChange?.("valid");
+    else if (focusedField) onVisualStateChange?.(focusedField);
+    else onVisualStateChange?.("idle");
+  }, [focusedField, onVisualStateChange, value]);
 
   const update = <K extends keyof WorksLeadData>(field: K, fieldValue: WorksLeadData[K]) => {
     onChange((current) => ({ ...current, [field]: fieldValue }));
@@ -57,17 +71,17 @@ export function WorksContactForm({
       <div className="grid gap-5">
         <div>
           <label htmlFor="works-name" className="text-sm font-semibold text-[#303241]">Nombre <span className="text-[#5369eb]">*</span></label>
-          <Input id="works-name" autoComplete="name" value={value.name} onChange={(event) => update("name", event.target.value)} maxLength={120} placeholder="Tu nombre" aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "works-name-error" : undefined} className={inputClass} />
+          <Input id="works-name" autoComplete="name" value={value.name} onFocus={() => setFocusedField("name")} onBlur={() => setFocusedField((current) => current === "name" ? null : current)} onChange={(event) => update("name", event.target.value)} maxLength={120} placeholder="Tu nombre" aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "works-name-error" : undefined} className={inputClass} />
           <FieldError id="works-name-error" error={errors.name} />
         </div>
         <div>
           <label htmlFor="works-company" className="text-sm font-semibold text-[#303241]">Empresa <span className="text-[#5369eb]">*</span></label>
-          <Input id="works-company" autoComplete="organization" value={value.company} onChange={(event) => update("company", event.target.value)} maxLength={160} placeholder="Nombre de la empresa" aria-invalid={Boolean(errors.company)} aria-describedby={errors.company ? "works-company-error" : undefined} className={inputClass} />
+          <Input id="works-company" autoComplete="organization" value={value.company} onFocus={() => setFocusedField("company")} onBlur={() => setFocusedField((current) => current === "company" ? null : current)} onChange={(event) => update("company", event.target.value)} maxLength={160} placeholder="Nombre de la empresa" aria-invalid={Boolean(errors.company)} aria-describedby={errors.company ? "works-company-error" : undefined} className={inputClass} />
           <FieldError id="works-company-error" error={errors.company} />
         </div>
         <div>
           <label htmlFor="works-email" className="text-sm font-semibold text-[#303241]">Email de trabajo <span className="text-[#5369eb]">*</span></label>
-          <Input id="works-email" type="email" autoComplete="email" value={value.email} onChange={(event) => update("email", event.target.value)} maxLength={254} placeholder="tu@empresa.com" aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "works-email-error" : undefined} className={inputClass} />
+          <Input id="works-email" type="email" autoComplete="email" value={value.email} onFocus={() => setFocusedField("email")} onBlur={() => setFocusedField((current) => current === "email" ? null : current)} onChange={(event) => update("email", event.target.value)} maxLength={254} placeholder="tu@empresa.com" aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "works-email-error" : undefined} className={inputClass} />
           <FieldError id="works-email-error" error={errors.email} />
         </div>
       </div>
