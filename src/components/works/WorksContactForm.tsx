@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import type { WorksLeadData } from "@/content/worksContent";
-import type { WorksSculptureState } from "@/components/works/WorksComputationalSculpture";
+import type { WorksVisualState } from "@/components/works/WorksVolumetricEnvironment";
 
 type FieldErrors = Partial<Record<keyof WorksLeadData | "form", string>>;
 
@@ -21,7 +21,7 @@ export function WorksContactForm({
   value: WorksLeadData;
   onChange: React.Dispatch<React.SetStateAction<WorksLeadData>>;
   onContinue: (value: WorksLeadData) => Promise<void>;
-  onVisualStateChange?: (state: WorksSculptureState) => void;
+  onVisualStateChange?: (state: WorksVisualState) => void;
 }) {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);

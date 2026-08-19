@@ -6,7 +6,10 @@ import { WorksContactForm } from "@/components/works/WorksContactForm";
 import { WorksReviewBanner } from "@/components/works/WorksReviewBanner";
 import { WorksContactSeo } from "@/components/works/WorksSeo";
 import { WorksSuccess } from "@/components/works/WorksSuccess";
-import type { WorksSculptureState } from "@/components/works/WorksComputationalSculpture";
+import type {
+  WorksVisualState,
+  WorksVisualVariant,
+} from "@/components/works/WorksVolumetricEnvironment";
 import { createWorksLead } from "@/services/worksLeads";
 import {
   emptyWorksLead,
@@ -20,9 +23,9 @@ import { captureWorksAttribution, type WorksAttribution } from "@/utils/worksAtt
 import { getWorksDebugStage, isWorksDebugEnabled, type WorksDebugStage } from "@/utils/worksDebug";
 import { trackWorksEvent } from "@/utils/worksTracking";
 
-const WorksComputationalSculpture = lazy(async () => {
-  const module = await import("@/components/works/WorksComputationalSculpture");
-  return { default: module.WorksComputationalSculpture };
+const WorksVolumetricEnvironment = lazy(async () => {
+  const module = await import("@/components/works/WorksVolumetricEnvironment");
+  return { default: module.WorksVolumetricEnvironment };
 });
 
 const emptyAttribution: WorksAttribution = {
@@ -32,6 +35,13 @@ const emptyAttribution: WorksAttribution = {
   utm_content: null,
   utm_term: null,
 };
+
+function getVisualVariant(search: string, isDebug: boolean): WorksVisualVariant {
+  if (!isDebug) return "porous";
+  const variant = new URLSearchParams(search).get("visualVariant");
+  if (variant === "folded" || variant === "monolith") return variant;
+  return "porous";
+}
 
 function createSubmissionId() {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
@@ -49,9 +59,10 @@ export default function WorksContact() {
   const navigate = useNavigate();
   const isDebug = isWorksDebugEnabled(location.search);
   const queryStage = getWorksDebugStage(location.search);
+  const visualVariant = getVisualVariant(location.search, isDebug);
   const [stage, setStage] = useState<WorksDebugStage>(() => (isDebug ? queryStage : "form"));
   const [lead, setLead] = useState<WorksLeadData>(() => (isDebug ? worksDebugLead : emptyWorksLead));
-  const [sculptureState, setSculptureState] = useState<WorksSculptureState>(() => isDebug ? "valid" : "idle");
+  const [visualState, setVisualState] = useState<WorksVisualState>(() => isDebug ? "valid" : "idle");
   const [leadId, setLeadId] = useState<string | null>(isDebug ? "debug-works-lead" : null);
   const attributionRef = useRef<WorksAttribution>(emptyAttribution);
   const submissionIdRef = useRef<string | null>(null);
@@ -124,33 +135,37 @@ export default function WorksContact() {
         </div>
       </header>
 
-      <main className="px-5 py-9 sm:px-8 sm:py-12 lg:py-14">
-        <div className="mx-auto max-w-6xl">
+      <main className="px-5 py-8 sm:px-8 sm:py-10 lg:py-0">
+        <div className="mx-auto max-w-7xl">
           {stage === "form" ? (
-            <div className="grid items-start gap-9 lg:grid-cols-[0.96fr_1.04fr] lg:grid-rows-[290px_auto] lg:gap-x-16 lg:gap-y-0">
-              <div className="order-3 h-[230px] sm:h-[280px] lg:order-none lg:col-start-1 lg:row-start-1 lg:h-[310px]">
-                <Suspense fallback={<SculptureLoadFallback />}>
-                  <WorksComputationalSculpture state={sculptureState} />
-                </Suspense>
-              </div>
-
-              <div className="order-1 lg:order-none lg:col-start-1 lg:row-start-2 lg:-mt-1">
-                <p className="text-[11px] font-semibold tracking-[0.18em] text-[#5369eb]">{worksContent.contact.eyebrow}</p>
-                <h1 className="mt-4 max-w-xl text-balance text-[clamp(2.5rem,4.8vw,4.45rem)] font-semibold leading-[0.96] tracking-[-0.04em] text-[#171827]">{worksContent.contact.title}</h1>
-                <p className="mt-5 max-w-lg text-pretty text-base leading-7 text-[#676e80] sm:text-lg sm:leading-8">{worksContent.contact.lead}</p>
-                <div className="mt-7 grid gap-3 border-t border-[#dfe3eb] pt-6 text-sm text-[#596072] sm:grid-cols-3 lg:grid-cols-1">
-                  <p className="flex items-center gap-3"><Clock3 className="h-4 w-4 text-[#5369eb]" /> 30 minutos</p>
-                  <p className="flex items-center gap-3"><Handshake className="h-4 w-4 text-[#5369eb]" /> Sin compromiso</p>
-                  <p className="flex items-center gap-3"><UsersRound className="h-4 w-4 text-[#5369eb]" /> Conversación con el equipo de Ruka</p>
+            <div className="grid gap-7 lg:min-h-[calc(100dvh-65px)] lg:grid-cols-[minmax(0,1.23fr)_minmax(410px,0.77fr)] lg:items-center lg:gap-8 xl:gap-12">
+              <section className="relative min-h-[310px] overflow-hidden sm:min-h-[350px] lg:min-h-[calc(100dvh-65px)]">
+                <div className="absolute inset-0">
+                  <Suspense fallback={<EnvironmentLoadFallback />}>
+                    <WorksVolumetricEnvironment state={visualState} variant={visualVariant} />
+                  </Suspense>
                 </div>
-              </div>
-              <div className="order-2 lg:order-none lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:pt-3">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(251,252,255,0)_15%,rgba(251,252,255,0.08)_36%,rgba(251,252,255,0.92)_68%,#fbfcff_82%)] lg:bg-[linear-gradient(180deg,rgba(251,252,255,0)_20%,rgba(251,252,255,0.04)_39%,rgba(251,252,255,0.88)_64%,#fbfcff_78%)]"
+                />
+
+                <div className="relative z-[1] flex min-h-[310px] flex-col justify-end pb-1 pt-32 sm:min-h-[350px] sm:pt-40 lg:min-h-[calc(100dvh-65px)] lg:max-w-[42rem] lg:pb-11 lg:pt-[46vh]">
+                  <p className="text-[11px] font-semibold tracking-[0.18em] text-[#5369eb]">{worksContent.contact.eyebrow}</p>
+                  <h1 className="mt-4 max-w-xl text-balance text-[clamp(2.5rem,4.8vw,4.45rem)] font-semibold leading-[0.96] tracking-[-0.04em] text-[#171827]">{worksContent.contact.title}</h1>
+                  <p className="mt-5 max-w-lg text-pretty text-base leading-7 text-[#5e6678] sm:text-lg sm:leading-8">{worksContent.contact.lead}</p>
+                  <ContactBenefits className="mt-7 hidden lg:grid" />
+                </div>
+              </section>
+
+              <div className="lg:py-10">
                 <WorksContactForm
                   value={lead}
                   onChange={setLead}
                   onContinue={handleContinue}
-                  onVisualStateChange={setSculptureState}
+                  onVisualStateChange={setVisualState}
                 />
+                <ContactBenefits className="mt-6 grid lg:hidden" />
               </div>
             </div>
           ) : stage === "calendar" ? (
@@ -171,13 +186,23 @@ export default function WorksContact() {
   );
 }
 
-function SculptureLoadFallback() {
+function ContactBenefits({ className }: { className: string }) {
+  return (
+    <div className={`${className} gap-3 border-t border-[#dfe3eb] pt-6 text-sm text-[#596072] sm:grid-cols-3 lg:grid-cols-1`}>
+      <p className="flex items-center gap-3"><Clock3 className="h-4 w-4 text-[#5369eb]" /> 30 minutos</p>
+      <p className="flex items-center gap-3"><Handshake className="h-4 w-4 text-[#5369eb]" /> Sin compromiso</p>
+      <p className="flex items-center gap-3"><UsersRound className="h-4 w-4 text-[#5369eb]" /> Conversación con el equipo de Ruka</p>
+    </div>
+  );
+}
+
+function EnvironmentLoadFallback() {
   return (
     <div
       aria-hidden="true"
-      className="h-full w-full [mask-image:linear-gradient(to_bottom,transparent_0%,black_12%,black_88%,transparent_100%)]"
+      className="h-full w-full bg-[#fbfcff]"
       style={{
-        background: "radial-gradient(ellipse at 50% 48%, rgba(83,105,235,0.11), rgba(251,252,255,0) 66%)",
+        background: "radial-gradient(ellipse at 62% 32%, rgba(83,105,235,0.12), rgba(251,252,255,0) 58%)",
       }}
     />
   );
