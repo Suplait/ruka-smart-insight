@@ -12,6 +12,11 @@ export type VisualLabFrame = {
     velocityY: number;
     speed: number;
     active: number;
+    pressed: number;
+    clickX: number;
+    clickY: number;
+    clickStrength: number;
+    clickAge: number;
   };
   state: WorksVisualLabState;
   stateValue: number;
@@ -60,6 +65,7 @@ export function useVisualLabScene(
   useEffect(() => {
     const container = containerRef.current;
     if (!container || failed) return undefined;
+    const interactionSurface = container.closest<HTMLElement>("[data-visual-lab-left]") ?? container;
 
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const compactQuery = window.matchMedia("(max-width: 767px)");
@@ -100,8 +106,13 @@ export function useVisualLabScene(
     const pointerCurrent = new THREE.Vector2();
     const pointerVelocityTarget = new THREE.Vector2();
     const pointerVelocityCurrent = new THREE.Vector2();
+    const clickPosition = new THREE.Vector2();
     let pointerActivityTarget = 0;
     let pointerActivityCurrent = 0;
+    let pointerInitialized = false;
+    let pointerPressTarget = 0;
+    let pointerPressCurrent = 0;
+    let clickAge = Number.POSITIVE_INFINITY;
     let frameId = 0;
     let running = false;
     let visible = true;
@@ -133,6 +144,10 @@ export function useVisualLabScene(
       if (!forceStatic) pointerVelocityTarget.multiplyScalar(Math.exp(-delta * 7.5));
       const activityMix = forceStatic ? 1 : 1 - Math.exp(-delta * 8.5);
       pointerActivityCurrent += (pointerActivityTarget - pointerActivityCurrent) * activityMix;
+      const pressMix = forceStatic ? 1 : 1 - Math.exp(-delta * 18);
+      pointerPressCurrent += (pointerPressTarget - pointerPressCurrent) * pressMix;
+      if (!forceStatic && Number.isFinite(clickAge)) clickAge += delta;
+      const clickStrength = forceStatic || clickAge > 2.4 ? 0 : Math.exp(-clickAge * 1.15);
 
       scene.render({
         elapsed: reduceMotion ? 0.72 : elapsed,
@@ -144,6 +159,11 @@ export function useVisualLabScene(
           velocityY: pointerVelocityCurrent.y,
           speed: Math.min(pointerVelocityCurrent.length() * 5.5, 1),
           active: pointerActivityCurrent,
+          pressed: pointerPressCurrent,
+          clickX: clickPosition.x,
+          clickY: clickPosition.y,
+          clickStrength,
+          clickAge,
         },
         state: currentState,
         stateValue,
@@ -190,19 +210,40 @@ export function useVisualLabScene(
       draw(performance.now(), true);
     };
 
-    const handlePointerMove = (event: PointerEvent) => {
-      if (reduceMotion || compact || event.pointerType !== "mouse") return;
+    const updatePointerFromEvent = (event: PointerEvent, trackVelocity = true) => {
       const bounds = container.getBoundingClientRect();
       const nextX = (((event.clientX - bounds.left) / bounds.width) - 0.5) * 2;
       const nextY = (((event.clientY - bounds.top) / bounds.height) - 0.5) * 2;
-      pointerVelocityTarget.set(nextX - pointerTarget.x, nextY - pointerTarget.y);
+      if (trackVelocity && pointerInitialized) {
+        pointerVelocityTarget.set(nextX - pointerTarget.x, nextY - pointerTarget.y);
+      } else {
+        pointerVelocityTarget.set(0, 0);
+      }
       pointerTarget.set(nextX, nextY);
       pointerActivityTarget = 1;
+      pointerInitialized = true;
+    };
+    const handlePointerMove = (event: PointerEvent) => {
+      if (reduceMotion || compact || event.pointerType !== "mouse") return;
+      updatePointerFromEvent(event);
+    };
+    const handlePointerDown = (event: PointerEvent) => {
+      if (reduceMotion || compact || pausedRef.current || event.pointerType !== "mouse" || event.button !== 0) return;
+      updatePointerFromEvent(event, false);
+      clickPosition.copy(pointerTarget);
+      clickAge = 0;
+      pointerPressTarget = 1;
+      start();
+    };
+    const handlePointerUp = () => {
+      pointerPressTarget = 0;
     };
     const handlePointerLeave = () => {
       pointerTarget.set(0, 0);
       pointerVelocityTarget.set(0, 0);
       pointerActivityTarget = 0;
+      pointerPressTarget = 0;
+      pointerInitialized = false;
     };
     const handleVisibility = () => {
       pageVisible = !document.hidden;
@@ -234,8 +275,11 @@ export function useVisualLabScene(
     }, { threshold: 0.05 });
     intersectionObserver.observe(container);
 
-    container.addEventListener("pointermove", handlePointerMove, { passive: true });
-    container.addEventListener("pointerleave", handlePointerLeave);
+    interactionSurface.addEventListener("pointermove", handlePointerMove, { passive: true });
+    interactionSurface.addEventListener("pointerdown", handlePointerDown);
+    interactionSurface.addEventListener("pointerup", handlePointerUp);
+    interactionSurface.addEventListener("pointercancel", handlePointerUp);
+    interactionSurface.addEventListener("pointerleave", handlePointerLeave);
     canvas.addEventListener("webglcontextlost", handleContextLost);
     document.addEventListener("visibilitychange", handleVisibility);
     motionQuery.addEventListener("change", handleMotion);
@@ -251,8 +295,11 @@ export function useVisualLabScene(
       window.cancelAnimationFrame(frameId);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
-      container.removeEventListener("pointermove", handlePointerMove);
-      container.removeEventListener("pointerleave", handlePointerLeave);
+      interactionSurface.removeEventListener("pointermove", handlePointerMove);
+      interactionSurface.removeEventListener("pointerdown", handlePointerDown);
+      interactionSurface.removeEventListener("pointerup", handlePointerUp);
+      interactionSurface.removeEventListener("pointercancel", handlePointerUp);
+      interactionSurface.removeEventListener("pointerleave", handlePointerLeave);
       canvas.removeEventListener("webglcontextlost", handleContextLost);
       document.removeEventListener("visibilitychange", handleVisibility);
       motionQuery.removeEventListener("change", handleMotion);

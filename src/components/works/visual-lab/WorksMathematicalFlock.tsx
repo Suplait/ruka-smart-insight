@@ -80,13 +80,21 @@ const birdVertexShader = `
   void main() {
     float wingWeight = abs(aWing);
     float wingSide = sign(aWing);
+    float interactionEnergy = smoothstep(1.02, 1.82, aHighlight);
     float speed = length(aVelocity);
     float climbDemand = smoothstep(0.02, 0.38, aVelocity.y);
-    float effort = clamp((0.88 - speed) * 1.5 + climbDemand * 0.38 + uValidPulse * 0.18, 0.0, 1.0);
+    float effort = clamp(
+      (0.88 - speed) * 1.5
+      + climbDemand * 0.38
+      + uValidPulse * 0.18
+      + interactionEnergy * 0.34,
+      0.0,
+      1.0
+    );
     float burstSignal = smoothstep(-0.22, 0.54, sin(uTime * (0.5 + aTone * 0.08) + aPhase * 0.21));
     float glideWindow = aGlide * (1.0 - burstSignal) * smoothstep(0.62, 0.96, speed) * (1.0 - effort * 0.7);
     float flockWave = sin(uTime * 0.92 - aOrigin.x * 1.35 + aOrigin.y * 0.48) * 0.36;
-    float individualPhase = uTime * aFrequency * (0.9 + effort * 0.2) + aPhase;
+    float individualPhase = uTime * aFrequency * (0.9 + effort * 0.2 + interactionEnergy * 0.36) + aPhase;
     float coherentPhase = uTime * (5.15 + effort * 0.9)
       - aOrigin.x * 1.48
       + aOrigin.y * 0.62
@@ -103,7 +111,7 @@ const birdVertexShader = `
     float turnSilhouette = smoothstep(0.28, 0.74, abs(aBank));
     float innerTurnWing = smoothstep(0.0, 0.9, wingSide * sign(aBank));
     float tailMask = step(1.5, aPart) * (1.0 - smoothstep(0.04, 0.22, wingWeight));
-    float shoulderAngle = flap * wingSide * (0.32 + effort * 0.09);
+    float shoulderAngle = flap * wingSide * (0.32 + effort * 0.09 + interactionEnergy * 0.075);
     float wristFlap = sin(flapPhase - 0.52);
     float wristAngle = wristFlap * wingSide * (0.22 + effort * 0.08) * wristWeight;
     float jointAngle = shoulderAngle * shoulderWeight + wristAngle;
@@ -127,7 +135,8 @@ const birdVertexShader = `
 
     float nearScale = mix(0.82, 1.2, smoothstep(-2.9, 1.75, aOrigin.z)) * (1.0 + aHero * 0.24);
     float localIntro = smoothstep(aTone * 0.28, 0.58 + aTone * 0.18, uIntro);
-    float stateScale = (0.9 + localIntro * 0.1) * (1.0 + uState * 0.055 + uValidPulse * 0.075);
+    float stateScale = (0.9 + localIntro * 0.1)
+      * (1.0 + uState * 0.055 + uValidPulse * 0.075 + interactionEnergy * 0.11);
     vec3 worldPosition = aOrigin
       + forward * local.x * aScale * nearScale * stateScale
       + bankedLateral * local.y * aScale * nearScale * stateScale
@@ -183,7 +192,11 @@ const birdFragmentShader = `
     vec3 depthColor = mix(mist, graphite, smoothstep(0.06, 0.98, vDepth));
     vec3 color = mix(depthColor, slate, vTone * 0.2);
     float atmosphericVeil = pow(1.0 - vDepth, 1.45);
-    float blueAmount = uState * 0.085 + vHighlight * (0.12 + uState * 0.22) + uValidPulse * vHighlight * 0.24;
+    float interactionGlow = smoothstep(1.02, 1.72, vHighlight);
+    float blueAmount = uState * 0.085
+      + min(vHighlight, 1.0) * (0.12 + uState * 0.22)
+      + uValidPulse * min(vHighlight, 1.0) * 0.24
+      + interactionGlow * 0.52;
     float validState = smoothstep(0.76, 0.98, uState);
     color = mix(color, rukaBlue, blueAmount);
     color = mix(color, rukaBlue, validState * (0.045 + vHighlight * 0.06));
@@ -191,6 +204,7 @@ const birdFragmentShader = `
     color *= 0.72 + diffuse * 0.36 + vWingLight * 0.08 + vFlightEnergy * 0.035;
     color = mix(color, color * 0.68, underside * 0.22 + step(1.5, vPart) * 0.13);
     color += rukaBlue * rim * (0.045 + vHighlight * 0.08 + vHero * 0.035);
+    color += rukaBlue * interactionGlow * 0.1;
 
     float alpha = mix(0.16, 0.95, smoothstep(0.02, 0.96, vDepth));
     float focusState = smoothstep(0.18, 0.48, uState) * (1.0 - smoothstep(0.66, 0.94, uState));
@@ -358,9 +372,11 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
   const groups = new Float32Array(MAX_BIRDS);
   const leaders = new Float32Array(MAX_BIRDS);
   const highlights = new Float32Array(MAX_BIRDS);
+  const baseHighlights = new Float32Array(MAX_BIRDS);
   const heroes = new Float32Array(MAX_BIRDS);
   const streamCoordinates = new Float32Array(MAX_BIRDS);
   const depthAnchors = new Float32Array(MAX_BIRDS);
+  const interactions = new Float32Array(MAX_BIRDS);
 
   for (let index = 0; index < MAX_BIRDS; index += 1) {
     const offset = index * 3;
@@ -394,7 +410,8 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
     glides[index] = 0.28 + seeded(index * 14.29 + 37) * 0.7;
     groups[index] = group;
     leaders[index] = Math.pow(seeded(index * 17.11 + 41), 7.5);
-    highlights[index] = seeded(index * 19.07 + 43) > 0.78 ? 1 : seeded(index * 19.07 + 43) * 0.25;
+    baseHighlights[index] = seeded(index * 19.07 + 43) > 0.78 ? 1 : seeded(index * 19.07 + 43) * 0.25;
+    highlights[index] = baseHighlights[index];
     heroes[index] = hero;
     streamCoordinates[index] = stream;
   }
@@ -403,9 +420,11 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
   const originAttribute = new THREE.InstancedBufferAttribute(positions, 3);
   const velocityAttribute = new THREE.InstancedBufferAttribute(velocities, 3);
   const bankAttribute = new THREE.InstancedBufferAttribute(banks, 1);
+  const highlightAttribute = new THREE.InstancedBufferAttribute(highlights, 1);
   originAttribute.setUsage(THREE.DynamicDrawUsage);
   velocityAttribute.setUsage(THREE.DynamicDrawUsage);
   bankAttribute.setUsage(THREE.DynamicDrawUsage);
+  highlightAttribute.setUsage(THREE.DynamicDrawUsage);
   geometry.setAttribute("aOrigin", originAttribute);
   geometry.setAttribute("aVelocity", velocityAttribute);
   geometry.setAttribute("aPhase", new THREE.InstancedBufferAttribute(phases, 1));
@@ -414,7 +433,7 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
   geometry.setAttribute("aFrequency", new THREE.InstancedBufferAttribute(frequencies, 1));
   geometry.setAttribute("aGlide", new THREE.InstancedBufferAttribute(glides, 1));
   geometry.setAttribute("aBank", bankAttribute);
-  geometry.setAttribute("aHighlight", new THREE.InstancedBufferAttribute(highlights, 1));
+  geometry.setAttribute("aHighlight", highlightAttribute);
   geometry.setAttribute("aHero", new THREE.InstancedBufferAttribute(heroes, 1));
   geometry.instanceCount = MAX_BIRDS;
 
@@ -435,6 +454,27 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
   });
   const flock = new THREE.Mesh(geometry, material);
   scene.add(flock);
+
+  const interactionRaycaster = new THREE.Raycaster();
+  const interactionNdc = new THREE.Vector2();
+  const interactionPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+  const pointerPlanePosition = new THREE.Vector3();
+  const clickPlanePosition = new THREE.Vector3();
+  const projectedBirdPosition = new THREE.Vector3();
+
+  const clickRingGeometry = new THREE.RingGeometry(0.78, 1, 64);
+  const clickRingMaterial = new THREE.MeshBasicMaterial({
+    color: 0x5369eb,
+    transparent: true,
+    opacity: 0,
+    depthWrite: false,
+    depthTest: false,
+    blending: THREE.NormalBlending,
+  });
+  const clickRing = new THREE.Mesh(clickRingGeometry, clickRingMaterial);
+  clickRing.visible = false;
+  clickRing.renderOrder = 3;
+  scene.add(clickRing);
 
   const gridHeads = new Int32Array(GRID_X * GRID_Y * GRID_Z);
   const gridNext = new Int16Array(MAX_BIRDS);
@@ -472,9 +512,16 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
     }
   }
 
-  function updateWake(frame: VisualLabFrame, delta: number) {
-    const pointerX = frame.pointer.x * viewHalfWidth;
-    const pointerY = -frame.pointer.y * viewHalfHeight;
+  function mapPointerToFlockPlane(x: number, y: number, target: THREE.Vector3) {
+    interactionNdc.set(x, -y);
+    camera.updateMatrixWorld();
+    interactionRaycaster.setFromCamera(interactionNdc, camera);
+    interactionRaycaster.ray.intersectPlane(interactionPlane, target);
+    target.x -= flock.position.x;
+    target.y -= flock.position.y;
+  }
+
+  function updateWake(frame: VisualLabFrame, delta: number, pointerX: number, pointerY: number) {
     const velocityX = frame.pointer.velocityX * viewHalfWidth * 10;
     const velocityY = -frame.pointer.velocityY * viewHalfHeight * 10;
     const follow = 1 - Math.exp(-delta * 16);
@@ -509,7 +556,9 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
     if (delta <= 0) return;
 
     sceneAge += delta;
-    updateWake(frame, delta);
+    mapPointerToFlockPlane(frame.pointer.x, frame.pointer.y, pointerPlanePosition);
+    mapPointerToFlockPlane(frame.pointer.clickX, frame.pointer.clickY, clickPlanePosition);
+    updateWake(frame, delta, pointerPlanePosition.x, pointerPlanePosition.y);
     rebuildGrid(count);
 
     const focus = smoothstep(0.08, 0.62, frame.stateValue);
@@ -524,6 +573,8 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
     const sequenceEnergy = gatherBeat * 0.3 + splitBeat * 0.55 + vortexBeat * 0.42;
     const densityBreath = 0.5 + 0.5 * Math.sin(frame.elapsed * 0.46 - 0.8);
     const densityScale = 0.82 + densityBreath * 0.36;
+    const clickWaveRadius = 0.015 + Math.min(frame.pointer.clickAge, 2.4) * 0.22;
+    const clickWaveWidth = 0.045 + Math.min(frame.pointer.clickAge, 2.4) * 0.008;
     const targetX = 0.82
       + Math.sin(frame.elapsed * (0.16 + sequenceEnergy * 0.045)) * (0.16 + splitBeat * 0.08)
       + focusOnly * 0.45
@@ -547,6 +598,11 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
       const vx = velocities[offset];
       const vy = velocities[offset + 1];
       const vz = velocities[offset + 2];
+      projectedBirdPosition
+        .set(px + flock.position.x, py + flock.position.y, pz + flock.position.z)
+        .project(camera);
+      const birdScreenX = projectedBirdPosition.x;
+      const birdScreenY = projectedBirdPosition.y;
       const [cellX, cellY, cellZ] = getGridCoordinates(px, py, pz);
 
       let alignX = 0;
@@ -630,6 +686,7 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
       let ax = 0;
       let ay = 0;
       let az = 0;
+      let interactionTarget = 0;
 
       if (perceivedNeighbors > 0.001) {
         const inverseNeighbors = 1 / perceivedNeighbors;
@@ -754,7 +811,8 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
         + rejoinBeat * 0.082
         + focusOnly * 0.048
         + valid * 0.02
-        + wakeStrength * 0.032
+        + wakeStrength * 0.062
+        + frame.pointer.clickStrength * 0.075
         + (1 - intro) * 0.02;
       ax += pathDx * centerStrength;
       ay += pathDy * centerStrength;
@@ -835,7 +893,7 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
               * wakeTrailStrength[trailIndex]
               * trailFade;
             const inverseDistance = 1 / pointerDistance;
-            const repel = (0.58 + frame.pointer.speed * 0.42) * (0.92 - downstream * 0.24);
+            const repel = (0.4 + frame.pointer.speed * 0.3) * (0.92 - downstream * 0.24);
             ax += pointerDx * inverseDistance * influence * repel;
             ay += pointerDy * inverseDistance * influence * repel;
             ax += -pointerDy * inverseDistance * influence * (0.11 + frame.pointer.speed * 0.18 + downstream * 0.06);
@@ -847,6 +905,59 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
         }
       }
 
+      if (frame.pointer.active > 0.025) {
+        const hoverDx = birdScreenX - frame.pointer.x;
+        const hoverDy = birdScreenY + frame.pointer.y;
+        const hoverDistanceSquared = hoverDx * hoverDx + hoverDy * hoverDy;
+        const hoverRadius = 0.24 + (1 - frame.pointer.speed) * 0.035 + frame.pointer.pressed * 0.025;
+
+        if (hoverDistanceSquared < hoverRadius * hoverRadius) {
+          const hoverDistance = Math.sqrt(Math.max(hoverDistanceSquared, 0.002));
+          const hoverProximity = Math.pow(1 - hoverDistance / hoverRadius, 2)
+            * frame.pointer.active;
+          const inverseHoverDistance = 1 / hoverDistance;
+          const hoverEnergy = 0.72 + (1 - frame.pointer.speed) * 0.38 + frame.pointer.pressed * 0.14;
+          ax += hoverDx * inverseHoverDistance * hoverProximity * hoverEnergy;
+          ay += hoverDy * inverseHoverDistance * hoverProximity * hoverEnergy;
+          ax += -hoverDy * inverseHoverDistance * hoverProximity * 0.25;
+          ay += hoverDx * inverseHoverDistance * hoverProximity * 0.25;
+          az += Math.sin(phases[index] + frame.elapsed * 2.1) * hoverProximity * 0.14;
+          interactionTarget = Math.max(
+            interactionTarget,
+            hoverProximity * (1.2 + (1 - frame.pointer.speed) * 0.5),
+          );
+        }
+      }
+
+      if (frame.pointer.clickStrength > 0.012) {
+        const clickDx = birdScreenX - frame.pointer.clickX;
+        const clickDy = birdScreenY + frame.pointer.clickY;
+        const clickDistance = Math.sqrt(clickDx * clickDx + clickDy * clickDy);
+        const clickBandOffset = (clickDistance - clickWaveRadius) / clickWaveWidth;
+        const clickBand = Math.exp(-clickBandOffset * clickBandOffset)
+          * frame.pointer.clickStrength;
+        const clickCore = (1 - smoothstep(0.015, 0.16 + frame.pointer.clickAge * 0.025, clickDistance))
+          * Math.exp(-frame.pointer.clickAge * 3);
+        const clickInfluence = Math.max(clickBand, clickCore);
+
+        if (clickInfluence > 0.002) {
+          const inverseClickDistance = 1 / Math.max(clickDistance, 0.08);
+          const radialImpulse = clickBand * 1.55 + clickCore * 1.05;
+          const groupRotation = group === 1 ? -1 : 1;
+          ax += clickDx * inverseClickDistance * radialImpulse;
+          ay += clickDy * inverseClickDistance * radialImpulse;
+          ax += -clickDy * inverseClickDistance * clickBand * 0.26 * groupRotation;
+          ay += clickDx * inverseClickDistance * clickBand * 0.26 * groupRotation;
+          az += Math.sin(phases[index] * 1.13 + frame.elapsed * 2.4) * clickInfluence * 0.28;
+          interactionTarget = Math.max(interactionTarget, clickInfluence * 1.35);
+        }
+      }
+
+      const interactionResponse = interactionTarget > interactions[index] ? 28 : 4.2;
+      interactions[index] += (interactionTarget - interactions[index])
+        * (1 - Math.exp(-delta * interactionResponse));
+      highlights[index] = baseHighlights[index] + interactions[index] * 1.7;
+
       if (px < -1.02) ax += (-1.02 - px) * 1.06;
       if (px > 2.68) ax -= (px - 2.68) * 1.24;
       if (py < -2.55) ay += (-2.55 - py) * 0.8;
@@ -855,7 +966,12 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
       if (pz < -2.9) az += (-2.9 - pz) * 0.58;
       if (pz > 1.9) az -= (pz - 1.9) * 0.58;
 
-      const limitedAcceleration = limitVector(ax, ay, az, 1.58 + focusOnly * 0.2 + valid * 0.28);
+      const limitedAcceleration = limitVector(
+        ax,
+        ay,
+        az,
+        1.58 + focusOnly * 0.2 + valid * 0.28 + interactions[index] * 0.58,
+      );
       accelerations[offset] = limitedAcceleration[0];
       accelerations[offset + 1] = limitedAcceleration[1];
       accelerations[offset + 2] = limitedAcceleration[2];
@@ -866,7 +982,12 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
       let vx = velocities[offset] + accelerations[offset] * delta;
       let vy = velocities[offset + 1] + accelerations[offset + 1] * delta;
       let vz = velocities[offset + 2] + accelerations[offset + 2] * delta;
-      const maxSpeed = 0.82 + tones[index] * 0.16 + focusOnly * 0.14 + valid * 0.18 + leaders[index] * 0.06;
+      const maxSpeed = 0.82
+        + tones[index] * 0.16
+        + focusOnly * 0.14
+        + valid * 0.18
+        + leaders[index] * 0.06
+        + interactions[index] * 0.22;
       let limitedVelocity = limitVector(vx, vy, vz, maxSpeed);
       vx = limitedVelocity[0];
       vy = limitedVelocity[1];
@@ -902,6 +1023,7 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
     originAttribute.needsUpdate = true;
     velocityAttribute.needsUpdate = true;
     bankAttribute.needsUpdate = true;
+    highlightAttribute.needsUpdate = true;
   }
 
   return {
@@ -936,6 +1058,22 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
       camera.position.set(cameraDriftX, 0.06 + cameraDriftY, cameraBaseZ + cameraDriftZ);
       camera.lookAt(0.3 + cameraDriftX * 0.18, 0.06 + cameraDriftY * 0.16, 0);
 
+      if (frame.pointer.clickStrength > 0.012 && frame.pointer.clickAge < 2.4) {
+        const ringRadius = (0.015 + Math.min(frame.pointer.clickAge, 2.4) * 0.22) * viewHalfWidth;
+        const ringReveal = smoothstep(0, 0.08, frame.pointer.clickAge);
+        clickRing.visible = true;
+        clickRing.position.set(
+          clickPlanePosition.x + flock.position.x,
+          clickPlanePosition.y + flock.position.y,
+          0,
+        );
+        clickRing.scale.setScalar(ringRadius);
+        clickRingMaterial.opacity = frame.pointer.clickStrength * ringReveal * 0.38;
+      } else {
+        clickRing.visible = false;
+        clickRingMaterial.opacity = 0;
+      }
+
       uniforms.uTime.value = frame.elapsed;
       uniforms.uState.value = frame.stateValue;
       uniforms.uValidPulse.value = smoothstep(0.67, 0.98, frame.stateValue) * Math.exp(-frame.stateAge * 0.5);
@@ -945,6 +1083,8 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
     dispose() {
       geometry.dispose();
       material.dispose();
+      clickRingGeometry.dispose();
+      clickRingMaterial.dispose();
     },
   };
 };
