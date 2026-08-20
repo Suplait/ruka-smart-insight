@@ -28,6 +28,11 @@ const WorksVolumetricEnvironment = lazy(async () => {
   return { default: module.WorksVolumetricEnvironment };
 });
 
+const WorksVisualLab = lazy(async () => {
+  const module = await import("@/components/works/visual-lab/WorksVisualLab");
+  return { default: module.WorksVisualLab };
+});
+
 const emptyAttribution: WorksAttribution = {
   utm_source: null,
   utm_medium: null,
@@ -41,6 +46,10 @@ function getVisualVariant(search: string, isDebug: boolean): WorksVisualVariant 
   const variant = new URLSearchParams(search).get("visualVariant");
   if (variant === "folded" || variant === "monolith") return variant;
   return "porous";
+}
+
+function isVisualLabEnabled(search: string) {
+  return new URLSearchParams(search).get("visualLab") === "1";
 }
 
 function createSubmissionId() {
@@ -57,7 +66,8 @@ function createSubmissionId() {
 export default function WorksContact() {
   const location = useLocation();
   const navigate = useNavigate();
-  const isDebug = isWorksDebugEnabled(location.search);
+  const isVisualLab = isVisualLabEnabled(location.search);
+  const isDebug = !isVisualLab && isWorksDebugEnabled(location.search);
   const queryStage = getWorksDebugStage(location.search);
   const visualVariant = getVisualVariant(location.search, isDebug);
   const [stage, setStage] = useState<WorksDebugStage>(() => (isDebug ? queryStage : "form"));
@@ -69,6 +79,7 @@ export default function WorksContact() {
   const contactTracked = useRef(false);
 
   useEffect(() => {
+    if (isVisualLab) return;
     if (isDebug) {
       setStage(queryStage);
       return;
@@ -78,7 +89,7 @@ export default function WorksContact() {
       trackWorksEvent("works_contact_view", { page_path: location.pathname });
       contactTracked.current = true;
     }
-  }, [isDebug, location.pathname, location.search, queryStage]);
+  }, [isDebug, isVisualLab, location.pathname, location.search, queryStage]);
 
   const goToStage = (next: WorksDebugStage) => {
     setStage(next);
@@ -137,7 +148,11 @@ export default function WorksContact() {
 
       <main className="px-5 py-8 sm:px-8 sm:py-10 lg:py-0">
         <div className="mx-auto max-w-7xl">
-          {stage === "form" ? (
+          {isVisualLab ? (
+            <Suspense fallback={<EnvironmentLoadFallback />}>
+              <WorksVisualLab />
+            </Suspense>
+          ) : stage === "form" ? (
             <div className="grid gap-7 lg:min-h-[calc(100dvh-65px)] lg:grid-cols-[minmax(0,1.23fr)_minmax(410px,0.77fr)] lg:items-center lg:gap-8 xl:gap-12">
               <section className="relative min-h-[310px] overflow-hidden sm:min-h-[350px] lg:min-h-[calc(100dvh-65px)]">
                 <div className="absolute inset-0">
