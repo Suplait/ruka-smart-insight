@@ -226,7 +226,7 @@ export default function LandingV2() {
         <Hero reduceMotion={reduceMotion} navigate={navigate} />
         <SocialProofSection />
         <OperationalGapSection />
-        <WorkSection reduceMotion={reduceMotion} primaryPath="/works" />
+        <WorkSection reduceMotion={reduceMotion} primaryPath="/one" />
         <ProductDemoSection reduceMotion={reduceMotion} navigate={navigate} />
         <IntegrationsSection />
         <PricingSection navigate={navigate} />

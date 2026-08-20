@@ -48,7 +48,7 @@
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
     },
     {
-      "source": "/works/contacto",
+      "source": "/one/contacto",
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
     },
     {
@@ -65,6 +65,16 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/works",
+      "destination": "/one",
+      "permanent": true
+    },
+    {
+      "source": "/works/:path*",
+      "destination": "/one/:path*",
+      "permanent": true
+    },
     {
       "source": "/v2/:path*",
       "destination": "/",
@@ -94,10 +104,10 @@
     { "source": "/privacy/", "destination": "/privacy/index.html" },
     { "source": "/terms", "destination": "/terms/index.html" },
     { "source": "/terms/", "destination": "/terms/index.html" },
-    { "source": "/works", "destination": "/works/index.html" },
-    { "source": "/works/", "destination": "/works/index.html" },
-    { "source": "/works/contacto", "destination": "/works/contacto/index.html" },
-    { "source": "/works/contacto/", "destination": "/works/contacto/index.html" },
+    { "source": "/one", "destination": "/one/index.html" },
+    { "source": "/one/", "destination": "/one/index.html" },
+    { "source": "/one/contacto", "destination": "/one/contacto/index.html" },
+    { "source": "/one/contacto/", "destination": "/one/contacto/index.html" },
     { "source": "/home-anterior", "destination": "/index.html" },
     { "source": "/onboarding-success", "destination": "/index.html" },
     { "source": "/calendly-success", "destination": "/index.html" },

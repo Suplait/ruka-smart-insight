@@ -80,7 +80,7 @@ export default function Navbar({
               <NavDropdown value="industries" label="Industrias" links={industryLinks} onLinkClick={handleLinkClick} onToggle={setDesktopMenu} />
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
-                  <Link to="/works" className={desktopLinkClass}>Ruka Works</Link>
+                  <Link to="/one" className={desktopLinkClass}>Ruka One</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
@@ -121,7 +121,7 @@ export default function Navbar({
               <SheetContent side="right" className="w-[340px] max-w-[92vw] border-l-[#dfe3ec] bg-white px-5 sm:w-[350px]">
                 <SheetTitle className="sr-only">Navegación principal</SheetTitle>
                 <SheetDescription className="sr-only">
-                  Accede al producto, industrias, Ruka Works y la información de Ruka.
+                  Accede al producto, industrias, Ruka One y la información de Ruka.
                 </SheetDescription>
                 <div className="flex h-full flex-col pt-7">
                   <Accordion type="single" collapsible className="w-full">
@@ -130,7 +130,7 @@ export default function Navbar({
                   </Accordion>
 
                   <div className="border-b border-[#e1e5ed] py-2">
-                    <Link to="/works" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Ruka Works</Link>
+                    <Link to="/one" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Ruka One</Link>
                     <Link to="/about" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Nosotros</Link>
                   </div>
 

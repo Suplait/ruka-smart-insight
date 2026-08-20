@@ -2,7 +2,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_RUKA_WORKS_CALENDLY_URL?: string;
+  readonly VITE_RUKA_ONE_CALENDLY_URL?: string;
 }
 
 interface ImportMeta {

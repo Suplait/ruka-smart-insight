@@ -136,14 +136,14 @@ export function WorkSection({ reduceMotion, primaryPath }: WorkSectionProps) {
               </h3>
             </div>
             <p className="min-w-0 max-w-2xl text-base leading-7 text-[#555d70]">
-              Ruka Works convierte procesos específicos en flujos que operan sobre tus sistemas y reglas.
+              Ruka One convierte procesos específicos en flujos que operan sobre tus sistemas y reglas.
             </p>
             <Button
               asChild
               className="group h-12 min-w-0 w-full whitespace-nowrap rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none transition-transform duration-150 hover:-translate-y-0.5 hover:bg-primary/90 active:scale-[0.98] sm:w-fit sm:px-6 sm:text-base"
             >
               <Link to={primaryPath}>
-                Ver Ruka Works
+                Ver Ruka One
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
               </Link>
             </Button>

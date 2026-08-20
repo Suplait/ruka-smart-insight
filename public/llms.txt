@@ -9,7 +9,7 @@ Ruka conecta información de plataformas como SII, ERP, POS, bancos, planillas, 
 - [Inicio](https://www.ruka.ai/): propuesta de valor, demostración de producto, integraciones, precios y preguntas frecuentes.
 - [Quiénes somos](https://www.ruka.ai/about): historia verificable de la compañía, sus fundadores y el origen de la tesis de producto.
 - [Hablar con Ruka](https://www.ruka.ai/register): formulario para revisar un proceso operativo con el equipo.
-- [Ruka Works](https://www.ruka.ai/works): propuesta high-ticket para convertir un proceso operacional específico en un flujo ejecutable sobre los sistemas, datos y reglas de una empresa.
+- [Ruka One](https://www.ruka.ai/one): Ruka para procesos específicos que todavía dependen de trabajo manual entre sistemas, reglas y decisiones. Trabaja sobre las herramientas existentes y puede combinar integraciones, reglas, agentes IA y revisión humana según lo que necesite el proceso.
 - [Ruka para restaurantes](https://www.ruka.ai/restaurantes): automatización de compras y operación para restaurantes.
 - [Ruka para hoteles](https://www.ruka.ai/hoteles): automatización de procesos operativos para hoteles.
 - [Ruka para retail](https://www.ruka.ai/retail): automatización de compras, stock y procesos para retail.

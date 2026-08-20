@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const siteOrigin = "https://www.ruka.ai";
+const oneDescription = "Ruka One convierte procesos operativos que cruzan ERP, SII, correo, planillas y sistemas internos en flujos que operan sobre tus reglas y datos actuales.";
 
 const routes = [
   {
@@ -82,11 +83,12 @@ const routes = [
     h1: "Términos y Condiciones",
   },
   {
-    path: "/works",
-    title: "Automatización de procesos empresariales | Ruka.ai",
-    canonical: `${siteOrigin}/works`,
+    path: "/one",
+    title: "Automatización de procesos empresariales | Ruka One",
+    canonical: `${siteOrigin}/one`,
     h1: "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
-    schema: ["Organization", "WebSite", "Service", "WebPage"],
+    schema: ["Organization", "WebSite", "Service", "WebPage", "BreadcrumbList", "FAQPage"],
+    ogImage: `${siteOrigin}/ruka-one-og.png`,
   },
 ];
 
@@ -98,10 +100,10 @@ const noIndexRoutes = [
     h1: "Lorem Ipsum Dolor Sit Amet",
   },
   {
-    path: "/works/contacto",
-    title: "Cuéntanos tu proceso | Ruka Works",
-    canonical: `${siteOrigin}/works/contacto`,
-    h1: "Veamos si Ruka puede hacerse cargo.",
+    path: "/one/contacto",
+    title: "Cuéntanos tu proceso | Ruka One",
+    canonical: `${siteOrigin}/one/contacto`,
+    h1: "¿Qué parte de tu operación sigue siendo manual?",
   },
 ];
 
@@ -191,6 +193,10 @@ async function validateRoute(route, { noIndex = false } = {}) {
   const description = getTagAttribute(html, "name", "description", "content");
   const canonical = getTagAttribute(html, "rel", "canonical", "href");
   const ogUrl = getTagAttribute(html, "property", "og:url", "content");
+  const ogImage = getTagAttribute(html, "property", "og:image", "content");
+  const ogImageAlt = getTagAttribute(html, "property", "og:image:alt", "content");
+  const twitterImage = getTagAttribute(html, "name", "twitter:image", "content");
+  const twitterImageAlt = getTagAttribute(html, "name", "twitter:image:alt", "content");
   const robots = getTagAttribute(html, "name", "robots", "content") ?? "";
   const h1Matches = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)];
   const h1 = h1Matches.map((match) => textContent(match[1]));
@@ -205,11 +211,18 @@ async function validateRoute(route, { noIndex = false } = {}) {
   assert(!/<div id="root"><\/div>/.test(html), `${route.path}: root SSR está vacío`);
 
   if (noIndex) {
-    assert(robots.includes("noindex"), `${route.path}: la ruta de ejemplo debe ser noindex`);
+    assert(robots.includes("noindex"), `${route.path}: la ruta debe ser noindex`);
   } else {
     assert(Boolean(description), `${route.path}: falta meta description`);
     assert(ogUrl === route.canonical, `${route.path}: og:url no coincide con canonical (${ogUrl})`);
     assert(!robots.includes("noindex"), `${route.path}: ruta pública marcada noindex`);
+  }
+
+  if (route.ogImage) {
+    assert(ogImage === route.ogImage, `${route.path}: og:image inesperada (${ogImage})`);
+    assert(twitterImage === route.ogImage, `${route.path}: twitter:image inesperada (${twitterImage})`);
+    assert(ogImageAlt?.includes("Ruka One"), `${route.path}: og:image:alt no identifica Ruka One`);
+    assert(twitterImageAlt?.includes("Ruka One"), `${route.path}: twitter:image:alt no identifica Ruka One`);
   }
 
   for (const expectedType of route.schema ?? []) {
@@ -232,30 +245,64 @@ for (const question of faqSchema?.mainEntity ?? []) {
   assert(homeHtml.includes(question.name), `/: pregunta FAQ ausente del HTML visible: ${question.name}`);
   assert(homeHtml.includes(question.acceptedAnswer?.text), `/: respuesta FAQ ausente del HTML visible: ${question.name}`);
 }
-assert(homeHtml.includes('href="/works"'), "/: falta enlace HTML crawleable hacia /works");
-assert(homeHtml.includes("Ver Ruka Works"), "/: falta copy contextual del enlace hacia Ruka Works");
+assert(homeHtml.includes('href="/one"'), "/: falta enlace HTML crawleable hacia /one");
+assert(homeHtml.includes("Ver Ruka One"), "/: falta copy contextual del enlace hacia Ruka One");
 
-const worksHtml = await readFile(routeFile("/works"), "utf8");
-const worksVisibleText = textContent(worksHtml);
+const oneHtml = await readFile(routeFile("/one"), "utf8");
+const oneVisibleText = textContent(oneHtml);
+assert(!oneHtml.includes("Ruka Works"), "/one: todavía contiene la marca pública Ruka Works");
+assert(!oneHtml.includes(`${siteOrigin}/works`), "/one: todavía referencia la URL legacy /works");
+assert(/<html\b[^>]*lang="es-CL"/i.test(oneHtml), "/one: html lang debe ser es-CL");
+assert(getTagAttribute(oneHtml, "property", "og:title", "content") === "Automatización de procesos empresariales | Ruka One", "/one: og:title inesperado");
+assert(getTagAttribute(oneHtml, "property", "og:description", "content") === oneDescription, "/one: og:description inesperada");
+assert(getTagAttribute(oneHtml, "property", "og:locale", "content") === "es_CL", "/one: og:locale debe ser es_CL");
+assert(getTagAttribute(oneHtml, "property", "og:site_name", "content") === "Ruka.ai", "/one: og:site_name debe ser Ruka.ai");
+assert(getTagAttribute(oneHtml, "name", "googlebot", "content")?.includes("max-image-preview:large"), "/one: falta directiva Googlebot de preview grande");
 for (const requiredText of [
   "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
   "Ruka ya procesa millones de registros operativos para cientos de empresas.",
   "¿Qué procesos puede operar Ruka?",
   "Ruka funciona mejor en procesos repetitivos que cruzan sistemas, documentos, reglas y decisiones.",
 ]) {
-  assert(worksVisibleText.includes(requiredText), `/works: falta contenido esencial prerenderizado (${requiredText})`);
+  assert(oneVisibleText.includes(requiredText), `/one: falta contenido esencial prerenderizado (${requiredText})`);
 }
 assert(
-  getTagAttribute(worksHtml, "name", "description", "content") ===
-    "Automatiza procesos que cruzan ERP, SII, correo, planillas y sistemas internos. Ruka ejecuta reglas, maneja excepciones y actualiza tus sistemas sin reemplazarlos.",
-  "/works: meta description inesperada",
+  getTagAttribute(oneHtml, "name", "description", "content") ===
+    oneDescription,
+  "/one: meta description inesperada",
 );
-const worksSchemaValues = parseSchema(worksHtml, "/works").values.flatMap((schema) => schema["@graph"] ?? [schema]);
-const worksService = worksSchemaValues.find((schema) => schema?.["@type"] === "Service");
+const oneSchemaValues = parseSchema(oneHtml, "/one").values.flatMap((schema) => schema["@graph"] ?? [schema]);
+const oneService = oneSchemaValues.find((schema) => schema?.["@type"] === "Service");
 assert(
-  worksService?.serviceType === "Automatización de procesos empresariales",
-  "/works: serviceType no representa automatización de procesos empresariales",
+  oneService?.serviceType === "Automatización de procesos empresariales",
+  "/one: serviceType no representa automatización de procesos empresariales",
 );
+assert(oneService?.name === "Ruka One", "/one: Service schema no usa el nombre Ruka One");
+assert(oneService?.url === `${siteOrigin}/one`, "/one: Service schema tiene URL incorrecta");
+assert(oneService?.description === oneDescription, "/one: Service schema diverge de la meta description");
+assert(oneService?.provider?.["@id"] === `${siteOrigin}/#organization`, "/one: Service schema no referencia a Ruka.ai como provider");
+assert(oneService?.areaServed?.identifier === "CL", "/one: Service schema no declara Chile/CL");
+
+const oneFaqSchema = oneSchemaValues.find((schema) => schema?.["@type"] === "FAQPage");
+assert(oneFaqSchema?.mainEntity?.length === 5, `/one: FAQPage debe contener 5 preguntas y contiene ${oneFaqSchema?.mainEntity?.length ?? 0}`);
+for (const question of oneFaqSchema?.mainEntity ?? []) {
+  assert(oneVisibleText.includes(question.name), `/one: pregunta FAQ ausente del HTML visible: ${question.name}`);
+  assert(oneVisibleText.includes(question.acceptedAnswer?.text), `/one: respuesta FAQ ausente del HTML visible: ${question.name}`);
+}
+
+const oneBreadcrumb = oneSchemaValues.find((schema) => schema?.["@type"] === "BreadcrumbList");
+assert(oneBreadcrumb?.itemListElement?.length === 2, "/one: BreadcrumbList debe tener Ruka y Ruka One");
+assert(oneBreadcrumb?.itemListElement?.[0]?.item === `${siteOrigin}/`, "/one: primer breadcrumb debe apuntar al home");
+assert(oneBreadcrumb?.itemListElement?.[1]?.name === "Ruka One", "/one: segundo breadcrumb debe llamarse Ruka One");
+assert(oneBreadcrumb?.itemListElement?.[1]?.item === `${siteOrigin}/one`, "/one: segundo breadcrumb debe apuntar a /one");
+
+const oneOgSvg = await readFile(path.join(projectRoot, "public", "ruka-one-og.svg"), "utf8");
+assert(oneOgSvg.includes("RUKA ONE"), "ruka-one-og.svg: falta branding RUKA ONE");
+assert(!oneOgSvg.includes("RUKA WORKS"), "ruka-one-og.svg: todavía contiene RUKA WORKS");
+const oneOgPng = await readFile(path.join(projectRoot, "public", "ruka-one-og.png"));
+assert(oneOgPng.subarray(1, 4).toString("ascii") === "PNG", "ruka-one-og.png: no es un PNG válido");
+assert(oneOgPng.readUInt32BE(16) === 1200, `ruka-one-og.png: ancho inesperado (${oneOgPng.readUInt32BE(16)})`);
+assert(oneOgPng.readUInt32BE(20) === 630, `ruka-one-og.png: alto inesperado (${oneOgPng.readUInt32BE(20)})`);
 
 const aboutHtml = await readFile(routeFile("/about"), "utf8");
 const aboutVisibleText = textContent(aboutHtml);
@@ -292,11 +339,18 @@ for (const route of routes) {
 for (const route of noIndexRoutes) {
   assert(!sitemap.includes(`<loc>${route.canonical}</loc>`), `sitemap.xml: incluye ruta noindex ${route.canonical}`);
 }
+assert(sitemap.includes(`<loc>${siteOrigin}/one</loc>`), "sitemap.xml: falta la URL canónica de Ruka One");
+assert(!sitemap.includes(`${siteOrigin}/works`), "sitemap.xml: todavía contiene la ruta legacy /works");
+assert(!sitemap.includes(`${siteOrigin}/one/contacto`), "sitemap.xml: incluye el funnel noindex /one/contacto");
+assert(sitemap.includes("<lastmod>2026-08-20</lastmod>"), "sitemap.xml: /one no tiene lastmod de esta iteración");
 
 const llms = await readFile(path.join(projectRoot, "dist", "llms.txt"), "utf8");
 assert(llms.startsWith("# Ruka.ai"), "llms.txt: encabezado canónico ausente");
 assert(llms.includes("## Páginas principales"), "llms.txt: falta guía de páginas principales");
 assert(llms.includes("## Citas y atribución"), "llms.txt: falta guía de citas y atribución");
+assert(llms.includes(`[Ruka One](${siteOrigin}/one)`), "llms.txt: falta entrada canónica de Ruka One");
+assert(!llms.includes("Ruka Works"), "llms.txt: todavía contiene la marca Ruka Works");
+assert(!llms.toLowerCase().includes("high-ticket"), "llms.txt: contiene lenguaje interno high-ticket");
 
 await access(path.join(projectRoot, "dist", "404.html"));
 const notFound = await readFile(path.join(projectRoot, "dist", "404.html"), "utf8");
@@ -322,6 +376,22 @@ assert(
   ),
   "vercel.json: falta redirect permanente /v2 → /",
 );
+assert(
+  (vercel.redirects ?? []).some(
+    (redirect) => redirect.source === "/works" && redirect.destination === "/one" && redirect.permanent === true,
+  ),
+  "vercel.json: falta redirect permanente /works → /one",
+);
+assert(
+  (vercel.redirects ?? []).some(
+    (redirect) => redirect.source === "/works/:path*" && redirect.destination === "/one/:path*" && redirect.permanent === true,
+  ),
+  "vercel.json: falta redirect permanente de rutas descendientes /works/* → /one/*",
+);
+assert(
+  !(vercel.rewrites ?? []).some((rewrite) => rewrite.source.startsWith("/works")),
+  "vercel.json: las rutas legacy /works no deben servirse como páginas 200",
+);
 const headerBySource = new Map((vercel.headers ?? []).map((entry) => [entry.source, entry.headers]));
 const headerValue = (source, key) =>
   headerBySource.get(source)?.find((header) => header.key.toLowerCase() === key.toLowerCase())?.value;
@@ -337,6 +407,15 @@ assert(
   headerValue("/llms.txt", "Content-Type")?.startsWith("text/plain"),
   "vercel.json: llms.txt debe servirse como text/plain",
 );
+assert(
+  headerValue("/one/contacto", "X-Robots-Tag") === "noindex, follow",
+  "vercel.json: /one/contacto debe enviar X-Robots-Tag noindex, follow",
+);
+
+const appSource = await readFile(path.join(projectRoot, "src", "App.tsx"), "utf8");
+assert(appSource.includes('path="/works/*"'), "App.tsx: falta compatibilidad client-side para /works/*");
+assert(appSource.includes("search: location.search"), "App.tsx: redirect legacy no preserva query string");
+assert(appSource.includes("hash: location.hash"), "App.tsx: redirect legacy no preserva hash");
 
 if (failures.length) {
   console.error(`SEO/AEO validation failed: ${failures.length} of ${assertions} assertions failed.`);

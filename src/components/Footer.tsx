@@ -8,9 +8,9 @@ const productLinks = [
   { label: "Precios", to: "/#precios" },
 ] as const;
 
-const worksLinks = [
-  { label: "Ruka Works", to: "/works" },
-  { label: "Revisar mi caso", to: "/works/contacto" },
+const oneLinks = [
+  { label: "Ruka One", to: "/one" },
+  { label: "Revisar mi caso", to: "/one/contacto" },
 ] as const;
 
 const industryLinks = [
@@ -60,7 +60,7 @@ export default function Footer() {
           </div>
 
           <FooterGroup title="Producto" links={productLinks} />
-          <FooterGroup title="Ruka Works" links={worksLinks} />
+          <FooterGroup title="Ruka One" links={oneLinks} />
           <FooterGroup title="Industrias" links={industryLinks} />
           <FooterGroup title="Compañía" links={companyLinks} />
         </div>
