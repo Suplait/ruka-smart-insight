@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import { ArrowLeft, Clock3, Handshake, UsersRound } from "lucide-react";
+import { ArrowLeft, Clock3, Handshake } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { WorksCalendly } from "@/components/works/WorksCalendly";
 import { WorksContactForm } from "@/components/works/WorksContactForm";
@@ -188,7 +188,6 @@ function ContactBenefits({ className }: { className: string }) {
     <div className={`${className} gap-3 border-t border-[#dfe3eb] pt-6 text-sm text-[#596072] sm:grid-cols-3 lg:grid-cols-1`}>
       <p className="flex items-center gap-3"><Clock3 className="h-4 w-4 text-[#5369eb]" /> 30 minutos</p>
       <p className="flex items-center gap-3"><Handshake className="h-4 w-4 text-[#5369eb]" /> Sin compromiso</p>
-      <p className="flex items-center gap-3"><UsersRound className="h-4 w-4 text-[#5369eb]" /> Conversación con el equipo de Ruka</p>
     </div>
   );
 }
