@@ -7,9 +7,9 @@ import {
 } from "@/components/works/visual-lab/visualLabRuntime";
 import type { WorksVisualLabSceneProps } from "@/components/works/visual-lab/visualLabTypes";
 
-const MAX_BIRDS = 176;
-const COMPACT_BIRDS = 66;
-const NARROW_BIRDS = 52;
+const MAX_BIRDS = 268;
+const COMPACT_BIRDS = 98;
+const NARROW_BIRDS = 76;
 const GRID_CELL_SIZE = 1.18;
 const GRID_X = 12;
 const GRID_Y = 10;
@@ -83,18 +83,20 @@ const birdVertexShader = `
     float interactionEnergy = smoothstep(1.02, 1.82, aHighlight);
     float speed = length(aVelocity);
     float climbDemand = smoothstep(0.02, 0.38, aVelocity.y);
+    float turnDemand = smoothstep(0.12, 0.72, abs(aBank));
     float effort = clamp(
-      (0.88 - speed) * 1.5
-      + climbDemand * 0.38
-      + uValidPulse * 0.18
-      + interactionEnergy * 0.68,
+      (0.86 - speed) * 1.18
+      + climbDemand * 0.25
+      + turnDemand * 0.62
+      + uValidPulse * 0.16
+      + interactionEnergy * 0.76,
       0.0,
       1.0
     );
     float burstSignal = smoothstep(-0.22, 0.54, sin(uTime * (0.5 + aTone * 0.08) + aPhase * 0.21));
     float glideWindow = aGlide * (1.0 - burstSignal) * smoothstep(0.62, 0.96, speed) * (1.0 - effort * 0.7);
-    float flockWave = sin(uTime * 0.92 - aOrigin.x * 1.35 + aOrigin.y * 0.48) * 0.36;
-    float individualPhase = uTime * aFrequency * (0.9 + effort * 0.2 + interactionEnergy * 1.18) + aPhase;
+    float flockWave = sin(uTime * 0.84 - aOrigin.x * 1.18 + aOrigin.y * 0.42) * 0.24;
+    float individualPhase = uTime * aFrequency * (0.72 + effort * 0.18 + interactionEnergy * 1.12) + aPhase;
     float coherentPhase = uTime * (5.15 + effort * 0.9)
       - aOrigin.x * 1.48
       + aOrigin.y * 0.62
@@ -102,40 +104,34 @@ const birdVertexShader = `
     float localSync = 0.16 + smoothstep(0.18, 0.94, uState) * 0.07;
     float flapPhase = mix(individualPhase, coherentPhase, localSync) + flockWave;
     float rawFlap = sin(flapPhase);
-    float flap = mix(rawFlap, 0.1 + sin(flapPhase * 0.28) * 0.045, glideWindow);
+    float activeFlap = rawFlap * (0.035 + effort * 0.07 + interactionEnergy * 0.16);
+    float glidePose = 0.018 + sin(flapPhase * 0.22) * 0.009;
+    float flap = mix(activeFlap, glidePose, glideWindow);
 
     vec3 local = position;
     vec3 localNormal = aSurfaceNormal;
-    float shoulderWeight = smoothstep(0.02, 0.5, wingWeight);
-    float wristWeight = smoothstep(0.48, 0.96, wingWeight);
+    float hingeWeight = smoothstep(0.04, 0.92, wingWeight);
     float turnSilhouette = smoothstep(0.28, 0.74, abs(aBank));
     float innerTurnWing = smoothstep(0.0, 0.9, wingSide * sign(aBank));
-    float tailMask = step(1.5, aPart) * (1.0 - smoothstep(0.04, 0.22, wingWeight));
-    float shoulderAngle = flap * wingSide * (0.32 + effort * 0.09 + interactionEnergy * 0.16);
-    float wristFlap = sin(flapPhase - 0.52);
-    float wristAngle = wristFlap * wingSide * (0.22 + effort * 0.08) * wristWeight;
-    float jointAngle = shoulderAngle * shoulderWeight + wristAngle;
+    float jointAngle = flap * wingSide * hingeWeight;
     local.yz = rotate2d(jointAngle) * local.yz;
     localNormal.yz = rotate2d(jointAngle) * localNormal.yz;
-    local.x -= pow(wingWeight, 1.55) * ((1.0 - abs(flap)) * 0.052 + turnSilhouette * 0.045);
     local.y *= 1.0
-      + glideWindow * wingWeight * 0.16
-      - turnSilhouette * innerTurnWing * wingWeight * 0.075
-      + tailMask * (0.12 + turnSilhouette * 0.13);
-    local.x -= tailMask * turnSilhouette * 0.025;
-    local.z += sin(uTime * 1.14 + aPhase * 0.37) * (1.0 - wingWeight) * 0.008;
+      + glideWindow * wingWeight * 0.065
+      - turnSilhouette * innerTurnWing * wingWeight * 0.055;
+    local.z += sin(uTime * 0.82 + aPhase * 0.31) * (1.0 - wingWeight) * 0.004;
 
     vec3 forward = normalize(aVelocity + vec3(0.00001));
     vec3 reference = abs(forward.z) > 0.92 ? vec3(0.0, 1.0, 0.0) : vec3(0.0, 0.0, 1.0);
     vec3 lateral = normalize(cross(reference, forward));
     vec3 normal = normalize(cross(forward, lateral));
-    float bankAmount = aBank + sin(uTime * 0.37 + aPhase) * 0.025;
+    float bankAmount = aBank * 0.48 + sin(uTime * 0.37 + aPhase) * 0.018;
     vec3 bankedLateral = lateral * cos(bankAmount) + normal * sin(bankAmount);
     vec3 bankedNormal = normal * cos(bankAmount) - lateral * sin(bankAmount);
 
     float nearScale = mix(0.82, 1.2, smoothstep(-2.9, 1.75, aOrigin.z)) * (1.0 + aHero * 0.24);
     float localIntro = smoothstep(aTone * 0.28, 0.58 + aTone * 0.18, uIntro);
-    float stateScale = (0.9 + localIntro * 0.1)
+    float stateScale = 0.96 * (0.9 + localIntro * 0.1)
       * (1.0 + uState * 0.055 + uValidPulse * 0.075 + interactionEnergy * 0.18);
     vec3 worldPosition = aOrigin
       + forward * local.x * aScale * nearScale * stateScale
@@ -144,7 +140,7 @@ const birdVertexShader = `
 
     vDepth = smoothstep(-3.0, 1.9, aOrigin.z);
     vTone = aTone;
-    vWingLight = 0.5 + 0.5 * flap * wingSide;
+    vWingLight = 0.5 + 0.5 * clamp(flap * wingSide * 3.8, -1.0, 1.0);
     vCopyFade = smoothstep(0.04, 0.84, aOrigin.x)
       * mix(0.76, 1.0, smoothstep(-0.5, 1.2, aOrigin.y));
     vPart = aPart;
@@ -155,7 +151,7 @@ const birdVertexShader = `
       + bankedLateral * localNormal.y
       + bankedNormal * localNormal.z
     );
-    vFlightEnergy = mix(0.28, 1.0, effort) * (1.0 - glideWindow * 0.42);
+    vFlightEnergy = mix(0.22, 1.0, effort) * (1.0 - glideWindow * 0.34);
     vHero = aHero;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(worldPosition, 1.0);
   }
@@ -179,32 +175,37 @@ const birdFragmentShader = `
   varying float vHero;
 
   void main() {
-    vec3 graphite = vec3(0.08, 0.095, 0.16);
-    vec3 slate = vec3(0.39, 0.45, 0.57);
-    vec3 mist = vec3(0.67, 0.72, 0.82);
+    vec3 graphite = vec3(0.055, 0.065, 0.105);
+    vec3 gunmetal = vec3(0.2, 0.225, 0.29);
+    vec3 alloy = vec3(0.48, 0.52, 0.61);
+    vec3 silver = vec3(0.7, 0.73, 0.8);
     vec3 rukaBlue = vec3(0.25, 0.33, 0.9);
 
     vec3 normal = normalize(vWorldNormal);
     vec3 keyDirection = normalize(vec3(-0.38, 0.72, 0.58));
     float diffuse = 0.5 + max(dot(normal, keyDirection), 0.0) * 0.5;
     float underside = max(dot(normal, -keyDirection), 0.0);
-    float rim = pow(1.0 - clamp(vFacing, 0.0, 1.0), 2.4);
-    vec3 depthColor = mix(mist, graphite, smoothstep(0.06, 0.98, vDepth));
-    vec3 color = mix(depthColor, slate, vTone * 0.2);
+    float rim = pow(1.0 - clamp(vFacing, 0.0, 1.0), 3.2);
+    float metalSweep = pow(max(dot(normal, normalize(vec3(-0.18, 0.54, 0.82))), 0.0), 12.0);
+    vec3 depthColor = mix(alloy, graphite, smoothstep(0.06, 0.98, vDepth));
+    float silverGlyph = step(0.7, vTone) * (1.0 - step(0.9, vTone));
+    vec3 color = mix(depthColor, gunmetal, 0.12);
+    color = mix(color, alloy, silverGlyph * 0.74);
     float atmosphericVeil = pow(1.0 - vDepth, 1.45);
     float interactionGlow = smoothstep(1.02, 1.72, vHighlight);
-    float blueAmount = uState * 0.085
-      + min(vHighlight, 1.0) * (0.12 + uState * 0.22)
-      + uValidPulse * min(vHighlight, 1.0) * 0.24
-      + interactionGlow * 0.78;
+    float accentGlyph = step(0.9, vTone);
+    float blueAmount = accentGlyph
+      + min(vHighlight, 1.0) * (0.035 + uState * 0.08)
+      + uValidPulse * min(vHighlight, 1.0) * 0.08
+      + interactionGlow * 0.34;
     float validState = smoothstep(0.76, 0.98, uState);
     color = mix(color, rukaBlue, blueAmount);
-    color = mix(color, rukaBlue, validState * (0.045 + vHighlight * 0.06));
-    color = mix(color, vec3(0.78, 0.82, 0.91), atmosphericVeil * 0.18);
-    color *= 0.72 + diffuse * 0.36 + vWingLight * 0.08 + vFlightEnergy * 0.035;
-    color = mix(color, color * 0.68, underside * 0.22 + step(1.5, vPart) * 0.13);
-    color += rukaBlue * rim * (0.045 + vHighlight * 0.08 + vHero * 0.035);
-    color += rukaBlue * interactionGlow * 0.14;
+    color = mix(color, rukaBlue, validState * (0.02 + vHighlight * 0.025));
+    color = mix(color, silver, metalSweep * (0.08 + vDepth * 0.12));
+    color = mix(color, alloy, atmosphericVeil * 0.06);
+    color *= 0.75 + diffuse * 0.27 + vWingLight * 0.07 + vFlightEnergy * 0.018;
+    color = mix(color, color * 0.72, underside * 0.18);
+    color = mix(color, silver, rim * (0.025 + vHero * 0.02));
 
     float alpha = mix(0.16, 0.95, smoothstep(0.02, 0.96, vDepth));
     float focusState = smoothstep(0.18, 0.48, uState) * (1.0 - smoothstep(0.66, 0.94, uState));
@@ -219,7 +220,7 @@ const birdFragmentShader = `
   }
 `;
 
-type BirdVertex = readonly [number, number, number];
+type GlyphVertex = readonly [number, number, number];
 
 function seeded(seed: number) {
   const value = Math.sin(seed * 92.173) * 43758.5453;
@@ -242,14 +243,14 @@ function limitVector(x: number, y: number, z: number, maximum: number) {
   return [x * ratio, y * ratio, z * ratio] as const;
 }
 
-function createBirdGeometry() {
+function createKineticGlyphGeometry() {
   const positions: number[] = [];
   const wingWeights: number[] = [];
   const parts: number[] = [];
   const normals: number[] = [];
 
   const addTriangle = (
-    vertices: readonly [BirdVertex, BirdVertex, BirdVertex],
+    vertices: readonly [GlyphVertex, GlyphVertex, GlyphVertex],
     wings: readonly [number, number, number],
     part: number,
   ) => {
@@ -272,67 +273,21 @@ function createBirdGeometry() {
     });
   };
 
-  const beak: BirdVertex = [0.57, 0, 0.012];
-  const headTop: BirdVertex = [0.4, 0, 0.062];
-  const headLeft: BirdVertex = [0.34, 0.048, 0.022];
-  const headRight: BirdVertex = [0.34, -0.048, 0.022];
-  const shoulderTop: BirdVertex = [0.1, 0, 0.07];
-  const shoulderLeft: BirdVertex = [0.1, 0.082, 0.018];
-  const shoulderRight: BirdVertex = [0.1, -0.082, 0.018];
-  const keel: BirdVertex = [0.03, 0, -0.046];
-  const tailLeft: BirdVertex = [-0.35, 0.046, 0];
-  const tailRight: BirdVertex = [-0.35, -0.046, 0];
-  addTriangle([beak, headLeft, headTop], [0, 0.03, 0], 3);
-  addTriangle([beak, headTop, headRight], [0, 0, -0.03], 3);
-  addTriangle([beak, headRight, headLeft], [0, -0.03, 0.03], 3);
-  addTriangle([headTop, headLeft, shoulderTop], [0, 0.03, 0], 0);
-  addTriangle([headTop, shoulderTop, headRight], [0, 0, -0.03], 0);
-  addTriangle([headLeft, shoulderLeft, keel], [0.03, 0.06, 0], 0);
-  addTriangle([headLeft, keel, headRight], [0.03, 0, -0.03], 0);
-  addTriangle([headRight, keel, shoulderRight], [-0.03, 0, -0.06], 0);
-  addTriangle([shoulderTop, shoulderLeft, tailLeft], [0, 0.06, 0], 0);
-  addTriangle([shoulderTop, tailLeft, tailRight], [0, 0, 0], 0);
-  addTriangle([shoulderTop, tailRight, shoulderRight], [0, 0, -0.06], 0);
-  addTriangle([keel, tailLeft, shoulderLeft], [0, 0, 0.06], 0);
-  addTriangle([keel, tailRight, tailLeft], [0, 0, 0], 0);
-  addTriangle([keel, shoulderRight, tailRight], [0, -0.06, 0], 0);
-
   ([1, -1] as const).forEach((side) => {
-    const rootFront: BirdVertex = [0.16, side * 0.06, 0.025];
-    const elbow: BirdVertex = [0.015, side * 0.35, 0.012];
-    const wrist: BirdVertex = [-0.13, side * 0.58, 0.002];
-    const sweep: BirdVertex = [-0.4, side * 0.48, -0.008];
-    const rootBack: BirdVertex = [-0.27, side * 0.06, 0];
-    addTriangle([rootFront, elbow, rootBack], [side * 0.08, side * 0.5, side * 0.08], 1);
-    addTriangle([elbow, sweep, rootBack], [side * 0.5, side * 0.78, side * 0.08], 1);
-    addTriangle([elbow, wrist, sweep], [side * 0.5, side * 0.78, side * 0.74], 1);
+    const hingeInner: GlyphVertex = [0.22, side * 0.008, -0.032];
+    const hingeOuter: GlyphVertex = [0.185, side * 0.062, -0.024];
+    const tipInner: GlyphVertex = [-0.2, side * 0.325, 0.038];
+    const tipOuter: GlyphVertex = [-0.165, side * 0.415, 0.038];
+    const hingeWing = side * 0.05;
 
-    const featherRoots: BirdVertex[] = [
-      [-0.08, side * 0.5, 0],
-      [-0.15, side * 0.48, -0.003],
-      [-0.22, side * 0.43, -0.006],
-    ];
-    const featherTips: BirdVertex[] = [
-      [-0.11, side * 0.84, -0.004],
-      [-0.24, side * 0.79, -0.008],
-      [-0.37, side * 0.68, -0.011],
-    ];
-    featherRoots.forEach((root, featherIndex) => {
-      const nextRoot = featherIndex < featherRoots.length - 1 ? featherRoots[featherIndex + 1] : sweep;
-      addTriangle(
-        [root, featherTips[featherIndex], nextRoot],
-        [side * (0.74 + featherIndex * 0.08), side, side * (0.76 + featherIndex * 0.06)],
-        2,
-      );
-    });
+    if (side > 0) {
+      addTriangle([hingeInner, tipInner, tipOuter], [hingeWing, side, side], 0);
+      addTriangle([hingeInner, tipOuter, hingeOuter], [hingeWing, side, hingeWing], 0);
+    } else {
+      addTriangle([hingeInner, tipOuter, tipInner], [hingeWing, side, side], 1);
+      addTriangle([hingeInner, hingeOuter, tipOuter], [hingeWing, hingeWing, side], 1);
+    }
   });
-
-  const tailCenter: BirdVertex = [-0.29, 0, -0.005];
-  const tailTipLeft: BirdVertex = [-0.54, 0.135, -0.01];
-  const tailNotch: BirdVertex = [-0.46, 0, -0.012];
-  const tailTipRight: BirdVertex = [-0.54, -0.135, -0.01];
-  addTriangle([tailCenter, tailTipLeft, tailNotch], [0, 0.08, 0], 2);
-  addTriangle([tailCenter, tailNotch, tailTipRight], [0, 0, -0.08], 2);
 
   const geometry = new THREE.InstancedBufferGeometry();
   geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
@@ -416,7 +371,7 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
     streamCoordinates[index] = stream;
   }
 
-  const geometry = createBirdGeometry();
+  const geometry = createKineticGlyphGeometry();
   const originAttribute = new THREE.InstancedBufferAttribute(positions, 3);
   const velocityAttribute = new THREE.InstancedBufferAttribute(velocities, 3);
   const bankAttribute = new THREE.InstancedBufferAttribute(banks, 1);
@@ -1123,7 +1078,7 @@ export function WorksMathematicalFlock({ state, paused }: WorksVisualLabScenePro
     <div
       ref={containerRef}
       data-visual-lab-scene="birds"
-      className="h-full w-full bg-[radial-gradient(ellipse_at_72%_25%,rgba(91,112,226,0.16),transparent_38%),radial-gradient(ellipse_at_78%_64%,rgba(198,210,247,0.2),transparent_46%),linear-gradient(145deg,#fbfcff,#f3f6ff_58%,#fafbff)] md:[&_canvas]:[filter:drop-shadow(0_7px_5px_rgba(25,34,72,0.1))]"
+      className="h-full w-full bg-[radial-gradient(ellipse_at_72%_25%,rgba(91,112,226,0.16),transparent_38%),radial-gradient(ellipse_at_78%_64%,rgba(198,210,247,0.2),transparent_46%),linear-gradient(145deg,#fbfcff,#f3f6ff_58%,#fafbff)]"
     />
   );
 }
