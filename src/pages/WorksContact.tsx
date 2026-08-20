@@ -6,10 +6,8 @@ import { WorksContactForm } from "@/components/works/WorksContactForm";
 import { WorksReviewBanner } from "@/components/works/WorksReviewBanner";
 import { WorksContactSeo } from "@/components/works/WorksSeo";
 import { WorksSuccess } from "@/components/works/WorksSuccess";
-import type {
-  WorksVisualState,
-  WorksVisualVariant,
-} from "@/components/works/WorksVolumetricEnvironment";
+import type { WorksVisualState } from "@/components/works/WorksVolumetricEnvironment";
+import type { WorksVisualLabState } from "@/components/works/visual-lab/visualLabTypes";
 import { createWorksLead } from "@/services/worksLeads";
 import {
   emptyWorksLead,
@@ -23,14 +21,9 @@ import { captureWorksAttribution, type WorksAttribution } from "@/utils/worksAtt
 import { getWorksDebugStage, isWorksDebugEnabled, type WorksDebugStage } from "@/utils/worksDebug";
 import { trackWorksEvent } from "@/utils/worksTracking";
 
-const WorksVolumetricEnvironment = lazy(async () => {
-  const module = await import("@/components/works/WorksVolumetricEnvironment");
-  return { default: module.WorksVolumetricEnvironment };
-});
-
-const WorksVisualLab = lazy(async () => {
-  const module = await import("@/components/works/visual-lab/WorksVisualLab");
-  return { default: module.WorksVisualLab };
+const WorksMathematicalFlock = lazy(async () => {
+  const module = await import("@/components/works/visual-lab/WorksMathematicalFlock");
+  return { default: module.WorksMathematicalFlock };
 });
 
 const emptyAttribution: WorksAttribution = {
@@ -40,17 +33,6 @@ const emptyAttribution: WorksAttribution = {
   utm_content: null,
   utm_term: null,
 };
-
-function getVisualVariant(search: string, isDebug: boolean): WorksVisualVariant {
-  if (!isDebug) return "porous";
-  const variant = new URLSearchParams(search).get("visualVariant");
-  if (variant === "folded" || variant === "monolith") return variant;
-  return "porous";
-}
-
-function isVisualLabEnabled(search: string) {
-  return new URLSearchParams(search).get("visualLab") === "1";
-}
 
 function createSubmissionId() {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
@@ -66,10 +48,8 @@ function createSubmissionId() {
 export default function WorksContact() {
   const location = useLocation();
   const navigate = useNavigate();
-  const isVisualLab = isVisualLabEnabled(location.search);
-  const isDebug = !isVisualLab && isWorksDebugEnabled(location.search);
+  const isDebug = isWorksDebugEnabled(location.search);
   const queryStage = getWorksDebugStage(location.search);
-  const visualVariant = getVisualVariant(location.search, isDebug);
   const [stage, setStage] = useState<WorksDebugStage>(() => (isDebug ? queryStage : "form"));
   const [lead, setLead] = useState<WorksLeadData>(() => (isDebug ? worksDebugLead : emptyWorksLead));
   const [visualState, setVisualState] = useState<WorksVisualState>(() => isDebug ? "valid" : "idle");
@@ -79,7 +59,6 @@ export default function WorksContact() {
   const contactTracked = useRef(false);
 
   useEffect(() => {
-    if (isVisualLab) return;
     if (isDebug) {
       setStage(queryStage);
       return;
@@ -89,7 +68,7 @@ export default function WorksContact() {
       trackWorksEvent("works_contact_view", { page_path: location.pathname });
       contactTracked.current = true;
     }
-  }, [isDebug, isVisualLab, location.pathname, location.search, queryStage]);
+  }, [isDebug, location.pathname, location.search, queryStage]);
 
   const goToStage = (next: WorksDebugStage) => {
     setStage(next);
@@ -135,6 +114,10 @@ export default function WorksContact() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const flockState: WorksVisualLabState = visualState === "idle" || visualState === "valid"
+    ? visualState
+    : "focus";
+
   return (
     <div className="min-h-[100dvh] bg-[#fbfcff] text-[#171827]">
       <WorksContactSeo />
@@ -148,24 +131,20 @@ export default function WorksContact() {
 
       <main className="px-5 py-8 sm:px-8 sm:py-10 lg:py-0">
         <div className="mx-auto max-w-7xl">
-          {isVisualLab ? (
-            <Suspense fallback={<EnvironmentLoadFallback />}>
-              <WorksVisualLab />
-            </Suspense>
-          ) : stage === "form" ? (
+          {stage === "form" ? (
             <div className="grid gap-7 lg:min-h-[calc(100dvh-65px)] lg:grid-cols-[minmax(0,1.23fr)_minmax(410px,0.77fr)] lg:items-center lg:gap-8 xl:gap-12">
-              <section className="relative min-h-[310px] overflow-hidden sm:min-h-[350px] lg:min-h-[calc(100dvh-65px)]">
+              <section className="relative min-h-[390px] overflow-hidden sm:min-h-[430px] lg:min-h-[calc(100dvh-65px)]">
                 <div className="absolute inset-0">
                   <Suspense fallback={<EnvironmentLoadFallback />}>
-                    <WorksVolumetricEnvironment state={visualState} variant={visualVariant} />
+                    <WorksMathematicalFlock state={flockState} paused={false} />
                   </Suspense>
                 </div>
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(251,252,255,0)_15%,rgba(251,252,255,0.08)_36%,rgba(251,252,255,0.92)_68%,#fbfcff_82%)] lg:bg-[linear-gradient(180deg,rgba(251,252,255,0)_20%,rgba(251,252,255,0.04)_39%,rgba(251,252,255,0.88)_64%,#fbfcff_78%)]"
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(251,252,255,0.95)_0%,rgba(251,252,255,0.76)_35%,rgba(251,252,255,0.12)_72%,transparent_100%),linear-gradient(180deg,transparent_0%,rgba(251,252,255,0.12)_45%,#fbfcff_91%)] lg:bg-[linear-gradient(90deg,rgba(251,252,255,0.92)_0%,rgba(251,252,255,0.66)_36%,rgba(251,252,255,0.06)_68%,transparent_100%),linear-gradient(180deg,transparent_0%,rgba(251,252,255,0.08)_64%,#fbfcff_100%)]"
                 />
 
-                <div className="relative z-[1] flex min-h-[310px] flex-col justify-end pb-1 pt-32 sm:min-h-[350px] sm:pt-40 lg:min-h-[calc(100dvh-65px)] lg:max-w-[42rem] lg:pb-11 lg:pt-[46vh]">
+                <div className="relative z-[1] flex min-h-[390px] flex-col justify-center py-12 sm:min-h-[430px] lg:min-h-[calc(100dvh-65px)] lg:max-w-[39rem] lg:py-16">
                   <p className="text-[11px] font-semibold tracking-[0.18em] text-[#5369eb]">{worksContent.contact.eyebrow}</p>
                   <h1 className="mt-4 max-w-xl text-balance text-[clamp(2.5rem,4.8vw,4.45rem)] font-semibold leading-[0.96] tracking-[-0.04em] text-[#171827]">{worksContent.contact.title}</h1>
                   <p className="mt-5 max-w-lg text-pretty text-base leading-7 text-[#5e6678] sm:text-lg sm:leading-8">{worksContent.contact.lead}</p>

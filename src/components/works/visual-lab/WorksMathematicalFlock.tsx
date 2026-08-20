@@ -87,14 +87,14 @@ const birdVertexShader = `
       (0.88 - speed) * 1.5
       + climbDemand * 0.38
       + uValidPulse * 0.18
-      + interactionEnergy * 0.34,
+      + interactionEnergy * 0.68,
       0.0,
       1.0
     );
     float burstSignal = smoothstep(-0.22, 0.54, sin(uTime * (0.5 + aTone * 0.08) + aPhase * 0.21));
     float glideWindow = aGlide * (1.0 - burstSignal) * smoothstep(0.62, 0.96, speed) * (1.0 - effort * 0.7);
     float flockWave = sin(uTime * 0.92 - aOrigin.x * 1.35 + aOrigin.y * 0.48) * 0.36;
-    float individualPhase = uTime * aFrequency * (0.9 + effort * 0.2 + interactionEnergy * 0.36) + aPhase;
+    float individualPhase = uTime * aFrequency * (0.9 + effort * 0.2 + interactionEnergy * 1.18) + aPhase;
     float coherentPhase = uTime * (5.15 + effort * 0.9)
       - aOrigin.x * 1.48
       + aOrigin.y * 0.62
@@ -111,7 +111,7 @@ const birdVertexShader = `
     float turnSilhouette = smoothstep(0.28, 0.74, abs(aBank));
     float innerTurnWing = smoothstep(0.0, 0.9, wingSide * sign(aBank));
     float tailMask = step(1.5, aPart) * (1.0 - smoothstep(0.04, 0.22, wingWeight));
-    float shoulderAngle = flap * wingSide * (0.32 + effort * 0.09 + interactionEnergy * 0.075);
+    float shoulderAngle = flap * wingSide * (0.32 + effort * 0.09 + interactionEnergy * 0.16);
     float wristFlap = sin(flapPhase - 0.52);
     float wristAngle = wristFlap * wingSide * (0.22 + effort * 0.08) * wristWeight;
     float jointAngle = shoulderAngle * shoulderWeight + wristAngle;
@@ -136,7 +136,7 @@ const birdVertexShader = `
     float nearScale = mix(0.82, 1.2, smoothstep(-2.9, 1.75, aOrigin.z)) * (1.0 + aHero * 0.24);
     float localIntro = smoothstep(aTone * 0.28, 0.58 + aTone * 0.18, uIntro);
     float stateScale = (0.9 + localIntro * 0.1)
-      * (1.0 + uState * 0.055 + uValidPulse * 0.075 + interactionEnergy * 0.11);
+      * (1.0 + uState * 0.055 + uValidPulse * 0.075 + interactionEnergy * 0.18);
     vec3 worldPosition = aOrigin
       + forward * local.x * aScale * nearScale * stateScale
       + bankedLateral * local.y * aScale * nearScale * stateScale
@@ -196,7 +196,7 @@ const birdFragmentShader = `
     float blueAmount = uState * 0.085
       + min(vHighlight, 1.0) * (0.12 + uState * 0.22)
       + uValidPulse * min(vHighlight, 1.0) * 0.24
-      + interactionGlow * 0.52;
+      + interactionGlow * 0.78;
     float validState = smoothstep(0.76, 0.98, uState);
     color = mix(color, rukaBlue, blueAmount);
     color = mix(color, rukaBlue, validState * (0.045 + vHighlight * 0.06));
@@ -204,7 +204,7 @@ const birdFragmentShader = `
     color *= 0.72 + diffuse * 0.36 + vWingLight * 0.08 + vFlightEnergy * 0.035;
     color = mix(color, color * 0.68, underside * 0.22 + step(1.5, vPart) * 0.13);
     color += rukaBlue * rim * (0.045 + vHighlight * 0.08 + vHero * 0.035);
-    color += rukaBlue * interactionGlow * 0.1;
+    color += rukaBlue * interactionGlow * 0.14;
 
     float alpha = mix(0.16, 0.95, smoothstep(0.02, 0.96, vDepth));
     float focusState = smoothstep(0.18, 0.48, uState) * (1.0 - smoothstep(0.66, 0.94, uState));
@@ -575,6 +575,11 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
     const densityScale = 0.82 + densityBreath * 0.36;
     const clickWaveRadius = 0.015 + Math.min(frame.pointer.clickAge, 2.4) * 0.22;
     const clickWaveWidth = 0.045 + Math.min(frame.pointer.clickAge, 2.4) * 0.008;
+    const clickImpact = Number.isFinite(frame.pointer.clickAge)
+      ? Math.exp(-frame.pointer.clickAge * 3)
+      : 0;
+    const clickRecovery = frame.pointer.clickStrength
+      * smoothstep(0.24, 0.82, frame.pointer.clickAge);
     const targetX = 0.82
       + Math.sin(frame.elapsed * (0.16 + sequenceEnergy * 0.045)) * (0.16 + splitBeat * 0.08)
       + focusOnly * 0.45
@@ -812,7 +817,7 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
         + focusOnly * 0.048
         + valid * 0.02
         + wakeStrength * 0.062
-        + frame.pointer.clickStrength * 0.075
+        + clickRecovery * 0.38
         + (1 - intro) * 0.02;
       ax += pathDx * centerStrength;
       ay += pathDy * centerStrength;
@@ -893,7 +898,7 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
               * wakeTrailStrength[trailIndex]
               * trailFade;
             const inverseDistance = 1 / pointerDistance;
-            const repel = (0.4 + frame.pointer.speed * 0.3) * (0.92 - downstream * 0.24);
+            const repel = (0.24 + frame.pointer.speed * 0.18) * (0.92 - downstream * 0.24);
             ax += pointerDx * inverseDistance * influence * repel;
             ay += pointerDy * inverseDistance * influence * repel;
             ax += -pointerDy * inverseDistance * influence * (0.11 + frame.pointer.speed * 0.18 + downstream * 0.06);
@@ -909,22 +914,29 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
         const hoverDx = birdScreenX - frame.pointer.x;
         const hoverDy = birdScreenY + frame.pointer.y;
         const hoverDistanceSquared = hoverDx * hoverDx + hoverDy * hoverDy;
-        const hoverRadius = 0.24 + (1 - frame.pointer.speed) * 0.035 + frame.pointer.pressed * 0.025;
+        const hoverRadius = 0.14 + (1 - frame.pointer.speed) * 0.025 + frame.pointer.pressed * 0.018;
 
         if (hoverDistanceSquared < hoverRadius * hoverRadius) {
           const hoverDistance = Math.sqrt(Math.max(hoverDistanceSquared, 0.002));
-          const hoverProximity = Math.pow(1 - hoverDistance / hoverRadius, 2)
+          const hoverProximity = Math.pow(1 - hoverDistance / hoverRadius, 3.2)
             * frame.pointer.active;
           const inverseHoverDistance = 1 / hoverDistance;
-          const hoverEnergy = 0.72 + (1 - frame.pointer.speed) * 0.38 + frame.pointer.pressed * 0.14;
+          const hoverEnergy = 0.36 + (1 - frame.pointer.speed) * 0.22 + frame.pointer.pressed * 0.12;
+          const hoverSpeed = Math.sqrt(vx * vx + vy * vy + vz * vz);
+          const inverseHoverSpeed = 1 / Math.max(hoverSpeed, 0.08);
+          const forwardBurst = hoverProximity
+            * (1.45 + (1 - frame.pointer.speed) * 0.82 + frame.pointer.pressed * 0.3);
           ax += hoverDx * inverseHoverDistance * hoverProximity * hoverEnergy;
           ay += hoverDy * inverseHoverDistance * hoverProximity * hoverEnergy;
-          ax += -hoverDy * inverseHoverDistance * hoverProximity * 0.25;
-          ay += hoverDx * inverseHoverDistance * hoverProximity * 0.25;
+          ax += -hoverDy * inverseHoverDistance * hoverProximity * 0.18;
+          ay += hoverDx * inverseHoverDistance * hoverProximity * 0.18;
           az += Math.sin(phases[index] + frame.elapsed * 2.1) * hoverProximity * 0.14;
+          ax += vx * inverseHoverSpeed * forwardBurst;
+          ay += vy * inverseHoverSpeed * forwardBurst;
+          az += vz * inverseHoverSpeed * forwardBurst * 0.7;
           interactionTarget = Math.max(
             interactionTarget,
-            hoverProximity * (1.2 + (1 - frame.pointer.speed) * 0.5),
+            hoverProximity * (1.55 + (1 - frame.pointer.speed) * 0.7),
           );
         }
       }
@@ -938,18 +950,25 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
           * frame.pointer.clickStrength;
         const clickCore = (1 - smoothstep(0.015, 0.16 + frame.pointer.clickAge * 0.025, clickDistance))
           * Math.exp(-frame.pointer.clickAge * 3);
-        const clickInfluence = Math.max(clickBand, clickCore);
+        const clickFalloff = 1 - smoothstep(0.18, 1.38, clickDistance);
+        const clickGlobal = clickImpact * (0.5 + clickFalloff * 0.5);
+        const clickInfluence = Math.max(clickBand, clickCore, clickGlobal);
 
         if (clickInfluence > 0.002) {
-          const inverseClickDistance = 1 / Math.max(clickDistance, 0.08);
-          const radialImpulse = clickBand * 1.55 + clickCore * 1.05;
+          const clickDirectionX = clickDistance > 0.025
+            ? clickDx / clickDistance
+            : Math.cos(phases[index]);
+          const clickDirectionY = clickDistance > 0.025
+            ? clickDy / clickDistance
+            : Math.sin(phases[index]);
+          const radialImpulse = clickBand * 1.9 + clickCore * 1.35 + clickGlobal * 2.45;
           const groupRotation = group === 1 ? -1 : 1;
-          ax += clickDx * inverseClickDistance * radialImpulse;
-          ay += clickDy * inverseClickDistance * radialImpulse;
-          ax += -clickDy * inverseClickDistance * clickBand * 0.26 * groupRotation;
-          ay += clickDx * inverseClickDistance * clickBand * 0.26 * groupRotation;
-          az += Math.sin(phases[index] * 1.13 + frame.elapsed * 2.4) * clickInfluence * 0.28;
-          interactionTarget = Math.max(interactionTarget, clickInfluence * 1.35);
+          ax += clickDirectionX * radialImpulse;
+          ay += clickDirectionY * radialImpulse;
+          ax += -clickDirectionY * clickBand * 0.34 * groupRotation;
+          ay += clickDirectionX * clickBand * 0.34 * groupRotation;
+          az += Math.sin(phases[index] * 1.13 + frame.elapsed * 2.4) * clickInfluence * 0.48;
+          interactionTarget = Math.max(interactionTarget, clickInfluence * 1.65);
         }
       }
 
@@ -957,6 +976,10 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
       interactions[index] += (interactionTarget - interactions[index])
         * (1 - Math.exp(-delta * interactionResponse));
       highlights[index] = baseHighlights[index] + interactions[index] * 1.7;
+      const reactiveReturn = Math.max(interactions[index] - interactionTarget, 0) * 0.42;
+      ax += pathDx * reactiveReturn;
+      ay += pathDy * reactiveReturn;
+      az += pathDz * reactiveReturn * 0.78;
 
       if (px < -1.02) ax += (-1.02 - px) * 1.06;
       if (px > 2.68) ax -= (px - 2.68) * 1.24;
@@ -970,7 +993,7 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
         ax,
         ay,
         az,
-        1.58 + focusOnly * 0.2 + valid * 0.28 + interactions[index] * 0.58,
+        1.58 + focusOnly * 0.2 + valid * 0.28 + interactions[index] * 1.15,
       );
       accelerations[offset] = limitedAcceleration[0];
       accelerations[offset + 1] = limitedAcceleration[1];
@@ -987,7 +1010,7 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
         + focusOnly * 0.14
         + valid * 0.18
         + leaders[index] * 0.06
-        + interactions[index] * 0.22;
+        + interactions[index] * 0.62;
       let limitedVelocity = limitVector(vx, vy, vz, maxSpeed);
       vx = limitedVelocity[0];
       vy = limitedVelocity[1];
@@ -1068,7 +1091,7 @@ const createMathematicalFlockScene: VisualLabSceneFactory = (renderer): VisualLa
           0,
         );
         clickRing.scale.setScalar(ringRadius);
-        clickRingMaterial.opacity = frame.pointer.clickStrength * ringReveal * 0.38;
+        clickRingMaterial.opacity = frame.pointer.clickStrength * ringReveal * 0.48;
       } else {
         clickRing.visible = false;
         clickRingMaterial.opacity = 0;
