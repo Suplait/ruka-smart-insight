@@ -133,7 +133,10 @@ export default function WorksContact() {
         <div className="mx-auto max-w-7xl">
           {stage === "form" ? (
             <div className="grid gap-7 lg:min-h-[calc(100dvh-65px)] lg:grid-cols-[minmax(0,1.23fr)_minmax(410px,0.77fr)] lg:items-center lg:gap-8 xl:gap-12">
-              <section className="relative min-h-[390px] overflow-hidden sm:min-h-[430px] lg:min-h-[calc(100dvh-65px)]">
+              <section
+                data-visual-lab-left
+                className="relative min-h-[390px] overflow-hidden sm:min-h-[430px] lg:min-h-[calc(100dvh-65px)]"
+              >
                 <div className="absolute inset-0">
                   <Suspense fallback={<EnvironmentLoadFallback />}>
                     <WorksMathematicalFlock state={flockState} paused={false} />
