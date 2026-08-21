@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { ArrowRight, LoaderCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ReviewBanner } from "@/components/onboarding-v2/ReviewBanner";
 import { VolumeSelector } from "@/components/onboarding-v2/VolumeSelector";
@@ -23,7 +24,9 @@ export function VolumeStepView({ selectedCount, onChange, onContinue, isLoading,
 
       <div className="mx-auto flex min-h-[calc(100dvh-42px)] max-w-6xl flex-col px-5 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
         <header>
-          <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto sm:h-9" />
+          <Link to="/" aria-label="Ir al inicio de Ruka" className="inline-flex">
+            <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto sm:h-9" />
+          </Link>
         </header>
 
         <div className="my-auto py-9 sm:py-12 lg:py-14">

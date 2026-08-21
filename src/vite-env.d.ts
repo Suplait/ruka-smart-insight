@@ -1,6 +1,14 @@
 
 /// <reference types="vite/client" />
 
+interface ImportMetaEnv {
+  readonly VITE_RUKA_ONE_CALENDLY_URL?: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
 interface Window {
   dataLayer?: any[];
   Calendly?: {

@@ -6,3 +6,6 @@ verify_jwt = false
 
 [functions.notify-slack]
 verify_jwt = false
+
+[functions.notify-one-slack]
+verify_jwt = false

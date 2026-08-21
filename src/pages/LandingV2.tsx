@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import {
   ArrowDown,
@@ -15,17 +15,13 @@ import {
   Braces,
   Layers3,
   Landmark,
-  Linkedin,
   LoaderCircle,
   LockKeyhole,
   Mail,
-  MapPin,
   Play,
   ReceiptText,
   Sparkles,
   Store,
-  Instagram,
-  Twitter,
   UsersRound,
 } from "lucide-react";
 import {
@@ -35,6 +31,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import OperationalGapSection from "@/components/landing-v2/OperationalGapSection";
 import { WorkSection } from "@/components/landing-v2/WorkSection";
@@ -86,13 +83,6 @@ function Reveal({
     </motion.div>
   );
 }
-
-const navItems = [
-  { label: "Trabajo", id: "trabajo" },
-  { label: "Demo", id: "demo" },
-  { label: "Integraciones", id: "integraciones" },
-  { label: "Precios", id: "precios" },
-] as const;
 
 const rukaDemoEmbedUrl = "https://prueba.ruka.ai/?embed=1&source=landing-v2";
 
@@ -224,27 +214,27 @@ export default function LandingV2() {
   }, [location.hash]);
 
   return (
-    <main className="min-h-[100dvh] bg-[#fbfcff] text-[#171827]">
+    <div className="min-h-[100dvh] bg-[#fbfcff] text-[#171827]">
       <ScrollProgress />
       <LandingV2Seo />
 
       <Navbar
-        sectionLinks={navItems}
-        sectionPath="/"
-        logoPath="/"
         primaryAction={{ label: CTA_LABEL, path: "/register" }}
         showLogin={false}
       />
-      <Hero reduceMotion={reduceMotion} navigate={navigate} />
-      <SocialProofSection />
-      <OperationalGapSection />
-      <WorkSection reduceMotion={reduceMotion} onPrimaryAction={() => navigate("/register")} />
-      <ProductDemoSection reduceMotion={reduceMotion} navigate={navigate} />
-      <IntegrationsSection />
-      <PricingSection navigate={navigate} />
-      <SupportersSection />
-      <FAQAndCTASection navigate={navigate} />
-    </main>
+      <main>
+        <Hero reduceMotion={reduceMotion} navigate={navigate} />
+        <SocialProofSection />
+        <OperationalGapSection />
+        <WorkSection reduceMotion={reduceMotion} primaryPath="/one" />
+        <ProductDemoSection reduceMotion={reduceMotion} navigate={navigate} />
+        <IntegrationsSection />
+        <PricingSection navigate={navigate} />
+        <SupportersSection />
+        <FAQAndCTASection navigate={navigate} />
+      </main>
+      <Footer />
+    </div>
   );
 }
 
@@ -867,7 +857,7 @@ function FAQAndCTASection({ navigate }: { navigate: (path: string) => void }) {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="faq" className="bg-white pb-0 pt-20 sm:pt-28">
+    <section id="faq" className="bg-white pb-20 pt-20 sm:pb-28 sm:pt-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
           <Reveal>
@@ -916,117 +906,7 @@ function FAQAndCTASection({ navigate }: { navigate: (path: string) => void }) {
           </div>
         </motion.div>
 
-        <motion.footer
-          className="mt-16 border-t border-[#dce3f2] pt-10 text-sm text-[#6a7184] sm:pt-12"
-          initial={reduceMotion ? false : { opacity: 0.7, y: 8 }}
-          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45, ease: easeOut }}
-        >
-          <div className="grid gap-10 border-b border-[#e5e8f0] pb-10 sm:grid-cols-2 lg:grid-cols-[1.45fr_0.75fr_0.75fr_1fr] lg:gap-12 lg:pb-12">
-            <div>
-              <Link to="/" aria-label="Volver al inicio de Ruka" className="inline-flex">
-                <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto transition-opacity hover:opacity-75" />
-              </Link>
-              <p className="mt-5 max-w-sm text-base leading-7 text-[#555b6e]">
-                Agentes IA que hacen el trabajo operativo entre los sistemas que tu empresa ya usa.
-              </p>
-              <div className="mt-6 flex items-center gap-2">
-                {[
-                  { label: "LinkedIn", href: "https://www.linkedin.com/company/rukaai/", Icon: Linkedin },
-                  { label: "Instagram", href: "https://www.instagram.com/ruka__ai/", Icon: Instagram },
-                  { label: "X", href: "https://x.com/ruka__ai", Icon: Twitter },
-                ].map(({ label, href, Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${label} de Ruka`}
-                    className="grid h-10 w-10 place-items-center rounded-full border border-[#dce3f2] bg-white text-[#555b6e] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary active:scale-[0.96]"
-                  >
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <FooterLinkGroup
-              title="Producto"
-              links={[
-                { label: "Trabajo", to: "/#trabajo" },
-                { label: "Probar Ruka", to: "/#demo" },
-                { label: "Integraciones", to: "/#integraciones" },
-                { label: "Precios", to: "/#precios" },
-              ]}
-            />
-
-            <FooterLinkGroup
-              title="Soluciones"
-              links={[
-                { label: "Restaurantes", to: "/restaurantes" },
-                { label: "Hoteles", to: "/hoteles" },
-                { label: "Retail", to: "/retail" },
-                { label: "Nosotros", to: "/about" },
-              ]}
-            />
-
-            <div>
-              <p className="font-semibold text-[#171827]">Dónde estamos</p>
-              <div className="mt-5 space-y-4">
-                <div className="flex items-start gap-3">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-                  <div>
-                    <p className="font-medium text-[#303447]">Santiago, Chile</p>
-                    <p className="mt-1 leading-6">General del Canto 50, Providencia</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-                  <div>
-                    <p className="font-medium text-[#303447]">Delaware, USA</p>
-                    <p className="mt-1 leading-6">1209 Orange St., Wilmington</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
-            <p>© {new Date().getFullYear()} Ruka.ai. Todos los derechos reservados.</p>
-            <div className="flex flex-wrap gap-x-5 gap-y-2">
-              <Link to="/privacy" className="transition-colors hover:text-[#171827]">Privacidad</Link>
-              <Link to="/terms" className="transition-colors hover:text-[#171827]">Términos</Link>
-            </div>
-          </div>
-        </motion.footer>
       </div>
     </section>
-  );
-}
-
-function FooterLinkGroup({
-  title,
-  links,
-}: {
-  title: string;
-  links: readonly { label: string; to: string }[];
-}) {
-  return (
-    <div>
-      <p className="font-semibold text-[#171827]">{title}</p>
-      <ul className="mt-5 space-y-3">
-        {links.map((link) => (
-          <li key={link.label}>
-            <Link
-              to={link.to}
-              className="inline-flex transition-colors duration-200 hover:text-[#171827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 }

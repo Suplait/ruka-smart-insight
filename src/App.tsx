@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Navigate, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from "@/components/theme-provider"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from "@/components/ui/toaster"
@@ -25,8 +25,27 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import WhatsappRedirect from './pages/WhatsappRedirect';
 import CalendlySuccess from './pages/CalendlySuccess';
 import Webinar from './pages/Webinar';
+import One from './pages/One';
+import OneContact from './pages/OneContact';
 
 const queryClient = new QueryClient();
+
+function LegacyOneRedirect() {
+  const location = useLocation();
+  const rawSuffix = location.pathname.slice('/works'.length);
+  const suffix = rawSuffix === '/' ? '' : rawSuffix.replace(/\/$/, '');
+
+  return (
+    <Navigate
+      replace
+      to={{
+        pathname: `/one${suffix}`,
+        search: location.search,
+        hash: location.hash,
+      }}
+    />
+  );
+}
 
 function App() {
   useEffect(() => {
@@ -58,6 +77,9 @@ function App() {
             <Route path="/calendly-success" element={<CalendlySuccess />} />
             <Route path="/whatsapp" element={<WhatsappRedirect />} />
             <Route path="/webinar" element={<Webinar />} />
+            <Route path="/one" element={<One />} />
+            <Route path="/one/contacto" element={<OneContact />} />
+            <Route path="/works/*" element={<LegacyOneRedirect />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <MarketingWhatsAppButton />

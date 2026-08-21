@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import { Check, Clock3 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { ReviewBanner } from "@/components/onboarding-v2/ReviewBanner";
 
 type CalendlyStageViewProps = {
@@ -27,7 +28,9 @@ export function CalendlyStageView({ volumeLabel, children, isReview = false, rev
 
       <div className="mx-auto max-w-[1480px] px-4 py-4 sm:px-6 sm:py-7 lg:px-8 lg:py-8">
         <header className="mb-5 lg:mb-8">
-          <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto sm:h-9" />
+          <Link to="/" aria-label="Ir al inicio de Ruka" className="inline-flex">
+            <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto sm:h-9" />
+          </Link>
         </header>
 
         <div className="grid items-start gap-6 lg:grid-cols-[minmax(300px,0.72fr)_minmax(0,1.28fr)] lg:gap-8 xl:grid-cols-[minmax(340px,0.68fr)_minmax(0,1.32fr)] xl:gap-10">

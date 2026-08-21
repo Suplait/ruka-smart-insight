@@ -1,10 +1,13 @@
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { isOnboardingDebugEnabledFromSearch } from "@/utils/onboardingDebug";
 import { pushToDataLayer } from "@/utils/dataLayer";
+import { isOneDebugEnabled } from "@/utils/oneDebug";
 
 const WHATSAPP_NUMBER = "56932595791";
 const WHATSAPP_MESSAGE = "Hola! Quisiera saber más de Ruka.ai y cómo podría ayudarnos con nuestros procesos.";
+const ONE_WHATSAPP_MESSAGE = "Hola! Llegué desde Ruka One y quería hacerles una consulta.";
 
 const exactMarketingRoutes = new Set([
   "/",
@@ -14,6 +17,7 @@ const exactMarketingRoutes = new Set([
   "/hoteles",
   "/retail",
   "/webinar",
+  "/one",
 ]);
 
 const acquisitionRoutes = new Set(["/register", "/restaurantes", "/hoteles", "/retail"]);
@@ -27,13 +31,32 @@ export function MarketingWhatsAppButton() {
   const location = useLocation();
   const reduceMotion = useReducedMotion();
   const pathname = normalizePathname(location.pathname);
+  const isOneLanding = pathname === "/one";
   const isMarketingRoute = exactMarketingRoutes.has(pathname) || pathname.startsWith("/productos/");
   const isAcquisitionRoute = acquisitionRoutes.has(pathname);
-  const isDebug = isOnboardingDebugEnabledFromSearch(location.search);
+  const isDebug = isOnboardingDebugEnabledFromSearch(location.search) || isOneDebugEnabled(location.search);
+  const [oneButtonVisible, setOneButtonVisible] = useState(false);
 
-  if (!isMarketingRoute || isDebug) return null;
+  useEffect(() => {
+    if (!isOneLanding) {
+      setOneButtonVisible(true);
+      return;
+    }
 
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+    setOneButtonVisible(false);
+    const heroActions = document.getElementById("one-hero-actions");
+    if (!heroActions) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setOneButtonVisible(!entry.isIntersecting),
+      { threshold: 0.18 },
+    );
+    observer.observe(heroActions);
+    return () => observer.disconnect();
+  }, [isOneLanding]);
+
+  if (!isMarketingRoute || isDebug || (isOneLanding && !oneButtonVisible)) return null;
+
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(isOneLanding ? ONE_WHATSAPP_MESSAGE : WHATSAPP_MESSAGE)}`;
 
   const handleClick = () => {
     pushToDataLayer("whatsapp_marketing_click", {
@@ -53,7 +76,7 @@ export function MarketingWhatsAppButton() {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       whileHover={reduceMotion ? undefined : { y: -2 }}
       transition={{ duration: reduceMotion ? 0 : 0.22, ease: "easeOut" }}
-      className={`fixed right-5 z-[60] flex h-[52px] w-[52px] items-center justify-center rounded-full border border-[#dce3f2] bg-white text-sm font-semibold text-[#202231] shadow-[0_14px_38px_rgba(23,24,39,0.16)] outline-none transition-[border-color,box-shadow] hover:border-[#b9c1d2] hover:shadow-[0_16px_42px_rgba(23,24,39,0.2)] focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 sm:w-auto sm:gap-2.5 sm:px-4 ${
+      className={`fixed right-5 z-40 flex h-[52px] w-[52px] items-center justify-center rounded-full border border-[#dce3f2] bg-white text-sm font-semibold text-[#202231] shadow-[0_14px_38px_rgba(23,24,39,0.16)] outline-none transition-[border-color,box-shadow] hover:border-[#b9c1d2] hover:shadow-[0_16px_42px_rgba(23,24,39,0.2)] focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 sm:w-auto sm:gap-2.5 sm:px-4 ${
         isAcquisitionRoute ? "bottom-[6.5rem] lg:bottom-8 lg:right-8" : "bottom-5 sm:bottom-8 sm:right-8"
       }`}
     >
@@ -63,7 +86,7 @@ export function MarketingWhatsAppButton() {
         aria-hidden="true"
         className="h-7 w-7 shrink-0"
       />
-      <span className="hidden sm:inline">Conversemos</span>
+      <span className="hidden sm:inline">{isOneLanding ? "Escríbenos" : "Conversemos"}</span>
     </motion.a>
   );
 }

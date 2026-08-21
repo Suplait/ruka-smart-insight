@@ -10,6 +10,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -65,10 +66,10 @@ const workflows: readonly Workflow[] = [
 
 type WorkSectionProps = {
   reduceMotion: boolean | null;
-  onPrimaryAction: () => void;
+  primaryPath: string;
 };
 
-export function WorkSection({ reduceMotion, onPrimaryAction }: WorkSectionProps) {
+export function WorkSection({ reduceMotion, primaryPath }: WorkSectionProps) {
   const [activeWorkflow, setActiveWorkflow] = useState(0);
   const selectedWorkflow = workflows[activeWorkflow];
 
@@ -131,18 +132,20 @@ export function WorkSection({ reduceMotion, onPrimaryAction }: WorkSectionProps)
             <div className="flex min-w-0 items-center gap-4">
               <motion.span whileHover={reduceMotion ? undefined : { rotate: 8, scale: 1.1 }} transition={{ duration: 0.2, ease: easeOut }}><Bot className="h-7 w-7 flex-none text-primary" strokeWidth={1.8} aria-hidden="true" /></motion.span>
               <h3 className="min-w-0 text-balance text-2xl font-semibold leading-tight tracking-[-0.025em] text-[#171827]">
-                ¿Otro proceso manual?
+                ¿Un proceso más complejo?
               </h3>
             </div>
             <p className="min-w-0 max-w-2xl text-base leading-7 text-[#555d70]">
-              Creamos un operador para tu flujo, sobre los sistemas y reglas que ya usa tu empresa.
+              Con Ruka One partimos desde un proceso propio de tu empresa y trabajamos contigo para llevarlo a operar sobre tus sistemas y reglas.
             </p>
             <Button
+              asChild
               className="group h-12 min-w-0 w-full whitespace-nowrap rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none transition-transform duration-150 hover:-translate-y-0.5 hover:bg-primary/90 active:scale-[0.98] sm:w-fit sm:px-6 sm:text-base"
-              onClick={onPrimaryAction}
             >
-              Cuéntanos tu proceso
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+              <Link to={primaryPath}>
+                Ver Ruka One
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+              </Link>
             </Button>
           </motion.aside>
         </motion.div>

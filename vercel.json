@@ -48,6 +48,10 @@
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
     },
     {
+      "source": "/one/contacto",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
       "source": "/robots.txt",
       "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }]
     },
@@ -61,6 +65,16 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/works",
+      "destination": "/one",
+      "permanent": true
+    },
+    {
+      "source": "/works/:path*",
+      "destination": "/one/:path*",
+      "permanent": true
+    },
     {
       "source": "/v2/:path*",
       "destination": "/",
@@ -90,6 +104,10 @@
     { "source": "/privacy/", "destination": "/privacy/index.html" },
     { "source": "/terms", "destination": "/terms/index.html" },
     { "source": "/terms/", "destination": "/terms/index.html" },
+    { "source": "/one", "destination": "/one/index.html" },
+    { "source": "/one/", "destination": "/one/index.html" },
+    { "source": "/one/contacto", "destination": "/one/contacto/index.html" },
+    { "source": "/one/contacto/", "destination": "/one/contacto/index.html" },
     { "source": "/home-anterior", "destination": "/index.html" },
     { "source": "/onboarding-success", "destination": "/index.html" },
     { "source": "/calendly-success", "destination": "/index.html" },
