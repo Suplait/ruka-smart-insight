@@ -9,7 +9,8 @@ type OneCalendlyProps = {
   onBack?: () => void;
 };
 
-const rawCalendarUrl = import.meta.env.VITE_RUKA_ONE_CALENDLY_URL?.trim();
+const defaultCalendarUrl = "https://calendly.com/suplait_lorenzo/ruka-works";
+const rawCalendarUrl = import.meta.env.VITE_RUKA_ONE_CALENDLY_URL?.trim() || defaultCalendarUrl;
 
 function getCalendarUrl() {
   if (!rawCalendarUrl) return null;
