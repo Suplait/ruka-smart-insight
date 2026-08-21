@@ -7,6 +7,7 @@ const corsHeaders = {
 
 const jsonHeaders = { ...corsHeaders, "Content-Type": "application/json" };
 const SLACK_CHANNEL = "ruka-leads";
+const SLACK_ICON = ":gem:";
 const RUKA_LOGO_URL = "https://www.ruka.ai/logo.png";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -96,6 +97,7 @@ function leadMessage(lead: OneLead, submissionId: string) {
   const digits = phoneDigits(lead.whatsapp);
   return {
     channel: SLACK_CHANNEL,
+    icon_emoji: SLACK_ICON,
     text: `Ruka One · Nuevo proceso para evaluar · ${lead.company}`,
     client_msg_id: submissionId,
     blocks: [
@@ -153,6 +155,7 @@ function leadMessage(lead: OneLead, submissionId: string) {
 function scheduledMessage(lead: OneLead, threadTs: string) {
   return {
     channel: SLACK_CHANNEL,
+    icon_emoji: SLACK_ICON,
     text: `Ruka One · Reunión agendada · ${lead.company}`,
     ...(threadTs ? { thread_ts: threadTs } : {}),
     blocks: [
