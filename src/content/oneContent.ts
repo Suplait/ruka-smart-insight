@@ -8,7 +8,7 @@ export const oneContent = {
     title: "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
     lead: "Con Ruka One, partimos de esos procesos y trabajamos contigo para llevarlos a operar sobre tus sistemas, reglas y datos actuales.",
     body: "Nos muestras cómo funciona hoy. Nosotros entendemos las reglas, excepciones y sistemas involucrados, y lo llevamos a producción sobre la base de Ruka.",
-    primaryAction: "Revisar mi caso",
+    primaryAction: "Conversemos",
     secondaryAction: "Ver cómo funciona",
     microcopy: "30 min · Sin compromiso",
   },
@@ -62,7 +62,7 @@ export const oneContent = {
     transition: {
       title: "No necesitas llegar con la solución.",
       copy: "Solo con la parte de tu operación que todavía depende de trabajo manual.",
-      action: "Revisar mi caso",
+      action: "Conversemos",
     },
   },
   comparison: {
@@ -166,7 +166,7 @@ export const oneContent = {
     title: "¿Hay una parte de tu operación que depende demasiado de una persona?",
     statement: "Revisémosla.",
     copy: "En 30 minutos entendemos cómo funciona hoy y vemos contigo cómo abordarlo con Ruka One.",
-    action: "Revisar mi caso",
+    action: "Conversemos",
     microcopy: "30 min · Sin compromiso",
   },
   contact: {

@@ -10,7 +10,7 @@ const productLinks = [
 
 const oneLinks = [
   { label: "Ruka One", to: "/one" },
-  { label: "Revisar mi caso", to: "/one/contacto" },
+  { label: "Conversemos", to: "/one/contacto" },
 ] as const;
 
 const industryLinks = [

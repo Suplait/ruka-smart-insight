@@ -33,7 +33,7 @@ export default function One() {
     <div className="min-h-screen overflow-x-clip bg-[#fbfcff] text-[#171827]">
       <OneSeo />
       <Navbar
-        primaryAction={{ label: "Revisar mi caso", path: ONE_CONTACT_PATH }}
+        primaryAction={{ label: "Conversemos", path: ONE_CONTACT_PATH }}
       />
       <main>
         <OneHero />
