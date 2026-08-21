@@ -4,7 +4,8 @@ import { fileURLToPath } from "node:url";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const siteOrigin = "https://www.ruka.ai";
-const oneDescription = "Ruka One convierte procesos operativos que cruzan ERP, SII, correo, planillas y sistemas internos en flujos que operan sobre tus reglas y datos actuales.";
+const oneDescription = "Con Ruka One llevamos procesos propios de tu empresa a operar sobre tus sistemas, reglas y datos actuales, sin reemplazar el software que ya usas.";
+const oneServiceDescription = "Ruka One es la forma de trabajar con Ruka sobre procesos específicos de una empresa, llevándolos a operar sobre sus sistemas, reglas y datos actuales.";
 
 const routes = [
   {
@@ -247,6 +248,10 @@ for (const question of faqSchema?.mainEntity ?? []) {
 }
 assert(homeHtml.includes('href="/one"'), "/: falta enlace HTML crawleable hacia /one");
 assert(homeHtml.includes("Ver Ruka One"), "/: falta copy contextual del enlace hacia Ruka One");
+assert(
+  homeHtml.includes("Con Ruka One partimos desde un proceso propio de tu empresa y trabajamos contigo para llevarlo a operar sobre tus sistemas y reglas."),
+  "/: falta el posicionamiento contextual actualizado de Ruka One",
+);
 
 const oneHtml = await readFile(routeFile("/one"), "utf8");
 const oneVisibleText = textContent(oneHtml);
@@ -260,11 +265,22 @@ assert(getTagAttribute(oneHtml, "property", "og:site_name", "content") === "Ruka
 assert(getTagAttribute(oneHtml, "name", "googlebot", "content")?.includes("max-image-preview:large"), "/one: falta directiva Googlebot de preview grande");
 for (const requiredText of [
   "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
-  "Ruka ya procesa millones de registros operativos para cientos de empresas.",
-  "¿Qué procesos puede operar Ruka?",
-  "Ruka funciona mejor en procesos repetitivos que cruzan sistemas, documentos, reglas y decisiones.",
+  "Ruka parte de procesos que ya estandarizamos. Ruka One parte del tuyo.",
+  "Ruka One usa la misma base tecnológica que hoy procesa millones de registros operativos para cientos de empresas.",
+  "¿Qué es Ruka One?",
+  "¿Cuál es la diferencia entre Ruka y Ruka One?",
+  "¿Qué tipo de procesos trabajamos con Ruka One?",
 ]) {
   assert(oneVisibleText.includes(requiredText), `/one: falta contenido esencial prerenderizado (${requiredText})`);
+}
+for (const forbiddenText of [
+  "Vemos contigo si Ruka puede ayudar.",
+  "vemos si Ruka puede ayudar",
+  "si tiene sentido que Ruka",
+  "Ruka los convierte",
+  "Ruka One convierte",
+]) {
+  assert(!oneVisibleText.includes(forbiddenText), `/one: conserva copy de posicionamiento débil (${forbiddenText})`);
 }
 assert(
   getTagAttribute(oneHtml, "name", "description", "content") ===
@@ -279,12 +295,12 @@ assert(
 );
 assert(oneService?.name === "Ruka One", "/one: Service schema no usa el nombre Ruka One");
 assert(oneService?.url === `${siteOrigin}/one`, "/one: Service schema tiene URL incorrecta");
-assert(oneService?.description === oneDescription, "/one: Service schema diverge de la meta description");
+assert(oneService?.description === oneServiceDescription, "/one: Service schema no explica correctamente el enfoque de Ruka One");
 assert(oneService?.provider?.["@id"] === `${siteOrigin}/#organization`, "/one: Service schema no referencia a Ruka.ai como provider");
 assert(oneService?.areaServed?.identifier === "CL", "/one: Service schema no declara Chile/CL");
 
 const oneFaqSchema = oneSchemaValues.find((schema) => schema?.["@type"] === "FAQPage");
-assert(oneFaqSchema?.mainEntity?.length === 5, `/one: FAQPage debe contener 5 preguntas y contiene ${oneFaqSchema?.mainEntity?.length ?? 0}`);
+assert(oneFaqSchema?.mainEntity?.length === 7, `/one: FAQPage debe contener 7 preguntas y contiene ${oneFaqSchema?.mainEntity?.length ?? 0}`);
 for (const question of oneFaqSchema?.mainEntity ?? []) {
   assert(oneVisibleText.includes(question.name), `/one: pregunta FAQ ausente del HTML visible: ${question.name}`);
   assert(oneVisibleText.includes(question.acceptedAnswer?.text), `/one: respuesta FAQ ausente del HTML visible: ${question.name}`);
@@ -296,9 +312,28 @@ assert(oneBreadcrumb?.itemListElement?.[0]?.item === `${siteOrigin}/`, "/one: pr
 assert(oneBreadcrumb?.itemListElement?.[1]?.name === "Ruka One", "/one: segundo breadcrumb debe llamarse Ruka One");
 assert(oneBreadcrumb?.itemListElement?.[1]?.item === `${siteOrigin}/one`, "/one: segundo breadcrumb debe apuntar a /one");
 
+const oneContactHtml = await readFile(routeFile("/one/contacto"), "utf8");
+const oneContactVisibleText = textContent(oneContactHtml);
+assert(
+  oneContactVisibleText.includes("Elige una hora y cuéntanos cómo funciona hoy. Vemos contigo cómo llevar ese proceso a operar sobre Ruka."),
+  "/one/contacto: falta el posicionamiento final del formulario",
+);
+for (const forbiddenText of ["si Ruka puede ayudar", "si podemos ayudarte", "si tiene sentido", "evaluamos si"]) {
+  assert(!oneContactVisibleText.toLowerCase().includes(forbiddenText.toLowerCase()), `/one/contacto: conserva lenguaje condicional débil (${forbiddenText})`);
+}
+
+const oneContentSource = await readFile(path.join(projectRoot, "src", "content", "oneContent.ts"), "utf8");
+for (const requiredText of [
+  "Nos cuentas cómo funciona hoy y vemos juntos cómo llevarlo a operar sobre Ruka.",
+  "Partimos por tu proceso tal como funciona hoy.",
+]) {
+  assert(oneContentSource.includes(requiredText), `oneContent.ts: falta copy final del funnel (${requiredText})`);
+}
+
 const oneOgSvg = await readFile(path.join(projectRoot, "public", "ruka-one-og.svg"), "utf8");
 assert(oneOgSvg.includes("RUKA ONE"), "ruka-one-og.svg: falta branding RUKA ONE");
 assert(!oneOgSvg.includes("RUKA WORKS"), "ruka-one-og.svg: todavía contiene RUKA WORKS");
+assert(oneOgSvg.includes("Partimos de tu proceso y trabajamos contigo"), "ruka-one-og.svg: conserva el posicionamiento anterior");
 const oneOgPng = await readFile(path.join(projectRoot, "public", "ruka-one-og.png"));
 assert(oneOgPng.subarray(1, 4).toString("ascii") === "PNG", "ruka-one-og.png: no es un PNG válido");
 assert(oneOgPng.readUInt32BE(16) === 1200, `ruka-one-og.png: ancho inesperado (${oneOgPng.readUInt32BE(16)})`);
@@ -349,6 +384,7 @@ assert(llms.startsWith("# Ruka.ai"), "llms.txt: encabezado canónico ausente");
 assert(llms.includes("## Páginas principales"), "llms.txt: falta guía de páginas principales");
 assert(llms.includes("## Citas y atribución"), "llms.txt: falta guía de citas y atribución");
 assert(llms.includes(`[Ruka One](${siteOrigin}/one)`), "llms.txt: falta entrada canónica de Ruka One");
+assert(llms.includes("la forma de trabajar con Ruka cuando el punto de partida es un proceso específico de una empresa"), "llms.txt: la entrada de Ruka One no explica su punto de partida");
 assert(!llms.includes("Ruka Works"), "llms.txt: todavía contiene la marca Ruka Works");
 assert(!llms.toLowerCase().includes("high-ticket"), "llms.txt: contiene lenguaje interno high-ticket");
 

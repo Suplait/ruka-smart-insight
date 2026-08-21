@@ -6,14 +6,29 @@ export const oneContent = {
   hero: {
     eyebrow: ONE_NAME.toUpperCase(),
     title: "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
-    lead: "Ruka los convierte en flujos que se ejecutan sobre tus sistemas, reglas y datos actuales.",
-    body: "Si para que algo funcione alguien tiene que buscar, cruzar, validar, decidir y actualizar, queremos verlo.",
+    lead: "Con Ruka One, partimos de esos procesos y trabajamos contigo para llevarlos a operar sobre tus sistemas, reglas y datos actuales.",
+    body: "Nos muestras cómo funciona hoy. Nosotros entendemos las reglas, excepciones y sistemas involucrados, y lo llevamos a producción sobre la base de Ruka.",
     primaryAction: "Revisar mi caso",
     secondaryAction: "Ver cómo funciona",
     microcopy: "30 min · Sin compromiso",
   },
   proof: {
-    title: "Ruka ya procesa millones de registros operativos para cientos de empresas.",
+    title: "Ruka One usa la misma base tecnológica que hoy procesa millones de registros operativos para cientos de empresas.",
+  },
+  startingPoint: {
+    eyebrow: "DOS FORMAS DE PARTIR",
+    title: "Ruka parte de procesos que ya estandarizamos. Ruka One parte del tuyo.",
+    copy: "Con Ruka puedes usar procesos que ya resolvimos como producto. Con Ruka One, empezamos por entender cómo funciona un proceso propio de tu empresa y trabajamos contigo para llevarlo a operar sobre la misma base tecnológica de Ruka.",
+    options: [
+      {
+        name: "RUKA",
+        copy: "Partimos desde un proceso que ya estandarizamos como producto.",
+      },
+      {
+        name: "RUKA ONE",
+        copy: "Partimos desde cómo funciona tu empresa hoy.",
+      },
+    ],
   },
   familiar: {
     eyebrow: "TRABAJO QUE EL SOFTWARE NO TERMINÓ DE RESOLVER",
@@ -52,9 +67,9 @@ export const oneContent = {
   },
   comparison: {
     title: "La diferencia no es automatizar un paso. Es quién empuja el proceso.",
-    lead: "Hoy una persona mueve cada caso de principio a fin. Con Ruka, el flujo corre y el equipo entra cuando realmente necesita decidir.",
+    lead: "Hoy alguien empuja cada caso de principio a fin. Con Ruka One, diseñamos el flujo para que avance y tu equipo entre cuando realmente necesita decidir.",
     without: {
-      label: "SIN RUKA",
+      label: "SIN RUKA ONE",
       input: "Entrada",
       steps: [
         "Busca contexto",
@@ -68,38 +83,38 @@ export const oneContent = {
       close: "El proceso avanza porque una persona lo empuja.",
     },
     with: {
-      label: "CON RUKA",
+      label: "CON RUKA ONE",
       input: "Entrada",
       steps: ["Busca contexto", "Cruza información", "Aplica reglas", "Ejecuta acciones"],
       decision: "¿Hay una excepción?",
-      normal: "Ruka continúa",
+      normal: "El flujo continúa",
       exception: "Decisión humana",
       finish: ["Actualiza sistemas", "Registra evidencia", "COMPLETADO"],
       close: "Tu equipo deja de operar cada caso. Entra cuando realmente necesita decidir.",
     },
   },
   method: {
-    title: "Así pasamos del trabajo manual a un flujo operando.",
+    title: "Así trabajamos con Ruka One.",
     steps: [
       {
         number: "01",
         verb: "ENTENDER",
-        title: "Vemos cómo funciona hoy.",
-        copy: "Recorremos qué activa el proceso, qué sistemas toca, qué reglas usa el equipo y dónde aparecen excepciones.",
+        title: "Partimos por cómo funciona hoy.",
+        copy: "Recorremos contigo qué activa el proceso, qué sistemas toca, qué reglas usa el equipo y dónde aparecen excepciones.",
         output: "Proceso entendido",
       },
       {
         number: "02",
-        verb: "PONERLO A OPERAR",
-        title: "Convertimos ese trabajo en un flujo real.",
-        copy: "Conectamos sistemas, reglas y acciones, y lo probamos con casos reales antes de dejarlo operando.",
+        verb: "CONSTRUIR",
+        title: "Lo llevamos a la base de Ruka.",
+        copy: "Conectamos sistemas, reglas y acciones, y lo probamos con casos reales antes de ponerlo a operar.",
         output: "Flujo en producción",
       },
       {
         number: "03",
-        verb: "MEJORAR",
-        title: "Medimos lo que ocurre y reducimos excepciones.",
-        copy: "Vemos qué ejecutó Ruka, dónde necesitó intervención y qué partes pueden automatizarse después.",
+        verb: "OPERAR Y MEJORAR",
+        title: "Lo dejamos corriendo y aprendemos de las excepciones.",
+        copy: "Vemos qué partes avanzan solas, dónde todavía hace falta una decisión humana y qué podemos seguir automatizando.",
         output: "Cada vez menos trabajo manual",
       },
     ],
@@ -108,8 +123,6 @@ export const oneContent = {
       copy: "Cada flujo puede combinar agentes IA, integraciones, reglas de negocio y revisión humana según lo que necesite cada parte.",
     },
     rail: ["Agentes IA", "Integraciones", "Reglas de negocio", "Revisión humana", "Trazabilidad"],
-    statement: "El proceso puede ser específico. La tecnología debajo no parte de cero.",
-    supporting: "Ruka reutiliza una base común para conectar sistemas, entender información, ejecutar reglas, actualizar datos y registrar lo que ocurrió.",
   },
   testimonial: {
     quote: "Información inmediata de volúmenes de compra, evolución de precios y control de pagos. Ahorro de HH en planillas.",
@@ -120,46 +133,55 @@ export const oneContent = {
     title: "Preguntas antes de revisar un proceso.",
     items: [
       {
-        question: "¿Qué procesos puede operar Ruka?",
-        answer: "Ruka funciona mejor en procesos repetitivos que cruzan sistemas, documentos, reglas y decisiones. El punto de partida no es una lista cerrada de casos, sino entender cómo funciona hoy el proceso.",
+        question: "¿Qué es Ruka One?",
+        answer: "Ruka One es nuestra forma de trabajar procesos específicos de una empresa. Partimos por entender cómo funcionan hoy y los llevamos a operar sobre la base tecnológica de Ruka.",
+      },
+      {
+        question: "¿Cuál es la diferencia entre Ruka y Ruka One?",
+        answer: "Con Ruka partes desde procesos que ya hemos estandarizado como producto. Con Ruka One, el punto de partida es un proceso propio de tu empresa, con sus sistemas, reglas y excepciones. La base tecnológica es la misma.",
+      },
+      {
+        question: "¿Qué tipo de procesos trabajamos con Ruka One?",
+        answer: "Procesos repetitivos que hoy dependen de personas para buscar información, cruzar sistemas, aplicar reglas, resolver excepciones o mantener datos actualizados. Partimos por cómo funciona tu proceso, no por una lista cerrada de casos.",
       },
       {
         question: "¿Tengo que cambiar mi ERP o mis sistemas actuales?",
-        answer: "No. Ruka se construye sobre los sistemas que tu empresa ya usa y ejecuta el trabajo entre ellos cuando es técnicamente posible integrarlos o interactuar con ellos.",
+        answer: "No. Con Ruka One trabajamos sobre los sistemas que tu empresa ya usa y definimos cómo conectarlos o interactuar con ellos según lo que requiera el proceso.",
       },
       {
-        question: "¿Ruka usa agentes IA?",
-        answer: "Sí. Dependiendo del proceso, Ruka puede combinar agentes IA con integraciones, reglas determinísticas y revisión humana. El objetivo no es usar IA en cada paso, sino elegir el nivel de autonomía adecuado para que el proceso funcione de forma confiable.",
+        question: "¿Ruka One usa agentes IA?",
+        answer: "Sí, cuando aportan. Un flujo puede combinar agentes IA, integraciones, reglas determinísticas y revisión humana. Elegimos qué usar en cada parte según el trabajo que hay que hacer y el nivel de control que necesita.",
       },
       {
-        question: "¿Qué pasa cuando Ruka encuentra una excepción?",
-        answer: "El flujo puede detenerse, escalar el caso a una persona con el contexto necesario y continuar después de la decisión. La intervención humana forma parte del diseño cuando hace falta.",
+        question: "¿Qué pasa cuando aparece una excepción?",
+        answer: "El flujo puede pedir una decisión humana con el contexto necesario y continuar después. Las excepciones se diseñan como parte del proceso, no quedan fuera de él.",
       },
       {
         question: "¿Esto es desarrollo de software a medida?",
-        answer: "No partimos desde cero para cada proceso. Usamos una base tecnológica común de Ruka y la configuramos para los sistemas, reglas y excepciones de cada operación.",
+        answer: "No partimos desde cero. Con Ruka One usamos la plataforma de Ruka y la adaptamos al proceso, sistemas, reglas y excepciones de tu operación.",
       },
     ],
   },
   finalCta: {
     title: "¿Hay una parte de tu operación que depende demasiado de una persona?",
     statement: "Revisémosla.",
-    copy: "En 30 minutos vemos cómo funciona hoy y si tiene sentido que Ruka se haga cargo de parte del trabajo.",
+    copy: "En 30 minutos entendemos cómo funciona hoy y vemos contigo cómo abordarlo con Ruka One.",
     action: "Revisar mi caso",
     microcopy: "30 min · Sin compromiso",
   },
   contact: {
     eyebrow: "RUKA ONE",
     title: "¿Qué parte de tu operación sigue siendo manual?",
-    lead: "Elige una hora y cuéntanos cómo funciona hoy. Vemos contigo si Ruka puede ayudar.",
+    lead: "Elige una hora y cuéntanos cómo funciona hoy. Vemos contigo cómo llevar ese proceso a operar sobre Ruka.",
     calendarTitle: "Elige una hora.",
-    calendarLead: "Nos cuentas cómo funciona hoy y vemos si Ruka puede ayudar.",
+    calendarLead: "Nos cuentas cómo funciona hoy y vemos juntos cómo llevarlo a operar sobre Ruka.",
     successTitle: "Listo. Nos vemos.",
-    successCopy: "Partimos desde ahí.",
+    successCopy: "Partimos por tu proceso tal como funciona hoy.",
   },
   seo: {
     title: "Automatización de procesos empresariales | Ruka One",
-    description: "Ruka One convierte procesos operativos que cruzan ERP, SII, correo, planillas y sistemas internos en flujos que operan sobre tus reglas y datos actuales.",
+    description: "Con Ruka One llevamos procesos propios de tu empresa a operar sobre tus sistemas, reglas y datos actuales, sin reemplazar el software que ya usas.",
+    serviceDescription: "Ruka One es la forma de trabajar con Ruka sobre procesos específicos de una empresa, llevándolos a operar sobre sus sistemas, reglas y datos actuales.",
     canonical: "https://www.ruka.ai/one",
     image: "https://www.ruka.ai/ruka-one-og.png",
   },
@@ -169,16 +191,19 @@ export type OneLeadData = {
   name: string;
   company: string;
   email: string;
+  whatsapp: string;
 };
 
 export const emptyOneLead: OneLeadData = {
   name: "",
   company: "",
   email: "",
+  whatsapp: "",
 };
 
 export const oneDebugLead: OneLeadData = {
   name: "María Operaciones",
   company: "Empresa de ejemplo",
   email: "maria@empresa.cl",
+  whatsapp: "987654321",
 };

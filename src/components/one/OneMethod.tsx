@@ -62,11 +62,6 @@ export function OneMethod() {
             ))}
           </div>
         </div>
-
-        <div className="mt-12 max-w-5xl">
-          <p className="text-balance text-[32px] font-semibold leading-[1.1] tracking-[-0.03em] text-[#202230] sm:text-[42px]">{oneContent.method.statement}</p>
-          <p className="mt-4 max-w-3xl text-base leading-7 text-[#646b7b]">{oneContent.method.supporting}</p>
-        </div>
       </div>
     </section>
   );

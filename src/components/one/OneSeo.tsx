@@ -17,7 +17,7 @@ const oneSchema = {
       "@id": serviceId,
       name: ONE_NAME,
       url: oneContent.seo.canonical,
-      description: oneContent.seo.description,
+      description: oneContent.seo.serviceDescription,
       provider: { "@id": organizationId },
       serviceType: "Automatización de procesos empresariales",
       areaServed: {
@@ -91,12 +91,12 @@ export function OneSeo() {
       <meta property="og:image:type" content="image/png" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content={`${ONE_NAME} ejecutando un proceso empresarial sobre los sistemas existentes`} />
+      <meta property="og:image:alt" content={`${ONE_NAME}: un proceso empresarial operando sobre los sistemas existentes`} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={oneContent.seo.title} />
       <meta name="twitter:description" content={oneContent.seo.description} />
       <meta name="twitter:image" content={oneContent.seo.image} />
-      <meta name="twitter:image:alt" content={`${ONE_NAME} ejecutando un proceso empresarial sobre los sistemas existentes`} />
+      <meta name="twitter:image:alt" content={`${ONE_NAME}: un proceso empresarial operando sobre los sistemas existentes`} />
       <script type="application/ld+json">{JSON.stringify(oneSchema)}</script>
     </Helmet>
   );

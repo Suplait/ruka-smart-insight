@@ -5,4 +5,4 @@ export type OneFlockSceneProps = {
   paused: boolean;
 };
 
-export type OneContactVisualState = "idle" | "name" | "company" | "email" | "valid";
+export type OneContactVisualState = "idle" | "name" | "company" | "email" | "whatsapp" | "valid";

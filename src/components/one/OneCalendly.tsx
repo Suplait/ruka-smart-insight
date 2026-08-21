@@ -9,7 +9,24 @@ type OneCalendlyProps = {
   onBack?: () => void;
 };
 
-const calendarUrl = import.meta.env.VITE_RUKA_ONE_CALENDLY_URL?.trim();
+const rawCalendarUrl = import.meta.env.VITE_RUKA_ONE_CALENDLY_URL?.trim();
+
+function getCalendarUrl() {
+  if (!rawCalendarUrl) return null;
+  try {
+    const url = new URL(rawCalendarUrl);
+    url.searchParams.set("hide_event_type_details", "1");
+    url.searchParams.set("hide_gdpr_banner", "1");
+    url.searchParams.set("background_color", "ffffff");
+    url.searchParams.set("text_color", "171827");
+    url.searchParams.set("primary_color", "5369eb");
+    return url.toString();
+  } catch {
+    return rawCalendarUrl;
+  }
+}
+
+const calendarUrl = getCalendarUrl();
 
 function DebugCalendar({ lead, onScheduled, onBack }: OneCalendlyProps) {
   return (
@@ -105,10 +122,16 @@ export function OneCalendly(props: OneCalendlyProps) {
       <div className="rounded-2xl border border-[#dfe3eb] bg-white p-8 text-center sm:p-14">
         <CalendarDays className="mx-auto h-9 w-9 text-[#5369eb]" />
         <h3 className="mt-5 text-xl font-semibold text-[#252736]">Calendario pendiente de configuración</h3>
-        <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#6c7283]">Tus datos ya quedaron guardados. Falta configurar el calendario independiente de {ONE_NAME}.</p>
+        <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#6c7283]">Tus datos ya fueron enviados al equipo. Falta configurar el calendario independiente de {ONE_NAME}.</p>
       </div>
     );
   }
 
-  return <div ref={mountRef} id="one-calendly-embed" className="min-h-[720px] w-full overflow-hidden rounded-2xl border border-[#dfe3eb] bg-white" />;
+  return (
+    <div
+      ref={mountRef}
+      id="one-calendly-embed"
+      className="h-[720px] w-full min-w-0 overflow-hidden rounded-2xl border border-[#dfe3eb] bg-white sm:h-[760px] [&_iframe]:!h-full [&_iframe]:!min-h-full [&_iframe]:!w-full"
+    />
+  );
 }

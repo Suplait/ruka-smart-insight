@@ -136,7 +136,7 @@ export function WorkSection({ reduceMotion, primaryPath }: WorkSectionProps) {
               </h3>
             </div>
             <p className="min-w-0 max-w-2xl text-base leading-7 text-[#555d70]">
-              Ruka One convierte procesos específicos en flujos que operan sobre tus sistemas y reglas.
+              Con Ruka One partimos desde un proceso propio de tu empresa y trabajamos contigo para llevarlo a operar sobre tus sistemas y reglas.
             </p>
             <Button
               asChild

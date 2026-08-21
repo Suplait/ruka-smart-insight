@@ -7,7 +7,7 @@ import { OneReviewBanner } from "@/components/one/OneReviewBanner";
 import { OneContactSeo } from "@/components/one/OneSeo";
 import { OneSuccess } from "@/components/one/OneSuccess";
 import type { OneContactVisualState, OneFlockState } from "@/components/one/visual/oneFlockTypes";
-import { createOneLead } from "@/services/oneLeads";
+import { notifyOneCalendlyScheduled, notifyOneLead } from "@/services/oneSlack";
 import {
   emptyOneLead,
   oneContent,
@@ -52,9 +52,10 @@ export default function OneContact() {
   const [stage, setStage] = useState<OneDebugStage>(() => (isDebug ? queryStage : "form"));
   const [lead, setLead] = useState<OneLeadData>(() => (isDebug ? oneDebugLead : emptyOneLead));
   const [visualState, setVisualState] = useState<OneContactVisualState>(() => isDebug ? "valid" : "idle");
-  const [leadId, setLeadId] = useState<string | null>(isDebug ? "debug-one-lead" : null);
   const attributionRef = useRef<OneAttribution>(emptyAttribution);
   const submissionIdRef = useRef<string | null>(null);
+  const slackThreadTsRef = useRef<string | null>(null);
+  const scheduledHandledRef = useRef(false);
   const contactTracked = useRef(false);
 
   useEffect(() => {
@@ -77,37 +78,56 @@ export default function OneContact() {
   const handleContinue = async (nextLead: OneLeadData) => {
     setLead(nextLead);
     if (isDebug) {
-      setLeadId("debug-one-lead");
       goToStage("calendar");
       return;
     }
 
     trackOneEvent("one_form_submit_attempt", { page_path: location.pathname });
     submissionIdRef.current ??= createSubmissionId();
-    const createdLeadId = await createOneLead(
+    const submissionId = submissionIdRef.current;
+    void notifyOneLead(
       nextLead,
       attributionRef.current,
-      "/one",
-      submissionIdRef.current,
-    );
-    setLeadId(createdLeadId);
-    trackOneEvent("one_lead_created", { page_path: location.pathname, lead_id: createdLeadId });
-    trackOneEvent("one_calendly_view", { page_path: location.pathname, lead_id: createdLeadId });
+      location.pathname,
+      submissionId,
+    ).then((threadTs) => {
+      slackThreadTsRef.current = threadTs;
+    }).catch((error) => {
+      console.error("Ruka One lead Slack notification failed", error);
+    });
+    trackOneEvent("one_lead_created", { page_path: location.pathname, lead_id: submissionId });
+    trackOneEvent("one_calendly_view", { page_path: location.pathname, lead_id: submissionId });
     setStage("calendar");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleScheduled = (eventUri?: string) => {
+    if (scheduledHandledRef.current) return;
+    scheduledHandledRef.current = true;
+
     if (!isDebug) {
+      const submissionId = submissionIdRef.current;
       const payload = {
         page_path: location.pathname,
-        ...(leadId ? { lead_id: leadId } : {}),
+        ...(submissionId ? { lead_id: submissionId } : {}),
       };
       trackOneEvent("one_calendly_scheduled", {
         ...payload,
         ...(eventUri ? { calendly_event_uri: eventUri } : {}),
       });
       trackOneEvent("one_success_view", payload);
+
+      if (submissionId) {
+        void notifyOneCalendlyScheduled(
+          lead,
+          attributionRef.current,
+          location.pathname,
+          submissionId,
+          slackThreadTsRef.current,
+        ).catch((error) => {
+          console.error("Ruka One Calendly Slack notification failed", error);
+        });
+      }
     }
     goToStage("success");
     window.scrollTo({ top: 0, behavior: "smooth" });

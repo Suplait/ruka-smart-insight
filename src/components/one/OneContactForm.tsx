@@ -11,6 +11,7 @@ function FieldError({ id, error }: { id: string; error?: string }) {
 }
 
 const inputClass = "mt-2 h-12 rounded-lg border-[#cfd4df] bg-white px-4 text-base text-[#242634] shadow-none placeholder:text-[#747b8b] focus-visible:ring-[#5369eb]";
+const phoneDigits = (value: string) => value.replace(/^\+?56/, "").replace(/\D/g, "").slice(0, 9);
 
 export function OneContactForm({
   value,
@@ -30,7 +31,8 @@ export function OneContactForm({
   useEffect(() => {
     const valid = value.name.trim().length >= 2
       && value.company.trim().length >= 2
-      && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.email.trim());
+      && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.email.trim())
+      && phoneDigits(value.whatsapp).length === 9;
 
     if (valid) onVisualStateChange?.("valid");
     else if (focusedField) onVisualStateChange?.(focusedField);
@@ -38,7 +40,8 @@ export function OneContactForm({
   }, [focusedField, onVisualStateChange, value]);
 
   const update = <K extends keyof OneLeadData>(field: K, fieldValue: OneLeadData[K]) => {
-    onChange((current) => ({ ...current, [field]: fieldValue }));
+    const nextValue = field === "whatsapp" ? phoneDigits(fieldValue) : fieldValue;
+    onChange((current) => ({ ...current, [field]: nextValue }));
     if (errors[field]) setErrors((current) => ({ ...current, [field]: undefined, form: undefined }));
   };
 
@@ -47,6 +50,7 @@ export function OneContactForm({
     if (value.name.trim().length < 2) next.name = "Ingresa tu nombre.";
     if (value.company.trim().length < 2) next.company = "Ingresa el nombre de tu empresa.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.email.trim())) next.email = "Ingresa un email de trabajo válido.";
+    if (phoneDigits(value.whatsapp).length !== 9) next.whatsapp = "Ingresa un WhatsApp válido de 9 dígitos.";
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -60,7 +64,7 @@ export function OneContactForm({
     } catch (error) {
       setErrors((current) => ({
         ...current,
-        form: error instanceof Error ? error.message : "No pudimos guardar tus datos. Inténtalo nuevamente.",
+        form: error instanceof Error ? error.message : "No pudimos enviar tus datos. Inténtalo nuevamente.",
       }));
       setSubmitting(false);
     }
@@ -84,6 +88,16 @@ export function OneContactForm({
           <Input id="one-email" type="email" autoComplete="email" value={value.email} onFocus={() => setFocusedField("email")} onBlur={() => setFocusedField((current) => current === "email" ? null : current)} onChange={(event) => update("email", event.target.value)} maxLength={254} placeholder="tu@empresa.com" aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "one-email-error" : undefined} className={inputClass} />
           <FieldError id="one-email-error" error={errors.email} />
         </div>
+        <div>
+          <label htmlFor="one-whatsapp" className="text-sm font-semibold text-[#303241]">WhatsApp <span className="text-[#5369eb]">*</span></label>
+          <div className="relative">
+            <Input id="one-whatsapp" type="tel" inputMode="numeric" autoComplete="tel-national" value={value.whatsapp} onFocus={() => setFocusedField("whatsapp")} onBlur={() => setFocusedField((current) => current === "whatsapp" ? null : current)} onChange={(event) => update("whatsapp", event.target.value)} maxLength={9} placeholder="9 1234 5678" aria-invalid={Boolean(errors.whatsapp)} aria-describedby={errors.whatsapp ? "one-whatsapp-error" : undefined} className={`${inputClass} pl-[5.15rem]`} />
+            <div className="pointer-events-none absolute left-4 top-1/2 mt-1 -translate-y-1/2 border-r border-[#d8dde6] pr-3 text-sm font-medium text-[#555c6d]" aria-hidden="true">
+              🇨🇱 +56
+            </div>
+          </div>
+          <FieldError id="one-whatsapp-error" error={errors.whatsapp} />
+        </div>
       </div>
 
       {errors.form ? <div role="alert" className="mt-5 rounded-lg border border-[#e7c9cf] bg-[#fff7f8] p-4 text-sm font-medium text-[#913548]">{errors.form}</div> : null}
@@ -93,7 +107,7 @@ export function OneContactForm({
         disabled={submitting}
         className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#5369eb] px-6 text-sm font-semibold text-white transition-[background-color,transform] duration-150 hover:bg-[#465bda] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5369eb] focus-visible:ring-offset-4 disabled:cursor-not-allowed disabled:opacity-65 sm:w-auto"
       >
-        {submitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Guardando...</> : <>Ver horarios <ArrowRight className="h-4 w-4" /></>}
+        {submitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Abriendo horarios...</> : <>Ver horarios <ArrowRight className="h-4 w-4" /></>}
       </button>
     </form>
   );
