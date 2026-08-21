@@ -124,6 +124,7 @@ export default function OneContact() {
           location.pathname,
           submissionId,
           slackThreadTsRef.current,
+          eventUri,
         ).catch((error) => {
           console.error("Ruka One Calendly Slack notification failed", error);
         });
