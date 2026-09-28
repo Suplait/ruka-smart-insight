@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import {
   ArrowDown,
@@ -196,7 +196,6 @@ const plans = [
 const faqItems = landingV2Seo.faq;
 
 export default function LandingV2() {
-  const navigate = useNavigate();
   const location = useLocation();
   const reduceMotion = useReducedMotion();
 
@@ -223,28 +222,22 @@ export default function LandingV2() {
         showLogin={false}
       />
       <main>
-        <Hero reduceMotion={reduceMotion} navigate={navigate} />
+        <Hero reduceMotion={reduceMotion} />
         <SocialProofSection />
         <OperationalGapSection />
         <WorkSection reduceMotion={reduceMotion} primaryPath="/one" />
-        <ProductDemoSection reduceMotion={reduceMotion} navigate={navigate} />
+        <ProductDemoSection reduceMotion={reduceMotion} />
         <IntegrationsSection />
-        <PricingSection navigate={navigate} />
+        <PricingSection />
         <SupportersSection />
-        <FAQAndCTASection navigate={navigate} />
+        <FAQAndCTASection />
       </main>
       <Footer />
     </div>
   );
 }
 
-function Hero({
-  reduceMotion,
-  navigate,
-}: {
-  reduceMotion: boolean | null;
-  navigate: (path: string) => void;
-}) {
+function Hero({ reduceMotion }: { reduceMotion: boolean | null }) {
   return (
     <section
       className="relative overflow-hidden bg-[#fbfcff] px-5 pb-14 pt-28 sm:px-8 sm:pb-20 md:pt-32 lg:min-h-[100dvh] lg:pb-16"
@@ -285,12 +278,11 @@ function Hero({
           transition={{ duration: 0.46, delay: 0.12, ease: easeOut }}
         >
           <motion.div className="flex w-full flex-col items-center gap-2 sm:w-auto" whileHover={reduceMotion ? undefined : { y: -2 }} whileTap={reduceMotion ? undefined : { scale: 0.98 }}>
-            <Button
-              className="h-12 w-full rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none transition-transform duration-150 ease-out hover:bg-primary/90 active:scale-[0.97] sm:w-auto sm:px-6 sm:text-base"
-              onClick={() => navigate("/register")}
-            >
-              {CTA_LABEL}
-              <ArrowRight className="ml-2 h-4 w-4" />
+            <Button asChild className="h-12 w-full rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none transition-transform duration-150 ease-out hover:bg-primary/90 active:scale-[0.97] sm:w-auto sm:px-6 sm:text-base">
+              <Link to="/register">
+                {CTA_LABEL}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
             <p className="text-xs font-medium text-[#6a7184]">Cuéntanos tu proceso · Sin compromiso</p>
           </motion.div>
@@ -510,13 +502,7 @@ function CustomerLogo({ logo, decorative = false }: { logo: (typeof customerLogo
   );
 }
 
-function ProductDemoSection({
-  reduceMotion,
-  navigate,
-}: {
-  reduceMotion: boolean | null;
-  navigate: (path: string) => void;
-}) {
+function ProductDemoSection({ reduceMotion }: { reduceMotion: boolean | null }) {
   const [isDemoOpen, setIsDemoOpen] = useState(false);
 
   return (
@@ -600,13 +586,11 @@ function ProductDemoSection({
             <h3 className="text-lg font-semibold tracking-[-0.015em] text-[#171827]">¿Te imaginas Ruka sobre tu propia operación?</h3>
             <p className="mt-1 text-sm leading-6 text-[#555b6e]">Cuéntanos qué proceso manual quieres dejar de hacer.</p>
           </div>
-          <Button
-            variant="ghost"
-            className="group h-11 w-fit flex-none justify-start rounded-full px-0 font-semibold text-primary hover:bg-transparent hover:text-primary/80"
-            onClick={() => navigate("/register")}
-          >
-            {CTA_LABEL}
-            <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+          <Button asChild variant="ghost" className="group h-11 w-fit flex-none justify-start rounded-full px-0 font-semibold text-primary hover:bg-transparent hover:text-primary/80">
+            <Link to="/register">
+              {CTA_LABEL}
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+            </Link>
           </Button>
         </Reveal>
       </div>
@@ -638,6 +622,10 @@ function IntegrationsSection() {
         <motion.p className="mt-7 text-sm font-medium text-[#555b6e]" initial={reduceMotion ? false : { opacity: 0.75, x: -8 }} whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.42, ease: easeOut }}>
           <span className="font-semibold text-[#171827]">¿No aparece tu sistema?</span> Probablemente también podamos conectarlo.
         </motion.p>
+        <Link to="/integraciones" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+          Ver integraciones
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
       </div>
     </section>
   );
@@ -701,7 +689,7 @@ function EcosystemRail({ group, reverse }: { group: EcosystemGroup; reverse: boo
   );
 }
 
-function PricingSection({ navigate }: { navigate: (path: string) => void }) {
+function PricingSection() {
   const reduceMotion = useReducedMotion();
 
   return (
@@ -714,6 +702,10 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
           <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555b6e]">
             Todos los planes tienen las mismas capacidades. Lo que cambia es cuánto procesa Ruka cada mes.
           </p>
+          <Link to="/precios" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+            Ver detalles de precios
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </Reveal>
 
         <div className="mt-12 grid gap-4 lg:grid-cols-3 lg:items-stretch">
@@ -778,12 +770,11 @@ function PricingSection({ navigate }: { navigate: (path: string) => void }) {
               </p>
             </div>
             <div className="flex flex-col items-start lg:items-end">
-              <Button
-                className="group h-12 w-full rounded-full bg-white px-6 font-semibold text-[#171827] shadow-none transition-transform duration-150 hover:-translate-y-0.5 hover:bg-[#f1f3ff] active:scale-[0.98] sm:w-fit"
-                onClick={() => navigate("/register")}
-              >
-                Cuéntanos tu proceso
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+              <Button asChild className="group h-12 w-full rounded-full bg-white px-6 font-semibold text-[#171827] shadow-none transition-transform duration-150 hover:-translate-y-0.5 hover:bg-[#f1f3ff] active:scale-[0.98] sm:w-fit">
+                <Link to="/register">
+                  Cuéntanos tu proceso
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                </Link>
               </Button>
             </div>
           </div>
@@ -853,7 +844,7 @@ function SupportersSection() {
   );
 }
 
-function FAQAndCTASection({ navigate }: { navigate: (path: string) => void }) {
+function FAQAndCTASection() {
   const reduceMotion = useReducedMotion();
 
   return (
@@ -891,12 +882,11 @@ function FAQAndCTASection({ navigate }: { navigate: (path: string) => void }) {
               <p className="mt-5 max-w-2xl text-lg leading-8 text-[#555b6e]">Muéstranos el proceso. Te mostramos cómo lo operaría Ruka.</p>
             </div>
             <div className="flex flex-col items-start gap-3 lg:items-end">
-              <Button
-              className="group h-12 w-full rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none transition-transform duration-150 hover:-translate-y-0.5 hover:bg-primary/90 active:scale-[0.97] sm:w-auto sm:px-6 sm:text-base"
-                onClick={() => navigate("/register")}
-              >
-                {CTA_LABEL}
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+              <Button asChild className="group h-12 w-full rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-none transition-transform duration-150 hover:-translate-y-0.5 hover:bg-primary/90 active:scale-[0.97] sm:w-auto sm:px-6 sm:text-base">
+                <Link to="/register">
+                  {CTA_LABEL}
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </Link>
               </Button>
               <p className="flex items-center gap-2 text-sm font-semibold text-[#555b6e]">
                 <UsersRound className="h-4 w-4 text-primary" />

@@ -14,8 +14,12 @@ import Hoteles from './pages/Hoteles';
 import Retail from './pages/Retail';
 import ProductoEjemplo from './pages/ProductoEjemplo';
 import CuentasPorPagar from './pages/CuentasPorPagar';
+import ConciliacionAutomatica from './pages/ConciliacionAutomatica';
+import Integraciones from './pages/Integraciones';
 import Stock from './pages/Stock';
 import PanelControl from './pages/PanelControl';
+import Precios from './pages/Precios';
+import RegistroDeCompras from './pages/RegistroDeCompras';
 import Register from './pages/Register';
 import AboutUs from './pages/AboutUs';
 import TermsAndConditions from './pages/TermsAndConditions';
@@ -68,7 +72,11 @@ function App() {
             <Route path="/productos/ejemplo" element={<ProductoEjemplo />} />
             <Route path="/productos/panel-control" element={<PanelControl />} />
             <Route path="/productos/cuentas-por-pagar" element={<CuentasPorPagar />} />
+            <Route path="/productos/registro-de-compras" element={<RegistroDeCompras />} />
+            <Route path="/productos/conciliacion-automatica" element={<ConciliacionAutomatica />} />
             <Route path="/productos/stock" element={<Stock />} />
+            <Route path="/precios" element={<Precios />} />
+            <Route path="/integraciones" element={<Integraciones />} />
             <Route path="/register" element={<Register />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/terms" element={<TermsAndConditions />} />

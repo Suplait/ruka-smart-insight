@@ -7,7 +7,7 @@ import { CheckCircle2, Sparkles, Users, Zap } from "lucide-react";
 const sellingPoints = [
   "Digitación, clasificación y alertas en tiempo real",
   "Control de margen diario con insights accionables",
-  "Onboarding asistido y soporte 24/7 por whatsapp",
+  "Onboarding asistido y acompañamiento de activación",
 ];
 
 const comparison = [
@@ -18,7 +18,7 @@ const comparison = [
   },
   {
     label: "Ruka.ai haciendo todo esto",
-    value: "Desde $40.990 CLP / mes",
+    value: "Desde $99.990 CLP / mes, IVA incluido",
     icon: Zap,
   },
 ];
@@ -138,16 +138,16 @@ export default function Pricing() {
                   Planes desde
                 </p>
                 <h3 className="text-5xl lg:text-6xl font-light text-gray-900 tracking-tight">
-                  $40.990
+                  $99.990
                   <span className="text-lg text-gray-500 font-normal"> CLP / mes</span>
                 </h3>
                 <p className="text-sm text-primary font-medium">
-                  Precio de lanzamiento. Cupos limitados.
+                  IVA incluido · según volumen de facturas de compra
                 </p>
               </div>
 
               <div className="space-y-3">
-                {["Implementación guiada y sin fricciones", "Alertas y reportes ilimitados", "Garantía total de 30 días"].map((item) => (
+                {["Procesamiento de documentos", "Integraciones, reglas y homologación", "Descuento por pago anticipado"].map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-primary" />
                     <span className="text-gray-700 font-light">{item}</span>

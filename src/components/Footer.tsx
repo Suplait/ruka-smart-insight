@@ -2,10 +2,13 @@ import { Instagram, Linkedin, MapPin, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const productLinks = [
-  { label: "Ruka", to: "/" },
-  { label: "Demo", to: "/#demo" },
-  { label: "Integraciones", to: "/#integraciones" },
-  { label: "Precios", to: "/#precios" },
+  { label: "Registro de compras", to: "/productos/registro-de-compras" },
+  { label: "Conciliación automática", to: "/productos/conciliacion-automatica" },
+  { label: "Cuentas por pagar", to: "/productos/cuentas-por-pagar" },
+  { label: "Panel de control", to: "/productos/panel-control" },
+  { label: "Stock", to: "/productos/stock" },
+  { label: "Integraciones", to: "/integraciones" },
+  { label: "Precios", to: "/precios" },
 ] as const;
 
 const oneLinks = [

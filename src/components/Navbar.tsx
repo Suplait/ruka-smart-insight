@@ -16,9 +16,13 @@ import SubdomainModal from "./SubdomainModal";
 
 const productLinks = [
   { label: "Qué hace Ruka", href: "/#trabajo" },
-  { label: "Demo", href: "/#demo" },
-  { label: "Integraciones", href: "/#integraciones" },
-  { label: "Precios", href: "/#precios" },
+  { label: "Registro de compras", href: "/productos/registro-de-compras" },
+  { label: "Conciliación automática", href: "/productos/conciliacion-automatica" },
+  { label: "Cuentas por pagar", href: "/productos/cuentas-por-pagar" },
+  { label: "Panel de control", href: "/productos/panel-control" },
+  { label: "Stock", href: "/productos/stock" },
+  { label: "Integraciones", href: "/integraciones" },
+  { label: "Precios", href: "/precios" },
 ] as const;
 
 const industryLinks = [
@@ -103,13 +107,19 @@ export default function Navbar({
                   Iniciar sesión
                 </Button>
               ) : null}
-              <Button
-                size="sm"
-                className="h-10 rounded-full bg-primary px-5 text-sm font-medium hover:bg-primary/90 active:scale-[0.98] xl:px-6"
-                onClick={runPrimaryAction}
-              >
-                {primaryAction.label}
-              </Button>
+              {primaryAction.onClick ? (
+                <Button
+                  size="sm"
+                  className="h-10 rounded-full bg-primary px-5 text-sm font-medium hover:bg-primary/90 active:scale-[0.98] xl:px-6"
+                  onClick={runPrimaryAction}
+                >
+                  {primaryAction.label}
+                </Button>
+              ) : (
+                <Button asChild size="sm" className="h-10 rounded-full bg-primary px-5 text-sm font-medium hover:bg-primary/90 active:scale-[0.98] xl:px-6">
+                  <Link to={primaryAction.path}>{primaryAction.label}</Link>
+                </Button>
+              )}
             </div>
 
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -147,12 +157,20 @@ export default function Navbar({
                         Iniciar sesión <LogIn className="h-4 w-4" />
                       </Button>
                     ) : null}
-                    <Button
-                      className="h-11 w-full justify-center gap-2 rounded-full bg-primary px-4 text-sm font-medium hover:bg-primary/90 active:scale-[0.98]"
-                      onClick={runPrimaryAction}
-                    >
-                      {primaryAction.label} <ArrowRight className="h-4 w-4" />
-                    </Button>
+                    {primaryAction.onClick ? (
+                      <Button
+                        className="h-11 w-full justify-center gap-2 rounded-full bg-primary px-4 text-sm font-medium hover:bg-primary/90 active:scale-[0.98]"
+                        onClick={runPrimaryAction}
+                      >
+                        {primaryAction.label} <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    ) : (
+                      <Button asChild className="h-11 w-full justify-center gap-2 rounded-full bg-primary px-4 text-sm font-medium hover:bg-primary/90 active:scale-[0.98]">
+                        <Link to={primaryAction.path} onClick={() => setIsOpen(false)}>
+                          {primaryAction.label} <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                    )}
                   </div>
                 </div>
               </SheetContent>

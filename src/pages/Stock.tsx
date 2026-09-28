@@ -79,11 +79,6 @@ export default function Stock() {
     "@type": "SoftwareApplication",
     "name": "Ruka - Gestión de Stock e Inventario",
     "applicationCategory": "BusinessApplication",
-    "offers": {
-      "@type": "Offer",
-      "price": "99990",
-      "priceCurrency": "CLP"
-    },
     "description": "Automatiza la gestión de tu inventario. Ruka registra automáticamente cada compra, gestiona múltiples bodegas, traspasos y te permite realizar inventarios periódicos sin complicaciones.",
     "featureList": [
       "Ingreso automático de stock desde compras",
@@ -99,7 +94,7 @@ export default function Stock() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
         <title>Gestión de Stock e Inventario Automatizada - Ahorra 15+ horas/semana | Ruka</title>
-        <meta name="description" content="Automatiza tu gestión de inventario con Ruka. Ingreso automático desde compras, múltiples bodegas, traspasos con aprobaciones y control de roles. Desde $99.990/mes IVA incluido." />
+        <meta name="description" content="Automatiza tu gestión de inventario con Ruka. Ingreso automático desde compras, múltiples bodegas, traspasos con aprobaciones y control de roles." />
         
         {/* Open Graph */}
         <meta property="og:title" content="Gestión de Stock e Inventario Automatizada | Ruka" />
@@ -311,7 +306,7 @@ export default function Stock() {
               Inversión Simple y Transparente
             </h2>
             <p className="text-xl text-gray-600">
-              Un solo plan, todo incluido
+              Gestión de Stock sobre tu plan de Ruka
             </p>
           </div>
 
@@ -320,16 +315,10 @@ export default function Stock() {
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mx-auto mb-4">
                 <Sparkles className="w-8 h-8 text-primary" />
               </div>
-              <CardTitle className="text-3xl mb-2">Plan Gestión de Stock</CardTitle>
-              <CardDescription className="text-lg">Automatiza todo tu inventario</CardDescription>
+              <CardTitle className="text-3xl mb-2">Se activa sobre tu plan de Ruka</CardTitle>
+              <CardDescription className="text-lg">El alcance se define según tu operación</CardDescription>
               <div className="mt-6">
-                <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-6xl font-bold text-primary">Desde $99.990</span>
-                  <div className="text-left">
-                    <div className="text-gray-600 text-lg">/mes</div>
-                    <div className="text-sm text-muted-foreground">IVA incluido</div>
-                  </div>
-                </div>
+                <p className="mx-auto max-w-xl text-lg leading-8 text-gray-600">El plan cubre el volumen de facturas que procesa Ruka. La configuración y el alcance de Stock se definen contigo antes de firmar.</p>
               </div>
             </CardHeader>
             <CardContent className="pb-12">
@@ -349,13 +338,13 @@ export default function Stock() {
                 onClick={() => {
                   pushToDataLayer('stock_cta_click', {
                     cta_location: 'pricing',
-                    cta_text: 'Comenzar Ahora',
+                    cta_text: 'Ver planes',
                     page_path: '/productos/stock'
                   });
-                  document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+                  window.location.href = '/precios';
                 }}
               >
-                Comenzar Ahora <ArrowRight className="ml-2" />
+                Ver planes <ArrowRight className="ml-2" />
               </Button>
             </CardContent>
           </Card>

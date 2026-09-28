@@ -65,11 +65,39 @@ const routes = [
     schema: ["SoftwareApplication"],
   },
   {
+    path: "/productos/registro-de-compras",
+    title: "Automatiza el registro de compras | Ruka",
+    canonical: `${siteOrigin}/productos/registro-de-compras`,
+    h1: "Automatiza el registro de compras sin cambiar tus sistemas.",
+    schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"],
+  },
+  {
+    path: "/productos/conciliacion-automatica",
+    title: "Conciliación automática de facturas, órdenes y pagos | Ruka",
+    canonical: `${siteOrigin}/productos/conciliacion-automatica`,
+    h1: "Cruza facturas, órdenes y pagos sin revisar todo a mano.",
+    schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"],
+  },
+  {
     path: "/productos/stock",
     title: "Gestión de Stock e Inventario Automatizada - Ahorra 15+ horas/semana | Ruka",
     canonical: `${siteOrigin}/productos/stock`,
     h1: "Gestión de Stock e Inventario Automatizada",
     schema: ["SoftwareApplication"],
+  },
+  {
+    path: "/precios",
+    title: "Precios de Ruka | Planes por volumen de documentos",
+    canonical: `${siteOrigin}/precios`,
+    h1: "Planes de Ruka según el volumen de documentos.",
+    schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"],
+  },
+  {
+    path: "/integraciones",
+    title: "Integraciones de Ruka | ERP, POS, SII y más",
+    canonical: `${siteOrigin}/integraciones`,
+    h1: "Ruka trabaja donde ya vive tu operación.",
+    schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"],
   },
   {
     path: "/privacy",
@@ -248,9 +276,50 @@ for (const question of faqSchema?.mainEntity ?? []) {
 }
 assert(homeHtml.includes('href="/one"'), "/: falta enlace HTML crawleable hacia /one");
 assert(homeHtml.includes("Ver Ruka One"), "/: falta copy contextual del enlace hacia Ruka One");
+for (const href of [
+  "/productos/registro-de-compras",
+  "/productos/conciliacion-automatica",
+  "/productos/cuentas-por-pagar",
+  "/productos/panel-control",
+  "/productos/stock",
+  "/integraciones",
+  "/precios",
+  "/register",
+]) {
+  assert(homeHtml.includes(`href="${href}"`), `/: falta enlace HTML crawleable hacia ${href}`);
+}
 assert(
   homeHtml.includes("Con Ruka One partimos desde un proceso propio de tu empresa y trabajamos contigo para llevarlo a operar sobre tus sistemas y reglas."),
   "/: falta el posicionamiento contextual actualizado de Ruka One",
+);
+
+const purchaseRegistrationHtml = await readFile(routeFile("/productos/registro-de-compras"), "utf8");
+for (const requiredText of [
+  "Producto en acción",
+  "De factura recibida a pago protegido.",
+  "Las compras llegan a una sola bandeja.",
+  "Recepción pendiente",
+  "Decisión de recepción",
+  "Evidencia y cantidades",
+  "Pago protegido",
+]) {
+  assert(
+    purchaseRegistrationHtml.includes(requiredText),
+    `/productos/registro-de-compras: falta contenido del recorrido de producto (${requiredText})`,
+  );
+}
+for (const imagePath of [
+  "/assets/registro-compras/facturas-en-bandeja.png",
+  "/assets/registro-compras/factura-pendiente-recepcion.png",
+  "/assets/registro-compras/seleccion-recepcion.png",
+  "/assets/registro-compras/registro-diferencias.png",
+  "/assets/registro-compras/bloqueo-pago.png",
+]) {
+  await access(path.join(projectRoot, "dist", imagePath.slice(1)));
+}
+assert(
+  purchaseRegistrationHtml.includes('src="/assets/registro-compras/facturas-en-bandeja.png"'),
+  "/productos/registro-de-compras: la primera captura debe estar en el HTML inicial",
 );
 
 const oneHtml = await readFile(routeFile("/one"), "utf8");
@@ -378,12 +447,31 @@ assert(sitemap.includes(`<loc>${siteOrigin}/one</loc>`), "sitemap.xml: falta la 
 assert(!sitemap.includes(`${siteOrigin}/works`), "sitemap.xml: todavía contiene la ruta legacy /works");
 assert(!sitemap.includes(`${siteOrigin}/one/contacto`), "sitemap.xml: incluye el funnel noindex /one/contacto");
 assert(sitemap.includes("<lastmod>2026-08-20</lastmod>"), "sitemap.xml: /one no tiene lastmod de esta iteración");
+for (const routePath of [
+  "/productos/registro-de-compras",
+  "/productos/conciliacion-automatica",
+  "/precios",
+  "/integraciones",
+]) {
+  assert(
+    sitemap.includes(`<loc>${siteOrigin}${routePath}</loc>\n    <lastmod>2026-09-07</lastmod>`),
+    `sitemap.xml: ${routePath} no tiene lastmod confiable`,
+  );
+}
 
 const llms = await readFile(path.join(projectRoot, "dist", "llms.txt"), "utf8");
 assert(llms.startsWith("# Ruka.ai"), "llms.txt: encabezado canónico ausente");
 assert(llms.includes("## Páginas principales"), "llms.txt: falta guía de páginas principales");
 assert(llms.includes("## Citas y atribución"), "llms.txt: falta guía de citas y atribución");
 assert(llms.includes(`[Ruka One](${siteOrigin}/one)`), "llms.txt: falta entrada canónica de Ruka One");
+for (const routePath of [
+  "/productos/registro-de-compras",
+  "/productos/conciliacion-automatica",
+  "/precios",
+  "/integraciones",
+]) {
+  assert(llms.includes(`${siteOrigin}${routePath}`), `llms.txt: falta guía de ${routePath}`);
+}
 assert(llms.includes("la forma de trabajar con Ruka cuando el punto de partida es un proceso específico de una empresa"), "llms.txt: la entrada de Ruka One no explica su punto de partida");
 assert(!llms.includes("Ruka Works"), "llms.txt: todavía contiene la marca Ruka Works");
 assert(!llms.toLowerCase().includes("high-ticket"), "llms.txt: contiene lenguaje interno high-ticket");
@@ -452,6 +540,14 @@ const appSource = await readFile(path.join(projectRoot, "src", "App.tsx"), "utf8
 assert(appSource.includes('path="/works/*"'), "App.tsx: falta compatibilidad client-side para /works/*");
 assert(appSource.includes("search: location.search"), "App.tsx: redirect legacy no preserva query string");
 assert(appSource.includes("hash: location.hash"), "App.tsx: redirect legacy no preserva hash");
+for (const routePath of [
+  "/productos/registro-de-compras",
+  "/productos/conciliacion-automatica",
+  "/precios",
+  "/integraciones",
+]) {
+  assert(appSource.includes(`path="${routePath}"`), `App.tsx: falta ruta ${routePath}`);
+}
 
 if (failures.length) {
   console.error(`SEO/AEO validation failed: ${failures.length} of ${assertions} assertions failed.`);

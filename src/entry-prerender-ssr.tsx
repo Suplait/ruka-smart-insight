@@ -4,14 +4,18 @@ import { Helmet } from "react-helmet";
 import { StaticRouter } from "react-router-dom/server";
 import AboutUs from "@/pages/AboutUs";
 import CuentasPorPagar from "@/pages/CuentasPorPagar";
+import ConciliacionAutomatica from "@/pages/ConciliacionAutomatica";
 import Hoteles from "@/pages/Hoteles";
+import Integraciones from "@/pages/Integraciones";
 import LandingV2 from "@/pages/LandingV2";
 import PanelControl from "@/pages/PanelControl";
+import Precios from "@/pages/Precios";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import ProductoEjemplo from "@/pages/ProductoEjemplo";
 import Register from "@/pages/Register";
 import Restaurantes from "@/pages/Restaurantes";
 import Retail from "@/pages/Retail";
+import RegistroDeCompras from "@/pages/RegistroDeCompras";
 import Stock from "@/pages/Stock";
 import TermsAndConditions from "@/pages/TermsAndConditions";
 import One from "@/pages/One";
@@ -27,7 +31,11 @@ const pages: Record<string, ComponentType> = {
   "/productos/ejemplo": ProductoEjemplo,
   "/productos/panel-control": PanelControl,
   "/productos/cuentas-por-pagar": CuentasPorPagar,
+  "/productos/registro-de-compras": RegistroDeCompras,
+  "/productos/conciliacion-automatica": ConciliacionAutomatica,
   "/productos/stock": Stock,
+  "/precios": Precios,
+  "/integraciones": Integraciones,
   "/privacy": PrivacyPolicy,
   "/terms": TermsAndConditions,
   "/one": One,
