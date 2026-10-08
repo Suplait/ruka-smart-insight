@@ -1,7 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-
-const defaultApiUrl = "https://rmxzryueysmzksmvpwpv.supabase.co/functions/v1/organic-growth-api";
+import { localEngineRequest } from "./local-engine.mjs";
 
 export const workspace = path.resolve(process.cwd(), ".organic-growth");
 
@@ -63,14 +62,5 @@ export function compare(current, previous) {
 }
 
 export async function engineRequest(action, body = {}) {
-  const endpoint = process.env.ORGANIC_GROWTH_API_URL || defaultApiUrl;
-  const secret = process.env.ORGANIC_GROWTH_SHARED_SECRET || (await readFile(path.join(workspace, "shared-secret"), "utf8")).trim();
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "x-organic-growth-secret": secret },
-    body: JSON.stringify({ action, ...body }),
-  });
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(`Organic Growth API ${action} failed (${response.status}): ${payload.error || "unknown"}`);
-  return payload;
+  return localEngineRequest(action, body);
 }

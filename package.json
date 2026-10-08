@@ -17,7 +17,11 @@
     "organic:register": "node scripts/organic-growth/register-cycle.mjs",
     "organic:guard": "node scripts/organic-growth/safety-guard.mjs",
     "organic:lint": "node scripts/organic-growth/lint-changed.mjs",
-    "organic:verify": "node scripts/organic-growth/verify-production.mjs"
+    "organic:verify": "node scripts/organic-growth/verify-production.mjs",
+    "organic:migrate-local": "node scripts/organic-growth/migrate-local-state.mjs",
+    "organic:integrity": "node scripts/organic-growth/job-control.mjs integrity",
+    "organic:test": "node --test scripts/organic-growth/local-engine.test.mjs",
+    "organic:backup": "node scripts/organic-growth/job-control.mjs backup"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

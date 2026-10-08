@@ -108,7 +108,7 @@ const snapshot = {
 };
 
 const file = await writePrivateJson("gsc-snapshot.json", snapshot);
-if (process.env.ORGANIC_GROWTH_RUN_ID && process.env.ORGANIC_GROWTH_API_URL) {
+if (process.env.ORGANIC_GROWTH_RUN_ID) {
   await engineRequest("snapshot", { runId: process.env.ORGANIC_GROWTH_RUN_ID, dataThroughDate, property: siteUrl, payload: snapshot });
 }
 console.log(JSON.stringify({ file, dataThroughDate, windows: Object.fromEntries(Object.entries(windows).map(([key, value]) => [key, value.metrics])) }, null, 2));
