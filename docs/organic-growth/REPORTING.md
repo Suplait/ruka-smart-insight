@@ -2,6 +2,8 @@
 
 Reports run independently on the 1st and 15th using `America/Santiago`, and are delivered to Slack channel ID `C073N8S9TB4` (currently named `#ruka-adquisición`).
 
+The report is first written to SQLite with `pending` delivery status. Codex then sends `.organic-growth/report-delivery.json` through the connected Slack tool and records the resulting message reference locally. A Slack failure never loses the generated report and can be retried without rebuilding Search Console data.
+
 ## Definitions
 
 - Search Console comparisons use the latest finalized data date, not the automation run date.

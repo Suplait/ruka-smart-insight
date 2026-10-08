@@ -35,6 +35,28 @@ if (command === "claim") {
   });
 } else if (command === "status") {
   console.log(JSON.stringify(await engineRequest("status"), null, 2));
+} else if (command === "report-delivered") {
+  console.log(JSON.stringify(await engineRequest("report_delivery", {
+    reportId: process.env.ORGANIC_GROWTH_REPORT_ID,
+    status: process.env.ORGANIC_GROWTH_DELIVERY_STATUS || "sent",
+    reference: process.env.ORGANIC_GROWTH_DELIVERY_REFERENCE || null,
+  }), null, 2));
+} else if (command === "incident") {
+  console.log(JSON.stringify(await engineRequest("incident", {
+    severity: process.env.ORGANIC_GROWTH_INCIDENT_SEVERITY || "warning",
+    title: process.env.ORGANIC_GROWTH_INCIDENT_TITLE || "Incidente del Organic Growth Engine",
+    details: process.env.ORGANIC_GROWTH_INCIDENT_DETAILS || "Sin detalles",
+  }), null, 2));
+} else if (command === "incident-delivered") {
+  console.log(JSON.stringify(await engineRequest("incident_delivery", {
+    incidentId: process.env.ORGANIC_GROWTH_INCIDENT_ID,
+    status: process.env.ORGANIC_GROWTH_DELIVERY_STATUS || "sent",
+    reference: process.env.ORGANIC_GROWTH_DELIVERY_REFERENCE || null,
+  }), null, 2));
+} else if (command === "integrity") {
+  console.log(JSON.stringify(await engineRequest("integrity"), null, 2));
+} else if (command === "backup") {
+  console.log(JSON.stringify(await engineRequest("backup"), null, 2));
 } else {
   throw new Error(`Unknown job-control command: ${command}`);
 }

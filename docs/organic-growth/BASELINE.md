@@ -25,4 +25,4 @@ Search Console's domain property includes tenant subdomains. Query-level data om
 - The sitemap existed publicly but had never been submitted in Search Console before this goal.
 - At baseline, Google reported seven recent public pages as unknown: five product pages, `/integraciones` and `/about`.
 
-Detailed snapshots, query data and product intelligence are stored privately in Supabase rather than committed to this public repository.
+Detailed snapshots, query data and product intelligence are stored privately in the local SQLite engine database rather than committed to this public repository.

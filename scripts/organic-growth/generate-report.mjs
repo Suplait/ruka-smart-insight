@@ -46,4 +46,29 @@ const result = await engineRequest("report", {
   periodEnd: snapshot.dataThroughDate,
   payload,
 });
-console.log(JSON.stringify(result, null, 2));
+const slackMessage = [
+  "*RUKA ORGANIC GROWTH | Reporte quincenal*",
+  `:mag: Datos finalizados hasta *${payload.dataThroughDate}* · Search Console`,
+  "",
+  "*Resumen ejecutivo*",
+  ...payload.executiveSummary.map((item) => `• ${item}`),
+  "",
+  "*Performance orgánica*",
+  `• 15 días · clics ${percentChange(payload.performance.days15.metrics.clicks)} · impresiones ${percentChange(payload.performance.days15.metrics.impressions)}`,
+  `• 30 días · clics ${percentChange(payload.performance.days30.metrics.clicks)} · impresiones ${percentChange(payload.performance.days30.metrics.impressions)}`,
+  "",
+  "*Cambios implementados*",
+  ...(payload.changes.length ? payload.changes.map((item) => `• ${item}`) : ["• Sin cambios desplegados en el período."]),
+  "",
+  `*Pipeline SEO*\n${payload.pipelineSummary}`,
+  ...(payload.nextBets.length ? ["", "*Próximas apuestas*", ...payload.nextBets.map((item) => `• ${item}`)] : []),
+  ...(payload.blockers.length ? ["", "*Decisiones requeridas*", ...payload.blockers.map((item) => `• ${item}`)] : []),
+  "",
+  "_Las variaciones describen movimiento observado; no atribuyen causalidad sin evidencia suficiente._",
+].join("\n");
+const slackFile = await writePrivateJson("report-delivery.json", {
+  reportId: result.reportId,
+  channelId: "C073N8S9TB4",
+  message: slackMessage,
+});
+console.log(JSON.stringify({ ...result, slackFile }, null, 2));
