@@ -8,6 +8,7 @@
 - A successful execution advances the next due time by five real days. Failures retry after six hours. Expired two-hour leases recover automatically.
 - Reporting has an independent lease and next-due timestamp; a Job A failure cannot block Job B.
 - **Codex Action** edits only a constrained set of public marketing/SEO files. `npm run organic:guard` blocks protected or unrelated paths.
+- Third-party workflow actions are pinned to reviewed immutable commit SHAs rather than mutable tags.
 - Every claimed cycle receives the persistent opportunity/experiment context and must emit a private structured manifest. After production verification, the workflow records the deployed experiment and any mature learnings back into Supabase.
 - Vercel remains the production deploy mechanism after an approved workflow PR merges to `main`.
 - The full repository lint has pre-existing errors outside this system's scope. Automation therefore runs `organic:lint`, which lints every JavaScript/TypeScript file changed in its branch, while build and SEO validation still cover the complete application.

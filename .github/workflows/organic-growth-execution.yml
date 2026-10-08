@@ -35,7 +35,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - name: Check out landing
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           fetch-depth: 0
 
@@ -54,7 +54,7 @@ jobs:
 
       - name: Check out product intelligence sources
         if: steps.claim.outputs.claimed == 'true'
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           repository: Suplait/ruka
           token: ${{ secrets.PRODUCT_REPOS_TOKEN }}
@@ -63,7 +63,7 @@ jobs:
 
       - name: Check out Ruka V3 intelligence source
         if: steps.claim.outputs.claimed == 'true'
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           repository: Suplait/ruka_v3
           token: ${{ secrets.PRODUCT_REPOS_TOKEN }}
@@ -97,7 +97,7 @@ jobs:
       - name: Execute one evidence-backed improvement
         if: steps.claim.outputs.claimed == 'true'
         id: codex
-        uses: openai/codex-action@v1
+        uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675 # v1
         with:
           openai-api-key: ${{ secrets.AZURE_OPENAI_API_KEY }}
           responses-api-endpoint: ${{ secrets.AZURE_OPENAI_RESPONSES_ENDPOINT }}
