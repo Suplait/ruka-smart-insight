@@ -9,7 +9,7 @@ if (!Array.isArray(manifest.affectedUrls) || !Array.isArray(manifest.evidence) |
   throw new Error("change-manifest.json requires affectedUrls, evidence and experimentUpdates arrays");
 }
 if (process.env.ORGANIC_GROWTH_PUBLISHED_CHANGED && manifest.changed !== (process.env.ORGANIC_GROWTH_PUBLISHED_CHANGED === "true")) {
-  throw new Error("Manifest changed flag does not match the branch published by the workflow");
+  throw new Error("Manifest changed flag does not match the branch published by the automation");
 }
 
 const knownOpportunityIds = new Set((context.opportunities || []).map((item) => item.id));

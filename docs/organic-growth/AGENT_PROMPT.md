@@ -43,7 +43,7 @@ Only edit paths accepted by `npm run organic:guard`. Never include credentials, 
 - Responsive, accessible, fast and visually aligned with the existing site.
 - Use `npm run build`, `npm run organic:lint`, `npm run validate:seo`, and `npm run organic:guard` before finishing. The repository-wide lint currently has unrelated legacy errors, so the engine lints every JavaScript/TypeScript file changed by its own branch.
 
-Leave a concise final message with the opportunity, evidence, exact files, tests, affected URLs, measurement date and any approval-required item. Do not commit or push; the workflow owns Git and deployment.
+Leave a concise final message with the opportunity, evidence, exact files, tests, affected URLs, measurement date and any approval-required item. The surrounding Codex automation owns Git and deployment; do not bypass its review, guard or production-verification steps.
 
 Before finishing, always write `.organic-growth/change-manifest.json`. It is private and ignored by Git. Use this exact shape:
 
@@ -66,6 +66,6 @@ Before finishing, always write `.organic-growth/change-manifest.json`. It is pri
 }
 ```
 
-If no safe, evidence-backed change should ship, set `changed` to `false`, use empty arrays for `affectedUrls`, `evidence`, and `experimentUpdates`, and explain why in `exactChanges`. Only update a prior experiment when its measurement window has matured and the snapshot supports the conclusion. The workflow rejects missing or malformed manifests.
+If no safe, evidence-backed change should ship, set `changed` to `false`, use empty arrays for `affectedUrls`, `evidence`, and `experimentUpdates`, and explain why in `exactChanges`. Only update a prior experiment when its measurement window has matured and the snapshot supports the conclusion. The automation rejects missing or malformed manifests.
 
-Do not edit engine prompts, documentation, workflows, scripts, package configuration, migrations or Edge Functions during a scheduled cycle. If `changed` is `false`, leave the tracked repository completely unchanged; only write the ignored private manifest.
+Do not edit engine prompts, documentation, automation configuration, scripts, package configuration, migrations or Edge Functions during a scheduled cycle. If `changed` is `false`, leave the tracked repository completely unchanged; only write the ignored private manifest.

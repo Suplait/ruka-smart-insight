@@ -1,6 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+const defaultApiUrl = "https://rmxzryueysmzksmvpwpv.supabase.co/functions/v1/organic-growth-api";
+
 export const workspace = path.resolve(process.cwd(), ".organic-growth");
 
 export async function ensureWorkspace() {
@@ -61,8 +63,8 @@ export function compare(current, previous) {
 }
 
 export async function engineRequest(action, body = {}) {
-  const endpoint = requiredEnv("ORGANIC_GROWTH_API_URL");
-  const secret = requiredEnv("ORGANIC_GROWTH_SHARED_SECRET");
+  const endpoint = process.env.ORGANIC_GROWTH_API_URL || defaultApiUrl;
+  const secret = process.env.ORGANIC_GROWTH_SHARED_SECRET || (await readFile(path.join(workspace, "shared-secret"), "utf8")).trim();
   const response = await fetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json", "x-organic-growth-secret": secret },

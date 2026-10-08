@@ -4,7 +4,7 @@ Reports run independently on the 1st and 15th using `America/Santiago`, and are 
 
 ## Definitions
 
-- Search Console comparisons use the latest finalized data date, not the workflow date.
+- Search Console comparisons use the latest finalized data date, not the automation run date.
 - 15-day and 30-day windows are compared with immediately preceding equivalent windows.
 - Branded and non-branded are classified from visible query rows; anonymized queries prevent complete query totals.
 - Domain-level totals include tenant subdomains. Public marketing reporting explicitly filters `www.ruka.ai` pages when page-level analysis is required.

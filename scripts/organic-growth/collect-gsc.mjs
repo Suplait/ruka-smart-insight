@@ -1,11 +1,26 @@
-import { compare, isoDate, shiftDays, sumRows, writePrivateJson, requiredEnv, engineRequest } from "./lib.mjs";
+import { readFile } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import { compare, isoDate, shiftDays, sumRows, writePrivateJson, engineRequest } from "./lib.mjs";
 
 const siteUrl = process.env.GSC_SITE_URL || "sc-domain:ruka.ai";
-const clientId = requiredEnv("GSC_CLIENT_ID");
-const clientSecret = requiredEnv("GSC_CLIENT_SECRET");
-const refreshToken = requiredEnv("GSC_REFRESH_TOKEN");
-
 async function accessToken() {
+  if (process.env.GSC_ACCESS_TOKEN) return process.env.GSC_ACCESS_TOKEN;
+
+  const credentialsPath = process.env.GSC_CREDENTIALS_FILE || path.join(os.homedir(), ".search-console-mcp", "credentials.json");
+  try {
+    const credentials = JSON.parse(await readFile(credentialsPath, "utf8"));
+    if (credentials.access_token && Number(credentials.expires_at || 0) > Date.now() + 60_000) return credentials.access_token;
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
+  }
+
+  const clientId = process.env.GSC_CLIENT_ID;
+  const clientSecret = process.env.GSC_CLIENT_SECRET;
+  const refreshToken = process.env.GSC_REFRESH_TOKEN;
+  if (!clientId || !clientSecret || !refreshToken) {
+    throw new Error("Search Console credentials are expired. Refresh the connected Google Search Console account in Codex and retry.");
+  }
   const response = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },

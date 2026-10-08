@@ -13,7 +13,7 @@ async function output(values) {
 if (command === "claim") {
   const result = await engineRequest("claim", {
     kind,
-    triggerSource: process.env.GITHUB_EVENT_NAME || "manual",
+    triggerSource: process.env.ORGANIC_GROWTH_TRIGGER_SOURCE || "codex_automation",
     force: process.env.ORGANIC_GROWTH_FORCE === "true",
   });
   await output({ claimed: Boolean(result.claimed), run_id: result.run_id || "", reason: result.reason || "", next_due_at: result.next_due_at || "" });
@@ -31,7 +31,7 @@ if (command === "claim") {
   await engineRequest("complete", {
     runId: process.env.ORGANIC_GROWTH_RUN_ID,
     success: false,
-    errorMessage: process.env.ORGANIC_GROWTH_ERROR || "GitHub Actions job failed",
+    errorMessage: process.env.ORGANIC_GROWTH_ERROR || "Codex automation job failed",
   });
 } else if (command === "status") {
   console.log(JSON.stringify(await engineRequest("status"), null, 2));
