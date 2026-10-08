@@ -24,6 +24,8 @@ export function AcquisitionSeo({
   features,
 }: AcquisitionSeoProps) {
   const imageUrl = "https://www.ruka.ai/ruka-agentes-ia-og.png";
+  const webpageId = `${canonicalUrl}#webpage`;
+  const breadcrumbId = `${canonicalUrl}#breadcrumb`;
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -31,21 +33,40 @@ export function AcquisitionSeo({
       createWebsiteSchema(),
       {
         "@type": "WebPage",
-        "@id": `${canonicalUrl}#webpage`,
+        "@id": webpageId,
         url: canonicalUrl,
         name: pageName,
         description,
         inLanguage: "es-CL",
         isPartOf: { "@id": websiteId },
         about: { "@id": softwareId },
+        breadcrumb: { "@id": breadcrumbId },
+        hasPart: { "@id": `${canonicalUrl}#faq` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          "@id": `${canonicalUrl}#primaryimage`,
+          url: imageUrl,
+          contentUrl: imageUrl,
+          width: 1200,
+          height: 630,
+        },
       },
       {
         ...createSoftwareSchema(),
         featureList: features,
       },
       {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Ruka", item: "https://www.ruka.ai/" },
+          { "@type": "ListItem", position: 2, name: pageName, item: canonicalUrl },
+        ],
+      },
+      {
         "@type": "FAQPage",
         "@id": `${canonicalUrl}#faq`,
+        isPartOf: { "@id": webpageId },
         mainEntity: acquisitionFaq.map((item) => ({
           "@type": "Question",
           name: item.question,
@@ -63,7 +84,8 @@ export function AcquisitionSeo({
       <title>{title}</title>
       <meta name="title" content={title} />
       <meta name="description" content={description} />
-      <meta name="robots" content="index, follow, max-image-preview:large" />
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
       <link rel="canonical" href={canonicalUrl} />
 
       <meta property="og:type" content="website" />

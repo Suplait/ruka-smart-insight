@@ -18,7 +18,6 @@ import ConciliacionAutomatica from './pages/ConciliacionAutomatica';
 import Integraciones from './pages/Integraciones';
 import Stock from './pages/Stock';
 import PanelControl from './pages/PanelControl';
-import Precios from './pages/Precios';
 import RegistroDeCompras from './pages/RegistroDeCompras';
 import Register from './pages/Register';
 import AboutUs from './pages/AboutUs';
@@ -75,7 +74,7 @@ function App() {
             <Route path="/productos/registro-de-compras" element={<RegistroDeCompras />} />
             <Route path="/productos/conciliacion-automatica" element={<ConciliacionAutomatica />} />
             <Route path="/productos/stock" element={<Stock />} />
-            <Route path="/precios" element={<Precios />} />
+            <Route path="/precios" element={<Navigate to="/#precios" replace />} />
             <Route path="/integraciones" element={<Integraciones />} />
             <Route path="/register" element={<Register />} />
             <Route path="/about" element={<AboutUs />} />

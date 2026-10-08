@@ -37,7 +37,17 @@ const oneSchema = {
       about: { "@id": serviceId },
       breadcrumb: { "@id": breadcrumbId },
       mainEntity: { "@id": faqId },
+      hasPart: { "@id": faqId },
       publisher: { "@id": organizationId },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        "@id": `${oneContent.seo.canonical}#primaryimage`,
+        url: oneContent.seo.image,
+        contentUrl: oneContent.seo.image,
+        width: 1200,
+        height: 630,
+        caption: `${ONE_NAME}: un proceso empresarial operando sobre los sistemas existentes`,
+      },
     },
     {
       "@type": "BreadcrumbList",
@@ -60,6 +70,7 @@ const oneSchema = {
     {
       "@type": "FAQPage",
       "@id": faqId,
+      isPartOf: { "@id": webpageId },
       mainEntity: oneContent.faq.items.map((item) => ({
         "@type": "Question",
         name: item.question,

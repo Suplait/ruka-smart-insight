@@ -15,8 +15,11 @@ Ruka conecta información de plataformas como SII, ERP, POS, bancos, planillas, 
 - [Ruka para retail](https://www.ruka.ai/retail): automatización de compras, stock y procesos para retail.
 - [Registro de compras](https://www.ruka.ai/productos/registro-de-compras): automatización del trabajo de recibir, leer, homologar y registrar compras desde las fuentes que ya usa la empresa.
 - [Conciliación automática](https://www.ruka.ai/productos/conciliacion-automatica): cruce de facturas, órdenes de compra, recepciones, pagos y otros registros según las reglas de cada operación.
+- [Cuentas por pagar](https://www.ruka.ai/productos/cuentas-por-pagar): preparación y control del proceso previo al pago de proveedores.
+- [Panel de control](https://www.ruka.ai/productos/panel-control): actualización de costos, margen y señales operativas a partir de ventas y compras.
+- [Stock](https://www.ruka.ai/productos/stock): registro trazable de ingresos, inventarios y movimientos entre bodegas.
 - [Integraciones](https://www.ruka.ai/integraciones): sistemas y fuentes con los que Ruka puede trabajar, incluyendo SII, ERP, POS, bancos, archivos y desarrollos propios.
-- [Precios](https://www.ruka.ai/precios): planes estándar de Ruka según el volumen mensual de documentos.
+- [Precios](https://www.ruka.ai/#precios): planes estándar de Ruka según el volumen mensual de documentos, publicados en la página principal.
 - [Política de privacidad](https://www.ruka.ai/privacy)
 - [Términos y condiciones](https://www.ruka.ai/terms)
 

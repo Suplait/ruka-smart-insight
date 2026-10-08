@@ -79,6 +79,16 @@
       "source": "/v2/:path*",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/precios",
+      "destination": "/#precios",
+      "permanent": true
+    },
+    {
+      "source": "/precios/",
+      "destination": "/#precios",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -104,8 +114,6 @@
     { "source": "/productos/conciliacion-automatica/", "destination": "/productos/conciliacion-automatica/index.html" },
     { "source": "/productos/stock", "destination": "/productos/stock/index.html" },
     { "source": "/productos/stock/", "destination": "/productos/stock/index.html" },
-    { "source": "/precios", "destination": "/precios/index.html" },
-    { "source": "/precios/", "destination": "/precios/index.html" },
     { "source": "/integraciones", "destination": "/integraciones/index.html" },
     { "source": "/integraciones/", "destination": "/integraciones/index.html" },
     { "source": "/privacy", "destination": "/privacy/index.html" },

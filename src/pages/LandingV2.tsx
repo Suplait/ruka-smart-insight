@@ -38,6 +38,7 @@ import { WorkSection } from "@/components/landing-v2/WorkSection";
 import { LandingV2Seo } from "@/components/seo/LandingV2Seo";
 import { customerLogos } from "@/content/customerLogos";
 import landingV2Seo from "@/content/landingV2Seo.json";
+import { pricingPlans } from "@/content/pricing";
 
 const CTA_LABEL = "Agendar 30 min";
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -174,24 +175,10 @@ const ecosystemGroups: readonly EcosystemGroup[] = [
   },
 ] as const;
 
-const plans = [
-  {
-    name: "Start",
-    volume: "Hasta 200 documentos / mes",
-    price: "$99.990",
-  },
-  {
-    name: "Core",
-    volume: "Hasta 500 documentos / mes",
-    price: "$249.990",
-    featured: true,
-  },
-  {
-    name: "Scale",
-    volume: "Hasta 1.200 documentos / mes",
-    price: "$449.990",
-  },
-] as const;
+const plans = pricingPlans.slice(0, 3).map((plan) => ({
+  ...plan,
+  volume: plan.capacity,
+}));
 
 const faqItems = landingV2Seo.faq;
 
@@ -702,10 +689,6 @@ function PricingSection() {
           <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#555b6e]">
             Todos los planes tienen las mismas capacidades. Lo que cambia es cuánto procesa Ruka cada mes.
           </p>
-          <Link to="/precios" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
-            Ver detalles de precios
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
         </Reveal>
 
         <div className="mt-12 grid gap-4 lg:grid-cols-3 lg:items-stretch">

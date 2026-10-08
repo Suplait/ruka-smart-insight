@@ -7,7 +7,7 @@
     "features": ["Registro de compras", "Conciliaciones", "Actualización entre sistemas"]
   },
   "restaurantes": {
-    "title": "Agentes IA para automatizar operaciones de restaurantes | Ruka",
+    "title": "Agentes IA para operaciones de restaurantes | Ruka",
     "description": "Ruka registra compras, cruza costos, ejecuta conciliaciones y mantiene tus sistemas al día sin reemplazar tu POS o ERP.",
     "canonicalUrl": "https://www.ruka.ai/restaurantes",
     "pageName": "Ruka para restaurantes",
@@ -21,7 +21,7 @@
     "features": ["Registro de compras", "Conciliaciones", "Costos y proveedores", "Actualización entre sistemas"]
   },
   "retail": {
-    "title": "Agentes IA para automatizar compras y operaciones de retail | Ruka",
+    "title": "Agentes IA para compras y operaciones retail | Ruka",
     "description": "Ruka registra compras, sigue precios, ejecuta conciliaciones y mantiene stock y sistemas actualizados para operaciones de retail.",
     "canonicalUrl": "https://www.ruka.ai/retail",
     "pageName": "Ruka para retail",

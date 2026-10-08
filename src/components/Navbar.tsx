@@ -15,14 +15,11 @@ import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from 
 import SubdomainModal from "./SubdomainModal";
 
 const productLinks = [
-  { label: "Qué hace Ruka", href: "/#trabajo" },
   { label: "Registro de compras", href: "/productos/registro-de-compras" },
   { label: "Conciliación automática", href: "/productos/conciliacion-automatica" },
   { label: "Cuentas por pagar", href: "/productos/cuentas-por-pagar" },
   { label: "Panel de control", href: "/productos/panel-control" },
   { label: "Stock", href: "/productos/stock" },
-  { label: "Integraciones", href: "/integraciones" },
-  { label: "Precios", href: "/precios" },
 ] as const;
 
 const industryLinks = [
@@ -78,9 +75,11 @@ export default function Navbar({
             <img src="/logo.png" alt="Ruka.ai" className="h-8 transition-opacity hover:opacity-80" />
           </Link>
 
-          <NavigationMenu value={desktopMenu} onValueChange={setDesktopMenu} className="hidden lg:flex" delayDuration={80} skipDelayDuration={220}>
+          <NavigationMenu viewport={false} value={desktopMenu} onValueChange={setDesktopMenu} className="hidden xl:flex" delayDuration={80} skipDelayDuration={220}>
             <NavigationMenuList className="gap-1">
               <NavDropdown value="product" label="Producto" links={productLinks} onLinkClick={handleLinkClick} onToggle={setDesktopMenu} />
+              <NavigationMenuItem><NavigationMenuLink asChild><Link to="/integraciones" className={desktopLinkClass}>Integraciones</Link></NavigationMenuLink></NavigationMenuItem>
+              <NavigationMenuItem><NavigationMenuLink asChild><Link to="/#precios" onClick={(event) => handleLinkClick(event, "/#precios")} className={desktopLinkClass}>Precios</Link></NavigationMenuLink></NavigationMenuItem>
               <NavDropdown value="industries" label="Industrias" links={industryLinks} onLinkClick={handleLinkClick} onToggle={setDesktopMenu} />
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
@@ -96,7 +95,7 @@ export default function Navbar({
           </NavigationMenu>
 
           <div className="flex items-center gap-3">
-            <div className="hidden items-center gap-3 lg:flex">
+            <div className="hidden items-center gap-3 xl:flex">
               {showLogin ? (
                 <Button
                   variant="ghost"
@@ -124,7 +123,7 @@ export default function Navbar({
 
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Abrir menú">
+                <Button variant="ghost" size="icon" className="xl:hidden" aria-label="Abrir menú">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
@@ -140,6 +139,8 @@ export default function Navbar({
                   </Accordion>
 
                   <div className="border-b border-[#e1e5ed] py-2">
+                    <Link to="/integraciones" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Integraciones</Link>
+                    <Link to="/#precios" onClick={(event) => handleLinkClick(event, "/#precios")} className={mobileDirectLinkClass}>Precios</Link>
                     <Link to="/one" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Ruka One</Link>
                     <Link to="/about" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Nosotros</Link>
                   </div>
@@ -201,7 +202,7 @@ function NavDropdown({
   onToggle: React.Dispatch<React.SetStateAction<string>>;
 }) {
   return (
-    <NavigationMenuItem value={value}>
+    <NavigationMenuItem value={value} className="relative">
       <NavigationMenuTrigger
         aria-haspopup="menu"
         className="rounded-lg bg-transparent px-3.5 text-sm font-medium text-gray-600 hover:bg-[#f4f6fb] hover:text-[#171827] focus:bg-[#f4f6fb] focus:text-[#171827] data-[state=open]:bg-[#f4f6fb] data-[state=open]:text-[#171827]"
@@ -215,8 +216,8 @@ function NavDropdown({
       >
         {label}
       </NavigationMenuTrigger>
-      <NavigationMenuContent>
-        <ul className="w-[232px] space-y-1 p-2.5">
+      <NavigationMenuContent className="left-1/2 top-full w-[232px] -translate-x-1/2 pt-2 md:w-[232px]">
+        <ul className="w-[232px] space-y-1 rounded-[14px] border border-[#dfe3ec] bg-white p-2.5 text-popover-foreground shadow-[0_12px_30px_rgba(31,36,54,0.12)]">
           {links.map((link) => (
             <li key={link.href}>
               <NavigationMenuLink asChild>

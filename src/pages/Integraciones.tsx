@@ -1,66 +1,165 @@
 import { useMemo, useState } from "react";
-import { Helmet } from "react-helmet";
+import { ArrowRight, Database, FileText, Landmark, Plug, Search, Store, X, type LucideIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ChevronDown, ChevronRight, Database, FileText, Landmark, Search, X } from "lucide-react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import { MarketingSeo } from "@/components/seo/MarketingSeo";
 
-type Category = "Documentos" | "Gestión" | "Ventas" | "Archivos";
-type Integration = { name: string; category: Category; logo?: string; description: string; flow: string };
+type Family = "Documentos" | "Gestión" | "Ventas" | "Fuentes propias";
+type Integration = { name: string; family: Family; logo?: string; detail: string; Icon?: LucideIcon };
 
-const integrations: Integration[] = [
-  { name: "SII", category: "Documentos", logo: "/integrations/sii.jpg", description: "Documentos tributarios y estados asociados.", flow: "Fuente de documentos tributarios para procesos de compra y venta." },
-  { name: "Ingefactura", category: "Documentos", logo: "/integrations/ingefactura.png", description: "Facturación electrónica.", flow: "Se revisa según el flujo documental que necesita tu equipo." },
-  { name: "eBill", category: "Documentos", logo: "/integrations/ebill.png", description: "Facturación electrónica.", flow: "Se revisa según el flujo documental que necesita tu equipo." },
-  { name: "iDTECloud", category: "Documentos", logo: "/integrations/idtecloud.png", description: "Documentos tributarios electrónicos.", flow: "Se revisa según el flujo documental que necesita tu equipo." },
-  { name: "DTEiGlobal", category: "Documentos", logo: "/integrations/dteiglobal.png", description: "Facturación y documentos DTE.", flow: "Se revisa según el flujo documental que necesita tu equipo." },
-  { name: "Facturacion.cl", category: "Documentos", logo: "/integrations/facturacion.png", description: "Facturación electrónica.", flow: "Se revisa según el flujo documental que necesita tu equipo." },
-  { name: "Defontana", category: "Gestión", logo: "/integrations/defontana.svg", description: "ERP y gestión empresarial.", flow: "La lectura o actualización depende del proceso acordado." },
-  { name: "Nubox", category: "Gestión", logo: "/integrations/nubox.svg", description: "Contabilidad y gestión.", flow: "La lectura o actualización depende del proceso acordado." },
-  { name: "Chipax", category: "Gestión", logo: "/integrations/chipax.png", description: "Finanzas y gestión de caja.", flow: "La lectura o actualización depende del proceso acordado." },
-  { name: "KAME", category: "Gestión", logo: "/integrations/kame.png", description: "ERP y gestión operacional.", flow: "La lectura o actualización depende del proceso acordado." },
-  { name: "SAP", category: "Gestión", logo: "/integrations/sap.svg", description: "ERP empresarial.", flow: "Se evalúa según los accesos y el alcance de la operación." },
-  { name: "Bancos", category: "Gestión", description: "Cartolas y movimientos bancarios.", flow: "Se evalúa el formato y la disponibilidad de cada fuente." },
-  { name: "ERP propio", category: "Gestión", description: "Sistemas internos o desarrollos a medida.", flow: "Se revisa el acceso disponible y el flujo que se quiere resolver." },
-  { name: "Toteat", category: "Ventas", logo: "/integrations/toteat.svg", description: "POS y gestión para restaurantes.", flow: "Datos de venta y operación según el flujo acordado." },
-  { name: "Fudo", category: "Ventas", logo: "/integrations/fudo.svg", description: "POS para restaurantes.", flow: "Datos de venta y operación según el flujo acordado." },
-  { name: "Justo", category: "Ventas", logo: "/integrations/justo.svg", description: "Ventas y canales de despacho.", flow: "Datos de venta y operación según el flujo acordado." },
-  { name: "Bsale", category: "Ventas", logo: "/integrations/bsale.png", description: "Ventas, inventario y POS.", flow: "Datos de venta y operación según el flujo acordado." },
-  { name: "Excel", category: "Archivos", description: "Planillas operativas.", flow: "Ruka puede trabajar sobre archivos que hoy requieren preparación manual." },
-  { name: "CSV", category: "Archivos", description: "Exportaciones de sistemas.", flow: "Ruka puede trabajar sobre archivos que hoy requieren preparación manual." },
-  { name: "XML", category: "Archivos", description: "Documentos estructurados.", flow: "Ruka puede trabajar sobre archivos que hoy requieren preparación manual." },
-  { name: "PDF", category: "Archivos", description: "Documentos y respaldos.", flow: "Ruka puede trabajar sobre archivos que hoy requieren preparación manual." },
-  { name: "Email", category: "Archivos", description: "Correo operacional.", flow: "Ruka puede trabajar sobre archivos que hoy requieren preparación manual." },
-  { name: "API", category: "Archivos", description: "Servicios y sistemas propios.", flow: "Se revisa el acceso y el alcance técnico del flujo." },
+const integrations: readonly Integration[] = [
+  { name: "SII", family: "Documentos", logo: "/integrations/sii.jpg", detail: "Documentos tributarios" },
+  { name: "Ingefactura", family: "Documentos", logo: "/integrations/ingefactura.png", detail: "Facturación electrónica" },
+  { name: "eBill", family: "Documentos", logo: "/integrations/ebill.png", detail: "Facturación electrónica" },
+  { name: "iDTECloud", family: "Documentos", logo: "/integrations/idtecloud.png", detail: "Documentos electrónicos" },
+  { name: "DTEiGlobal", family: "Documentos", logo: "/integrations/dteiglobal.png", detail: "Documentos electrónicos" },
+  { name: "Facturacion.cl", family: "Documentos", logo: "/integrations/facturacion.png", detail: "Facturación electrónica" },
+  { name: "Defontana", family: "Gestión", logo: "/integrations/defontana.svg", detail: "ERP y gestión" },
+  { name: "Nubox", family: "Gestión", logo: "/integrations/nubox.svg", detail: "Contabilidad y gestión" },
+  { name: "Chipax", family: "Gestión", logo: "/integrations/chipax.png", detail: "Finanzas y caja" },
+  { name: "KAME", family: "Gestión", logo: "/integrations/kame.png", detail: "ERP y operación" },
+  { name: "SAP", family: "Gestión", logo: "/integrations/sap.svg", detail: "ERP empresarial" },
+  { name: "Bancos", family: "Gestión", detail: "Cartolas y movimientos", Icon: Landmark },
+  { name: "Toteat", family: "Ventas", logo: "/integrations/toteat.svg", detail: "POS y restaurantes" },
+  { name: "Fudo", family: "Ventas", logo: "/integrations/fudo.svg", detail: "POS y restaurantes" },
+  { name: "Justo", family: "Ventas", logo: "/integrations/justo.svg", detail: "Ventas y despacho" },
+  { name: "Bsale", family: "Ventas", logo: "/integrations/bsale.png", detail: "Ventas e inventario" },
+  { name: "Excel", family: "Fuentes propias", detail: "Planillas operativas", Icon: FileText },
+  { name: "CSV", family: "Fuentes propias", detail: "Exportaciones", Icon: FileText },
+  { name: "XML", family: "Fuentes propias", detail: "Documentos estructurados", Icon: FileText },
+  { name: "PDF", family: "Fuentes propias", detail: "Documentos y respaldos", Icon: FileText },
+  { name: "Correo", family: "Fuentes propias", detail: "Bandejas operativas", Icon: FileText },
+  { name: "API", family: "Fuentes propias", detail: "Servicios conectados", Icon: Plug },
+  { name: "Sistema propio", family: "Fuentes propias", detail: "Desarrollos internos", Icon: Database },
+] as const;
+
+const families: readonly { name: Family; description: string; Icon: LucideIcon }[] = [
+  { name: "Documentos", description: "Facturación y documentos tributarios", Icon: FileText },
+  { name: "Gestión", description: "ERP, contabilidad, finanzas y bancos", Icon: Database },
+  { name: "Ventas", description: "POS, ecommerce y canales de venta", Icon: Store },
+  { name: "Fuentes propias", description: "Archivos, APIs y sistemas internos", Icon: Plug },
 ];
 
-const categories: Array<"Todos" | Category> = ["Todos", "Documentos", "Gestión", "Ventas", "Archivos"];
-const whatsapp = "https://api.whatsapp.com/send/?phone=56932595791&text=Hola%20Ruka%2C%20quiero%20evaluar%20una%20integración.";
-
-function DirectionNote() { return <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#64708a]"><span className="text-primary">↔</span> Flujo por definir</span>; }
+const faqs = [
+  { question: "¿Qué pasa si mi sistema no aparece?", answer: "Que no esté listado no significa que no podamos conectarlo. Revisamos el acceso disponible y la información que necesita el proceso." },
+  { question: "¿Ruka necesita reemplazar alguno de mis sistemas?", answer: "No. Ruka está diseñada para trabajar sobre las herramientas que ya usa tu empresa." },
+  { question: "¿Una integración permite leer y escribir información?", answer: "Depende del sistema, sus permisos y el proceso acordado. Antes de implementar definimos exactamente qué información se lee y qué acciones puede ejecutar Ruka." },
+] as const;
 
 export default function Integraciones() {
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<"Todos" | Category>("Todos");
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const shown = useMemo(() => integrations.filter((item) => (category === "Todos" || item.category === category) && `${item.name} ${item.category} ${item.description}`.toLowerCase().includes(query.trim().toLowerCase())), [category, query]);
+  const normalized = query.trim().toLocaleLowerCase("es");
+  const groups = useMemo(() => families.map((family) => ({
+    ...family,
+    items: integrations.filter((integration) => integration.family === family.name && `${integration.name} ${integration.detail}`.toLocaleLowerCase("es").includes(normalized)),
+  })).filter((family) => family.items.length), [normalized]);
 
-  return <div className="min-h-screen bg-[#fbfcff] text-[#171827]">
-    <Helmet><title>Directorio de integraciones | Ruka</title><meta name="description" content="Busca las integraciones de Ruka con ERP, POS, facturación electrónica, archivos y sistemas propios." /><link rel="canonical" href="https://www.ruka.ai/integraciones" /></Helmet>
-    <Navbar />
-    <main>
-      <section className="border-b border-[#e4e7f2] bg-white pb-16 pt-28 sm:pb-20 sm:pt-36"><div className="mx-auto max-w-5xl px-6 text-center"><p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-primary">Directorio de integraciones</p><h1 className="mt-5 text-balance text-5xl font-semibold tracking-[-0.06em] sm:text-7xl">¿Está tu sistema?</h1><p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-[#555b6e]">Busca por nombre. En menos de un minuto sabrás si aparece entre las fuentes que ya trabaja Ruka.</p><div className="mx-auto mt-9 flex max-w-2xl items-center gap-3 rounded-2xl border border-[#cfd6eb] bg-[#fbfcff] px-4 py-3 shadow-[0_14px_40px_rgba(37,49,90,0.09)]"><Search className="h-5 w-5 shrink-0 text-primary" /><input value={query} onChange={(event) => setQuery(event.target.value)} className="min-w-0 flex-1 bg-transparent text-base outline-none placeholder:text-[#8b94a7]" placeholder="Busca Toteat, Defontana, SII…" aria-label="Buscar integración" />{query && <button type="button" onClick={() => setQuery("")} aria-label="Limpiar búsqueda"><X className="h-5 w-5 text-[#71809a]" /></button>}</div><p className="mt-4 text-sm text-[#747d90]">{integrations.length} fuentes y sistemas listados</p></div></section>
+  return (
+    <div className="min-h-screen bg-[#fbfcff] text-[#171827]">
+      <MarketingSeo
+        path="/integraciones"
+        name="Integraciones"
+        title="Integraciones de Ruka | ERP, POS, SII y más"
+        description="Ruka trabaja con SII, ERP, sistemas contables, POS, bancos, archivos y sistemas propios para automatizar procesos sin reemplazar tus herramientas."
+        faqs={faqs}
+        primaryEntity={{
+          "@type": "ItemList",
+          "@id": "https://www.ruka.ai/integraciones#catalogo",
+          name: "Sistemas y fuentes con los que trabaja Ruka",
+          numberOfItems: integrations.length,
+          itemListElement: integrations.map((integration, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            item: {
+              "@type": "Thing",
+              name: integration.name,
+              description: integration.detail,
+            },
+          })),
+        }}
+      />
+      <Navbar />
+      <main>
+        <section className="overflow-hidden px-5 pb-16 pt-28 sm:px-8 sm:pb-24 sm:pt-36">
+          <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-end lg:gap-20">
+            <div>
+              <p className="text-sm font-semibold text-primary">Integraciones</p>
+              <h1 className="mt-5 max-w-4xl text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.04em] sm:text-7xl">Trabajamos donde ya vive tu operación.</h1>
+            </div>
+            <div>
+              <p className="max-w-2xl text-lg leading-8 text-[#5c6477]">Sistemas de gestión, facturadores, POS, bancos, archivos o desarrollos propios. Conectamos lo que Ruka necesita sin pedirte que cambies los sistemas que ya usas.</p>
+              <div className="relative mt-7 max-w-xl">
+                <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-primary" aria-hidden="true" />
+                <input value={query} onChange={(event) => setQuery(event.target.value)} className="h-14 w-full rounded-xl border border-[#cfd6e5] bg-white pl-12 pr-12 text-base text-[#202231] shadow-[0_10px_35px_rgba(37,49,90,0.06)] outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-[#8b94a7] focus:border-primary focus:shadow-[0_0_0_4px_rgba(80,101,233,0.1)]" placeholder="Busca SII, SAP, Toteat..." aria-label="Buscar una integración" />
+                {query ? <button type="button" onClick={() => setQuery("")} className="absolute right-3 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full text-[#687084] hover:bg-[#eef1f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label="Limpiar búsqueda"><X className="h-4 w-4" /></button> : null}
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <section className="py-14 sm:py-20"><div className="mx-auto max-w-6xl px-6"><div className="flex flex-col gap-5 border-b border-[#e4e7f2] pb-6 sm:flex-row sm:items-center sm:justify-between"><div className="flex flex-wrap gap-2">{categories.map((item) => <button key={item} type="button" onClick={() => setCategory(item)} className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${category === item ? "bg-[#161a29] text-white" : "border border-[#dfe4ef] bg-white text-[#59647b] hover:bg-[#eef1ff]"}`}>{item}</button>)}</div><p className="font-mono text-xs text-[#778198]">{shown.length.toString().padStart(2, "0")} RESULTADOS</p></div>
-        {shown.length ? <div className="mt-6 overflow-hidden rounded-2xl border border-[#e1e5ee] bg-white">{shown.map((item) => <article key={item.name} className="border-b border-[#e7eaf1] last:border-0"><button type="button" onClick={() => setExpanded(expanded === item.name ? null : item.name)} className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-5 text-left transition-colors hover:bg-[#fbfcff] sm:grid-cols-[12rem_1fr_auto_auto] sm:gap-6 sm:px-7"><div className="flex min-w-0 items-center gap-3">{item.logo ? <span className="flex h-9 w-20 items-center"><img src={item.logo} alt={`Logo de ${item.name}`} className="max-h-8 max-w-full object-contain object-left" loading="lazy" /></span> : <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#eef1ff] text-primary"><Database className="h-4 w-4" /></span>}<span className="font-semibold text-[#29364e] sm:hidden">{item.name}</span></div><div className="hidden sm:block"><p className="font-semibold text-[#29364e]">{item.name}</p><p className="mt-1 text-sm text-[#727d91]">{item.description}</p></div><span className="hidden rounded-full bg-[#f2f4f8] px-2.5 py-1 font-mono text-[10px] text-[#657087] sm:inline-flex">{item.category}</span><ChevronDown className={`h-5 w-5 text-[#758097] transition-transform ${expanded === item.name ? "rotate-180" : ""}`} /></button>{expanded === item.name && <div className="grid gap-5 border-t border-[#e7eaf1] bg-[#fbfcff] px-5 py-6 sm:grid-cols-[0.9fr_1.4fr] sm:px-7"><div><p className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#7b8598]">Tipo de conexión</p><div className="mt-3"><DirectionNote /></div><p className="mt-3 text-sm leading-6 text-[#667188]">La dirección —leer, escribir o ambas— se define con los accesos y el proceso específico.</p></div><div className="border-l-0 border-[#e4e7f2] sm:border-l sm:pl-6"><p className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#7b8598]">Flujo posible</p><p className="mt-3 text-sm leading-6 text-[#4f5b73]">{item.flow}</p><a href={whatsapp} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center text-sm font-semibold text-primary">Evaluar esta integración <ArrowRight className="ml-1.5 h-4 w-4" /></a></div></div>}</article>)}</div> : <div className="mt-6 rounded-2xl border border-dashed border-[#cbd3e3] bg-white px-6 py-14 text-center"><p className="text-lg font-semibold text-[#2c3952]">No tenemos “{query}” listado todavía.</p><p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#6d788e]">Cuéntanos de qué sistema se trata. Revisamos el acceso disponible y si podemos integrarlo a tu proceso.</p><a href={whatsapp} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white">Solicitar integración <ArrowRight className="ml-2 h-4 w-4" /></a></div>}</div></section>
+        <section className="border-y border-[#dfe4ef] bg-white px-5 py-16 sm:px-8 sm:py-20" aria-live="polite">
+          <div className="mx-auto max-w-7xl">
+            {groups.length ? (
+              <div className="divide-y divide-[#dfe4ef] border-y border-[#dfe4ef]">
+                {groups.map(({ name, description, Icon, items }) => (
+                  <section key={name} className="grid gap-7 py-10 lg:grid-cols-[16rem_1fr] lg:gap-12">
+                    <div>
+                      <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#eef1ff] text-primary"><Icon className="h-5 w-5" aria-hidden="true" /></span>
+                      <h2 className="mt-4 text-xl font-semibold">{name}</h2>
+                      <p className="mt-2 text-sm leading-6 text-[#697286]">{description}</p>
+                    </div>
+                    <ul className="grid gap-x-8 gap-y-1 sm:grid-cols-2 xl:grid-cols-3">
+                      {items.map((item) => {
+                        const ItemIcon = item.Icon;
+                        return (
+                          <li key={item.name} className="flex min-h-20 items-center gap-4 border-b border-[#e8ebf2] py-4">
+                            <span className="flex h-10 w-20 shrink-0 items-center justify-center">
+                              {item.logo ? <img src={item.logo} alt={`Logo de ${item.name}`} className="max-h-8 max-w-[5rem] object-contain" loading="lazy" /> : ItemIcon ? <ItemIcon className="h-5 w-5 text-[#657087]" aria-hidden="true" /> : null}
+                            </span>
+                            <span className="min-w-0"><span className="block text-sm font-semibold text-[#252838]">{item.name}</span><span className="mt-1 block text-xs leading-5 text-[#737c8e]">{item.detail}</span></span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </section>
+                ))}
+              </div>
+            ) : (
+              <div className="py-16 text-center">
+                <p className="text-2xl font-semibold">No encontramos “{query}” en el catálogo.</p>
+                <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-[#667084]">Probablemente también podamos conectarlo. Revisamos contigo cómo acceder a su información.</p>
+                <Link to="/register" className="mt-7 inline-flex min-h-12 items-center rounded-full bg-primary px-6 text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4">Cuéntanos qué sistema usas <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              </div>
+            )}
+          </div>
+        </section>
 
-      <section className="border-y border-[#e4e7f2] bg-white py-20 sm:py-28"><div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center"><div><p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary">Un caso concreto</p><h2 className="mt-4 text-balance text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">Así deja de perderse una factura de compra.</h2><p className="mt-5 text-lg leading-8 text-[#555b6e]">No es un diagrama genérico: es el recorrido de un DTE que llega, se valida y queda disponible para que el equipo continúe.</p></div><div className="rounded-[24px] bg-[#161a29] p-5 text-white shadow-[0_20px_55px_rgba(19,25,45,0.16)] sm:p-7"><p className="font-mono text-[11px] font-semibold tracking-[0.15em] text-[#aeb8ff]">DTE DE COMPRA · EJEMPLO</p><div className="mt-6 grid gap-3 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-center"><div className="rounded-xl bg-white/10 p-4"><FileText className="h-5 w-5 text-[#b9c2ff]" /><p className="mt-5 text-sm font-semibold">01 · Llega</p><p className="mt-1 text-xs leading-5 text-[#c2c9db]">XML y factura desde SII o correo.</p></div><ChevronRight className="mx-auto h-4 w-4 rotate-90 text-[#8996e9] sm:rotate-0" /><div className="rounded-xl bg-[#4e65e9] p-4"><Database className="h-5 w-5" /><p className="mt-5 text-sm font-semibold">02 · Ruka</p><p className="mt-1 text-xs leading-5 text-[#e0e4ff]">Lee, valida y separa excepciones.</p></div><ChevronRight className="mx-auto h-4 w-4 rotate-90 text-[#8996e9] sm:rotate-0" /><div className="rounded-xl bg-white/10 p-4"><Landmark className="h-5 w-5 text-[#b9c2ff]" /><p className="mt-5 text-sm font-semibold">03 · Continúa</p><p className="mt-1 text-xs leading-5 text-[#c2c9db]">Registro listo para aprobar o pagar.</p></div></div><p className="mt-6 border-t border-white/10 pt-5 text-sm leading-6 text-[#c8cfdf]">La configuración exacta se define con el sistema de origen, las reglas del proceso y el destino que necesita la operación.</p></div></div></section>
+        <section className="px-5 py-20 sm:px-8 sm:py-28">
+          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+            <div>
+              <p className="text-sm font-semibold text-primary">Cómo conectamos</p>
+              <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.04em]">La integración empieza por el proceso.</h2>
+              <p className="mt-5 text-lg leading-8 text-[#5d6578]">No conectamos herramientas por acumular logos. Definimos qué información necesita Ruka y qué debe hacer con ella.</p>
+            </div>
+            <ol className="grid gap-4 sm:grid-cols-3">
+              {["Muéstranos el trabajo manual", "Revisamos fuentes y accesos", "Conectamos el flujo necesario"].map((step, index) => (
+                <li key={step} className="border-t-2 border-[#cfd6e8] pt-5"><span className="font-mono text-sm font-semibold text-primary">0{index + 1}</span><p className="mt-4 text-lg font-semibold leading-7">{step}</p></li>
+              ))}
+            </ol>
+          </div>
+        </section>
 
-      <section className="py-20 sm:py-28"><div className="mx-auto max-w-6xl px-6"><div className="max-w-2xl"><p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary">Conecta el directorio con tu problema</p><h2 className="mt-4 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">Una fuente puede resolver más de un proceso.</h2></div><div className="mt-10 overflow-x-auto rounded-2xl border border-[#e1e5ee] bg-white"><table className="w-full min-w-[650px] text-left text-sm"><thead className="border-b border-[#e4e7f2] bg-[#fbfcff] text-[#69748a]"><tr><th className="px-6 py-4 font-medium">Proceso</th><th className="px-6 py-4 font-medium">Fuentes habituales</th><th className="px-6 py-4 font-medium">Resultado</th></tr></thead><tbody className="divide-y divide-[#e9ecf2] text-[#46536b]">{[["Registro de compras", "SII · XML · Email · ERP", "Documento listo para revisar"], ["Conciliación automática", "Bancos · ERP · Planillas", "Movimientos y excepciones visibles"], ["Panel de control", "POS · ERP · Facturas", "Datos cruzados para decidir"], ["Ventas y operación", "POS · API · Archivos", "Información ordenada para el equipo"]].map((row) => <tr key={row[0]}><td className="px-6 py-5 font-semibold text-[#29364e]">{row[0]}</td><td className="px-6 py-5">{row[1]}</td><td className="px-6 py-5">{row[2]}</td></tr>)}</tbody></table></div></div></section>
-
-      <section className="border-y border-[#e4e7f2] bg-white py-20"><div className="mx-auto max-w-3xl px-6"><p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary">Preguntas frecuentes</p><h2 className="mt-4 text-4xl font-semibold tracking-[-0.05em]">Antes de integrar, resolvamos lo importante.</h2><div className="mt-9 divide-y divide-[#e2e6ef] border-y border-[#e2e6ef]">{[["¿Tengo que cambiar mi ERP, POS o sistema contable?", "No. El punto de partida son las herramientas que ya usa tu equipo y el proceso que quieres mejorar."], ["¿Ruka lee desde el sistema o escribe en él?", "Puede ser una u otra dirección, o ambas. Se define por integración después de revisar los accesos y controles necesarios."], ["¿Cuánto demora una integración?", "Depende de la fuente, los accesos y las reglas. Primero definimos un alcance realista con tu equipo."], ["¿Qué ocurre si no aparece mi sistema?", "Podemos evaluar archivos, correo, APIs y sistemas propios. Solicitarlo no implica una promesa de disponibilidad."], ["¿La información queda trazable?", "El diseño del flujo considera el origen, las reglas y el estado que el equipo necesita revisar antes de continuar."]].map(([question, answer]) => <details key={question} className="group py-5"><summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-[#34415a]">{question}<ChevronDown className="h-5 w-5 text-[#788399] transition-transform group-open:rotate-180" /></summary><p className="mt-3 text-sm leading-7 text-[#687389]">{answer}</p></details>)}</div></div></section>
-      <section className="bg-[#161a29] py-20 text-white"><div className="mx-auto max-w-3xl px-6 text-center"><p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[#aeb8ff]">¿No encontraste tu sistema?</p><h2 className="mt-4 text-balance text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">Cuéntanos qué fuente necesitas conectar.</h2><p className="mt-5 text-lg leading-8 text-[#c7cedd]">Revisamos el acceso disponible, el proceso y la información que debería quedar lista.</p><div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><a href={whatsapp} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3.5 text-sm font-semibold text-[#252e45]">Solicitar una integración <ArrowRight className="ml-2 h-4 w-4" /></a><Link to="/register" className="inline-flex items-center justify-center rounded-full border border-white/25 px-5 py-3.5 text-sm font-semibold">Agendar conversación</Link></div></div></section>
-    </main>
-    <Footer />
-  </div>;
+        <section className="border-t border-[#dfe4ef] bg-white px-5 py-20 sm:px-8 sm:py-24">
+          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+            <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.04em]">Preguntas sobre conexiones.</h2>
+            <div className="border-t border-[#dfe4ef]">
+              {faqs.map((faq) => <details key={faq.question} className="group border-b border-[#dfe4ef] py-5"><summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-lg font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{faq.question}<span className="text-primary transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span></summary><p className="max-w-3xl pt-4 text-base leading-7 text-[#626a7d]">{faq.answer}</p></details>)}
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
 }

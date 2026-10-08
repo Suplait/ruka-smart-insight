@@ -32,4 +32,13 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
 Sitemap: https://www.ruka.ai/sitemap.xml

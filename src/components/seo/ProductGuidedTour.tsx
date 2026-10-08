@@ -1,20 +1,12 @@
-import { useState, type ReactNode } from "react";
-import { ChevronRight, type LucideIcon } from "lucide-react";
+import { useId, useState, type ReactNode } from "react";
+import { ArrowLeft, ArrowRight, Check, Eye, type LucideIcon } from "lucide-react";
 
 export type ProductGuidedTourStep = {
   label: string;
   title: string;
   description: string;
   outcome: string;
-  focus: {
-    label: string;
-    copy: string;
-    left: string;
-    top: string;
-    width: string;
-    height: string;
-    labelPosition?: "top" | "bottom";
-  };
+  focus: { label: string; copy: string };
   Icon: LucideIcon;
   visual: ReactNode;
   aspect?: "standard" | "wide" | "cinema";
@@ -29,111 +21,115 @@ type ProductGuidedTourProps = {
 const aspectClasses = {
   standard: "aspect-[4/3]",
   wide: "aspect-[16/10]",
-  cinema: "aspect-video",
+  cinema: "aspect-[4/3] sm:aspect-video",
 };
 
 export function ProductGuidedTour({ heading, intro, steps }: ProductGuidedTourProps) {
   const [activeStep, setActiveStep] = useState(0);
   const active = steps[activeStep];
-  const focusStyle = {
-    left: active.focus.left,
-    top: active.focus.top,
-    width: active.focus.width,
-    height: active.focus.height,
-    boxShadow: "0 0 0 999px rgba(23, 26, 41, 0.32)",
-  };
+  const tabsId = useId();
+
+  const selectStep = (index: number) => setActiveStep((index + steps.length) % steps.length);
 
   return (
-    <section className="border-y border-[#dce1eb] py-16 sm:py-20" aria-labelledby="product-tour-title">
-      <div className="max-w-3xl">
-        <p className="text-sm font-semibold text-primary">Producto en acción</p>
-        <h2 id="product-tour-title" className="mt-3 text-balance text-3xl font-semibold leading-[1.1] tracking-[-0.035em] text-[#171827] sm:text-4xl">
-          {heading}
-        </h2>
-        <p className="mt-5 text-lg leading-8 text-[#555b6e]">{intro}</p>
-      </div>
+    <section className="border-y border-[#dce1eb] bg-white px-5 py-20 sm:px-8 sm:py-28" aria-labelledby="product-tour-title">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-end lg:gap-20">
+          <div>
+            <p className="text-sm font-semibold text-primary">Producto en acción</p>
+            <h2 id="product-tour-title" className="mt-3 text-balance text-3xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#171827] sm:text-4xl">{heading}</h2>
+          </div>
+          <p className="max-w-2xl text-pretty text-lg leading-8 text-[#596176] lg:justify-self-end">{intro}</p>
+        </div>
 
-      <div className="mt-10 overflow-hidden rounded-[22px] border border-[#dce1eb] bg-[#f7f8fc] shadow-[0_18px_55px_rgba(24,30,52,0.055)] sm:mt-12">
-        <div className="grid lg:grid-cols-[20rem_minmax(0,1fr)]">
-          <div className="border-b border-[#dce1eb] bg-white p-4 sm:p-5 lg:border-b-0 lg:border-r lg:p-6">
-            <div className="flex items-center justify-between gap-3 border-b border-[#e4e8f0] pb-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#687080]">Recorrido guiado</p>
-              <span className="rounded-full bg-[#eef1ff] px-2.5 py-1 text-xs font-semibold text-primary">
-                {activeStep + 1} / {steps.length}
+        <div className="mt-10 overflow-hidden rounded-2xl border border-[#d8deea] bg-[#f6f7fb] sm:mt-12">
+          <div className="flex items-center justify-between border-b border-[#dfe4ed] bg-white px-4 py-3.5 sm:px-6">
+            <div className="flex items-center gap-2.5">
+              <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#30a875] opacity-30 motion-reduce:hidden" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#30a875]" />
               </span>
+              <span className="text-sm font-semibold text-[#40485b]">Recorrido de producto</span>
             </div>
+            <span className="font-mono text-xs font-semibold tabular-nums text-[#747d90]">{String(activeStep + 1).padStart(2, "0")} / {String(steps.length).padStart(2, "0")}</span>
+          </div>
 
-            <div className="mt-3 grid gap-1.5 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="border-b border-[#dfe4ed] bg-white">
+            <div className="scrollbar-hide flex overflow-x-auto px-2 sm:px-4" role="tablist" aria-label="Pasos del recorrido">
               {steps.map((step, index) => {
                 const Icon = step.Icon;
                 const isActive = index === activeStep;
-
+                const tabId = `${tabsId}-tab-${index}`;
+                const panelId = `${tabsId}-panel-${index}`;
                 return (
                   <button
                     key={step.label}
+                    id={tabId}
                     type="button"
-                    aria-pressed={isActive}
-                    onClick={() => setActiveStep(index)}
-                    className={`group flex min-h-16 w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
-                      isActive
-                        ? "bg-[#171a29] text-white shadow-[0_8px_20px_rgba(23,26,41,0.16)]"
-                        : "text-[#4d5568] hover:bg-[#f4f6fb]"
-                    }`}
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={panelId}
+                    tabIndex={isActive ? 0 : -1}
+                    onClick={() => selectStep(index)}
+                    onKeyDown={(event) => {
+                      if (event.key === "ArrowRight") selectStep(activeStep + 1);
+                      if (event.key === "ArrowLeft") selectStep(activeStep - 1);
+                    }}
+                    className={`group relative flex min-w-[10rem] flex-1 items-center gap-3 px-3 py-4 text-left focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary sm:min-w-[11rem] sm:px-4 ${isActive ? "text-[#171827]" : "text-[#7a8293] hover:text-[#3e4658]"}`}
                   >
-                    <span className={`flex h-9 w-9 flex-none items-center justify-center rounded-lg ${isActive ? "bg-white/[0.12] text-[#aeb8ff]" : "bg-[#eef1ff] text-primary"}`}>
+                    <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl transition-colors duration-200 ${isActive ? "bg-[#171a29] text-white" : "bg-[#f1f3f8] text-[#737c90] group-hover:bg-[#e9ecf3]"}`}>
                       <Icon className="h-4 w-4" strokeWidth={1.9} aria-hidden="true" />
                     </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-xs font-semibold tracking-[0.02em] opacity-70">0{index + 1}</span>
+                    <span className="min-w-0">
+                      <span className="block font-mono text-[10px] font-semibold tracking-[0.08em] text-primary">0{index + 1}</span>
                       <span className="mt-0.5 block text-sm font-semibold leading-5">{step.label}</span>
                     </span>
-                    <ChevronRight className={`h-4 w-4 flex-none transition-transform ${isActive ? "translate-x-0 text-white" : "-translate-x-1 text-[#a2a9b8] group-hover:translate-x-0"}`} aria-hidden="true" />
+                    <span className={`absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-primary transition-transform duration-200 ${isActive ? "scale-x-100" : "scale-x-0"}`} aria-hidden="true" />
                   </button>
                 );
               })}
             </div>
           </div>
 
-          <div className="min-w-0 p-3 sm:p-5 lg:p-6">
-            <figure aria-live="polite">
-              <div className="overflow-hidden rounded-[18px] border border-[#d7ddea] bg-[#eef1f5] shadow-[0_20px_48px_rgba(24,30,52,0.12)]">
-                <div className={`relative overflow-hidden bg-[#eef1f5] ${aspectClasses[active.aspect ?? "standard"]}`}>
-                  {active.visual}
-                  <div
-                    className="pointer-events-none absolute z-10 rounded-lg border-2 border-[#6475ff] bg-white/[0.03] shadow-[0_0_0_5px_rgba(255,255,255,0.72),0_0_20px_rgba(81,101,255,0.5)]"
-                    style={focusStyle}
-                    aria-hidden="true"
-                  >
-                    <span className="absolute -left-2.5 -top-2.5 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-primary text-xs font-bold text-white shadow-sm">
-                      {activeStep + 1}
-                    </span>
-                    <span
-                      className={`absolute left-0 whitespace-nowrap rounded-full bg-[#171a29] px-3 py-1.5 text-[11px] font-semibold tracking-[0.01em] text-white shadow-[0_8px_18px_rgba(23,26,41,0.2)] ${
-                        active.focus.labelPosition === "bottom" ? "-bottom-10" : "-top-10"
-                      }`}
-                    >
-                      {active.focus.label}
-                    </span>
-                  </div>
+          <div key={activeStep} id={`${tabsId}-panel-${activeStep}`} role="tabpanel" aria-labelledby={`${tabsId}-tab-${activeStep}`} className="grid animate-in fade-in-0 duration-300 lg:grid-cols-[minmax(0,1fr)_21rem]">
+            <div className="min-w-0 border-b border-[#dfe4ed] p-3 sm:p-5 lg:border-b-0 lg:border-r lg:p-6">
+              <div className="overflow-hidden rounded-xl bg-white shadow-[0_10px_28px_rgba(29,38,72,0.12)]">
+                <div className="flex h-10 items-center gap-1.5 border-b border-[#e2e6ee] bg-[#fbfcfe] px-4" aria-hidden="true">
+                  <span className="h-2 w-2 rounded-full bg-[#d2d7e1]" />
+                  <span className="h-2 w-2 rounded-full bg-[#d2d7e1]" />
+                  <span className="h-2 w-2 rounded-full bg-[#d2d7e1]" />
+                  <span className="mx-auto h-5 w-36 rounded-md border border-[#e3e6ed] bg-white sm:w-52" />
+                  <span className="w-5" />
                 </div>
+                <div className={`relative overflow-hidden bg-[#eef1f5] ${aspectClasses[active.aspect ?? "standard"]}`}>{active.visual}</div>
+              </div>
+            </div>
+
+            <aside className="flex flex-col bg-white p-6 sm:p-8 lg:min-h-full" aria-live="polite">
+              <div>
+                <p className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">Paso {String(activeStep + 1).padStart(2, "0")}</p>
+                <h3 className="mt-3 text-balance text-2xl font-semibold leading-[1.12] tracking-[-0.03em] text-[#202231]">{active.title}</h3>
+                <p className="mt-4 text-[15px] leading-7 text-[#626a7c]">{active.description}</p>
               </div>
 
-              <figcaption className="mt-5 grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(13rem,0.8fr)] sm:items-end">
-                <div>
-                  <p className="text-sm font-semibold text-primary">Paso {activeStep + 1} · {active.label}</p>
-                  <h3 className="mt-2 text-balance text-2xl font-semibold leading-tight tracking-[-0.025em] text-[#202231]">{active.title}</h3>
-                  <p className="mt-3 text-[15px] leading-7 text-[#62697a]">{active.description}</p>
+              <div className="mt-6 rounded-2xl bg-[#eef1ff] p-4">
+                <div className="flex items-center gap-2 text-primary">
+                  <Eye className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
+                  <p className="text-xs font-semibold uppercase tracking-[0.08em]">{active.focus.label}</p>
                 </div>
-                <div className="rounded-xl border border-[#d8def0] bg-white px-4 py-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">Mira en pantalla</p>
-                  <p className="mt-2 text-sm font-medium leading-6 text-[#41495c]">{active.focus.copy}</p>
-                  <p className="mt-3 border-t border-[#e5e8f1] pt-3 text-sm leading-6 text-[#62697a]">
-                    <span className="font-semibold text-[#41495c]">Resultado: </span>
-                    {active.outcome}
-                  </p>
-                </div>
-              </figcaption>
-            </figure>
+                <p className="mt-2 text-sm leading-6 text-[#46516d]">{active.focus.copy}</p>
+              </div>
+
+              <div className="mt-5 flex items-start gap-3 border-t border-[#e5e8ef] pt-5">
+                <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#e7f7ef] text-[#17805e]"><Check className="h-3.5 w-3.5" strokeWidth={2.5} aria-hidden="true" /></span>
+                <p className="text-sm leading-6 text-[#4f586b]"><span className="font-semibold text-[#252838]">Resultado. </span>{active.outcome}</p>
+              </div>
+
+              <div className="mt-auto flex items-center justify-between gap-3 pt-8">
+                <button type="button" onClick={() => selectStep(activeStep - 1)} className="grid h-10 w-10 place-items-center rounded-full border border-[#d9dee8] bg-white text-[#5e6678] transition-[border-color,color,transform] duration-200 hover:border-[#aeb8ff] hover:text-primary active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label="Paso anterior"><ArrowLeft className="h-4 w-4" aria-hidden="true" /></button>
+                <button type="button" onClick={() => selectStep(activeStep + 1)} className="group inline-flex h-10 items-center justify-center rounded-full bg-[#171a29] px-4 text-sm font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-primary active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">Siguiente <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" /></button>
+              </div>
+            </aside>
           </div>
         </div>
       </div>

@@ -38,10 +38,19 @@ const aboutStructuredData = {
       inLanguage: "es-CL",
       isPartOf: { "@id": websiteId },
       mainEntity: { "@id": organizationId },
+      breadcrumb: { "@id": `${aboutSeo.canonicalUrl}#breadcrumb` },
       primaryImageOfPage: {
         "@type": "ImageObject",
         url: aboutSeo.imageUrl,
       },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${aboutSeo.canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Ruka", item: "https://www.ruka.ai/" },
+        { "@type": "ListItem", position: 2, name: "Quiénes somos", item: aboutSeo.canonicalUrl },
+      ],
     },
     ...founderEntities,
   ],
