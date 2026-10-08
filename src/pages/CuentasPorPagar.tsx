@@ -29,9 +29,9 @@ function ReceptionProof() {
         </div>
 
         <div>
-          <p className="text-sm font-semibold text-primary">Recepción antes del pago</p>
-          <h2 id="reception-proof-title" className="mt-4 text-balance text-4xl font-semibold leading-[1.04] tracking-[-0.04em] sm:text-5xl">Lo recibido decide qué se puede pagar.</h2>
-          <p className="mt-5 text-lg leading-8 text-[#5d6577]">Tu equipo confirma cantidades y registra faltantes o productos con problemas al momento de recibir. Ruka deja esa evidencia vinculada a la factura.</p>
+          <p className="text-sm font-semibold text-primary">Antes de pagar</p>
+          <h2 id="reception-proof-title" className="mt-4 text-balance text-4xl font-semibold leading-[1.04] tracking-[-0.04em] sm:text-5xl">Primero confirma qué llegó.</h2>
+          <p className="mt-5 text-lg leading-8 text-[#5d6577]">Tu equipo anota las cantidades recibidas, los faltantes y cualquier problema. Ruka deja todo vinculado a la factura antes de preparar el pago.</p>
           <ul className="mt-7 space-y-3 text-[15px] text-[#4f586b]">
             {["Cantidades recibidas por producto", "Faltantes, incidencias y evidencia", "Bloqueo de facturas con diferencias"].map((item) => (
               <li key={item} className="flex items-center gap-3">
@@ -51,9 +51,9 @@ function PaymentProof() {
     <section className="border-b border-[#dfe4ef] bg-[#f6f7fb] px-5 py-20 sm:px-8 sm:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16">
         <div>
-          <p className="text-sm font-semibold text-primary">Nómina bancaria</p>
-          <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.04] tracking-[-0.04em] sm:text-5xl">Genera la nómina masiva en un clic.</h2>
-          <p className="mt-5 text-lg leading-8 text-[#5d6577]">Ruka toma las facturas que ya pasaron tus controles y genera el archivo en el formato de tu banco, listo para subir y pagar.</p>
+          <p className="text-sm font-semibold text-primary">Pago masivo a proveedores</p>
+          <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.04] tracking-[-0.04em] sm:text-5xl">Un clic y la nómina queda lista.</h2>
+          <p className="mt-5 text-lg leading-8 text-[#5d6577]">Ruka toma las facturas aprobadas y arma el archivo en el formato que pide tu banco. Tú solo lo descargas, lo subes y autorizas el pago.</p>
           <div className="mt-8 border-y border-[#d9deea]" aria-label="Flujo desde facturas aprobadas hasta nómina bancaria">
             {[
               { Icon: FileText, label: "Facturas listas", detail: "Recepción y reglas confirmadas" },

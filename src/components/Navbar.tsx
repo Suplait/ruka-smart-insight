@@ -18,8 +18,8 @@ const productLinks = [
   { label: "Registro de compras", href: "/productos/registro-de-compras" },
   { label: "Conciliación automática", href: "/productos/conciliacion-automatica" },
   { label: "Cuentas por pagar", href: "/productos/cuentas-por-pagar" },
-  { label: "Panel de control", href: "/productos/panel-control" },
-  { label: "Stock", href: "/productos/stock" },
+  { label: "Costos y margen", href: "/productos/panel-control" },
+  { label: "Stock e inventario", href: "/productos/stock" },
 ] as const;
 
 const industryLinks = [

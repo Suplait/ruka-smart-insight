@@ -9,9 +9,9 @@ function StockMovement() {
     <section className="border-y border-[#dfe4ef] bg-white px-5 py-20 sm:px-8 sm:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <div>
-          <p className="text-sm font-semibold text-primary">Movimiento trazable</p>
-          <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.04] tracking-[-0.04em] sm:text-5xl">Cada traspaso conserva quién pidió, quién aprobó y qué cambió.</h2>
-          <p className="mt-5 text-lg leading-8 text-[#5d6577]">Las bodegas se conectan sin perder el control operativo que necesita tu equipo.</p>
+          <p className="text-sm font-semibold text-primary">Traspasos entre bodegas</p>
+          <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.04] tracking-[-0.04em] sm:text-5xl">Siempre sabes quién movió qué y hacia dónde.</h2>
+          <p className="mt-5 text-lg leading-8 text-[#5d6577]">Cada solicitud conserva su origen, destino, responsable y aprobación. Cuando el traspaso se confirma, el stock se actualiza.</p>
           <div className="mt-8 border-y border-[#dfe4ef]">
             {["Solicitud registrada", "Aprobación visible", "Inventario actualizado"].map((item, index) => (
               <div key={item} className="flex items-center gap-3 border-b border-[#dfe4ef] py-3.5 last:border-b-0">

@@ -7,30 +7,30 @@ import { productPages } from "@/content/productPages";
 const steps = [
   {
     label: "Fuentes reunidas",
-    title: "Los documentos del mismo caso, juntos.",
-    description: "Factura, orden, recepción y pago dejan de vivir como piezas separadas.",
-    outcome: "El caso queda completo antes de aplicar una regla.",
-    focus: { label: "Caso completo", copy: "Cada fuente aporta la evidencia que explica el resultado." },
+    title: "Primero, Ruka junta todo lo de la compra.",
+    description: "Factura, orden, recepción y pago aparecen unidos en un solo caso.",
+    outcome: "Ya no tienes que abrir cuatro sistemas para entender qué pasó.",
+    focus: { label: "Caso completo", copy: "Cada documento queda a mano para comprobar el resultado." },
     Icon: Network,
     visual: <ConciliationWorkspaceVisual stage="sources" />,
     aspect: "cinema" as const,
   },
   {
     label: "Reglas aplicadas",
-    title: "Tus criterios se aplican siempre igual.",
-    description: "Monto, proveedor, fecha, orden, recepción y las tolerancias que define tu equipo.",
-    outcome: "Lo repetitivo deja de depender de una revisión manual.",
-    focus: { label: "Reglas de validación", copy: "La operación define qué significa que un caso calce." },
+    title: "Después, comprueba que los datos coincidan.",
+    description: "Compara monto, proveedor, fecha, orden, recepción y las tolerancias que acepta tu equipo.",
+    outcome: "Las compras correctas avanzan sin una revisión manual.",
+    focus: { label: "Reglas de validación", copy: "Tú defines qué debe coincidir y qué diferencia es aceptable." },
     Icon: BadgeCheck,
     visual: <ConciliationWorkspaceVisual stage="rules" />,
     aspect: "cinema" as const,
   },
   {
     label: "Diferencias separadas",
-    title: "Solo queda arriba lo que necesita una decisión.",
-    description: "La diferencia aparece con el valor esperado, el recibido y su documento de origen.",
-    outcome: "El equipo revisa excepciones, no el volumen completo.",
-    focus: { label: "Diferencia explicada", copy: "La excepción conserva el contexto necesario para resolverla." },
+    title: "Si algo no calza, te muestra exactamente qué.",
+    description: "La diferencia aparece con el valor esperado, lo que llegó y el documento donde se encontró.",
+    outcome: "Tu equipo revisa cuatro diferencias, no 128 compras.",
+    focus: { label: "Diferencia explicada", copy: "Tienes el contexto necesario para resolverla sin volver a investigar." },
     Icon: TriangleAlert,
     visual: <ConciliationWorkspaceVisual stage="exceptions" />,
     aspect: "cinema" as const,
@@ -58,7 +58,7 @@ export default function ConciliacionAutomatica() {
     <ProductLandingPage
       content={productPages.conciliacion}
       visual={<HeroVisual />}
-      demo={<ProductGuidedTour heading="De cuatro documentos a un caso resuelto." intro="Recorre el proceso completo sin perder el contexto de cada decisión." steps={steps} />}
+      demo={<ProductGuidedTour heading="Mira cómo Ruka concilia una compra." intro="Los documentos se reúnen, las reglas se aplican y solo las diferencias reales llegan a tu equipo." steps={steps} />}
     />
   );
 }

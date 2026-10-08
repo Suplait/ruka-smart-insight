@@ -10,9 +10,9 @@ function MarginView() {
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-16">
         <ProductImage src={panelTicket} alt="Detalle de ticket promedio y margen en Ruka" position="center" aspect="banner" label="Control / Ticket promedio" />
         <div>
-          <p className="text-sm font-semibold text-primary">Del dato a la causa</p>
-          <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.04] tracking-[-0.04em] sm:text-5xl">No solo ves que cambió. Puedes seguir por qué.</h2>
-          <p className="mt-5 text-lg leading-8 text-[#5d6577]">Cada lectura conecta con ventas, compras y costos que permiten explicar la variación.</p>
+          <p className="text-sm font-semibold text-primary">Cuando cambia el margen</p>
+          <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.04] tracking-[-0.04em] sm:text-5xl">No solo ves el cambio. También ves qué lo provocó.</h2>
+          <p className="mt-5 text-lg leading-8 text-[#5d6577]">Abre el indicador y sigue la variación hasta las ventas, compras y costos que la explican.</p>
           <div className="mt-8 flex items-center border-y border-[#dfe4ef] py-4" aria-label="Datos conectados para calcular margen">
             {[
               { Icon: ShoppingBag, label: "Ventas" },

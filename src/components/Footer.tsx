@@ -5,8 +5,8 @@ const productLinks = [
   { label: "Registro de compras", to: "/productos/registro-de-compras" },
   { label: "Conciliación automática", to: "/productos/conciliacion-automatica" },
   { label: "Cuentas por pagar", to: "/productos/cuentas-por-pagar" },
-  { label: "Panel de control", to: "/productos/panel-control" },
-  { label: "Stock", to: "/productos/stock" },
+  { label: "Costos y margen", to: "/productos/panel-control" },
+  { label: "Stock e inventario", to: "/productos/stock" },
 ] as const;
 
 const oneLinks = [

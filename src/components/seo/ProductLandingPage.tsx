@@ -149,7 +149,7 @@ export function ProductLandingPage({ content, visual, demo }: ProductLandingPage
         <section className="bg-[#171a29] px-5 py-20 text-white sm:px-8 sm:py-24">
           <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
-              <p className="text-sm font-semibold text-[#aeb8ff]">Lo importante</p>
+              <p className="text-sm font-semibold text-[#aeb8ff]">En la práctica</p>
               <h2 className="mt-4 max-w-4xl text-balance text-4xl font-semibold leading-[1.03] tracking-[-0.04em] sm:text-5xl">{content.promise}</h2>
             </div>
             <Link to="/register" className="group inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 text-base font-semibold text-[#202231] transition-[background-color,transform] duration-200 hover:bg-[#eef1ff] active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[#171a29]">
@@ -162,7 +162,7 @@ export function ProductLandingPage({ content, visual, demo }: ProductLandingPage
           <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.68fr_1.32fr] lg:gap-20">
             <div>
               <p className="text-sm font-semibold text-primary">Preguntas frecuentes</p>
-              <h2 id="product-faq-title" className="mt-4 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.04em]">Antes de ponerlo a trabajar.</h2>
+              <h2 id="product-faq-title" className="mt-4 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.04em]">Lo que suele preguntarnos el equipo.</h2>
             </div>
             <div className="border-t border-[#dfe4ef]">
               {content.faqs.map((faq) => (
@@ -181,8 +181,8 @@ export function ProductLandingPage({ content, visual, demo }: ProductLandingPage
         <section className="px-5 pb-20 sm:px-8 sm:pb-28">
           <div className="mx-auto flex max-w-7xl flex-col gap-7 rounded-2xl bg-[#eef1ff] px-7 py-9 sm:px-10 sm:py-11 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h2 className="text-3xl font-semibold tracking-[-0.035em]">¿Este trabajo sigue siendo manual?</h2>
-              <p className="mt-2 text-base text-[#5d6578]">Muéstranos cómo funciona hoy. Te contamos qué podría tomar Ruka.</p>
+              <h2 className="text-3xl font-semibold tracking-[-0.035em]">¿Todavía hacen esto a mano?</h2>
+              <p className="mt-2 text-base text-[#5d6578]">Muéstranos el proceso. En 30 minutos vemos contigo qué parte podría tomar Ruka.</p>
             </div>
             <Link to="/register" className="group inline-flex min-h-12 shrink-0 items-center justify-center rounded-full bg-primary px-6 text-base font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-[#4358d8] active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4">
               Agendar 30 min <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
