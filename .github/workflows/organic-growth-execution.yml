@@ -1,0 +1,195 @@
+name: Organic Growth Execution
+
+on:
+  schedule:
+    - cron: "17 12 * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Run even when the persistent schedule is not due"
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: organic-growth-execution
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  deployments: read
+  pull-requests: write
+  statuses: read
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
+      ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
+      GSC_CLIENT_ID: ${{ secrets.GSC_CLIENT_ID }}
+      GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
+      GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
+      GSC_SITE_URL: sc-domain:ruka.ai
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out landing
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Claim due execution atomically
+        id: claim
+        env:
+          ORGANIC_GROWTH_FORCE: ${{ inputs.force || false }}
+        run: node scripts/organic-growth/job-control.mjs claim execution
+
+      - name: Stop when not due
+        if: steps.claim.outputs.claimed != 'true'
+        run: echo "Execution not claimed (${{ steps.claim.outputs.reason }}); next due ${{ steps.claim.outputs.next_due_at }}."
+
+      - name: Check out product intelligence sources
+        if: steps.claim.outputs.claimed == 'true'
+        uses: actions/checkout@v5
+        with:
+          repository: Suplait/ruka
+          token: ${{ secrets.PRODUCT_REPOS_TOKEN }}
+          path: .organic-growth/sources/ruka-ai
+          fetch-depth: 80
+
+      - name: Check out Ruka V3 intelligence source
+        if: steps.claim.outputs.claimed == 'true'
+        uses: actions/checkout@v5
+        with:
+          repository: Suplait/ruka_v3
+          token: ${{ secrets.PRODUCT_REPOS_TOKEN }}
+          path: .organic-growth/sources/ruka_v3
+          fetch-depth: 80
+
+      - name: Collect finalized Search Console evidence
+        if: steps.claim.outputs.claimed == 'true'
+        env:
+          ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
+        run: npm run organic:gsc
+
+      - name: Collect read-only product intelligence
+        if: steps.claim.outputs.claimed == 'true'
+        env:
+          ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
+          RUKA_REPO_PATH: ${{ github.workspace }}/.organic-growth/sources/ruka-ai
+          RUKA_V3_REPO_PATH: ${{ github.workspace }}/.organic-growth/sources/ruka_v3
+        run: npm run organic:product
+
+      - name: Prepare persistent engine context
+        if: steps.claim.outputs.claimed == 'true'
+        run: npm run organic:prepare
+
+      - name: Create isolated work branch
+        if: steps.claim.outputs.claimed == 'true'
+        env:
+          RUN_ID: ${{ steps.claim.outputs.run_id }}
+        run: git switch -c "organic-growth/${RUN_ID:0:8}"
+
+      - name: Execute one evidence-backed improvement
+        if: steps.claim.outputs.claimed == 'true'
+        id: codex
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          responses-api-endpoint: ${{ secrets.AZURE_OPENAI_RESPONSES_ENDPOINT }}
+          permission-profile: ":workspace"
+          prompt-file: docs/organic-growth/AGENT_PROMPT.md
+          output-file: .organic-growth/codex-result.md
+          model: gpt-5.5-camilo
+          effort: high
+          allow-bots: true
+
+      - name: Validate safety, build, lint and server SEO
+        if: steps.claim.outputs.claimed == 'true'
+        run: |
+          npm run organic:guard
+          npm run organic:manifest
+          npm run build
+          npm run organic:lint
+          npm run validate:seo
+
+      - name: Publish reviewed automation PR
+        if: steps.claim.outputs.claimed == 'true'
+        id: publish
+        env:
+          RUN_ID: ${{ steps.claim.outputs.run_id }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "ruka-organic-growth[bot]"
+          git config user.email "organic-growth@ruka.ai"
+          git add --all
+          git commit -m "Improve organic growth from Search Console evidence"
+          git push --set-upstream origin "HEAD"
+          PR_URL="$(gh pr create --base main --head "$(git branch --show-current)" --title "Organic growth: scheduled improvement" --body-file .organic-growth/codex-result.md)"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "pr_url=$PR_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for checks and merge safe change
+        if: steps.claim.outputs.claimed == 'true' && steps.publish.outputs.changed == 'true'
+        env:
+          PR_URL: ${{ steps.publish.outputs.pr_url }}
+        run: |
+          gh pr checks "$PR_URL" --watch --fail-fast --interval 15
+          gh pr merge "$PR_URL" --squash --delete-branch
+
+      - name: Resolve deployed SHA
+        if: steps.claim.outputs.claimed == 'true'
+        id: deployment
+        run: |
+          git fetch origin main
+          echo "sha=$(git rev-parse origin/main)" >> "$GITHUB_OUTPUT"
+
+      - name: Verify production with bounded retries
+        if: steps.claim.outputs.claimed == 'true' && steps.publish.outputs.changed == 'true'
+        env:
+          ORGANIC_GROWTH_EXPECTED_SHA: ${{ steps.deployment.outputs.sha }}
+          GITHUB_API_URL: ${{ github.api_url }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          for attempt in $(seq 1 15); do
+            if npm run organic:verify; then exit 0; fi
+            if [ "$attempt" -eq 15 ]; then exit 1; fi
+            sleep 20
+          done
+
+      - name: Persist experiment and learning
+        if: steps.claim.outputs.claimed == 'true'
+        env:
+          ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
+          ORGANIC_GROWTH_GIT_SHA: ${{ steps.deployment.outputs.sha }}
+          ORGANIC_GROWTH_PR_URL: ${{ steps.publish.outputs.pr_url }}
+          ORGANIC_GROWTH_DEPLOYMENT_URL: https://www.ruka.ai
+          ORGANIC_GROWTH_PUBLISHED_CHANGED: ${{ steps.publish.outputs.changed }}
+        run: npm run organic:register
+
+      - name: Complete execution run
+        if: steps.claim.outputs.claimed == 'true'
+        env:
+          ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
+          ORGANIC_GROWTH_GIT_SHA: ${{ steps.deployment.outputs.sha }}
+          ORGANIC_GROWTH_PR_URL: ${{ steps.publish.outputs.pr_url }}
+          ORGANIC_GROWTH_DEPLOYMENT_URL: https://www.ruka.ai
+          ORGANIC_GROWTH_SUMMARY: '{"automation":"completed","changed":"${{ steps.publish.outputs.changed }}"}'
+        run: node scripts/organic-growth/job-control.mjs complete execution
+
+      - name: Record and alert failure
+        if: failure() && steps.claim.outputs.claimed == 'true'
+        env:
+          ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
+          ORGANIC_GROWTH_ERROR: "Organic Growth Execution failed in GitHub Actions run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        run: |
+          node scripts/organic-growth/job-control.mjs fail execution || true
+          node -e 'fetch(process.env.ORGANIC_GROWTH_API_URL,{method:"POST",headers:{"content-type":"application/json","x-organic-growth-secret":process.env.ORGANIC_GROWTH_SHARED_SECRET},body:JSON.stringify({action:"incident",severity:"critical",title:"Falló Organic Growth Execution",details:process.env.ORGANIC_GROWTH_ERROR})}).then(r=>{if(!r.ok)process.exit(1)})' || true
