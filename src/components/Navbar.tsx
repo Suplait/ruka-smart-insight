@@ -20,6 +20,12 @@ const productLinks = [
   { label: "Cuentas por pagar", href: "/productos/cuentas-por-pagar" },
   { label: "Costos y margen", href: "/productos/panel-control" },
   { label: "Stock e inventario", href: "/productos/stock" },
+  {
+    label: "Ruka One",
+    href: "/one",
+    description: "Para un proceso propio de tu empresa",
+    featured: true,
+  },
 ] as const;
 
 const industryLinks = [
@@ -197,7 +203,7 @@ function NavDropdown({
 }: {
   value: string;
   label: string;
-  links: readonly { label: string; href: string }[];
+  links: readonly { label: string; href: string; description?: string; featured?: boolean }[];
   onLinkClick: (event: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
   onToggle: React.Dispatch<React.SetStateAction<string>>;
 }) {
@@ -216,17 +222,23 @@ function NavDropdown({
       >
         {label}
       </NavigationMenuTrigger>
-      <NavigationMenuContent className="left-1/2 top-full w-[232px] -translate-x-1/2 pt-2 md:w-[232px]">
-        <ul className="w-[232px] space-y-1 rounded-[14px] border border-[#dfe3ec] bg-white p-2.5 text-popover-foreground shadow-[0_12px_30px_rgba(31,36,54,0.12)]">
+      <NavigationMenuContent className="left-1/2 top-full w-[280px] -translate-x-1/2 pt-2 md:w-[280px]">
+        <ul className="w-[280px] space-y-1 rounded-[14px] border border-[#dfe3ec] bg-white p-2.5 text-popover-foreground shadow-[0_12px_30px_rgba(31,36,54,0.12)]">
           {links.map((link) => (
-            <li key={link.href}>
+            <li key={link.href} className={link.featured ? "mt-2 border-t border-[#e1e5ed] pt-2" : undefined}>
               <NavigationMenuLink asChild>
                 <Link
                   to={link.href}
                   onClick={(event) => onLinkClick(event, link.href)}
-                  className="block rounded-lg px-3.5 py-3 text-sm font-medium text-[#414654] transition-colors hover:bg-[#f3f5fa] hover:text-[#171827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  className={link.featured
+                    ? "group flex items-center justify-between gap-3 rounded-lg bg-[#f1f3ff] px-3.5 py-3 text-[#171827] transition-colors hover:bg-[#e8ecff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    : "block rounded-lg px-3.5 py-3 text-sm font-medium text-[#414654] transition-colors hover:bg-[#f3f5fa] hover:text-[#171827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"}
                 >
-                  {link.label}
+                  <span>
+                    <span className="block text-sm font-semibold">{link.label}</span>
+                    {link.description ? <span className="mt-0.5 block text-xs font-normal leading-4 text-[#62697a]">{link.description}</span> : null}
+                  </span>
+                  {link.featured ? <ArrowRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true" /> : null}
                 </Link>
               </NavigationMenuLink>
             </li>
@@ -245,7 +257,7 @@ function MobileNavGroup({
 }: {
   value: string;
   label: string;
-  links: readonly { label: string; href: string }[];
+  links: readonly { label: string; href: string; description?: string; featured?: boolean }[];
   onLinkClick: (event: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
 }) {
   return (
@@ -260,9 +272,15 @@ function MobileNavGroup({
               key={link.href}
               to={link.href}
               onClick={(event) => onLinkClick(event, link.href)}
-              className="flex min-h-10 items-center rounded-lg px-3 text-sm font-medium text-[#62697a] transition-colors hover:bg-[#f4f6fb] hover:text-[#171827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className={link.featured
+                ? "group mt-2 flex min-h-14 items-center justify-between gap-3 border-t border-[#d9deea] px-3 pt-2 text-[#171827] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                : "flex min-h-10 items-center rounded-lg px-3 text-sm font-medium text-[#62697a] transition-colors hover:bg-[#f4f6fb] hover:text-[#171827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"}
             >
-              {link.label}
+              <span>
+                <span className="block text-sm font-semibold">{link.label}</span>
+                {link.description ? <span className="mt-0.5 block text-xs font-normal leading-4 text-[#62697a]">{link.description}</span> : null}
+              </span>
+              {link.featured ? <ArrowRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true" /> : null}
             </Link>
           ))}
         </div>
