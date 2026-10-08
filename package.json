@@ -9,7 +9,15 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "validate:seo": "node scripts/validate-seo.mjs"
+    "validate:seo": "node scripts/validate-seo.mjs",
+    "organic:gsc": "node scripts/organic-growth/collect-gsc.mjs",
+    "organic:product": "node scripts/organic-growth/collect-product-intelligence.mjs",
+    "organic:prepare": "node scripts/organic-growth/prepare-context.mjs",
+    "organic:manifest": "node scripts/organic-growth/register-cycle.mjs --validate",
+    "organic:register": "node scripts/organic-growth/register-cycle.mjs",
+    "organic:guard": "node scripts/organic-growth/safety-guard.mjs",
+    "organic:lint": "node scripts/organic-growth/lint-changed.mjs",
+    "organic:verify": "node scripts/organic-growth/verify-production.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

@@ -9,3 +9,6 @@ verify_jwt = false
 
 [functions.notify-one-slack]
 verify_jwt = false
+
+[functions.organic-growth-api]
+verify_jwt = false
