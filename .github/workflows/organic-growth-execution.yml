@@ -25,14 +25,6 @@ jobs:
   execute:
     runs-on: ubuntu-latest
     timeout-minutes: 75
-    env:
-      ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
-      ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
-      GSC_CLIENT_ID: ${{ secrets.GSC_CLIENT_ID }}
-      GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
-      GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
-      GSC_SITE_URL: sc-domain:ruka.ai
-      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Check out landing
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -46,6 +38,8 @@ jobs:
         id: claim
         env:
           ORGANIC_GROWTH_FORCE: ${{ inputs.force || false }}
+          ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
+          ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
         run: node scripts/organic-growth/job-control.mjs claim execution
 
       - name: Stop when not due
@@ -73,12 +67,20 @@ jobs:
       - name: Collect finalized Search Console evidence
         if: steps.claim.outputs.claimed == 'true'
         env:
+          GSC_CLIENT_ID: ${{ secrets.GSC_CLIENT_ID }}
+          GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
+          GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
+          GSC_SITE_URL: sc-domain:ruka.ai
+          ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
+          ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
           ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
         run: npm run organic:gsc
 
       - name: Collect read-only product intelligence
         if: steps.claim.outputs.claimed == 'true'
         env:
+          ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
+          ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
           ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
           RUKA_REPO_PATH: ${{ github.workspace }}/.organic-growth/sources/ruka-ai
           RUKA_V3_REPO_PATH: ${{ github.workspace }}/.organic-growth/sources/ruka_v3
@@ -86,7 +88,14 @@ jobs:
 
       - name: Prepare persistent engine context
         if: steps.claim.outputs.claimed == 'true'
+        env:
+          ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
+          ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
         run: npm run organic:prepare
+
+      - name: Remove product source checkouts before agent execution
+        if: steps.claim.outputs.claimed == 'true'
+        run: rm -rf "$GITHUB_WORKSPACE/.organic-growth/sources"
 
       - name: Create isolated work branch
         if: steps.claim.outputs.claimed == 'true'
@@ -127,6 +136,7 @@ jobs:
         if: steps.claim.outputs.claimed == 'true'
         id: publish
         env:
+          GH_TOKEN: ${{ github.token }}
           RUN_ID: ${{ steps.claim.outputs.run_id }}
         run: |
           if [ -z "$(git status --porcelain)" ]; then
@@ -145,6 +155,7 @@ jobs:
       - name: Wait for checks and merge safe change
         if: steps.claim.outputs.claimed == 'true' && steps.publish.outputs.changed == 'true'
         env:
+          GH_TOKEN: ${{ github.token }}
           PR_URL: ${{ steps.publish.outputs.pr_url }}
         run: |
           gh pr checks "$PR_URL" --watch --fail-fast --interval 15
@@ -174,6 +185,8 @@ jobs:
       - name: Persist experiment and learning
         if: steps.claim.outputs.claimed == 'true'
         env:
+          ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
+          ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
           ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
           ORGANIC_GROWTH_GIT_SHA: ${{ steps.deployment.outputs.sha }}
           ORGANIC_GROWTH_PR_URL: ${{ steps.publish.outputs.pr_url }}
@@ -184,6 +197,8 @@ jobs:
       - name: Complete execution run
         if: steps.claim.outputs.claimed == 'true'
         env:
+          ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
+          ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
           ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
           ORGANIC_GROWTH_GIT_SHA: ${{ steps.deployment.outputs.sha }}
           ORGANIC_GROWTH_PR_URL: ${{ steps.publish.outputs.pr_url }}
@@ -194,6 +209,8 @@ jobs:
       - name: Record and alert failure
         if: failure() && steps.claim.outputs.claimed == 'true'
         env:
+          ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
+          ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
           ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
           ORGANIC_GROWTH_ERROR: "Organic Growth Execution failed in GitHub Actions run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         run: |

@@ -22,13 +22,6 @@ jobs:
   report:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    env:
-      ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
-      ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
-      GSC_CLIENT_ID: ${{ secrets.GSC_CLIENT_ID }}
-      GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
-      GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
-      GSC_SITE_URL: sc-domain:ruka.ai
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
@@ -39,6 +32,8 @@ jobs:
         id: claim
         env:
           ORGANIC_GROWTH_FORCE: ${{ inputs.force || false }}
+          ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
+          ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
         run: node scripts/organic-growth/job-control.mjs claim reporting
 
       - name: Stop when not due
@@ -48,18 +43,28 @@ jobs:
       - name: Collect finalized Search Console evidence
         if: steps.claim.outputs.claimed == 'true'
         env:
+          GSC_CLIENT_ID: ${{ secrets.GSC_CLIENT_ID }}
+          GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
+          GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
+          GSC_SITE_URL: sc-domain:ruka.ai
+          ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
+          ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
           ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
         run: npm run organic:gsc
 
       - name: Generate and deliver executive Slack report
         if: steps.claim.outputs.claimed == 'true'
         env:
+          ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
+          ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
           ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
         run: node scripts/organic-growth/generate-report.mjs
 
       - name: Complete reporting run
         if: steps.claim.outputs.claimed == 'true'
         env:
+          ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
+          ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
           ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
           ORGANIC_GROWTH_SUMMARY: '{"report":"delivered"}'
         run: node scripts/organic-growth/job-control.mjs complete reporting
@@ -67,6 +72,8 @@ jobs:
       - name: Record and alert failure
         if: failure() && steps.claim.outputs.claimed == 'true'
         env:
+          ORGANIC_GROWTH_API_URL: ${{ secrets.ORGANIC_GROWTH_API_URL }}
+          ORGANIC_GROWTH_SHARED_SECRET: ${{ secrets.ORGANIC_GROWTH_SHARED_SECRET }}
           ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
           ORGANIC_GROWTH_ERROR: "Organic Growth Reporting failed in GitHub Actions run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         run: |

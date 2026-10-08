@@ -27,6 +27,7 @@
 - `PRODUCT_REPOS_TOKEN` (read-only access to `Suplait/ruka` and `Suplait/ruka_v3`)
 
 Secrets must never be written to workflow output, committed files or Codex prompts.
+They are scoped only to the workflow steps that require them. The Codex step does not inherit Search Console, engine, product-repository or GitHub publishing credentials, and the private product checkouts are removed after their read-only summary is generated.
 
 ## Failure and recovery
 
