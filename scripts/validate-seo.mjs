@@ -13,75 +13,98 @@ const routes = [
     title: "Agentes IA para automatizar procesos operativos | Ruka",
     canonical: `${siteOrigin}/`,
     h1: "Tu empresa ya tiene los sistemas. Ruka hace el trabajo que queda entre medio.",
-    schema: ["Organization", "WebSite", "SoftwareApplication", "FAQPage", "WebPage"],
+    schema: ["Organization", "WebSite", "SoftwareApplication", "FAQPage", "WebPage", "BreadcrumbList"],
   },
   {
     path: "/about",
     title: "Quiénes somos | Ruka.ai",
     canonical: `${siteOrigin}/about`,
     h1: "No empezamos con Ruka.",
-    schema: ["Organization", "WebSite", "AboutPage", "Person"],
+    schema: ["Organization", "WebSite", "AboutPage", "Person", "BreadcrumbList"],
   },
   {
     path: "/register",
     title: "Agentes IA para automatizar trabajo operativo | Ruka",
     canonical: `${siteOrigin}/register`,
     h1: "Cuéntanos qué trabajo manual quieres dejar de hacer.",
-    schema: ["Organization", "WebSite", "WebPage", "SoftwareApplication", "FAQPage"],
+    schema: ["Organization", "WebSite", "WebPage", "SoftwareApplication", "FAQPage", "BreadcrumbList"],
   },
   {
     path: "/restaurantes",
-    title: "Agentes IA para automatizar operaciones de restaurantes | Ruka",
+    title: "Agentes IA para operaciones de restaurantes | Ruka",
     canonical: `${siteOrigin}/restaurantes`,
     h1: "El trabajo administrativo entre tu SII, POS y planillas, hecho por Ruka.",
-    schema: ["Organization", "WebSite", "WebPage", "SoftwareApplication", "FAQPage"],
+    schema: ["Organization", "WebSite", "WebPage", "SoftwareApplication", "FAQPage", "BreadcrumbList"],
   },
   {
     path: "/hoteles",
     title: "Agentes IA para automatizar procesos en hoteles | Ruka",
     canonical: `${siteOrigin}/hoteles`,
     h1: "Menos trabajo manual entre compras, contabilidad y operación.",
-    schema: ["Organization", "WebSite", "WebPage", "SoftwareApplication", "FAQPage"],
+    schema: ["Organization", "WebSite", "WebPage", "SoftwareApplication", "FAQPage", "BreadcrumbList"],
   },
   {
     path: "/retail",
-    title: "Agentes IA para automatizar compras y operaciones de retail | Ruka",
+    title: "Agentes IA para compras y operaciones retail | Ruka",
     canonical: `${siteOrigin}/retail`,
     h1: "Tus compras no deberían terminar en otra planilla.",
-    schema: ["Organization", "WebSite", "WebPage", "SoftwareApplication", "FAQPage"],
+    schema: ["Organization", "WebSite", "WebPage", "SoftwareApplication", "FAQPage", "BreadcrumbList"],
   },
   {
     path: "/productos/panel-control",
-    title: "Panel de Control Empresarial - Decisiones en Tiempo Real | Ruka",
+    title: "Control de costos y margen operativo | Ruka",
     canonical: `${siteOrigin}/productos/panel-control`,
-    h1: "Convierte Tus Datos en Decisiones",
-    schema: ["SoftwareApplication"],
+    h1: "Ve cuánto te deja cada producto, sin rehacer planillas.",
+    schema: ["Organization", "WebSite", "Service", "WebPage", "BreadcrumbList", "FAQPage"],
   },
   {
     path: "/productos/cuentas-por-pagar",
-    title: "Cuentas por Pagar - Automatiza Pagos a Proveedores | Ruka",
+    title: "Automatiza cuentas por pagar y pagos a proveedores | Ruka",
     canonical: `${siteOrigin}/productos/cuentas-por-pagar`,
-    h1: "Cuentas por Pagar - Automatiza Pagos a Proveedores",
-    schema: ["SoftwareApplication"],
+    h1: "Deja el pago a proveedores listo para el banco.",
+    schema: ["Organization", "WebSite", "Service", "WebPage", "BreadcrumbList", "FAQPage"],
+  },
+  {
+    path: "/productos/registro-de-compras",
+    title: "Registro de compras automático para empresas | Ruka",
+    canonical: `${siteOrigin}/productos/registro-de-compras`,
+    h1: "Tus facturas llegan. Ruka las registra.",
+    schema: ["Organization", "WebSite", "Service", "WebPage", "BreadcrumbList", "FAQPage"],
+  },
+  {
+    path: "/productos/conciliacion-automatica",
+    title: "Conciliación automática de facturas y órdenes | Ruka",
+    canonical: `${siteOrigin}/productos/conciliacion-automatica`,
+    h1: "Factura, orden y recepción. Ruka revisa que todo calce.",
+    schema: ["Organization", "WebSite", "Service", "WebPage", "BreadcrumbList", "FAQPage"],
   },
   {
     path: "/productos/stock",
-    title: "Gestión de Stock e Inventario Automatizada - Ahorra 15+ horas/semana | Ruka",
+    title: "Software para control de stock e inventario | Ruka",
     canonical: `${siteOrigin}/productos/stock`,
-    h1: "Gestión de Stock e Inventario Automatizada",
-    schema: ["SoftwareApplication"],
+    h1: "Cada movimiento actualiza tu stock.",
+    schema: ["Organization", "WebSite", "Service", "WebPage", "BreadcrumbList", "FAQPage"],
+  },
+  {
+    path: "/integraciones",
+    title: "Integraciones de Ruka | ERP, POS, SII y más",
+    canonical: `${siteOrigin}/integraciones`,
+    h1: "Trabajamos donde ya vive tu operación.",
+    schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage", "ItemList"],
   },
   {
     path: "/privacy",
     title: "Política de Privacidad | Ruka.ai",
     canonical: `${siteOrigin}/privacy`,
     h1: "Política de Privacidad",
+    schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"],
   },
   {
     path: "/terms",
     title: "Términos y Condiciones | Ruka.ai",
     canonical: `${siteOrigin}/terms`,
     h1: "Términos y Condiciones",
+    schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"],
   },
   {
     path: "/one",
@@ -134,6 +157,19 @@ function getTagAttribute(html, selectorAttribute, selectorValue, targetAttribute
     if (attributes[selectorAttribute] === selectorValue) return attributes[targetAttribute];
   }
   return undefined;
+}
+
+function getTagAttributes(html, selectorAttribute, selectorValue) {
+  const tags = html.match(/<(?:meta|link)\b[^>]*>/gi) ?? [];
+  return tags.flatMap((tag) => {
+    const attributes = Object.fromEntries(
+      [...tag.matchAll(/([:\w-]+)=(?:"([^"]*)"|'([^']*)')/g)].map((match) => [
+        match[1].toLowerCase(),
+        match[2] ?? match[3] ?? "",
+      ]),
+    );
+    return attributes[selectorAttribute] === selectorValue ? [attributes] : [];
+  });
 }
 
 function textContent(markup) {
@@ -202,8 +238,16 @@ async function validateRoute(route, { noIndex = false } = {}) {
   const h1Matches = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)];
   const h1 = h1Matches.map((match) => textContent(match[1]));
   const schema = parseSchema(html, route.path);
+  const titleCount = (html.match(/<title\b[^>]*>/gi) ?? []).length;
+  const descriptionTags = getTagAttributes(html, "name", "description");
+  const canonicalTags = getTagAttributes(html, "rel", "canonical");
+  const ogImageWidth = getTagAttribute(html, "property", "og:image:width", "content");
+  const ogImageHeight = getTagAttribute(html, "property", "og:image:height", "content");
+  const googlebot = getTagAttribute(html, "name", "googlebot", "content") ?? "";
 
   assert(title === route.title, `${route.path}: title inesperado (${title})`);
+  assert(titleCount === 1, `${route.path}: esperaba exactamente un title y encontré ${titleCount}`);
+  assert(canonicalTags.length === 1, `${route.path}: esperaba exactamente un canonical y encontré ${canonicalTags.length}`);
   assert(canonical === route.canonical, `${route.path}: canonical inesperado (${canonical})`);
   assert(h1Matches.length === 1, `${route.path}: esperaba exactamente un H1 y encontré ${h1Matches.length}`);
   assert(h1[0] === route.h1, `${route.path}: H1 inesperado (${h1[0]})`);
@@ -214,9 +258,32 @@ async function validateRoute(route, { noIndex = false } = {}) {
   if (noIndex) {
     assert(robots.includes("noindex"), `${route.path}: la ruta debe ser noindex`);
   } else {
+    assert(descriptionTags.length === 1, `${route.path}: esperaba exactamente una description y encontré ${descriptionTags.length}`);
     assert(Boolean(description), `${route.path}: falta meta description`);
+    assert(title.length >= 20 && title.length <= 65, `${route.path}: title fuera del rango útil de 20-65 caracteres (${title.length})`);
+    assert(description.length >= 90 && description.length <= 170, `${route.path}: description fuera del rango útil de 90-170 caracteres (${description.length})`);
     assert(ogUrl === route.canonical, `${route.path}: og:url no coincide con canonical (${ogUrl})`);
+    assert(robots.includes("max-image-preview:large"), `${route.path}: robots no habilita previews grandes`);
+    assert(googlebot.includes("max-image-preview:large"), `${route.path}: googlebot no habilita previews grandes`);
+    assert(Boolean(ogImage), `${route.path}: falta og:image`);
+    assert(twitterImage === ogImage, `${route.path}: twitter:image no coincide con og:image`);
+    assert(Boolean(ogImageAlt), `${route.path}: falta og:image:alt`);
+    assert(Boolean(twitterImageAlt), `${route.path}: falta twitter:image:alt`);
+    assert(ogImageWidth === "1200", `${route.path}: og:image:width debe ser 1200 (${ogImageWidth})`);
+    assert(ogImageHeight === "630", `${route.path}: og:image:height debe ser 630 (${ogImageHeight})`);
     assert(!robots.includes("noindex"), `${route.path}: ruta pública marcada noindex`);
+
+    if (ogImage?.startsWith(siteOrigin)) {
+      const imagePath = path.join(projectRoot, "dist", new URL(ogImage).pathname.slice(1));
+      try {
+        const image = await readFile(imagePath);
+        assert(image.subarray(1, 4).toString("ascii") === "PNG", `${route.path}: og:image no es un PNG válido`);
+        assert(image.readUInt32BE(16) === 1200, `${route.path}: ancho real de og:image no es 1200`);
+        assert(image.readUInt32BE(20) === 630, `${route.path}: alto real de og:image no es 630`);
+      } catch (error) {
+        assert(false, `${route.path}: og:image no existe en el build (${error.message})`);
+      }
+    }
   }
 
   if (route.ogImage) {
@@ -228,6 +295,27 @@ async function validateRoute(route, { noIndex = false } = {}) {
 
   for (const expectedType of route.schema ?? []) {
     assert(schema.types.includes(expectedType), `${route.path}: falta schema ${expectedType}`);
+  }
+
+  if (!noIndex) {
+    const graph = schema.values.flatMap((value) => value["@graph"] ?? [value]);
+    const page = graph.find((value) => value?.["@type"] === "WebPage" || value?.["@type"] === "AboutPage");
+    assert(Boolean(page?.primaryImageOfPage), `${route.path}: la página no enlaza primaryImageOfPage en schema`);
+    assert(Boolean(page?.breadcrumb), `${route.path}: la página no enlaza BreadcrumbList en schema`);
+  }
+
+  if (route.schema?.includes("FAQPage")) {
+    const visibleText = textContent(html);
+    const graph = schema.values.flatMap((value) => value["@graph"] ?? [value]);
+    const faqPage = graph
+      .find((value) => value?.["@type"] === "FAQPage");
+    const page = graph.find((value) => value?.["@type"] === "WebPage" || value?.["@type"] === "AboutPage");
+    assert(Boolean(faqPage?.mainEntity?.length), `${route.path}: FAQPage no contiene preguntas`);
+    assert(page?.hasPart?.["@id"] === faqPage?.["@id"], `${route.path}: WebPage no enlaza su FAQPage`);
+    for (const question of faqPage?.mainEntity ?? []) {
+      assert(visibleText.includes(question.name), `${route.path}: pregunta FAQ ausente del HTML inicial (${question.name})`);
+      assert(visibleText.includes(question.acceptedAnswer?.text), `${route.path}: respuesta FAQ ausente del HTML inicial (${question.name})`);
+    }
   }
 
   return { html, title, canonical, h1: h1[0], schema };
@@ -248,9 +336,72 @@ for (const question of faqSchema?.mainEntity ?? []) {
 }
 assert(homeHtml.includes('href="/one"'), "/: falta enlace HTML crawleable hacia /one");
 assert(homeHtml.includes("Ver Ruka One"), "/: falta copy contextual del enlace hacia Ruka One");
+for (const href of [
+  "/productos/registro-de-compras",
+  "/productos/conciliacion-automatica",
+  "/productos/cuentas-por-pagar",
+  "/productos/panel-control",
+  "/productos/stock",
+  "/integraciones",
+  "/#precios",
+  "/register",
+]) {
+  assert(homeHtml.includes(`href="${href}"`), `/: falta enlace HTML crawleable hacia ${href}`);
+}
 assert(
   homeHtml.includes("Con Ruka One partimos desde un proceso propio de tu empresa y trabajamos contigo para llevarlo a operar sobre tus sistemas y reglas."),
   "/: falta el posicionamiento contextual actualizado de Ruka One",
+);
+
+for (const routePath of [
+  "/productos/registro-de-compras",
+  "/productos/conciliacion-automatica",
+  "/productos/cuentas-por-pagar",
+  "/productos/panel-control",
+  "/productos/stock",
+]) {
+  const html = await readFile(routeFile(routePath), "utf8");
+  const graph = parseSchema(html, routePath).values.flatMap((schema) => schema["@graph"] ?? [schema]);
+  const service = graph.find((entity) => entity?.["@type"] === "Service");
+  const webpage = graph.find((entity) => entity?.["@type"] === "WebPage");
+  assert(service?.provider?.["@id"] === `${siteOrigin}/#organization`, `${routePath}: Service no referencia a Ruka como provider`);
+  assert(service?.areaServed?.identifier === "CL", `${routePath}: Service no declara Chile como área de servicio`);
+  assert(webpage?.mainEntity?.["@id"] === service?.["@id"], `${routePath}: WebPage no enlaza el Service como entidad principal`);
+}
+
+const integrationsHtml = await readFile(routeFile("/integraciones"), "utf8");
+const integrationsGraph = parseSchema(integrationsHtml, "/integraciones").values.flatMap((schema) => schema["@graph"] ?? [schema]);
+const integrationsList = integrationsGraph.find((entity) => entity?.["@type"] === "ItemList");
+assert(integrationsList?.numberOfItems === 23, `/integraciones: ItemList declara ${integrationsList?.numberOfItems ?? 0} sistemas y fuentes, esperaba 23`);
+assert(integrationsList?.itemListElement?.length === 23, "/integraciones: ItemList no contiene todo el catálogo visible");
+
+const purchaseRegistrationHtml = await readFile(routeFile("/productos/registro-de-compras"), "utf8");
+for (const requiredText of [
+  "Producto en acción",
+  "Mira cómo se registra una compra.",
+  "Todas las facturas, en una sola bandeja.",
+  "Recepción pendiente",
+  "Decisión de recepción",
+  "Evidencia y cantidades",
+  "Pago protegido",
+]) {
+  assert(
+    purchaseRegistrationHtml.includes(requiredText),
+    `/productos/registro-de-compras: falta contenido del recorrido de producto (${requiredText})`,
+  );
+}
+for (const imagePath of [
+  "/assets/registro-compras/facturas-en-bandeja.png",
+  "/assets/registro-compras/factura-pendiente-recepcion.png",
+  "/assets/registro-compras/seleccion-recepcion.png",
+  "/assets/registro-compras/registro-diferencias.png",
+  "/assets/registro-compras/bloqueo-pago.png",
+]) {
+  await access(path.join(projectRoot, "dist", imagePath.slice(1)));
+}
+assert(
+  purchaseRegistrationHtml.includes('src="/assets/registro-compras/facturas-en-bandeja.png"'),
+  "/productos/registro-de-compras: la primera captura debe estar en el HTML inicial",
 );
 
 const oneHtml = await readFile(routeFile("/one"), "utf8");
@@ -361,7 +512,7 @@ assert(
 assert(!aboutHtml.includes('style="opacity:0'), "/about: el contenido editorial SSR no debe quedar oculto sin JavaScript");
 
 const robots = await readFile(path.join(projectRoot, "dist", "robots.txt"), "utf8");
-for (const bot of ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended", "CCBot"]) {
+for (const bot of ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended", "CCBot", "Applebot-Extended", "Amazonbot", "meta-externalagent"]) {
   assert(robots.includes(`User-agent: ${bot}`), `robots.txt: falta regla explícita para ${bot}`);
 }
 assert(robots.includes(`Sitemap: ${siteOrigin}/sitemap.xml`), "robots.txt: falta directiva Sitemap canónica");
@@ -370,6 +521,10 @@ const sitemap = await readFile(path.join(projectRoot, "dist", "sitemap.xml"), "u
 assert(sitemap.startsWith('<?xml version="1.0" encoding="UTF-8"?>'), "sitemap.xml: cabecera XML inválida");
 for (const route of routes) {
   assert(sitemap.includes(`<loc>${route.canonical}</loc>`), `sitemap.xml: falta ${route.canonical}`);
+  assert(
+    sitemap.includes(`<loc>${route.canonical}</loc>\n    <lastmod>2026-10-08</lastmod>`),
+    `sitemap.xml: ${route.path} no refleja la fecha de esta iteración SEO`,
+  );
 }
 for (const route of noIndexRoutes) {
   assert(!sitemap.includes(`<loc>${route.canonical}</loc>`), `sitemap.xml: incluye ruta noindex ${route.canonical}`);
@@ -377,13 +532,20 @@ for (const route of noIndexRoutes) {
 assert(sitemap.includes(`<loc>${siteOrigin}/one</loc>`), "sitemap.xml: falta la URL canónica de Ruka One");
 assert(!sitemap.includes(`${siteOrigin}/works`), "sitemap.xml: todavía contiene la ruta legacy /works");
 assert(!sitemap.includes(`${siteOrigin}/one/contacto`), "sitemap.xml: incluye el funnel noindex /one/contacto");
-assert(sitemap.includes("<lastmod>2026-08-20</lastmod>"), "sitemap.xml: /one no tiene lastmod de esta iteración");
 
 const llms = await readFile(path.join(projectRoot, "dist", "llms.txt"), "utf8");
 assert(llms.startsWith("# Ruka.ai"), "llms.txt: encabezado canónico ausente");
 assert(llms.includes("## Páginas principales"), "llms.txt: falta guía de páginas principales");
 assert(llms.includes("## Citas y atribución"), "llms.txt: falta guía de citas y atribución");
 assert(llms.includes(`[Ruka One](${siteOrigin}/one)`), "llms.txt: falta entrada canónica de Ruka One");
+for (const routePath of [
+  "/productos/registro-de-compras",
+  "/productos/conciliacion-automatica",
+  "/#precios",
+  "/integraciones",
+]) {
+  assert(llms.includes(`${siteOrigin}${routePath}`), `llms.txt: falta guía de ${routePath}`);
+}
 assert(llms.includes("la forma de trabajar con Ruka cuando el punto de partida es un proceso específico de una empresa"), "llms.txt: la entrada de Ruka One no explica su punto de partida");
 assert(!llms.includes("Ruka Works"), "llms.txt: todavía contiene la marca Ruka Works");
 assert(!llms.toLowerCase().includes("high-ticket"), "llms.txt: contiene lenguaje interno high-ticket");
@@ -411,6 +573,12 @@ assert(
     (redirect) => redirect.source === "/v2/:path*" && redirect.destination === "/" && redirect.permanent === true,
   ),
   "vercel.json: falta redirect permanente /v2 → /",
+);
+assert(
+  (vercel.redirects ?? []).some(
+    (redirect) => redirect.source === "/precios" && redirect.destination === "/#precios" && redirect.permanent === true,
+  ),
+  "vercel.json: falta redirect permanente /precios → /#precios",
 );
 assert(
   (vercel.redirects ?? []).some(
@@ -452,6 +620,13 @@ const appSource = await readFile(path.join(projectRoot, "src", "App.tsx"), "utf8
 assert(appSource.includes('path="/works/*"'), "App.tsx: falta compatibilidad client-side para /works/*");
 assert(appSource.includes("search: location.search"), "App.tsx: redirect legacy no preserva query string");
 assert(appSource.includes("hash: location.hash"), "App.tsx: redirect legacy no preserva hash");
+for (const routePath of [
+  "/productos/registro-de-compras",
+  "/productos/conciliacion-automatica",
+  "/integraciones",
+]) {
+  assert(appSource.includes(`path="${routePath}"`), `App.tsx: falta ruta ${routePath}`);
+}
 
 if (failures.length) {
   console.error(`SEO/AEO validation failed: ${failures.length} of ${assertions} assertions failed.`);
@@ -460,4 +635,4 @@ if (failures.length) {
 }
 
 console.log(`SEO/AEO validation passed: ${assertions} assertions across ${routes.length + noIndexRoutes.length} prerendered routes.`);
-console.log("Verified: route-specific HTML, metadata, H1s, JSON-LD, FAQ visibility, robots, sitemap, llms.txt and static 404.");
+console.log("Verified: route-specific HTML, unique metadata, social image integrity, H1s, linked JSON-LD entities, FAQ visibility, robots, sitemap, llms.txt and static 404.");

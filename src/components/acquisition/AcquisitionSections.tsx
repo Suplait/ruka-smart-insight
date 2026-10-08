@@ -9,6 +9,7 @@ import {
   Landmark,
 } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 export type Outcome = {
@@ -244,5 +245,29 @@ export function AcquisitionSystemNote({ title, description }: { title: string; d
       <p className="max-w-xl text-2xl font-semibold tracking-[-0.035em] text-[#202231]">{title}</p>
       <p className="mt-3 max-w-xl text-base leading-7 text-[#62697a]">{description}</p>
     </section>
+  );
+}
+
+export function AcquisitionRelatedLinks({
+  links,
+}: {
+  links: Array<{ label: string; to: string }>;
+}) {
+  return (
+    <nav aria-label="Soluciones relacionadas" className="border-t border-[#dce1eb] pt-8">
+      <p className="text-sm font-semibold text-[#202231]">Soluciones relacionadas</p>
+      <div className="mt-4 flex flex-wrap gap-3">
+        {links.map((link) => (
+          <Link
+            key={link.to}
+            to={link.to}
+            className="inline-flex items-center gap-2 rounded-full border border-[#d7ddea] bg-white px-4 py-2.5 text-sm font-semibold text-[#414656] transition-colors hover:border-primary/30 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            {link.label}
+            <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </Link>
+        ))}
+      </div>
+    </nav>
   );
 }

@@ -23,6 +23,7 @@ type Workflow = {
   copy: string;
   steps: readonly string[];
   video: string;
+  href: string;
 };
 
 const workflows: readonly Workflow[] = [
@@ -34,6 +35,7 @@ const workflows: readonly Workflow[] = [
     copy: "Ruka recibe compras desde SII, XML, PDF o papel; lee, homologa y registra la información donde corresponde.",
     steps: ["Recibir", "Leer", "Homologar", "Registrar"],
     video: "/robot_facturas.mp4",
+    href: "/productos/registro-de-compras",
   },
   {
     id: "conciliaciones",
@@ -43,6 +45,7 @@ const workflows: readonly Workflow[] = [
     copy: "Ruka cruza facturas, órdenes de compra, recepciones y pagos para validar coincidencias y alertar diferencias.",
     steps: ["Cruzar", "Validar", "Conciliar", "Alertar"],
     video: "/robot_dinero.mp4",
+    href: "/productos/conciliacion-automatica",
   },
   {
     id: "actualizacion",
@@ -52,6 +55,7 @@ const workflows: readonly Workflow[] = [
     copy: "Ruka mueve y actualiza información entre tu ERP, POS, planillas, inventario, recetario u otras herramientas.",
     steps: ["Preparar", "Conectar", "Actualizar", "Confirmar"],
     video: "/robot_inventario.mp4",
+    href: "/integraciones",
   },
   {
     id: "costos-margen",
@@ -61,6 +65,7 @@ const workflows: readonly Workflow[] = [
     copy: "Ruka homologa insumos, monitorea cambios de costo y mantiene el margen calculado con información al día.",
     steps: ["Homologar", "Monitorear", "Calcular", "Alertar"],
     video: "/robot_grafico2.mp4",
+    href: "/productos/panel-control",
   },
 ] as const;
 
@@ -149,6 +154,19 @@ export function WorkSection({ reduceMotion, primaryPath }: WorkSectionProps) {
             </Button>
           </motion.aside>
         </motion.div>
+
+        <nav className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm" aria-label="Páginas de producto">
+          <span className="font-medium text-[#687080]">Conoce cada proceso:</span>
+          {workflows.map((workflow) => (
+            <Link
+              key={workflow.id}
+              to={workflow.href}
+              className="font-semibold text-primary transition-colors hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              {workflow.title}
+            </Link>
+          ))}
+        </nav>
       </div>
     </section>
   );
@@ -218,6 +236,13 @@ function WorkflowDetail({ workflow }: { workflow: Workflow }) {
           </h3>
         </div>
         <p className="mt-6 max-w-md text-pretty text-lg leading-8 text-white/[0.76]">{workflow.copy}</p>
+        <Link
+          to={workflow.href}
+          className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#aeb8ff] transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+        >
+          Ver {workflow.title.toLowerCase()}
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+        </Link>
       </div>
 
       <WorkflowSteps steps={workflow.steps} />

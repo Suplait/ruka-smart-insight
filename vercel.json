@@ -79,6 +79,16 @@
       "source": "/v2/:path*",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/precios",
+      "destination": "/#precios",
+      "permanent": true
+    },
+    {
+      "source": "/precios/",
+      "destination": "/#precios",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -98,8 +108,14 @@
     { "source": "/productos/panel-control/", "destination": "/productos/panel-control/index.html" },
     { "source": "/productos/cuentas-por-pagar", "destination": "/productos/cuentas-por-pagar/index.html" },
     { "source": "/productos/cuentas-por-pagar/", "destination": "/productos/cuentas-por-pagar/index.html" },
+    { "source": "/productos/registro-de-compras", "destination": "/productos/registro-de-compras/index.html" },
+    { "source": "/productos/registro-de-compras/", "destination": "/productos/registro-de-compras/index.html" },
+    { "source": "/productos/conciliacion-automatica", "destination": "/productos/conciliacion-automatica/index.html" },
+    { "source": "/productos/conciliacion-automatica/", "destination": "/productos/conciliacion-automatica/index.html" },
     { "source": "/productos/stock", "destination": "/productos/stock/index.html" },
     { "source": "/productos/stock/", "destination": "/productos/stock/index.html" },
+    { "source": "/integraciones", "destination": "/integraciones/index.html" },
+    { "source": "/integraciones/", "destination": "/integraciones/index.html" },
     { "source": "/privacy", "destination": "/privacy/index.html" },
     { "source": "/privacy/", "destination": "/privacy/index.html" },
     { "source": "/terms", "destination": "/terms/index.html" },

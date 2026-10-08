@@ -13,6 +13,13 @@ Ruka conecta información de plataformas como SII, ERP, POS, bancos, planillas, 
 - [Ruka para restaurantes](https://www.ruka.ai/restaurantes): automatización de compras y operación para restaurantes.
 - [Ruka para hoteles](https://www.ruka.ai/hoteles): automatización de procesos operativos para hoteles.
 - [Ruka para retail](https://www.ruka.ai/retail): automatización de compras, stock y procesos para retail.
+- [Registro de compras](https://www.ruka.ai/productos/registro-de-compras): registro automático de facturas recibidas desde SII, XML, PDF, correo y otras fuentes en el ERP, POS o sistema contable que ya usa la empresa.
+- [Conciliación automática](https://www.ruka.ai/productos/conciliacion-automatica): conciliación de facturas con órdenes de compra, recepciones y pagos; los casos correctos avanzan y las diferencias quedan explicadas.
+- [Cuentas por pagar](https://www.ruka.ai/productos/cuentas-por-pagar): preparación del pago masivo a proveedores, desde las facturas aprobadas hasta una nómina bancaria lista para subir.
+- [Control de costos y margen](https://www.ruka.ai/productos/panel-control): actualización de costos y margen por producto o local a partir de ventas, compras y recetas conectadas.
+- [Control de stock e inventario](https://www.ruka.ai/productos/stock): registro de recepciones, traspasos y conteos para mantener el inventario actualizado entre bodegas.
+- [Integraciones](https://www.ruka.ai/integraciones): sistemas y fuentes con los que Ruka puede trabajar, incluyendo SII, ERP, POS, bancos, archivos y desarrollos propios.
+- [Precios](https://www.ruka.ai/#precios): planes estándar de Ruka según el volumen mensual de documentos, publicados en la página principal.
 - [Política de privacidad](https://www.ruka.ai/privacy)
 - [Términos y condiciones](https://www.ruka.ai/terms)
 

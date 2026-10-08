@@ -13,6 +13,7 @@ import acquisitionSeo from "@/content/acquisitionSeo.json";
 import {
   AcquisitionHero,
   AcquisitionIntegrations,
+  AcquisitionRelatedLinks,
   AcquisitionSystemNote,
   AcquisitionWorkSection,
 } from "@/components/acquisition/AcquisitionSections";
@@ -51,7 +52,7 @@ export default function Restaurantes() {
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
-      let target = new Date();
+      const target = new Date();
       target.setHours(12, 0, 0, 0);
       if (now.getHours() >= 12) {
         target.setDate(target.getDate() + 1);
@@ -148,6 +149,14 @@ export default function Restaurantes() {
                 <AcquisitionSystemNote
                   title="Tu POS y tu ERP no cambian."
                   description="Ruka mueve, cruza y actualiza la información entre las herramientas que ya sostienen tu operación."
+                />
+
+                <AcquisitionRelatedLinks
+                  links={[
+                    { label: "Registro de compras", to: "/productos/registro-de-compras" },
+                    { label: "Conciliación automática", to: "/productos/conciliacion-automatica" },
+                    { label: "Panel de control", to: "/productos/panel-control" },
+                  ]}
                 />
 
                 <div id="mobile-form-section" className="lg:hidden w-full mb-8">

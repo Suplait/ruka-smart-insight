@@ -2,10 +2,11 @@ import { Instagram, Linkedin, MapPin, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const productLinks = [
-  { label: "Ruka", to: "/" },
-  { label: "Demo", to: "/#demo" },
-  { label: "Integraciones", to: "/#integraciones" },
-  { label: "Precios", to: "/#precios" },
+  { label: "Registro de compras", to: "/productos/registro-de-compras" },
+  { label: "Conciliación automática", to: "/productos/conciliacion-automatica" },
+  { label: "Cuentas por pagar", to: "/productos/cuentas-por-pagar" },
+  { label: "Costos y margen", to: "/productos/panel-control" },
+  { label: "Stock e inventario", to: "/productos/stock" },
 ] as const;
 
 const oneLinks = [
@@ -13,16 +14,18 @@ const oneLinks = [
   { label: "Conversemos", to: "/one/contacto" },
 ] as const;
 
-const industryLinks = [
-  { label: "Restaurantes", to: "/restaurantes" },
-  { label: "Hoteles", to: "/hoteles" },
-  { label: "Retail", to: "/retail" },
-] as const;
-
 const companyLinks = [
   { label: "Quiénes somos", to: "/about" },
   { label: "Privacidad", to: "/privacy" },
   { label: "Términos", to: "/terms" },
+] as const;
+
+const exploreLinks = [
+  { label: "Integraciones", to: "/integraciones" },
+  { label: "Precios", to: "/#precios" },
+  { label: "Restaurantes", to: "/restaurantes" },
+  { label: "Hoteles", to: "/hoteles" },
+  { label: "Retail", to: "/retail" },
 ] as const;
 
 const socialLinks = [
@@ -35,7 +38,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-[#dce3f2] bg-[#f5f7fb] px-5 text-[#60687a] sm:px-8">
       <div className="mx-auto max-w-7xl py-12 sm:py-14">
-        <div className="grid gap-x-8 gap-y-11 sm:grid-cols-2 lg:grid-cols-[1.45fr_0.72fr_0.76fr_0.76fr_0.72fr] lg:gap-x-10">
+        <div className="grid gap-x-8 gap-y-11 sm:grid-cols-2 lg:grid-cols-[1.35fr_repeat(4,0.72fr)] lg:gap-x-10">
           <div>
             <Link to="/" aria-label="Ir al inicio de Ruka" className="inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4">
               <img src="/logo.png" alt="Ruka.ai" className="h-8 w-auto transition-opacity hover:opacity-75" />
@@ -60,8 +63,8 @@ export default function Footer() {
           </div>
 
           <FooterGroup title="Producto" links={productLinks} />
+          <FooterGroup title="Explorar" links={exploreLinks} />
           <FooterGroup title="Ruka One" links={oneLinks} />
-          <FooterGroup title="Industrias" links={industryLinks} />
           <FooterGroup title="Compañía" links={companyLinks} />
         </div>
 

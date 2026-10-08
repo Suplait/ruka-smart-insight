@@ -12,6 +12,7 @@ import acquisitionSeo from "@/content/acquisitionSeo.json";
 import {
   AcquisitionHero,
   AcquisitionIntegrations,
+  AcquisitionRelatedLinks,
   AcquisitionSystemNote,
   AcquisitionWorkSection,
 } from "@/components/acquisition/AcquisitionSections";
@@ -43,7 +44,7 @@ export default function Hoteles() {
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
-      let target = new Date();
+      const target = new Date();
       target.setHours(12, 0, 0, 0);
       if (now.getHours() >= 12) {
         target.setDate(target.getDate() + 1);
@@ -124,6 +125,14 @@ export default function Hoteles() {
                 <AcquisitionSystemNote
                   title="Tu PMS, ERP y sistema contable siguen siendo los mismos."
                   description="Ruka hace el trabajo entre ellos para que la información llegue actualizada donde corresponde."
+                />
+
+                <AcquisitionRelatedLinks
+                  links={[
+                    { label: "Registro de compras", to: "/productos/registro-de-compras" },
+                    { label: "Conciliación automática", to: "/productos/conciliacion-automatica" },
+                    { label: "Integraciones", to: "/integraciones" },
+                  ]}
                 />
 
                 <AcquisitionIntegrations

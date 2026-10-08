@@ -15,10 +15,17 @@ import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from 
 import SubdomainModal from "./SubdomainModal";
 
 const productLinks = [
-  { label: "Qué hace Ruka", href: "/#trabajo" },
-  { label: "Demo", href: "/#demo" },
-  { label: "Integraciones", href: "/#integraciones" },
-  { label: "Precios", href: "/#precios" },
+  { label: "Registro de compras", href: "/productos/registro-de-compras" },
+  { label: "Conciliación automática", href: "/productos/conciliacion-automatica" },
+  { label: "Cuentas por pagar", href: "/productos/cuentas-por-pagar" },
+  { label: "Costos y margen", href: "/productos/panel-control" },
+  { label: "Stock e inventario", href: "/productos/stock" },
+  {
+    label: "Ruka One",
+    href: "/one",
+    description: "Para un proceso propio de tu empresa",
+    featured: true,
+  },
 ] as const;
 
 const industryLinks = [
@@ -74,9 +81,11 @@ export default function Navbar({
             <img src="/logo.png" alt="Ruka.ai" className="h-8 transition-opacity hover:opacity-80" />
           </Link>
 
-          <NavigationMenu value={desktopMenu} onValueChange={setDesktopMenu} className="hidden lg:flex" delayDuration={80} skipDelayDuration={220}>
+          <NavigationMenu viewport={false} value={desktopMenu} onValueChange={setDesktopMenu} className="hidden xl:flex" delayDuration={80} skipDelayDuration={220}>
             <NavigationMenuList className="gap-1">
               <NavDropdown value="product" label="Producto" links={productLinks} onLinkClick={handleLinkClick} onToggle={setDesktopMenu} />
+              <NavigationMenuItem><NavigationMenuLink asChild><Link to="/integraciones" className={desktopLinkClass}>Integraciones</Link></NavigationMenuLink></NavigationMenuItem>
+              <NavigationMenuItem><NavigationMenuLink asChild><Link to="/#precios" onClick={(event) => handleLinkClick(event, "/#precios")} className={desktopLinkClass}>Precios</Link></NavigationMenuLink></NavigationMenuItem>
               <NavDropdown value="industries" label="Industrias" links={industryLinks} onLinkClick={handleLinkClick} onToggle={setDesktopMenu} />
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
@@ -92,7 +101,7 @@ export default function Navbar({
           </NavigationMenu>
 
           <div className="flex items-center gap-3">
-            <div className="hidden items-center gap-3 lg:flex">
+            <div className="hidden items-center gap-3 xl:flex">
               {showLogin ? (
                 <Button
                   variant="ghost"
@@ -103,18 +112,24 @@ export default function Navbar({
                   Iniciar sesión
                 </Button>
               ) : null}
-              <Button
-                size="sm"
-                className="h-10 rounded-full bg-primary px-5 text-sm font-medium hover:bg-primary/90 active:scale-[0.98] xl:px-6"
-                onClick={runPrimaryAction}
-              >
-                {primaryAction.label}
-              </Button>
+              {primaryAction.onClick ? (
+                <Button
+                  size="sm"
+                  className="h-10 rounded-full bg-primary px-5 text-sm font-medium hover:bg-primary/90 active:scale-[0.98] xl:px-6"
+                  onClick={runPrimaryAction}
+                >
+                  {primaryAction.label}
+                </Button>
+              ) : (
+                <Button asChild size="sm" className="h-10 rounded-full bg-primary px-5 text-sm font-medium hover:bg-primary/90 active:scale-[0.98] xl:px-6">
+                  <Link to={primaryAction.path}>{primaryAction.label}</Link>
+                </Button>
+              )}
             </div>
 
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Abrir menú">
+                <Button variant="ghost" size="icon" className="xl:hidden" aria-label="Abrir menú">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
@@ -130,6 +145,8 @@ export default function Navbar({
                   </Accordion>
 
                   <div className="border-b border-[#e1e5ed] py-2">
+                    <Link to="/integraciones" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Integraciones</Link>
+                    <Link to="/#precios" onClick={(event) => handleLinkClick(event, "/#precios")} className={mobileDirectLinkClass}>Precios</Link>
                     <Link to="/one" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Ruka One</Link>
                     <Link to="/about" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Nosotros</Link>
                   </div>
@@ -147,12 +164,20 @@ export default function Navbar({
                         Iniciar sesión <LogIn className="h-4 w-4" />
                       </Button>
                     ) : null}
-                    <Button
-                      className="h-11 w-full justify-center gap-2 rounded-full bg-primary px-4 text-sm font-medium hover:bg-primary/90 active:scale-[0.98]"
-                      onClick={runPrimaryAction}
-                    >
-                      {primaryAction.label} <ArrowRight className="h-4 w-4" />
-                    </Button>
+                    {primaryAction.onClick ? (
+                      <Button
+                        className="h-11 w-full justify-center gap-2 rounded-full bg-primary px-4 text-sm font-medium hover:bg-primary/90 active:scale-[0.98]"
+                        onClick={runPrimaryAction}
+                      >
+                        {primaryAction.label} <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    ) : (
+                      <Button asChild className="h-11 w-full justify-center gap-2 rounded-full bg-primary px-4 text-sm font-medium hover:bg-primary/90 active:scale-[0.98]">
+                        <Link to={primaryAction.path} onClick={() => setIsOpen(false)}>
+                          {primaryAction.label} <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                    )}
                   </div>
                 </div>
               </SheetContent>
@@ -178,12 +203,12 @@ function NavDropdown({
 }: {
   value: string;
   label: string;
-  links: readonly { label: string; href: string }[];
+  links: readonly { label: string; href: string; description?: string; featured?: boolean }[];
   onLinkClick: (event: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
   onToggle: React.Dispatch<React.SetStateAction<string>>;
 }) {
   return (
-    <NavigationMenuItem value={value}>
+    <NavigationMenuItem value={value} className="relative">
       <NavigationMenuTrigger
         aria-haspopup="menu"
         className="rounded-lg bg-transparent px-3.5 text-sm font-medium text-gray-600 hover:bg-[#f4f6fb] hover:text-[#171827] focus:bg-[#f4f6fb] focus:text-[#171827] data-[state=open]:bg-[#f4f6fb] data-[state=open]:text-[#171827]"
@@ -197,17 +222,23 @@ function NavDropdown({
       >
         {label}
       </NavigationMenuTrigger>
-      <NavigationMenuContent>
-        <ul className="w-[232px] space-y-1 p-2.5">
+      <NavigationMenuContent className="left-1/2 top-full w-[280px] -translate-x-1/2 pt-2 md:w-[280px]">
+        <ul className="w-[280px] space-y-1 rounded-[14px] border border-[#dfe3ec] bg-white p-2.5 text-popover-foreground shadow-[0_12px_30px_rgba(31,36,54,0.12)]">
           {links.map((link) => (
-            <li key={link.href}>
+            <li key={link.href} className={link.featured ? "mt-2 border-t border-[#e1e5ed] pt-2" : undefined}>
               <NavigationMenuLink asChild>
                 <Link
                   to={link.href}
                   onClick={(event) => onLinkClick(event, link.href)}
-                  className="block rounded-lg px-3.5 py-3 text-sm font-medium text-[#414654] transition-colors hover:bg-[#f3f5fa] hover:text-[#171827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  className={link.featured
+                    ? "group flex items-center justify-between gap-3 rounded-lg bg-[#f1f3ff] px-3.5 py-3 text-[#171827] transition-colors hover:bg-[#e8ecff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    : "block rounded-lg px-3.5 py-3 text-sm font-medium text-[#414654] transition-colors hover:bg-[#f3f5fa] hover:text-[#171827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"}
                 >
-                  {link.label}
+                  <span>
+                    <span className="block text-sm font-semibold">{link.label}</span>
+                    {link.description ? <span className="mt-0.5 block text-xs font-normal leading-4 text-[#62697a]">{link.description}</span> : null}
+                  </span>
+                  {link.featured ? <ArrowRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true" /> : null}
                 </Link>
               </NavigationMenuLink>
             </li>
@@ -226,7 +257,7 @@ function MobileNavGroup({
 }: {
   value: string;
   label: string;
-  links: readonly { label: string; href: string }[];
+  links: readonly { label: string; href: string; description?: string; featured?: boolean }[];
   onLinkClick: (event: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
 }) {
   return (
@@ -241,9 +272,15 @@ function MobileNavGroup({
               key={link.href}
               to={link.href}
               onClick={(event) => onLinkClick(event, link.href)}
-              className="flex min-h-10 items-center rounded-lg px-3 text-sm font-medium text-[#62697a] transition-colors hover:bg-[#f4f6fb] hover:text-[#171827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className={link.featured
+                ? "group mt-2 flex min-h-14 items-center justify-between gap-3 border-t border-[#d9deea] px-3 pt-2 text-[#171827] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                : "flex min-h-10 items-center rounded-lg px-3 text-sm font-medium text-[#62697a] transition-colors hover:bg-[#f4f6fb] hover:text-[#171827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"}
             >
-              {link.label}
+              <span>
+                <span className="block text-sm font-semibold">{link.label}</span>
+                {link.description ? <span className="mt-0.5 block text-xs font-normal leading-4 text-[#62697a]">{link.description}</span> : null}
+              </span>
+              {link.featured ? <ArrowRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true" /> : null}
             </Link>
           ))}
         </div>

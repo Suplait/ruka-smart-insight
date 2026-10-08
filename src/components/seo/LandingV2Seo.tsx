@@ -33,6 +33,7 @@ const structuredData = {
     {
       "@type": "FAQPage",
       "@id": `${seo.canonicalUrl}#faq`,
+      isPartOf: { "@id": `${seo.canonicalUrl}#webpage` },
       mainEntity: seo.faq.map((item) => ({
         "@type": "Question",
         name: item.question,
@@ -52,6 +53,24 @@ const structuredData = {
       isPartOf: { "@id": "https://www.ruka.ai/#website" },
       about: { "@id": softwareId },
       publisher: { "@id": organizationId },
+      hasPart: { "@id": `${seo.canonicalUrl}#faq` },
+      breadcrumb: { "@id": `${seo.canonicalUrl}#breadcrumb` },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        "@id": `${seo.canonicalUrl}#primaryimage`,
+        url: seo.imageUrl,
+        contentUrl: seo.imageUrl,
+        width: 1200,
+        height: 630,
+        caption: seo.imageAlt,
+      },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${seo.canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Ruka", item: seo.canonicalUrl },
+      ],
     },
   ],
 };
