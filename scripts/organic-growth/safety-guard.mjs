@@ -19,15 +19,15 @@ const allowed = [
   /^src\/content\/productPages\.ts$/,
   /^public\/(sitemap\.xml|robots\.txt|llms\.txt)$/,
   /^public\/organic-growth\//,
-  /^docs\/organic-growth\//,
-  /^scripts\/organic-growth\//,
 ];
 
 if (process.env.ORGANIC_GROWTH_BOOTSTRAP === "true") {
   allowed.push(
     /^\.github\/workflows\/organic-growth-(execution|reporting)\.yml$/,
     /^\.gitignore$/,
+    /^docs\/organic-growth\//,
     /^package(-lock)?\.json$/,
+    /^scripts\/organic-growth\//,
     /^supabase\/config\.toml$/,
     /^supabase\/functions\/organic-growth-api\/index\.ts$/,
     /^supabase\/migrations\/\d+_(create_organic_growth_engine|separate_organic_growth_leases|recover_expired_organic_growth_leases)\.sql$/,

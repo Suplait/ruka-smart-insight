@@ -94,6 +94,12 @@ jobs:
           RUN_ID: ${{ steps.claim.outputs.run_id }}
         run: git switch -c "organic-growth/${RUN_ID:0:8}"
 
+      - name: Stage immutable cycle validators
+        if: steps.claim.outputs.claimed == 'true'
+        run: |
+          mkdir -p "$RUNNER_TEMP/organic-growth-trusted"
+          cp scripts/organic-growth/{job-control,lib,lint-changed,register-cycle,safety-guard}.mjs "$RUNNER_TEMP/organic-growth-trusted/"
+
       - name: Execute one evidence-backed improvement
         if: steps.claim.outputs.claimed == 'true'
         id: codex
@@ -111,10 +117,10 @@ jobs:
       - name: Validate safety, build, lint and server SEO
         if: steps.claim.outputs.claimed == 'true'
         run: |
-          npm run organic:guard
-          npm run organic:manifest
+          node "$RUNNER_TEMP/organic-growth-trusted/safety-guard.mjs"
+          node "$RUNNER_TEMP/organic-growth-trusted/register-cycle.mjs" --validate
           npm run build
-          npm run organic:lint
+          node "$RUNNER_TEMP/organic-growth-trusted/lint-changed.mjs"
           npm run validate:seo
 
       - name: Publish reviewed automation PR
@@ -173,7 +179,7 @@ jobs:
           ORGANIC_GROWTH_PR_URL: ${{ steps.publish.outputs.pr_url }}
           ORGANIC_GROWTH_DEPLOYMENT_URL: https://www.ruka.ai
           ORGANIC_GROWTH_PUBLISHED_CHANGED: ${{ steps.publish.outputs.changed }}
-        run: npm run organic:register
+        run: node "$RUNNER_TEMP/organic-growth-trusted/register-cycle.mjs"
 
       - name: Complete execution run
         if: steps.claim.outputs.claimed == 'true'
@@ -183,7 +189,7 @@ jobs:
           ORGANIC_GROWTH_PR_URL: ${{ steps.publish.outputs.pr_url }}
           ORGANIC_GROWTH_DEPLOYMENT_URL: https://www.ruka.ai
           ORGANIC_GROWTH_SUMMARY: '{"automation":"completed","changed":"${{ steps.publish.outputs.changed }}"}'
-        run: node scripts/organic-growth/job-control.mjs complete execution
+        run: node "$RUNNER_TEMP/organic-growth-trusted/job-control.mjs" complete execution
 
       - name: Record and alert failure
         if: failure() && steps.claim.outputs.claimed == 'true'
@@ -191,5 +197,7 @@ jobs:
           ORGANIC_GROWTH_RUN_ID: ${{ steps.claim.outputs.run_id }}
           ORGANIC_GROWTH_ERROR: "Organic Growth Execution failed in GitHub Actions run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         run: |
-          node scripts/organic-growth/job-control.mjs fail execution || true
+          CONTROL="$RUNNER_TEMP/organic-growth-trusted/job-control.mjs"
+          if [ ! -f "$CONTROL" ]; then CONTROL="scripts/organic-growth/job-control.mjs"; fi
+          node "$CONTROL" fail execution || true
           node -e 'fetch(process.env.ORGANIC_GROWTH_API_URL,{method:"POST",headers:{"content-type":"application/json","x-organic-growth-secret":process.env.ORGANIC_GROWTH_SHARED_SECRET},body:JSON.stringify({action:"incident",severity:"critical",title:"Falló Organic Growth Execution",details:process.env.ORGANIC_GROWTH_ERROR})}).then(r=>{if(!r.ok)process.exit(1)})' || true

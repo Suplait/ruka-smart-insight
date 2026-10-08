@@ -13,6 +13,7 @@
 - Vercel remains the production deploy mechanism after an approved workflow PR merges to `main`.
 - The full repository lint has pre-existing errors outside this system's scope. Automation therefore runs `organic:lint`, which lints every JavaScript/TypeScript file changed in its branch, while build and SEO validation still cover the complete application.
 - The one-time infrastructure branch is audited with `ORGANIC_GROWTH_BOOTSTRAP=true npm run organic:guard`. Scheduled cycles never receive that flag, so they cannot edit the scheduler, workflows, Edge Function or migrations.
+- Before Codex runs, the workflow copies the guard, manifest validator, changed-file lint and job-control helpers into the runner's temporary directory outside the writable repository. Validation and run completion use those immutable copies, so a cycle cannot weaken its own controls.
 
 ## Required GitHub Actions secrets
 

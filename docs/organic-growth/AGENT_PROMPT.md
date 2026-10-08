@@ -67,3 +67,5 @@ Before finishing, always write `.organic-growth/change-manifest.json`. It is pri
 ```
 
 If no safe, evidence-backed change should ship, set `changed` to `false`, use empty arrays for `affectedUrls`, `evidence`, and `experimentUpdates`, and explain why in `exactChanges`. Only update a prior experiment when its measurement window has matured and the snapshot supports the conclusion. The workflow rejects missing or malformed manifests.
+
+Do not edit engine prompts, documentation, workflows, scripts, package configuration, migrations or Edge Functions during a scheduled cycle. If `changed` is `false`, leave the tracked repository completely unchanged; only write the ignored private manifest.
