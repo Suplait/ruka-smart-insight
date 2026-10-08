@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { BrowserRouter, Navigate, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from "@/components/theme-provider"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -33,6 +33,47 @@ import OneContact from './pages/OneContact';
 
 const queryClient = new QueryClient();
 
+const resetPageScroll = () => {
+  const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+  document.documentElement.style.scrollBehavior = "auto";
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  window.scrollTo(0, 0);
+  document.documentElement.style.scrollBehavior = previousScrollBehavior;
+};
+
+function ScrollToTopOnRouteChange() {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    if (hash) return;
+    resetPageScroll();
+  }, [pathname, hash]);
+
+  useEffect(() => {
+    if (hash) return;
+
+    const frame = window.requestAnimationFrame(resetPageScroll);
+    const timeout = window.setTimeout(resetPageScroll, 100);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timeout);
+    };
+  }, [pathname, hash]);
+
+  return null;
+}
+
 function LegacyOneRedirect() {
   const location = useLocation();
   const rawSuffix = location.pathname.slice('/works'.length);
@@ -61,6 +102,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="ruka-theme">
         <BrowserRouter>
+          <ScrollToTopOnRouteChange />
           <Routes>
             <Route path="/" element={<LandingV2 />} />
             <Route path="/v2" element={<Navigate to="/" replace />} />
