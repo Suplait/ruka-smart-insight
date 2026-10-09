@@ -1,6 +1,6 @@
 # Product Intelligence Policy
 
-Detailed product intelligence is private and persisted in `organic_growth_product_signals`. This public file documents the validation process without exposing internal code or roadmap information.
+Detailed product intelligence is private and persisted in the local SQLite `product_signals` table. This public file documents the validation process without exposing internal code or roadmap information.
 
 Each cycle reads recent `origin/main` history from `ruka` and `ruka_v3` without modifying either repository. Signals are classified as active, partial, experimental, future or unknown. A commit title is only a lead; public content requires corroboration from current product behavior, public documentation or commercial validation.
 

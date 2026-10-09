@@ -1,6 +1,6 @@
 # Organic Growth Experiments
 
-The authoritative experiment register lives in the private `organic_growth_experiments` table. States are:
+The authoritative experiment register lives in the private local SQLite `experiments` table. States are:
 
 `DISCOVERED → PRIORITIZED → IN_PROGRESS → DEPLOYED → MEASURING → VALIDATED / INCONCLUSIVE / REVERTED`
 

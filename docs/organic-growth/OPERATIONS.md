@@ -5,8 +5,10 @@
 - **Codex Automations** provides the visible local scheduler and the agentic execution environment. GitHub Actions is not used by this engine.
 - **Local SQLite** stores scheduler state, leases, Search Console snapshots, opportunities, experiments, product signals, reports and run logs at `~/.codex/ruka-organic-growth/state.sqlite`.
 - `LocalOrganicGrowthEngine.claim()` uses an immediate SQLite transaction to decide atomically whether work is due and prevent concurrent mutation.
-- A successful execution advances the next due time by five real days. Failures retry after six hours. Expired two-hour leases recover automatically.
-- Reporting has an independent lease and next-due timestamp; a Job A failure cannot block Job B.
+- The daily watchdog observes availability, indexation, data freshness and new opportunities without forcing a deployment.
+- A successful build cycle advances the next due time by three real days. Failures retry after six hours.
+- Experiment measurement runs weekly, strategic prioritization runs monthly, and reporting remains quincenal.
+- Monitoring, execution, measurement, strategy and reporting each have an independent lease and next-due timestamp. A failure in one cadence cannot block another. Expired two-hour leases recover automatically.
 - The **Codex execution automation** edits only a constrained set of public marketing/SEO files. `npm run organic:guard` blocks protected or unrelated paths.
 - Every claimed cycle receives the persistent opportunity/experiment context and must emit a private structured manifest. After production verification, the automation records the deployed experiment and any mature learnings back into SQLite.
 - Vercel remains the production deploy mechanism after the automation merges a validated PR to `main`.
@@ -27,6 +29,18 @@
 - Report and incident delivery uses the connected Slack tool in Codex. SQLite records the pending payload before delivery and its delivery reference afterwards.
 
 Secrets must never be written to task output, committed files or automation prompts.
+
+## Operating cadence
+
+| Cadence | Purpose | May deploy? |
+| --- | --- | --- |
+| Daily monitoring | Detect availability, indexation, Search Console freshness and material anomalies | No |
+| Every 3 days | Prioritize and ship at most one safe, evidence-backed growth improvement | Yes |
+| Weekly measurement | Revisit mature experiments and record evidence-based outcomes | No |
+| 1st and 15th | Deliver the operational growth report | No |
+| Monthly strategy | Re-rank clusters, commercial priorities and larger opportunities | No |
+
+Cadence is an opportunity to act, not a content quota. A job may complete successfully with no public change when evidence is insufficient.
 
 ## Failure and recovery
 
