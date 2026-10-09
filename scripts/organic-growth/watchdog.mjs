@@ -58,6 +58,22 @@ const experimentsDue = (status.experiments || []).filter((experiment) => (
   && Date.parse(experiment.evaluate_after) <= checkedAt.getTime()
 ));
 
+const opportunityHints = (snapshot?.breakdowns?.queries || [])
+  .filter((query) => query.segment === "non_branded" && query.intent === "commercial" && Number(query.impressions || 0) >= 3)
+  .sort((left, right) => {
+    const leftPotential = Number(left.impressions || 0) * Math.max(1, Number(left.position || 1));
+    const rightPotential = Number(right.impressions || 0) * Math.max(1, Number(right.position || 1));
+    return rightPotential - leftPotential;
+  })
+  .slice(0, 5)
+  .map((query) => ({
+    query: query.query,
+    clicks: Number(query.clicks || 0),
+    impressions: Number(query.impressions || 0),
+    ctr: Number(query.ctr || 0),
+    position: Number(query.position || 0),
+  }));
+
 const payload = {
   schemaVersion: 1,
   checkedAt: checkedAt.toISOString(),
@@ -66,6 +82,7 @@ const payload = {
   dataThroughDate: snapshot?.dataThroughDate || null,
   dataLagDays,
   experimentsDue: experimentsDue.map((experiment) => ({ id: experiment.id, title: experiment.title, evaluateAfter: experiment.evaluate_after })),
+  opportunityHints,
   issues,
   storage: { type: status.storage?.type, integrity: integrity.ok },
 };
