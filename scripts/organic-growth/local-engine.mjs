@@ -5,7 +5,7 @@ import path from "node:path";
 import { backup as sqliteBackup, DatabaseSync } from "node:sqlite";
 
 const timezone = "America/Santiago";
-const allowedKinds = new Set(["execution", "reporting"]);
+const allowedKinds = new Set(["execution", "reporting", "monitoring", "measurement", "strategy"]);
 const allowedExperimentStatuses = new Set(["measuring", "validated", "inconclusive", "reverted"]);
 
 export const defaultDatabasePath = path.join(os.homedir(), ".codex", "ruka-organic-growth", "state.sqlite");
@@ -57,6 +57,56 @@ export function nextReportAt(after = new Date()) {
   });
 }
 
+export function nextWeeklyMeasurementAt(after = new Date()) {
+  const local = zonedParts(after, timezone);
+  const weekday = new Date(Date.UTC(local.year, local.month - 1, local.day)).getUTCDay();
+  let daysUntilMonday = (8 - weekday) % 7;
+  if (daysUntilMonday === 0 && (local.hour > 10 || (local.hour === 10 && (local.minute > 0 || local.second > 0)))) {
+    daysUntilMonday = 7;
+  }
+  const target = new Date(Date.UTC(local.year, local.month - 1, local.day + daysUntilMonday));
+  return zonedDateToUtc({
+    year: target.getUTCFullYear(),
+    month: target.getUTCMonth() + 1,
+    day: target.getUTCDate(),
+    hour: 10,
+  });
+}
+
+export function nextMonthlyStrategyAt(after = new Date()) {
+  const local = zonedParts(after, timezone);
+  const beforeThisMonthReview = local.day === 1 && (local.hour < 11);
+  const target = beforeThisMonthReview
+    ? new Date(Date.UTC(local.year, local.month - 1, 1))
+    : new Date(Date.UTC(local.year, local.month, 1));
+  return zonedDateToUtc({
+    year: target.getUTCFullYear(),
+    month: target.getUTCMonth() + 1,
+    day: 1,
+    hour: 11,
+  });
+}
+
+const jobFields = {
+  execution: { prefix: "execution", due: "next_execution_at", success: "last_execution_success_at" },
+  reporting: { prefix: "reporting", due: "next_report_at", success: "last_report_success_at" },
+  monitoring: { prefix: "monitoring", due: "next_monitoring_at", success: "last_monitoring_success_at" },
+  measurement: { prefix: "measurement", due: "next_measurement_at", success: "last_measurement_success_at" },
+  strategy: { prefix: "strategy", due: "next_strategy_at", success: "last_strategy_success_at" },
+};
+
+function nextDueAt(kind, now, success) {
+  if (!success) {
+    const retryHours = kind === "reporting" || kind === "monitoring" ? 2 : kind === "strategy" ? 24 : 6;
+    return new Date(now.getTime() + retryHours * 3600000);
+  }
+  if (kind === "execution") return new Date(now.getTime() + 3 * 86400000);
+  if (kind === "reporting") return nextReportAt(now);
+  if (kind === "monitoring") return new Date(now.getTime() + 86400000);
+  if (kind === "measurement") return nextWeeklyMeasurementAt(now);
+  return nextMonthlyStrategyAt(now);
+}
+
 function priorityScore(row) {
   if (row.priority_score != null) return Number(row.priority_score);
   const effort = Math.max(1, Number(row.effort || 1));
@@ -99,14 +149,26 @@ export class LocalOrganicGrowthEngine {
         execution_lease_expires_at TEXT,
         reporting_lease_run_id TEXT,
         reporting_lease_expires_at TEXT,
+        monitoring_lease_run_id TEXT,
+        monitoring_lease_expires_at TEXT,
+        measurement_lease_run_id TEXT,
+        measurement_lease_expires_at TEXT,
+        strategy_lease_run_id TEXT,
+        strategy_lease_expires_at TEXT,
+        next_monitoring_at TEXT NOT NULL,
+        next_measurement_at TEXT NOT NULL,
+        next_strategy_at TEXT NOT NULL,
         last_execution_success_at TEXT,
         last_report_success_at TEXT,
+        last_monitoring_success_at TEXT,
+        last_measurement_success_at TEXT,
+        last_strategy_success_at TEXT,
         last_data_through_date TEXT,
         updated_at TEXT NOT NULL
       );
       CREATE TABLE IF NOT EXISTS runs (
         id TEXT PRIMARY KEY,
-        kind TEXT NOT NULL CHECK (kind IN ('execution', 'reporting')),
+        kind TEXT NOT NULL CHECK (kind IN ('execution', 'reporting', 'monitoring', 'measurement', 'strategy')),
         trigger_source TEXT NOT NULL,
         status TEXT NOT NULL CHECK (status IN ('running', 'succeeded', 'failed', 'skipped')),
         started_at TEXT NOT NULL,
@@ -186,12 +248,78 @@ export class LocalOrganicGrowthEngine {
       );
     `);
     const current = this.now();
+    const columns = new Map(this.db.prepare("PRAGMA table_info(state)").all().map((row) => [row.name, row]));
+    const additions = [
+      ["monitoring_lease_run_id", "TEXT"], ["monitoring_lease_expires_at", "TEXT"],
+      ["measurement_lease_run_id", "TEXT"], ["measurement_lease_expires_at", "TEXT"],
+      ["strategy_lease_run_id", "TEXT"], ["strategy_lease_expires_at", "TEXT"],
+      ["next_monitoring_at", "TEXT"], ["next_measurement_at", "TEXT"], ["next_strategy_at", "TEXT"],
+      ["last_monitoring_success_at", "TEXT"], ["last_measurement_success_at", "TEXT"], ["last_strategy_success_at", "TEXT"],
+    ];
+    for (const [name, type] of additions) {
+      if (!columns.has(name)) this.db.exec(`ALTER TABLE state ADD COLUMN ${name} ${type}`);
+    }
+
     this.db.prepare(`
       INSERT OR IGNORE INTO state (
-        engine_key, timezone, next_execution_at, next_report_at, updated_at
-      ) VALUES ('ruka', ?, ?, ?, ?)
-    `).run(timezone, iso(current), iso(nextReportAt(current)), iso(current));
-    this.db.prepare("INSERT OR REPLACE INTO metadata(key, value) VALUES('schema_version', '1')").run();
+        engine_key, timezone, next_execution_at, next_report_at, next_monitoring_at,
+        next_measurement_at, next_strategy_at, updated_at
+      ) VALUES ('ruka', ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      timezone,
+      iso(current),
+      iso(nextReportAt(current)),
+      iso(current),
+      iso(nextWeeklyMeasurementAt(current)),
+      iso(nextMonthlyStrategyAt(current)),
+      iso(current),
+    );
+
+    const runsSql = this.db.prepare("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'runs'").get()?.sql || "";
+    if (!runsSql.includes("'monitoring'")) {
+      this.db.exec(`
+        DROP INDEX IF EXISTS runs_kind_started_idx;
+        ALTER TABLE runs RENAME TO runs_legacy;
+        CREATE TABLE runs (
+          id TEXT PRIMARY KEY,
+          kind TEXT NOT NULL CHECK (kind IN ('execution', 'reporting', 'monitoring', 'measurement', 'strategy')),
+          trigger_source TEXT NOT NULL,
+          status TEXT NOT NULL CHECK (status IN ('running', 'succeeded', 'failed', 'skipped')),
+          started_at TEXT NOT NULL,
+          finished_at TEXT,
+          data_through_date TEXT,
+          git_sha TEXT,
+          pull_request_url TEXT,
+          deployment_url TEXT,
+          summary_json TEXT NOT NULL DEFAULT '{}',
+          error_message TEXT
+        );
+        INSERT INTO runs SELECT * FROM runs_legacy;
+        DROP TABLE runs_legacy;
+        CREATE INDEX runs_kind_started_idx ON runs(kind, started_at DESC);
+      `);
+    }
+
+    this.db.prepare(`
+      UPDATE state SET
+        next_monitoring_at = COALESCE(next_monitoring_at, ?),
+        next_measurement_at = COALESCE(next_measurement_at, ?),
+        next_strategy_at = COALESCE(next_strategy_at, ?),
+        next_execution_at = CASE
+          WHEN last_execution_success_at IS NOT NULL
+            AND julianday(next_execution_at) > julianday(last_execution_success_at, '+3 days')
+          THEN strftime('%Y-%m-%dT%H:%M:%fZ', last_execution_success_at, '+3 days')
+          ELSE next_execution_at
+        END,
+        updated_at = ?
+      WHERE engine_key = 'ruka'
+    `).run(
+      iso(current),
+      iso(nextWeeklyMeasurementAt(current)),
+      iso(nextMonthlyStrategyAt(current)),
+      iso(current),
+    );
+    this.db.prepare("INSERT OR REPLACE INTO metadata(key, value) VALUES('schema_version', '2')").run();
   }
 
   #transaction(callback) {
@@ -209,11 +337,12 @@ export class LocalOrganicGrowthEngine {
   #recoverExpiredLeases(now) {
     const state = this.db.prepare("SELECT * FROM state WHERE engine_key = 'ruka'").get();
     for (const kind of allowedKinds) {
-      const runField = `${kind === "execution" ? "execution" : "reporting"}_lease_run_id`;
-      const expiryField = `${kind === "execution" ? "execution" : "reporting"}_lease_expires_at`;
+      const { prefix } = jobFields[kind];
+      const runField = `${prefix}_lease_run_id`;
+      const expiryField = `${prefix}_lease_expires_at`;
       if (state[runField] && state[expiryField] && Date.parse(state[expiryField]) <= now.getTime()) {
         this.db.prepare("UPDATE runs SET status = 'failed', finished_at = ?, error_message = ? WHERE id = ? AND status = 'running'")
-          .run(iso(now), `${kind === "execution" ? "Execution" : "Reporting"} lease expired before completion`, state[runField]);
+          .run(iso(now), `${kind} lease expired before completion`, state[runField]);
         this.db.prepare(`UPDATE state SET ${runField} = NULL, ${expiryField} = NULL, updated_at = ? WHERE engine_key = 'ruka'`)
           .run(iso(now));
       }
@@ -226,10 +355,10 @@ export class LocalOrganicGrowthEngine {
       const now = this.now();
       this.#recoverExpiredLeases(now);
       const state = this.db.prepare("SELECT * FROM state WHERE engine_key = 'ruka'").get();
-      const prefix = kind === "execution" ? "execution" : "reporting";
+      const { prefix, due } = jobFields[kind];
       const leaseRunId = state[`${prefix}_lease_run_id`];
       const leaseExpiresAt = state[`${prefix}_lease_expires_at`];
-      const nextDueAt = state[`next_${kind === "execution" ? "execution" : "report"}_at`];
+      const nextDueAt = state[due];
       if (leaseRunId && leaseExpiresAt && Date.parse(leaseExpiresAt) > now.getTime()) {
         return { claimed: false, run_id: null, reason: "active_lease", next_due_at: nextDueAt };
       }
@@ -254,7 +383,7 @@ export class LocalOrganicGrowthEngine {
       const run = this.db.prepare("SELECT * FROM runs WHERE id = ?").get(body.runId);
       if (!run) throw new Error(`Unknown run ${body.runId}`);
       if (run.status !== "running") throw new Error(`Run ${body.runId} is already ${run.status}`);
-      const prefix = run.kind === "execution" ? "execution" : "reporting";
+      const { prefix, due: dueField, success: successField } = jobFields[run.kind];
       const state = this.db.prepare("SELECT * FROM state WHERE engine_key = 'ruka'").get();
       if (state[`${prefix}_lease_run_id`] !== body.runId) throw new Error(`Run ${body.runId} no longer owns the ${run.kind} lease`);
       const success = body.success !== false;
@@ -268,11 +397,7 @@ export class LocalOrganicGrowthEngine {
         body.pullRequestUrl || null, body.deploymentUrl || null, JSON.stringify(body.summary || {}),
         success ? null : String(body.errorMessage || "Unknown failure").slice(0, 8000), body.runId,
       );
-      const nextDue = run.kind === "execution"
-        ? iso(now.getTime() + (success ? 5 * 86400000 : 6 * 3600000))
-        : success ? iso(nextReportAt(now)) : iso(now.getTime() + 2 * 3600000);
-      const dueField = run.kind === "execution" ? "next_execution_at" : "next_report_at";
-      const successField = run.kind === "execution" ? "last_execution_success_at" : "last_report_success_at";
+      const nextDue = iso(nextDueAt(run.kind, now, success));
       this.db.prepare(`
         UPDATE state SET ${dueField} = ?, ${successField} = CASE WHEN ? THEN ? ELSE ${successField} END,
           last_data_through_date = COALESCE(?, last_data_through_date),

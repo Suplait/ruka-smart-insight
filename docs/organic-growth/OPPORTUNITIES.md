@@ -1,6 +1,6 @@
 # Organic Growth Opportunities
 
-The authoritative backlog lives in the private `organic_growth_opportunities` table. This public-safe view documents the initial priorities and their rationale.
+The authoritative backlog lives in the private local SQLite `opportunities` table. This public-safe view documents the initial priorities and their rationale.
 
 | Priority | Opportunity | Evidence | Status |
 | --- | --- | --- | --- |
