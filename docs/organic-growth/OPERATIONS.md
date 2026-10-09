@@ -34,11 +34,11 @@ Secrets must never be written to task output, committed files or automation prom
 
 | Cadence | Purpose | May deploy? |
 | --- | --- | --- |
-| Daily monitoring | Detect availability, indexation, Search Console freshness and material anomalies | No |
-| Every 3 days | Prioritize and ship at most one safe, evidence-backed growth improvement | Yes |
-| Weekly measurement | Revisit mature experiments and record evidence-based outcomes | No |
-| 1st and 15th | Deliver the operational growth report | No |
-| Monthly strategy | Re-rank clusters, commercial priorities and larger opportunities | No |
+| Daily at 08:30 | Detect availability, indexation, Search Console freshness and material anomalies | No |
+| Every 3 days at 17:30 | Prioritize and ship at most one safe, evidence-backed growth improvement | Yes |
+| Monday at 10:00 | Revisit mature experiments and record evidence-based outcomes | No |
+| 1st and 15th at 09:00 | Deliver the operational growth report | No |
+| 1st of each month at 11:00 | Re-rank clusters, commercial priorities and larger opportunities | No |
 
 Cadence is an opportunity to act, not a content quota. A job may complete successfully with no public change when evidence is insufficient.
 
