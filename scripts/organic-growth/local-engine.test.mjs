@@ -6,6 +6,8 @@ import { DatabaseSync } from "node:sqlite";
 import test from "node:test";
 import {
   LocalOrganicGrowthEngine,
+  nextDailyMonitoringAt,
+  nextExecutionAt,
   nextMonthlyStrategyAt,
   nextReportAt,
   nextWeeklyMeasurementAt,
@@ -33,6 +35,11 @@ test("weekly measurement and monthly strategy use their Santiago cadences", () =
   assert.equal(nextMonthlyStrategyAt(new Date("2026-10-08T12:00:00Z")).toISOString(), "2026-11-01T14:00:00.000Z");
 });
 
+test("daily monitoring and three-day execution stay anchored to their Santiago cron times", () => {
+  assert.equal(nextDailyMonitoringAt(new Date("2026-10-08T12:00:00Z")).toISOString(), "2026-10-09T11:30:00.000Z");
+  assert.equal(nextExecutionAt(new Date("2026-10-08T12:00:00Z")).toISOString(), "2026-10-11T20:30:00.000Z");
+});
+
 test("claim is atomic, jobs are independent and success advances execution three days", () => {
   const subject = fixture();
   try {
@@ -45,10 +52,10 @@ test("claim is atomic, jobs are independent and success advances execution three
     subject.engine.complete({ runId: reporting.run_id, success: true });
 
     const completed = subject.engine.complete({ runId: execution.run_id, success: true, dataThroughDate: "2026-10-06" });
-    assert.equal(completed.next_due_at, "2026-10-11T12:00:00.000Z");
+    assert.equal(completed.next_due_at, "2026-10-11T20:30:00.000Z");
     assert.equal(subject.engine.claim({ kind: "execution" }).reason, "not_due");
 
-    subject.setNow("2026-10-11T12:00:01.000Z");
+    subject.setNow("2026-10-11T20:30:01.000Z");
     assert.equal(subject.engine.claim({ kind: "execution" }).claimed, true);
   } finally { subject.close(); }
 });
@@ -64,7 +71,7 @@ test("monitoring, measurement and strategy have independent leases", () => {
     assert.equal(strategy.claimed, true);
     assert.equal(subject.engine.claim({ kind: "monitoring", force: true }).reason, "active_lease");
 
-    assert.equal(subject.engine.complete({ runId: monitoring.run_id, success: true }).next_due_at, "2026-10-09T12:00:00.000Z");
+    assert.equal(subject.engine.complete({ runId: monitoring.run_id, success: true }).next_due_at, "2026-10-09T11:30:00.000Z");
     assert.equal(subject.engine.complete({ runId: measurement.run_id, success: true }).next_due_at, "2026-10-12T13:00:00.000Z");
     assert.equal(subject.engine.complete({ runId: strategy.run_id, success: true }).next_due_at, "2026-11-01T14:00:00.000Z");
   } finally { subject.close(); }
@@ -115,7 +122,7 @@ test("version one databases migrate without losing history and adopt the three-d
   const engine = new LocalOrganicGrowthEngine(databasePath, { now: () => new Date("2026-10-09T00:00:00.000Z") });
   try {
     const status = engine.status();
-    assert.equal(status.state.next_execution_at, "2026-10-11T20:21:53.429Z");
+    assert.equal(status.state.next_execution_at, "2026-10-11T20:30:00.000Z");
     assert.equal(status.runs.some((run) => run.id === "legacy-run"), true);
     assert.equal(engine.claim({ kind: "monitoring", force: true }).claimed, true);
   } finally {

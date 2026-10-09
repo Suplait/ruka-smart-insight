@@ -57,6 +57,26 @@ export function nextReportAt(after = new Date()) {
   });
 }
 
+function nextLocalDayAt(after, days, hour, minute = 0) {
+  const local = zonedParts(after, timezone);
+  const target = new Date(Date.UTC(local.year, local.month - 1, local.day + days));
+  return zonedDateToUtc({
+    year: target.getUTCFullYear(),
+    month: target.getUTCMonth() + 1,
+    day: target.getUTCDate(),
+    hour,
+    minute,
+  });
+}
+
+export function nextExecutionAt(after = new Date()) {
+  return nextLocalDayAt(after, 3, 17, 30);
+}
+
+export function nextDailyMonitoringAt(after = new Date()) {
+  return nextLocalDayAt(after, 1, 8, 30);
+}
+
 export function nextWeeklyMeasurementAt(after = new Date()) {
   const local = zonedParts(after, timezone);
   const weekday = new Date(Date.UTC(local.year, local.month - 1, local.day)).getUTCDay();
@@ -100,9 +120,9 @@ function nextDueAt(kind, now, success) {
     const retryHours = kind === "reporting" || kind === "monitoring" ? 2 : kind === "strategy" ? 24 : 6;
     return new Date(now.getTime() + retryHours * 3600000);
   }
-  if (kind === "execution") return new Date(now.getTime() + 3 * 86400000);
+  if (kind === "execution") return nextExecutionAt(now);
   if (kind === "reporting") return nextReportAt(now);
-  if (kind === "monitoring") return new Date(now.getTime() + 86400000);
+  if (kind === "monitoring") return nextDailyMonitoringAt(now);
   if (kind === "measurement") return nextWeeklyMeasurementAt(now);
   return nextMonthlyStrategyAt(now);
 }
@@ -248,6 +268,7 @@ export class LocalOrganicGrowthEngine {
       );
     `);
     const current = this.now();
+    const previousSchemaVersion = Number(this.db.prepare("SELECT value FROM metadata WHERE key = 'schema_version'").get()?.value || 1);
     const columns = new Map(this.db.prepare("PRAGMA table_info(state)").all().map((row) => [row.name, row]));
     const additions = [
       ["monitoring_lease_run_id", "TEXT"], ["monitoring_lease_expires_at", "TEXT"],
@@ -305,12 +326,6 @@ export class LocalOrganicGrowthEngine {
         next_monitoring_at = COALESCE(next_monitoring_at, ?),
         next_measurement_at = COALESCE(next_measurement_at, ?),
         next_strategy_at = COALESCE(next_strategy_at, ?),
-        next_execution_at = CASE
-          WHEN last_execution_success_at IS NOT NULL
-            AND julianday(next_execution_at) > julianday(last_execution_success_at, '+3 days')
-          THEN strftime('%Y-%m-%dT%H:%M:%fZ', last_execution_success_at, '+3 days')
-          ELSE next_execution_at
-        END,
         updated_at = ?
       WHERE engine_key = 'ruka'
     `).run(
@@ -319,7 +334,14 @@ export class LocalOrganicGrowthEngine {
       iso(nextMonthlyStrategyAt(current)),
       iso(current),
     );
-    this.db.prepare("INSERT OR REPLACE INTO metadata(key, value) VALUES('schema_version', '2')").run();
+    if (previousSchemaVersion < 3) {
+      const state = this.db.prepare("SELECT last_execution_success_at FROM state WHERE engine_key = 'ruka'").get();
+      if (state?.last_execution_success_at) {
+        this.db.prepare("UPDATE state SET next_execution_at = ?, updated_at = ? WHERE engine_key = 'ruka'")
+          .run(iso(nextExecutionAt(new Date(state.last_execution_success_at))), iso(current));
+      }
+    }
+    this.db.prepare("INSERT OR REPLACE INTO metadata(key, value) VALUES('schema_version', '3')").run();
   }
 
   #transaction(callback) {
