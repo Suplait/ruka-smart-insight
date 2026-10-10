@@ -24,6 +24,20 @@ Priority starts with Chilean operations and finance teams that repeatedly move o
 
 These are hypotheses to validate against Search Console, public demand and verified product evidence, not a mandate to produce one page per phrase.
 
+## When the blog is the right surface
+
+Use a blog post when the query requires explanation, comparison, a workflow guide or education before a buyer is ready for a product page. Use or improve a product page when the intent is to evaluate a solution, capability or vendor. Do not create a post merely because a keyword exists.
+
+A blog opportunity must satisfy all of these conditions:
+
+1. Evidence identifies a real query, repeated buyer question or important supporting topic.
+2. The post has a distinct intent and will not compete with an existing Ruka URL.
+3. Ruka has a verified product or process advantage that can be linked naturally.
+4. Claims can be supported by public Ruka evidence or clearly identified external sources.
+5. The article can answer the query fully without filler, generic AI prose or manufactured statistics.
+
+The default outcome is no post when these conditions are not met. Publishing cadence is not a success metric.
+
 ## Prioritization model
 
 Every opportunity is scored from real evidence:

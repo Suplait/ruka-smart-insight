@@ -19,6 +19,9 @@ import Stock from "@/pages/Stock";
 import TermsAndConditions from "@/pages/TermsAndConditions";
 import One from "@/pages/One";
 import OneContact from "@/pages/OneContact";
+import BlogIndex from "@/pages/BlogIndex";
+import BlogArticle from "@/pages/BlogArticle";
+import { blogPosts } from "@/content/blog/posts";
 
 const pages: Record<string, ComponentType> = {
   "/": LandingV2,
@@ -38,9 +41,23 @@ const pages: Record<string, ComponentType> = {
   "/terms": TermsAndConditions,
   "/one": One,
   "/one/contacto": OneContact,
+  "/blog": BlogIndex,
 };
 
+for (const post of blogPosts) {
+  pages[`/blog/${post.slug}`] = () => <BlogArticle post={post} />;
+}
+
 export const prerenderPaths = Object.keys(pages);
+export const blogSitemapEntries = [
+  { path: "/blog", lastmod: blogPosts[0]?.dateModified ?? "2026-10-09" },
+  ...blogPosts.map((post) => ({ path: `/blog/${post.slug}`, lastmod: post.dateModified })),
+];
+export const blogLlmsEntries = blogPosts.map((post) => ({
+  title: post.title,
+  path: `/blog/${post.slug}`,
+  description: post.excerpt,
+}));
 
 export function renderPrerenderedPage(path: string) {
   const Page = pages[path];

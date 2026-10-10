@@ -16,6 +16,7 @@ const oneLinks = [
 
 const companyLinks = [
   { label: "Quiénes somos", to: "/about" },
+  { label: "Blog", to: "/blog" },
   { label: "Privacidad", to: "/privacy" },
   { label: "Términos", to: "/terms" },
 ] as const;

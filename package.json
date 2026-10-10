@@ -22,7 +22,8 @@
     "organic:migrate-local": "node scripts/organic-growth/migrate-local-state.mjs",
     "organic:integrity": "node scripts/organic-growth/job-control.mjs integrity",
     "organic:test": "node --test scripts/organic-growth/local-engine.test.mjs",
-    "organic:backup": "node scripts/organic-growth/job-control.mjs backup"
+    "organic:backup": "node scripts/organic-growth/job-control.mjs backup",
+    "organic:blog:validate": "node scripts/organic-growth/validate-blog.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

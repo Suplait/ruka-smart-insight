@@ -94,6 +94,11 @@ export default function Navbar({
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
+                  <Link to="/blog" className={desktopLinkClass}>Blog</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
                   <Link to="/about" className={desktopLinkClass}>Nosotros</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
@@ -148,6 +153,7 @@ export default function Navbar({
                     <Link to="/integraciones" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Integraciones</Link>
                     <Link to="/#precios" onClick={(event) => handleLinkClick(event, "/#precios")} className={mobileDirectLinkClass}>Precios</Link>
                     <Link to="/one" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Ruka One</Link>
+                    <Link to="/blog" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Blog</Link>
                     <Link to="/about" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Nosotros</Link>
                   </div>
 

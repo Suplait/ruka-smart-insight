@@ -30,6 +30,8 @@ import CalendlySuccess from './pages/CalendlySuccess';
 import Webinar from './pages/Webinar';
 import One from './pages/One';
 import OneContact from './pages/OneContact';
+import BlogIndex from './pages/BlogIndex';
+import BlogArticle from './pages/BlogArticle';
 
 const queryClient = new QueryClient();
 
@@ -128,6 +130,8 @@ function App() {
             <Route path="/webinar" element={<Webinar />} />
             <Route path="/one" element={<One />} />
             <Route path="/one/contacto" element={<OneContact />} />
+            <Route path="/blog" element={<BlogIndex />} />
+            <Route path="/blog/:slug" element={<BlogArticle />} />
             <Route path="/works/*" element={<LegacyOneRedirect />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

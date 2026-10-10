@@ -23,6 +23,12 @@ Ruka conecta información de plataformas como SII, ERP, POS, bancos, planillas, 
 - [Política de privacidad](https://www.ruka.ai/privacy)
 - [Términos y condiciones](https://www.ruka.ai/terms)
 
+<!-- BLOG:START -->
+## Guías del blog
+
+- [Blog de Ruka](https://www.ruka.ai/blog): guías prácticas para automatizar trabajo operativo sobre los sistemas existentes.
+<!-- BLOG:END -->
+
 ## Procesos que Ruka puede ejecutar
 
 - Registro de compras y documentos.

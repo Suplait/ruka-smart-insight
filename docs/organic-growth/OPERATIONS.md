@@ -10,6 +10,7 @@
 - Experiment measurement runs weekly, strategic prioritization runs monthly, and reporting remains quincenal.
 - Monitoring, execution, measurement, strategy and reporting each have an independent lease and next-due timestamp. A failure in one cadence cannot block another. Expired two-hour leases recover automatically.
 - The **Codex execution automation** edits only a constrained set of public marketing/SEO files. `npm run organic:guard` blocks protected or unrelated paths.
+- Blog posts are structured content under `src/content/blog/posts`. The application discovers, prerenders and adds them to `sitemap.xml` and `llms.txt` during the build. Scheduled cycles never edit the blog renderer or routing infrastructure.
 - Every claimed cycle receives the persistent opportunity/experiment context and must emit a private structured manifest. After production verification, the automation records the deployed experiment and any mature learnings back into SQLite.
 - Vercel remains the production deploy mechanism after the automation merges a validated PR to `main`.
 - The full repository lint has pre-existing errors outside this system's scope. Automation therefore runs `organic:lint`, which lints every JavaScript/TypeScript file changed in its branch, while build and SEO validation still cover the complete application.
@@ -41,6 +42,16 @@ Secrets must never be written to task output, committed files or automation prom
 | 1st of each month at 11:00 | Re-rank clusters, commercial priorities and larger opportunities | No |
 
 Cadence is an opportunity to act, not a content quota. A job may complete successfully with no public change when evidence is insufficient.
+
+## Blog publication path
+
+1. Select an existing opportunity from the persistent engine context.
+2. Confirm that a guide is a better search result than a product-page change and document cannibalization risk.
+3. Research the question and verify every product statement against public product evidence.
+4. Add one JSON post following `docs/organic-growth/BLOG.md`. Add a real, rights-safe image under `public/blog` only when an existing product image is not appropriate.
+5. Run blog validation, build, changed-file lint, SEO validation and the safety guard.
+6. Inspect the prerendered HTML, internal links, sitemap entry and responsive page before opening the PR.
+7. Treat the post as the cycle's single experiment and evaluate it on its configured Search Console window.
 
 ## Failure and recovery
 

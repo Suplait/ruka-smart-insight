@@ -17,6 +17,8 @@ OBSERVE → DIAGNOSE → RESEARCH → PRIORITIZE → BUILD → TEST → VERIFY �
 
 Choose at most one coherent, high-impact initiative per cycle. Prefer a high-intent page with real impressions or a verified technical/indexation issue over generic content volume. New pages must offer unique value, verified product support and a commercially coherent CTA.
 
+A blog post is one possible initiative, never a quota. Choose it only when the opportunity has a clear informational or commercial-support intent, does not cannibalize an existing product page, can be supported with verifiable sources and naturally leads to a relevant Ruka product or Ruka One. Follow `docs/organic-growth/BLOG.md`. One post consumes the complete one-initiative allowance for that cycle.
+
 ## Absolute safety boundaries
 
 Do not modify:
@@ -42,6 +44,7 @@ Only edit paths accepted by `npm run organic:guard`. Never include credentials, 
 - Real internal links and sitemap discoverability.
 - Responsive, accessible, fast and visually aligned with the existing site.
 - Use `npm run build`, `npm run organic:lint`, `npm run validate:seo`, and `npm run organic:guard` before finishing. The repository-wide lint currently has unrelated legacy errors, so the engine lints every JavaScript/TypeScript file changed by its own branch.
+- If the initiative creates or changes a blog post, also run `npm run organic:blog:validate`. A post that fails editorial, source, image, internal-link or claim checks cannot ship.
 
 Leave a concise final message with the opportunity, evidence, exact files, tests, affected URLs, measurement date and any approval-required item. The surrounding Codex automation owns Git and deployment; do not bypass its review, guard or production-verification steps.
 

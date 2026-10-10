@@ -2,7 +2,7 @@ import { requiredEnv } from "./lib.mjs";
 
 const origin = process.env.ORGANIC_GROWTH_PRODUCTION_ORIGIN || "https://www.ruka.ai";
 const expectedSha = process.env.ORGANIC_GROWTH_EXPECTED_SHA || "";
-const paths = (process.env.ORGANIC_GROWTH_VERIFY_PATHS || "/,/robots.txt,/sitemap.xml,/llms.txt,/integraciones")
+const paths = (process.env.ORGANIC_GROWTH_VERIFY_PATHS || "/,/robots.txt,/sitemap.xml,/llms.txt,/integraciones,/blog")
   .split(",").map((value) => value.trim()).filter(Boolean);
 
 const failures = [];

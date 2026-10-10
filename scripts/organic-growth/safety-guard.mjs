@@ -17,8 +17,10 @@ const allowed = [
   /^src\/pages\/(AboutUs|Integraciones|PanelControl|CuentasPorPagar|RegistroDeCompras|ConciliacionAutomatica|Stock)\.tsx$/,
   /^src\/components\/seo\/(AboutSeo|ProductDemoVisuals|ProductLandingPage|PurchaseRegistrationTour|ProductGuidedTour)\.tsx$/,
   /^src\/content\/productPages\.ts$/,
+  /^src\/content\/blog\/posts\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/,
   /^public\/(sitemap\.xml|robots\.txt|llms\.txt)$/,
   /^public\/organic-growth\//,
+  /^public\/blog\/[a-z0-9]+(?:-[a-z0-9]+)*\.(?:png|jpe?g|webp)$/,
 ];
 
 if (process.env.ORGANIC_GROWTH_BOOTSTRAP === "true") {

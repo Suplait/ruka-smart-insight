@@ -1,0 +1,125 @@
+{
+  "slug": "conciliar-facturas-ordenes-compra-recepciones",
+  "status": "published",
+  "category": "Conciliaciones",
+  "title": "Cómo conciliar facturas, órdenes de compra y recepciones",
+  "excerpt": "Qué revisar para conectar lo pedido, lo recibido y lo facturado sin convertir cada compra en una investigación manual.",
+  "metaTitle": "Conciliar facturas, órdenes de compra y recepciones | Ruka",
+  "metaDescription": "Guía para conciliar facturas, órdenes de compra y recepciones, detectar diferencias y preparar pagos con información validada.",
+  "datePublished": "2026-10-09",
+  "dateModified": "2026-10-09",
+  "readingTimeMinutes": 7,
+  "targetQuery": "conciliar facturas ordenes de compra recepciones",
+  "searchIntent": "informacional comercial",
+  "audience": "equipos de compras, cuentas por pagar, finanzas y operaciones",
+  "heroImage": {
+    "src": "/assets/registro-compras/seleccion-recepcion.png",
+    "alt": "Comparación entre una factura de compra y su recepción en Ruka",
+    "position": "center center"
+  },
+  "intro": [
+    "Una factura puede estar correcta desde el punto de vista tributario y aun así no corresponder a lo que la empresa pidió o recibió. La conciliación conecta esas tres versiones de la compra antes de que una diferencia avance hacia el pago, el inventario o el cierre contable.",
+    "El desafío no es solo comparar totales. Hay que identificar documentos relacionados, homologar productos y unidades, considerar recepciones parciales y aplicar las tolerancias de cada operación. Cuando ese trabajo se hace a mano, el equipo termina revisando todo para encontrar unos pocos casos realmente problemáticos."
+  ],
+  "keyTakeaways": [
+    "La conciliación une lo pedido, lo recibido y lo facturado.",
+    "Las tolerancias deben representar reglas reales de la empresa.",
+    "El resultado útil separa coincidencias de diferencias accionables.",
+    "Un pago puede prepararse solo después de pasar los controles definidos."
+  ],
+  "sections": [
+    {
+      "id": "tres-versiones-de-una-compra",
+      "title": "Las tres versiones de una misma compra",
+      "paragraphs": [
+        "La orden de compra expresa la intención: qué se pidió, a quién, en qué cantidad y bajo qué condiciones. La recepción registra lo que efectivamente llegó. La factura representa lo que el proveedor está cobrando. La conciliación busca comprobar que esas tres versiones son compatibles antes de seguir.",
+        "En operaciones reales, los documentos rara vez tienen una correspondencia perfecta. Una orden puede recibirse en varias entregas, una factura puede agrupar más de una orden y los nombres de producto pueden cambiar entre sistemas. También existen descuentos, impuestos, cargos logísticos o diferencias de unidad que deben interpretarse con reglas claras.",
+        "Por eso la primera tarea es construir una relación confiable entre documentos. Un número de orden ayuda, pero no siempre está disponible o bien escrito. Fechas, proveedor, montos, referencias e ítems aportan señales adicionales para encontrar la correspondencia correcta."
+      ],
+      "bullets": [
+        "Orden de compra: lo que la empresa autorizó.",
+        "Recepción: lo que realmente llegó.",
+        "Factura: lo que el proveedor está cobrando.",
+        "Reglas: lo que la empresa considera aceptable."
+      ]
+    },
+    {
+      "id": "reglas-y-tolerancias",
+      "title": "Definir reglas antes de automatizar",
+      "paragraphs": [
+        "Una conciliación automatizada necesita criterios explícitos. Puede aceptar una diferencia mínima por redondeo y detener una diferencia de cantidad. Puede permitir una recepción parcial, pero impedir que se pague más de lo recibido. Las reglas correctas dependen del tipo de compra y del riesgo que la empresa quiere controlar.",
+        "Si las tolerancias son demasiado amplias, el control pierde valor. Si son demasiado estrictas, cada caso termina como excepción y la automatización no reduce trabajo. La forma práctica de calibrarlas es revisar diferencias históricas, identificar cuáles requerían una acción y traducir ese criterio en condiciones observables.",
+        "También conviene definir quién resuelve cada tipo de diferencia. Compras puede aclarar una condición comercial, operaciones confirmar una recepción y finanzas validar un impuesto. Separar estos caminos evita que todos reciban la misma lista sin contexto."
+      ],
+      "callout": "Una buena conciliación no produce más alertas. Produce menos casos, mejor explicados y dirigidos a la persona correcta."
+    },
+    {
+      "id": "resultado-accionable",
+      "title": "Del cruce de datos a una decisión clara",
+      "paragraphs": [
+        "El resultado no debería ser una planilla con miles de filas. Cada compra necesita un estado comprensible: coincide, tiene una diferencia dentro de tolerancia o requiere revisión. Para los casos con problemas, el equipo debe poder ver qué cambió y entre qué documentos, sin reconstruir la historia desde cero.",
+        "Cuando la conciliación termina bien, el proceso siguiente puede usar ese resultado. Cuentas por pagar sabe qué documentos están validados. Inventario recibe las cantidades confirmadas. Compras ve diferencias recurrentes por proveedor. La trazabilidad permite volver desde el registro final a la evidencia original.",
+        "Esta continuidad es importante porque evita una automatización aislada. Si el resultado vuelve a depender de una persona que copia el estado a otro sistema, el cuello de botella solo se movió unos metros."
+      ],
+      "bullets": [
+        "Coincidencias que pueden avanzar sin revisión.",
+        "Diferencias explicadas con documento, campo y valor.",
+        "Casos dirigidos al responsable adecuado.",
+        "Evidencia disponible para auditoría y seguimiento."
+      ]
+    },
+    {
+      "id": "partir-con-un-alcance-real",
+      "title": "Cómo partir sin modelar toda la empresa",
+      "paragraphs": [
+        "No es necesario representar todos los escenarios desde el primer día. Un alcance útil puede comenzar con proveedores de alto volumen, una categoría de compra o un tipo de orden. Lo importante es que incluya documentos reales y las decisiones que hoy toma el equipo.",
+        "Durante el levantamiento se observan casos normales y casos difíciles. Los normales permiten automatizar volumen. Los difíciles ayudan a diseñar excepciones y responsabilidades. Con el flujo operando, las reglas se ajustan sobre evidencia y luego se incorporan nuevas variantes.",
+        "Ruka puede conectar las fuentes existentes, relacionar documentos y ejecutar las reglas acordadas. El objetivo no es que el equipo deje de controlar, sino que deje de buscar manualmente qué necesita control."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "question": "¿Se puede conciliar si una orden tiene varias recepciones?",
+      "answer": "Sí. El flujo puede considerar recepciones parciales y acumular cantidades antes de comparar con la factura, según las reglas de la empresa."
+    },
+    {
+      "question": "¿Qué pasa si los productos tienen nombres distintos?",
+      "answer": "Se pueden aplicar reglas de homologación para relacionar códigos, descripciones y unidades entre proveedores y sistemas internos."
+    },
+    {
+      "question": "¿La conciliación puede bloquear un pago?",
+      "answer": "Puede dejar el documento fuera del flujo de pago cuando existe una diferencia que debe resolverse, siempre de acuerdo con los controles definidos por la empresa."
+    }
+  ],
+  "relatedProduct": {
+    "label": "Ver conciliación automática",
+    "href": "/productos/conciliacion-automatica",
+    "title": "Conciliaciones que terminan en una decisión",
+    "description": "Conoce cómo Ruka cruza documentos, aplica tus reglas y separa los casos que realmente necesitan revisión."
+  },
+  "relatedLinks": [
+    {
+      "label": "Cuentas por pagar",
+      "href": "/productos/cuentas-por-pagar"
+    },
+    {
+      "label": "Registro de compras",
+      "href": "/productos/registro-de-compras"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Ruka: conciliación automática",
+      "url": "https://www.ruka.ai/productos/conciliacion-automatica"
+    },
+    {
+      "title": "Ruka: cuentas por pagar",
+      "url": "https://www.ruka.ai/productos/cuentas-por-pagar"
+    }
+  ],
+  "author": {
+    "name": "Equipo Ruka",
+    "url": "https://www.ruka.ai/about"
+  }
+}

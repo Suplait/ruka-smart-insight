@@ -1,4 +1,4 @@
-import { access, readFile } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -115,6 +115,33 @@ const routes = [
     ogImage: `${siteOrigin}/ruka-one-og.png`,
   },
 ];
+
+const blogPostsDirectory = path.join(projectRoot, "src", "content", "blog", "posts");
+const blogPostFiles = (await readdir(blogPostsDirectory)).filter((file) => file.endsWith(".json"));
+const blogPosts = await Promise.all(
+  blogPostFiles.map(async (file) => JSON.parse(await readFile(path.join(blogPostsDirectory, file), "utf8"))),
+);
+blogPosts.sort((a, b) => b.datePublished.localeCompare(a.datePublished));
+
+routes.push({
+  path: "/blog",
+  title: "Guías de automatización operativa | Blog de Ruka",
+  canonical: `${siteOrigin}/blog`,
+  h1: "Menos tareas. Más operación.",
+  schema: ["Organization", "WebSite", "CollectionPage", "ItemList", "BreadcrumbList"],
+  lastmod: blogPosts[0]?.dateModified,
+});
+
+for (const post of blogPosts) {
+  routes.push({
+    path: `/blog/${post.slug}`,
+    title: post.metaTitle,
+    canonical: `${siteOrigin}/blog/${post.slug}`,
+    h1: post.title,
+    schema: ["Organization", "WebSite", "WebPage", "BlogPosting", "FAQPage", "BreadcrumbList"],
+    lastmod: post.dateModified,
+  });
+}
 
 const noIndexRoutes = [
   {
@@ -299,7 +326,7 @@ async function validateRoute(route, { noIndex = false } = {}) {
 
   if (!noIndex) {
     const graph = schema.values.flatMap((value) => value["@graph"] ?? [value]);
-    const page = graph.find((value) => value?.["@type"] === "WebPage" || value?.["@type"] === "AboutPage");
+    const page = graph.find((value) => ["WebPage", "AboutPage", "CollectionPage"].includes(value?.["@type"]));
     assert(Boolean(page?.primaryImageOfPage), `${route.path}: la página no enlaza primaryImageOfPage en schema`);
     assert(Boolean(page?.breadcrumb), `${route.path}: la página no enlaza BreadcrumbList en schema`);
   }
@@ -309,7 +336,7 @@ async function validateRoute(route, { noIndex = false } = {}) {
     const graph = schema.values.flatMap((value) => value["@graph"] ?? [value]);
     const faqPage = graph
       .find((value) => value?.["@type"] === "FAQPage");
-    const page = graph.find((value) => value?.["@type"] === "WebPage" || value?.["@type"] === "AboutPage");
+    const page = graph.find((value) => ["WebPage", "AboutPage", "CollectionPage"].includes(value?.["@type"]));
     assert(Boolean(faqPage?.mainEntity?.length), `${route.path}: FAQPage no contiene preguntas`);
     assert(page?.hasPart?.["@id"] === faqPage?.["@id"], `${route.path}: WebPage no enlaza su FAQPage`);
     for (const question of faqPage?.mainEntity ?? []) {
@@ -521,8 +548,9 @@ const sitemap = await readFile(path.join(projectRoot, "dist", "sitemap.xml"), "u
 assert(sitemap.startsWith('<?xml version="1.0" encoding="UTF-8"?>'), "sitemap.xml: cabecera XML inválida");
 for (const route of routes) {
   assert(sitemap.includes(`<loc>${route.canonical}</loc>`), `sitemap.xml: falta ${route.canonical}`);
+  const expectedLastmod = route.lastmod ?? "2026-10-08";
   assert(
-    sitemap.includes(`<loc>${route.canonical}</loc>\n    <lastmod>2026-10-08</lastmod>`),
+    sitemap.includes(`<loc>${route.canonical}</loc>\n    <lastmod>${expectedLastmod}</lastmod>`),
     `sitemap.xml: ${route.path} no refleja la fecha de esta iteración SEO`,
   );
 }
@@ -549,6 +577,18 @@ for (const routePath of [
 assert(llms.includes("la forma de trabajar con Ruka cuando el punto de partida es un proceso específico de una empresa"), "llms.txt: la entrada de Ruka One no explica su punto de partida");
 assert(!llms.includes("Ruka Works"), "llms.txt: todavía contiene la marca Ruka Works");
 assert(!llms.toLowerCase().includes("high-ticket"), "llms.txt: contiene lenguaje interno high-ticket");
+assert(llms.includes("## Guías del blog"), "llms.txt: falta la sección del blog");
+for (const post of blogPosts) {
+  assert(llms.includes(`${siteOrigin}/blog/${post.slug}`), `llms.txt: falta el artículo ${post.slug}`);
+}
+
+const blogIndexHtml = await readFile(routeFile("/blog"), "utf8");
+for (const post of blogPosts) {
+  assert(blogIndexHtml.includes(`href="/blog/${post.slug}"`), `/blog: falta enlace crawleable a ${post.slug}`);
+  const articleHtml = await readFile(routeFile(`/blog/${post.slug}`), "utf8");
+  assert(articleHtml.includes(post.intro[0]), `/blog/${post.slug}: el contenido no está prerenderizado`);
+  assert(articleHtml.includes(`href="${post.relatedProduct.href}"`), `/blog/${post.slug}: falta enlace al producto relacionado`);
+}
 
 await access(path.join(projectRoot, "dist", "404.html"));
 const notFound = await readFile(path.join(projectRoot, "dist", "404.html"), "utf8");
@@ -562,7 +602,8 @@ assert(indexSource.includes("https://www.googletagmanager.com"), "index.html: fa
 const vercel = JSON.parse(await readFile(path.join(projectRoot, "vercel.json"), "utf8"));
 const rewriteSources = new Set((vercel.rewrites ?? []).map((rewrite) => rewrite.source));
 for (const route of [...routes, ...noIndexRoutes].filter((route) => route.path !== "/")) {
-  assert(rewriteSources.has(route.path), `vercel.json: falta rewrite explícito para ${route.path}`);
+  const hasBlogWildcard = route.path.startsWith("/blog/") && rewriteSources.has("/blog/:slug");
+  assert(rewriteSources.has(route.path) || hasBlogWildcard, `vercel.json: falta rewrite explícito para ${route.path}`);
 }
 assert(
   !(vercel.rewrites ?? []).some((rewrite) => rewrite.source === "/(.*)" || rewrite.source === "/:path*"),
@@ -627,6 +668,8 @@ for (const routePath of [
 ]) {
   assert(appSource.includes(`path="${routePath}"`), `App.tsx: falta ruta ${routePath}`);
 }
+assert(appSource.includes('path="/blog"'), "App.tsx: falta ruta /blog");
+assert(appSource.includes('path="/blog/:slug"'), "App.tsx: falta ruta dinámica de artículos");
 
 if (failures.length) {
   console.error(`SEO/AEO validation failed: ${failures.length} of ${assertions} assertions failed.`);

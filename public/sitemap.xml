@@ -60,4 +60,7 @@
     <loc>https://www.ruka.ai/one</loc>
     <lastmod>2026-10-08</lastmod>
   </url>
+  <!-- BLOG:START -->
+  <!-- Las rutas del blog se generan desde src/content/blog/posts durante el build. -->
+  <!-- BLOG:END -->
 </urlset>

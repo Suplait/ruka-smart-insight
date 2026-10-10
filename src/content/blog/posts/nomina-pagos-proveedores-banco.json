@@ -1,0 +1,125 @@
+{
+  "slug": "nomina-pagos-proveedores-banco",
+  "status": "published",
+  "category": "Cuentas por pagar",
+  "title": "Cómo preparar una nómina de pagos a proveedores para el banco",
+  "excerpt": "Del documento validado al archivo bancario: qué ordenar para generar pagos masivos sin volver a armar la información en una planilla.",
+  "metaTitle": "Nómina de pagos a proveedores para el banco | Ruka",
+  "metaDescription": "Aprende cómo preparar una nómina de pagos a proveedores, validar los datos y generar un archivo masivo compatible con tu banco.",
+  "datePublished": "2026-10-09",
+  "dateModified": "2026-10-09",
+  "readingTimeMinutes": 6,
+  "targetQuery": "nomina pagos proveedores banco",
+  "searchIntent": "informacional comercial",
+  "audience": "equipos de tesorería, cuentas por pagar y finanzas",
+  "heroImage": {
+    "src": "/assets/registro-compras/bloqueo-pago.png",
+    "alt": "Control de factura y recepción antes de preparar el pago a proveedores",
+    "position": "center center"
+  },
+  "intro": [
+    "Preparar pagos a proveedores suele ser el último tramo de una cadena manual. La factura ya fue recibida, registrada y revisada, pero alguien todavía debe reunir cuentas bancarias, montos, fechas y referencias en el formato exacto que espera el banco.",
+    "Cuando esa nómina se arma desde cero cada semana, aparecen versiones de planillas, datos duplicados y controles repetidos. La alternativa es mantener el contexto desde el registro de la compra y generar el archivo bancario solo con documentos que ya pasaron las reglas de la empresa."
+  ],
+  "keyTakeaways": [
+    "La nómina debe construirse desde información previamente validada.",
+    "Cada banco exige estructura, campos y formatos específicos.",
+    "La automatización necesita controles antes de exportar, no después.",
+    "El archivo final debe conservar trazabilidad con facturas y proveedores."
+  ],
+  "sections": [
+    {
+      "id": "por-que-se-vuelve-manual",
+      "title": "Por qué el pago termina otra vez en una planilla",
+      "paragraphs": [
+        "Los datos necesarios para pagar suelen estar repartidos. El monto está en la factura, la fecha puede depender de las condiciones comerciales, la cuenta bancaria vive en un maestro de proveedores y la aprobación aparece en otro sistema o mensaje. La planilla se convierte en el lugar donde una persona reúne todo justo antes de subirlo al banco.",
+        "Ese método puede funcionar con poco volumen, pero es frágil. Una fila desplazada, una cuenta antigua o una factura incluida dos veces puede generar un error costoso. Además, revisar una nómina manual requiere volver a recorrer la misma información que ya se validó antes.",
+        "El primer paso para mejorar el proceso es reconocer que la exportación bancaria no está aislada. Depende de la calidad del registro de compras, de la conciliación y de la vigencia de los datos del proveedor."
+      ],
+      "bullets": [
+        "Facturas aprobadas para pago.",
+        "Datos bancarios vigentes del proveedor.",
+        "Fechas, referencias y forma de agrupación.",
+        "Formato requerido por el banco de destino."
+      ]
+    },
+    {
+      "id": "controles-antes-de-exportar",
+      "title": "Los controles que deben ocurrir antes de exportar",
+      "paragraphs": [
+        "Generar un archivo con un clic solo es útil cuando el contenido ya es confiable. Antes de incluir una factura, el flujo puede comprobar que no esté pagada, que el proveedor tenga una cuenta válida, que el monto coincida con el documento aprobado y que la fecha corresponda al ciclo actual.",
+        "También hay decisiones de negocio. Una empresa puede agrupar varias facturas en una sola transferencia o mantener una operación por documento. Puede trabajar con distintos bancos según sociedad, moneda o proveedor. Esas reglas deben quedar explícitas para que el resultado sea repetible.",
+        "Cuando falta un dato, el caso debe quedar identificado antes de crear la nómina. Así la persona responsable corrige un conjunto pequeño de excepciones y no descubre el problema al cargar el archivo en el portal bancario."
+      ],
+      "callout": "El clic final no es la automatización. La automatización es llegar a ese clic con la información correcta y trazable."
+    },
+    {
+      "id": "adaptar-el-formato-al-banco",
+      "title": "Adaptar la salida al formato del banco",
+      "paragraphs": [
+        "Los bancos no usan una estructura universal. Cambian los nombres de columnas, largos de campo, tipos de cuenta, separadores y reglas para agrupar pagos. El motor debe generar la salida que corresponde al banco y no obligar al equipo a reordenarla manualmente después.",
+        "Conviene validar el archivo con casos controlados antes de incorporarlo al ciclo regular. Se comparan montos, cantidad de pagos y datos de destino, y se confirma que el portal lo recibe sin ajustes. Una vez estable, el mismo flujo puede producir la nómina cada vez que se cierra un lote.",
+        "La exportación no ejecuta necesariamente la transferencia. La aprobación y carga final pueden mantenerse bajo el control del equipo, mientras Ruka prepara el archivo listo para subir. Esa separación permite reducir trabajo sin eliminar los controles financieros que la empresa necesita."
+      ],
+      "bullets": [
+        "Formato correcto para cada banco.",
+        "Totales y cantidad de operaciones verificados.",
+        "Referencia entre cada pago y sus documentos.",
+        "Archivo listo para cargar y aprobar."
+      ]
+    },
+    {
+      "id": "medir-el-impacto",
+      "title": "Qué medir después de automatizar",
+      "paragraphs": [
+        "La reducción de tiempo es importante, pero no es la única señal. También conviene medir cuántas nóminas requieren correcciones, cuántos documentos quedan fuera por falta de datos y cuánto tarda el ciclo desde que una factura se aprueba hasta que el pago queda preparado.",
+        "Los errores recurrentes muestran dónde mejorar el proceso anterior. Si faltan cuentas bancarias, el maestro necesita una regla de actualización. Si aparecen facturas duplicadas, el registro debe fortalecer su control. La automatización vuelve visibles estas causas porque mantiene el recorrido completo.",
+        "Ruka puede tomar la información validada, aplicar las reglas de pago y generar la nómina masiva compatible con el banco. El equipo conserva la aprobación y deja de reconstruir el archivo cada vez."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "question": "¿Ruka realiza directamente las transferencias?",
+      "answer": "El alcance puede centrarse en generar la nómina lista para subir al banco. La carga y aprobación final pueden mantenerse bajo control del equipo."
+    },
+    {
+      "question": "¿Se puede generar un formato distinto para cada banco?",
+      "answer": "Sí, siempre que se definan y validen los campos requeridos por cada formato bancario."
+    },
+    {
+      "question": "¿Qué ocurre si faltan datos del proveedor?",
+      "answer": "El caso puede separarse antes de exportar la nómina, evitando que el problema aparezca recién al cargar el archivo."
+    }
+  ],
+  "relatedProduct": {
+    "label": "Ver cuentas por pagar",
+    "href": "/productos/cuentas-por-pagar",
+    "title": "De la recepción a una nómina lista para el banco",
+    "description": "Conoce cómo Ruka valida compras y genera el archivo masivo de pago sin reconstruir la información en una planilla."
+  },
+  "relatedLinks": [
+    {
+      "label": "Conciliación automática",
+      "href": "/productos/conciliacion-automatica"
+    },
+    {
+      "label": "Registro de compras",
+      "href": "/productos/registro-de-compras"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Ruka: cuentas por pagar",
+      "url": "https://www.ruka.ai/productos/cuentas-por-pagar"
+    },
+    {
+      "title": "Ruka: registro de compras",
+      "url": "https://www.ruka.ai/productos/registro-de-compras"
+    }
+  ],
+  "author": {
+    "name": "Equipo Ruka",
+    "url": "https://www.ruka.ai/about"
+  }
+}
