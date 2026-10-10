@@ -48,7 +48,7 @@ Cadence is an opportunity to act, not a content quota. A job may complete succes
 1. Select an existing opportunity from the persistent engine context.
 2. Confirm that a guide is a better search result than a product-page change and document cannibalization risk.
 3. Research the question and verify every product statement against public product evidence.
-4. Add one JSON post following `docs/organic-growth/BLOG.md`. Add a real, rights-safe image under `public/blog` only when an existing product image is not appropriate.
+4. Add one JSON post following `docs/organic-growth/BLOG.md`. Capture a fresh, article-specific product screenshot from a safe demo/test environment when it clarifies the workflow; otherwise create a new rights-safe Ruka visual. Store it under `public/blog`. Never reuse another post's image.
 5. Run blog validation, build, changed-file lint, SEO validation and the safety guard.
 6. Inspect the prerendered HTML, internal links, sitemap entry and responsive page before opening the PR.
 7. Treat the post as the cycle's single experiment and evaluate it on its configured Search Console window.

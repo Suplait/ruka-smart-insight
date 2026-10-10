@@ -45,6 +45,7 @@ Only edit paths accepted by `npm run organic:guard`. Never include credentials, 
 - Responsive, accessible, fast and visually aligned with the existing site.
 - Use `npm run build`, `npm run organic:lint`, `npm run validate:seo`, and `npm run organic:guard` before finishing. The repository-wide lint currently has unrelated legacy errors, so the engine lints every JavaScript/TypeScript file changed by its own branch.
 - If the initiative creates or changes a blog post, also run `npm run organic:blog:validate`. A post that fails editorial, source, image, internal-link or claim checks cannot ship.
+- A new post must have a unique hero visual. Prefer a fresh screenshot captured from a demo, test or synthetic-data environment when it materially explains the workflow. Never capture production customer data or sensitive information, and never reuse an image already assigned to another post, even under a different filename.
 
 Leave a concise final message with the opportunity, evidence, exact files, tests, affected URLs, measurement date and any approval-required item. The surrounding Codex automation owns Git and deployment; do not bypass its review, guard or production-verification steps.
 

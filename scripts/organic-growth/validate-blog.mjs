@@ -1,4 +1,5 @@
 import { access, readFile, readdir } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -7,6 +8,8 @@ const postsDirectory = path.join(projectRoot, "src", "content", "blog", "posts")
 const files = (await readdir(postsDirectory)).filter((file) => file.endsWith(".json")).sort();
 const failures = [];
 const slugs = new Set();
+const imageSources = new Map();
+const imageHashes = new Map();
 
 const textFields = (post) => [
   post.title,
@@ -91,9 +94,21 @@ for (const file of files) {
   const imageSource = post.heroImage?.src ?? "";
   assert(imageSource.startsWith("/"), `${label}: heroImage.src debe ser una ruta local absoluta`);
   assert((post.heroImage?.alt?.length ?? 0) >= 20, `${label}: heroImage.alt debe describir la imagen`);
+  if (imageSources.has(imageSource)) {
+    failures.push(`${label}: reutiliza la imagen principal de ${imageSources.get(imageSource)} (${imageSource})`);
+  } else {
+    imageSources.set(imageSource, label);
+  }
   if (imageSource.startsWith("/")) {
     try {
-      await access(path.join(projectRoot, "public", imageSource.slice(1)));
+      const imagePath = path.join(projectRoot, "public", imageSource.slice(1));
+      await access(imagePath);
+      const imageHash = createHash("sha256").update(await readFile(imagePath)).digest("hex");
+      if (imageHashes.has(imageHash)) {
+        failures.push(`${label}: usa el mismo archivo visual que ${imageHashes.get(imageHash)}, aunque tenga otro nombre`);
+      } else {
+        imageHashes.set(imageHash, label);
+      }
     } catch {
       failures.push(`${label}: la imagen ${imageSource} no existe en public`);
     }

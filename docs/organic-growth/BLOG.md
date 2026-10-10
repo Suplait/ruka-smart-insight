@@ -41,7 +41,11 @@ Required editorial elements:
 - Do not imply that Ruka executes an action when public product evidence only shows that it prepares or supports it.
 - Do not pad the article to reach a word count. The validator enforces a range, not a target.
 - Do not generate lookalike brand marks or use third-party imagery without clear rights.
-- Reuse a relevant product screenshot when it explains the workflow. Otherwise create an original Ruka-owned visual and store it in `public/blog`.
+- Every new post needs its own visual. Never reuse the hero image, or the same image saved under another filename, in more than one blog post.
+- When the platform explains the workflow better than an illustration, capture a new screenshot specifically for the article from a demo, test or synthetic-data environment. Use the browser and the real product flow to choose a meaningful state, not a decorative dashboard view.
+- Never capture production tenants, real customer names, supplier data, emails, phone numbers, bank information, credentials, tokens or any other private information. If a safe demo environment is unavailable, do not take the screenshot.
+- Crop only irrelevant browser chrome or empty space. Do not alter values, hide product limitations or assemble a UI state that the product does not actually produce.
+- Store newly captured or generated visuals in `public/blog` with a descriptive filename tied to the article slug. Use a newly created Ruka-owned illustration only when a product screenshot would not clarify the topic.
 - Avoid duplicate or near-duplicate topics. Check titles, target queries and search intent across all existing posts.
 
 ## Required checks
