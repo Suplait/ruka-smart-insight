@@ -14,10 +14,15 @@ export function useCalendlyObservation(key?: string | number, continuation?: Lea
       if (!fromEmbed) return;
       const eventUri = event.data?.payload?.event?.uri;
       const inviteeUri = event.data?.payload?.invitee?.uri;
-      if (typeof eventUri !== "string" || !/^https:\/\/api.calendly.com\/scheduled_events\/[a-zA-Z0-9-]+$/.test(eventUri) || seen.has(eventUri)) return;
+      if (typeof eventUri !== "string" || !/^https:\/\/api.calendly.com\/scheduled_events\/[a-zA-Z0-9-]+$/.test(eventUri)) return;
+      if (inviteeUri != null && (typeof inviteeUri !== "string" ||
+        !/^https:\/\/api.calendly.com\/scheduled_events\/[a-zA-Z0-9-]+\/invitees\/[a-zA-Z0-9-]+$/.test(inviteeUri) ||
+        inviteeUri.split("/invitees/")[0] !== eventUri)) return;
+      const reference = inviteeUri ?? eventUri;
+      if (seen.has(reference)) return;
       const owner = readLeadContinuation(key, continuation);
       if (!owner) return;
-      seen.add(eventUri);
+      seen.add(reference);
       void invokeLeadIntake(owner, { action: "observe_calendar", event_uri: eventUri, invitee_uri: inviteeUri });
     };
     window.addEventListener("message", observe);

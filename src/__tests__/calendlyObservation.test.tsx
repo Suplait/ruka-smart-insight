@@ -39,4 +39,25 @@ describe("independent Calendly observation", () => {
     expect(listener.mock.calls.filter(([name]) => name === "message")).toHaveLength(0);
     listener.mockRestore();
   });
+
+  it("keeps separate invitees of a group event and rejects mismatched references", async () => {
+    const submission = createLeadSubmission()!;
+    const frame = document.createElement("iframe");
+    frame.src = "https://calendly.com/ruka-ai/calendar";
+    document.body.append(frame);
+    renderHook(() => useCalendlyObservation(submission.continuation.submission_id));
+    const send = (uri: string) => window.dispatchEvent(new MessageEvent("message", {
+      origin: "https://calendly.com", source: frame.contentWindow,
+      data: { ...data, payload: { ...data.payload, invitee: { uri } } },
+    }));
+    await act(async () => {
+      send("https://api.calendly.com/scheduled_events/other-event/invitees/person-1");
+      send(`${eventUri}/invitees/person-1?email=private`);
+      send(`${eventUri}/invitees/person-1`);
+      send(`${eventUri}/invitees/person-2`);
+      send(`${eventUri}/invitees/person-2`);
+    });
+    expect(backend.invoke).toHaveBeenCalledTimes(2);
+    expect(window.dataLayer).toEqual([]);
+  });
 });
