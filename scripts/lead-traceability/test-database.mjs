@@ -23,9 +23,11 @@ try {
     "-f", "supabase/migrations/20261013180000_add_lead_traceability.sql",
     "-f", "supabase/migrations/20261013181000_add_calendly_evidence.sql",
     "-f", "supabase/migrations/20261013190000_add_clickup_delivery.sql",
+    "-f", "supabase/migrations/20261013200000_add_calendar_reconciliation.sql",
     "-f", "supabase/tests/lead_traceability.sql",
     "-f", "supabase/tests/calendly_evidence.sql",
-    "-f", "supabase/tests/clickup_delivery.sql"]);
+    "-f", "supabase/tests/clickup_delivery.sql",
+    "-f", "supabase/tests/calendar_reconciliation.sql"]);
   console.log(result.toString().trim().split("\n").slice(-6).join("\n"));
   console.log("Lead traceability SQL assertions passed in a disposable PostgreSQL instance.");
 } catch (error) {

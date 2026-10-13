@@ -39,6 +39,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      lead_calendar_reconciliation: {
+        Row: {
+          attempts: number
+          cycle_completed_at: string | null
+          cycle_started_at: string
+          last_error: string | null
+          lease_id: string | null
+          lease_until: string | null
+          next_attempt_at: string
+          pages_processed: number
+          revision: number
+          state: Json
+          updated_at: string
+          user_uri: string
+        }
+        Insert: {
+          attempts?: number
+          cycle_completed_at?: string | null
+          cycle_started_at?: string
+          last_error?: string | null
+          lease_id?: string | null
+          lease_until?: string | null
+          next_attempt_at?: string
+          pages_processed?: number
+          revision?: number
+          state: Json
+          updated_at?: string
+          user_uri: string
+        }
+        Update: {
+          attempts?: number
+          cycle_completed_at?: string | null
+          cycle_started_at?: string
+          last_error?: string | null
+          lease_id?: string | null
+          lease_until?: string | null
+          next_attempt_at?: string
+          pages_processed?: number
+          revision?: number
+          state?: Json
+          updated_at?: string
+          user_uri?: string
+        }
+        Relationships: []
+      }
       lead_calendly_receipts: {
         Row: {
           event_key: string
@@ -941,6 +986,29 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      trace_claim_calendar_reconciliation: {
+        Args: { p_user_uri: string }
+        Returns: {
+          attempts: number
+          cycle_completed_at: string | null
+          cycle_started_at: string
+          last_error: string | null
+          lease_id: string | null
+          lease_until: string | null
+          next_attempt_at: string
+          pages_processed: number
+          revision: number
+          state: Json
+          updated_at: string
+          user_uri: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "lead_calendar_reconciliation"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       trace_claim_clickup_delivery: { Args: never; Returns: Json }
       trace_claim_deliveries: {
         Args: { p_limit?: number }
@@ -990,6 +1058,16 @@ export type Database = {
           isOneToOne: false
           isSetofReturn: true
         }
+      }
+      trace_commit_calendar_reconciliation: {
+        Args: {
+          p_lease: string
+          p_meetings: Json
+          p_revision: number
+          p_state: Json
+          p_user_uri: string
+        }
+        Returns: boolean
       }
       trace_confirm_initial_slack: {
         Args: { p_channel: string; p_id: string; p_ts: string }
@@ -1072,6 +1150,15 @@ export type Database = {
       trace_record_calendly: {
         Args: { p_meeting: Json; p_source?: string }
         Returns: undefined
+      }
+      trace_release_calendar_reconciliation: {
+        Args: {
+          p_error?: string
+          p_lease: string
+          p_retry_after?: number
+          p_user_uri: string
+        }
+        Returns: boolean
       }
       trace_submit_lead: {
         Args: { p_id: string; p_lead: Json; p_token_hash: string }

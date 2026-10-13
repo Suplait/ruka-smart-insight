@@ -21,3 +21,6 @@ verify_jwt = false
 
 [functions.lead-calendly-webhook]
 verify_jwt = false
+
+[functions.lead-calendly-reconcile]
+verify_jwt = false
