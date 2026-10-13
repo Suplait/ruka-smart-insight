@@ -1,4 +1,6 @@
 export const labels = {
+  ga4_source_unavailable: 'Conciliación GA4 fallida o sin lectura confirmada en 36 horas',
+  ga4_volume_drop: 'Señales GA4 con caída frente al mismo día semanal, ajustadas por tráfico; revisar conciliación agregada',
   source_unavailable: 'No se pudo consultar Supabase',
   enrichment_stale: 'Worker Slack/ClickUp sin actividad confirmada en 10 minutos',
   persistence_failed: 'Formularios cuya persistencia falló',
@@ -36,7 +38,7 @@ export function monitorDecision(response, state, now) {
     observation.incidents.map(key => `• ${labels[key]}: ${observation.counts[key]}`).join('\n');
   const text = `${recovery ? '✅ Trazabilidad recuperada' : '⚠️ Revisar trazabilidad de leads'}\n${detail}\n` +
     'Responsable: equipo Ruka de captación.\n' +
-    'Revisar: https://github.com/Suplait/ruka-smart-insight/blob/codex/lead-traceability-closeout/docs/lead-traceability-alerts.md\n' +
+    'Revisar: https://github.com/Suplait/ruka-smart-insight/blob/main/docs/lead-traceability-alerts.md\n' +
     'Este aviso no ejecuta llamadas, crea tareas ni reenvía conversiones.';
   return { fingerprint: observation.fingerprint, text, recovery, observedAt: new Date(now).toISOString() };
 }

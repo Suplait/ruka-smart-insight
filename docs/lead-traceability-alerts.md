@@ -16,6 +16,8 @@ El monitor independiente de n8n consulta cada cinco minutos un RPC privado de Su
 | Reintentos agotados | Corregir la causa y reservar de nuevo sólo el enriquecimiento fallido, conservando submission, tarea y mensaje originales. Nunca reejecutar el INSERT comercial. |
 | Reconciliación Mauro atrasada | Revisar el horario de quince minutos, `last_error`, cursor y credencial Calendly. No borrar el cursor ni volver a crear suscripciones como primer remedio. Un ciclo terminado puede dormir 24 horas. |
 | Reunión sin asociación | Revisar las reuniones reservadas en los últimos siete días sin lead inequívoco. No atribuir una reunión a un candidato ambiguo. Lorenzo está fuera de esta conexión. |
+| GA4 sin lectura | Revisar acceso, cuota y ejecución diaria del colector. Un error de API no es ausencia de conversiones. Ver [conciliación GA4](lead-ga4-reconciliation.md). |
+| Caída de señales GA4 | Consultar `lead_ga4_reconciliations`, comparar tráfico, el mismo día semanal y conteos confirmados en Supabase. Es una señal agregada para investigar, no una prueba de leads perdidos. |
 
 Las alertas no cuentan los ClickUp pendientes de One: ese flujo no tiene un vínculo CRM verificado. Una recuperación significa que las comprobaciones vuelven a estar dentro de sus umbrales, no que se haya reconstruido información ausente.
 

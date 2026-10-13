@@ -27,3 +27,6 @@ verify_jwt = false
 
 [functions.lead-calendly-reconcile]
 verify_jwt = false
+
+[functions.lead-ga4-reconcile]
+verify_jwt = false
