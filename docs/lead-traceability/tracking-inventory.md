@@ -40,14 +40,16 @@ La etiqueta 25 carga Microsoft Clarity en All Pages. El activador 10 “Just Lin
 - **Enhanced conversions ya existe**: etiqueta 54 “CHTML - listener user_data” observa email/teléfono del formulario clásico y añade `ruka_lead_submit` con `enhanced_conversion_data`. Etiquetas Ads 52 y 58 referencian `user_provided_data`. No se agregó esta función ni se alterará en este goal.
 - El listener 54 observa tanto click como submit. Se debe conservar y comparar su comportamiento en QA; no se deduplica silenciosamente como parte del enriquecimiento.
 - La etiqueta Meta 49 utiliza actualmente `fbq('track', 'registration_success')`. Se conserva tal cual; no se sustituye por `trackCustom` ni por otro nombre.
-- No hay activadores ni etiquetas `one_*` en esta versión, ni reenvío de esos eventos por GTM Server. El código One sólo hace push a dataLayer. La conexión faltante hacia GA4 debe verificarse también contra la configuración/recepción de la propiedad antes de añadir un adaptador; no se considera creada todavía.
+- No hay activadores ni etiquetas `one_*` en esta versión publicada, ni reenvío de esos eventos por GTM Server. El código One sólo hace push a dataLayer. Tras revisar la configuración de GA4 indicada abajo, se añadió una conexión exclusivamente como borrador en workspace 24; aún no se publicó ni se confirmó recepción.
 - Tampoco hay activadores para los eventos dinámicos `form_submission_success/failure` o `registration_error` en esta versión. No son intercambiables con `form_submit` ni con un lead persistido.
 
 ## Consentimiento y cobertura
 
 No se encontró CMP en el repositorio, etiquetas de consentimiento/CMP en la exportación, ni código de consentimiento en los HTML personalizados. Las 29 etiquetas muestran `consentStatus: NOT_SET`; esto es la configuración de consentimiento adicional de GTM, **no una prueba de consentimiento otorgado por una persona**. La nueva captura mantiene `analytics_consent: unknown` e IDs GA nulos hasta conectar una fuente explícita. No cambia la configuración de consentimiento de los destinos actuales.
 
-El inventario establece el contrato de configuración, no la recepción histórica ni una garantía de entrega. Aún faltan los diagnósticos de Meta Events Manager, la configuración de eventos derivados de GA4 y la verificación de red antes/después de la activación. No se habilitarán Measurement Protocol, CAPI ni importaciones offline para duplicar rutas que ya existen.
+GA4 muestra zona horaria **Chile, (GMT-03:00) Chile Time** y moneda CLP. En el stream `G-M7YT4CY8MC`, Custom configurations tiene un único evento derivado: `ads_conversion_P_gina_de_logro_1`, desde `event_name = page_view` y `page_path` comienza por `/onboarding-success` sin distinguir mayúsculas. No hay modificaciones de eventos. El filtro `one_` en Recent events devuelve cero resultados en la ventana administrativa de 28 días. Se preparó una conexión aditiva independiente en `integrations/gtm/one-ga4-additive.json`; todavía no se publicó.
+
+El inventario establece el contrato de configuración, no la recepción histórica ni una garantía de entrega. Aún faltan los diagnósticos de Meta Events Manager y la verificación de red antes/después de la activación. No se habilitarán Measurement Protocol, CAPI ni importaciones offline para duplicar rutas que ya existen.
 
 ## Repetir la comparación
 
