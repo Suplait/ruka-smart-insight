@@ -10,6 +10,7 @@ beforeEach(() => {
   vi.stubEnv("VITE_LEAD_TRACEABILITY", "true");
   sessionStorage.clear();
   localStorage.clear();
+  window.history.replaceState({}, "", "/restaurantes");
 });
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllEnvs(); });
 
@@ -63,12 +64,35 @@ describe("secure intake transport", () => {
     expect(backend.from).not.toHaveBeenCalled();
   });
 
-  it("adds the fifth UTM without changing the legacy campaign values", async () => {
+  it("adds the fifth UTM from the same campaign without changing the legacy values", async () => {
     const api = await import("@/services/leadIntake");
-    window.history.replaceState({}, "", "/restaurantes?utm_term=restaurant");
+    window.history.replaceState({}, "", "/restaurantes?utm_source=legacy&utm_term=restaurant");
     const submission = api.createLeadSubmission()!;
     backend.invoke.mockResolvedValue({ data: { ts: "1.2" }, error: null });
     await api.prepareClassicLead(submission, { ...lead, utm_source: "legacy" }, lead);
     expect(backend.invoke.mock.calls[0][1].body.lead).toMatchObject({ utm_source: "legacy", utm_term: "restaurant" });
+  });
+
+  it("does not combine a legacy campaign with the term of a different touch", async () => {
+    const api = await import("@/services/leadIntake");
+    window.history.replaceState({}, "", "/restaurantes?utm_source=google&utm_campaign=new&utm_term=restaurant");
+    const submission = api.createLeadSubmission()!;
+    backend.invoke.mockResolvedValue({ data: { ts: "1.2" }, error: null });
+    await api.prepareClassicLead(submission, { ...lead, utm_source: "google", utm_campaign: "old" }, lead);
+    const body = backend.invoke.mock.calls[0][1].body;
+    expect(body.lead).toMatchObject({ utm_source: "google", utm_campaign: "old", utm_term: null });
+    expect(body.attribution.last_non_direct_touch).toMatchObject({ utm_campaign: "new", utm_term: "restaurant" });
+  });
+
+  it("does not fill an absent term with a different campaign's session term", async () => {
+    const api = await import("@/services/leadIntake");
+    const { captureLeadAttribution } = await import("@/utils/leadAttribution");
+    window.history.replaceState({}, "", "/restaurantes?utm_source=google&utm_campaign=old&utm_term=old-term");
+    captureLeadAttribution();
+    window.history.replaceState({}, "", "/restaurantes?utm_source=google&utm_campaign=new");
+    const submission = api.createLeadSubmission()!;
+    backend.invoke.mockResolvedValue({ data: { ts: "1.2" }, error: null });
+    await api.prepareClassicLead(submission, { ...lead, utm_source: "google", utm_campaign: "new" }, lead);
+    expect(backend.invoke.mock.calls[0][1].body.lead).toMatchObject({ utm_campaign: "new", utm_term: null });
   });
 });

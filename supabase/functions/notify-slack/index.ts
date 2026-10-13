@@ -1,4 +1,5 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { legacyLeadAccessResponse } from '../_shared/legacyLeadAccess.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -43,6 +44,9 @@ Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
   }
+
+  const expired = legacyLeadAccessResponse(corsHeaders);
+  if (expired) return expired;
 
   try {
     const SLACK_BOT_TOKEN = Deno.env.get('SLACK_BOT_TOKEN')
