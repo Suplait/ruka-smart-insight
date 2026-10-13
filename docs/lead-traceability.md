@@ -36,7 +36,7 @@ La captura de adquisición y el receptor de mensajes de Calendly funcionan separ
 
 ## Límites que faltan resolver antes de activar
 
-1. Completar el inventario/export de GTM y Meta y preparar la presentación del embudo en GA4 con ambos eventos de Calendly. No editar sus conexiones existentes.
+1. Exportaciones de GTM web v21 y Server v1 completadas; [inventario y hashes](lead-traceability/tracking-inventory.md) guardados. Server tiene cero etiquetas; Meta y Ads ya reciben las rutas clásicas detalladas en el inventario. Falta revisar diagnósticos de Meta, eventos derivados de GA4 y preparar el embudo con ambos eventos Calendly. Los `one_*` no tienen conexión en los contenedores inspeccionados; verificar cobertura restante antes de añadirla.
 2. Conectar el consentimiento real y la lectura de IDs mediante la API de Google. Actualmente el consentimiento es `unknown` y los IDs GA son nulos; no se infieren permisos de cookies ni se inventan identificadores.
 3. Verificar un portador admitido por Calendly para `booking_token` con un payload real. `a1` ya contiene la empresa y las UTMs conservan su significado. No se utiliza `salesforce_uuid` como portador sin verificar su contrato en el embed.
 4. Crear las suscripciones firmadas de Calendly y configurar credenciales sin alterar la suscripción comercial existente. El calendario clásico usa Mauro y One usa Lorenzo. La recuperación periódica está implementada/desplegada apagada; falta autenticación, QA con lecturas reales y horario. El trigger nativo de n8n confirma al recibir, por lo que no sustituye el receptor independiente que persiste antes de confirmar. OAuth requiere verificar la clave de firma de la aplicación; un secreto OAuth no equivale a esa clave.
