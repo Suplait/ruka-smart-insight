@@ -1091,6 +1091,10 @@ export type Database = {
         Args: { p_list_id: string; p_submission: string; p_task_id: string }
         Returns: boolean
       }
+      trace_mark_persistence_failed: {
+        Args: { p_id: string; p_token_hash: string }
+        Returns: boolean
+      }
       trace_observe_calendar: {
         Args: {
           p_event_uri: string

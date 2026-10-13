@@ -109,11 +109,8 @@ export async function handleLeadIntake(request: Request) {
       return error ? json({ error: "Observation could not be saved" }, 503) : json({ success: true });
     }
     if (action === "persistence_failed") {
-      if (submission.status === "pending") {
-        await db.from("lead_submissions").update({ status: "failed", updated_at: new Date().toISOString() }).eq("id", submissionId).eq("status", "pending");
-        await db.rpc("trace_queue_enrichment", { p_submission: submissionId });
-      }
-      return json({ success: true });
+      const { error } = await db.rpc("trace_mark_persistence_failed", { p_id: submissionId, p_token_hash: digest });
+      return error ? json({ error: "Failure could not be recorded" }, 503) : json({ success: true });
     }
     return json({ error: "Unknown action" }, 400);
   } catch (error) {

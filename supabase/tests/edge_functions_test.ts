@@ -6,7 +6,7 @@ const token = "a".repeat(64);
 const lead = { name: "QA Local", company_name: "Example", email: "qa@example.invalid", ccity: "Santiago", page_path: "/restaurantes", utm_term: "restaurant" };
 const assert = (condition: unknown, message: string) => { if (!condition) throw new Error(message); };
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
-type Options = { claim?: boolean; slackThrows?: boolean; unauthorized?: boolean; submitError?: boolean; worker?: boolean };
+type Options = { claim?: boolean; slackThrows?: boolean; unauthorized?: boolean; submitError?: boolean; worker?: boolean; failureError?: boolean; missingReference?: boolean; deferRejected?: boolean };
 
 async function fixture(options: Options, test: (calls: { path: string; body: Record<string, unknown> }[]) => Promise<void>) {
   const env = { SUPABASE_URL: "https://database.example.invalid", SUPABASE_SERVICE_ROLE_KEY: "local-test-key", SLACK_BOT_TOKEN: "local-test-slack", LEAD_INTAKE_ENABLED: "true", LEAD_TRACEABILITY_WORKER_TOKEN: "local-worker-token", LEAD_SLACK_ENRICHMENT_ENABLED: options.worker ? "true" : "false" };
@@ -24,6 +24,9 @@ async function fixture(options: Options, test: (calls: { path: string; body: Rec
     }
     assert(url.origin === "https://database.example.invalid", "No unexpected external destination");
     if (url.pathname.endsWith("/trace_claim_slack_deliveries")) return json([{ id: 9, submission_id: id, destination: "slack_enrichment", lease_id: "fixture-lease", revision: 3 }]);
+    if (url.pathname.endsWith("/trace_mark_persistence_failed")) return options.failureError ? json({ message: "fixture write failure" }, 500) : json(false);
+    if (url.pathname.endsWith("/trace_defer_delivery")) return json(!options.deferRejected);
+    if (url.pathname === "/rest/v1/lead_submissions" && init?.method === "GET" && options.missingReference) return json({ id, status: "pending", slack_initial_state: "uncertain" });
     if (url.pathname.endsWith("/trace_finish_delivery")) return json(true);
     if (url.pathname === "/rest/v1/lead_traceability_health") return new Response(null, { status: 204 });
     if (url.pathname === "/rest/v1/lead_submissions" && init?.method === "GET") return json({ id, lead_id: 42, status: "persisted", slack_channel_id: "C08DUJ6V2G6", slack_message_ts: "1234.5678", slack_initial_message: { text: "Initial notice", blocks: [{ type: "section", text: { type: "mrkdwn", text: "<!channel> Contact" } }] } });
@@ -108,4 +111,28 @@ Deno.test("worker updates only the original message and acknowledges its leased 
   assert(!JSON.stringify(updates).includes("<!channel>"), "No repeated mention");
   assert(!calls.some(call => call.path === "/api/chat.postMessage"), "Enrichment cannot create a message");
   assert(calls.some(call => call.path.endsWith("trace_finish_delivery") && call.body.p_lease === "fixture-lease" && call.body.p_revision === 3 && call.body.p_error === null), "Finish exact leased revision");
+}));
+
+Deno.test("persistence failure uses one atomic RPC and cannot acknowledge a failed write", async () => {
+  for (const failureError of [false, true]) await fixture({ failureError }, async calls => {
+    const response = await handleLeadIntake(request("persistence_failed"));
+    assert(response.status === (failureError ? 503 : 200), "Write result must be checked");
+    assert(calls.some(c => c.path.endsWith("trace_mark_persistence_failed")), "Atomic transaction");
+    assert(!calls.some(c => c.path.endsWith("trace_queue_enrichment") || c.body.status === "failed"), "No split status/outbox writes");
+  });
+});
+
+Deno.test("uncertain Slack deliveries are recorded without history reads or duplicate messages", async () => {
+  for (const deferRejected of [false, true]) await fixture({ worker: true, missingReference: true, deferRejected }, async calls => {
+    const response = await handleLeadEnrichment(new Request("https://local.example/worker", { method: "POST", headers: { Authorization: "Bearer local-worker-token" } }));
+    const result = await response.json();
+    assert(result.waiting === (deferRejected ? 0 : 1) && result.failed === (deferRejected ? 1 : 0), "Check deferral acknowledgement");
+    assert(calls.some(c => c.body.p_reason === "initial_slack_delivery_unconfirmed"), "Explicit uncertainty");
+    assert(!calls.some(c => c.path.startsWith("/api/")), "No history, posting or update without confirmed reference");
+  });
+});
+
+Deno.test("existing Supabase scheduler credential cannot bypass rollout flags", () => fixture({}, async calls => {
+  const response = await handleLeadEnrichment(new Request("https://local.example/worker", { method: "POST", headers: { Authorization: "Bearer local-test-key" } }));
+  assert((await response.json()).enabled === false && calls.length === 0, "Service role supports existing scheduler with delivery gate intact");
 }));

@@ -8,13 +8,17 @@ type Delivery = { id: number; submission_id: string; destination: string; lease_
 export async function handleLeadEnrichment(request: Request) {
   if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
   const token = Deno.env.get("LEAD_TRACEABILITY_WORKER_TOKEN");
+  const serviceRole = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   const supplied = request.headers.get("Authorization")?.replace(/^Bearer /, "");
-  if (!token || !supplied || await tokenDigest(token) !== await tokenDigest(supplied)) return json({ error: "Unauthorized" }, 401);
+  if (!supplied || !(await Promise.all([token, serviceRole].filter((v): v is string => !!v).map(async value => await tokenDigest(value) === await tokenDigest(supplied)))).some(Boolean)) return json({ error: "Unauthorized" }, 401);
   if (Deno.env.get("LEAD_SLACK_ENRICHMENT_ENABLED") !== "true") return json({ enabled: false });
-  const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, { auth: { persistSession: false } });
+  const deadline = AbortSignal.timeout(60000);
+  const boundedFetch: typeof fetch = (input, init) => fetch(input, { ...init, redirect: "error", signal: AbortSignal.any([deadline, AbortSignal.timeout(10000)]) });
+  const db = createClient(Deno.env.get("SUPABASE_URL")!, serviceRole!, { auth: { persistSession: false }, global: { fetch: boundedFetch } });
   const result = { delivered: 0, waiting: 0, failed: 0 };
   try {
-    await db.from("lead_traceability_health").upsert({ job: "enrichment", last_started_at: new Date().toISOString() }, { onConflict: "job" });
+    const { error: healthError } = await db.from("lead_traceability_health").upsert({ job: "enrichment", last_started_at: new Date().toISOString() }, { onConflict: "job" });
+    if (healthError) throw new Error("health_write_failed");
     // Each request is bounded below the lease duration; another worker skips leased rows.
     const { data: deliveries, error } = await db.rpc("trace_claim_slack_deliveries", { p_limit: 4 });
     if (error) throw new Error("claim_failed");
@@ -24,8 +28,8 @@ export async function handleLeadEnrichment(request: Request) {
         if (error || !finished) result.failed++; else if (reason) result.failed++; else result.delivered++;
       };
       const defer = async (reason: string) => {
-        const { error } = await db.rpc("trace_defer_delivery", { p_id: delivery.id, p_lease: delivery.lease_id, p_reason: reason });
-        if (error) result.failed++; else result.waiting++;
+        const { data: deferred, error } = await db.rpc("trace_defer_delivery", { p_id: delivery.id, p_lease: delivery.lease_id, p_reason: reason });
+        if (error || !deferred) result.failed++; else result.waiting++;
       };
       try {
         if (delivery.destination !== "slack_enrichment") {
@@ -35,9 +39,12 @@ export async function handleLeadEnrichment(request: Request) {
         const { data: submission, error } = await db.from("lead_submissions").select("*").eq("id", delivery.submission_id).single();
         if (error || !submission) { await finish("submission_unavailable"); return; }
         if (!submission.slack_message_ts || !submission.slack_channel_id || !submission.slack_initial_message) {
-          await defer(submission.slack_initial_state === "uncertain" ? "initial_slack_requires_reconciliation" : "initial_slack_reference_missing");
+          // Keep ambiguous initial sends visible without reading history or
+          // risking another message. Enrich only a confirmed original root.
+          await defer(submission.slack_initial_state === "uncertain" || submission.slack_initial_state === "sending" ? "initial_slack_delivery_unconfirmed" : "initial_slack_reference_missing");
           return;
         }
+        if (submission.slack_channel_id !== "C08DUJ6V2G6") { await defer("unexpected_slack_channel"); return; }
         const slackToken = Deno.env.get("SLACK_BOT_TOKEN");
         if (!slackToken) { await defer("slack_credential_missing"); return; }
         const { data: lead, error: leadError } = submission.lead_id
@@ -51,7 +58,7 @@ export async function handleLeadEnrichment(request: Request) {
           persisted: submission.status === "persisted", failed: submission.status === "failed",
           clickupTaskId: submission.clickup_task_id, invoiceCount: lead?.facturas_compra_mes, confirmedMeetings: meetings || [],
         });
-        const response = await fetch("https://slack.com/api/chat.update", {
+        const response = await boundedFetch("https://slack.com/api/chat.update", {
           method: "POST", headers: { Authorization: `Bearer ${slackToken}`, "Content-Type": "application/json" },
           body: JSON.stringify(message), signal: AbortSignal.timeout(10000),
         });
@@ -60,7 +67,8 @@ export async function handleLeadEnrichment(request: Request) {
         await finish(response.ok && body.ok ? null : response.status === 429 ? "slack_rate_limited" : "slack_update_rejected", response.status === 429 ? Math.min(3600, Math.max(0, Number(response.headers.get("retry-after")) || 60)) : undefined);
       } catch { await finish("delivery_transport_failed"); }
     }));
-    await db.from("lead_traceability_health").upsert({ job: "enrichment", last_started_at: new Date().toISOString(), last_completed_at: new Date().toISOString(), result });
+    const { error: completedError } = await db.from("lead_traceability_health").upsert({ job: "enrichment", last_completed_at: new Date().toISOString(), result });
+    if (completedError) throw new Error("health_write_failed");
     return json(result);
   } catch {
     console.error("lead_enrichment_worker_failed");
