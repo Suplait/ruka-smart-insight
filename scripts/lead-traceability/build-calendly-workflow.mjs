@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 const id = name => { const h=createHash('sha256').update(name).digest('hex'); return `${h.slice(0,8)}-${h.slice(8,12)}-5${h.slice(13,16)}-a${h.slice(17,20)}-${h.slice(20,32)}`; };
 const nodes=[{id:id('calendar-manual'),name:'Prueba controlada de conexion',type:'n8n-nodes-base.manualTrigger',typeVersion:1,position:[0,0],parameters:{}}];
 const connections={'Prueba controlada de conexion':{main:[[]]}};
-for(const [index,account] of ['classic','one'].entries()) {
+for(const [index,account] of ['classic'].entries()) {
   const name=account==='one'?'Reconciliar calendario One':'Reconciliar calendario clasico';
   const summary=account==='one'?'Resultado One':'Resultado clasico';
   nodes.push({id:id(name),name,type:'n8n-nodes-base.httpRequest',typeVersion:4.2,position:[260,index*240],
@@ -18,8 +18,8 @@ for(const [index,account] of ['classic','one'].entries()) {
   connections[name]={main:[[{node:summary,type:'main',index:0}]]};
 }
 const workflow={name:'Trazabilidad leads · Reconciliación Calendly (preparación)',active:false,nodes,connections,pinData:{},
-  settings:{executionOrder:'v1',executionTimeout:240,saveDataErrorExecution:'none',saveDataSuccessExecution:'none',saveManualExecutions:false}};
-// With two sequential branches, the total ceiling is 240 s; each edge worker has its own 120 s lease.
+  settings:{executionOrder:'v1',executionTimeout:120,saveDataErrorExecution:'none',saveDataSuccessExecution:'none',saveManualExecutions:false}};
+// Lorenzo / One is deferred at the user's request. Only the classic calendar is scheduled.
 const target=fileURLToPath(new URL('../../integrations/n8n/lead-calendly-reconciliation.json',import.meta.url));
 mkdirSync(fileURLToPath(new URL('../../integrations/n8n/',import.meta.url)),{recursive:true});
 writeFileSync(target,JSON.stringify(workflow,null,2)+'\n');

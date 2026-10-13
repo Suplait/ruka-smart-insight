@@ -14,7 +14,7 @@ export async function handleCalendlyWebhook(request: Request) {
     if (!await verifyCalendlySignature(raw, request.headers.get("Calendly-Webhook-Signature"), secret)) return json({ error: "Invalid signature" }, 401);
     const evidence = await projectCalendlyEvidence(JSON.parse(raw));
     if (!evidence) return json({ ignored: true });
-    const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, { auth: { persistSession: false } });
+    const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, { auth: { persistSession: false }, global: { fetch: (input, init) => fetch(input, { ...init, signal: AbortSignal.timeout(10000) }) } });
     const { error } = await db.rpc("trace_record_calendly", { p_meeting: evidence, p_source: "calendly" });
     if (error) return json({ error: "Evidence could not be saved" }, 503);
     // Acknowledge only after the meeting, ledger and outbox transaction commits.

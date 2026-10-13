@@ -28,7 +28,7 @@
     "organic:backup": "node scripts/organic-growth/job-control.mjs backup",
     "organic:blog:validate": "node scripts/organic-growth/validate-blog.mjs",
     "test:tracking-contract": "node scripts/lead-traceability/check-tracking-contract.mjs",
-    "test:lead-edge": "npx --yes deno@2.9.6 test --allow-env supabase/tests/edge_functions_test.ts supabase/tests/calendar_reconciliation_test.ts"
+    "test:lead-edge": "npx --yes deno@2.9.6 test --allow-env supabase/tests/edge_functions_test.ts supabase/tests/calendar_reconciliation_test.ts supabase/tests/calendly_webhook_test.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

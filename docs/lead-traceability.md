@@ -7,14 +7,14 @@ Actualizado: 13 de octubre de 2026. Goal E2E autorizado y **todavía en curso**.
 - Proyecto Supabase: `rmxzryueysmzksmvpwpv` (landing-ruka).
 - Base Git del contrato: `a054453`. Rama de trabajo: `codex/lead-traceability`.
 - Aplicadas en producción: `20261013180000_add_lead_traceability.sql`, `20261013181000_add_calendly_evidence.sql`, `20261013190000_add_clickup_delivery.sql` `20261013200000_add_calendar_reconciliation.sql`, `20261013210000_add_slack_recovery.sql` y `20261013220000_simplify_slack_visibility.sql`.
-- Desplegados: `lead-intake`, `lead-enrichment-worker`, `lead-calendly-webhook` y `lead-calendly-reconcile`. Están desactivados por defecto; no se configuraron sus secretos de activación.
+- Desplegados: `lead-intake`, `lead-enrichment-worker`, `lead-calendly-webhook` y `lead-calendly-reconcile`. Intake y salidas Slack siguen apagados. Recepción firmada y lectura Calendly habilitadas para la cuenta clásica; Calendly de Lorenzo/One queda fuera de esta entrega por petición del usuario. El consumidor de lectura aún no tiene horario.
 - Las tablas nuevas tienen RLS y no conceden SELECT a `anon`. Los RPC de escritura sólo permiten `service_role`.
 - El frontend nuevo está preparado en esta rama, sin publicar. `VITE_LEAD_TRACEABILITY` está apagado por defecto.
 - Los endpoints antiguos y permisos antiguos de `leads` siguen vigentes para conservar el flujo actual. **La exposición anónima anterior no se considera corregida todavía.**
 - No se ejecutó ningún workflow comercial como prueba, no se generaron leads/reuniones productivos de prueba ni se modificaron etiquetas de GTM, GA4, Meta o Ads.
 - Creado el campo opcional de texto largo **Trazabilidad del lead** en CRM empresas: `e40a83ca-2acc-4103-ac62-cbf5ab7563e0`. No se escribieron valores en tareas.
 - Guardado el consumidor independiente [Trazabilidad leads · ClickUp (preparación)](https://ruka.app.n8n.cloud/workflow/lCtphAXKkdzgMa5h), sin publicar, sin horario y sin webhook. Una prueba manual con cero asociaciones confirmó acceso a Supabase y salida con cero elementos antes de cualquier llamada ClickUp. La primera prueba detectó una referencia de credencial importada incorrectamente; se corrigió en ambos nodos Supabase y en el generador.
-- Guardado [Trazabilidad leads · Reconciliación Calendly (preparación)](https://ruka.app.n8n.cloud/workflow/30VjXmWyrIhz8hXh), cinco nodos sin horario, publicación ni MCP. Ambas ramas devolvieron HTTP 200 y `enabled: false`: valida autenticación n8n–Supabase, sin leer Calendly ni generar evidencia. Parámetros, credenciales y conexiones coinciden con el JSON versionado; settings aplicados por UI: orden v1, sin guardar ejecuciones y timeout de cuatro minutos.
+- Guardado [Trazabilidad leads · Reconciliación Calendly (preparación)](https://ruka.app.n8n.cloud/workflow/30VjXmWyrIhz8hXh), ahora con tres nodos para el calendario clásico, sin horario, publicación ni MCP. Las dos ramas originales validaron autenticación con enabled=false. Tras configurar Mauro, la rama clásica leyó cuatro páginas y guardó dos reuniones. La rama de Lorenzo se retiró por petición del usuario. Settings: orden v1, sin guardar ejecuciones y timeout de dos minutos.
 - En GTM, [workspace 24 Ruka One · conexión GA4](https://tagmanager.google.com/?authuser=2#/container/accounts/6231394894/containers/206691913/workspaces/24) contiene una conexión nueva de los siete eventos One a GA4, sin publicar. La importación verificada añadió etiqueta 60 y activador 59, con cero modificaciones/bajas de configuración existente. Preview en Chrome validó un disparo para `one_page_view` y otro para `one_contact_view`, sin disparo en History Change ni submit de formulario. Faltan los pasos posteriores y recepción antes de publicarla.
 
 ## Contrato de compatibilidad
@@ -33,7 +33,7 @@ La captura de adquisición y el receptor de mensajes de Calendly funcionan separ
 - Consumidor ClickUp preparado: lee la tarea existente, valida ID/lista/campo/lease, modifica sólo el campo dedicado y confirma la revisión. Un valor idéntico es un no-op; los errores HTTP y 429 conservan la entrega para reintento. Agrupa hasta diez envíos recientes asociados a la misma tarea y serializa sus reservas para impedir que dos envíos sobrescriban su evidencia entre sí. El vínculo es privado, idempotente y rechaza reasignaciones silenciosas. Falta conectar ese vínculo al resultado del workflow comercial y realizar QA de escritura aislada antes de programarlo.
 - Calendly: receptor con HMAC-SHA256 del cuerpo original, ventana de firma de tres minutos y confirmación HTTP sólo después del commit. Conserva invitees separados, cancelaciones y enlaces de reprogramación. Un evento creado atrasado no reactiva un invitee cancelado. Los receipts privados conservan evidencia aun sin lead asociado.
 - Asociación: email normalizado sólo cuando hay un candidato inequívoco dentro de noventa días. Varios candidatos quedan ambiguos. Al completar un ciclo de reconciliación se intenta asociar hasta cien reuniones pendientes; aún falta programar y activar el consumidor.
-- Recuperación Calendly: cursor independiente por usuario, consulta explícita de eventos e invitados activos/cancelados desde noventa días atrás, cuatro páginas por invocación, reserva de 120 segundos y commit atómico de evidencia/cursor. Sólo sigue tokens de paginación sobre el host fijo de Calendly. Conserva cancelaciones/reprogramaciones y almacena hashes, sin contacto ni respuestas del invitado. Respeta 429, limita reintentos y deja errores en salud por calendario. Cada ciclo completo espera 24 horas; la programación todavía está pendiente. Clásico y One requieren credenciales y URI de usuario separados, comprobados contra `/users/me`.
+- Recuperación Calendly: cursor independiente por usuario, consulta explícita de eventos e invitados activos/cancelados desde noventa días atrás, cuatro páginas por invocación, reserva de 120 segundos y commit atómico de evidencia/cursor. Sólo sigue tokens de paginación sobre el host fijo de Calendly. Conserva cancelaciones/reprogramaciones y almacena hashes, sin contacto ni respuestas del invitado. Respeta 429, limita reintentos y deja errores en salud por calendario. Cada ciclo completo espera 24 horas; la programación todavía está pendiente. Clásico y One usan configuración explícita de credencial y URI de usuario, comprobada contra `/users/me`; nunca se sustituye silenciosamente una cuenta por otra.
 
 El estado de persistencia fallida, su evidencia y el trabajo de enriquecimiento se guardan en una sola transacción. Repetir el callback no añade otra entrega y un callback atrasado no cambia un lead ya persistido.
 
@@ -42,7 +42,7 @@ El estado de persistencia fallida, su evidencia y el trabajo de enriquecimiento 
 1. Exportaciones de GTM web v21 y Server v1 completadas; [inventario y hashes](lead-traceability/tracking-inventory.md) guardados. Server tiene cero etiquetas; Meta y Ads tienen conectadas las rutas clásicas detalladas en el inventario. GA4 no tiene modificaciones, tiene una sola regla derivada ajena a One y no muestra `one_*` en su listado de eventos recientes. Conexión One preparada en workspace 24; falta Preview/publicación/recepción, diagnósticos de Meta y presentación del embudo con ambos eventos Calendly. Zona horaria de la propiedad leída: Chile Time (GMT-03:00).
 2. Conectar el consentimiento real y la lectura de IDs mediante la API de Google. Actualmente el consentimiento es `unknown` y los IDs GA son nulos; no se infieren permisos de cookies ni se inventan identificadores.
 3. Verificar un portador admitido por Calendly para `booking_token` con un payload real. `a1` ya contiene la empresa y las UTMs conservan su significado. No se utiliza `salesforce_uuid` como portador sin verificar su contrato en el embed.
-4. Crear las suscripciones firmadas de Calendly y configurar credenciales sin alterar la suscripción comercial existente. El calendario clásico usa Mauro y One usa Lorenzo. La recuperación periódica está implementada/desplegada apagada; falta autenticación, QA con lecturas reales y horario. El trigger nativo de n8n confirma al recibir, por lo que no sustituye el receptor independiente que persiste antes de confirmar. OAuth requiere verificar la clave de firma de la aplicación; un secreto OAuth no equivale a esa clave.
+4. Calendario clásico de Mauro conectado por suscripción firmada; lectura real y guardado de dos reuniones verificados. Falta programar la lectura y observar una entrega firmada originada realmente en Calendly. Calendly de Lorenzo/One se omite por petición del usuario. El trigger comercial permanece sin cambios. El receptor independiente guarda la evidencia antes de confirmar.
 5. Conectar `trace_link_clickup` a los resultados de creación/búsqueda del workflow comercial, validando los contextos Supabase y Calendly. El consumidor de diez nodos y el campo dedicado ya están preparados. Falta QA de escritura en destino aislado, programación y salud/alertas del consumidor. No tocar estados comerciales, crear tasks, repetir llamadas ni WhatsApp.
 6. Verificar la escritura del aviso enriquecido y la actualización por referencia confirmada. Por la corrección de alcance del usuario, no leer historial, ampliar scopes del bot ni reconstruir mensajes antiguos. Las entregas inciertas quedan pendientes y deben aparecer en las alertas técnicas ya previstas.
 7. Activar y observar los adaptadores en destinos aislados; verificar Safari/Chrome, móvil, bloqueo de storage, doble submit, cortes de red, las dos ramas de facturas y One.
@@ -96,6 +96,16 @@ Etapa reconciliación Calendly: catorce pruebas Edge correctas (ocho previas y s
 
 Etapa simplificación Slack: 17 pruebas Edge correctas, aserciones SQL de idempotencia, fallo transaccional y permisos; build de 21 rutas y contrato de 31 llamadas correctos. No se presentan las pruebas locales como validación E2E de mensajes productivos.
 
+## Calendly clásico conectado
+
+El token facilitado por el usuario se verificó contra `/users/me`: usuario `e1fc0690-f20a-4400-9940-284d3c8a2e24`, perfil Ruka, `https://calendly.com/ruka-ai`, zona `America/Santiago`. Coincide con los dos calendarios clásicos del código. Token y URI se guardaron como secretos de Supabase; el token no está en Git. Se verificó acceso a reuniones y suscripciones mediante la API oficial.
+
+Suscripción independiente `61eb5709-d781-4fa5-8da8-e81c7cf0502c`, scope `user`, estado `active`, eventos `invitee.created` e `invitee.canceled`, destino `lead-calendly-webhook`. Se compararon las dos suscripciones anteriores (n8n y Snov) antes/después: sin cambios. Se usa una clave de firma propia guardada sólo como secreto.
+
+Prueba remota sin escritura: firma inválida devuelve 401; firma válida con evento no admitido devuelve 200/ignored. Esto verifica configuración criptográfica del receptor, no una entrega originada en Calendly. La ejecución manual del consumidor realizó cuatro páginas y guardó dos receipts/reuniones reales; cero submissions y cero trabajos de entrega. El cursor queda preparado para continuar. One respondió enabled=false y luego el usuario pidió omitir ese calendario por ahora. No se crearon reservas, leads ni contactos de prueba ni se ejecutó el workflow comercial.
+
+21 pruebas Edge correctas, incluidas cuatro nuevas del receptor (firma, proyección mínima, fallo de commit y comprobación sin escritura). Lint de los archivos cambiados correcto. El cliente API usa un User-Agent explícito: la lectura inicial con el agente por defecto de urllib devolvió 403; con identificación de la aplicación funcionó.
+
 ## Interruptores y rollback
 
 | Interruptor | Estado por defecto | Uso |
@@ -104,11 +114,11 @@ Etapa simplificación Slack: 17 pruebas Edge correctas, aserciones SQL de idempo
 | `LEAD_INTAKE_ENABLED` | apagado | Habilitar el intake después de validar dependencias |
 | `LEAD_SLACK_ENRICHMENT_ENABLED` | apagado | Permitir al worker editar mensajes existentes |
 | `LEAD_TRACEABILITY_WORKER_TOKEN` | sin configurar | Alternativa a la credencial service role existente de n8n para autenticar el worker |
-| `LEAD_CALENDLY_ENABLED` | apagado | Habilitar recepción firmada |
-| `LEAD_CALENDLY_SIGNING_KEY` | sin configurar | Validar firmas de la suscripción independiente |
-| `LEAD_CALENDLY_RECONCILE_ENABLED` | apagado | Permitir lecturas periódicas de Calendly |
-| `CALENDLY_ACCESS_TOKEN` / `LEAD_CALENDLY_USER_URI` | sin configurar | Token y usuario del calendario clásico |
-| `CALENDLY_ONE_ACCESS_TOKEN` / `LEAD_CALENDLY_ONE_USER_URI` | sin configurar | Token y usuario del calendario One |
+| `LEAD_CALENDLY_ENABLED` | activo en producción | Recepción firmada del calendario clásico |
+| `LEAD_CALENDLY_SIGNING_KEY` | configurado como secreto | Validar firmas de la suscripción independiente |
+| `LEAD_CALENDLY_RECONCILE_ENABLED` | activo en producción; sin horario | Permitir lecturas de Calendly por el consumidor autorizado |
+| `CALENDLY_ACCESS_TOKEN` / `LEAD_CALENDLY_USER_URI` | configurados como secretos | Token y usuario del calendario clásico |
+| `CALENDLY_ONE_ACCESS_TOKEN` / `LEAD_CALENDLY_ONE_USER_URI` | fuera de esta entrega | Calendly de Lorenzo omitido por petición del usuario |
 
 Antes del cierre de permisos, se puede volver a publicar el frontend con la flag apagada y desactivar los adaptadores. Después del cierre, el rollback debe mantener la ruta de continuación segura; no reabrir lecturas públicas como solución automática.
 

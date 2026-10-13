@@ -32,7 +32,7 @@ export async function handleCalendlyReconciliation(request: Request) {
   const get = async (url: string) => {
     const parsed = new URL(url);
     if (parsed.origin !== "https://api.calendly.com" || parsed.username || parsed.password) throw new CalendarApiError("invalid_api_destination");
-    const response = await fetch(url, { method: "GET", headers: { Authorization: `Bearer ${accessToken}`, Accept: "application/json" }, redirect: "error", signal: AbortSignal.timeout(10000) });
+    const response = await fetch(url, { method: "GET", headers: { Authorization: `Bearer ${accessToken}`, Accept: "application/json", "User-Agent": "RukaLeadTraceability/1.0" }, redirect: "error", signal: AbortSignal.timeout(10000) });
     if (!response.ok) throw new CalendarApiError(response.status === 429 ? "calendly_rate_limited" : "calendly_read_failed", Math.min(3600, Math.max(60, Number(response.headers.get("retry-after")) || 60)));
     if (Number(response.headers.get("content-length")) > 2097152) throw new CalendarApiError("calendly_response_too_large");
     const raw = await response.text();

@@ -60,54 +60,6 @@
       "parameters": {
         "jsCode": "const r=$input.first().json; const ok=r.statusCode===200 && !r.body?.error; return [{json:{account:'classic',ok,...(ok?r.body:{error:'calendar_reconciliation_failed'})}}];"
       }
-    },
-    {
-      "id": "f262fd13-2045-5abe-ae93-9151ce42069e",
-      "name": "Reconciliar calendario One",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        260,
-        240
-      ],
-      "credentials": {
-        "supabaseApi": {
-          "id": "i80JbcEXhgCsijsU",
-          "name": "Supabase account"
-        }
-      },
-      "parameters": {
-        "method": "POST",
-        "url": "https://rmxzryueysmzksmvpwpv.supabase.co/functions/v1/lead-calendly-reconcile",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "supabaseApi",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "{\"account\":\"one\"}",
-        "options": {
-          "timeout": 110000,
-          "response": {
-            "response": {
-              "fullResponse": true,
-              "responseFormat": "json"
-            }
-          }
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "id": "661c93a6-37cf-56bd-a036-48ef0b9c3cc8",
-      "name": "Resultado One",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        520,
-        240
-      ],
-      "parameters": {
-        "jsCode": "const r=$input.first().json; const ok=r.statusCode===200 && !r.body?.error; return [{json:{account:'one',ok,...(ok?r.body:{error:'calendar_reconciliation_failed'})}}];"
-      }
     }
   ],
   "connections": {
@@ -116,11 +68,6 @@
         [
           {
             "node": "Reconciliar calendario clasico",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Reconciliar calendario One",
             "type": "main",
             "index": 0
           }
@@ -137,23 +84,12 @@
           }
         ]
       ]
-    },
-    "Reconciliar calendario One": {
-      "main": [
-        [
-          {
-            "node": "Resultado One",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "pinData": {},
   "settings": {
     "executionOrder": "v1",
-    "executionTimeout": 240,
+    "executionTimeout": 120,
     "saveDataErrorExecution": "none",
     "saveDataSuccessExecution": "none",
     "saveManualExecutions": false
