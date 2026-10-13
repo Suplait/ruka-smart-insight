@@ -54,7 +54,14 @@ export async function invokeLeadIntake(continuation: LeadContinuation, body: Rec
 }
 
 function withTerm(lead: LeadInput, submission: LeadSubmission) {
-  return { ...lead, utm_term: lead.utm_term ?? submission.attribution?.last_non_direct_touch?.utm_term ?? submission.attribution?.session_entry.utm_term ?? null };
+  // The legacy store and independent attribution record can describe different
+  // visits. Only complete the fifth UTM from a touch whose other four match.
+  const campaignKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content"] as const;
+  const normalize = (value: string | null | undefined) => value?.trim() || null;
+  const attribution = submission.attribution;
+  const matchingTouch = [attribution?.last_non_direct_touch, attribution?.session_entry, attribution?.first_touch]
+    .find(touch => touch && campaignKeys.every(key => normalize(touch[key]) === normalize(lead[key])));
+  return { ...lead, utm_term: lead.utm_term ?? matchingTouch?.utm_term ?? null };
 }
 
 export function prepareClassicLead(submission: LeadSubmission | null, lead: LeadInput, legacySlackLead: LeadInput) {
