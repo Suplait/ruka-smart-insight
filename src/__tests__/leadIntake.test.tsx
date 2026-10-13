@@ -14,6 +14,13 @@ beforeEach(() => {
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllEnvs(); });
 
 describe("secure intake transport", () => {
+  it("uses the verified secure transport by default in new builds", async () => {
+    vi.stubEnv("VITE_LEAD_TRACEABILITY", undefined);
+    const api = await import("@/services/leadIntake");
+    expect(api.leadTraceabilityEnabled()).toBe(true);
+    expect(api.createLeadSubmission()).not.toBeNull();
+  });
+
   it("reuses a cryptographic continuation across retries and keeps it out of tracking", async () => {
     const api = await import("@/services/leadIntake");
     const first = api.createLeadSubmission()!;

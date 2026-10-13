@@ -2,8 +2,9 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 import { captureLeadAttribution, type LeadAttribution } from "@/utils/leadAttribution";
 
-// Activate only after the additive database and edge deployment have passed QA.
-export const leadTraceabilityEnabled = () => import.meta.env.VITE_LEAD_TRACEABILITY === "true";
+// The deployed intake and both delivery adapters passed real-destination QA.
+// Explicit false is retained for compatibility tests and pre-cutover rollback.
+export const leadTraceabilityEnabled = () => import.meta.env.VITE_LEAD_TRACEABILITY !== "false";
 export type LeadContinuation = { submission_id: string; continuation_token: string; expires_at: number };
 export type LeadSubmission = { continuation: LeadContinuation; attribution: LeadAttribution | null };
 type LeadInput = Record<string, string | null | undefined>;

@@ -9,7 +9,7 @@ Actualizado: 13 de octubre de 2026. Goal E2E autorizado y **todavía en curso**.
 - Aplicadas en producción: `20261013180000_add_lead_traceability.sql`, `20261013181000_add_calendly_evidence.sql`, `20261013190000_add_clickup_delivery.sql` `20261013200000_add_calendar_reconciliation.sql`, `20261013210000_add_slack_recovery.sql` y `20261013220000_simplify_slack_visibility.sql`.
 - Desplegados: `lead-intake`, `lead-enrichment-worker`, `lead-calendly-webhook` y `lead-calendly-reconcile`. Intake y enriquecimiento Slack habilitados para la prueba real autorizada; el frontend público sigue sin publicar. Recepción firmada y lectura Calendly habilitadas para la cuenta clásica; Calendly de Lorenzo/One queda fuera de esta entrega por petición del usuario. El consumidor de lectura de Mauro está publicado con horario cada quince minutos.
 - Las tablas nuevas tienen RLS y no conceden SELECT a `anon`. Los RPC de escritura sólo permiten `service_role`.
-- El frontend nuevo está preparado en esta rama, sin publicar. `VITE_LEAD_TRACEABILITY` está apagado por defecto.
+- El frontend nuevo está preparado en esta rama, sin publicar. Los nuevos builds activan el transporte seguro por defecto; `VITE_LEAD_TRACEABILITY=false` queda disponible sólo para pruebas de compatibilidad y rollback anterior al cierre de accesos antiguos.
 - Los endpoints antiguos y permisos antiguos de `leads` siguen vigentes para conservar el flujo actual. **La exposición anónima anterior no se considera corregida todavía.**
 - El usuario autorizó después una prueba en los destinos reales, sin listas/canales temporales. Se creó un lead ficticio sin teléfono desde el formulario local conectado a Supabase productivo; el hook comercial lo procesó normalmente. No se ejecutó manualmente ni se reintentó ese workflow comercial. No se reservaron reuniones ni se publicaron cambios de GTM, GA4, Meta o Ads.
 - Creado el campo opcional de texto largo **Trazabilidad del lead** en CRM empresas: `e40a83ca-2acc-4103-ac62-cbf5ab7563e0`. Escritura validada en la tarea de prueba `17tgxqycuuc`.
@@ -128,13 +128,13 @@ El usuario descartó destinos temporales y pidió probar como un lead real. Desd
 
 Export del consumidor de doce nodos comparado íntegramente con fuente (`383db25f-b4eb-4f5b-83ad-f00f6549bfb0`); después se añadió y verificó un Schedule Trigger de un minuto con dos conexiones. Publicado con nombre de versión **Slack y ClickUp · entrega automática validada** (prefijo `c7c89060`). Retención desactivada y timeout de dos minutos. Primer heartbeat automático verificado a las 20:25:20 UTC: `delivered:0, waiting:0, failed:0`.
 
-El frontend público sigue apagado por defecto, así que esto valida la ruta preparada con servicios reales, no un rollout público completado. Los datos de prueba se conservaron para revisión del usuario; no se borraron.
+El frontend público todavía usa la versión anterior, así que esto valida la ruta preparada con servicios reales, no un rollout público completado. Los nuevos builds de esta rama activan el transporte seguro por defecto: 14 pruebas de transporte/guardrail pasan y el build genera las 21 rutas. Los datos de prueba se conservaron para revisión del usuario; no se borraron.
 
 ## Interruptores y rollback
 
 | Interruptor | Estado por defecto | Uso |
 | --- | --- | --- |
-| `VITE_LEAD_TRACEABILITY` | apagado | Transporte nuevo del frontend |
+| `VITE_LEAD_TRACEABILITY` | activo por defecto en esta rama, sin rollout público | Transporte nuevo del frontend |
 | `LEAD_INTAKE_ENABLED` | activo en producción | Habilitar el intake después de validar dependencias |
 | `LEAD_SLACK_ENRICHMENT_ENABLED` | activo en producción | Permitir al worker editar mensajes existentes |
 | `LEAD_TRACEABILITY_WORKER_TOKEN` | sin configurar | Alternativa a la credencial service role existente de n8n para autenticar el worker |
