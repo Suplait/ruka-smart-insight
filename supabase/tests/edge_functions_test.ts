@@ -23,7 +23,7 @@ async function fixture(options: Options, test: (calls: { path: string; body: Rec
       return json({ ok: true, channel: "C08DUJ6V2G6", ts: "1234.5678" });
     }
     assert(url.origin === "https://database.example.invalid", "No unexpected external destination");
-    if (url.pathname.endsWith("/trace_claim_deliveries")) return json([{ id: 9, submission_id: id, destination: "slack_enrichment", lease_id: "fixture-lease", revision: 3 }]);
+    if (url.pathname.endsWith("/trace_claim_slack_deliveries")) return json([{ id: 9, submission_id: id, destination: "slack_enrichment", lease_id: "fixture-lease", revision: 3 }]);
     if (url.pathname.endsWith("/trace_finish_delivery")) return json(true);
     if (url.pathname === "/rest/v1/lead_traceability_health") return new Response(null, { status: 204 });
     if (url.pathname === "/rest/v1/lead_submissions" && init?.method === "GET") return json({ id, lead_id: 42, status: "persisted", slack_channel_id: "C08DUJ6V2G6", slack_message_ts: "1234.5678", slack_initial_message: { text: "Initial notice", blocks: [{ type: "section", text: { type: "mrkdwn", text: "<!channel> Contact" } }] } });

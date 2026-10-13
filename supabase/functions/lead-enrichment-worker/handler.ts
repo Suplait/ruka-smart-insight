@@ -16,7 +16,7 @@ export async function handleLeadEnrichment(request: Request) {
   try {
     await db.from("lead_traceability_health").upsert({ job: "enrichment", last_started_at: new Date().toISOString() }, { onConflict: "job" });
     // Each request is bounded below the lease duration; another worker skips leased rows.
-    const { data: deliveries, error } = await db.rpc("trace_claim_deliveries", { p_limit: 4 });
+    const { data: deliveries, error } = await db.rpc("trace_claim_slack_deliveries", { p_limit: 4 });
     if (error) throw new Error("claim_failed");
     await Promise.all(((deliveries || []) as Delivery[]).map(async delivery => {
       const finish = async (reason: string | null, retryAfter?: number) => {

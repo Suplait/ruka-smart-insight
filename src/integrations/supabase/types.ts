@@ -941,6 +941,7 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      trace_claim_clickup_delivery: { Args: never; Returns: Json }
       trace_claim_deliveries: {
         Args: { p_limit?: number }
         Returns: {
@@ -966,6 +967,30 @@ export type Database = {
         }
       }
       trace_claim_initial_slack: { Args: { p_id: string }; Returns: boolean }
+      trace_claim_slack_deliveries: {
+        Args: { p_limit?: number }
+        Returns: {
+          attempts: number
+          delivered_at: string | null
+          delivered_revision: number
+          destination: string
+          id: number
+          last_error: string | null
+          lease_id: string | null
+          lease_until: string | null
+          next_attempt_at: string
+          revision: number
+          state: string
+          submission_id: string
+          updated_at: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "lead_delivery_outbox"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       trace_confirm_initial_slack: {
         Args: { p_channel: string; p_id: string; p_ts: string }
         Returns: undefined
@@ -982,6 +1007,10 @@ export type Database = {
           p_retry_after?: number
           p_revision: number
         }
+        Returns: boolean
+      }
+      trace_link_clickup: {
+        Args: { p_list_id: string; p_submission: string; p_task_id: string }
         Returns: boolean
       }
       trace_observe_calendar: {

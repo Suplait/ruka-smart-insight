@@ -1,0 +1,354 @@
+{
+  "name": "Trazabilidad leads · ClickUp (preparación)",
+  "nodes": [
+    {
+      "id": "a7f8c0a9-3ae8-5dc2-a918-3a5dc8e68427",
+      "name": "Solo prueba aislada autorizada",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "345cc484-d057-539e-a844-d86f16c8e991",
+      "name": "Reservar entrega existente",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://rmxzryueysmzksmvpwpv.supabase.co/rest/v1/rpc/trace_claim_clickup_delivery",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{}",
+        "options": {
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "i80JbcEXhgCsijsU",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "id": "b663b114-6215-5c01-afd2-b8b31f9e7f0a",
+      "name": "Preparar trabajo",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const r = $input.first().json; if (r.statusCode !== 200) throw new Error('clickup_claim_failed'); if (!r.body) return []; return [{json:r.body}];"
+      }
+    },
+    {
+      "id": "d7020123-f20b-540b-adb7-57c3382fdcf0",
+      "name": "Leer tarea existente",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        0
+      ],
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "clickUpOAuth2Api",
+        "options": {
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        },
+        "url": "=https://api.clickup.com/api/v2/task/{{ $('Preparar trabajo').first().json.task_id }}"
+      },
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "DNlA3eKMDHk3NI7V",
+          "name": "Clickup ESTE ES (Camilo)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "315f19ef-473d-5a65-a8ca-95a2c8801406",
+      "name": "Validar y proyectar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Pure projection also embedded verbatim in the independent n8n consumer.\nconst CLICKUP_LIST = '901301203866';\nconst CLICKUP_FIELD = 'e40a83ca-2acc-4103-ac62-cbf5ab7563e0';\nconst utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];\nconst obj = v => v && typeof v === 'object' && !Array.isArray(v) ? v : {};\nconst text = (v, max = 250) => typeof v === 'string' ? v.replace(/[\\r\\n\\u0000-\\u001f]/g, ' ').trim().slice(0, max) : '';\nconst page = v => {\n  const raw = text(v, 2000);\n  if (raw.startsWith('/') && !raw.startsWith('//')) return raw.split(/[?#]/)[0].slice(0, 300);\n  try { const url = new URL(raw); return ['https:', 'http:'].includes(url.protocol) ? `${url.origin}${url.pathname}`.slice(0, 300) : ''; }\n  catch { return ''; }\n};\nconst date = v => {\n  const d = new Date(text(v));\n  return Number.isNaN(d.getTime()) ? 'Fecha no disponible' : new Intl.DateTimeFormat('es-CL', {\n    timeZone: 'America/Santiago', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false,\n  }).format(d) + ' (Chile)';\n};\nconst touch = (label, v) => {\n  const t = obj(v);\n  return [label, ...utmKeys.filter(k => text(t[k])).map(k => `${k}: ${text(t[k])}`),\n    page(t.page) ? `Página: ${page(t.page)}` : '', page(t.referrer_origin) ? `Referencia: ${page(t.referrer_origin)}` : '',\n  ].filter(Boolean).join('\\n');\n};\n\nfunction clickupText(job) {\n  const submissions = Array.isArray(job.submissions) ? job.submissions.slice(0, 10) : [];\n  const lines = ['Trazabilidad de captación', `${Number.isSafeInteger(job.submission_count) ? job.submission_count : submissions.length} envíos asociados · se muestran hasta 10 recientes.`];\n  for (const s of submissions) {\n    const a = obj(s.attribution);\n    lines.push('', `${s.funnel === 'one' ? 'One' : 'Clásico'} · Lead ${Number.isSafeInteger(s.lead_id) ? s.lead_id : 'sin ID'} · ${date(s.created_at)}`,\n      `Submission: ${text(s.submission_id, 36)}`);\n    if (a.version === 1) {\n      lines.push(touch('Primera entrada', a.first_touch), touch('Entrada de esta sesión', a.session_entry));\n      if (Object.keys(obj(a.last_non_direct_touch)).length) lines.push(touch('Último contacto no directo', a.last_non_direct_touch));\n      lines.push(`Conversión: ${page(a.conversion_page || s.conversion_page) || 'No disponible'}`);\n      const pages = Array.isArray(a.observed_pages) ? a.observed_pages.slice(-5).map(p => page(obj(p).page)).filter(Boolean) : [];\n      if (pages.length) lines.push(`Recorrido observado (parcial): ${pages.join(' → ')}`);\n      const touches = [a.first_touch, a.session_entry, a.last_non_direct_touch].map(obj);\n      lines.push(`Clic Google: ${touches.some(t => ['gclid', 'gbraid', 'wbraid'].some(k => text(t[k]))) ? 'identificador presente' : 'no capturado'}`,\n        `Clic Meta: ${touches.some(t => text(t.fbclid)) ? 'identificador presente' : 'no capturado'}`,\n        `Consentimiento analytics: ${['granted', 'denied'].includes(a.analytics_consent) ? a.analytics_consent : 'unknown'}`);\n    } else {\n      lines.push(touch('Atribución histórica parcial', s.legacy_utms), `Conversión: ${page(s.conversion_page) || 'No disponible'}`);\n    }\n    if (Number.isFinite(s.invoice_count)) lines.push(`Volumen registrado: ${s.invoice_count} facturas/mes`);\n  }\n  const meetings = Array.isArray(job.meetings) ? job.meetings : [];\n  const active = meetings.filter(m => m.status === 'active');\n  const history = lines.join('\\n');\n  const summary = history.length > 22000 ? history.slice(0, 22000) + '\\n[Detalle del historial acotado]' : history;\n  lines.length = 0;\n  lines.push(summary, '', 'Agenda confirmada por Calendly');\n  if (active.length) lines.push(...active.slice(0, 3).map(m => `Confirmada: ${date(m.starts_at)}`));\n  else lines.push(meetings.length ? 'Agenda cancelada; sin otra reunión confirmada.' : 'Sin agenda confirmada hasta ahora.');\n  return lines.join('\\n').slice(0, 24000);\n}\n\nfunction clickupAck(job, error = null, retryAfter = null) {\n  return { p_id: job.delivery.id, p_lease: job.delivery.lease_id, p_revision: job.delivery.revision,\n    p_error: error, p_retry_after: retryAfter };\n}\n\nfunction prepareClickupUpdate(job, response, now = Date.now()) {\n  const finish = (error, retryAfter = null) => ({ action: 'finish', ack: clickupAck(job, error, retryAfter) });\n  if (job.list_id !== CLICKUP_LIST || job.field_id !== CLICKUP_FIELD || !/^[a-zA-Z0-9]{1,50}$/.test(job.task_id)) return finish('clickup_invalid_destination');\n  // Leave enough time for the bounded HTTP write and acknowledgement.\n  if (!(Date.parse(job.delivery.lease_until) > now + 15000)) return finish('clickup_lease_expiring');\n  if (response?.statusCode === 429) return finish('clickup_rate_limited', Math.min(3600, Math.max(60, Number(response.headers?.['retry-after']) || 60)));\n  if (response?.statusCode !== 200) return finish('clickup_read_failed');\n  const task = obj(response.body);\n  if (task.id !== job.task_id || obj(task.list).id !== CLICKUP_LIST || task.archived || task.parent) return finish('clickup_task_mismatch');\n  const field = Array.isArray(task.custom_fields) ? task.custom_fields.find(f => f.id === CLICKUP_FIELD) : null;\n  if (!field || field.type !== 'text') return finish('clickup_field_missing');\n  const value = clickupText(job);\n  // A retry after an uncertain HTTP write does not write the same field twice.\n  if (field.value === value) return finish(null);\n  return { action: 'write', task_id: job.task_id, field_id: CLICKUP_FIELD, value, ack: clickupAck(job) };\n}\n\nfunction finishClickupWrite(prepared, response) {\n  const success = response?.statusCode >= 200 && response.statusCode < 300 && !response.body?.err && !response.body?.error;\n  return { ack: { ...prepared.ack, p_error: success ? null : response?.statusCode === 429 ? 'clickup_rate_limited' : 'clickup_write_failed',\n    p_retry_after: response?.statusCode === 429 ? Math.min(3600, Math.max(60, Number(response.headers?.['retry-after']) || 60)) : null } };\n}\n\nreturn [{json:prepareClickupUpdate($('Preparar trabajo').first().json, $input.first().json)}];"
+      }
+    },
+    {
+      "id": "81292dbb-04ad-5f90-ad13-90c03070d86f",
+      "name": "Requiere actualizar campo",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1100,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "08bb4b21-f41a-5554-aa11-83b66a110167",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "write",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "693b74c4-6f0b-5e98-a479-b699faaa73d7",
+      "name": "Actualizar solo trazabilidad",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        -140
+      ],
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "clickUpOAuth2Api",
+        "options": {
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        },
+        "method": "POST",
+        "url": "=https://api.clickup.com/api/v2/task/{{ $json.task_id }}/field/{{ $json.field_id }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({value:$json.value}) }}"
+      },
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "DNlA3eKMDHk3NI7V",
+          "name": "Clickup ESTE ES (Camilo)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "b5152516-8ac8-5c35-a1e6-3b463072208b",
+      "name": "Clasificar resultado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        -140
+      ],
+      "parameters": {
+        "jsCode": "// Pure projection also embedded verbatim in the independent n8n consumer.\nconst CLICKUP_LIST = '901301203866';\nconst CLICKUP_FIELD = 'e40a83ca-2acc-4103-ac62-cbf5ab7563e0';\nconst utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];\nconst obj = v => v && typeof v === 'object' && !Array.isArray(v) ? v : {};\nconst text = (v, max = 250) => typeof v === 'string' ? v.replace(/[\\r\\n\\u0000-\\u001f]/g, ' ').trim().slice(0, max) : '';\nconst page = v => {\n  const raw = text(v, 2000);\n  if (raw.startsWith('/') && !raw.startsWith('//')) return raw.split(/[?#]/)[0].slice(0, 300);\n  try { const url = new URL(raw); return ['https:', 'http:'].includes(url.protocol) ? `${url.origin}${url.pathname}`.slice(0, 300) : ''; }\n  catch { return ''; }\n};\nconst date = v => {\n  const d = new Date(text(v));\n  return Number.isNaN(d.getTime()) ? 'Fecha no disponible' : new Intl.DateTimeFormat('es-CL', {\n    timeZone: 'America/Santiago', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false,\n  }).format(d) + ' (Chile)';\n};\nconst touch = (label, v) => {\n  const t = obj(v);\n  return [label, ...utmKeys.filter(k => text(t[k])).map(k => `${k}: ${text(t[k])}`),\n    page(t.page) ? `Página: ${page(t.page)}` : '', page(t.referrer_origin) ? `Referencia: ${page(t.referrer_origin)}` : '',\n  ].filter(Boolean).join('\\n');\n};\n\nfunction clickupText(job) {\n  const submissions = Array.isArray(job.submissions) ? job.submissions.slice(0, 10) : [];\n  const lines = ['Trazabilidad de captación', `${Number.isSafeInteger(job.submission_count) ? job.submission_count : submissions.length} envíos asociados · se muestran hasta 10 recientes.`];\n  for (const s of submissions) {\n    const a = obj(s.attribution);\n    lines.push('', `${s.funnel === 'one' ? 'One' : 'Clásico'} · Lead ${Number.isSafeInteger(s.lead_id) ? s.lead_id : 'sin ID'} · ${date(s.created_at)}`,\n      `Submission: ${text(s.submission_id, 36)}`);\n    if (a.version === 1) {\n      lines.push(touch('Primera entrada', a.first_touch), touch('Entrada de esta sesión', a.session_entry));\n      if (Object.keys(obj(a.last_non_direct_touch)).length) lines.push(touch('Último contacto no directo', a.last_non_direct_touch));\n      lines.push(`Conversión: ${page(a.conversion_page || s.conversion_page) || 'No disponible'}`);\n      const pages = Array.isArray(a.observed_pages) ? a.observed_pages.slice(-5).map(p => page(obj(p).page)).filter(Boolean) : [];\n      if (pages.length) lines.push(`Recorrido observado (parcial): ${pages.join(' → ')}`);\n      const touches = [a.first_touch, a.session_entry, a.last_non_direct_touch].map(obj);\n      lines.push(`Clic Google: ${touches.some(t => ['gclid', 'gbraid', 'wbraid'].some(k => text(t[k]))) ? 'identificador presente' : 'no capturado'}`,\n        `Clic Meta: ${touches.some(t => text(t.fbclid)) ? 'identificador presente' : 'no capturado'}`,\n        `Consentimiento analytics: ${['granted', 'denied'].includes(a.analytics_consent) ? a.analytics_consent : 'unknown'}`);\n    } else {\n      lines.push(touch('Atribución histórica parcial', s.legacy_utms), `Conversión: ${page(s.conversion_page) || 'No disponible'}`);\n    }\n    if (Number.isFinite(s.invoice_count)) lines.push(`Volumen registrado: ${s.invoice_count} facturas/mes`);\n  }\n  const meetings = Array.isArray(job.meetings) ? job.meetings : [];\n  const active = meetings.filter(m => m.status === 'active');\n  const history = lines.join('\\n');\n  const summary = history.length > 22000 ? history.slice(0, 22000) + '\\n[Detalle del historial acotado]' : history;\n  lines.length = 0;\n  lines.push(summary, '', 'Agenda confirmada por Calendly');\n  if (active.length) lines.push(...active.slice(0, 3).map(m => `Confirmada: ${date(m.starts_at)}`));\n  else lines.push(meetings.length ? 'Agenda cancelada; sin otra reunión confirmada.' : 'Sin agenda confirmada hasta ahora.');\n  return lines.join('\\n').slice(0, 24000);\n}\n\nfunction clickupAck(job, error = null, retryAfter = null) {\n  return { p_id: job.delivery.id, p_lease: job.delivery.lease_id, p_revision: job.delivery.revision,\n    p_error: error, p_retry_after: retryAfter };\n}\n\nfunction prepareClickupUpdate(job, response, now = Date.now()) {\n  const finish = (error, retryAfter = null) => ({ action: 'finish', ack: clickupAck(job, error, retryAfter) });\n  if (job.list_id !== CLICKUP_LIST || job.field_id !== CLICKUP_FIELD || !/^[a-zA-Z0-9]{1,50}$/.test(job.task_id)) return finish('clickup_invalid_destination');\n  // Leave enough time for the bounded HTTP write and acknowledgement.\n  if (!(Date.parse(job.delivery.lease_until) > now + 15000)) return finish('clickup_lease_expiring');\n  if (response?.statusCode === 429) return finish('clickup_rate_limited', Math.min(3600, Math.max(60, Number(response.headers?.['retry-after']) || 60)));\n  if (response?.statusCode !== 200) return finish('clickup_read_failed');\n  const task = obj(response.body);\n  if (task.id !== job.task_id || obj(task.list).id !== CLICKUP_LIST || task.archived || task.parent) return finish('clickup_task_mismatch');\n  const field = Array.isArray(task.custom_fields) ? task.custom_fields.find(f => f.id === CLICKUP_FIELD) : null;\n  if (!field || field.type !== 'text') return finish('clickup_field_missing');\n  const value = clickupText(job);\n  // A retry after an uncertain HTTP write does not write the same field twice.\n  if (field.value === value) return finish(null);\n  return { action: 'write', task_id: job.task_id, field_id: CLICKUP_FIELD, value, ack: clickupAck(job) };\n}\n\nfunction finishClickupWrite(prepared, response) {\n  const success = response?.statusCode >= 200 && response.statusCode < 300 && !response.body?.err && !response.body?.error;\n  return { ack: { ...prepared.ack, p_error: success ? null : response?.statusCode === 429 ? 'clickup_rate_limited' : 'clickup_write_failed',\n    p_retry_after: response?.statusCode === 429 ? Math.min(3600, Math.max(60, Number(response.headers?.['retry-after']) || 60)) : null } };\n}\n\nreturn [{json:finishClickupWrite($('Validar y proyectar').first().json, $input.first().json)}];"
+      }
+    },
+    {
+      "id": "dd8865a6-6ff0-547a-a210-c077ad956bac",
+      "name": "Confirmar revision entregada",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://rmxzryueysmzksmvpwpv.supabase.co/rest/v1/rpc/trace_finish_delivery",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.ack) }}",
+        "options": {
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "i80JbcEXhgCsijsU",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "id": "9b51897a-176e-53da-ab0d-ce03f3eb6d63",
+      "name": "Verificar confirmacion",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1980,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const r=$input.first().json; if(r.statusCode!==200 || r.body!==true) throw new Error('clickup_ack_failed'); return [{json:{acknowledged:true}}];"
+      }
+    }
+  ],
+  "connections": {
+    "Solo prueba aislada autorizada": {
+      "main": [
+        [
+          {
+            "node": "Reservar entrega existente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reservar entrega existente": {
+      "main": [
+        [
+          {
+            "node": "Preparar trabajo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar trabajo": {
+      "main": [
+        [
+          {
+            "node": "Leer tarea existente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer tarea existente": {
+      "main": [
+        [
+          {
+            "node": "Validar y proyectar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar y proyectar": {
+      "main": [
+        [
+          {
+            "node": "Requiere actualizar campo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Requiere actualizar campo": {
+      "main": [
+        [
+          {
+            "node": "Actualizar solo trazabilidad",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Confirmar revision entregada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizar solo trazabilidad": {
+      "main": [
+        [
+          {
+            "node": "Clasificar resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clasificar resultado": {
+      "main": [
+        [
+          {
+            "node": "Confirmar revision entregada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmar revision entregada": {
+      "main": [
+        [
+          {
+            "node": "Verificar confirmacion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "executionTimeout": 60,
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false
+  }
+}
