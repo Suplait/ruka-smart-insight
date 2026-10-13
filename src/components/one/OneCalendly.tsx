@@ -2,7 +2,10 @@ import { useEffect, useRef } from "react";
 import { ArrowLeft, CalendarDays, Check, Clock3 } from "lucide-react";
 import { ONE_NAME, type OneLeadData } from "@/content/oneContent";
 
+import { useCalendlyObservation } from "@/hooks/useCalendlyObservation";
+
 type OneCalendlyProps = {
+  submissionId?: string;
   lead: OneLeadData;
   isDebug: boolean;
   onScheduled: (eventUri?: string) => void;
@@ -66,6 +69,7 @@ function DebugCalendar({ lead, onScheduled, onBack }: OneCalendlyProps) {
 }
 
 export function OneCalendly(props: OneCalendlyProps) {
+  useCalendlyObservation(props.isDebug ? undefined : props.submissionId);
   const mountRef = useRef<HTMLDivElement>(null);
   const { isDebug, lead, onScheduled } = props;
   const scheduledRef = useRef(onScheduled);

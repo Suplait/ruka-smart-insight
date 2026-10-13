@@ -1,0 +1,1530 @@
+{
+  "container": "GTM-NTNN9QBG",
+  "containerId": "206691913",
+  "version": "21",
+  "versionName": "Google Ads scheduled event",
+  "sourceUrl": "https://tagmanager.google.com/#/versions/accounts/6231394894/containers/206691913/versions/21?apiLink=version",
+  "configurationSha256": "ded5ec22de46abfad04e19106092c3b6c2b6f6bcb0c1c3a56d2aa3f2034f3427",
+  "tags": [
+    {
+      "id": "3",
+      "name": "Google Tag",
+      "type": "googtag",
+      "paused": false,
+      "firing": [
+        "2147479573"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "tagId": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [],
+      "parameterKeys": [
+        "tagId"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "1781ccdf5ec98641fe4c53df3a25dd73d7d9eeafeb6d7af0b4c6e682481040bc"
+    },
+    {
+      "id": "7",
+      "name": "GA4 - form_submit",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "6"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "eventName": "form_submit",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "2e107362b1954791e3e20df525375068792cff6e72a038fc83bcbf87c4bc291f"
+    },
+    {
+      "id": "8",
+      "name": "meta - form_submit",
+      "type": "html",
+      "paused": false,
+      "firing": [
+        "6"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {},
+      "eventParameters": [],
+      "parameterKeys": [
+        "html",
+        "supportDocumentWrite"
+      ],
+      "pixelCalls": [
+        {
+          "method": "track",
+          "value": "Lead"
+        }
+      ],
+      "configurationSha256": "7849cda3c8f1b80b664f2af88a8f4f69674f09e8980ad4a328727fcae652b9b7"
+    },
+    {
+      "id": "9",
+      "name": "Meta Pixel ID 1018711990106623",
+      "type": "html",
+      "paused": false,
+      "firing": [
+        "2147479553"
+      ],
+      "blocking": [],
+      "firingOption": null,
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {},
+      "eventParameters": [],
+      "parameterKeys": [
+        "html",
+        "supportDocumentWrite"
+      ],
+      "pixelCalls": [
+        {
+          "method": "init",
+          "value": "1018711990106623"
+        },
+        {
+          "method": "track",
+          "value": "PageView"
+        }
+      ],
+      "configurationSha256": "459164288aba003b5af595dd9d54cf9c8e5507795d11f7e179a68f07ac503704"
+    },
+    {
+      "id": "13",
+      "name": "GA4 Event - registration_success",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "12"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "eventName": "registration_success",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [
+        {
+          "parameter": "lead_id",
+          "parameterValue": "{{Data layer variable - lead_id}}"
+        },
+        {
+          "parameter": "company_name",
+          "parameterValue": "{{Data Layer variable - company_name}}"
+        }
+      ],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "eventSettingsTable",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "da1b72c2ff8a7d7d97760409c031eebf384b45f810c8685b0ef426eb22373cd7"
+    },
+    {
+      "id": "15",
+      "name": "GA4 - onboarding_step_1_months",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "14"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "enhancedUserId": "false",
+        "eventName": "onboarding_step_1_months",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "enhancedUserId",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "b52e76ffc95219f72a323fe388e22669e02e6ed21714d469d9b445b3f627fcb6"
+    },
+    {
+      "id": "17",
+      "name": "GA4 - onboarding_step_2_billing",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "16"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "enhancedUserId": "false",
+        "eventName": "onboarding_step_2_billing",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "enhancedUserId",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "2c3657da020949b797a678eea19153ff23ca6461d2da6a8540f32428e6e9403c"
+    },
+    {
+      "id": "19",
+      "name": "GA4 - onboarding_step_3_subdomain",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "18"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "eventName": "onboarding_step_3_subdomain",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [
+        {
+          "parameter": "lead_id",
+          "parameterValue": "{{Data layer variable - lead_id}}"
+        },
+        {
+          "parameter": "company_name",
+          "parameterValue": "{{Data Layer variable - company_name}}"
+        },
+        {
+          "parameter": "facturas_compra_mes",
+          "parameterValue": "{{Data Layer variable - facturas_compra_mes}}"
+        },
+        {
+          "parameter": "sistema_facturacion",
+          "parameterValue": "{{Data Layer variable - sistema_facturacion}}"
+        }
+      ],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "eventSettingsTable",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "6dae1ca78d7c420ce845c01d997d043726cbb2de5f75042b228ac394123d432d"
+    },
+    {
+      "id": "21",
+      "name": "GA4 onboarding_step_4_sii",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "20"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "eventName": "onboarding_step_4_sii",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [
+        {
+          "parameter": "lead_id",
+          "parameterValue": "{{Data layer variable - lead_id}}"
+        },
+        {
+          "parameter": "company_name",
+          "parameterValue": "{{Data Layer variable - company_name}}"
+        },
+        {
+          "parameter": "facturas_compra_mes",
+          "parameterValue": "{{Data Layer variable - facturas_compra_mes}}"
+        },
+        {
+          "parameter": "sistema_facturacion",
+          "parameterValue": "{{Data Layer variable - sistema_facturacion}}"
+        }
+      ],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "eventSettingsTable",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "44269b3d62b70438df83457518963c4abb985059e70e118c86277d2bfe2d39c1"
+    },
+    {
+      "id": "23",
+      "name": "GA4 - onboarding_completed",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "22"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "eventName": "onboarding_completed",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [
+        {
+          "parameter": "lead_id",
+          "parameterValue": "{{Data layer variable - lead_id}}"
+        },
+        {
+          "parameter": "company_name",
+          "parameterValue": "{{Data Layer variable - company_name}}"
+        },
+        {
+          "parameter": "facturas_compra_mes",
+          "parameterValue": "{{Data Layer variable - facturas_compra_mes}}"
+        },
+        {
+          "parameter": "sistema_facturacion",
+          "parameterValue": "{{Data Layer variable - sistema_facturacion}}"
+        }
+      ],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "eventSettingsTable",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "9f09a6074e74c2633da9a46a95669c09a96f13b7f9b4eb6713773fd39ff9e550"
+    },
+    {
+      "id": "24",
+      "name": "meta - CompleteRegistration",
+      "type": "html",
+      "paused": false,
+      "firing": [
+        "22"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {},
+      "eventParameters": [],
+      "parameterKeys": [
+        "html",
+        "supportDocumentWrite"
+      ],
+      "pixelCalls": [
+        {
+          "method": "track",
+          "value": "CompleteRegistration"
+        }
+      ],
+      "configurationSha256": "06eb16b9451746697b29aea7348592b9dcfc45d0e19ef72c8628bd59b4d0a705"
+    },
+    {
+      "id": "25",
+      "name": "Microsoft Clarity - Official",
+      "type": "html",
+      "paused": false,
+      "firing": [
+        "2147479553"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {},
+      "eventParameters": [],
+      "parameterKeys": [
+        "html",
+        "supportDocumentWrite"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "28df92b6db277b305fa92ebf3768b5c82d772e8612863ffe2b8c300663f9c3bb"
+    },
+    {
+      "id": "27",
+      "name": "meta - whatsapp_onboarding",
+      "type": "html",
+      "paused": false,
+      "firing": [
+        "26"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {},
+      "eventParameters": [],
+      "parameterKeys": [
+        "html",
+        "supportDocumentWrite"
+      ],
+      "pixelCalls": [
+        {
+          "method": "track",
+          "value": "Contact"
+        }
+      ],
+      "configurationSha256": "5d5e40ce5141a04925299d2037f932428dde9ad693ad24c17dc8e5c5a2312ad6"
+    },
+    {
+      "id": "28",
+      "name": "GA4 - whatsapp_onboarding",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "26"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "enhancedUserId": "false",
+        "eventName": "whatsapp_onboarding",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "enhancedUserId",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "cda03c4c374925da9aaed0dd02de1b5a596a9428407511176600456f3b8a87e3"
+    },
+    {
+      "id": "30",
+      "name": "GA4 - Webinar Registration Success",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "29"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "eventName": "webinar_registration_success",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "17b2e2069cbb4901f3e1d3dea556a5561d7578f1d4a2bcee3d2d4d2152f8a896"
+    },
+    {
+      "id": "32",
+      "name": "GA4 - lead_created",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "31"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "eventName": "lead_created",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "f1e42a3ab5714dfca9bceea681ea97c0f37b9c4d40bf44b3c99d0ea7e0807c47"
+    },
+    {
+      "id": "33",
+      "name": "meta - webinar - SubmitApplication",
+      "type": "html",
+      "paused": false,
+      "firing": [
+        "29"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {},
+      "eventParameters": [],
+      "parameterKeys": [
+        "html",
+        "supportDocumentWrite"
+      ],
+      "pixelCalls": [
+        {
+          "method": "track",
+          "value": "SubmitApplication"
+        }
+      ],
+      "configurationSha256": "3447ee56a6cbed9239c4ffb709791ed569a98bb9b5c0ff64399dfa0c3caddb77"
+    },
+    {
+      "id": "36",
+      "name": "meta - calendly_event_scheduled / Schedule",
+      "type": "html",
+      "paused": false,
+      "firing": [
+        "35"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {},
+      "eventParameters": [],
+      "parameterKeys": [
+        "html",
+        "supportDocumentWrite"
+      ],
+      "pixelCalls": [
+        {
+          "method": "track",
+          "value": "Schedule"
+        }
+      ],
+      "configurationSha256": "6584683525adf8934d850b5e0d9f4d796aa2b2127ba3873b5930951eb0283739"
+    },
+    {
+      "id": "38",
+      "name": "meta - calendly group scheduled - StartTrial",
+      "type": "html",
+      "paused": false,
+      "firing": [
+        "37"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {},
+      "eventParameters": [],
+      "parameterKeys": [
+        "html",
+        "supportDocumentWrite"
+      ],
+      "pixelCalls": [
+        {
+          "method": "track",
+          "value": "StartTrial"
+        }
+      ],
+      "configurationSha256": "f128f0f50b046870cab4f76b646645be3b9331d59249eae1ad73d3bf726e53f2"
+    },
+    {
+      "id": "39",
+      "name": "GA4 - calendly_group_scheduled",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "37"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "eventName": "calendly_group_scheduled",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [
+        {
+          "parameter": "lead_id",
+          "parameterValue": "{{Data layer variable - lead_id}}"
+        },
+        {
+          "parameter": "facturas_compra_mes",
+          "parameterValue": "{{Data Layer variable - facturas_compra_mes}}"
+        },
+        {
+          "parameter": "company_name",
+          "parameterValue": "{{Data Layer variable - company_name}}"
+        }
+      ],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "eventSettingsTable",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "4bed957969c51e6dee897c6b55d69398fd3949af64e17f81e77ed0897f7b595b"
+    },
+    {
+      "id": "40",
+      "name": "GA4 - calendly_event_scheduled",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "35"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "eventName": "calendly_event_scheduled",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [
+        {
+          "parameter": "lead_id",
+          "parameterValue": "{{Data layer variable - lead_id}}"
+        },
+        {
+          "parameter": "company_name",
+          "parameterValue": "{{Data Layer variable - company_name}}"
+        },
+        {
+          "parameter": "facturas_compra_mes",
+          "parameterValue": "{{Data Layer variable - facturas_compra_mes}}"
+        }
+      ],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "eventSettingsTable",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "dcb604afecb6c166eaf295aa25466687539fe46581518ee1c9bcbc9e4ec8106b"
+    },
+    {
+      "id": "46",
+      "name": "GA - page_view_registro",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "45"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "eventName": "page_view_registro",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "22aa06c7fed6614d4820249791f868786e2089a93ec0b147ba09b5521e7d995d"
+    },
+    {
+      "id": "48",
+      "name": "GA4 - onboarding_step_1_invoices",
+      "type": "gaawe",
+      "paused": false,
+      "firing": [
+        "47"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "sendEcommerceData": "false",
+        "eventName": "onboarding_step_1_invoices",
+        "measurementIdOverride": "G-M7YT4CY8MC"
+      },
+      "eventParameters": [
+        {
+          "parameter": "lead_id",
+          "parameterValue": "{{Data layer variable - lead_id}}"
+        },
+        {
+          "parameter": "company_name",
+          "parameterValue": "{{Data Layer variable - company_name}}"
+        },
+        {
+          "parameter": "facturas_compra_mes",
+          "parameterValue": "{{Data Layer variable - facturas_compra_mes}}"
+        }
+      ],
+      "parameterKeys": [
+        "sendEcommerceData",
+        "eventSettingsTable",
+        "eventName",
+        "measurementIdOverride"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "d164b25204ab470596e1ee41322d957ad5fabe04e5f2a7ad901acbb0d52b7160"
+    },
+    {
+      "id": "49",
+      "name": "meta - registration_success",
+      "type": "html",
+      "paused": false,
+      "firing": [
+        "12"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {},
+      "eventParameters": [],
+      "parameterKeys": [
+        "html",
+        "supportDocumentWrite"
+      ],
+      "pixelCalls": [
+        {
+          "method": "track",
+          "value": "registration_success"
+        }
+      ],
+      "configurationSha256": "eb1831995fcf958bfd339a3978af2bd35e4a7145d4a126f0fe5f7f846e25ebfc"
+    },
+    {
+      "id": "50",
+      "name": "Google Ads - gtag",
+      "type": "googtag",
+      "paused": false,
+      "firing": [
+        "2147479573"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "tagId": "AW-18420993007"
+      },
+      "eventParameters": [],
+      "parameterKeys": [
+        "tagId"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "2985a73d0217d7a701b8d2fb484fad9179b414ebf094ade5bce18ab623e94b49"
+    },
+    {
+      "id": "51",
+      "name": "Conversion Linker",
+      "type": "gclidw",
+      "paused": false,
+      "firing": [
+        "2147479573"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {},
+      "eventParameters": [],
+      "parameterKeys": [
+        "enableCrossDomain",
+        "enableUrlPassthrough",
+        "enableCookieOverrides",
+        "cookiePrefix"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "504b247109e6b0d9ebd6894163e458947adf8b9b0238136158c331c5fe891ecc"
+    },
+    {
+      "id": "52",
+      "name": "Google Ads - Registration_success",
+      "type": "awct",
+      "paused": false,
+      "firing": [
+        "12"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "conversionCookiePrefix": "_gcl",
+        "enableShippingData": "false",
+        "conversionId": "18420993007",
+        "conversionLabel": "U1POCNydluwcEO-X6M9E",
+        "rdp": "false"
+      },
+      "eventParameters": [
+        {
+          "parameter": "user_data",
+          "parameterValue": "{{user_provided_data}}"
+        }
+      ],
+      "parameterKeys": [
+        "enableNewCustomerReporting",
+        "enableConversionLinker",
+        "enableProductReporting",
+        "eventSettingsTable",
+        "conversionCookiePrefix",
+        "enableShippingData",
+        "conversionId",
+        "conversionLabel",
+        "rdp"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "bb63d50dc54fdb80f1fb11cc91296e523d93584eb7d22e4d5ffb8e2c3c2fbd37"
+    },
+    {
+      "id": "54",
+      "name": "CHTML - listener user_data",
+      "type": "html",
+      "paused": false,
+      "firing": [
+        "2147479553"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {},
+      "eventParameters": [],
+      "parameterKeys": [
+        "html",
+        "supportDocumentWrite"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "dc32bc491d9030b58e689a592a8f8901e8b153a1e5c357fb8fd773990e62e95e"
+    },
+    {
+      "id": "58",
+      "name": "Google Ads - Scheduled_Event",
+      "type": "awct",
+      "paused": false,
+      "firing": [
+        "35"
+      ],
+      "blocking": [],
+      "firingOption": "ONCE_PER_EVENT",
+      "consent": {
+        "consentStatus": "NOT_SET"
+      },
+      "settings": {
+        "conversionCookiePrefix": "_gcl",
+        "enableShippingData": "false",
+        "conversionId": "18420993007",
+        "conversionLabel": "la29CMCXv-4cEO-X6M9E",
+        "rdp": "false"
+      },
+      "eventParameters": [
+        {
+          "parameter": "user_data",
+          "parameterValue": "{{user_provided_data}}"
+        }
+      ],
+      "parameterKeys": [
+        "enableNewCustomerReporting",
+        "enableConversionLinker",
+        "enableProductReporting",
+        "eventSettingsTable",
+        "conversionCookiePrefix",
+        "enableShippingData",
+        "conversionId",
+        "conversionLabel",
+        "rdp"
+      ],
+      "pixelCalls": [],
+      "configurationSha256": "acb608530acc308c651e9b8c0fbc3314e411727b55f50d6671f8d9c14bc1310d"
+    }
+  ],
+  "triggers": [
+    {
+      "id": "6",
+      "name": "form_submit event",
+      "type": "CUSTOM_EVENT",
+      "eventFilters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{_event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "form_submit"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "form_submit"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "8f89e73f9b48a68203fe1f170fa3b720039617d1228ee45c518a5d475965b3a6"
+    },
+    {
+      "id": "10",
+      "name": "Just Links - solicitar demo",
+      "type": "LINK_CLICK",
+      "eventFilters": [],
+      "filters": [
+        {
+          "type": "CONTAINS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Click Text}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "Demo"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "9a7a6a29405d02aa6ed7390999f4dd63d792d66280b015a86128f41e6c9dc7ac"
+    },
+    {
+      "id": "12",
+      "name": "registration_success",
+      "type": "CUSTOM_EVENT",
+      "eventFilters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{_event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "registration_success"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "type": "CONTAINS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "registration_success"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "854af2cb6eb97eb25389fb9aee2064b640119d88f9273f41c1159d03a7540152"
+    },
+    {
+      "id": "14",
+      "name": "onboarding_step_1_months",
+      "type": "CUSTOM_EVENT",
+      "eventFilters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{_event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "onboarding_step_1_months"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "type": "CONTAINS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "onboarding_step_1_months"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "348a8665be9f7acebc73a76303265970848e8f00daa341892453b02b981fd470"
+    },
+    {
+      "id": "16",
+      "name": "onboarding_step_2_billing",
+      "type": "CUSTOM_EVENT",
+      "eventFilters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{_event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "onboarding_step_2_billing"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "type": "CONTAINS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "onboarding_step_2_billing"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "47d383006b2fe5590032d453dafe953ac77ffe36de694827a44d058c2c33e24c"
+    },
+    {
+      "id": "18",
+      "name": "onboarding_step_3_subdomain",
+      "type": "CUSTOM_EVENT",
+      "eventFilters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{_event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "onboarding_step_3_subdomain"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "type": "CONTAINS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "onboarding_step_3_subdomain"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "2707a3f3bb8f29a16675e6617b1bc3a1296ade648538f0ae69660fc4e8c76b46"
+    },
+    {
+      "id": "20",
+      "name": "onboarding_step_4_sii",
+      "type": "CUSTOM_EVENT",
+      "eventFilters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{_event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "onboarding_step_4_sii"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "type": "CONTAINS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "onboarding_step_4_sii"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "98a25f9f47167cd59e7d16084a532b37c4bf5b601cf1cd015a2e414e08054d96"
+    },
+    {
+      "id": "22",
+      "name": "onboarding_completed",
+      "type": "CUSTOM_EVENT",
+      "eventFilters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{_event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "onboarding_completed"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "type": "CONTAINS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "onboarding_completed"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "eb83c4f783e4694da022182ff1d4f08e595cc167fbf51b3fb4c89398b6e29778"
+    },
+    {
+      "id": "26",
+      "name": "whatsapp_onboarding",
+      "type": "CUSTOM_EVENT",
+      "eventFilters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{_event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "whatsapp_onboarding"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "type": "CONTAINS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "whatsapp_onboarding"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "59819215effa4616e14f47036c2a79389365da37ed9adb42697bfdf1d15c9a10"
+    },
+    {
+      "id": "29",
+      "name": "webinar_registration_success",
+      "type": "CUSTOM_EVENT",
+      "eventFilters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{_event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "webinar_registration_success"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "type": "CONTAINS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Page Path}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "webinar"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "289e7328b8669604ab32723aca705d831bd53e3d84336f13303abd3e0e4839ae"
+    },
+    {
+      "id": "31",
+      "name": "lead_created en /restaurantes",
+      "type": "CUSTOM_EVENT",
+      "eventFilters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{_event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "lead_created"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "type": "MATCH_REGEX",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Page URL}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "^https:\\/\\/www\\.ruka\\.ai\\/(register|restaurantes|hoteles)"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "dd17063072f91c8adf6fa9632ceeaf8c5cfa5dfabae0443a86e7a15b570f7187"
+    },
+    {
+      "id": "35",
+      "name": "calendly_event_scheduled",
+      "type": "CUSTOM_EVENT",
+      "eventFilters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{_event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "calendly_event_scheduled"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "type": "CONTAINS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "calendly_event_scheduled"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "113bc71f95b81df285945d1375f77c91f8b26410a516af72e84107a7bcb21b91"
+    },
+    {
+      "id": "37",
+      "name": "calendly_group_scheduled",
+      "type": "CUSTOM_EVENT",
+      "eventFilters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{_event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "calendly_group_scheduled"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "type": "CONTAINS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "calendly_group_scheduled"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "b6b1051ac628eb6d6610a88fc27e696e950b638d8eda4904ebed97280d557c74"
+    },
+    {
+      "id": "45",
+      "name": "Page view Registro",
+      "type": "HISTORY_CHANGE",
+      "eventFilters": [],
+      "filters": [
+        {
+          "type": "CONTAINS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Page URL}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "register"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "f51d62ed797e18419b31ad2106d64b5cf651a367e0a37f33d462c649da65b44e"
+    },
+    {
+      "id": "47",
+      "name": "onboarding_step_1_invoices",
+      "type": "CUSTOM_EVENT",
+      "eventFilters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{_event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "onboarding_step_1_invoices"
+            }
+          ]
+        }
+      ],
+      "filters": [
+        {
+          "type": "EQUALS",
+          "parameter": [
+            {
+              "type": "TEMPLATE",
+              "key": "arg0",
+              "value": "{{Event}}"
+            },
+            {
+              "type": "TEMPLATE",
+              "key": "arg1",
+              "value": "onboarding_step_1_invoices"
+            }
+          ]
+        }
+      ],
+      "configurationSha256": "e179611449a6aa5f2148f63ad27feb3555fa1901790e22576d982f85703e8713"
+    }
+  ],
+  "variables": [
+    {
+      "id": "41",
+      "name": "Data layer variable - lead_id",
+      "type": "v",
+      "configurationSha256": "73aa397e395b32af71e849a7469c5447af3ad6e1ac44457e72c29817beea9ea7"
+    },
+    {
+      "id": "42",
+      "name": "Data Layer variable - company_name",
+      "type": "v",
+      "configurationSha256": "c47bf4972fd09e95d09134114a19374390043f3b77e3f0a3db34df97cbfb9790"
+    },
+    {
+      "id": "43",
+      "name": "Data Layer variable - facturas_compra_mes",
+      "type": "v",
+      "configurationSha256": "1ef268f852b2007ad7f4b0bdc10072efb0da1ec266ebb54d604f46af8dd0bc05"
+    },
+    {
+      "id": "44",
+      "name": "Data Layer variable - sistema_facturacion",
+      "type": "v",
+      "configurationSha256": "e3fff47aeda6affec14b0386012de7027cdcf7beb80b2f95a5792c0f9bf8bd99"
+    },
+    {
+      "id": "55",
+      "name": "DataLayer - email",
+      "type": "v",
+      "configurationSha256": "9b0b32c675ff909b27fb51f8968492a1564e182d453cc3ae1623d04b55efaeb9"
+    },
+    {
+      "id": "56",
+      "name": "DataLayer - phone_number",
+      "type": "v",
+      "configurationSha256": "78de3d473de802ed43da2aa01de993d06daf9a753ffd7e8182b1b5568631a1ae"
+    },
+    {
+      "id": "57",
+      "name": "user_provided_data",
+      "type": "awec",
+      "configurationSha256": "879d30fc3c09aaa03d10ac69b5b283880b94d953d69b7f4b8bf057a3c4179867"
+    }
+  ],
+  "clients": [],
+  "templates": []
+}

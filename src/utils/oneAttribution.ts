@@ -33,7 +33,11 @@ export function captureOneAttribution(search: string): OneAttribution {
   const hasCurrentAttribution = Object.values(current).some(Boolean);
 
   if (hasCurrentAttribution) {
-    window.localStorage.setItem(ONE_UTM_STORAGE_KEY, JSON.stringify(current));
+    try {
+      window.localStorage.setItem(ONE_UTM_STORAGE_KEY, JSON.stringify(current));
+    } catch {
+      // Keep current URL evidence even when persistence is unavailable.
+    }
     return current;
   }
 

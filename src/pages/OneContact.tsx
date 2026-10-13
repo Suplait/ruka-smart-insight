@@ -191,7 +191,7 @@ export default function OneContact() {
               <h1 className="mt-4 max-w-4xl text-balance text-[clamp(2.5rem,4.8vw,4.7rem)] font-semibold leading-[0.96] tracking-[-0.055em] text-[#171827]">{oneContent.contact.calendarTitle}</h1>
               <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-[#676e80] sm:text-lg sm:leading-8">{oneContent.contact.calendarLead}</p>
               <div className="mt-7">
-                <OneCalendly lead={lead} isDebug={isDebug} onScheduled={handleScheduled} onBack={isDebug ? () => goToStage("form") : undefined} />
+                <OneCalendly submissionId={submissionIdRef.current ?? undefined} lead={lead} isDebug={isDebug} onScheduled={handleScheduled} onBack={isDebug ? () => goToStage("form") : undefined} />
               </div>
             </div>
           ) : (

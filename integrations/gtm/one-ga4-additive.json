@@ -1,0 +1,75 @@
+{
+  "exportFormatVersion": 2,
+  "containerVersion": {
+    "accountId": "6231394894",
+    "containerId": "206691913",
+    "container": {
+      "accountId": "6231394894",
+      "containerId": "206691913",
+      "name": "ruka.ai v2 SI",
+      "publicId": "GTM-NTNN9QBG",
+      "usageContext": [
+        "WEB"
+      ]
+    },
+    "tag": [
+      {
+        "accountId": "6231394894",
+        "containerId": "206691913",
+        "tagId": "1001",
+        "name": "GA4 - Ruka One (eventos existentes)",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "sendEcommerceData",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "{{Event}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-M7YT4CY8MC"
+          }
+        ],
+        "firingTriggerId": [
+          "1001"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "consentSettings": {
+          "consentStatus": "NOT_SET"
+        }
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "6231394894",
+        "containerId": "206691913",
+        "triggerId": "1001",
+        "name": "Ruka One - siete eventos existentes",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{_event}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "^one_(page_view|contact_view|form_submit_attempt|lead_created|calendly_view|calendly_scheduled|success_view)$"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

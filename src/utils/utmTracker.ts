@@ -23,7 +23,11 @@ export const saveUTMParams = (utmParams: UTMParams): void => {
   const hasUTMParams = Object.values(utmParams).some(value => value !== null && value !== '');
   
   if (hasUTMParams) {
-    localStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(utmParams));
+    try {
+      localStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(utmParams));
+    } catch {
+      // Attribution storage must never interrupt the conversion path.
+    }
   }
 };
 
@@ -46,5 +50,9 @@ export const getStoredUTMParams = (): UTMParams => {
 };
 
 export const clearUTMParams = (): void => {
-  localStorage.removeItem(UTM_STORAGE_KEY);
+  try {
+    localStorage.removeItem(UTM_STORAGE_KEY);
+  } catch {
+    // Storage may be disabled by the browser.
+  }
 };

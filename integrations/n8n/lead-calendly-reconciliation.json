@@ -1,0 +1,128 @@
+{
+  "name": "Trazabilidad leads · Reconciliación Calendly",
+  "active": false,
+  "nodes": [
+    {
+      "id": "11992b71-903d-54ae-aa49-c3fa860d830f",
+      "name": "Prueba controlada de conexion",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "d9661a34-52ad-5a62-a743-8dc7a155e713",
+      "name": "Reconciliar calendario clasico",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        260,
+        0
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "i80JbcEXhgCsijsU",
+          "name": "Supabase account"
+        }
+      },
+      "parameters": {
+        "method": "POST",
+        "url": "https://rmxzryueysmzksmvpwpv.supabase.co/functions/v1/lead-calendly-reconcile",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"account\":\"classic\"}",
+        "options": {
+          "timeout": 110000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "4f058d5d-3630-50a7-ae43-cd6d6fb50ed7",
+      "name": "Resultado clasico",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const r=$input.first().json; const ok=r.statusCode===200 && !r.body?.error; return [{json:{account:'classic',ok,...(ok?r.body:{error:'calendar_reconciliation_failed'})}}];"
+      }
+    },
+    {
+      "id": "8b0161c6-8755-50bb-a805-2643ae399aa0",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        144,
+        144
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Prueba controlada de conexion": {
+      "main": [
+        [
+          {
+            "node": "Reconciliar calendario clasico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reconciliar calendario clasico": {
+      "main": [
+        [
+          {
+            "node": "Resultado clasico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Reconciliar calendario clasico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "executionTimeout": 120,
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false
+  }
+}

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { getClassicLead, updateClassicLead, readLeadContinuation, type LeadContinuation } from "@/services/leadIntake";
 import { pushToDataLayer } from "@/utils/dataLayer";
 import { notifySlackOnboardingStep } from "@/utils/slackNotifier";
 import CalendlyIntegration from "@/components/onboarding/CalendlyIntegration";
@@ -16,6 +16,7 @@ const HIGH_VOLUME_THRESHOLD = 150;
 
 type OnboardingLocationState = {
   leadId?: number;
+  continuation?: LeadContinuation;
   restaurantName?: string;
   firstName?: string;
   lastName?: string;
@@ -86,7 +87,7 @@ const OnboardingProductionFlow = () => {
       const {
         data: lead,
         error
-      } = await supabase.from("leads").select("first_name, last_name, email, ccity, whatsapp, company_name, name").eq("id", leadId).single();
+      } = await getClassicLead(leadId, readLeadContinuation(leadId, locationState.continuation));
 
       if (error || !lead) {
         return;
@@ -107,7 +108,7 @@ const OnboardingProductionFlow = () => {
     };
 
     void fetchLeadData();
-  }, [leadId, leadData.ciudad, leadData.email, leadData.firstName, leadData.lastName, leadData.nombreRestaurante, leadData.whatsapp]);
+  }, [leadId, leadData.ciudad, leadData.email, leadData.firstName, leadData.lastName, leadData.nombreRestaurante, leadData.whatsapp, locationState.continuation]);
 
   const updateFormData = <K extends keyof FormData>(key: K, value: FormData[K]) => {
     setFormData(prev => ({
@@ -127,12 +128,7 @@ const OnboardingProductionFlow = () => {
   const updateLead = async (updateData: Record<string, string | number | boolean | null>) => {
     if (!leadId) return false;
 
-    const response = await supabase.functions.invoke("update-lead", {
-      body: {
-        leadId: Number(leadId),
-        updateData
-      }
-    });
+    const response = await updateClassicLead(Number(leadId), readLeadContinuation(leadId, locationState.continuation), updateData);
 
     if (response.error || !response.data?.success) {
       toast({
@@ -188,6 +184,8 @@ const OnboardingProductionFlow = () => {
   };
 
   const renderCalendlyLeadData = () => ({
+    traceLeadId: leadId,
+    traceContinuation: locationState.continuation,
     firstName: leadData.firstName,
     lastName: leadData.lastName,
     email: leadData.email,

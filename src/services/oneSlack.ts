@@ -1,6 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { OneLeadData } from "@/content/oneContent";
 import type { OneAttribution } from "@/utils/oneAttribution";
+import { createLeadSubmission, invokeLeadIntake, leadTraceabilityEnabled } from "@/services/leadIntake";
 
 type OneSlackResponse = {
   success?: boolean;
@@ -29,6 +30,21 @@ async function sendOneSlackNotification({
   threadTs,
   calendlyEventUri,
 }: OneSlackNotification) {
+  if (leadTraceabilityEnabled()) {
+    // Scheduling evidence is captured by the separate, origin-checked iframe
+    // observer and later confirmed by Calendly. This path cannot post duplicates.
+    if (notificationType === "calendly_scheduled") return null;
+    const submission = createLeadSubmission(submissionId);
+    if (!submission) return null;
+    const { data, error } = await invokeLeadIntake(submission.continuation, {
+      action: "prepare", funnel: "one", attribution: submission.attribution,
+      lead: {
+        name: lead.name.trim(), company: lead.company.trim(), email: lead.email.trim(),
+        whatsapp: chileWhatsapp(lead.whatsapp), landing_path: landingPath, ...attribution,
+      },
+    });
+    return error || !data?.success ? null : data;
+  }
   const { data, error } = await supabase.functions.invoke<OneSlackResponse>("notify-one-slack", {
     body: {
       notification_type: notificationType,

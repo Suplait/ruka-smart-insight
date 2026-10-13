@@ -1,8 +1,12 @@
+import { useCalendlyObservation } from "@/hooks/useCalendlyObservation";
+import type { LeadContinuation } from "@/services/leadIntake";
 
 import React, { useEffect } from 'react';
 
 interface CalendlyIntegrationLowProps {
   leadData: {
+    traceLeadId?: number;
+    traceContinuation?: LeadContinuation;
     firstName: string;
     lastName: string;
     email: string;
@@ -13,6 +17,7 @@ interface CalendlyIntegrationLowProps {
 }
 
 const CalendlyIntegrationLow = ({ leadData }: CalendlyIntegrationLowProps) => {
+  useCalendlyObservation(leadData.traceLeadId, leadData.traceContinuation);
   useEffect(() => {
     // Add event listener for Calendly scheduling events
     const handleCalendlyEvent = (e: MessageEvent) => {

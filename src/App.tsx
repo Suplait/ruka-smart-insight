@@ -7,6 +7,8 @@ import { Toaster } from "@/components/ui/toaster"
 import { MarketingWhatsAppButton } from '@/components/MarketingWhatsAppButton';
 import { extractUTMParams, saveUTMParams } from '@/utils/utmTracker';
 
+import { LeadAttributionObserver } from "@/components/LeadAttributionObserver";
+
 import Index from './pages/Index';
 import LandingV2 from './pages/LandingV2';
 import Restaurantes from './pages/Restaurantes';
@@ -105,6 +107,7 @@ function App() {
       <ThemeProvider defaultTheme="light" storageKey="ruka-theme">
         <BrowserRouter>
           <ScrollToTopOnRouteChange />
+          <LeadAttributionObserver />
           <Routes>
             <Route path="/" element={<LandingV2 />} />
             <Route path="/v2" element={<Navigate to="/" replace />} />

@@ -1,0 +1,20 @@
+{
+  "container": "GTM-WQZPBT68",
+  "containerId": "208874413",
+  "version": "1",
+  "versionName": null,
+  "sourceUrl": "https://tagmanager.google.com/#/versions/accounts/6231394894/containers/208874413/versions/1?apiLink=version",
+  "configurationSha256": "714d2c9a19af2f403145a4b0e208212a742a160835f99f4dc3ad29b1933fce9f",
+  "tags": [],
+  "triggers": [],
+  "variables": [],
+  "clients": [
+    {
+      "id": "1",
+      "name": "GA4",
+      "type": "gaaw_client",
+      "configurationSha256": "6f6609517bf36be617f74c909f519fde4a8064462042a381ac9fb66be9c94906"
+    }
+  ],
+  "templates": []
+}
