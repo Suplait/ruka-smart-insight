@@ -17,7 +17,10 @@ for(const [index,account] of ['classic'].entries()) {
   connections['Prueba controlada de conexion'].main[0].push({node:name,type:'main',index:0});
   connections[name]={main:[[{node:summary,type:'main',index:0}]]};
 }
-const workflow={name:'Trazabilidad leads · Reconciliación Calendly (preparación)',active:false,nodes,connections,pinData:{},
+nodes.push({id:id('calendar-schedule'),name:'Schedule Trigger',type:'n8n-nodes-base.scheduleTrigger',typeVersion:1.4,position:[144,144],
+  parameters:{rule:{interval:[{field:'minutes',minutesInterval:15}]}}});
+connections['Schedule Trigger']={main:[[{node:'Reconciliar calendario clasico',type:'main',index:0}]]};
+const workflow={name:'Trazabilidad leads · Reconciliación Calendly',active:false,nodes,connections,pinData:{},
   settings:{executionOrder:'v1',executionTimeout:120,saveDataErrorExecution:'none',saveDataSuccessExecution:'none',saveManualExecutions:false}};
 // Lorenzo / One is deferred at the user's request. Only the classic calendar is scheduled.
 const target=fileURLToPath(new URL('../../integrations/n8n/lead-calendly-reconciliation.json',import.meta.url));

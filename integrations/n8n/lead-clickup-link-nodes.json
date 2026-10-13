@@ -1,0 +1,92 @@
+{
+  "nodes": [
+    {
+      "id": "9e0d378b-28e1-440e-a3e3-25709dd0ba18",
+      "name": "Correlacionar tarea con lead",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -32,
+        1536
+      ],
+      "parameters": {
+        "jsCode": "// Project only identifiers already returned by the commercial workflow.\n// Never create a task or guess between multiple search results.\nfunction prepareClickupLink(tasks, webhookBody) {\n  if (webhookBody?.type !== 'INSERT' || webhookBody?.schema !== 'public' || webhookBody?.table !== 'leads') return null;\n  const submission = webhookBody.record?.submission_id;\n  if (typeof submission !== 'string' || !/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(submission)) return null;\n  if (!Array.isArray(tasks) || tasks.length !== 1) return null;\n  const task = tasks[0];\n  if (typeof task?.id !== 'string' || !/^[a-zA-Z0-9]{1,50}$/.test(task.id) || String(task.list?.id) !== '901301203866') return null;\n  return { p_submission: submission, p_task_id: task.id, p_list_id: '901301203866' };\n}\n\nlet source; try { source=$('Crea/actualiza lead supabase').first().json.body; } catch { return []; }\nconst link=prepareClickupLink($input.all().map(item=>item.json),source); return link?[{json:link}]:[];"
+      }
+    },
+    {
+      "id": "250e410e-bc08-4dca-a59b-26eaecc85ab3",
+      "name": "Guardar vinculo privado ClickUp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        1536
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "i80JbcEXhgCsijsU",
+          "name": "Supabase account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000,
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "method": "POST",
+        "url": "https://rmxzryueysmzksmvpwpv.supabase.co/rest/v1/rpc/trace_link_clickup",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "timeout": 5000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "415c178a-9bbc-492d-88cb-13e1a766d645",
+      "name": "Resultado de correlacion",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        1536
+      ],
+      "parameters": {
+        "jsCode": "const r=$input.first().json; return [{json:{linked:r.statusCode===200 && typeof r.body==='boolean',changed:r.statusCode===200 && r.body===true}}];"
+      }
+    }
+  ],
+  "connections": {
+    "Correlacionar tarea con lead": {
+      "main": [
+        [
+          {
+            "node": "Guardar vinculo privado ClickUp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar vinculo privado ClickUp": {
+      "main": [
+        [
+          {
+            "node": "Resultado de correlacion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

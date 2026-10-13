@@ -11,9 +11,9 @@ Borrador guardado en Ruka.ai: `lCtphAXKkdzgMa5h`. No publicado, sin cron y sin w
 
 La lista y el campo de producción están fijados en el SQL y el proyector. No ejecutar con tareas reales como prueba de escritura. La única ejecución remota realizada usó una cola sin asociaciones, y se detuvo antes del GET de ClickUp. Para QA de escritura falta preparar un destino aislado y su configuración explícita; no relajar el guard de lista para apuntar a cualquier tarea.
 
-## Contrato de enlace pendiente
+## Contrato de enlace publicado
 
-El workflow comercial conserva sus nodos y sus acciones. Una futura rama independiente deberá llamar por HTTP con la credencial Supabase existente:
+El workflow comercial conserva sus nodos y sus acciones. La rama independiente publicada en `Creación de leads` llama por HTTP con la credencial Supabase existente:
 
 ```text
 POST /rest/v1/rpc/trace_link_clickup
@@ -21,6 +21,8 @@ POST /rest/v1/rpc/trace_link_clickup
 ```
 
 No inferir el submission a partir del item actual sin verificar qué disparador lo produjo: el workflow mezcla entradas Supabase y Calendly. No volver a ejecutar el flujo comercial para recuperar la referencia. La llamada repetida al RPC devuelve false y no genera otra evidencia ni otro envío. Una referencia diferente es un error explícito que requiere reconciliación.
+
+Fuente del enlace: `build-clickup-link.mjs`, `clickup-link.mjs` y `lead-clickup-link-nodes.json`. Se añaden ramas desde **Crea el lead** y **Guardar ID del lead**. El proyector lee el INSERT original, exige un único task de la lista correcta y omite entradas Calendly/antiguas. El export antes/después confirmó intactos los 73 nodos originales y su grafo; sólo se añadieron tres nodos y cuatro conexiones.
 
 ## Consumo
 
@@ -30,8 +32,8 @@ Sólo se escribe `POST /task/{id}/field/{field}` con `{value}`. No hay creación
 
 ## Recuperación de reuniones Calendly
 
-Fuente: `scripts/lead-traceability/build-calendly-workflow.mjs`. Genera `lead-calendly-reconciliation.json` con cinco nodos: disparador manual y dos ramas independientes para clásico y One. Borrador `30VjXmWyrIhz8hXh`, sin horario, publicación ni acceso MCP. Settings aplicados por UI: v1, no guardar ejecuciones correctas/fallidas/manuales, timeout de cuatro minutos. La prueba de conectividad devuelve `ok: true, enabled: false` en ambas ramas; no es una sincronización real.
+Fuente: `scripts/lead-traceability/build-calendly-workflow.mjs`. Genera `lead-calendly-reconciliation.json` con cuatro nodos: disparador manual, horario cada quince minutos, lectura de Mauro y resultado. Workflow publicado `30VjXmWyrIhz8hXh`. Settings aplicados y comparados con export: v1, no guardar ejecuciones correctas/fallidas/manuales, timeout de dos minutos; MCP apagado. El JSON exportable conserva `active:false` para evitar activaciones involuntarias al importar.
 
-Cada rama llama `lead-calendly-reconcile` con la credencial Supabase existente y `{account: "classic"}` o `{account: "one"}`. El endpoint requiere su flag y el token/usuario correspondiente: nunca usa la cuenta clásica como fallback de One. Lee `/users/me` para comprobar identidad, procesa hasta cuatro páginas y persiste evidencia junto con el cursor. No llama a workflows comerciales ni escribe tareas/mensajes.
+Llama `lead-calendly-reconcile` con la credencial Supabase existente y `{account: "classic"}`. Token/usuario de Mauro y receptor firmado están configurados; la prueba manual previa leyó cuatro páginas y guardó dos reuniones reales. Lorenzo/One queda fuera por petición expresa del usuario. El endpoint nunca sustituye una cuenta por otra. Lee `/users/me` para comprobar identidad, procesa hasta cuatro páginas y persiste evidencia junto con el cursor. No llama a workflows comerciales ni escribe tareas/mensajes.
 
-La cola privada conserva un lease por usuario, backoff y ocho intentos sin progreso. Sólo se marca terminado después de recorrer eventos e invitados activos/cancelados. El siguiente ciclo completo vence en 24 horas; se necesita un horario más frecuente para avanzar páginas pendientes. Los nodos de resultado dejan `ok: false` para errores sin impedir la otra cuenta; la vigilancia debe comprobar ambas respuestas y la salud persistida, no sólo el estado verde de n8n. Falta configurar credenciales, validar las suscripciones firmadas independientes, lecturas reales y monitor antes de programarlo.
+La cola privada conserva un lease por usuario, backoff y ocho intentos sin progreso. Sólo se marca terminado después de recorrer eventos e invitados activos/cancelados. El siguiente ciclo completo vence en 24 horas; el horario más frecuente permite avanzar páginas pendientes. El resultado devuelve `ok:false` ante error: la vigilancia debe comprobar esa respuesta y la salud persistida, no sólo el estado verde de n8n. Falta observar la primera ejecución automática y conectar las alertas.

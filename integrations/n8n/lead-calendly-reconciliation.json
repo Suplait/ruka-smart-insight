@@ -1,5 +1,5 @@
 {
-  "name": "Trazabilidad leads · Reconciliación Calendly (preparación)",
+  "name": "Trazabilidad leads · Reconciliación Calendly",
   "active": false,
   "nodes": [
     {
@@ -60,6 +60,26 @@
       "parameters": {
         "jsCode": "const r=$input.first().json; const ok=r.statusCode===200 && !r.body?.error; return [{json:{account:'classic',ok,...(ok?r.body:{error:'calendar_reconciliation_failed'})}}];"
       }
+    },
+    {
+      "id": "8b0161c6-8755-50bb-a805-2643ae399aa0",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        144,
+        144
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      }
     }
   ],
   "connections": {
@@ -79,6 +99,17 @@
         [
           {
             "node": "Resultado clasico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Reconciliar calendario clasico",
             "type": "main",
             "index": 0
           }
