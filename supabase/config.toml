@@ -19,6 +19,9 @@ verify_jwt = false
 [functions.lead-enrichment-worker]
 verify_jwt = false
 
+[functions.lead-external-watchdog]
+verify_jwt = false
+
 [functions.lead-calendly-webhook]
 verify_jwt = false
 

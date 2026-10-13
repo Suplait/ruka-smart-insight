@@ -1,0 +1,35 @@
+begin;
+insert into public.lead_traceability_health(job,last_started_at,last_completed_at)
+values('enrichment',now(),now()) on conflict(job) do update set last_completed_at=now();
+do $$ declare notice jsonb; attempt uuid; begin
+  assert public.trace_claim_watchdog_notice() is null, 'Healthy startup is silent';
+  update public.lead_traceability_health set last_completed_at=now()-interval '31 minutes' where job='enrichment';
+  notice := public.trace_claim_watchdog_notice();
+  assert notice->>'state'='stale';
+  attempt := (notice->>'attempt_id')::uuid;
+  assert public.trace_claim_watchdog_notice() is null, 'Concurrent callers cannot repost';
+  update public.lead_watchdog_state set cooldown_until=now()-interval '1 minute' where id='heartbeat';
+  assert public.trace_claim_watchdog_notice() is null, 'Even after cooldown, uncertain delivery is not retried';
+  assert public.trace_finish_watchdog_notice('heartbeat',attempt,'rejected');
+  notice := public.trace_claim_watchdog_notice();
+  assert notice->>'state'='stale', 'Explicit rejection may retry after cooldown';
+  assert not public.trace_finish_watchdog_notice('heartbeat',attempt,'confirmed'), 'Late acknowledgement cannot overwrite another attempt';
+  assert public.trace_finish_watchdog_notice('heartbeat',(notice->>'attempt_id')::uuid,'confirmed');
+  update public.lead_traceability_health set last_completed_at=now() where job='enrichment';
+  assert public.trace_claim_watchdog_notice() is null, 'Recovery respects cooldown';
+  update public.lead_watchdog_state set cooldown_until=now()-interval '1 minute' where id='heartbeat';
+  notice := public.trace_claim_watchdog_notice();
+  assert notice->>'state'='healthy';
+  assert public.trace_finish_watchdog_notice('heartbeat',(notice->>'attempt_id')::uuid,'confirmed');
+  assert public.trace_claim_watchdog_notice() is null, 'Recovery does not repeat';
+  notice := public.trace_claim_watchdog_notice(true);
+  assert notice->>'state'='probe';
+  assert public.trace_finish_watchdog_notice('probe',(notice->>'attempt_id')::uuid,'confirmed');
+  update public.lead_watchdog_state set cooldown_until=now()-interval '1 minute' where id='probe';
+  assert public.trace_claim_watchdog_notice(true) is null, 'One probe only';
+  assert public.trace_claim_watchdog_notice() is null, 'Probe does not manufacture recovery';
+  assert not has_table_privilege('anon','public.lead_watchdog_state','select');
+  assert not has_function_privilege('anon','public.trace_claim_watchdog_notice(boolean)','execute');
+  assert not has_function_privilege('authenticated','public.trace_finish_watchdog_notice(text,uuid,text)','execute');
+end $$;
+rollback;
