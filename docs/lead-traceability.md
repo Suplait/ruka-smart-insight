@@ -5,11 +5,11 @@ Actualizado: 13 de octubre de 2026. Goal E2E autorizado y **todavía en curso**.
 ## Estado comprobado
 
 - Proyecto Supabase: `rmxzryueysmzksmvpwpv` (landing-ruka).
-- Base Git del contrato: `a054453`. Rama de trabajo: `codex/lead-traceability`.
+- Base Git del contrato: `a054453`. [PR #86](https://github.com/Suplait/ruka-smart-insight/pull/86) integrado en `main`, commit `77d7379`; cierre pendiente en `codex/lead-traceability-closeout`.
 - Aplicadas en producción: `20261013180000_add_lead_traceability.sql`, `20261013181000_add_calendly_evidence.sql`, `20261013190000_add_clickup_delivery.sql` `20261013200000_add_calendar_reconciliation.sql`, `20261013210000_add_slack_recovery.sql` y `20261013220000_simplify_slack_visibility.sql`.
-- Desplegados: `lead-intake`, `lead-enrichment-worker`, `lead-calendly-webhook` y `lead-calendly-reconcile`. Intake y enriquecimiento Slack habilitados para la prueba real autorizada; el frontend público sigue sin publicar. Recepción firmada y lectura Calendly habilitadas para la cuenta clásica; Calendly de Lorenzo/One queda fuera de esta entrega por petición del usuario. El consumidor de lectura de Mauro está publicado con horario cada quince minutos.
+- Desplegados: `lead-intake`, `lead-enrichment-worker`, `lead-calendly-webhook` y `lead-calendly-reconcile`. Intake y enriquecimiento Slack habilitados; frontend público publicado y verificado. Recepción firmada y lectura Calendly habilitadas para la cuenta clásica; Calendly de Lorenzo/One queda fuera de esta entrega por petición del usuario. El consumidor de lectura de Mauro está publicado con horario cada quince minutos.
 - Las tablas nuevas tienen RLS y no conceden SELECT a `anon`. Los RPC de escritura sólo permiten `service_role`.
-- El frontend nuevo está preparado en esta rama, sin publicar. Los nuevos builds activan el transporte seguro por defecto; `VITE_LEAD_TRACEABILITY=false` queda disponible sólo para pruebas de compatibilidad y rollback anterior al cierre de accesos antiguos.
+- El frontend nuevo está publicado en `www.ruka.ai`: Vercel Production `7049491048`, commit `77d7379`, estado `success`. La prueba pública One confirmó persistencia con continuación privada y Slack con cinco UTMs. `VITE_LEAD_TRACEABILITY=false` queda disponible sólo para pruebas de compatibilidad y rollback anterior al cierre de accesos antiguos.
 - Los endpoints antiguos y permisos antiguos de `leads` siguen vigentes para conservar el flujo actual. **La exposición anónima anterior no se considera corregida todavía.**
 - El usuario autorizó después una prueba en los destinos reales, sin listas/canales temporales. Se creó un lead ficticio sin teléfono desde el formulario local conectado a Supabase productivo; el hook comercial lo procesó normalmente. No se ejecutó manualmente ni se reintentó ese workflow comercial. No se reservaron reuniones ni se publicaron cambios de GTM, GA4, Meta o Ads.
 - Creado el campo opcional de texto largo **Trazabilidad del lead** en CRM empresas: `e40a83ca-2acc-4103-ac62-cbf5ab7563e0`. Escritura validada en la tarea de prueba `17tgxqycuuc`.
@@ -45,8 +45,8 @@ El estado de persistencia fallida, su evidencia y el trabajo de enriquecimiento 
 4. Calendario clásico de Mauro conectado por suscripción firmada; lectura real y guardado de dos reuniones verificados. Lectura programada cada quince minutos; primera ejecución automática comprobada; falta una entrega firmada originada realmente en Calendly. Calendly de Lorenzo/One se omite por petición del usuario. El trigger comercial permanece sin cambios. El receptor independiente guarda la evidencia antes de confirmar.
 5. `trace_link_clickup` conectado a los resultados de creación/búsqueda del workflow comercial, con fixtures para entradas Supabase y Calendly y comparación completa del workflow original. El consumidor de trece nodos ya entregó datos a Slack/ClickUp y está publicado cada minuto. Faltan alertas y seguimiento de fallos. No modificar estados comerciales ni disparar llamadas/WhatsApp con enriquecimientos.
 6. Aviso inicial y actualización por referencia confirmada verificados con el lead ficticio 1883. Por la corrección de alcance del usuario, no leer historial, ampliar scopes del bot ni reconstruir mensajes antiguos. Las entregas inciertas quedan pendientes y deben aparecer en las alertas técnicas ya previstas.
-7. Prueba real autorizada completada en Chrome para clásico y ambas ramas de volumen; escritura Slack/ClickUp y reintento vacíos confirmados. Faltan móvil/Safari y la validación restante de One; storage, tiempos y fallos tienen pruebas locales.
-8. Publicar el frontend, resolver la continuación de pestañas antiguas y recién entonces revocar SELECT/INSERT públicos y retirar el update genérico. Un cambio de permisos sin resolver los clientes cacheados rompería su onboarding.
+7. Prueba real autorizada completada en Chrome para clásico y ambas ramas de volumen; escritura Slack/ClickUp y reintentos vacíos confirmados. One probado desde local y después desde el sitio público: persistencia, Slack y avance al calendario. Faltan móvil/Safari; storage, tiempos y fallos tienen pruebas locales.
+8. Frontend publicado. Falta la decisión del usuario entre cerrar los accesos antiguos ahora o conservar 24 horas de compatibilidad. Entonces revocar SELECT/INSERT públicos y retirar el update genérico. Un cambio de permisos sin resolver los clientes cacheados rompería su onboarding. La migración `20261013230000` ya retiró permisos directos de UPDATE/DELETE/TRUNCATE/REFERENCES/TRIGGER que ningún formulario utiliza; no cerró todavía la lectura pública.
 9. Definir/activar retención del detalle del servidor, alertas con cooldown y monitor externo del heartbeat. Están activos el lector de Mauro y el enriquecimiento Slack/ClickUp; las alertas todavía faltan.
 
 ## n8n: evidencia inspeccionada
@@ -134,7 +134,7 @@ El frontend público todavía usa la versión anterior, así que esto valida la 
 
 | Interruptor | Estado por defecto | Uso |
 | --- | --- | --- |
-| `VITE_LEAD_TRACEABILITY` | activo por defecto en esta rama, sin rollout público | Transporte nuevo del frontend |
+| `VITE_LEAD_TRACEABILITY` | activo por defecto y publicado | Transporte nuevo del frontend |
 | `LEAD_INTAKE_ENABLED` | activo en producción | Habilitar el intake después de validar dependencias |
 | `LEAD_SLACK_ENRICHMENT_ENABLED` | activo en producción | Permitir al worker editar mensajes existentes |
 | `LEAD_TRACEABILITY_WORKER_TOKEN` | sin configurar | Alternativa a la credencial service role existente de n8n para autenticar el worker |
@@ -149,3 +149,12 @@ Antes del cierre de permisos, se puede volver a publicar el frontend con la flag
 Las migraciones son aditivas: el rollback no elimina evidencia. Ante una regresión del nuevo trigger de persistencia, revisar primero el error concreto y volver a la versión validada; no desactivar triggers comerciales ni reejecutar workflows para compensar. Las entregas inciertas se reconcilian por sus referencias, no creando otro mensaje/task.
 
 Fuentes de contratos: [firmas Calendly](https://developer.calendly.com/api-docs/overview/webhooks/webhook-signatures), [suscripciones](https://developer.calendly.com/api-docs/calendly-api/webhooks/create-webhook-subscription), [opciones de embed](https://developer.calendly.com/api-docs/overview/embedding/recipes).
+
+## Publicación y prueba One — 13 de octubre, 20:38 UTC
+
+- PR #86 integrado mediante el conector GitHub `camilosilvac23`; el CLI tenía otra cuenta con sólo lectura. Vercel Production confirmó el SHA `77d737923fb28c4c7cc819060eabeb92f729179a`. El preview Vercel de rama se omite por configuración; su check verde no prueba un build. Netlify generó su preview, pero no tiene los rewrites Vercel y no se usó para validar rutas profundas.
+- Verificación pública: HTTP 200, canonical y contenido prerenderizado en seis rutas (`/`, `/register`, `/one`, `/one/contacto`, `/restaurantes`, `/productos/registro-de-compras`).
+- One local: lead 12, submission `13b3f88e-f020-425a-b419-4222d864ec43`, Slack `1791923663.613079`. El consumidor automático confirmó revisión Slack 3/3. No existe vínculo CRM para este flujo; su entrega ClickUp permanece sin reservar, a la espera de una referencia real. No se creó una tarea One artificial.
+- One público: lead 13, submission `c9982d7a-f0b1-473f-8fcd-728ff116470a`, Slack `1791923871.267209`, campaña `rollout_20261013`. Ruta observada `/register → /one/contacto`, las cinco UTMs y token privado confirmados en Supabase. Lectura del hilo exacto confirmó el contenido en Slack. Se usaron correo `.invalid` y teléfono de ceros, sin reserva de Calendly.
+- Pruebas al cierre de esta etapa: 41 Vitest, 31 llamadas existentes en el contrato de tracking y 24 Edge (incluye tres casos de caducidad de la ruta antigua).
+- Preparado, **sin desplegar/configurar todavía**: `LEAD_LEGACY_ACCESS_ENDS_AT` permite fijar una fecha UTC de cierre en los tres endpoints antiguos. Antes de esa fecha conserva el comportamiento; desde la fecha responde 410 antes de leer contacto o usar la cuenta de servicio. Una configuración malformada responde 503. La revocación final de SELECT/INSERT sigue pendiente de la decisión de compatibilidad; las rutas nuevas continúan operando.

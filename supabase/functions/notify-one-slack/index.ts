@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
+import { legacyLeadAccessResponse } from "../_shared/legacyLeadAccess.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -266,6 +267,8 @@ async function postSlack(token: string, message: Record<string, unknown>) {
 
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+  const expired = legacyLeadAccessResponse(corsHeaders);
+  if (expired) return expired;
   if (request.method !== "POST") return json({ success: false, error: "method_not_allowed" }, 405);
 
   try {
