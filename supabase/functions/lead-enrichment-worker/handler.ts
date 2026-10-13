@@ -16,8 +16,9 @@ export async function handleLeadEnrichment(request: Request) {
   const boundedFetch: typeof fetch = (input, init) => fetch(input, { ...init, redirect: "error", signal: AbortSignal.any([deadline, AbortSignal.timeout(10000)]) });
   const db = createClient(Deno.env.get("SUPABASE_URL")!, serviceRole!, { auth: { persistSession: false }, global: { fetch: boundedFetch } });
   const result = { delivered: 0, waiting: 0, failed: 0 };
+  const startedAt = new Date().toISOString();
   try {
-    const { error: healthError } = await db.from("lead_traceability_health").upsert({ job: "enrichment", last_started_at: new Date().toISOString() }, { onConflict: "job" });
+    const { error: healthError } = await db.from("lead_traceability_health").upsert({ job: "enrichment", last_started_at: startedAt }, { onConflict: "job" });
     if (healthError) throw new Error("health_write_failed");
     // Each request is bounded below the lease duration; another worker skips leased rows.
     const { data: deliveries, error } = await db.rpc("trace_claim_slack_deliveries", { p_limit: 4 });
@@ -67,7 +68,7 @@ export async function handleLeadEnrichment(request: Request) {
         await finish(response.ok && body.ok ? null : response.status === 429 ? "slack_rate_limited" : "slack_update_rejected", response.status === 429 ? Math.min(3600, Math.max(0, Number(response.headers.get("retry-after")) || 60)) : undefined);
       } catch { await finish("delivery_transport_failed"); }
     }));
-    const { error: completedError } = await db.from("lead_traceability_health").upsert({ job: "enrichment", last_completed_at: new Date().toISOString(), result });
+    const { error: completedError } = await db.from("lead_traceability_health").upsert({ job: "enrichment", last_started_at: startedAt, last_completed_at: new Date().toISOString(), result }, { onConflict: "job" });
     if (completedError) throw new Error("health_write_failed");
     return json(result);
   } catch {

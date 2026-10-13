@@ -22,7 +22,7 @@ const rpc = (name, body) => ({ method: 'POST', url: `https://rmxzryueysmzksmvpwp
 const api = { authentication: 'predefinedCredentialType', nodeCredentialType: 'clickUpOAuth2Api',
   options: { timeout: 10000, response: { response: { fullResponse: true, neverError: true, responseFormat: 'json' } } } };
 add('Solo prueba aislada autorizada', 'manualTrigger', {}, [0, 0]);
-// No schedule or public webhook is installed before isolated destination QA.
+// The manual trigger remains available for controlled delivery checks.
 add('Reservar entrega existente', 'httpRequest', rpc('trace_claim_clickup_delivery', '{}'), [220, 0], { credentials: supabase });
 add('Preparar trabajo', 'code', { jsCode: "const r = $input.first().json; if (r.statusCode !== 200) throw new Error('clickup_claim_failed'); if (!r.body) return []; return [{json:r.body}];" }, [440, 0]);
 add('Leer tarea existente', 'httpRequest', { ...api, url: "=https://api.clickup.com/api/v2/task/{{ $('Preparar trabajo').first().json.task_id }}" }, [660, 0], { credentials: clickup, onError: 'continueRegularOutput' });
@@ -48,8 +48,21 @@ connect('Actualizar solo trazabilidad', 'Clasificar resultado');
 connect('Clasificar resultado', 'Confirmar revision entregada');
 connect('Confirmar revision entregada', 'Verificar confirmacion');
 
-const workflow = { name: 'Trazabilidad leads · ClickUp (preparación)', nodes, connections, active: false, pinData: {},
-  settings: { executionOrder: 'v1', executionTimeout: 60, saveDataErrorExecution: 'none', saveDataSuccessExecution: 'none', saveManualExecutions: false },
+add('Enriquecer Slack confirmado', 'httpRequest', {
+  method: 'POST', url: 'https://rmxzryueysmzksmvpwpv.supabase.co/functions/v1/lead-enrichment-worker',
+  authentication: 'predefinedCredentialType', nodeCredentialType: 'supabaseApi',
+  sendBody: true, specifyBody: 'json', jsonBody: '{}',
+  options: { timeout: 65000, response: { response: { fullResponse: true, responseFormat: 'json' } } },
+}, [220, 300], { credentials: supabase, onError: 'continueRegularOutput' });
+add('Verificar enriquecimiento Slack', 'code', { jsCode: "const r=$input.first().json; if(r.statusCode!==200 || r.body?.error || r.body?.failed>0) throw new Error('slack_enrichment_failed'); return [{json:r.body}];" }, [440, 300]);
+connect('Solo prueba aislada autorizada', 'Enriquecer Slack confirmado');
+connect('Enriquecer Slack confirmado', 'Verificar enriquecimiento Slack');
+add('Schedule Trigger', 'scheduleTrigger', { rule: { interval: [{ field: 'minutes', minutesInterval: 1 }] } }, [0, -220], { typeVersion: 1.4 });
+connect('Schedule Trigger', 'Reservar entrega existente');
+connect('Schedule Trigger', 'Enriquecer Slack confirmado');
+
+const workflow = { name: 'Trazabilidad leads · Slack y ClickUp', nodes, connections, active: false, pinData: {},
+  settings: { executionOrder: 'v1', executionTimeout: 120, saveDataErrorExecution: 'none', saveDataSuccessExecution: 'none', saveManualExecutions: false },
 };
 const output = fileURLToPath(new URL('../../integrations/n8n/lead-clickup-enrichment.json', import.meta.url));
 mkdirSync(fileURLToPath(new URL('../../integrations/n8n/', import.meta.url)), { recursive: true });

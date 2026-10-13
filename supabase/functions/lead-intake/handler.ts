@@ -65,8 +65,8 @@ export async function handleLeadIntake(request: Request) {
           method: "POST", headers: { Authorization: `Bearer ${slackToken}`, "Content-Type": "application/json" },
           body: JSON.stringify(message), signal: AbortSignal.timeout(15000),
         });
-        // An ambiguous transport result is never retried as a new message. A
-        // reconciliation worker must first locate the submission in Slack metadata.
+        // An ambiguous transport result stays pending. Only a confirmed
+        // channel/ts can be enriched; no history search or blind resend.
         const result = await response.json();
         if (!result.ok) {
           await db.from("lead_submissions").update({ slack_initial_state: response.ok ? "failed" : "uncertain" }).eq("id", submissionId);

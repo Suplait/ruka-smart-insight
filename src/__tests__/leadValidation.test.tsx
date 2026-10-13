@@ -16,6 +16,14 @@ describe("intake boundary", () => {
     expect(() => validateLead({ name: "Example", email: "bad", ccity: "Santiago", company_name: "Company" }, "classic")).toThrow();
   });
 
+  it("preserves an optional empty phone for the existing n8n INSERT contract", () => {
+    for (const whatsapp of [undefined, null, "", "   "]) {
+      const lead = validateLead({ name: "Prueba", company_name: "Prueba", email: "qa@example.invalid", ccity: "Santiago", whatsapp }, "classic");
+      expect(lead.whatsapp).toBe("");
+      expect(lead.whatsapp!.replace(/%2B|[^0-9]/g, "")).toBe("");
+    }
+  });
+
   it("drops malformed optional attribution without rejecting the lead", () => {
     expect(projectAttribution([])).toBeNull();
     expect(projectAttribution({ version: 99 })).toBeNull();

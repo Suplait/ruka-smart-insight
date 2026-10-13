@@ -7,8 +7,11 @@ const text = (v, max = 250) => typeof v === 'string' ? v.replace(/[\r\n\u0000-\u
 const page = v => {
   const raw = text(v, 2000);
   if (raw.startsWith('/') && !raw.startsWith('//')) return raw.split(/[?#]/)[0].slice(0, 300);
-  try { const url = new URL(raw); return ['https:', 'http:'].includes(url.protocol) ? `${url.origin}${url.pathname}`.slice(0, 300) : ''; }
-  catch { return ''; }
+  // n8n's Code sandbox does not expose the browser URL global. Parse only
+  // displayable HTTP(S) pages, excluding credentials, queries and fragments.
+  const match = raw.match(/^(https?):\/\/([^/?#\s]+)(\/[^?#]*)?(?:[?#].*)?$/i);
+  if (!match || /[@\\<>]/.test(match[2]) || /[\\<>]/.test(match[3] || '')) return '';
+  return `${match[1].toLowerCase()}://${match[2]}${match[3] || '/'}`.slice(0, 300);
 };
 const date = v => {
   const d = new Date(text(v));

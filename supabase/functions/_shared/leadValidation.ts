@@ -46,6 +46,9 @@ export function validateLead(input: unknown, funnel: Funnel): LeadInput {
   };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email || "")) throw new LeadRequestError("Invalid email");
   if (funnel === "classic") {
+    // The existing INSERT webhook calls .replace() on this optional field.
+    // Preserve the browser's empty string instead of introducing null.
+    lead.whatsapp ??= "";
     Object.assign(lead, {
       company_name: text(data.company_name, 160, true), ccity: text(data.ccity, 120, true),
       first_name: text(data.first_name, 120), last_name: text(data.last_name, 120),

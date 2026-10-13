@@ -28,7 +28,11 @@ async function fixture(options: Options, test: (calls: { path: string; body: Rec
     if (url.pathname.endsWith("/trace_defer_delivery")) return json(!options.deferRejected);
     if (url.pathname === "/rest/v1/lead_submissions" && init?.method === "GET" && options.missingReference) return json({ id, status: "pending", slack_initial_state: "uncertain" });
     if (url.pathname.endsWith("/trace_finish_delivery")) return json(true);
-    if (url.pathname === "/rest/v1/lead_traceability_health") return new Response(null, { status: 204 });
+    if (url.pathname === "/rest/v1/lead_traceability_health") {
+      // PostgreSQL checks NOT NULL before resolving the upsert conflict.
+      if (typeof body.last_started_at !== "string") return json({ code: "23502", message: "last_started_at is required" }, 400);
+      return new Response(null, { status: 204 });
+    }
     if (url.pathname === "/rest/v1/lead_submissions" && init?.method === "GET") return json({ id, lead_id: 42, status: "persisted", slack_channel_id: "C08DUJ6V2G6", slack_message_ts: "1234.5678", slack_initial_message: { text: "Initial notice", blocks: [{ type: "section", text: { type: "mrkdwn", text: "<!channel> Contact" } }] } });
     if (url.pathname === "/rest/v1/leads") return json({ facturas_compra_mes: 225 });
     if (url.pathname === "/rest/v1/lead_meetings") return json([]);

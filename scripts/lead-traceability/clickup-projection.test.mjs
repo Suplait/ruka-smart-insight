@@ -49,12 +49,14 @@ test('uses authoritative cancellation and keeps the history bounded', () => {
   assert.match(clickupText(j), /Confirmada:.*Chile/);
 });
 
-test('the actual n8n artifact validates destinations and has no automatic/commercial actions', () => {
+test('the actual n8n artifact validates destinations and schedules only enrichment', () => {
   const workflow = JSON.parse(readFileSync(new URL('../../integrations/n8n/lead-clickup-enrichment.json', import.meta.url)));
   assert.equal(workflow.active, false);
   assert.equal(workflow.settings.saveManualExecutions, false);
-  assert.equal(workflow.settings.executionTimeout, 60);
-  assert.equal(workflow.nodes.filter(n => /Trigger|webhook|cron/i.test(n.type)).length, 1);
+  assert.equal(workflow.settings.executionTimeout, 120);
+  assert.equal(workflow.nodes.filter(n => /Trigger|webhook|cron/i.test(n.type)).length, 2);
+  assert.deepEqual(workflow.nodes.find(n => n.type.endsWith('scheduleTrigger')).parameters.rule.interval, [{field:'minutes',minutesInterval:1}]);
+  assert.deepEqual(workflow.connections['Schedule Trigger'].main[0].map(n=>n.node), ['Reservar entrega existente','Enriquecer Slack confirmado']);
   assert.ok(workflow.nodes.some(n => n.type.endsWith('manualTrigger')));
   const writes = workflow.nodes.filter(n => n.parameters.method === 'POST' && n.parameters.url?.includes('clickup.com'));
   assert.equal(writes.length, 1);
@@ -63,9 +65,11 @@ test('the actual n8n artifact validates destinations and has no automatic/commer
   const j = job(); const r = response();
   const source = workflow.nodes.find(n => n.name === 'Validar y proyectar').parameters.jsCode;
   const execute = input => runInNewContext(`(function(){${source}})()`, {
-    URL, $: () => ({first: () => ({json: j})}), $input: {first: () => ({json: input})},
+    $: () => ({first: () => ({json: j})}), $input: {first: () => ({json: input})},
   });
   assert.equal(execute(r)[0].json.action, 'write');
+  assert.match(execute(r)[0].json.value, /Página: https:\/\/www.ruka.ai\/restaurantes/);
+  assert.doesNotMatch(execute(r)[0].json.value, /secret/);
   r.body.list.id = 'other-list';
   assert.equal(execute(r)[0].json.ack.p_error, 'clickup_task_mismatch');
 });
