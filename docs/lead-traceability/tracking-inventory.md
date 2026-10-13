@@ -60,3 +60,7 @@ node scripts/lead-traceability/snapshot-gtm.mjs /ruta/privada/export.json /ruta/
 ```
 
 Comparar hashes por ID de etiqueta/activador/variable, además de la lista de IDs. El hash de la versión completa también incluye metadatos de versión; una diferencia requiere revisar el detalle y no implica por sí sola un cambio de envíos. Estos snapshots son evidencia de auditoría; no sirven como archivos de importación de GTM.
+
+## Actualización de publicación — versión22
+
+El inventario anterior conserva la línea base v21. El13 de octubre se publicó v22 con sólo la etiqueta60 y el activador59 para los siete eventos One existentes. Cinco eventos del recorrido real fueron recibidos una vez en DebugView; los dos de reserva/éxito no se provocaron. No se cambió ningún key event ni etiqueta anterior. La exploración compartida está descrita en `docs/lead-traceability.md`.
