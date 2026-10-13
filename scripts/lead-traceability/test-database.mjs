@@ -31,6 +31,8 @@ try {
     "-f", "supabase/migrations/20261014010000_expire_lead_attribution_detail.sql",
     "-f", "supabase/migrations/20261014020000_add_external_lead_watchdog.sql",
     "-f", "supabase/migrations/20261014030000_add_ga4_reconciliation.sql",
+    "-f", "supabase/migrations/20261014040000_associate_calendar_browser_reference.sql",
+    "-f", "supabase/tests/calendar_browser_reference.sql",
     "-f", "supabase/tests/ga4_reconciliation.sql",
     "-f", "supabase/tests/lead_traceability.sql",
     "-f", "supabase/tests/calendly_evidence.sql",

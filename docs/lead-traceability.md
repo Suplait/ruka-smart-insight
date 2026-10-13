@@ -23,6 +23,10 @@ Las llamadas de tracking conservan nombres, argumentos y orden. Las pruebas de R
 
 La captura de adquisición y el receptor de mensajes de Calendly funcionan separados del dataLayer. No se añadieron conversiones ni envíos Measurement Protocol/CAPI. El receptor nuevo de Calendly comprueba origen exacto, ventana del iframe y estructura; no modifica los listeners antiguos.
 
+La migración `20261014040000` aprovecha la referencia exacta de evento/invitado observada por ese receptor. Cuando existe un receipt firmado o leído desde la API, busca candidatos con el mismo hash de correo y dentro de la ventana de 90 días / cinco minutos ya definida. Una única observación del invitado entre esos candidatos permite asociar con método `browser_reference`; si hay varias, conserva `ambiguous`. Sin esa evidencia mantiene el método `unique_email` anterior. Una observación de navegador nunca crea una reunión confirmada ni reasigna una asociación existente. El worker actual resuelve las observaciones que llegan después del webhook, sin añadir trabajo al formulario.
+
+Las observaciones distinguen invitados de una misma reunión grupal y conservan idempotencia con las claves anteriores. El token de continuación sigue siendo privado entre navegador y Supabase. Esto no demuestra un `booking_token` transportado por Calendly: ese portador y la reserva real firmada siguen pendientes; no se sobrescriben `a1`, UTMs ni preguntas del calendario. Cerrar la pestaña antes de entregar la observación puede dejar únicamente la asociación por correo, o una ambigüedad visible.
+
 ## Piezas implementadas
 
 - `leadAttribution`: cinco UTMs, primera entrada, entrada de sesión, último contacto no directo, referrer externo, URLs sin query/hash y hasta veinte páginas observadas. Caducidad local de noventa días y sesión de treinta minutos. Storage bloqueado usa memoria. Los IDs propios nunca se presentan como IDs de Google.
