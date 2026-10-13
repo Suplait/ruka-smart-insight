@@ -9,6 +9,11 @@ const touch = {
 const attribution = { version: 1, first_touch: touch, session_entry: touch, last_non_direct_touch: touch, conversion_page: "/register?token=SECRET", captured_at: touch.observed_at };
 
 describe("enriched Slack projection", () => {
+  it("distinguishes expired detail from an acquisition capture failure", () => {
+    const rendered = JSON.stringify(buildLeadVisibilityBlocks({ attribution: { version: 1, detail_expired: true } }));
+    expect(rendered).toContain("detalle eliminado tras 90 días");
+    expect(rendered).not.toContain("Clic Google: no capturado");
+  });
   it("stays within Slack text limits even when escaping oversized inputs", () => {
     const large = Object.fromEntries(Object.keys(touch).map(key => [key, "<>&".repeat(1000)]));
     const blocks = buildLeadVisibilityBlocks({ attribution: { ...attribution, first_touch: large, last_non_direct_touch: large } });

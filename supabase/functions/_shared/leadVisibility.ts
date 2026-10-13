@@ -85,7 +85,9 @@ export function buildLeadVisibilityBlocks(context: LeadVisibility): SlackBlock[]
     const metaClick = [first, current, last].some(t => value(t.fbclid));
     const consent = ["granted", "denied"].includes(value(attribution.analytics_consent)) ? value(attribution.analytics_consent) : "unknown";
     blocks.push({ type: "context", elements: [{ type: "mrkdwn", text:
-      `Clic Google: ${googleClick ? "identificador presente" : "no capturado"} · Meta: ${metaClick ? "identificador presente" : "no capturado"} · IDs GA4: ${value(attribution.ga_client_id) && value(attribution.ga_session_id) ? "disponibles" : "no disponibles"} · Consentimiento analytics: ${consent}` }] });
+      attribution.detail_expired === true
+        ? `Identificadores y recorrido: detalle eliminado tras 90 días · Consentimiento analytics: ${consent}`
+        : `Clic Google: ${googleClick ? "identificador presente" : "no capturado"} · Meta: ${metaClick ? "identificador presente" : "no capturado"} · IDs GA4: ${value(attribution.ga_client_id) && value(attribution.ga_session_id) ? "disponibles" : "no disponibles"} · Consentimiento analytics: ${consent}` }] });
   }
   const state = context.failed ? "Persistencia fallida; requiere revisión" : context.persisted ? "Lead guardado" : "Persistencia pendiente";
   const identifiers = [Number.isSafeInteger(context.leadId) ? `Lead ID: ${context.leadId}` : "", context.submissionId ? `Submission: ${escapeSlack(context.submissionId, 36)}` : ""].filter(Boolean);
