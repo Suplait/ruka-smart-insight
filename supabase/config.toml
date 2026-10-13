@@ -12,3 +12,12 @@ verify_jwt = false
 
 [functions.organic-growth-api]
 verify_jwt = false
+
+[functions.lead-intake]
+verify_jwt = false
+
+[functions.lead-enrichment-worker]
+verify_jwt = false
+
+[functions.lead-calendly-webhook]
+verify_jwt = false

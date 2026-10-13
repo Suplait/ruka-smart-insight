@@ -2,6 +2,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
+  readonly VITE_LEAD_TRACEABILITY?: string;
   readonly VITE_RUKA_ONE_CALENDLY_URL?: string;
 }
 

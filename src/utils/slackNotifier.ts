@@ -1,5 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
+import { leadTraceabilityEnabled } from "@/services/leadIntake";
+
 type SlackLeadData = Record<string, unknown>;
 
 /**
@@ -9,6 +11,9 @@ export function notifySlackOnboardingStep(leadId: number, step: string, leadData
   if (!leadId || !step) {
     return false;
   }
+
+  // The secure qualification transaction queues enrichment of the original message.
+  if (leadTraceabilityEnabled()) return true;
 
   void (async () => {
     try {

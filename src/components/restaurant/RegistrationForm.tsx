@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, CreditCard, Clock4, ShieldCheck, Info, HelpCircle, Tag } from "lucide-react";
@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/components/ui/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { supabase } from "@/integrations/supabase/client";
+import { createLeadSubmission, prepareClassicLead, persistClassicLead, finishClassicSlack, type LeadSubmission, type ClassicLeadInput } from "@/services/leadIntake";
 import { pushToDataLayer, trackFormSubmission, trackRegistration } from "@/utils/dataLayer";
 import { getStoredUTMParams } from "@/utils/utmTracker";
 interface FormData {
@@ -41,6 +41,7 @@ export default function RegistrationForm({
     codigoPromocional: "",
     acceptTerms: false
   });
+  const submissionRef = useRef<LeadSubmission | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,22 +70,41 @@ export default function RegistrationForm({
         has_promo_code: !!formData.codigoPromocional
       }, true);
 
+      // Get stored UTM parameters
+      const utmParams = getStoredUTMParams();
+
+      // Create the lead data object
+      const leadDataToInsert: ClassicLeadInput = {
+        company_name: formData.nombreRestaurante,
+        name: `${formData.firstName} ${formData.lastName}`,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        ccity: formData.ciudad,
+        whatsapp: whatsappNumber,
+        codigo_promocional: formData.codigoPromocional || null,
+        page_path: pagePath || window.location.pathname,
+        utm_source: utmParams.utm_source,
+        utm_medium: utmParams.utm_medium,
+        utm_campaign: utmParams.utm_campaign,
+        utm_content: utmParams.utm_content
+      };
+
+      submissionRef.current ??= createLeadSubmission();
+      const submission = submissionRef.current;
+      const slackLead = {
+        company_name: formData.nombreRestaurante,
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        ccity: formData.ciudad,
+        whatsapp: whatsappNumber,
+      };
+
       // First, try to send Slack notification and get the timestamp
       let slackTimestamp: string | null = null;
       try {
         // Send Slack notification
-        const slackPromise = supabase.functions.invoke('notify-slack', {
-          body: {
-            lead: {
-              company_name: formData.nombreRestaurante,
-              name: `${formData.firstName} ${formData.lastName}`,
-              email: formData.email,
-              ccity: formData.ciudad,
-              whatsapp: whatsappNumber
-            },
-            isOnboarding: false
-          }
-        });
+        const slackPromise = prepareClassicLead(submission, leadDataToInsert, slackLead);
 
         // Create a timeout promise (10 seconds)
         const timeoutPromise = new Promise<null>(resolve => {
@@ -105,26 +125,6 @@ export default function RegistrationForm({
         console.log('Slack notification error, proceeding without timestamp:', slackError);
       }
 
-      // Get stored UTM parameters
-      const utmParams = getStoredUTMParams();
-
-      // Create the lead data object
-      const leadDataToInsert: Record<string, string | null | undefined> = {
-        company_name: formData.nombreRestaurante,
-        name: `${formData.firstName} ${formData.lastName}`,
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        email: formData.email,
-        ccity: formData.ciudad,
-        whatsapp: whatsappNumber,
-        codigo_promocional: formData.codigoPromocional || null,
-        page_path: pagePath || window.location.pathname,
-        utm_source: utmParams.utm_source,
-        utm_medium: utmParams.utm_medium,
-        utm_campaign: utmParams.utm_campaign,
-        utm_content: utmParams.utm_content
-      };
-
       // Add slack_message_ts if we got it in time
       if (slackTimestamp) {
         leadDataToInsert.slack_message_ts = slackTimestamp;
@@ -134,7 +134,7 @@ export default function RegistrationForm({
       const {
         data: leadData,
         error: leadError
-      } = await supabase.from('leads').insert([leadDataToInsert]).select().single();
+      } = await persistClassicLead(submission, leadDataToInsert);
       if (leadError) {
         throw leadError;
       }
@@ -146,36 +146,9 @@ export default function RegistrationForm({
 
       // If we didn't get the timestamp in time, handle the update asynchronously
       if (!slackTimestamp) {
-        // This runs in background without blocking the user flow
-        supabase.functions.invoke('notify-slack', {
-          body: {
-            lead: {
-              company_name: formData.nombreRestaurante,
-              name: `${formData.firstName} ${formData.lastName}`,
-              email: formData.email,
-              ccity: formData.ciudad,
-              whatsapp: whatsappNumber
-            },
-            isOnboarding: false
-          }
-        }).then(slackResponse => {
-          if (!slackResponse.error && slackResponse.data?.ts) {
-            // Update the lead with the timestamp when it arrives
-            supabase.functions.invoke('update-lead', {
-              body: {
-                leadId: leadId,
-                updateData: {
-                  slack_message_ts: slackResponse.data.ts
-                }
-              }
-            }).catch(updateError => {
-              console.log('Error updating lead with late timestamp:', updateError);
-            });
-          }
-        }).catch(slackError => {
-          console.log('Background Slack notification failed:', slackError);
-        });
+        void finishClassicSlack(submission, leadDataToInsert, slackLead, leadId);
       }
+
       trackRegistration({
         lead_id: leadId,
         restaurant_name: formData.nombreRestaurante
@@ -185,7 +158,8 @@ export default function RegistrationForm({
       navigate('/onboarding-success', {
         state: {
           restaurantName: formData.nombreRestaurante,
-          leadId: leadId
+          leadId: leadId,
+          ...(submission ? { continuation: submission.continuation } : {})
         }
       });
     } catch (error) {
