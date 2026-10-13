@@ -39,6 +39,8 @@ El estado de persistencia fallida, su evidencia y el trabajo de enriquecimiento 
 
 ## Estado de los requisitos y pendientes
 
+Retención del detalle de atribución implementada en migraciones `20261014010000`/`20261014011000`: identificadores y recorrido a 90 días, hashes de continuación vencidos, trabajo privado por hora en Supabase. [Política, límites y pruebas](lead-attribution-retention.md). La retención integral de contactos/snapshots y de las herramientas externas queda fuera de esta limpieza técnica; no se afirma que todos los datos personales expiren a 90 días.
+
 1. Exportaciones de GTM web v21 y Server v1 completadas; [inventario y hashes](lead-traceability/tracking-inventory.md) guardados. Server tiene cero etiquetas; Meta y Ads tienen conectadas las rutas clásicas detalladas en el inventario. GA4 no tiene modificaciones, tiene una sola regla derivada ajena a One y no muestra `one_*` en su listado de eventos recientes. Conexión One publicada en v22, cinco eventos recibidos una vez en DebugView y exploración compartida con ambos eventos Calendly. Siguen pendientes diagnósticos de Meta y QA de reserva/éxito. Zona horaria de la propiedad leída: Chile Time (GMT-03:00).
 2. Conectar el consentimiento real y la lectura de IDs mediante la API de Google. Actualmente el consentimiento es `unknown` y los IDs GA son nulos; no se infieren permisos de cookies ni se inventan identificadores.
 3. Verificar un portador admitido por Calendly para `booking_token` con un payload real. `a1` ya contiene la empresa y las UTMs conservan su significado. No se utiliza `salesforce_uuid` como portador sin verificar su contrato en el embed.
