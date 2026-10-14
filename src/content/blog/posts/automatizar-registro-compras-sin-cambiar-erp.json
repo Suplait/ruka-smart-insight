@@ -8,19 +8,19 @@
   "metaTitle": "Automatizar el registro de compras sin cambiar tu ERP | Ruka",
   "metaDescription": "Aprende cómo automatizar el registro de compras, desde la recepción de facturas hasta la actualización de tu ERP, sin reemplazar tus sistemas actuales.",
   "datePublished": "2026-10-09",
-  "dateModified": "2026-10-09",
-  "readingTimeMinutes": 7,
+  "dateModified": "2026-10-14",
+  "readingTimeMinutes": 8,
   "targetQuery": "automatizar registro de compras",
   "searchIntent": "informacional comercial",
   "audience": "equipos de finanzas, administración y operaciones",
   "heroImage": {
-    "src": "/assets/registro-compras/facturas-en-bandeja.png",
-    "alt": "Bandeja de facturas de compra organizadas para su procesamiento en Ruka",
-    "position": "center top"
+    "src": "/blog/2026-10/registro-lineas-demo.jpg",
+    "alt": "Líneas de una factura en la demo de Ruka: cantidades, unidades, precio neto e insumo maestro",
+    "caption": "Captura nueva de prueba.ruka.ai, con datos de demostración. El detalle permite revisar cantidades y relacionar el nombre del proveedor con el insumo maestro. No representa resultados de un cliente."
   },
   "intro": [
     "Registrar una compra parece una tarea simple hasta que se mira el proceso completo. La factura puede llegar desde el SII, un correo, un PDF o un documento físico. Después alguien tiene que leerla, identificar al proveedor, ordenar los ítems, aplicar reglas internas y llevar la información al sistema correcto.",
-    "Automatizar este trabajo no exige reemplazar el ERP. El objetivo es poner una capa operativa entre las fuentes y los sistemas que ya existen, para que la información llegue lista y el equipo deje de sostener cada traspaso manual."
+    "No necesitas partir cambiando el ERP. Primero hay que saber qué entra, qué debe revisarse y cómo acepta información el sistema de destino. Leer una factura y registrarla en otro software son dos capacidades distintas: conviene comprobar ambas antes de dar el flujo por resuelto."
   ],
   "keyTakeaways": [
     "El ERP puede seguir siendo el sistema de registro final.",
@@ -29,6 +29,25 @@
     "Conviene partir por un flujo acotado y medir cuánto trabajo manual desaparece."
   ],
   "sections": [
+    {
+      "id": "ejemplo-del-documento-al-registro",
+      "title": "Sigue una compra, no una lista de funciones",
+      "paragraphs": [
+        "Supongamos que compras cuatro sacos de harina de 25 kg a $20.000 cada uno. La factura expresa sacos, pero tu control de costos trabaja en kilos. Registrar 4 como si fueran kilos daría un costo equivocado, aunque el total de la factura estuviera bien. La correspondencia correcta es 100 kg a $800 por kg, con un neto de $80.000.",
+        "Ese es el tipo de regla que hay que dejar resuelta. No basta con reconocer palabras con IA: hay que conservar el documento, confirmar el producto, convertir la unidad cuando corresponde y comprobar el resultado. Los montos de este ejemplo son ficticios y no incluyen IVA."
+      ],
+      "example": {
+        "title": "Ejemplo: harina comprada en sacos, usada en kilos",
+        "rows": [
+          { "label": "Fuente", "detail": "Factura: 4 sacos × $20.000", "result": "Neto: $80.000" },
+          { "label": "Unidad", "detail": "Cada saco contiene 25 kg", "result": "4 × 25 = 100 kg" },
+          { "label": "Costo", "detail": "$80.000 ÷ 100 kg", "result": "$800 por kg" },
+          { "label": "Destino", "detail": "Producto y código del sistema confirmados", "result": "Registrar solo por el mecanismo habilitado" }
+        ],
+        "note": "Ejemplo educativo. Un cambio de unidad requiere una equivalencia comprobada; no se deduce por parecido entre nombres."
+      },
+      "action": { "label": "Ver qué aporta la conexión con SII", "href": "/integraciones/sii" }
+    },
     {
       "id": "donde-esta-el-trabajo-manual",
       "title": "Dónde está realmente el trabajo manual",
@@ -58,7 +77,7 @@
       "id": "como-convivir-con-el-erp",
       "title": "Cómo convive la automatización con tu ERP",
       "paragraphs": [
-        "El ERP sigue cumpliendo su función: mantener el registro contable u operacional. Ruka trabaja sobre las fuentes que alimentan ese registro y ejecuta el trabajo que hoy ocurre entre ellas. Dependiendo del sistema, la actualización puede hacerse por API, archivos de importación, correo estructurado u otros mecanismos disponibles.",
+        "El ERP sigue cumpliendo su función. Lo que hay que confirmar es el acceso concreto: leer documentos desde un sistema no demuestra que también podamos escribir en él. Una API, un archivo de importación o un flujo de carga son alternativas que deben revisarse para tu versión y configuración, no promesas intercambiables.",
         "La elección técnica depende menos de una lista de logos y más de la forma concreta en que cada empresa opera. Dos compañías con el mismo ERP pueden usar módulos, maestros y reglas distintas. Por eso la conexión debe diseñarse alrededor del proceso real y no solamente del proveedor de software.",
         "Antes de implementar, conviene confirmar quién es dueño de cada dato, qué campos son obligatorios y cómo se corrigen errores. Esa claridad evita automatizar un problema de origen y permite que el sistema final reciba información consistente."
       ],
@@ -75,7 +94,7 @@
       "paragraphs": [
         "El registro de compras es un buen candidato cuando ocurre todas las semanas, consume horas de personas que podrían estar resolviendo problemas de mayor valor y sigue una secuencia reconocible. También hay una señal clara cuando el atraso en registrar compras afecta pagos, inventario, costos o cierres.",
         "Para dimensionarlo, toma una semana representativa. Cuenta cuántos documentos entran, cuántas fuentes participan, cuántos minutos se destinan a cada uno y cuántas veces el equipo vuelve sobre el mismo caso. Luego identifica el porcentaje de documentos que sigue reglas repetibles. Esa base permite evaluar el impacto sin recurrir a promesas genéricas.",
-        "Si el proceso es suficientemente estable y las fuentes son accesibles, se puede comenzar con un alcance concreto. Ruka conecta la información, aplica las reglas acordadas y deja el registro donde la operación lo necesita."
+        "Antes de ampliar, prueba una compra normal y otra con un dato faltante. Verifica que la primera llegue al destino correcto y que la segunda no aparezca como terminada. Revisa también una factura repetida: reintentar una carga no debería crear un segundo registro. Esa prueba vale más que una lista larga de integraciones."
       ]
     }
   ],
@@ -100,6 +119,8 @@
     "description": "Mira cómo Ruka recibe, lee, ordena y registra la información de compra sobre los sistemas que ya usa tu empresa."
   },
   "relatedLinks": [
+    { "label": "Documentos de Nubox hacia Ruka: alcance y requisitos", "href": "/integraciones/nubox" },
+    { "label": "Compras de Ruka a Toteat: productos, unidades y locales", "href": "/integraciones/toteat" },
     {
       "label": "Integraciones de Ruka",
       "href": "/integraciones"

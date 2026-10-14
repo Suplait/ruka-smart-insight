@@ -2,6 +2,7 @@ export type BlogImage = {
   src: string;
   alt: string;
   position?: string;
+  caption?: string;
 };
 
 export type BlogSection = {
@@ -10,6 +11,12 @@ export type BlogSection = {
   paragraphs: string[];
   bullets?: string[];
   callout?: string;
+  example?: {
+    title: string;
+    rows: { label: string; detail: string; result: string }[];
+    note: string;
+  };
+  action?: BlogLink;
 };
 
 export type BlogFaq = {

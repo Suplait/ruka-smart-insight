@@ -7,15 +7,15 @@
   "metaTitle": "Conciliar facturas, órdenes de compra y recepciones | Ruka",
   "metaDescription": "Guía para conciliar facturas, órdenes de compra y recepciones, detectar diferencias y preparar pagos con información validada.",
   "datePublished": "2026-10-09",
-  "dateModified": "2026-10-09",
-  "readingTimeMinutes": 7,
+  "dateModified": "2026-10-14",
+  "readingTimeMinutes": 8,
   "targetQuery": "conciliar facturas ordenes de compra recepciones",
   "searchIntent": "informacional comercial",
   "audience": "equipos de compras, cuentas por pagar, finanzas y operaciones",
   "heroImage": {
-    "src": "/assets/registro-compras/seleccion-recepcion.png",
-    "alt": "Comparación entre una factura de compra y su recepción en Ruka",
-    "position": "center center"
+    "src": "/blog/2026-10/recepcion-cantidades-demo.jpg",
+    "alt": "Recepción con observaciones en la demo de Ruka: 14 kg recibidos frente a 16 kg esperados",
+    "caption": "Captura nueva de la recepción en prueba.ruka.ai, con datos de demostración. Muestra una cantidad recibida distinta de la esperada; no es una captura del cruce de órdenes de compra ni un resultado de cliente."
   },
   "intro": [
     "Una factura puede estar correcta desde el punto de vista tributario y aun así no corresponder a lo que la empresa pidió o recibió. La conciliación conecta esas tres versiones de la compra antes de que una diferencia avance hacia el pago, el inventario o el cierre contable.",
@@ -28,6 +28,24 @@
     "Un pago puede prepararse solo después de pasar los controles definidos."
   ],
   "sections": [
+    {
+      "id": "prueba-con-una-compra",
+      "title": "Una diferencia de cantidad y otra de precio",
+      "paragraphs": [
+        "En este ejemplo pediste 10 sacos de harina a $1.000 y 6 bidones de aceite a $2.500. La factura cobra los 10 sacos, pero solo llegaron 8. El aceite llegó completo, aunque se facturó a $2.800. Son dos problemas distintos: operaciones debe aclarar la entrega; compras debe revisar el precio acordado.",
+        "No los resuelves cambiando la recepción a 10 para que quede verde ni aceptando el precio porque el total parece razonable. Primero se confirma la evidencia. Prueba el ejemplo interactivo: puedes modificar cantidades y precios, quitar un documento o cambiar la tolerancia. Los datos son ficticios y no se ejecuta ningún pago."
+      ],
+      "example": {
+        "title": "La misma compra vista desde tres documentos",
+        "rows": [
+          { "label": "Harina", "detail": "OC: 10 · Factura: 10 · Recepción: 8", "result": "2 sacos sin respaldo de recepción" },
+          { "label": "Aceite", "detail": "Precio acordado: $2.500 · Facturado: $2.800", "result": "$300 más por bidón" },
+          { "label": "Envases", "detail": "OC, factura y recepción: 100 unidades", "result": "Coincide en los campos del ejemplo" }
+        ],
+        "note": "Montos netos ficticios. Coincidir en estos campos no reemplaza controles de impuestos, duplicados, identidad del proveedor o aprobación de pago."
+      },
+      "action": { "label": "Probar esta conciliación", "href": "/herramientas/conciliar-factura-orden-recepcion" }
+    },
     {
       "id": "tres-versiones-de-una-compra",
       "title": "Las tres versiones de una misma compra",
@@ -58,7 +76,7 @@
       "title": "Del cruce de datos a una decisión clara",
       "paragraphs": [
         "El resultado no debería ser una planilla con miles de filas. Cada compra necesita un estado comprensible: coincide, tiene una diferencia dentro de tolerancia o requiere revisión. Para los casos con problemas, el equipo debe poder ver qué cambió y entre qué documentos, sin reconstruir la historia desde cero.",
-        "Cuando la conciliación termina bien, el proceso siguiente puede usar ese resultado. Cuentas por pagar sabe qué documentos están validados. Inventario recibe las cantidades confirmadas. Compras ve diferencias recurrentes por proveedor. La trazabilidad permite volver desde el registro final a la evidencia original.",
+        "Un cruce sin diferencias no autoriza por sí solo el pago ni actualiza automáticamente otro sistema. El siguiente paso depende de la configuración: cuentas por pagar necesita sus controles, e inventario necesita las cantidades recibidas y el destino correcto. Conserva siempre la relación con los documentos originales.",
         "Esta continuidad es importante porque evita una automatización aislada. Si el resultado vuelve a depender de una persona que copia el estado a otro sistema, el cuello de botella solo se movió unos metros."
       ],
       "bullets": [
@@ -81,7 +99,7 @@
   "faq": [
     {
       "question": "¿Se puede conciliar si una orden tiene varias recepciones?",
-      "answer": "Sí. El flujo puede considerar recepciones parciales y acumular cantidades antes de comparar con la factura, según las reglas de la empresa."
+      "answer": "Hay que relacionar y acumular las entregas sin contarlas dos veces. Esa regla y su disponibilidad en tu flujo se confirman al definir el alcance. El ejemplo interactivo de esta guía compara una sola recepción."
     },
     {
       "question": "¿Qué pasa si los productos tienen nombres distintos?",
@@ -99,6 +117,8 @@
     "description": "Conoce cómo Ruka cruza documentos, aplica tus reglas y separa los casos que realmente necesitan revisión."
   },
   "relatedLinks": [
+    { "label": "Prueba el ejemplo de factura, orden y recepción", "href": "/herramientas/conciliar-factura-orden-recepcion" },
+    { "label": "Antes de enviar compras a Toteat", "href": "/integraciones/toteat" },
     {
       "label": "Cuentas por pagar",
       "href": "/productos/cuentas-por-pagar"

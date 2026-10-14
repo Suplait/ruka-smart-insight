@@ -34,6 +34,8 @@ import One from './pages/One';
 import OneContact from './pages/OneContact';
 import BlogIndex from './pages/BlogIndex';
 import BlogArticle from './pages/BlogArticle';
+import IntegrationGuide from './pages/IntegrationGuide';
+import ReconciliationExample from './pages/ReconciliationExample';
 
 const queryClient = new QueryClient();
 
@@ -123,6 +125,8 @@ function App() {
             <Route path="/productos/stock" element={<Stock />} />
             <Route path="/precios" element={<Navigate to="/#precios" replace />} />
             <Route path="/integraciones" element={<Integraciones />} />
+            <Route path="/integraciones/:slug" element={<IntegrationGuide />} />
+            <Route path="/herramientas/conciliar-factura-orden-recepcion" element={<ReconciliationExample />} />
             <Route path="/register" element={<Register />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/terms" element={<TermsAndConditions />} />

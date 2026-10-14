@@ -116,6 +116,12 @@ const routes = [
   },
 ];
 
+const integrationGuides = JSON.parse(await readFile(path.join(projectRoot, "src/content/integrationGuides.json"), "utf8"));
+for (const guide of integrationGuides) {
+  routes.push({ path: `/integraciones/${guide.slug}`, title: guide.title, canonical: `${siteOrigin}/integraciones/${guide.slug}`, h1: guide.headline, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage"], lastmod: guide.reviewedAt });
+}
+routes.push({ path: "/herramientas/conciliar-factura-orden-recepcion", title: "Prueba cómo conciliar factura, orden y recepción | Ruka", canonical: `${siteOrigin}/herramientas/conciliar-factura-orden-recepcion`, h1: "¿Lo que te cobran es lo que pediste y recibiste?", schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage"], lastmod: "2026-10-14" });
+
 const blogPostsDirectory = path.join(projectRoot, "src", "content", "blog", "posts");
 const blogPostFiles = (await readdir(blogPostsDirectory)).filter((file) => file.endsWith(".json"));
 const blogPosts = await Promise.all(
@@ -129,7 +135,7 @@ routes.push({
   canonical: `${siteOrigin}/blog`,
   h1: "Menos tareas. Más operación.",
   schema: ["Organization", "WebSite", "CollectionPage", "ItemList", "BreadcrumbList"],
-  lastmod: blogPosts[0]?.dateModified,
+  lastmod: blogPosts.map((post) => post.dateModified).sort().at(-1),
 });
 
 for (const post of blogPosts) {
@@ -140,6 +146,7 @@ for (const post of blogPosts) {
     h1: post.title,
     schema: ["Organization", "WebSite", "WebPage", "BlogPosting", "FAQPage", "BreadcrumbList"],
     lastmod: post.dateModified,
+    articleImage: `${siteOrigin}${post.heroImage.src}`,
   });
 }
 
@@ -329,6 +336,10 @@ async function validateRoute(route, { noIndex = false } = {}) {
     const page = graph.find((value) => ["WebPage", "AboutPage", "CollectionPage"].includes(value?.["@type"]));
     assert(Boolean(page?.primaryImageOfPage), `${route.path}: la página no enlaza primaryImageOfPage en schema`);
     assert(Boolean(page?.breadcrumb), `${route.path}: la página no enlaza BreadcrumbList en schema`);
+    if (route.articleImage) {
+      assert(page?.primaryImageOfPage?.contentUrl === route.articleImage, `${route.path}: schema no apunta a su captura real`);
+      assert(html.includes(`src="${new URL(route.articleImage).pathname}"`), `${route.path}: la captura del schema no aparece en el artículo`);
+    }
   }
 
   if (route.schema?.includes("FAQPage")) {

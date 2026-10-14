@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { MarketingSeo } from "@/components/seo/MarketingSeo";
+import integrationGuides from "@/content/integrationGuides.json";
 
 type Family = "Documentos" | "Gestión" | "Ventas" | "Fuentes propias";
 type Integration = { name: string; family: Family; logo?: string; detail: string; Icon?: LucideIcon };
@@ -112,12 +113,13 @@ export default function Integraciones() {
                     <ul className="grid gap-x-8 gap-y-1 sm:grid-cols-2 xl:grid-cols-3">
                       {items.map((item) => {
                         const ItemIcon = item.Icon;
+                        const guide = integrationGuides.find((entry) => entry.name === item.name);
                         return (
                           <li key={item.name} className="flex min-h-20 items-center gap-4 border-b border-[#e8ebf2] py-4">
                             <span className="flex h-10 w-20 shrink-0 items-center justify-center">
                               {item.logo ? <img src={item.logo} alt={`Logo de ${item.name}`} className="max-h-8 max-w-[5rem] object-contain" loading="lazy" /> : ItemIcon ? <ItemIcon className="h-5 w-5 text-[#657087]" aria-hidden="true" /> : null}
                             </span>
-                            <span className="min-w-0"><span className="block text-sm font-semibold text-[#252838]">{item.name}</span><span className="mt-1 block text-xs leading-5 text-[#737c8e]">{item.detail}</span></span>
+                            <span className="min-w-0"><span className="block text-sm font-semibold text-[#252838]">{item.name}</span><span className="mt-1 block text-xs leading-5 text-[#737c8e]">{item.detail}</span>{guide && <Link to={`/integraciones/${guide.slug}`} className="mt-1 inline-flex min-h-10 items-center gap-1 text-xs font-semibold text-[#424ec0] underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-primary">Ver alcance y requisitos <span className="sr-only">de {item.name}</span><ArrowRight size={13} aria-hidden="true" /></Link>}</span>
                           </li>
                         );
                       })}

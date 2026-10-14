@@ -1,0 +1,113 @@
+[
+  {
+    "slug": "sii",
+    "name": "SII",
+    "logo": "/integrations/sii.jpg",
+    "title": "Integra las compras del SII con tu operación | Ruka",
+    "description": "Conoce cómo Ruka incorpora documentos de compra del SII, qué información necesita y qué controles quedan separados de la recepción física y el pago.",
+    "headline": "Del documento del SII al trabajo de todos los días.",
+    "lead": "La compra ya está informada. No debería obligarte a volver a ingresarla para poder trabajar con ella.",
+    "direction": "SII → Ruka",
+    "scope": "Consulta e incorporación de documentos de compra, con acceso autorizado.",
+    "reviewedAt": "2026-10-14",
+    "evidenceLevel": "implementation-reviewed",
+    "capabilityId": "sii-purchase-intake",
+    "input": "Documentos tributarios de compra y detalle disponible en XML.",
+    "output": "Información de la compra disponible en Ruka para revisar y continuar el proceso.",
+    "steps": [
+      { "title": "Definir empresa y acceso", "text": "Revisamos la empresa, el período y los permisos necesarios. No pedimos credenciales en una página pública." },
+      { "title": "Incorporar los documentos", "text": "Ruka recibe la información disponible de las compras. El detalle por producto depende de que exista un XML u otra fuente que permita leerlo." },
+      { "title": "Usar la compra en tu flujo", "text": "Revisa productos y unidades, registra la recepción y continúa hacia costos o cuentas por pagar según la configuración de tu operación." }
+    ],
+    "example": {
+      "title": "Un mismo proveedor, dos formas de nombrar la harina.",
+      "text": "En la factura dice «Harina 25 kg»; tu equipo la usa como «Harina panadera». Antes de actualizar costos o stock hay que relacionar el producto y su unidad. Recibir el XML es el comienzo, no todo el trabajo.",
+      "input": "Factura y detalle XML",
+      "action": "Lectura y revisión de productos",
+      "output": "Compra lista para continuar"
+    },
+    "requirements": ["Acceso autorizado a la empresa y sus documentos.", "Disponibilidad del detalle necesario: no todos los documentos llegan con XML.", "Productos, unidades y reglas definidos para el siguiente paso."],
+    "limits": ["Un documento tributario no demuestra que la mercadería llegó completa.", "Revisar una compra dentro de Ruka no equivale por sí solo a dar un acuse tributario.", "Enviar información a un ERP o POS requiere configurar ese destino por separado."],
+    "faq": [
+      { "question": "¿Y si no hay XML?", "answer": "Hay que revisar qué otra fuente está disponible, por ejemplo un PDF o una imagen. El dato faltante no se inventa y puede requerir revisión." },
+      { "question": "¿Esto reemplaza el trabajo de recepción?", "answer": "No. El SII informa el documento; tu operación confirma qué llegó. Son dos controles distintos." }
+    ],
+    "guide": { "href": "/blog/automatizar-registro-compras-sin-cambiar-erp", "label": "Cómo registrar compras sin cambiar tu ERP" },
+    "product": { "href": "/productos/registro-de-compras", "label": "Ver registro de compras" },
+    "sources": [{ "label": "Registro de compras en Ruka", "url": "https://www.ruka.ai/productos/registro-de-compras" }, { "label": "Documentación de documentos y reportes", "url": "https://api.rukafactura.cl/api_docs" }]
+  },
+  {
+    "slug": "toteat",
+    "name": "Toteat",
+    "logo": "/integrations/toteat.svg",
+    "title": "Compras de Ruka a Toteat: alcance y requisitos | Ruka",
+    "description": "Conoce el flujo de compras de Ruka hacia Toteat: productos, unidades, locales y controles necesarios antes de registrar información en el destino.",
+    "headline": "La compra revisada, en el local que corresponde.",
+    "lead": "El salto entre la factura del proveedor y Toteat no debería depender de volver a escribir cada producto.",
+    "direction": "Ruka → Toteat",
+    "scope": "Envío de líneas de compra a Toteat en operaciones con este flujo habilitado.",
+    "reviewedAt": "2026-10-14",
+    "evidenceLevel": "implementation-reviewed",
+    "capabilityId": "toteat-purchase-posting",
+    "input": "Compra revisada, productos relacionados y destino por local.",
+    "output": "Envío al destino configurado y resultado del intento en Ruka.",
+    "steps": [
+      { "title": "Relacionar productos y locales", "text": "Definimos qué código de Toteat corresponde a cada producto y a qué local se envía. La unidad de compra también tiene que coincidir." },
+      { "title": "Revisar antes de enviar", "text": "Si falta un destino o hay una unidad incompatible, el flujo requiere resolverlo. No se trata de copiar valores a ciegas." },
+      { "title": "Comprobar el resultado", "text": "Se registra el resultado del envío. Un intento fallido o parcial necesita seguimiento; haber enviado una solicitud no equivale a un registro exitoso." }
+    ],
+    "example": {
+      "title": "La misma factura puede tener más de un destino.",
+      "text": "Tu proveedor entrega insumos para dos locales. El trabajo es relacionar cada línea con su producto y su destino, no solo mover el total de la factura. Ese mapa debe estar definido antes del envío.",
+      "input": "Líneas de la compra",
+      "action": "Producto + unidad + local",
+      "output": "Envío a Toteat"
+    },
+    "requirements": ["Integración habilitada para la operación y accesos vigentes.", "Códigos de productos y unidades compatibles.", "Asignación de locales y reglas de recepción/revisión acordadas."],
+    "limits": ["No implica sincronización bidireccional de todos los módulos de Toteat.", "Una línea sin correspondencia o con unidad incompatible no debe tratarse como enviada correctamente.", "El alcance se confirma para tus locales antes de implementar; no es una conexión universal sin configuración."],
+    "faq": [
+      { "question": "¿Puedo enviar una factura sin relacionar los productos?", "answer": "El flujo necesita reconocer los productos y sus unidades. Si esa correspondencia falta, hay que resolverla antes de considerar el registro completo." },
+      { "question": "¿La recepción de mercadería sigue siendo necesaria?", "answer": "Sí. El registro en un sistema no sustituye comprobar lo que llegó. Acordamos qué revisión o recepción habilita el envío." }
+    ],
+    "guide": { "href": "/blog/conciliar-facturas-ordenes-compra-recepciones", "label": "Qué revisar entre factura y recepción" },
+    "product": { "href": "/productos/stock", "label": "Ver control de stock" },
+    "sources": [{ "label": "Integraciones de Ruka", "url": "https://www.ruka.ai/integraciones" }, { "label": "Registro de compras en Ruka", "url": "https://www.ruka.ai/productos/registro-de-compras" }]
+  },
+  {
+    "slug": "nubox",
+    "name": "Nubox",
+    "logo": "/integrations/nubox.svg",
+    "title": "Documentos de Nubox en Ruka: alcance y requisitos",
+    "description": "Cómo Ruka incorpora documentos de compra disponibles en Nubox. Conoce el alcance de lectura, los requisitos y qué revisar antes de continuar el proceso.",
+    "headline": "Tus documentos de Nubox, sin otra ronda de digitación.",
+    "lead": "Si el respaldo ya está en Nubox, el trabajo es llevar su información al proceso. No descargarlo para volver a escribirlo todo.",
+    "direction": "Nubox → Ruka",
+    "scope": "Incorporación de documentos de compra disponibles en Nubox, en operaciones configuradas.",
+    "reviewedAt": "2026-10-14",
+    "evidenceLevel": "implementation-reviewed",
+    "capabilityId": "nubox-document-intake",
+    "input": "Documentos PDF de compra accesibles en la cuenta configurada.",
+    "output": "Documento incorporado al flujo de lectura y revisión de compras de Ruka.",
+    "steps": [
+      { "title": "Confirmar el acceso", "text": "Revisamos la empresa y los documentos disponibles en la cuenta. El alcance depende de los accesos y del flujo configurado." },
+      { "title": "Incorporar el respaldo", "text": "Ruka identifica el documento e incorpora el PDF al proceso de lectura. Si el archivo no es válido, no se trata como una compra procesada." },
+      { "title": "Revisar lo leído", "text": "La información se usa en el registro de compras. Los datos faltantes o que necesitan confirmación se revisan antes de continuar." }
+    ],
+    "example": {
+      "title": "El PDF deja de ser el punto de partida de una planilla.",
+      "text": "Hoy alguien abre el respaldo, busca proveedor y productos y copia los datos. Con el flujo configurado, ese documento entra a la lectura de Ruka. El paso siguiente depende de la calidad del archivo y de las reglas de tu operación.",
+      "input": "PDF disponible en Nubox",
+      "action": "Incorporación y lectura",
+      "output": "Compra para revisar en Ruka"
+    },
+    "requirements": ["Acceso autorizado a los documentos de la empresa.", "PDF disponible y legible.", "Flujo de incorporación habilitado y revisión de la información obtenida."],
+    "limits": ["Esta ficha describe lectura hacia Ruka, no escritura de asientos en Nubox.", "No promete cobertura de todos los módulos ni de cualquier tipo de documento.", "La lectura de una imagen puede requerir confirmación; no reemplaza el respaldo original."],
+    "faq": [
+      { "question": "¿Ruka registra automáticamente la contabilidad en Nubox?", "answer": "Ese no es el alcance descrito aquí. Esta conexión incorpora documentos desde Nubox a Ruka; cualquier escritura en otro sistema se revisa por separado." },
+      { "question": "¿Un PDF leído cuenta como recepción de mercadería?", "answer": "No. Leer el documento y confirmar lo recibido son pasos distintos. La recepción debe quedar respaldada por la operación." }
+    ],
+    "guide": { "href": "/blog/automatizar-registro-compras-sin-cambiar-erp", "label": "Del documento al registro de compras" },
+    "product": { "href": "/productos/registro-de-compras", "label": "Ver registro de compras" },
+    "sources": [{ "label": "Integraciones de Ruka", "url": "https://www.ruka.ai/integraciones" }, { "label": "Registro de compras en Ruka", "url": "https://www.ruka.ai/productos/registro-de-compras" }]
+  }
+]

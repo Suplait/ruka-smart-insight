@@ -12,6 +12,7 @@ const {
   renderPrerenderedPage,
   blogSitemapEntries = [],
   blogLlmsEntries = [],
+  discoveryEntries = [],
 } = await import(`${ssrEntryPath}?build=${Date.now()}`);
 
 const removeDefaultSeo = (html) =>
@@ -63,7 +64,13 @@ sitemap = sitemap.replace(
   "</urlset>",
   `  <!-- BLOG:START -->\n${sitemapBlog}\n  <!-- BLOG:END -->\n</urlset>`,
 );
-await writeFile(sitemapPath, sitemap, "utf8");
+const discoveryXml = discoveryEntries.map((entry) => [
+  "  <url>",
+  `    <loc>https://www.ruka.ai${escapeXml(entry.path)}</loc>`,
+  `    <lastmod>${escapeXml(entry.lastmod)}</lastmod>`,
+  "  </url>",
+].join("\n")).join("\n");
+await writeFile(sitemapPath, sitemap.replace("</urlset>", `${discoveryXml}\n</urlset>`), "utf8");
 
 const llmsPath = path.join(projectRoot, "dist", "llms.txt");
 let llms = await readFile(llmsPath, "utf8");
@@ -78,7 +85,7 @@ llms = llms.replace(
   /<!-- BLOG:START -->[\s\S]*?<!-- BLOG:END -->/,
   `<!-- BLOG:START -->\n${llmsBlog}\n<!-- BLOG:END -->`,
 );
-await writeFile(llmsPath, llms, "utf8");
+await writeFile(llmsPath, `${llms}\n\n## Conexiones y ejemplos prácticos\n\n${discoveryEntries.map((entry) => `- [${entry.title}](https://www.ruka.ai${entry.path}): ${entry.description}`).join("\n")}\n`, "utf8");
 
 await rm(ssrDirectory, { recursive: true, force: true });
 console.log(`Generated route-specific server HTML for ${prerenderPaths.length} routes.`);

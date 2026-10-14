@@ -22,6 +22,10 @@ import OneContact from "@/pages/OneContact";
 import BlogIndex from "@/pages/BlogIndex";
 import BlogArticle from "@/pages/BlogArticle";
 import { blogPosts } from "@/content/blog/posts";
+import IntegrationGuide from "@/pages/IntegrationGuide";
+import ReconciliationExample from "@/pages/ReconciliationExample";
+import { reconciliationExamplePath } from "@/utils/reconciliationExample";
+import integrationGuides from "@/content/integrationGuides.json";
 
 const pages: Record<string, ComponentType> = {
   "/": LandingV2,
@@ -42,7 +46,17 @@ const pages: Record<string, ComponentType> = {
   "/one": One,
   "/one/contacto": OneContact,
   "/blog": BlogIndex,
+  [reconciliationExamplePath]: ReconciliationExample,
 };
+
+for (const guide of integrationGuides) {
+  pages[`/integraciones/${guide.slug}`] = () => <IntegrationGuide guide={guide} />;
+}
+
+export const discoveryEntries = [
+  ...integrationGuides.map((guide) => ({ path: `/integraciones/${guide.slug}`, title: `Ruka y ${guide.name}`, description: guide.description, lastmod: guide.reviewedAt })),
+  { path: reconciliationExamplePath, title: "Ejemplo interactivo de conciliación", description: "Compara una factura, orden y recepción con datos ficticios. Sin registro, archivos ni pagos.", lastmod: "2026-10-14" },
+];
 
 for (const post of blogPosts) {
   pages[`/blog/${post.slug}`] = () => <BlogArticle post={post} />;
@@ -50,7 +64,7 @@ for (const post of blogPosts) {
 
 export const prerenderPaths = Object.keys(pages);
 export const blogSitemapEntries = [
-  { path: "/blog", lastmod: blogPosts[0]?.dateModified ?? "2026-10-09" },
+  { path: "/blog", lastmod: [...blogPosts].map((post) => post.dateModified).sort().at(-1) ?? "2026-10-09" },
   ...blogPosts.map((post) => ({ path: `/blog/${post.slug}`, lastmod: post.dateModified })),
 ];
 export const blogLlmsEntries = blogPosts.map((post) => ({

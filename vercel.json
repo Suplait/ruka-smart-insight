@@ -92,6 +92,14 @@
     }
   ],
   "rewrites": [
+    { "source": "/integraciones/sii", "destination": "/integraciones/sii/index.html" },
+    { "source": "/integraciones/sii/", "destination": "/integraciones/sii/index.html" },
+    { "source": "/integraciones/toteat", "destination": "/integraciones/toteat/index.html" },
+    { "source": "/integraciones/toteat/", "destination": "/integraciones/toteat/index.html" },
+    { "source": "/integraciones/nubox", "destination": "/integraciones/nubox/index.html" },
+    { "source": "/integraciones/nubox/", "destination": "/integraciones/nubox/index.html" },
+    { "source": "/herramientas/conciliar-factura-orden-recepcion", "destination": "/herramientas/conciliar-factura-orden-recepcion/index.html" },
+    { "source": "/herramientas/conciliar-factura-orden-recepcion/", "destination": "/herramientas/conciliar-factura-orden-recepcion/index.html" },
     { "source": "/about", "destination": "/about/index.html" },
     { "source": "/about/", "destination": "/about/index.html" },
     { "source": "/register", "destination": "/register/index.html" },

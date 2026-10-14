@@ -7,15 +7,15 @@
   "metaTitle": "Nómina de pagos a proveedores para el banco | Ruka",
   "metaDescription": "Aprende cómo preparar una nómina de pagos a proveedores, validar los datos y generar un archivo masivo compatible con tu banco.",
   "datePublished": "2026-10-09",
-  "dateModified": "2026-10-09",
-  "readingTimeMinutes": 6,
+  "dateModified": "2026-10-14",
+  "readingTimeMinutes": 8,
   "targetQuery": "nomina pagos proveedores banco",
   "searchIntent": "informacional comercial",
   "audience": "equipos de tesorería, cuentas por pagar y finanzas",
   "heroImage": {
-    "src": "/assets/registro-compras/bloqueo-pago.png",
-    "alt": "Control de factura y recepción antes de preparar el pago a proveedores",
-    "position": "center center"
+    "src": "/blog/2026-10/nomina-bancaria-demo.jpg",
+    "alt": "Opciones de exportación de nómina bancaria y avisos de documentos excluidos en la demo de Ruka",
+    "caption": "Captura nueva de prueba.ruka.ai con datos de demostración. Preparar o descargar una nómina no ejecuta una transferencia. Los formatos disponibles se confirman con tu banco y operación."
   },
   "intro": [
     "Preparar pagos a proveedores suele ser el último tramo de una cadena manual. La factura ya fue recibida, registrada y revisada, pero alguien todavía debe reunir cuentas bancarias, montos, fechas y referencias en el formato exacto que espera el banco.",
@@ -28,6 +28,25 @@
     "El archivo final debe conservar trazabilidad con facturas y proveedores."
   ],
   "sections": [
+    {
+      "id": "ejemplo-de-un-lote",
+      "title": "Un lote de cuatro facturas, no cuatro transferencias a ciegas",
+      "paragraphs": [
+        "Imagina cuatro facturas por $120.000, $80.000, $50.000 y $30.000. La tercera tiene una diferencia de recepción pendiente y la cuarta no tiene datos bancarios completos. Aunque seleccionaste $280.000, el archivo de este ejemplo debe incluir solo $200.000, correspondientes a las dos facturas habilitadas.",
+        "Lo importante es comprobar la salida, no solo el total seleccionado en pantalla. Revisa qué documentos quedaron fuera y por qué. Si agrupas las dos facturas habilitadas de un mismo proveedor, serían una transferencia de $200.000; si exportas por documento, serían dos. Los montos aquí son ficticios y no describen la captura de arriba."
+      ],
+      "example": {
+        "title": "Ejemplo de control antes de exportar",
+        "rows": [
+          { "label": "Factura A", "detail": "$120.000 · Revisada y con datos completos", "result": "Incluida" },
+          { "label": "Factura B", "detail": "$80.000 · Revisada y con datos completos", "result": "Incluida" },
+          { "label": "Factura C", "detail": "$50.000 · Recepción por aclarar", "result": "Fuera del lote del ejemplo" },
+          { "label": "Factura D", "detail": "$30.000 · Cuenta bancaria incompleta", "result": "Fuera hasta resolver los datos" },
+          { "label": "Control", "detail": "Seleccionado: $280.000", "result": "Archivo esperado: $200.000" }
+        ],
+        "note": "Reglas ilustrativas, no una promesa de validación bancaria. Comprueba titular, cuenta, documentos, total y formato antes de autorizar en el banco."
+      }
+    },
     {
       "id": "por-que-se-vuelve-manual",
       "title": "Por qué el pago termina otra vez en una planilla",
@@ -59,7 +78,7 @@
       "paragraphs": [
         "Los bancos no usan una estructura universal. Cambian los nombres de columnas, largos de campo, tipos de cuenta, separadores y reglas para agrupar pagos. El motor debe generar la salida que corresponde al banco y no obligar al equipo a reordenarla manualmente después.",
         "Conviene validar el archivo con casos controlados antes de incorporarlo al ciclo regular. Se comparan montos, cantidad de pagos y datos de destino, y se confirma que el portal lo recibe sin ajustes. Una vez estable, el mismo flujo puede producir la nómina cada vez que se cierra un lote.",
-        "La exportación no ejecuta necesariamente la transferencia. La aprobación y carga final pueden mantenerse bajo el control del equipo, mientras Ruka prepara el archivo listo para subir. Esa separación permite reducir trabajo sin eliminar los controles financieros que la empresa necesita."
+        "En el flujo descrito aquí, Ruka prepara la nómina; no ejecuta las transferencias. Tu equipo carga el archivo en el banco, revisa el resultado y autoriza según sus permisos. Descargar una planilla o marcar algo como pagado dentro de un sistema no acredita que el banco haya transferido el dinero."
       ],
       "bullets": [
         "Formato correcto para cada banco.",
@@ -81,11 +100,11 @@
   "faq": [
     {
       "question": "¿Ruka realiza directamente las transferencias?",
-      "answer": "El alcance puede centrarse en generar la nómina lista para subir al banco. La carga y aprobación final pueden mantenerse bajo control del equipo."
+      "answer": "No en el flujo descrito en esta guía. Ruka prepara el archivo; la carga, revisión y autorización de la transferencia ocurren en el banco bajo control de tu equipo."
     },
     {
       "question": "¿Se puede generar un formato distinto para cada banco?",
-      "answer": "Sí, siempre que se definan y validen los campos requeridos por cada formato bancario."
+      "answer": "Los formatos disponibles deben confirmarse para tu banco y tipo de nómina. No existe un archivo universal: verifica la versión y los campos exigidos antes del primer uso."
     },
     {
       "question": "¿Qué ocurre si faltan datos del proveedor?",
@@ -99,6 +118,7 @@
     "description": "Conoce cómo Ruka valida compras y genera el archivo masivo de pago sin reconstruir la información en una planilla."
   },
   "relatedLinks": [
+    { "label": "Probar una conciliación antes del pago", "href": "/herramientas/conciliar-factura-orden-recepcion" },
     {
       "label": "Conciliación automática",
       "href": "/productos/conciliacion-automatica"
