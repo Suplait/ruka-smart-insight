@@ -5,15 +5,15 @@ export const ONE_CONTACT_PATH = "/one/contacto";
 export const oneContent = {
   hero: {
     eyebrow: ONE_NAME.toUpperCase(),
-    title: "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
-    lead: "Con Ruka One, partimos de esos procesos y trabajamos contigo para llevarlos a operar sobre tus sistemas, reglas y datos actuales.",
-    body: "Nos muestras cómo funciona hoy. Nosotros entendemos las reglas, excepciones y sistemas involucrados, y lo llevamos a producción sobre la base de Ruka.",
+    title: "Tu empresa ya tiene los sistemas. Nosotros nos hacemos cargo del trabajo.",
+    lead: "Ejecutamos procesos completos de tu back office con agentes de IA, integraciones y operación continua. Tu equipo deja de hacer la pega manual y nosotros respondemos por el resultado.",
+    body: "No te vendemos otra herramienta para que tu equipo trabaje más rápido. Nos hacemos cargo de ejecutar, verificar e investigar lo que antes tenía que resolver una persona.",
     primaryAction: "Conversemos",
-    secondaryAction: "Ver cómo funciona",
+    secondaryAction: "Qué trabajo asumimos",
     microcopy: "30 min · Sin compromiso",
   },
   proof: {
-    title: "Ruka One usa la misma base tecnológica que hoy procesa millones de registros operativos para cientos de empresas.",
+    title: "La tecnología detrás de Ruka One se apoya en la experiencia de Ruka procesando millones de registros operativos para cientos de empresas.",
   },
   startingPoint: {
     eyebrow: "DOS FORMAS DE PARTIR",
@@ -94,7 +94,7 @@ export const oneContent = {
     },
   },
   method: {
-    title: "Así trabajamos con Ruka One.",
+    title: "Del proceso actual a una operación de la que nos hacemos responsables.",
     steps: [
       {
         number: "01",
@@ -106,16 +106,16 @@ export const oneContent = {
       {
         number: "02",
         verb: "CONSTRUIR",
-        title: "Lo llevamos a la base de Ruka.",
+        title: "Conectamos y ponemos a operar.",
         copy: "Conectamos sistemas, reglas y acciones, y lo probamos con casos reales antes de ponerlo a operar.",
         output: "Flujo en producción",
       },
       {
         number: "03",
         verb: "OPERAR Y MEJORAR",
-        title: "Lo dejamos corriendo y aprendemos de las excepciones.",
-        copy: "Vemos qué partes avanzan solas, dónde todavía hace falta una decisión humana y qué podemos seguir automatizando.",
-        output: "Cada vez menos trabajo manual",
+        title: "Lo operamos, verificamos y mejoramos.",
+        copy: "Monitoreamos el resultado, investigamos las excepciones y escalamos las decisiones que requieren al cliente. Mejoramos la cobertura con evidencia.",
+        output: "Resultado y seguimiento acordados",
       },
     ],
     technology: {
@@ -163,9 +163,9 @@ export const oneContent = {
     ],
   },
   finalCta: {
-    title: "¿Hay una parte de tu operación que depende demasiado de una persona?",
+    title: "¿Qué proceso te gustaría dejar de ejecutar manualmente?",
     statement: "Revisémosla.",
-    copy: "En 30 minutos entendemos cómo funciona hoy y vemos contigo cómo abordarlo con Ruka One.",
+    copy: "Conversemos 30 minutos sobre el trabajo que hoy hace tu equipo, qué resultado necesitas y qué parte podemos asumir nosotros.",
     action: "Conversemos",
     microcopy: "30 min · Sin compromiso",
   },
@@ -179,9 +179,9 @@ export const oneContent = {
     successCopy: "Partimos por tu proceso tal como funciona hoy.",
   },
   seo: {
-    title: "Automatización de procesos empresariales | Ruka One",
-    description: "Con Ruka One llevamos procesos propios de tu empresa a operar sobre tus sistemas, reglas y datos actuales, sin reemplazar el software que ya usas.",
-    serviceDescription: "Ruka One es la forma de trabajar con Ruka sobre procesos específicos de una empresa, llevándolos a operar sobre sus sistemas, reglas y datos actuales.",
+    title: "Operación de back office con agentes IA | Ruka One",
+    description: "Ruka One asume la ejecución de procesos de back office con agentes IA, integraciones y seguimiento continuo. Tu equipo decide; nosotros hacemos el trabajo.",
+    serviceDescription: "Ruka One asume la ejecución de procesos de back office mediante agentes IA, integraciones, controles y operación continua, con responsabilidades y resultados acordados.",
     canonical: "https://www.ruka.ai/one",
     image: "https://www.ruka.ai/ruka-one-og.png",
   },
