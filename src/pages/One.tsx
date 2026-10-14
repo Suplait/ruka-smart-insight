@@ -2,15 +2,13 @@ import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { BeforeAfter } from "@/components/one/BeforeAfter";
-import { FamiliarPatterns } from "@/components/one/FamiliarPatterns";
+import { OneOwnershipSections } from "@/components/one/OneOwnershipSections";
 import { OneFaq } from "@/components/one/OneFaq";
 import { OneFinalCta } from "@/components/one/OneFinalCta";
 import { OneHero } from "@/components/one/OneHero";
 import { OneMethod } from "@/components/one/OneMethod";
 import { OneSeo } from "@/components/one/OneSeo";
 import { OneSocialProof } from "@/components/one/OneSocialProof";
-import { OneStartingPoint } from "@/components/one/OneStartingPoint";
 import { OneTestimonial } from "@/components/one/OneTestimonial";
 import { captureOneAttribution } from "@/utils/oneAttribution";
 import { isOneDebugEnabled } from "@/utils/oneDebug";
@@ -38,9 +36,7 @@ export default function One() {
       <main>
         <OneHero />
         <OneSocialProof />
-        <OneStartingPoint />
-        <FamiliarPatterns />
-        <BeforeAfter />
+        <OneOwnershipSections />
         <OneMethod />
         <OneTestimonial />
         <OneFaq />
