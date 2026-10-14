@@ -63,6 +63,7 @@ export function BlogIndexSeo() {
 
 export function BlogPostSeo({ post }: { post: BlogPost }) {
   const canonical = `${origin}/blog/${post.slug}`;
+  const articleImage = `${origin}${post.heroImage.src}`;
   const graph = [
     createOrganizationSchema(),
     createWebsiteSchema(),
@@ -79,10 +80,8 @@ export function BlogPostSeo({ post }: { post: BlogPost }) {
       primaryImageOfPage: {
         "@type": "ImageObject",
         "@id": `${canonical}#primaryimage`,
-        url: defaultImage,
-        contentUrl: defaultImage,
-        width: 1200,
-        height: 630,
+        url: articleImage,
+        contentUrl: articleImage,
         caption: post.heroImage.alt,
       },
       mainEntity: { "@id": `${canonical}#article` },
@@ -198,6 +197,9 @@ function countPostWords(post: BlogPost) {
       ...section.paragraphs,
       ...(section.bullets ?? []),
       section.callout ?? "",
+      section.example?.title ?? "",
+      ...(section.example?.rows ?? []).flatMap((row) => [row.label, row.detail, row.result]),
+      section.example?.note ?? "",
     ]),
     ...post.faq.flatMap((item) => [item.question, item.answer]),
   ].join(" ");

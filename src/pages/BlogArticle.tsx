@@ -37,11 +37,12 @@ export default function BlogArticle({ post: prerenderedPost }: BlogArticleProps)
                 <span className="h-px w-6 bg-primary/30" aria-hidden="true" />
                 <span className="text-[#707789]">Guía práctica</span>
               </div>
-              <h1 className="mt-5 text-[clamp(2.75rem,7vw,5.7rem)] font-semibold leading-[0.94] tracking-[-0.062em]">{post.title}</h1>
+              <h1 className="mt-5 text-balance text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.04] tracking-[-0.04em]">{post.title}</h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-[#5e6678] sm:text-xl sm:leading-9">{post.excerpt}</p>
               <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-[#dfe3ed] pt-6 text-sm text-[#6a7182]">
                 <span className="font-semibold text-[#303241]">{post.author.name}</span>
                 <time dateTime={post.datePublished}>{formatDate(post.datePublished)}</time>
+                {post.dateModified !== post.datePublished && <span>Actualizada el <time dateTime={post.dateModified}>{formatDate(post.dateModified)}</time></span>}
                 <span className="inline-flex items-center gap-1.5"><Clock3 className="h-4 w-4" aria-hidden="true" />{post.readingTimeMinutes} min de lectura</span>
               </div>
             </div>
@@ -50,21 +51,21 @@ export default function BlogArticle({ post: prerenderedPost }: BlogArticleProps)
 
         <div className="px-5 pt-8 sm:px-8 sm:pt-12">
           <figure className="mx-auto max-w-7xl">
-            <div className="relative overflow-hidden border border-[#dfe3ed] bg-[#e9ecf4] shadow-[0_22px_60px_rgba(27,32,49,0.1)]">
+            <div className="relative overflow-hidden rounded-xl border border-[#dfe3ed] bg-white">
               <div className="flex h-10 items-center gap-1.5 border-b border-[#dfe3ed] bg-white px-4" aria-hidden="true">
                 <span className="h-2.5 w-2.5 rounded-full bg-[#d9dde7]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#d9dde7]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#d9dde7]" />
-                <span className="ml-auto text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a91a1]">Ruka en operación</span>
+                <span className="ml-auto text-xs font-medium text-[#505b70]">Demo de Ruka · Datos de ejemplo</span>
               </div>
-              <img
+              <a href={post.heroImage.src} target="_blank" rel="noopener noreferrer" aria-label="Ampliar captura de la demo en una pestaña nueva"><img
                 src={post.heroImage.src}
                 alt={post.heroImage.alt}
-                className="aspect-[16/9] w-full object-cover"
+                className="max-h-[650px] w-full object-contain"
                 style={{ objectPosition: post.heroImage.position }}
-              />
+              /></a>
             </div>
-            <figcaption className="mt-3 text-xs leading-5 text-[#7a8191]">{post.heroImage.alt}</figcaption>
+            <figcaption className="mt-3 text-sm leading-6 text-[#505b70]">{post.heroImage.caption ?? post.heroImage.alt} <a href={post.heroImage.src} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">Ampliar captura</a></figcaption>
           </figure>
         </div>
 
@@ -97,7 +98,7 @@ export default function BlogArticle({ post: prerenderedPost }: BlogArticleProps)
                 {post.intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
               </div>
 
-              <section aria-labelledby="key-takeaways" className="my-12 border-l-4 border-primary bg-[#f0f3ff] px-6 py-7 sm:px-8">
+              <section aria-labelledby="key-takeaways" className="my-12 rounded-xl bg-[#f0f3ff] px-6 py-7 sm:px-8">
                 <h2 id="key-takeaways" className="text-lg font-semibold tracking-[-0.02em] text-[#171827]">Lo esencial</h2>
                 <ul className="mt-5 space-y-3">
                   {post.keyTakeaways.map((item) => (
@@ -109,13 +110,14 @@ export default function BlogArticle({ post: prerenderedPost }: BlogArticleProps)
                 </ul>
               </section>
 
-              {post.sections.map((section, index) => (
+              {post.sections.map((section) => (
                 <section key={section.id} id={section.id} className="scroll-mt-28 border-t border-[#e2e6ee] py-12 first:border-t-0 first:pt-0">
-                  <p className="text-xs font-semibold tabular-nums uppercase tracking-[0.2em] text-primary">0{index + 1}</p>
-                  <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-[-0.042em] sm:text-4xl">{section.title}</h2>
+                  <h2 className="text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] sm:text-4xl">{section.title}</h2>
                   <div className="mt-6 space-y-5 text-[1.05rem] leading-8 text-[#4d5567] sm:text-lg sm:leading-9">
                     {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                   </div>
+                  {section.example && <div className="my-8 overflow-hidden rounded-xl border border-[#d5dcec]"><h3 className="bg-[#f7f8fc] px-5 py-4 text-base font-semibold">{section.example.title}</h3><dl className="divide-y divide-[#e2e6ee]">{section.example.rows.map((row) => <div key={row.label} className="grid gap-2 px-5 py-4 sm:grid-cols-[0.65fr_1fr_1fr] sm:gap-4"><dt className="text-sm font-semibold">{row.label}</dt><dd className="text-sm leading-6 text-[#505b70]">{row.detail}</dd><dd className="text-sm font-medium leading-6 text-[#424ec0]">{row.result}</dd></div>)}</dl><p className="border-t border-[#e2e6ee] bg-[#f7f8fc] px-5 py-4 text-xs leading-6 text-[#505b70]">{section.example.note}</p></div>}
+                  {section.action && <Link to={section.action.href} className="my-5 inline-flex min-h-12 items-center gap-3 rounded-full bg-primary px-5 text-sm font-semibold text-white focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4">{section.action.label}<ArrowRight size={16} /></Link>}
                   {section.bullets?.length ? (
                     <ul className="mt-7 grid gap-3 border-y border-[#e2e6ee] py-6 sm:grid-cols-2">
                       {section.bullets.map((bullet) => (

@@ -26,7 +26,12 @@ const textFields = (post) => [
     ...(section.paragraphs ?? []),
     ...(section.bullets ?? []),
     section.callout ?? "",
+    section.example?.title,
+    ...(section.example?.rows ?? []).flatMap((row) => [row.label, row.detail, row.result]),
+    section.example?.note,
+    section.action?.label,
   ]),
+  post.heroImage?.caption,
   ...(post.faq ?? []).flatMap((item) => [item.question, item.answer]),
   post.relatedProduct?.title,
   post.relatedProduct?.description,
@@ -77,6 +82,16 @@ for (const file of files) {
     assert(!sectionIds.has(section.id), `${label}: id de sección duplicado (${section.id})`);
     sectionIds.add(section.id);
     assert((section.paragraphs?.length ?? 0) >= 2, `${label}: la sección ${section.id} necesita al menos dos párrafos`);
+    if (section.example) {
+      assert(Boolean(section.example.title?.trim()) && Boolean(section.example.note?.trim()), `${label}: ejemplo sin título o aclaración`);
+      assert(Array.isArray(section.example.rows) && section.example.rows.length > 0, `${label}: ejemplo sin filas`);
+      for (const row of section.example.rows ?? []) {
+        assert([row.label, row.detail, row.result].every((value) => typeof value === "string" && value.trim()), `${label}: fila de ejemplo incompleta`);
+      }
+    }
+    if (section.action) {
+      assert(Boolean(section.action.label?.trim()) && /^\/(?!\/)[a-z0-9/-]+(?:#[a-z0-9-]+)?$/.test(section.action.href ?? ""), `${label}: acción interna inválida`);
+    }
   }
 
   for (const source of post.sources ?? []) {
