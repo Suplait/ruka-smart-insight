@@ -4,8 +4,8 @@ import { fileURLToPath } from "node:url";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const siteOrigin = "https://www.ruka.ai";
-const oneDescription = "Con Ruka One llevamos procesos propios de tu empresa a operar sobre tus sistemas, reglas y datos actuales, sin reemplazar el software que ya usas.";
-const oneServiceDescription = "Ruka One es la forma de trabajar con Ruka sobre procesos específicos de una empresa, llevándolos a operar sobre sus sistemas, reglas y datos actuales.";
+const oneDescription = "Ruka One asume la ejecución de procesos de back office con agentes IA, integraciones y seguimiento continuo. Tu equipo decide; nosotros hacemos el trabajo.";
+const oneServiceDescription = "Ruka One asume la ejecución de procesos de back office mediante agentes IA, integraciones, controles y operación continua, con responsabilidades y resultados acordados.";
 
 const routes = [
   {
@@ -108,9 +108,9 @@ const routes = [
   },
   {
     path: "/one",
-    title: "Automatización de procesos empresariales | Ruka One",
+    title: "Operación de back office con agentes IA | Ruka One",
     canonical: `${siteOrigin}/one`,
-    h1: "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
+    h1: "Tu empresa ya tiene los sistemas. Nosotros nos hacemos cargo del trabajo.",
     schema: ["Organization", "WebSite", "Service", "WebPage", "BreadcrumbList", "FAQPage"],
     ogImage: `${siteOrigin}/ruka-one-og.png`,
   },
@@ -447,15 +447,14 @@ const oneVisibleText = textContent(oneHtml);
 assert(!oneHtml.includes("Ruka Works"), "/one: todavía contiene la marca pública Ruka Works");
 assert(!oneHtml.includes(`${siteOrigin}/works`), "/one: todavía referencia la URL legacy /works");
 assert(/<html\b[^>]*lang="es-CL"/i.test(oneHtml), "/one: html lang debe ser es-CL");
-assert(getTagAttribute(oneHtml, "property", "og:title", "content") === "Automatización de procesos empresariales | Ruka One", "/one: og:title inesperado");
+assert(getTagAttribute(oneHtml, "property", "og:title", "content") === "Operación de back office con agentes IA | Ruka One", "/one: og:title inesperado");
 assert(getTagAttribute(oneHtml, "property", "og:description", "content") === oneDescription, "/one: og:description inesperada");
 assert(getTagAttribute(oneHtml, "property", "og:locale", "content") === "es_CL", "/one: og:locale debe ser es_CL");
 assert(getTagAttribute(oneHtml, "property", "og:site_name", "content") === "Ruka.ai", "/one: og:site_name debe ser Ruka.ai");
 assert(getTagAttribute(oneHtml, "name", "googlebot", "content")?.includes("max-image-preview:large"), "/one: falta directiva Googlebot de preview grande");
 for (const requiredText of [
-  "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
-  "Ruka parte de procesos que ya estandarizamos. Ruka One parte del tuyo.",
-  "Ruka One usa la misma base tecnológica que hoy procesa millones de registros operativos para cientos de empresas.",
+  "Tu empresa ya tiene los sistemas. Nosotros nos hacemos cargo del trabajo.",
+  "La tecnología detrás de Ruka One se apoya en la experiencia de Ruka procesando millones de registros operativos para cientos de empresas.",
   "¿Qué es Ruka One?",
   "¿Cuál es la diferencia entre Ruka y Ruka One?",
   "¿Qué tipo de procesos trabajamos con Ruka One?",
@@ -479,7 +478,7 @@ assert(
 const oneSchemaValues = parseSchema(oneHtml, "/one").values.flatMap((schema) => schema["@graph"] ?? [schema]);
 const oneService = oneSchemaValues.find((schema) => schema?.["@type"] === "Service");
 assert(
-  oneService?.serviceType === "Automatización de procesos empresariales",
+  oneService?.serviceType === "Operación de procesos de back office",
   "/one: serviceType no representa automatización de procesos empresariales",
 );
 assert(oneService?.name === "Ruka One", "/one: Service schema no usa el nombre Ruka One");
