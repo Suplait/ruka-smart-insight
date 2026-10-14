@@ -36,7 +36,7 @@ export function OneHero() {
                 {oneContent.hero.primaryAction} <ArrowRight className="h-4 w-4" />
               </Link>
               <a
-                href="#como-funciona"
+                href="#que-asumimos"
                 className="inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[#cfd4df] bg-white px-6 text-sm font-semibold text-[#2b2d3b] transition-[border-color,background-color,transform] duration-150 hover:border-[#aeb5c3] hover:bg-[#f8f9fb] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5369eb] focus-visible:ring-offset-4"
               >
                 {oneContent.hero.secondaryAction} <ArrowDown className="h-4 w-4" />
