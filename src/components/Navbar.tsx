@@ -20,12 +20,6 @@ const productLinks = [
   { label: "Cuentas por pagar", href: "/productos/cuentas-por-pagar" },
   { label: "Costos y margen", href: "/productos/panel-control" },
   { label: "Stock e inventario", href: "/productos/stock" },
-  {
-    label: "Ruka One",
-    href: "/one",
-    description: "Para un proceso propio de tu empresa",
-    featured: true,
-  },
 ] as const;
 
 const industryLinks = [
@@ -84,14 +78,8 @@ export default function Navbar({
           <NavigationMenu viewport={false} value={desktopMenu} onValueChange={setDesktopMenu} className="hidden xl:flex" delayDuration={80} skipDelayDuration={220}>
             <NavigationMenuList className="gap-1">
               <NavDropdown value="product" label="Producto" links={productLinks} onLinkClick={handleLinkClick} onToggle={setDesktopMenu} />
-              <NavigationMenuItem><NavigationMenuLink asChild><Link to="/integraciones" className={desktopLinkClass}>Integraciones</Link></NavigationMenuLink></NavigationMenuItem>
               <NavigationMenuItem><NavigationMenuLink asChild><Link to="/#precios" onClick={(event) => handleLinkClick(event, "/#precios")} className={desktopLinkClass}>Precios</Link></NavigationMenuLink></NavigationMenuItem>
               <NavDropdown value="industries" label="Industrias" links={industryLinks} onLinkClick={handleLinkClick} onToggle={setDesktopMenu} />
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link to="/one" className={desktopLinkClass}>Ruka One</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link to="/blog" className={desktopLinkClass}>Blog</Link>
@@ -141,7 +129,7 @@ export default function Navbar({
               <SheetContent side="right" className="w-[340px] max-w-[92vw] border-l-[#dfe3ec] bg-white px-5 sm:w-[350px]">
                 <SheetTitle className="sr-only">Navegación principal</SheetTitle>
                 <SheetDescription className="sr-only">
-                  Accede al producto, industrias, Ruka One y la información de Ruka.
+                  Accede al producto, industrias y la información de Ruka.
                 </SheetDescription>
                 <div className="flex h-full flex-col pt-7">
                   <Accordion type="single" collapsible className="w-full">
@@ -150,9 +138,7 @@ export default function Navbar({
                   </Accordion>
 
                   <div className="border-b border-[#e1e5ed] py-2">
-                    <Link to="/integraciones" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Integraciones</Link>
                     <Link to="/#precios" onClick={(event) => handleLinkClick(event, "/#precios")} className={mobileDirectLinkClass}>Precios</Link>
-                    <Link to="/one" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Ruka One</Link>
                     <Link to="/blog" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Blog</Link>
                     <Link to="/about" onClick={() => setIsOpen(false)} className={mobileDirectLinkClass}>Nosotros</Link>
                   </div>
