@@ -21,7 +21,7 @@ function ProductImage({ src, alt, caption, eager = false, detail = false }: { sr
       <Dialog.Root>
         <Dialog.Trigger asChild>
           <button type="button" className={`group relative block w-full overflow-hidden rounded-xl bg-white text-left ${focus}`} aria-label={`Ampliar imagen: ${alt}`}>
-            <img src={src} alt={alt} width={detail ? 840 : 1200} height={detail ? 315 : 900} loading={eager ? "eager" : "lazy"} fetchPriority={eager ? "high" : undefined} className={`${detail ? "aspect-[8/3]" : "aspect-[4/3]"} w-full object-contain`} />
+            <img src={src} alt={alt} width={detail ? 840 : 1200} height={detail ? 315 : 900} loading={eager ? "eager" : "lazy"} {...(eager ? { fetchpriority: "high" } : {})} className={`${detail ? "aspect-[8/3]" : "aspect-[4/3]"} w-full object-contain`} />
             <span className="flex min-h-11 items-center justify-center gap-2 border-t border-[#e8ebf2] px-3 text-xs font-semibold text-[#424ec0] motion-safe:transition-colors group-hover:bg-[#eef0ff]"><Maximize2 size={14} aria-hidden="true" />Ampliar captura</span>
           </button>
         </Dialog.Trigger>
