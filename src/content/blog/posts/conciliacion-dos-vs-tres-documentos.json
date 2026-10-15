@@ -1,0 +1,144 @@
+{
+  "slug": "conciliacion-dos-vs-tres-documentos",
+  "category": "Comparativas",
+  "title": "Conciliar dos o tres documentos: cuándo necesitas la recepción",
+  "excerpt": "Factura y orden pueden coincidir aunque falte mercadería. Qué añade el tercer documento y cómo tratar compras que no tienen recepción física.",
+  "metaTitle": "Conciliación de 2 vs. 3 documentos: diferencias | Ruka",
+  "metaDescription": "Compara factura contra orden de compra y conciliación con recepción. Ejemplos de entregas parciales, servicios y controles antes de preparar un pago.",
+  "targetQuery": "conciliacion dos documentos vs tres documentos",
+  "searchIntent": "comparación de controles de cuentas por pagar",
+  "intro": [
+    "Comparar la factura con la orden de compra permite revisar si el proveedor cobra lo acordado. Añadir la recepción permite comprobar, además, si lo cobrado tiene respaldo en lo que llegó. Son preguntas distintas: una no reemplaza a la otra.",
+    "El tercer documento no siempre es una guía de mercadería. Para un servicio puede ser una conformidad del responsable o un hito aprobado. La decisión útil es qué evidencia necesita esa compra antes de avanzar, no imponer el mismo control a todos los proveedores."
+  ],
+  "keyTakeaways": [
+    "Dos documentos contrastan lo pedido con lo facturado.",
+    "El tercero añade evidencia de entrega o conformidad.",
+    "Una coincidencia documental no autoriza por sí sola un pago."
+  ],
+  "sections": [
+    {
+      "id": "ejemplo-faltante",
+      "title": "El caso que dos documentos no detectan",
+      "paragraphs": [
+        "Imagina una orden por 10 cajas a $20.000 y una factura por las mismas 10 cajas al mismo precio. El cruce de orden y factura coincide: $200.000 netos. Pero bodega registró solo 8 cajas. Sin consultar esa recepción, no puedes detectar que dos cajas facturadas siguen sin respaldo de entrega.",
+        "Al añadir la recepción aparece una diferencia de $40.000 netos asociada a cantidad. No necesariamente corresponde rechazar toda la factura: puede haber otra entrega pendiente, un error de conteo o un cobro que deba corregirse. La acción depende de la evidencia y del acuerdo con el proveedor. El sistema debería explicar la diferencia, no decidir una política comercial que nadie definió."
+      ],
+      "example": {
+        "title": "Mismos documentos, distinto alcance del control",
+        "rows": [
+          {
+            "label": "Orden + factura",
+            "detail": "10 cajas pedidas · 10 facturadas",
+            "result": "Cantidad y precio coinciden"
+          },
+          {
+            "label": "+ recepción",
+            "detail": "8 cajas recibidas",
+            "result": "2 cajas por aclarar"
+          }
+        ],
+        "note": "Ejemplo ficticio de montos netos. No contempla impuestos, descuentos ni autorización de pagos."
+      },
+      "action": {
+        "label": "Probar un cruce con datos ficticios",
+        "href": "/herramientas/conciliar-factura-orden-recepcion"
+      }
+    },
+    {
+      "id": "elegir-control",
+      "title": "Qué control tiene sentido para cada compra",
+      "paragraphs": [
+        "En mercadería que pasa por bodega suele existir un registro de cantidades. En un servicio mensual, contar unidades recibidas puede no tener sentido; necesitas confirmar el período, el contrato y la prestación. En una compra urgente sin orden previa, no conviene fabricar una orden retrospectiva solo para que el cruce quede completo: define una vía de aprobación identificable.",
+        "Revisa el riesgo y las fuentes disponibles. Si una factura de servicio tiene una conformidad válida, ese respaldo puede cumplir el papel del tercer documento. Si no existe ni recepción ni aceptación, una coincidencia de importes no demuestra cumplimiento. La ausencia debe quedar visible para quien decide, en vez de traducirse automáticamente en «todo correcto»."
+      ],
+      "bullets": [
+        "Mercadería: cantidades recibidas y unidades compatibles.",
+        "Servicios: conformidad o hito aceptado por el responsable.",
+        "Sin orden previa: regla y autorización específicas.",
+        "Compra recurrente: período y referencia del acuerdo."
+      ]
+    },
+    {
+      "id": "parciales",
+      "title": "Entregas parciales y nombres distintos",
+      "paragraphs": [
+        "La comparación debe usar unidades equivalentes. Una orden por cajas y una recepción por unidades pueden coincidir después de convertirlas, pero solo si conoces cuántas unidades tiene cada caja. Lo mismo ocurre cuando el proveedor y la empresa usan códigos diferentes. Una relación confirmada entre productos es más útil que comparar textos casi iguales.",
+        "Con entregas parciales, hay que acumular respaldos sin contar una recepción dos veces. También debes distinguir lo ya conciliado de lo pendiente. La necesidad de ese control no prueba que cualquier herramienta lo soporte: exige una prueba con tus variantes antes de incorporarlo al alcance. El ejemplo público de Ruka compara una recepción y no demuestra cobertura de todas las combinaciones de documentos."
+      ],
+      "bullets": [
+        "Define qué documento respalda cada cantidad.",
+        "Conserva el vínculo con la compra original.",
+        "No conviertas un dato ausente en cero ni en coincidencia.",
+        "Asigna a alguien la resolución de diferencias."
+      ]
+    },
+    {
+      "id": "antes-pagar",
+      "title": "Lo que sigue después de conciliar",
+      "paragraphs": [
+        "Incluso si todo coincide, quedan controles que no pertenecen a ese cruce: documento duplicado, impuestos, vencimiento, descuentos, datos bancarios y autorización. La conciliación aporta una condición para avanzar, no una orden de transferencia. Separar esas responsabilidades evita confundir un semáforo verde con un pago aprobado.",
+        "Ruka plantea conciliaciones según las fuentes y reglas acordadas para cada operación. Para evaluar el flujo, parte por una compra habitual y otra difícil, documenta el resultado esperado y comprueba cómo se explica la diferencia. Después conecta esa revisión con cuentas por pagar, donde se prepara la nómina bancaria y el equipo conserva la carga y autorización en el banco."
+      ],
+      "action": {
+        "label": "Cómo se prepara una nómina bancaria",
+        "href": "/blog/nomina-pagos-proveedores-banco"
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "¿Siempre conviene usar tres documentos?",
+      "answer": "Conviene usar evidencia suficiente para el riesgo de la compra. En un servicio, el tercer respaldo puede ser una conformidad; no es necesario inventar una recepción física."
+    },
+    {
+      "question": "¿Dos documentos que coinciden permiten pagar?",
+      "answer": "No por sí solos. El cruce no reemplaza la política de aprobación, la revisión de duplicados ni los controles bancarios."
+    }
+  ],
+  "relatedProduct": {
+    "label": "Ver conciliación automática",
+    "href": "/productos/conciliacion-automatica",
+    "title": "Diferencias que se pueden explicar",
+    "description": "Revisa con Ruka qué documentos y reglas requiere el cruce de tu operación."
+  },
+  "relatedLinks": [
+    {
+      "label": "Guía del proceso completo",
+      "href": "/blog/conciliar-facturas-ordenes-compra-recepciones"
+    },
+    {
+      "label": "Preparar pagos a proveedores",
+      "href": "/blog/nomina-pagos-proveedores-banco"
+    },
+    {
+      "label": "Compras hacia Toteat",
+      "href": "/integraciones/toteat"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Conciliaciones: alcance de Ruka",
+      "url": "https://www.ruka.ai/productos/conciliacion-automatica"
+    },
+    {
+      "title": "Cuentas por pagar y preparación bancaria",
+      "url": "https://www.ruka.ai/productos/cuentas-por-pagar"
+    }
+  ],
+  "status": "published",
+  "datePublished": "2026-10-14",
+  "dateModified": "2026-10-14",
+  "readingTimeMinutes": 5,
+  "audience": "equipos de operaciones, compras y finanzas en Chile",
+  "author": {
+    "name": "Equipo Ruka",
+    "url": "https://www.ruka.ai/about"
+  },
+  "heroImage": {
+    "kind": "diagram",
+    "src": "/blog/2026-10/conciliacion-dos-vs-tres-documentos.svg",
+    "alt": "Mismos documentos, distinto alcance del control",
+    "caption": "Diagrama explicativo propio de Ruka. Esquema conceptual, no una captura de la plataforma ni un resultado de cliente."
+  }
+}

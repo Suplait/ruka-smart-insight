@@ -1,0 +1,145 @@
+{
+  "slug": "registro-compras-excel-vs-automatizacion",
+  "category": "Comparativas",
+  "title": "Registro de compras en Excel o automatizado: cuándo cambiar",
+  "excerpt": "Una planilla puede ser suficiente. La señal para cambiar es el trabajo que exige mantenerla correcta y llevar sus datos al siguiente sistema.",
+  "metaTitle": "Registro de compras en Excel vs. automatización | Ruka",
+  "metaDescription": "Cuándo una planilla de compras basta y cuándo automatizar: compara captura, duplicados, unidades, revisión y registro en otros sistemas sin promesas de ahorro.",
+  "targetQuery": "registro compras excel vs automatizacion",
+  "searchIntent": "evaluación de alternativas de registro",
+  "intro": [
+    "Excel permite empezar rápido: reúnes documentos, defines columnas y revisas lo que entra. Para un volumen acotado y una persona responsable puede ser una buena decisión. Una planilla no es un problema solo por ser una planilla.",
+    "La dificultad aparece cuando mantenerla al día depende de descargar datos de varios lugares, corregir nombres y copiar la misma compra a otro sistema. Antes de reemplazarla, identifica qué trabajo hace el archivo y qué trabajo está haciendo la persona a su alrededor."
+  ],
+  "keyTakeaways": [
+    "Conservar Excel puede tener sentido si el proceso es simple y controlable.",
+    "Automatizar exige accesos, reglas y un responsable de diferencias.",
+    "Compara el recorrido completo, incluyendo correcciones y reintentos."
+  ],
+  "sections": [
+    {
+      "id": "comparar-trabajo",
+      "title": "Compara cuatro tareas, no dos marcas",
+      "paragraphs": [
+        "Empieza por la entrada: alguien recibe correo, consulta documentos o revisa una carpeta. Luego normaliza los datos, comprueba duplicados y relaciona cada producto con su código interno. Finalmente usa el registro para pagar, actualizar costos o cargar otra plataforma. Excel puede participar en todos esos pasos, pero no los ejecuta automáticamente por estar abierto.",
+        "Una automatización también tiene límites. Necesita fuentes disponibles, un mapa de campos y reglas que no cambien sin aviso. Puede seguir entregando una planilla si ese es el destino útil. Lo que cambia es quién mantiene las filas y cómo se resuelven las excepciones; no hace falta prometer que desaparecerán todos los archivos."
+      ],
+      "example": {
+        "title": "Qué revisar en una prueba",
+        "rows": [
+          {
+            "label": "Entrada",
+            "detail": "Correo, portal o carpeta",
+            "result": "¿Quién trae el documento?"
+          },
+          {
+            "label": "Control",
+            "detail": "Folio, proveedor, unidad y duplicados",
+            "result": "¿Quién aclara una diferencia?"
+          },
+          {
+            "label": "Destino",
+            "detail": "ERP, POS o planilla",
+            "result": "¿Cómo se confirma el registro?"
+          }
+        ],
+        "note": "Comparación de responsabilidades. No es una medición de rendimiento de Excel ni de Ruka."
+      }
+    },
+    {
+      "id": "cuando-conservar",
+      "title": "Cuándo conservar la planilla",
+      "paragraphs": [
+        "Si las compras llegan de una sola fuente, el formato es estable y el responsable puede revisar el registro sin atrasos, puede convenir mejorar el archivo existente. Columnas obligatorias, validaciones, una referencia al respaldo y una única versión de trabajo ayudan más que agregar software sin un problema claro.",
+        "Tampoco todos los cálculos deben mudarse a otra plataforma. Una planilla puede seguir siendo útil para análisis puntuales o escenarios que cambian seguido. Separa ese uso del registro oficial: cuando varias copias contienen estados distintos de una misma factura, lo difícil ya no es calcular, sino saber cuál dato usar y quién lo confirmó."
+      ],
+      "bullets": [
+        "Una versión de trabajo y responsables identificados.",
+        "Campos y unidades definidos, sin depender de colores informales.",
+        "Acceso al documento que respalda cada fila.",
+        "Un procedimiento claro para corregir errores."
+      ]
+    },
+    {
+      "id": "cuando-automatizar",
+      "title": "Qué señales justifican evaluar automatización",
+      "paragraphs": [
+        "Observa si hay tareas repetidas que no requieren una decisión nueva: copiar proveedor y folio, descargar el mismo tipo de archivo o convertir una unidad cuya equivalencia ya está definida. También cuenta las interrupciones: una columna movida, un local sin código o un documento recibido dos veces. No asumas que todas desaparecerán; registra qué parte podría ejecutarse con reglas.",
+        "Una forma práctica de dimensionarlo es anotar durante una semana el tiempo dedicado a captura, revisión, corrección y carga. No conviertas todo ese tiempo en ahorro prometido: algunas revisiones seguirán siendo necesarias, y la implementación también tiene costo. Usa el registro para comparar propuestas sobre el mismo alcance y estimar qué tramo merece probarse primero."
+      ],
+      "bullets": [
+        "Reingresar la misma información en más de un destino.",
+        "Acumular compras porque solo una persona conoce el formato.",
+        "Corregir errores repetidos de unidad o de producto.",
+        "Revisar cada fila para encontrar pocas diferencias reales."
+      ]
+    },
+    {
+      "id": "transicion",
+      "title": "Cómo probar sin perder el control",
+      "paragraphs": [
+        "Elige un proveedor o una fuente y acuerda el resultado esperado. Incluye un documento repetido, un dato faltante y una carga rechazada. Durante la prueba compara el registro con sus respaldos, no solo con el total de la planilla. Una suma correcta puede esconder compras duplicadas y otras ausentes que se compensan.",
+        "Define dónde quedará el dato oficial y quién podrá corregirlo. Evita que la planilla y el destino reciban cambios independientes sin una regla de conciliación. Si el proceso necesita aprobación, esa decisión debe mantenerse visible. El objetivo es reducir traspasos manuales, no crear otra copia que alguien tendrá que mantener."
+      ],
+      "action": {
+        "label": "Cómo definir el registro sin cambiar de ERP",
+        "href": "/blog/automatizar-registro-compras-sin-cambiar-erp"
+      }
+    },
+    {
+      "id": "con-ruka",
+      "title": "Qué pedirle a Ruka en esa evaluación",
+      "paragraphs": [
+        "Muestra de dónde llega una compra y dónde termina hoy. Ruka puede trabajar con documentos y destinos configurados, pero el alcance depende del acceso, las correspondencias y las reglas de tu empresa. Pide distinguir lectura, revisión y escritura: tener el documento disponible no significa que ya esté actualizado en todos tus sistemas.",
+        "La mejor prueba deja claro qué hizo Ruka, qué faltó y qué decidió tu equipo. Si el resultado útil sigue siendo una planilla, también puede ser un destino a evaluar. Lo importante es que la información llegue de forma consistente y que el proceso no dependa de repetir las mismas acciones cada semana."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "question": "¿Tengo que eliminar Excel?",
+      "answer": "No. Puede seguir siendo una herramienta de análisis o un destino acordado. La evaluación debe centrarse en las tareas repetidas y en cuál es el registro oficial."
+    },
+    {
+      "question": "¿Existe un número de facturas que obligue a automatizar?",
+      "answer": "No hay un umbral universal. Importan también la diversidad de fuentes, los destinos, las unidades, los errores y el tiempo de revisión."
+    }
+  ],
+  "relatedProduct": {
+    "label": "Ver registro de compras",
+    "href": "/productos/registro-de-compras",
+    "title": "Menos traspasos para la misma compra",
+    "description": "Define qué parte del registro puede ejecutar Ruka sobre los sistemas que ya usas."
+  },
+  "relatedLinks": [
+    {
+      "label": "OCR o proceso completo",
+      "href": "/blog/ocr-facturas-vs-registro-automatico"
+    },
+    {
+      "label": "Documentos desde el SII",
+      "href": "/integraciones/sii"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Fuentes y alcance del registro de compras",
+      "url": "https://www.ruka.ai/productos/registro-de-compras"
+    }
+  ],
+  "status": "published",
+  "datePublished": "2026-10-14",
+  "dateModified": "2026-10-14",
+  "readingTimeMinutes": 5,
+  "audience": "equipos de operaciones, compras y finanzas en Chile",
+  "author": {
+    "name": "Equipo Ruka",
+    "url": "https://www.ruka.ai/about"
+  },
+  "heroImage": {
+    "kind": "diagram",
+    "src": "/blog/2026-10/registro-compras-excel-vs-automatizacion.svg",
+    "alt": "Qué revisar en una prueba",
+    "caption": "Diagrama explicativo propio de Ruka. Esquema conceptual, no una captura de la plataforma ni un resultado de cliente."
+  }
+}

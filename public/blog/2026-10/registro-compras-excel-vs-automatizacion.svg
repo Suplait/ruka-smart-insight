@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+<title id="title">Elige por el trabajo que queda.</title><desc id="desc">Una persona ingresa frente a La fuente entrega datos. Una persona relaciona frente a Se aplican reglas. Una persona copia frente a Se verifica el destino</desc>
+<rect width="1200" height="630" fill="#f5f6fc"/>
+<text x="60" y="62" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#4f5ce7">Ruka · Guía práctica</text>
+<text x="60" y="133" font-family="Arial,sans-serif" font-size="44" font-weight="700" fill="#171827">Elige por el trabajo que queda.</text>
+<rect x="60" y="178" width="510" height="338" rx="12" fill="white"/>
+<rect x="630" y="178" width="510" height="338" rx="12" fill="#171827"/>
+<g font-family="Arial,sans-serif"><text x="90" y="226" font-size="23" font-weight="700" fill="#505b70">PLANILLA MANUAL</text><text x="660" y="226" font-size="23" font-weight="700" fill="#bfc6ff">FLUJO CONFIGURADO</text>
+<text x="90" y="296" font-size="29" fill="#171827">Una persona ingresa</text><text x="660" y="296" font-size="29" fill="#ffffff">La fuente entrega datos</text><path d="M90 318H540 M660 318H1110" stroke="#8a94b0" stroke-opacity=".25"/>
+<text x="90" y="378" font-size="29" fill="#171827">Una persona relaciona</text><text x="660" y="378" font-size="29" fill="#ffffff">Se aplican reglas</text><path d="M90 400H540 M660 400H1110" stroke="#8a94b0" stroke-opacity=".25"/>
+<text x="90" y="460" font-size="29" fill="#171827">Una persona copia</text><text x="660" y="460" font-size="29" fill="#ffffff">Se verifica el destino</text>
+<text x="60" y="573" font-size="23" fill="#505b70">Ambos necesitan control. El alcance define qué se automatiza.</text></g></svg>

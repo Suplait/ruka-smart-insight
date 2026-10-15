@@ -845,11 +845,11 @@ function FAQAndCTASection() {
           <Accordion type="single" collapsible className="grid gap-3">
             {faqItems.map((item, index) => (
               <motion.div key={item.question} initial={reduceMotion ? false : { opacity: 0.72, x: 12 }} whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.55 }} transition={{ duration: 0.36, delay: reduceMotion ? 0 : Math.min(index, 4) * 0.04, ease: easeOut }} whileHover={reduceMotion ? undefined : { x: 3 }}>
-                <AccordionItem value={`faq-${index}`} className="rounded-2xl border border-[#dce3f2] bg-[#fbfcff] px-5 transition-colors duration-200 hover:border-primary/25 hover:bg-white">
+                <AccordionItem value={`faq-${index}`} className="rounded-2xl border border-[#dce3f2] bg-[#fbfcff] px-5 transition-colors duration-200 hover:border-primary/25 hover:bg-white [&>[role=region][data-state=closed]]:hidden">
                   <AccordionTrigger className="text-left text-base font-semibold text-[#171827] hover:text-primary hover:no-underline sm:text-lg">
                     {item.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-base leading-7 text-[#555b6e]">{item.answer}</AccordionContent>
+                  <AccordionContent forceMount className="text-base leading-7 text-[#555b6e]">{item.answer}</AccordionContent>
                 </AccordionItem>
               </motion.div>
             ))}

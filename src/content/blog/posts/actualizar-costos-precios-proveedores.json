@@ -1,0 +1,149 @@
+{
+  "slug": "actualizar-costos-precios-proveedores",
+  "category": "Costos y margen",
+  "title": "Cómo actualizar costos cuando cambia el precio de un proveedor",
+  "excerpt": "Antes de comparar precios, iguala unidades y presentaciones. Un ejemplo para seguir el cambio desde la factura hasta el costo de una receta.",
+  "metaTitle": "Actualizar costos ante cambios de proveedores | Ruka",
+  "metaDescription": "Aprende a comparar precios por unidad, actualizar costos de recetas y revisar el margen con un ejemplo. Qué datos confirmar antes de cambiar precios de venta.",
+  "targetQuery": "actualizar costos cambio precio proveedor",
+  "searchIntent": "guía operativa de comparación y actualización de costos",
+  "intro": [
+    "Una caja más cara no siempre significa un insumo más caro: puede traer otra cantidad. Y un proveedor que mantiene el precio puede haber reducido el contenido. Comparar solo el total de la última factura puede ocultar ambos cambios.",
+    "Para actualizar costos necesitas relacionar la compra con el insumo que usa tu operación, llevarla a una unidad comparable y decidir cómo se incorpora al cálculo. Aquí seguimos un ejemplo sencillo. Es una explicación del método, no una promesa de margen ni una medición de resultados de Ruka."
+  ],
+  "keyTakeaways": [
+    "Compara el costo por unidad equivalente, no solo por envase.",
+    "Define qué cargos e impuestos entran al costo con tu responsable contable.",
+    "Un costo de ingredientes no equivale a la rentabilidad completa del negocio."
+  ],
+  "sections": [
+    {
+      "id": "normalizar-unidades",
+      "title": "Primero: el mismo producto en la misma unidad",
+      "paragraphs": [
+        "Supón que la compra anterior fue un saco de 25 kg a $25.000 netos y la nueva uno de 20 kg a $24.000 netos. El envase cuesta menos, pero el kilo pasó de $1.000 a $1.200: subió un 20%. Si comparas solo ambos precios, concluirás justamente lo contrario de lo que ocurrió.",
+        "Antes del cálculo confirma que se trata del mismo insumo o de un sustituto aceptable. Calidad, concentración, rendimiento y merma pueden hacer que dos productos no sean equivalentes. El ejemplo divide precio por kilos y no incluye flete, descuentos, impuestos recuperables ni pérdidas; tu regla de costo debe definir cómo tratar cada componente."
+      ],
+      "example": {
+        "title": "Una presentación más barata, un kilo más caro",
+        "rows": [
+          {
+            "label": "Antes",
+            "detail": "$25.000 ÷ 25 kg",
+            "result": "$1.000 por kg"
+          },
+          {
+            "label": "Ahora",
+            "detail": "$24.000 ÷ 20 kg",
+            "result": "$1.200 por kg"
+          },
+          {
+            "label": "Variación",
+            "detail": "($1.200 − $1.000) ÷ $1.000",
+            "result": "+20% por kg"
+          }
+        ],
+        "note": "Ejemplo ficticio con precios netos y producto equivalente. No representa precios reales de un proveedor."
+      }
+    },
+    {
+      "id": "aplicar-receta",
+      "title": "Después: cuánto cambia el consumo por producto",
+      "paragraphs": [
+        "Si una preparación usa 250 gramos de ese insumo, su aporte al costo pasa de $250 a $300. Son $50 adicionales por preparación, antes de considerar otros ingredientes. Para que el cálculo sea consistente, la receta debe expresar cantidades compatibles con la unidad de compra y mantener actualizado su rendimiento.",
+        "No sustituyas el costo de toda la receta por el precio del insumo que acaba de cambiar. Recalcula los componentes afectados y conserva los demás según el método elegido. Si falta un precio o una equivalencia, muestra el costo como incompleto: tratar lo desconocido como cero produce un margen que parece mejor de lo que realmente es."
+      ],
+      "bullets": [
+        "Producto de compra relacionado con el insumo de la receta.",
+        "Cantidad consumida y rendimiento definidos.",
+        "Unidad comparable entre compra y consumo.",
+        "Datos faltantes identificados, no reemplazados por cero."
+      ]
+    },
+    {
+      "id": "metodo-costo",
+      "title": "Acordar qué precio alimenta el costo",
+      "paragraphs": [
+        "Usar la última compra, un promedio o un costo estándar produce resultados distintos. Ninguno debe elegirse de forma implícita porque fue el dato más fácil de obtener. Define con el equipo para qué usarás el número: revisar una compra nueva, valorar existencias o decidir un precio de venta no son necesariamente el mismo cálculo.",
+        "También importa la fecha. Una factura cargada hoy puede corresponder a mercadería recibida antes. No cambies retrospectivamente un reporte cerrado sin dejar claro el método y el período afectados. Conserva la referencia al documento de origen y explica cuándo se actualizó el costo; eso permite entender una variación sin reconstruirla desde correos."
+      ],
+      "bullets": [
+        "Método explícito y consistente entre períodos.",
+        "Tratamiento acordado de descuentos, flete y notas de crédito.",
+        "Fecha de la compra y fecha de actualización diferenciadas.",
+        "Responsable para cambios de receta o equivalencias."
+      ]
+    },
+    {
+      "id": "margen",
+      "title": "Revisar el margen sin confundirlo con utilidad",
+      "paragraphs": [
+        "Si mantienes el precio de venta y sube el costo, la diferencia disponible disminuye. Pero la definición del indicador importa: margen sobre ventas y recargo sobre costo usan denominadores distintos. Trabaja con una base comparable, por ejemplo ingresos y costos netos cuando corresponda, y acuerda el tratamiento tributario antes de interpretar porcentajes.",
+        "Además, descontar ingredientes de la venta no descuenta por sí solo personal, arriendo, comisiones, energía o desperdicio. Presenta el indicador con su alcance. Puede servir para detectar dónde revisar compras, porciones o precios, pero no debe etiquetarse como utilidad final de la empresa si no incorpora todos esos gastos."
+      ]
+    },
+    {
+      "id": "llevar-operacion",
+      "title": "Qué automatizar y qué confirmar",
+      "paragraphs": [
+        "La lectura de compras y la relación de productos pueden alimentar una actualización de costos. Antes de habilitarla, prueba cambios de presentación, productos nuevos y notas de crédito. Verifica que una unidad no reconocida genere una revisión y no una conversión supuesta. Define también en qué sistema debe quedar el resultado y cómo comprobar que se actualizó.",
+        "Ruka presenta capacidades de costos y margen sobre información conectada. Para tu operación hay que confirmar fuentes, recetas, unidades y método; no basta con mostrar un tablero. Parte por un insumo importante, sigue el cálculo desde el documento y decide qué variación merece atención. Luego amplía el alcance con las reglas ya comprobadas."
+      ],
+      "action": {
+        "label": "Revisar control de costos y margen",
+        "href": "/productos/panel-control"
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "¿Un precio menor por caja siempre baja el costo?",
+      "answer": "No. Hay que dividir por el contenido comparable y considerar calidad y rendimiento. Una caja más pequeña puede aumentar el costo por unidad aunque cueste menos."
+    },
+    {
+      "question": "¿El margen de ingredientes es la utilidad?",
+      "answer": "No. No incluye necesariamente todos los gastos del negocio. El indicador debe explicitar qué ingresos y costos considera."
+    }
+  ],
+  "relatedProduct": {
+    "label": "Ver costos y margen",
+    "href": "/productos/panel-control",
+    "title": "Saber qué cambió y de dónde viene",
+    "description": "Revisa cómo Ruka usa compras, ventas y recetas conectadas para mantener información de costos."
+  },
+  "relatedLinks": [
+    {
+      "label": "Ordenar la compra desde el documento",
+      "href": "/blog/automatizar-registro-compras-sin-cambiar-erp"
+    },
+    {
+      "label": "Revisar diferencias antes de usar los datos",
+      "href": "/blog/conciliar-facturas-ordenes-compra-recepciones"
+    },
+    {
+      "label": "Unidades y compras hacia Toteat",
+      "href": "/integraciones/toteat"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Control de costos y margen en Ruka",
+      "url": "https://www.ruka.ai/productos/panel-control"
+    }
+  ],
+  "status": "published",
+  "datePublished": "2026-10-14",
+  "dateModified": "2026-10-14",
+  "readingTimeMinutes": 5,
+  "audience": "equipos de operaciones, compras y finanzas en Chile",
+  "author": {
+    "name": "Equipo Ruka",
+    "url": "https://www.ruka.ai/about"
+  },
+  "heroImage": {
+    "kind": "diagram",
+    "src": "/blog/2026-10/actualizar-costos-precios-proveedores.svg",
+    "alt": "Una presentación más barata, un kilo más caro",
+    "caption": "Diagrama explicativo propio de Ruka. Esquema conceptual, no una captura de la plataforma ni un resultado de cliente."
+  }
+}

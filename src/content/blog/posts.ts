@@ -76,5 +76,11 @@ export const featuredBlogPost =
 export const getBlogPost = (slug: string) =>
   blogPosts.find((post) => post.slug === slug);
 
-export const getRelatedBlogPosts = (post: BlogPost, limit = 2) =>
-  blogPosts.filter((candidate) => candidate.slug !== post.slug).slice(0, limit);
+export const getRelatedBlogPosts = (post: BlogPost, limit = 2) => {
+  const editorialLinks = new Set(post.relatedLinks.map((link) => link.href));
+  const candidates = blogPosts.filter((candidate) => candidate.slug !== post.slug);
+  return [
+    ...candidates.filter((candidate) => editorialLinks.has(`/blog/${candidate.slug}`)),
+    ...candidates.filter((candidate) => !editorialLinks.has(`/blog/${candidate.slug}`)),
+  ].slice(0, limit);
+};

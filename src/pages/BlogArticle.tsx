@@ -52,20 +52,20 @@ export default function BlogArticle({ post: prerenderedPost }: BlogArticleProps)
         <div className="px-5 pt-8 sm:px-8 sm:pt-12">
           <figure className="mx-auto max-w-7xl">
             <div className="relative overflow-hidden rounded-xl border border-[#dfe3ed] bg-white">
-              <div className="flex h-10 items-center gap-1.5 border-b border-[#dfe3ed] bg-white px-4" aria-hidden="true">
+              {post.heroImage.kind !== "diagram" && <div className="flex h-10 items-center gap-1.5 border-b border-[#dfe3ed] bg-white px-4" aria-hidden="true">
                 <span className="h-2.5 w-2.5 rounded-full bg-[#d9dde7]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#d9dde7]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#d9dde7]" />
                 <span className="ml-auto text-xs font-medium text-[#505b70]">Demo de Ruka · Datos de ejemplo</span>
-              </div>
-              <a href={post.heroImage.src} target="_blank" rel="noopener noreferrer" aria-label="Ampliar captura de la demo en una pestaña nueva"><img
+              </div>}
+              <a href={post.heroImage.src} target="_blank" rel="noopener noreferrer" aria-label="Ampliar imagen del artículo en una pestaña nueva"><img
                 src={post.heroImage.src}
                 alt={post.heroImage.alt}
                 className="max-h-[650px] w-full object-contain"
                 style={{ objectPosition: post.heroImage.position }}
               /></a>
             </div>
-            <figcaption className="mt-3 text-sm leading-6 text-[#505b70]">{post.heroImage.caption ?? post.heroImage.alt} <a href={post.heroImage.src} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">Ampliar captura</a></figcaption>
+            <figcaption className="mt-3 text-sm leading-6 text-[#505b70]">{post.heroImage.caption ?? post.heroImage.alt} <a href={post.heroImage.src} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">Ampliar imagen</a></figcaption>
           </figure>
         </div>
 

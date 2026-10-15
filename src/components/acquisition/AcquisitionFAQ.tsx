@@ -36,12 +36,12 @@ export function AcquisitionFAQ() {
           <AccordionItem
             key={item.question}
             value={`acquisition-faq-${index}`}
-            className="rounded-2xl border border-[#dde2ed] bg-white px-5 shadow-[0_10px_35px_rgba(24,30,52,0.035)] transition-colors hover:border-primary/25"
+            className="rounded-2xl border border-[#dde2ed] bg-white px-5 shadow-[0_10px_35px_rgba(24,30,52,0.035)] transition-colors hover:border-primary/25 [&>[role=region][data-state=closed]]:hidden"
           >
             <AccordionTrigger className="py-5 text-left text-base font-semibold leading-snug text-[#202231] hover:no-underline">
               {item.question}
             </AccordionTrigger>
-            <AccordionContent className="max-w-2xl pb-5 text-[15px] leading-7 text-[#62697a]">
+            <AccordionContent forceMount className="max-w-2xl pb-5 text-[15px] leading-7 text-[#62697a]">
               {item.answer}
             </AccordionContent>
           </AccordionItem>
