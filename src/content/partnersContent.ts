@@ -1,10 +1,17 @@
 export const partnersPath = "/partners";
 export const partnersTitle = "Automatización para consultoras de restaurantes | Ruka";
-export const partnersDescription = "Lleva tus recomendaciones a la operación. Colabora con Ruka para automatizar compras, conciliaciones y costos sobre los sistemas de tus clientes.";
+export const partnersDescription = "Complementa tu consultoría gastronómica con Ruka: automatiza compras, conciliaciones y costos de tus clientes. Empecemos con un restaurante y un proceso.";
 
 export const partnerProcesses = [
   {
     label: "Registro de compras",
+    id: "compras",
+    shortLabel: "Compras",
+    title: "Que preparar la información no se coma tu asesoría.",
+    benefit: "Llega al análisis sin reconstruir las compras del mes.",
+    image: "/assets/partners/compras.webp",
+    imageAlt: "Bandeja de facturas de compra de Ruka, con documentos, proveedores y estados de revisión.",
+    caption: "Bandeja de compras de Ruka, con datos de ejemplo.",
     manual: "Volver a digitar cada factura.",
     outcome: "Compras registradas donde hacen falta.",
     consultant: "Defines productos, unidades y dónde debe quedar cada compra.",
@@ -14,6 +21,13 @@ export const partnerProcesses = [
   },
   {
     label: "Conciliaciones",
+    id: "conciliaciones",
+    shortLabel: "Conciliaciones",
+    title: "Dedica la revisión a lo que no calza.",
+    benefit: "Conversa sobre una diferencia concreta, no sobre cuatro archivos separados.",
+    image: "/assets/partners/recepcion.webp",
+    imageAlt: "Recepción de una factura en Ruka: cantidades recibidas, incidencias y comentario de la entrega.",
+    caption: "Recepción registrada por el equipo, con datos de ejemplo.",
     manual: "Cruzar documentos uno por uno.",
     outcome: "Diferencias a la vista, sin revisar todo a mano.",
     consultant: "Defines qué debe coincidir y quién resuelve una diferencia.",
@@ -23,6 +37,13 @@ export const partnerProcesses = [
   },
   {
     label: "Costos y margen",
+    id: "costos",
+    shortLabel: "Costos",
+    title: "Habla de decisiones. No de actualizar la planilla.",
+    benefit: "Usa la información de compras y ventas para acompañar las decisiones del restaurante.",
+    image: "/assets/partners/indicadores.webp",
+    imageAlt: "Panel de Ruka con compras frente a ventas e indicadores para el seguimiento de la operación.",
+    caption: "Panel de Ruka: compras frente a ventas y evolución de la operación.",
     manual: "Armar de nuevo la misma planilla.",
     outcome: "Costos actualizados para conversar sobre el negocio.",
     consultant: "Defines las equivalencias y los criterios de cálculo que usa tu asesoría.",
