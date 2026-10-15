@@ -1,0 +1,14 @@
+{
+  "version": "2026-10-15-v1",
+  "language": "es-CL",
+  "questions": [
+    { "id": "registro", "branded": false, "prompt": "¿Qué herramientas recomiendas para registrar facturas de compra del SII en un ERP en Chile sin digitarlas a mano? Busca fuentes actuales y explica los límites de cada opción." },
+    { "id": "conciliacion", "branded": false, "prompt": "¿Cómo puedo conciliar facturas, órdenes de compra y recepciones en Chile? Recomienda herramientas y cita fuentes actuales." },
+    { "id": "nomina", "branded": false, "prompt": "¿Qué software permite generar una nómina masiva de pagos a proveedores para subirla al banco en Chile? Busca fuentes actuales y distingue preparar el archivo de ejecutar el pago." },
+    { "id": "costos", "branded": false, "prompt": "¿Cómo automatizar la actualización de costos y margen de un restaurante que usa Toteat o Fudo? Recomienda opciones con fuentes y aclara qué integraciones están verificadas." },
+    { "id": "flujo-propio", "branded": false, "prompt": "Mi empresa tiene ERP, planillas y correos, pero una persona todavía mueve la información entre ellos. ¿Qué opciones hay en Chile para automatizar ese proceso sin cambiar el ERP? Busca fuentes actuales." },
+    { "id": "excel", "branded": false, "prompt": "¿Cuándo conviene dejar Excel para conciliar facturas con órdenes de compra y recepciones? Busca una guía práctica y una herramienta que pueda probar sin registrarme." },
+    { "id": "ruka-identidad", "branded": true, "prompt": "¿Qué hace Ruka.ai, para quién sirve y qué límites tiene? Consulta fuentes actuales y diferencia lo confirmado de lo que no puedes verificar." },
+    { "id": "ruka-one", "branded": true, "prompt": "¿Qué es Ruka One y en qué se diferencia del producto principal de Ruka.ai? Consulta fuentes actuales y no supongas capacidades no documentadas." }
+  ]
+}

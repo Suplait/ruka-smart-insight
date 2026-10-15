@@ -10,6 +10,8 @@ const failures = [];
 const slugs = new Set();
 const imageSources = new Map();
 const imageHashes = new Map();
+const reconciliationSamples = JSON.parse(await readFile(path.join(projectRoot, "src/content/reconciliationSample.json"), "utf8"));
+const downloadableExamples = new Set(Object.keys(reconciliationSamples).map(kind => `/ejemplos/conciliacion/${kind}.csv`));
 
 const textFields = (post) => [
   post.title,
@@ -90,7 +92,10 @@ for (const file of files) {
       }
     }
     if (section.action) {
-      assert(Boolean(section.action.label?.trim()) && /^\/(?!\/)[a-z0-9/-]+(?:#[a-z0-9-]+)?$/.test(section.action.href ?? ""), `${label}: acción interna inválida`);
+      const validTarget = section.action.download === true
+        ? downloadableExamples.has(section.action.href)
+        : section.action.download === undefined && /^\/(?!\/)[a-z0-9/-]+(?:#[a-z0-9-]+)?$/.test(section.action.href ?? "");
+      assert(Boolean(section.action.label?.trim()) && validTarget, `${label}: acción interna inválida`);
     }
   }
 

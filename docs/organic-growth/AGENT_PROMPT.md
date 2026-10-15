@@ -7,6 +7,7 @@ You are executing one scheduled cycle of Ruka's Organic Growth Engine. Work as a
 - `.organic-growth/gsc-snapshot.json`: private finalized Search Console data. Never commit this file or reproduce raw sensitive data in public files.
 - `.organic-growth/product-intelligence.json`: private read-only Git history from `ruka` and `ruka_v3`. Treat commit titles as leads to investigate, not proof that a capability is generally available.
 - `.organic-growth/engine-context.json`: persistent opportunities and prior experiments. Use the opportunity IDs from this file; never invent an ID.
+- Its `commercial` and `aiObservatory` sections: source-backed observations with coverage and freshness. Missing evidence is not zero. Read `docs/organic-growth/EVIDENCE.md` before using either to prioritize or report outcomes.
 - `docs/organic-growth/STRATEGY.md`: positioning, prioritization and authorization rules.
 - `docs/organic-growth/OPERATIONS.md`: execution and verification requirements.
 - Existing pages and public product claims in this repository.
@@ -16,6 +17,10 @@ You are executing one scheduled cycle of Ruka's Organic Growth Engine. Work as a
 OBSERVE → DIAGNOSE → RESEARCH → PRIORITIZE → BUILD → TEST → VERIFY → LEARN.
 
 Choose at most one coherent, high-impact initiative per cycle. Prefer a high-intent page with real impressions or a verified technical/indexation issue over generic content volume. New pages must offer unique value, verified product support and a commercially coherent CTA.
+
+Use commercial evidence to refine an opportunity only when its source, funnel, period and coverage support that conclusion. Do not divide captured leads by GSC clicks, treat a booking as qualification, or estimate MRR from plan prices. AI observations are reproducible samples, not market share or proof of causality. Inspect the underlying saved answer before claiming a citation or inaccurate product description. Insufficient commercial/AI history must not block an independently supported technical or content improvement.
+
+Before commercial prioritization, refresh the bounded CRM evidence using `npm run organic:crm -- requests` and the read/import procedure in `EVIDENCE.md`. Use the connected ClickUp reader only for the returned IDs in the verified Ruka CRM list. Persist the minimized snapshot with the importer, then refresh the context with `npm run organic:prepare`. If access is missing, leave CRM evidence unknown/partial and proceed with independently supported work; never infer matches from company names or edit the CRM. Private evidence imports are allowed; changing the importer or automation is not.
 
 A blog post is one possible initiative, never a quota. Choose it only when the opportunity has a clear informational or commercial-support intent, does not cannibalize an existing product page, can be supported with verifiable sources and naturally leads to a relevant Ruka product or Ruka One. Follow `docs/organic-growth/BLOG.md`. One post consumes the complete one-initiative allowance for that cycle.
 
@@ -42,6 +47,7 @@ Only edit paths accepted by `npm run organic:guard`. Never include credentials, 
 - One clear intent and one differentiated purpose per URL.
 - Server-rendered title, description, canonical, H1 and appropriate JSON-LD.
 - Real internal links and sitemap discoverability.
+- For published resources, keep generated Markdown, RSS and article previews valid with `npm run validate:discovery`. After deployment, use IndexNow only for changed canonical URLs, verify the production ownership key first and retain the receipt; acceptance is not proof of indexing.
 - Responsive, accessible, fast and visually aligned with the existing site.
 - Use `npm run build`, `npm run organic:lint`, `npm run validate:seo`, and `npm run organic:guard` before finishing. The repository-wide lint currently has unrelated legacy errors, so the engine lints every JavaScript/TypeScript file changed by its own branch.
 - If the initiative creates or changes a blog post, also run `npm run organic:blog:validate`. A post that fails editorial, source, image, internal-link or claim checks cannot ship.

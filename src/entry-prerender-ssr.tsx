@@ -55,7 +55,7 @@ for (const guide of integrationGuides) {
 
 export const discoveryEntries = [
   ...integrationGuides.map((guide) => ({ path: `/integraciones/${guide.slug}`, title: `Ruka y ${guide.name}`, description: guide.description, lastmod: guide.reviewedAt })),
-  { path: reconciliationExamplePath, title: "Ejemplo interactivo de conciliación", description: "Compara una factura, orden y recepción con datos ficticios. Sin registro, archivos ni pagos.", lastmod: "2026-10-14" },
+  { path: reconciliationExamplePath, title: "Conciliador de factura, orden y recepción en CSV", description: "Compara tus archivos localmente, revisa diferencias y descarga el resultado. Sin registro ni envío de documentos al servidor.", lastmod: "2026-10-15" },
 ];
 
 for (const post of blogPosts) {

@@ -76,7 +76,7 @@ export default function BlogIndex() {
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Biblioteca</p>
                 <h2 id="latest-guides" className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Guías para llevar a la práctica</h2>
               </div>
-              <p className="text-sm text-[#6b7280]">Actualizadas por el equipo de Ruka</p>
+              <a href="/rss.xml" className="inline-flex min-h-11 items-center text-sm font-medium text-[#424ec0] underline underline-offset-4">Seguir nuevas guías por RSS</a>
             </div>
 
             <div>

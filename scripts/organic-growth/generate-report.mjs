@@ -1,4 +1,7 @@
 import { engineRequest, readPrivateJson, writePrivateJson } from "./lib.mjs";
+import { readCommercialEvidence } from './commercial-evidence.mjs';
+import { readObservatory } from './ai-observatory.mjs';
+import { collectCommercial } from './collect-commercial.mjs';
 
 const snapshot = await readPrivateJson("gsc-snapshot.json");
 const status = await engineRequest("status");
@@ -21,6 +24,11 @@ const commercialQueries = snapshot.breakdowns.queries
 const recentRuns = status.runs.filter((run) => run.kind === "execution" && run.status === "succeeded");
 const recentExperiments = status.experiments.filter((experiment) => ["deployed", "measuring"].includes(experiment.status));
 const approvalRequired = status.opportunities.filter((opportunity) => opportunity.status === "approval_required");
+// Reporting starts in its own clean worktree and doesn't run organic:prepare.
+// Refresh the optional source here instead of relying on another run's files.
+await collectCommercial();
+const commercial = await readCommercialEvidence();
+const aiObservatory = await readObservatory();
 
 const payload = {
   dataThroughDate: snapshot.dataThroughDate,
@@ -31,6 +39,8 @@ const payload = {
     commercialQueries.length ? `La principal oportunidad sigue siendo capturar demanda non-branded comercial, hoy todavía pequeña frente al tráfico de marca.` : "Search Console aún no entrega suficiente consulta non-branded visible para atribuir una tendencia robusta.",
   ],
   performance: { days15: { metrics: days15.metrics }, days30: { metrics: days30.metrics } },
+  commercial,
+  aiObservatory,
   winners: topPages.map((row) => `${new URL(row.page).pathname}: ${row.clicks} clics y ${row.impressions} impresiones (90 días)`),
   losers: commercialQueries.map((row) => `“${row.query}”: ${row.impressions} impresiones, posición ${row.position.toFixed(1)}, CTR ${(row.ctr * 100).toFixed(1)}%`),
   changes: recentExperiments.slice(0, 6).map((experiment) => `${experiment.title} · ${experiment.status} · ${(experiment.affected_urls || []).join(", ")}`),
@@ -61,6 +71,14 @@ const slackMessage = [
   ...(payload.changes.length ? payload.changes.map((item) => `• ${item}`) : ["• Sin cambios desplegados en el período."]),
   "",
   `*Pipeline SEO*\n${payload.pipelineSummary}`,
+  '',
+  '*Evidencia comercial · cohorte de captura de 90 días*',
+  commercial.state === 'ok'
+    ? `• ${commercial.submissions} envíos persistidos con trazabilidad; ${commercial.attributionKnown} con primera página conocida. ${commercial.excludedExplicitTests} pruebas explícitas excluidas. No equivale a personas ni clientes.`
+    : '• Fuente comercial no disponible o vencida; no se informa cero.',
+  commercial.state === 'ok' ? `• CRM: ${commercial.crm.observedTasks}/${commercial.crm.linkedTasks} tareas vinculadas observadas. Estado comercial actual, no conversiones históricas. MRR: sin fuente verificada.` : '• Reuniones calificadas e ingresos: sin evidencia suficiente.',
+  '*Observatorio IA*',
+  ...(aiObservatory.groups.length ? aiObservatory.groups.map(group => `• ${group.provider} / ${group.model} / ${group.branded ? 'marca' : 'sin marca'}: ${group.completed} respuestas completas, ${group.citations} con cita confirmada, ${group.citationUnknown} sin captura completa de citas, ${group.recommendations} recomendaciones de Ruka o sus recursos; ${group.blocked} bloqueadas, ${group.stale} vencidas. Recomendar una guía no implica recomendar el producto. No es cuota de mercado.`) : ['• Aún no hay observaciones verificadas.']),
   ...(payload.nextBets.length ? ["", "*Próximas apuestas*", ...payload.nextBets.map((item) => `• ${item}`)] : []),
   ...(payload.blockers.length ? ["", "*Decisiones requeridas*", ...payload.blockers.map((item) => `• ${item}`)] : []),
   "",
