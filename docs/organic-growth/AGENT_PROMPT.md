@@ -43,6 +43,7 @@ Only edit paths accepted by `npm run organic:guard`. Never include credentials, 
 
 ## Quality bar
 
+- Keep internal QA, harness reports, source revisions, pending validation plans and maintenance documentation out of customer pages, downloads and `public`. Internal evidence informs claims; it is not customer content. Follow `internal/PUBLICATION-BOUNDARY.md` and inspect every linked download plus generated Markdown. Explain relevant limitations in buyer language without turning simulated tests into production guarantees.
 - Natural Chilean Spanish suitable for business buyers.
 - No invented integrations, customers, savings, statistics or product behavior.
 - One clear intent and one differentiated purpose per URL.

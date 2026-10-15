@@ -6,31 +6,31 @@ import Footer from "@/components/Footer";
 import { MarketingSeo } from "@/components/seo/MarketingSeo";
 
 export const purchaseDossierPath = "/procesos/registrar-compras-toteat";
-export const purchaseDossierTitle = "Registrar compras en Toteat: alcance y prueba del proceso | Ruka";
+export const purchaseDossierTitle = "Registrar compras en Toteat: guía para tu equipo | Ruka";
 export const purchaseDossierDescription = "Qué necesitas para llevar una compra a Toteat: productos, unidades, locales y una hoja para comprobar el resultado con tu equipo.";
 const shareUrl = `https://www.ruka.ai${purchaseDossierPath}`;
 
 const preparation = [
-  ["Detalle de la compra", "Un documento seguro con sus líneas y lo que efectivamente se recibió.", "Compras"],
+  ["Detalle de la compra", "La factura con sus productos, cantidades y precios, junto al registro de lo que recibiste.", "Compras"],
   ["Productos y unidades", "La equivalencia aprobada entre el producto de origen y el del destino. Una caja no equivale por sí sola a kilos.", "Catálogo y operación"],
   ["Local y fechas", "Dónde debe registrarse cada línea y qué fechas corresponden.", "Administración"],
-  ["Acceso para probar", "Una cuenta de prueba habilitada y autorización para revisar el resultado.", "Administrador del sistema"],
+  ["Responsables", "Quién resuelve una diferencia y quién confirma que la compra quedó bien registrada.", "Tu equipo"],
 ];
 const acceptance = [
-  ["Compra válida", "Comparar cada línea, producto, cantidad, unidad, local y fecha con lo acordado antes del envío."],
-  ["Unidad o local sin resolver", "Comprobar qué detiene el proceso y quién resuelve la diferencia. No completar datos por intuición."],
-  ["Línea excluida", "Revisar advertencias y cobertura: un estado de envío exitoso no demuestra que llegaron todas las líneas."],
-  ["Envío parcial o sin respuesta", "Revisar el destino y el historial antes de repetir. Sin certeza de lo ocurrido, detener el reintento."],
+  ["Productos y cantidades", "Compara lo recibido con lo registrado. Revisa las unidades: dos cajas no son necesariamente dos kilos."],
+  ["Local y fecha", "Confirma que la compra corresponde al local y al período correctos, especialmente si operas con varias sucursales."],
+  ["Diferencias pendientes", "Deja claro qué falta resolver, quién se hará cargo y qué información necesita para hacerlo."],
+  ["Registro final", "Revisa la compra en Toteat antes de darla por cerrada. Si no sabes si una carga llegó, confírmalo antes de repetirla."],
 ];
 const decisionFields = [
   "Trabajo manual que queremos retirar",
-  "Documento de prueba y detalle disponible",
+  "Dónde llega hoy la factura y su detalle",
   "Destino, local y responsable del proceso",
   "Equivalencias que falta aprobar",
-  "Resultado esperado, línea por línea",
-  "Qué debe detener el envío y quién lo resuelve",
-  "Cómo revisaremos un envío sin respuesta",
-  "Evidencia pendiente para autorizar el siguiente paso",
+  "Cómo confirmamos lo recibido",
+  "Diferencias habituales y quién las resuelve",
+  "Cómo comprobamos el registro en Toteat",
+  "Primer paso y responsable",
 ];
 
 export default function PurchaseProcessDossier() {
@@ -68,14 +68,13 @@ export default function PurchaseProcessDossier() {
             <Link to="/integraciones/toteat" className="dossier-screen inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#505b70] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"><ArrowLeft size={16} /> Ruka y Toteat</Link>
             <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_16rem] lg:gap-16">
               <div>
-                <p className="text-sm font-semibold text-[#424ec0]">Expediente de proceso · Compras → Toteat</p>
+                <p className="text-sm font-semibold text-[#424ec0]">Guía de compras · Ruka y Toteat</p>
                 <h1 className="mt-5 max-w-4xl text-balance text-[clamp(2.4rem,4.6vw,4rem)] font-semibold leading-[1.08] tracking-[-0.04em]">Llevar una compra a Toteat sin volver a ingresarla a mano.</h1>
-                <p className="mt-6 max-w-2xl text-lg leading-8 text-[#505b70]">Tu POS sigue siendo el mismo. La decisión es qué trabajo puede hacer Ruka entre la compra y su registro, y cómo comprobar que quedó bien.</p>
+                <p className="mt-6 max-w-2xl text-lg leading-8 text-[#505b70]">Si tu equipo vuelve a digitar cada compra en el POS, empieza por ordenar ese recorrido. Esta guía te ayuda a identificar los datos, las equivalencias y las revisiones que necesitas.</p>
               </div>
-              <aside className="border-t border-[#dce2ed] pt-5 lg:self-end" aria-label="Estado del expediente">
-                <p className="text-sm font-semibold">Para evaluar con tu equipo</p>
-                <p className="mt-3 text-sm leading-6 text-[#505b70]">Controles internos revisados. La prueba completa en una cuenta de Toteat sigue pendiente.</p>
-                <p className="mt-4 text-xs text-[#505b70]">Revisado el 15 de octubre de 2026</p>
+              <aside className="border-t border-[#dce2ed] pt-5 lg:self-end" aria-label="Qué encontrarás en esta guía">
+                <p className="text-sm font-semibold">Para trabajar con tu equipo</p>
+                <p className="mt-3 text-sm leading-6 text-[#505b70]">Qué preparar, qué revisar y una hoja para organizar tu proceso. Descárgala o compártela con quien lleva las compras.</p>
               </aside>
             </div>
             <div className="dossier-screen mt-8 flex flex-wrap items-center gap-3">
@@ -83,7 +82,7 @@ export default function PurchaseProcessDossier() {
               <button type="button" onClick={copyLink} className="inline-flex min-h-12 items-center gap-2 rounded-full border border-[#cbd2e2] px-5 text-sm font-semibold hover:bg-white focus-visible:ring-2 focus-visible:ring-primary">{copyState === "copied" ? <Check size={16} /> : <Copy size={16} />} {copyState === "copied" ? "Enlace copiado" : "Copiar enlace"}</button>
               <a href="/expedientes/registrar-compras-toteat.pdf" download className="inline-flex min-h-12 items-center gap-2 rounded-full px-5 text-sm font-semibold hover:bg-white focus-visible:ring-2 focus-visible:ring-primary"><Download size={16} /> Descargar PDF</a>
             </div>
-            <p role="status" aria-live="polite" className="dossier-screen mt-3 text-sm text-[#505b70]">{copyState === "copied" ? "Puedes compartir el expediente con tu equipo." : copyState === "fallback" ? "No pudimos copiarlo. Selecciona el enlace de abajo para compartirlo." : "Sin registro. Puedes compartirlo o imprimirlo."}</p>
+            <p role="status" aria-live="polite" className="dossier-screen mt-3 text-sm text-[#505b70]">{copyState === "copied" ? "Puedes compartir la guía con tu equipo." : copyState === "fallback" ? "No pudimos copiarlo. Selecciona el enlace de abajo para compartirlo." : "Sin registro. Puedes compartirlo o imprimirlo."}</p>
             {copyState === "fallback" && <input aria-label="Enlace para compartir" readOnly value={shareUrl} onFocus={(event) => event.currentTarget.select()} className="dossier-screen mt-3 min-h-11 w-full rounded border border-[#cbd2e2] bg-white p-3 text-sm" />}
             <p className="dossier-print-url hidden">{shareUrl}</p>
           </div>
@@ -91,15 +90,15 @@ export default function PurchaseProcessDossier() {
 
         <section className="px-5 py-14 sm:px-8 sm:py-20" aria-labelledby="scope-title">
           <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[16rem_1fr] lg:gap-16">
-            <div><p className="text-sm font-semibold text-[#424ec0]">01 / El alcance</p><h2 id="scope-title" className="mt-3 text-3xl font-semibold tracking-[-0.03em]">Una compra. Un resultado que revisar.</h2></div>
+            <div><h2 id="scope-title" className="text-3xl font-semibold tracking-[-0.03em]">Empieza por una compra.</h2></div>
             <div className="max-w-3xl space-y-5 text-base leading-8 text-[#505b70]">
-              <p>Ya tienes la factura. Todavía hay que relacionar sus productos con los que usas, comprobar las unidades y definir a qué local corresponde cada línea. Este expediente se concentra en preparar y enviar esa compra a Toteat.</p>
-              <p className="font-medium text-[#171827]">El resultado no es «se envió una solicitud». Es que la compra correcta quedó en el local correcto, con cantidades, fechas y referencias que puedas revisar.</p>
+              <p>Toma una compra habitual y sigue su recorrido: dónde llega la factura, quién revisa lo recibido y cómo termina registrada en Toteat. Ahí aparecen los pasos que tu equipo repite a mano.</p>
+              <p className="font-medium text-[#171827]">La meta: que cada producto quede registrado con la cantidad, la unidad y el local que corresponden.</p>
               <div className="grid gap-6 border-y border-[#dce2ed] py-6 sm:grid-cols-2">
-                <div><h3 className="font-semibold text-[#171827]">Tiene sentido evaluarlo si…</h3><p className="mt-2">El registro se repite y alguien puede aprobar productos, unidades y locales. Sigue una compra completa y cuenta también el tiempo de resolver diferencias y corregirla.</p></div>
-                <div><h3 className="font-semibold text-[#171827]">Primero hay que resolver…</h3><p className="mt-2">El detalle que falta, qué llegó realmente o quién define las equivalencias. Automatizar una ambigüedad no la corrige.</p></div>
+                <div><h3 className="font-semibold text-[#171827]">Lo que se repite</h3><p className="mt-2">Copiar productos, convertir unidades y volver a ingresar cantidades. Anota qué pasos podrías dejar de hacer una vez definidas las reglas.</p></div>
+                <div><h3 className="font-semibold text-[#171827]">Lo que necesita una decisión</h3><p className="mt-2">Un producto nuevo, una entrega incompleta o una unidad desconocida. Define quién lo resuelve antes de continuar.</p></div>
               </div>
-              <p>No supone cambiar tu POS, decidir equivalencias por ti ni automatizar toda la empresa. La disponibilidad y el alcance se confirman para tu cuenta.</p>
+              <p>Ruka puede enviar compras a Toteat en operaciones habilitadas. Revisamos contigo el acceso y la relación entre productos, unidades y locales para definir el alcance de tu operación.</p>
             </div>
           </div>
         </section>
@@ -107,10 +106,10 @@ export default function PurchaseProcessDossier() {
         <section className="border-y border-[#dce2ed] bg-[#f7f8fc] px-5 py-14 sm:px-8 sm:py-20" aria-labelledby="detail-title">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-8 lg:grid-cols-[16rem_1fr] lg:gap-16">
-              <div><p className="text-sm font-semibold text-[#424ec0]">02 / Antes del envío</p><h2 id="detail-title" className="mt-3 text-3xl font-semibold tracking-[-0.03em]">La factura no cuenta toda la historia.</h2><p className="mt-5 text-base leading-7 text-[#505b70]">Lo facturado y lo recibido pueden ser distintos. El ejemplo muestra dónde revisar cantidades; no prueba un envío a Toteat.</p></div>
+              <div><h2 id="detail-title" className="text-3xl font-semibold tracking-[-0.03em]">La factura y lo que recibes no siempre coinciden.</h2><p className="mt-5 text-base leading-7 text-[#505b70]">Una entrega puede llegar incompleta o con otra cantidad. Conviene resolver esa diferencia antes de preparar el registro.</p></div>
               <figure>
                 <a href="/assets/process-evidence/recepcion-demo.jpg" className="block rounded-xl focus-visible:ring-2 focus-visible:ring-primary" aria-label="Abrir captura de recepción en tamaño completo"><img src="/assets/process-evidence/recepcion-demo.jpg" width="840" height="315" loading="lazy" alt="Demo de recepción: tomate cherry, esperado 16 kilos, y queso mantecoso, esperado 22 kilos, con campos de cantidad recibida e incidencia." className="h-auto w-full rounded-xl border border-[#dce2ed] bg-white" /></a>
-                <figcaption className="mt-4 text-sm leading-6 text-[#505b70]">Captura de <a href="https://prueba.ruka.ai" className="underline underline-offset-4">la demo pública de Ruka</a>, con datos de ejemplo. Abre la imagen para ver el detalle. No es una compra de cliente ni evidencia de escritura en el destino.</figcaption>
+                <figcaption className="mt-4 text-sm leading-6 text-[#505b70]">Recepción de productos en <a href="https://prueba.ruka.ai" className="underline underline-offset-4">la demo de Ruka</a>, con datos de ejemplo. Puedes abrir la imagen para ver el detalle.</figcaption>
               </figure>
             </div>
             <dl className="mt-10 divide-y divide-[#dce2ed]">
@@ -120,41 +119,23 @@ export default function PurchaseProcessDossier() {
           </div>
         </section>
 
-        <section className="px-5 py-14 sm:px-8 sm:py-20" aria-labelledby="evidence-title">
-          <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[16rem_1fr] lg:gap-16">
-            <div><p className="text-sm font-semibold text-[#424ec0]">03 / La evidencia</p><h2 id="evidence-title" className="mt-3 text-3xl font-semibold tracking-[-0.03em]">Qué sabemos. Qué falta probar.</h2></div>
-            <div className="space-y-6 text-base leading-8 text-[#505b70]">
-              <p>Revisamos el servicio de envío con datos ficticios y respuestas controladas, sin conectarnos a Toteat. Fueron 10 pruebas internas con 57 verificaciones. Eso permite revisar controles del servicio, no afirmar que el proceso completo ya funcionó en una cuenta real.</p>
-              <a href="/evidencia/compra-toteat-2026-10-15.txt" className="inline-flex min-h-11 items-center font-semibold text-[#424ec0] underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-primary">Leer la ficha de prueba: versión, método y límites</a>
-              <ul className="space-y-5">
-                <li><strong className="text-[#171827]">Datos bloqueantes:</strong> una unidad marcada como incompatible o un local marcado como no resuelto detuvieron el envío. Falta comprobar la detección desde el documento original.</li>
-                <li><strong className="text-[#171827]">Envío parcial:</strong> se conservó el fallo sin marcar toda la compra como terminada. Una línea no bloqueante, en cambio, se excluyó con una advertencia mientras otra sí se envió.</li>
-                <li><strong className="text-[#171827]">Reintento:</strong> con historial disponible se solicitaron solo los grupos pendientes. Sin ese historial, se volvieron a solicitar ambos. No es una garantía universal contra duplicados.</li>
-              </ul>
-              <div className="rounded-xl bg-[#eef0ff] p-6 text-[#171827]"><h3 className="text-lg font-semibold">Pendiente: comprobarlo de punta a punta.</h3><p className="mt-3">Hay que probar la obtención de datos, sus equivalencias, la conservación del historial y el registro final en una cuenta autorizada. No se ha medido ahorro de tiempo de un cliente con este expediente.</p></div>
-              <p>Si un envío queda sin respuesta, no asumas que no llegó. Revisa el destino y el historial antes de repetir. Si sigue siendo indeterminado, detén el reintento. Aquí no se demuestra reversión automática de un registro externo.</p>
-            </div>
-          </div>
-        </section>
 
         <section className="border-t border-[#dce2ed] px-5 py-14 sm:px-8 sm:py-20" aria-labelledby="acceptance-title">
           <div className="mx-auto max-w-6xl">
-            <p className="text-sm font-semibold text-[#424ec0]">04 / La prueba que proponemos</p>
-            <h2 id="acceptance-title" className="mt-3 max-w-3xl text-balance text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">Acordar qué significa «quedó bien». Antes de enviar.</h2>
-            <p className="mt-5 max-w-3xl text-base leading-8 text-[#505b70]">Elige una compra segura. Guarda el estado anterior y el resultado esperado, línea por línea. Después prueba estos casos en un entorno autorizado, sin provocar fallos en una operación compartida.</p>
+            <h2 id="acceptance-title" className="max-w-3xl text-balance text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">Antes de dar la compra por cerrada.</h2>
+            <p className="mt-5 max-w-3xl text-base leading-8 text-[#505b70]">Estas cuatro revisiones te ayudan a encontrar diferencias a tiempo y evitar que otra persona tenga que reconstruir la compra después.</p>
             <ol className="mt-8 divide-y divide-[#dce2ed] border-y border-[#dce2ed]">{acceptance.map(([title, text], index) => <li key={title} className="grid gap-3 py-6 sm:grid-cols-[2rem_14rem_1fr] sm:gap-6"><span className="text-sm font-semibold text-[#424ec0]">0{index + 1}</span><h3 className="text-lg font-semibold">{title}</h3><p className="max-w-2xl text-base leading-7 text-[#505b70]">{text}</p></li>)}</ol>
-            <p className="mt-5 max-w-3xl text-sm leading-7 text-[#505b70]">Registra cada caso como aprobado, fallido, indeterminado o no ejecutado. Una prueba que falta no cuenta como aprobada. Si cambian las reglas o las equivalencias, vuelve a definir el resultado esperado.</p>
+            <p className="mt-5 max-w-3xl text-sm leading-7 text-[#505b70]">Si queda una diferencia, conserva la referencia de la factura y deja una nota clara para quien la resolverá.</p>
           </div>
         </section>
 
         <section id="hoja-decision" className="decision-sheet scroll-mt-28 bg-[#f7f8fc] px-5 py-14 sm:px-8 sm:py-20" aria-labelledby="decision-title">
           <div className="mx-auto max-w-6xl">
-            <p className="text-sm font-semibold text-[#424ec0]">05 / Para conversar con tu equipo</p>
             <h2 id="decision-title" className="mt-3 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">La hoja de decisión.</h2>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-[#505b70]">Imprímela o guárdala como PDF. Completen estos puntos antes de autorizar una prueba con información real. No tienes que entregar documentos para leerla.</p>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-[#505b70]">Descarga la guía y completen esta hoja con una compra habitual. Les servirá para acordar qué trabajo quieren automatizar y qué necesitan resolver primero.</p>
             <dl className="mt-8 grid gap-x-10 sm:grid-cols-2">{decisionFields.map((field) => <div key={field} className="decision-field min-h-28 border-b border-[#bcc5d7] py-5"><dt className="text-sm font-semibold">{field}</dt><dd className="sr-only">Por definir con el responsable del proceso.</dd></div>)}</dl>
-            <p className="mt-8 max-w-3xl text-lg font-medium leading-8">La decisión no es comprar porque la demo se ve bien. Es acordar un proceso y saber cómo reconocer que funciona.</p>
-            <div className="dossier-screen mt-8 flex flex-col gap-5 border-t border-[#dce2ed] pt-8 sm:flex-row sm:items-center sm:justify-between"><p className="max-w-xl text-base leading-7 text-[#505b70]">¿Ya identificaste ese trabajo? Revisemos el alcance. Esta hoja no autoriza accesos, gastos ni cambios productivos.</p><Link to="/register" className="inline-flex min-h-12 shrink-0 items-center justify-center gap-3 rounded-full bg-primary px-6 font-semibold text-white focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4">Agendar 30 min <ArrowRight size={18} /></Link></div>
+            <p className="mt-8 max-w-3xl text-lg font-medium leading-8">No necesitas tener todas las respuestas para conversar. Partimos por el trabajo que hoy hace tu equipo.</p>
+            <div className="dossier-screen mt-8 flex flex-col gap-5 border-t border-[#dce2ed] pt-8 sm:flex-row sm:items-center sm:justify-between"><p className="max-w-xl text-base leading-7 text-[#505b70]">¿Quieres llevar este proceso a Ruka? Cuéntanos cómo registras tus compras y revisamos juntos el siguiente paso.</p><Link to="/register" className="inline-flex min-h-12 shrink-0 items-center justify-center gap-3 rounded-full bg-primary px-6 font-semibold text-white focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4">Agendar 30 min <ArrowRight size={18} /></Link></div>
           </div>
         </section>
       </main>

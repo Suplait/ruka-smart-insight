@@ -56,7 +56,7 @@ for (const guide of integrationGuides) {
 }
 
 export const discoveryEntries = [
-  { path: purchaseDossierPath, title: "Registrar compras en Toteat: expediente de proceso", description: purchaseDossierDescription, lastmod: "2026-10-15" },
+  { path: purchaseDossierPath, title: "Registrar compras en Toteat: guía para tu equipo", description: purchaseDossierDescription, lastmod: "2026-10-15" },
   ...integrationGuides.map((guide) => ({ path: `/integraciones/${guide.slug}`, title: `Ruka y ${guide.name}`, description: guide.description, lastmod: guide.reviewedAt })),
   { path: reconciliationExamplePath, title: "Conciliador de factura, orden y recepción en CSV", description: "Compara tus archivos localmente, revisa diferencias y descarga el resultado. Sin registro ni envío de documentos al servidor.", lastmod: "2026-10-15" },
 ];

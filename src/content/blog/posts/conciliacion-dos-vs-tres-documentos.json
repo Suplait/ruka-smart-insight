@@ -64,7 +64,7 @@
       "title": "Entregas parciales y nombres distintos",
       "paragraphs": [
         "La comparación debe usar unidades equivalentes. Una orden por cajas y una recepción por unidades pueden coincidir después de convertirlas, pero solo si conoces cuántas unidades tiene cada caja. Lo mismo ocurre cuando el proveedor y la empresa usan códigos diferentes. Una relación confirmada entre productos es más útil que comparar textos casi iguales.",
-        "Con entregas parciales, hay que acumular respaldos sin contar una recepción dos veces. También debes distinguir lo ya conciliado de lo pendiente. La necesidad de ese control no prueba que cualquier herramienta lo soporte: exige una prueba con tus variantes antes de incorporarlo al alcance. El ejemplo público de Ruka compara una recepción y no demuestra cobertura de todas las combinaciones de documentos."
+        "Con entregas parciales, acumula los respaldos sin contar una recepción dos veces y distingue lo conciliado de lo pendiente. Si tu compra tiene varias entregas, revisa ese caso al definir la automatización: el tratamiento de recepciones parciales debe quedar acordado para tu flujo."
       ],
       "bullets": [
         "Define qué documento respalda cada cantidad.",
@@ -128,7 +128,7 @@
   ],
   "status": "published",
   "datePublished": "2026-10-14",
-  "dateModified": "2026-10-14",
+  "dateModified": "2026-10-15",
   "readingTimeMinutes": 5,
   "audience": "equipos de operaciones, compras y finanzas en Chile",
   "author": {
