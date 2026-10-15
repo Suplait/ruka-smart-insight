@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowDown, ArrowRight, Check, ChevronDown, Copy, Maximize2, X } from "lucide-react";
+import { ArrowDown, ArrowRight, Check, ChevronDown, Copy, Maximize2, X, Database, Workflow, ChartNoAxesCombined } from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Tabs from "@radix-ui/react-tabs";
 import { Link } from "react-router-dom";
@@ -7,7 +7,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { MarketingSeo } from "@/components/seo/MarketingSeo";
 import { organizationId } from "@/utils/structuredData";
-import { createPartnerBrief, partnerFaqs, partnerProcesses, partnerSources, partnersDescription, partnersPath, partnersTitle } from "@/content/partnersContent";
+import { createPartnerBrief, partnerComparison, partnerFaqs, partnerProcesses, partnerSources, partnersDescription, partnersPath, partnersTitle } from "@/content/partnersContent";
+import { IngredientExample } from "@/components/partners/IngredientExample";
 
 const focus = "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#424ec0]";
 const action = `inline-flex min-h-12 items-center justify-center gap-3 whitespace-nowrap rounded-full px-6 font-semibold motion-safe:transition-transform motion-safe:duration-150 motion-safe:active:scale-[0.98] ${focus}`;
@@ -88,10 +89,10 @@ function BriefBuilder() {
       <div className="border-t border-[#dce2ed] p-5 sm:p-6">
         <p className="mb-6 text-sm leading-6 text-[#505b70]">Arma un resumen para copiar. Es opcional: no necesitas completarlo para conversar. No se guarda ni se envía a Ruka.</p>
         <div className="grid gap-5 sm:grid-cols-2">
-          <label className="block text-sm font-semibold" htmlFor="partner-process">Trabajo a revisar<select id="partner-process" value={process} onChange={(event) => { setProcess(event.target.value); setCopyState("idle"); }} className={`mt-2 min-h-12 w-full rounded-lg border border-[#b6bfd3] bg-white px-3 text-base font-normal ${focus}`}>{partnerProcesses.map((item) => <option key={item.label}>{item.label}</option>)}<option>Otro proceso recurrente</option></select></label>
+          <label className="block text-sm font-semibold" htmlFor="partner-process">Trabajo a revisar<select id="partner-process" value={process} onChange={(event) => { setProcess(event.target.value); setCopyState("idle"); }} className={`mt-2 min-h-12 w-full rounded-lg border border-[#b6bfd3] bg-white px-3 text-base font-normal ${focus}`}>{partnerProcesses.map((item) => <option key={item.label}>{item.label}</option>)}<option>Insumos maestros y costos unitarios</option><option>Datos para dashboards vía API</option><option>Otro proceso recurrente</option></select></label>
           <label className="block text-sm font-semibold" htmlFor="partner-source">Fuentes o sistemas<select id="partner-source" value={source} onChange={(event) => { setSource(event.target.value); setCopyState("idle"); }} className={`mt-2 min-h-12 w-full rounded-lg border border-[#b6bfd3] bg-white px-3 text-base font-normal ${focus}`}>{partnerSources.map((item) => <option key={item}>{item}</option>)}</select></label>
         </div>
-        <div className="mt-6 border-l-2 border-[#c7cdf7] pl-5" aria-label="Vista previa del resumen"><p className="font-semibold">{process}</p><p className="mt-1 text-sm leading-6 text-[#505b70]">Fuentes: {source}. Revisaremos qué se repite, dónde debe quedar el resultado, las reglas y cómo comprobar que funciona.</p></div>
+        <div className="mt-6 rounded-lg bg-[#f7f8fc] p-5" aria-label="Vista previa del resumen"><p className="font-semibold">{process}</p><p className="mt-1 text-sm leading-6 text-[#505b70]">Fuentes: {source}. Revisaremos qué se repite, dónde debe quedar el resultado, las reglas y cómo comprobar que funciona.</p></div>
         <button type="button" onClick={copyBrief} className={`${action} mt-6 border border-[#b6bfd3] text-sm`}>{copyState === "copied" ? <Check size={17} aria-hidden="true" /> : <Copy size={17} aria-hidden="true" />}{copyState === "copied" ? "Resumen copiado" : "Copiar resumen"}</button>
         <p role="status" className="mt-3 min-h-6 text-sm leading-6 text-[#505b70]">{copyState === "copied" ? "Listo para compartir con tu equipo. No se envió a Ruka." : copyState === "fallback" ? "No pudimos copiarlo. Selecciona el texto del resumen y cópialo manualmente." : "No incluyas contraseñas ni datos de tus clientes."}</p>
         {copyState === "fallback" && <textarea aria-label="Resumen para copiar manualmente" readOnly value={brief} rows={10} className={`mt-3 w-full resize-y rounded-lg border border-[#b6bfd3] p-4 text-sm leading-6 ${focus}`} />}
@@ -103,7 +104,7 @@ function BriefBuilder() {
 export default function Partners() {
   return (
     <div className="bg-white text-[#171827]">
-      <MarketingSeo path={partnersPath} title={partnersTitle} description={partnersDescription} name="Automatización para consultoras de restaurantes" image="/partners-og.png" imageAlt="Ruka para consultoras de restaurantes: tu asesoría, en la operación." faqs={partnerFaqs} primaryEntity={{ "@type": "Service", "@id": "https://www.ruka.ai/partners#service", name: "Automatización operativa para consultoras de restaurantes", description: partnersDescription, serviceType: "Automatización de procesos operativos", provider: { "@id": organizationId }, audience: { "@type": "Audience", audienceType: "Consultoras de restaurantes y asesorías gastronómicas" }, url: "https://www.ruka.ai/partners" }} />
+      <MarketingSeo path={partnersPath} title={partnersTitle} description={partnersDescription} name="Automatización para consultoras de restaurantes" image="/partners-og.png" imageAlt="Ruka para consultoras de restaurantes: tu experiencia, más alcance." faqs={partnerFaqs} primaryEntity={{ "@type": "Service", "@id": "https://www.ruka.ai/partners#service", name: "Automatización operativa para consultoras de restaurantes", description: partnersDescription, serviceType: "Automatización de procesos operativos", provider: { "@id": organizationId }, audience: { "@type": "Audience", audienceType: "Consultoras de restaurantes y asesorías gastronómicas" }, url: "https://www.ruka.ai/partners" }} />
       <Navbar primaryAction={{ label: "Conversemos", path: "/one/contacto" }} />
       <main id="partners-main">
         {/* Clearance for the existing fixed navbar, not additional decorative whitespace. */}
@@ -111,45 +112,54 @@ export default function Partners() {
           <div className={`${section} grid items-center gap-9 pb-12 pt-5 sm:pb-16 lg:grid-cols-[1fr_1.08fr] lg:gap-12 lg:pt-8`}>
             <div>
               <p className="text-sm font-semibold text-[#424ec0]">Para consultoras de restaurantes</p>
-              <h1 className="mt-5 text-[clamp(2.35rem,11vw,3.2rem)] font-semibold leading-[1.06] tracking-[-0.04em] sm:text-[clamp(2.75rem,4.5vw,4.1rem)]">Tu asesoría,<br />en la operación.</h1>
-              <p className="mt-6 max-w-lg text-lg leading-8 text-[#505b70]">Ruka automatiza compras, conciliaciones y costos para que tu consultora se enfoque en mejorar el negocio del cliente.</p>
-              <div className="mt-8 flex flex-wrap gap-3"><Link to="/one/contacto" className={`${action} bg-[#4b59df] text-white hover:bg-[#3e4bc4]`}>Conversemos <ArrowRight size={18} aria-hidden="true" /></Link><a href="#colaboracion" className={`${action} border border-[#cbd2e2] bg-white`}>Cómo colaborar <ArrowDown size={17} aria-hidden="true" /></a></div>
+              <h1 className="mt-5 text-[clamp(2.35rem,11vw,3.2rem)] font-semibold leading-[1.06] tracking-[-0.04em] sm:text-[clamp(2.75rem,4.5vw,4.1rem)]">Tu experiencia.<br />Más alcance.</h1>
+              <p className="mt-6 max-w-lg text-lg leading-8 text-[#505b70]">Ruka automatiza la operación de tus clientes y organiza sus datos para que tu consultoría gastronómica aporte más valor.</p>
+              <div className="mt-8 flex flex-wrap gap-3"><Link to="/one/contacto" className={`${action} bg-[#4b59df] text-white hover:bg-[#3e4bc4]`}>Conversemos <ArrowRight size={18} aria-hidden="true" /></Link><a href="#sin-con-ruka" className={`${action} border border-[#cbd2e2] bg-white`}>Qué cambia con Ruka <ArrowDown size={17} aria-hidden="true" /></a></div>
             </div>
-            <div className="min-w-0 rounded-2xl bg-[#eef0ff] p-4 sm:p-6">
-              <p className="text-sm font-semibold text-[#424ec0]">Así se ve un control en la operación</p>
-              <p className="mb-6 mt-3 max-w-md text-2xl font-semibold leading-tight tracking-[-0.02em]">Lo recibido, junto a la factura.<br />No en una conversación perdida.</p>
-              <ProductImage src="/assets/partners/recepcion-detalle.webp" alt="El equipo registra lo recibido y sus diferencias directamente en Ruka." caption="Detalle de recepción en la demo de Ruka. Datos de ejemplo." eager detail />
-            </div>
+            <IngredientExample />
           </div>
         </header>
 
-        <section className={`${section} py-16 sm:py-24`} aria-labelledby="partner-value">
-          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-            <div><h2 id="partner-value" className={heading}>Que tu trabajo no termine en una recomendación.</h2><p className="mt-5 text-lg leading-8 text-[#505b70]">Ayudas al restaurante a trabajar mejor. Ruka pone a trabajar los procesos que hoy dependen de copiar, cruzar y perseguir información.</p></div>
-            <div className="divide-y divide-[#dce2ed] border-y border-[#dce2ed]">
-              {[
-                ["Menos preparación", "Compras y costos organizados para analizar el negocio, en vez de reconstruir la información antes de cada reunión."],
-                ["Seguimiento entre visitas", "Las reglas que defines se aplican en el flujo acordado. El control no depende solo de tu próxima revisión."],
-                ["Más tiempo para decidir", "Las diferencias llegan con contexto. Tu experiencia se concentra en resolverlas y acompañar al cliente."],
-              ].map(([title, copy], index) => <div key={title} className="flex gap-5 py-6"><span className="pt-1 text-xs font-semibold tabular-nums text-[#424ec0]" aria-hidden="true">0{index + 1}</span><div><h3 className="text-xl font-semibold tracking-[-0.015em]">{title}</h3><p className="mt-2 text-base leading-7 text-[#505b70]">{copy}</p></div></div>)}
-            </div>
+        <section id="sin-con-ruka" className={`${section} scroll-mt-24 py-16 sm:py-24`} aria-labelledby="partner-value">
+          <h2 id="partner-value" className={`${heading} max-w-2xl`}>Que tu tiempo se vaya en asesorar.</h2>
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-[#505b70]">Cuando ordenar la información se vuelve un trabajo en sí mismo, queda menos espacio para mejorar el negocio.</p>
+          <div className="mt-10">
+            <div aria-hidden="true" className="hidden grid-cols-[0.65fr_1fr_1.15fr] gap-6 px-5 pb-4 text-lg font-semibold md:grid"><span>En tu asesoría</span><span className="text-[#505b70]">Sin Ruka</span><span className="px-4 text-[#424ec0]">Con Ruka</span></div>
+            {partnerComparison.map((item) => <article key={item.task} className="grid gap-4 border-t border-[#dce2ed] py-6 md:grid-cols-[0.65fr_1fr_1.15fr] md:gap-6 md:px-5"><h3 className="text-lg font-semibold leading-7">{item.task}</h3><div><p className="mb-2 text-sm font-semibold text-[#505b70] md:sr-only">Sin Ruka</p><p className="text-sm leading-7 text-[#505b70]">{item.without}</p></div><div className="rounded-lg bg-[#eef0ff] p-4 md:-my-2"><p className="mb-2 text-sm font-semibold text-[#424ec0] md:sr-only">Con Ruka</p><p className="text-sm leading-7 text-[#303b69]">{item.with}</p></div></article>)}
+          </div>
+          <p className="mt-5 max-w-3xl text-sm leading-7 text-[#505b70]">Ruka ejecuta los procesos configurados. Tu consultora define criterios, interpreta los resultados y acompaña las decisiones del cliente.</p>
+        </section>
+
+        <section id="datos-y-api" className="scroll-mt-24 bg-[#eef0ff] py-16 sm:py-20" aria-labelledby="partner-api">
+          <div className={section}>
+            <h2 id="partner-api" className={`${heading} max-w-3xl`}>Tus dashboards. Tu metodología.<br className="hidden sm:block" /> Una base que no armas a mano.</h2>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#505b70]">La API de Ruka te permite construir análisis propios con los datos de tus clientes. Tu valor no tiene que caber en nuestro dashboard.</p>
+            <ol className="mt-10 grid gap-6 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-start" aria-label="De la operación al análisis de tu consultora">
+              <li className="min-w-0"><Database className="text-[#424ec0]" size={25} aria-hidden="true" /><h3 className="mt-4 text-xl font-semibold">La operación del cliente</h3><p className="mt-3 text-sm leading-7 text-[#505b70]">Compras, proveedores y movimientos en sus sistemas. Cada restaurante conserva sus accesos y sus decisiones.</p></li>
+              <li aria-hidden="true" className="self-center text-[#424ec0]"><ArrowRight className="hidden md:block" size={22} /><ArrowDown className="md:hidden" size={22} /></li>
+              <li className="min-w-0"><Workflow className="text-[#424ec0]" size={25} aria-hidden="true" /><h3 className="mt-4 text-xl font-semibold">Ruka organiza y ejecuta</h3><p className="mt-3 text-sm leading-7 text-[#505b70]">Registro, conciliación, insumos maestros y costos unitarios, según las conexiones y reglas que acordemos.</p></li>
+              <li aria-hidden="true" className="self-center text-[#424ec0]"><ArrowRight className="hidden md:block" size={22} /><ArrowDown className="md:hidden" size={22} /></li>
+              <li className="min-w-0"><ChartNoAxesCombined className="text-[#424ec0]" size={25} aria-hidden="true" /><h3 className="mt-4 text-xl font-semibold">Tu análisis, vía API</h3><p className="mt-3 text-sm leading-7 text-[#505b70]">Construye seguimiento de costos, compras por proveedor o indicadores propios con la información disponible y autorizada.</p></li>
+            </ol>
+            <div className="mt-10 grid gap-6 border-t border-[#cbd2eb] pt-7 md:grid-cols-2"><p className="text-sm leading-7 text-[#505b70]"><strong className="text-[#171827]">El insumo es el punto de unión.</strong> Distintos nombres y formatos pueden relacionarse con un insumo maestro. Así puedes comparar costos por kilo, litro o unidad, no solo totales de facturas.</p><p className="text-sm leading-7 text-[#505b70]"><strong className="text-[#171827]">Los accesos se acuerdan por cliente.</strong> Definimos los datos, permisos y actualización que necesita tu análisis. La API no da acceso automático a otras cuentas.</p></div>
+            <a href="#colaboracion" className={`${link} mt-6`}>Exploremos tu forma de trabajar <ArrowRight size={17} aria-hidden="true" /></a>
           </div>
         </section>
 
         <section className="bg-[#f7f8fc] py-16 sm:py-24" aria-labelledby="partner-work">
           <div className={section}>
-            <h2 id="partner-work" className={`${heading} max-w-2xl`}>¿Qué trabajo le quitarías de encima a tu cliente?</h2>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#505b70]">Explora tres puntos de partida. En cada uno, tu criterio sigue siendo clave; cambia quién hace el trabajo repetitivo.</p>
+            <h2 id="partner-work" className={`${heading} max-w-2xl`}>El dato mejora porque el trabajo se hace.</h2>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#505b70]">No es solo reunir información. Ruka registra compras, cruza documentos y actualiza costos. Mira dónde entra tu criterio.</p>
             <ProcessExplorer />
           </div>
         </section>
 
         <section className={`${section} py-16 sm:py-24`} aria-labelledby="partner-roles">
           <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-            <div className="rounded-2xl bg-[#171827] p-7 text-white sm:p-10">
+            <div className="rounded-2xl bg-[#f7f8fc] p-7 sm:p-10">
               <h2 id="partner-roles" className={`${heading} max-w-lg`}>Tu metodología.<br />Nuestra ejecución.</h2>
-              <p className="mt-6 text-base leading-8 text-[#d5d9e8]">No se trata de entregar una licencia y dejarte la implementación. Diseñamos contigo qué trabajo toma Ruka y cómo se conecta con tu servicio.</p>
-              <Link to="/one" className={`mt-6 inline-flex min-h-12 items-center gap-2 font-semibold text-white underline decoration-white/40 underline-offset-4 hover:decoration-white focus-visible:!outline-white ${focus}`}>Conoce Ruka One <ArrowRight size={17} aria-hidden="true" /></Link>
+              <p className="mt-6 text-base leading-8 text-[#505b70]">Tú conoces el negocio y la forma de trabajar del cliente. Diseñamos contigo qué procesos toma Ruka para sostener tu servicio entre una visita y la siguiente.</p>
+              <Link to="/one" className={`${link} mt-6`}>Conoce Ruka One <ArrowRight size={17} aria-hidden="true" /></Link>
             </div>
             <dl className="divide-y divide-[#dce2ed] text-base leading-7">
               <div className="pb-6"><dt className="text-lg font-semibold">La relación con el cliente no se improvisa.</dt><dd className="mt-2 text-[#505b70]">Acordamos quién lo acompaña, quién implementa y quién responde cuando hay una incidencia. Tu asesoría conserva un rol claro.</dd></div>
@@ -179,7 +189,7 @@ export default function Partners() {
           <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16"><div><h2 id="partner-questions" className={heading}>Antes de trabajar juntos.</h2><p className="mt-5 text-base leading-7 text-[#505b70]">Lo que conviene dejar claro desde el principio.</p></div><div className="divide-y divide-[#dce2ed] border-y border-[#dce2ed]">{partnerFaqs.map((faq) => <details key={faq.question} className="group py-1"><summary className={`flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-4 text-base font-semibold [&::-webkit-details-marker]:hidden ${focus}`}>{faq.question}<ChevronDown size={18} className="shrink-0 group-open:rotate-180 motion-safe:transition-transform" aria-hidden="true" /></summary><p className="pb-6 pr-6 text-base leading-8 text-[#505b70]">{faq.answer}</p></details>)}</div></div>
         </section>
 
-        <section className={`${section} pb-20 sm:pb-24`} aria-labelledby="partner-invitation"><div className="flex flex-col gap-8 rounded-2xl bg-[#171827] p-8 text-white sm:p-12 lg:flex-row lg:items-center lg:justify-between"><div className="max-w-2xl"><h2 id="partner-invitation" className={heading}>Piensa en ese cliente.<br />Partamos por ahí.</h2><p className="mt-5 max-w-xl text-base leading-7 text-[#d5d9e8]">El que todavía depende de una planilla, de cruzar facturas a mano o de perseguir datos antes de tomar una decisión.</p></div><div className="shrink-0"><Link to="/one/contacto" className={`${action} bg-white text-[#171827]`}>Conversemos <ArrowRight size={18} aria-hidden="true" /></Link><p className="mt-4 text-sm text-[#d5d9e8]">30 minutos · Sin compromiso</p></div></div></section>
+        <section className={`${section} pb-20 sm:pb-24`} aria-labelledby="partner-invitation"><div className="flex flex-col gap-8 rounded-2xl bg-[#eef0ff] p-8 sm:p-12 lg:flex-row lg:items-center lg:justify-between"><div className="max-w-2xl"><h2 id="partner-invitation" className={heading}>Tu próximo cliente puede empezar distinto.</h2><p className="mt-5 max-w-xl text-base leading-7 text-[#505b70]">Cuéntanos qué quieres mejorar: el trabajo operativo, la base de tu análisis o ambos. Diseñemos el primer caso juntos.</p></div><div className="shrink-0"><Link to="/one/contacto" className={`${action} bg-[#4b59df] text-white hover:bg-[#3e4bc4]`}>Conversemos <ArrowRight size={18} aria-hidden="true" /></Link><p className="mt-4 text-sm text-[#505b70]">30 minutos · Sin compromiso</p></div></div></section>
       </main>
       <Footer />
     </div>
