@@ -18,14 +18,15 @@ Canonical identity: **Ruka.ai**, public website **https://www.ruka.ai/**. Ruka O
 - Live profile: https://www.descubre.vc/rukaai
 - Correct website and LinkedIn links; description still centered on purchases, suppliers, analytics/chat/reports. No current Ruka One positioning.
 - Actual UI offers **Reclamar** and a role/start-date/LinkedIn/founder claim form. No authenticated ownership was established. Inspected and canceled the claim form; did not submit a founder assertion or create an account.
-- Pending external action: verified owner must claim or arrange correction with the directory. The website's current description and the Spanish LinkedIn text are the proposed factual basis. Do not treat directory similarity scores, claimed stage or old press dates as verified business metrics.
+- External limitation, not a release blocker: the user confirmed there is no available account/access to modify this directory. No ownership claim or outreach is required for this release. The website and LinkedIn remain the controlled, updated sources. Do not treat directory similarity scores, claimed stage or old press dates as verified business metrics.
 
 ## Bing Webmaster Tools
 
 - Signed in with the authorized corporate Google identity. Only basic sign-in name/email/profile access; no Search Console grant or site import.
 - Account initially had no sites. Added the public URL to request verification instructions; UI explicitly shows **Not verified**.
-- Manual XML/meta verification is offered. Asked the user for action-time approval to grant this account verified site-owner access. No ownership file/meta has been published and no Verify action executed at this checkpoint.
-- IndexNow remains separate: its public key and notification implementation still require website deployment and a verified live receipt. Neither Webmaster verification nor IndexNow acceptance proves indexing, ranking or AI citations.
+- User approved manual XML/meta verification for `camilo@ruka.ai`. Reopened the Profile panel and verified that exact account before publishing the official downloaded `BingSiteAuth.xml` as a static root file. No Search Console import, DNS change or new API credential. The file is a public ownership proof, not an API secret.
+- Verification completion must be confirmed in Bing after this file is deployed; publishing the file alone does not prove verified ownership. The release evidence records the final UI result.
+- IndexNow is separate: the live submission on 2026-10-15 returned HTTP 202 (`verification_pending`) for 29 canonical URLs; the receipt is stored outside the repository. Neither Webmaster verification nor IndexNow acceptance proves indexing, ranking or AI citations.
 
 ## Out of scope / not asserted
 

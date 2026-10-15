@@ -4,6 +4,10 @@ Goal requested 2026-10-15. Scope: audit points 1–9; MCP and agent integrations
 
 ## Acceptance ledger
 
+The implementation checkpoint below is historical. **Production release verified on 2026-10-15:** PR [#100](https://github.com/Suplait/ruka-smart-insight/pull/100), main `d3102a367fdd168fc1c232a4c4e3f4a9a6e87d96`, successful Vercel deployment `7086575813`. All 29 public routes passed raw-server HTML/SEO comparisons; 45 exports/assets passed HTTP/content checks; all seven production social images were visually reviewed. `/v2` permanently redirects to `/`; unknown routes return 404. The live CSV tool passed actual upload, 2-review/1-match result, filter, download, malformed-input invalidation, reset and 390px responsive checks. The final implementation suite passed 136 Vitest tests, 30 Node tests, 1,552 SEO assertions, 164 discovery checks and the unchanged 31-call tracking contract. Reproducible release evidence is in the PR comment and the private engine evidence file `activation-release-2026-10-15.json` (never commit customer/AI raw snapshots).
+
+Workstreams 1–8 are deployed with their documented measurement limitations: unknown billing/absent linked CRM cohort are not invented revenue; the eight-answer AI baseline is observational and partial accuracy remains unscored; IndexNow returned 202, not proof of indexing. LinkedIn corrections are verified. Descubre.vc is explicitly accepted as an uncontrolled external source, not a release requirement. Bing ownership verification is the remaining authorized administrative action, tracked in `EXTERNAL-IDENTITY.md` and the follow-up release evidence.
+
 | Workstream | Deliverable / acceptance | Status |
 | --- | --- | --- |
 | 1. Baseline | Existing prerender, canonical, sitemap, FAQ and funnel contracts remain passing | Local build/SEO/tracking green; production pending |
