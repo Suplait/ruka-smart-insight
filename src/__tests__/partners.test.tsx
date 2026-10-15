@@ -4,7 +4,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import Partners from "@/pages/Partners";
-import { createPartnerBrief, partnerFaqs, partnerProcesses } from "@/content/partnersContent";
+import { createPartnerBrief, ingredientExamples, partnerComparison, partnerFaqs, partnerProcesses, unitCost } from "@/content/partnersContent";
 
 vi.mock("@/components/Navbar", () => ({ default: () => null }));
 vi.mock("@/components/Footer", () => ({ default: () => null }));
@@ -27,7 +27,13 @@ describe("consulting partner experience", () => {
   it("keeps all FAQ answers in the initial HTML without JavaScript", () => {
     const html = renderToString(<MemoryRouter><Partners /></MemoryRouter>);
     for (const faq of partnerFaqs) expect(html).toContain(faq.answer);
-    expect(html.match(/<details/g)).toHaveLength(7);
+    expect(html.match(/<details/g)).toHaveLength(partnerFaqs.length + 1);
+    for (const row of partnerComparison) {
+      expect(html).toContain(row.without);
+      expect(html).toContain(row.with);
+    }
+    expect(html).toContain("La API de Ruka");
+    expect(html).not.toContain("recepcion-detalle.webp");
     for (const process of partnerProcesses) {
       expect(html).toContain(process.title);
       expect(html).toContain(process.ruka);
@@ -88,12 +94,43 @@ describe("consulting partner experience", () => {
   it("opens an accessible image dialog and restores focus without navigating", async () => {
     const user = userEvent.setup();
     renderPage();
-    const trigger = screen.getByRole("button", { name: "Ampliar imagen: El equipo registra lo recibido y sus diferencias directamente en Ruka." });
+    const trigger = screen.getByRole("button", { name: `Ampliar imagen: ${partnerProcesses[0].imageAlt}` });
     await user.click(trigger);
     expect(screen.getByRole("dialog", { name: "Detalle de la plataforma" })).toBeTruthy();
     expect(screen.getByRole("button", { name: "Cerrar imagen" })).toBeTruthy();
     await user.keyboard("{Escape}");
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     expect(document.activeElement).toBe(trigger);
+  });
+  it("compares package prices and unit costs without sending data, with keyboard support and wraparound", async () => {
+    const user = userEvent.setup();
+    const fetchSpy = vi.spyOn(globalThis, "fetch");
+    const storageSpy = vi.spyOn(Storage.prototype, "setItem");
+    renderPage();
+    expect(screen.getByText("$3.000")).toBeTruthy();
+    expect(screen.getByText("$3.400")).toBeTruthy();
+    const raw = screen.getByRole("button", { name: "Precio del envase" });
+    raw.focus();
+    await user.keyboard("{Enter}");
+    expect(raw.getAttribute("aria-pressed")).toBe("true");
+    expect(screen.getByText("$18.000")).toBeTruthy();
+    expect(screen.getByText("$6.800")).toBeTruthy();
+    await user.click(screen.getByRole("button", { name: "Otro ejemplo" }));
+    await user.click(screen.getByRole("button", { name: "Costo unitario" }));
+    expect(screen.getByText("$7.500")).toBeTruthy();
+    expect(screen.getByText("$8.400")).toBeTruthy();
+    await user.click(screen.getByRole("button", { name: "Otro ejemplo" }));
+    expect(screen.getByText("$1.900")).toBeTruthy();
+    expect(screen.getByText("Costos comparables por litro.")).toBeTruthy();
+    await user.click(screen.getByRole("button", { name: "Otro ejemplo" }));
+    expect(screen.getByText("Tomate cherry")).toBeTruthy();
+    expect(fetchSpy).not.toHaveBeenCalled();
+    expect(storageSpy).not.toHaveBeenCalled();
+  });
+  it("computes all six illustrative prices from base-unit quantities and rejects invalid inputs", () => {
+    expect(ingredientExamples.flatMap((example) => example.purchases.map(unitCost))).toEqual([3000, 3400, 7500, 8400, 1900, 2200]);
+    for (const quantity of [0, -1, NaN, Infinity]) expect(() => unitCost({ price: 100, quantity })).toThrow(RangeError);
+    for (const price of [-1, NaN, Infinity]) expect(() => unitCost({ price, quantity: 1 })).toThrow(RangeError);
+    expect(unitCost({ price: 0, quantity: 1 })).toBe(0);
   });
 });

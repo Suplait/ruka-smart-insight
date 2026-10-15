@@ -1,6 +1,34 @@
 export const partnersPath = "/partners";
 export const partnersTitle = "Automatización para consultoras de restaurantes | Ruka";
-export const partnersDescription = "Complementa tu consultoría gastronómica con Ruka: automatiza compras, conciliaciones y costos de tus clientes. Empecemos con un restaurante y un proceso.";
+export const partnersDescription = "Potencia tu consultoría gastronómica con Ruka: compras y conciliaciones automatizadas, insumos maestros, costos unitarios y API para tus propios dashboards.";
+
+// Illustrative, net CLP prices. Quantities are expressed in the ingredient's base unit.
+export const ingredientExamples = [
+  { name: "Tomate cherry", unit: "kg", purchases: [
+    { name: "Tomate cherry caja", pack: "Caja de 6 kg", quantity: 6, price: 18000 },
+    { name: "Cherry selección", pack: "Bolsa de 2 kg", quantity: 2, price: 6800 },
+  ] },
+  { name: "Queso mantecoso", unit: "kg", purchases: [
+    { name: "Q. mantecoso barra", pack: "Barra de 3 kg", quantity: 3, price: 22500 },
+    { name: "Queso mantecoso trozo", pack: "Envase de 500 g", quantity: 0.5, price: 4200 },
+  ] },
+  { name: "Aceite de maravilla", unit: "litro", purchases: [
+    { name: "Aceite maravilla bidón", pack: "Bidón de 5 litros", quantity: 5, price: 9500 },
+    { name: "Aceite maravilla botella", pack: "Botella de 1 litro", quantity: 1, price: 2200 },
+  ] },
+] as const;
+
+export function unitCost(purchase: { price: number; quantity: number }) {
+  if (!Number.isFinite(purchase.quantity) || purchase.quantity <= 0 || !Number.isFinite(purchase.price) || purchase.price < 0) throw new RangeError("A valid price and positive base-unit quantity are required.");
+  return purchase.price / purchase.quantity;
+}
+
+export const partnerComparison = [
+  { task: "Preparar la reunión", without: "Pedir archivos, reunir compras y ordenar la información antes de analizar.", with: "Compras registradas y organizadas para dedicar la reunión a lo que cambia en el negocio." },
+  { task: "Entender qué se compra", without: "El mismo insumo aparece con nombres y presentaciones distintos según el proveedor.", with: "Insumos maestros y equivalencias para trabajar con una identidad común por producto." },
+  { task: "Revisar los costos", without: "Convertir cajas, bolsas y gramos a mano para comparar precios.", with: "Costos llevados a una unidad común para detectar variaciones y revisar su impacto en el margen." },
+  { task: "Entregar tu análisis", without: "Rearmar la base de la planilla o del dashboard cada vez que llegan datos nuevos.", with: "Usar la API de Ruka para alimentar tus propios dashboards con la información autorizada de cada cliente." },
+] as const;
 
 export const partnerProcesses = [
   {
@@ -56,7 +84,8 @@ export const partnerProcesses = [
 export const partnerFaqs = [
   { question: "¿Tenemos que usar un POS específico?", answer: "No planteamos la colaboración alrededor de una sola marca. Revisamos el POS, ERP, facturador y archivos de cada cliente. La lectura y la escritura disponibles dependen del acceso, los permisos y las capacidades de cada sistema; las confirmamos antes de proponer una automatización." },
   { question: "¿Ruka reemplaza el trabajo de la consultora?", answer: "La propuesta es complementar tu asesoría. Tú aportas el diagnóstico, los criterios del negocio y el acompañamiento al cliente. Ruka se encarga de los pasos repetitivos que acordemos automatizar. Definimos por escrito quién atiende al cliente y quién resuelve cada tipo de incidencia." },
-  { question: "¿Sirve si ya tenemos planillas o un dashboard propio?", answer: "Podemos evaluar cómo alimentar o actualizar lo que ya usan. No necesitas abandonar tu metodología para conversar. Primero revisamos qué información necesita, en qué formato y si existe una forma autorizada de entregarla." },
+  { question: "¿Podemos usar la API para nuestros propios dashboards?", answer: "Sí. Ruka tiene API para construir tus propios dashboards y análisis sobre la información de tus clientes. Acordamos qué datos necesitas, qué información está disponible y los permisos de cada cliente. No implica acceso automático a toda tu cartera ni un conector listo para cualquier herramienta." },
+  { question: "¿Qué son los insumos maestros y los costos unitarios?", answer: "Un insumo maestro reúne las equivalencias de un producto que puede llegar con nombres y presentaciones diferentes. Con las cantidades y conversiones definidas, Ruka lleva los costos a una unidad común, como kilo, litro o unidad. Tu criterio es importante: productos con distinta calidad o rendimiento no se vuelven equivalentes solo por tener un nombre parecido." },
   { question: "¿Cómo funciona el acuerdo comercial?", answer: "Lo definimos contigo según el proceso, la implementación y el acompañamiento necesarios. Antes de presentar una propuesta al cliente, acordamos alcance, responsabilidades, costos y forma de contratación. Esta página no ofrece comisiones ni exige exclusividad." },
   { question: "¿Qué necesitamos para la primera conversación?", answer: "Un ejemplo de trabajo manual que se repita y los nombres de los sistemas que toca. No necesitas traer facturas, datos personales ni contraseñas de tus clientes. Si después evaluamos un caso real, acordamos primero los permisos y cómo compartir la información." },
   { question: "¿Podemos empezar con un solo cliente?", answer: "Sí. Es la forma que proponemos: un cliente, un proceso y un resultado acordado. Confirmamos la viabilidad, probamos el recorrido con autorización y revisamos el resultado antes de ampliar el alcance." },
