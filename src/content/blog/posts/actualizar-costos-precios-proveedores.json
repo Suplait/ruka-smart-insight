@@ -47,6 +47,29 @@
       }
     },
     {
+      "id": "presentacion-desconocida",
+      "title": "¿Cuántos kilos trae esa caja?",
+      "paragraphs": [
+        "Si la factura dice «2 cajas» y la receta consume kilos, no falta una fórmula: falta saber qué contiene cada caja. Confirma producto, presentación y contenido con quien recibe o con el proveedor. No uses la equivalencia de una compra anterior solo porque el nombre se parece.",
+        "Una presentación fija y una de peso variable requieren tratamientos distintos. Si cada caja trae cuatro bolsas de dos kilos, puedes calcular 2 × 4 × 2 = 16 kg. Si cada caja pesa distinto, necesitas el peso real recibido: el promedio de otra entrega no demuestra la cantidad de esta."
+      ],
+      "example": {
+        "title": "El dato que habilita cada cálculo",
+        "rows": [
+          { "label": "Contenido fijo confirmado", "detail": "2 cajas × 4 bolsas × 2 kg", "result": "16 kg" },
+          { "label": "Peso variable", "detail": "2 cajas sin peso recibido", "result": "Pendiente: pesar o confirmar" },
+          { "label": "Otra magnitud", "detail": "6 litros para una receta en kilos", "result": "No asumir 6 kg" }
+        ],
+        "note": "Ejemplos de método, no conversiones ejecutadas por Ruka. Pasar de volumen a masa requiere una equivalencia apropiada para ese producto y sus condiciones."
+      },
+      "bullets": [
+        "Guarda quién aprobó la equivalencia, la presentación y desde qué compra aplica.",
+        "Si el proveedor cambia contenido, calidad o rendimiento, revisa la relación antes de comparar.",
+        "Sin equivalencia confirmada, deja el costo incompleto. No rellenes la cantidad con uno ni con cero."
+      ],
+      "action": { "label": "Ver qué confirmar antes de registrar una compra en Toteat", "href": "/procesos/registrar-compras-toteat" }
+    },
+    {
       "id": "aplicar-receta",
       "title": "Después: cuánto cambia el consumo por producto",
       "paragraphs": [
@@ -133,8 +156,8 @@
   ],
   "status": "published",
   "datePublished": "2026-10-14",
-  "dateModified": "2026-10-14",
-  "readingTimeMinutes": 5,
+  "dateModified": "2026-10-15",
+  "readingTimeMinutes": 7,
   "audience": "equipos de operaciones, compras y finanzas en Chile",
   "author": {
     "name": "Equipo Ruka",

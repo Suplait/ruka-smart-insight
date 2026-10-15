@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { ArrowLeft, ArrowRight, Check, Clock3, ExternalLink } from "lucide-react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { BlogPostSeo } from "@/components/blog/BlogSeo";
@@ -14,6 +15,19 @@ type BlogArticleProps = {
 export default function BlogArticle({ post: prerenderedPost }: BlogArticleProps) {
   const { slug = "" } = useParams();
   const post = prerenderedPost ?? getBlogPost(slug);
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (!post || !hash) return;
+    let id: string;
+    try { id = decodeURIComponent(hash.slice(1)); } catch { return; }
+    // On a direct URL or React Router navigation, the browser can process the
+    // fragment before the article exists. Resolve it after the article mounts.
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView({ block: "start", behavior: "instant" });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [post, hash]);
 
   if (!post) return <Navigate to="/404" replace />;
 

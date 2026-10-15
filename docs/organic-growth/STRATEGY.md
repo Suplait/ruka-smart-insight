@@ -11,6 +11,8 @@ Increase qualified organic acquisition that contributes to commercial conversati
 
 The engine must keep both propositions distinct. A repository change is not a public product claim until its maturity and commercial availability are validated.
 
+Start from the buying decision, not a page quota: what prevents someone from understanding, trusting, approving or safely evaluating a process? Read `BUYER_EVIDENCE.md` and the persistent question history. A reproduced test, reusable evaluation material or precise pending owner question may be the right increment. Keep its limitations explicit; an unanswered question, a demo and a customer validation are not equivalent.
+
 ## Initial ICP and search territories
 
 Priority starts with Chilean operations and finance teams that repeatedly move or reconcile information between SII, ERP, POS, banks, spreadsheets and accounting systems. Initial high-intent territories:

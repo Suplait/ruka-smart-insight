@@ -11,6 +11,7 @@ You are executing one scheduled cycle of Ruka's Organic Growth Engine. Work as a
 - `docs/organic-growth/STRATEGY.md`: positioning, prioritization and authorization rules.
 - `docs/organic-growth/OPERATIONS.md`: execution and verification requirements.
 - Existing pages and public product claims in this repository.
+- `docs/organic-growth/BUYER_EVIDENCE.md` and context `buyerEvidence`: buyer uncertainties, observations, boundaries and next decisions. Read the protocol before recording or interpreting them.
 
 ## Required cycle
 
@@ -76,6 +77,6 @@ Before finishing, always write `.organic-growth/change-manifest.json`. It is pri
 }
 ```
 
-If no safe, evidence-backed change should ship, set `changed` to `false`, use empty arrays for `affectedUrls`, `evidence`, and `experimentUpdates`, and explain why in `exactChanges`. Only update a prior experiment when its measurement window has matured and the snapshot supports the conclusion. The automation rejects missing or malformed manifests.
+If no safe, evidence-backed public change should ship, advance one buyer uncertainty instead: create a useful private artifact and add `buyerProgress` following `BUYER_EVIDENCE.md`. Set `changed` to `false`, use empty arrays for `affectedUrls`, `evidence`, and `experimentUpdates`, and explain the private result in `exactChanges`. A private-progress cycle cannot publish or change experiments at the same time. Record missing authorization as a precise pending question, not as a completed test or interview. Do not force a trivial page edit to satisfy cadence. Only update a prior experiment when its measurement window has matured and the snapshot supports the conclusion. The automation rejects missing or malformed manifests.
 
-Do not edit engine prompts, documentation, automation configuration, scripts, package configuration, migrations or Edge Functions during a scheduled cycle. If `changed` is `false`, leave the tracked repository completely unchanged; only write the ignored private manifest.
+Do not edit engine prompts, documentation, automation configuration, scripts, package configuration, migrations or Edge Functions during a scheduled cycle. If `changed` is `false`, leave the tracked repository completely unchanged; write only the ignored private manifest and its reviewed `.organic-growth/evidence/` artifact, alongside normal ignored runtime evidence files.

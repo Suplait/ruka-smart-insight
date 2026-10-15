@@ -14,6 +14,7 @@ coverage/
 *.local
 supabase/.temp/
 .organic-growth/
+/output/pdf/
 
 # Editor directories and files
 .vscode/*

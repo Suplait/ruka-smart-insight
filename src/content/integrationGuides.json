@@ -9,7 +9,7 @@
     "lead": "La compra ya está informada. No debería obligarte a volver a ingresarla para poder trabajar con ella.",
     "direction": "SII → Ruka",
     "scope": "Consulta e incorporación de documentos de compra, con acceso autorizado.",
-    "reviewedAt": "2026-10-14",
+    "reviewedAt": "2026-10-15",
     "evidenceLevel": "implementation-reviewed",
     "capabilityId": "sii-purchase-intake",
     "input": "Documentos tributarios de compra y detalle disponible en XML.",
@@ -64,6 +64,10 @@
       "label": "Ver registro de compras"
     },
     "sources": [
+      {
+        "label": "Registro de Compras y Ventas del SII",
+        "url": "https://www.sii.cl/destacados/f29/registrocompraventas.htm"
+      },
       {
         "label": "Registro de compras en Ruka",
         "url": "https://www.ruka.ai/productos/registro-de-compras"

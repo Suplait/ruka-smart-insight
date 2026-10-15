@@ -1,0 +1,2 @@
+# Generated PDF assets are binary; never normalize their cross-reference offsets.
+*.pdf binary
