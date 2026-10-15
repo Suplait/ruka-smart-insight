@@ -5,7 +5,7 @@ import { vi } from "vitest";
 import guides from "@/content/integrationGuides.json";
 import registry from "@/content/capabilities.json";
 import IntegrationGuide from "@/pages/IntegrationGuide";
-import { blogPosts } from "@/content/blog/posts";
+import { blogPosts, getRelatedBlogPosts } from "@/content/blog/posts";
 
 vi.mock("@/components/Navbar", () => ({ default: () => null }));
 vi.mock("@/components/Footer", () => ({ default: () => null }));
@@ -13,7 +13,7 @@ vi.mock("@/components/seo/MarketingSeo", () => ({ MarketingSeo: () => null }));
 
 describe("discovery content contracts", () => {
   it("each guide references conditional, reviewed evidence with explicit limits", () => {
-    expect(guides.map((g) => g.slug)).toEqual(expect.arrayContaining(["sii", "toteat", "nubox"]));
+    expect(guides.map((g) => g.slug)).toEqual(expect.arrayContaining(["sii", "toteat", "nubox", "chipax", "idtecloud"]));
     for (const guide of guides) {
       const capability = registry.capabilities.find((entry) => entry.id === guide.capabilityId);
       expect(capability?.assessment).toBe("implemented-conditional");
@@ -25,6 +25,20 @@ describe("discovery content contracts", () => {
       expect(html).toContain(guide.direction.replace(/>/g, "&gt;"));
       expect(html).toContain(guide.limits[0]);
       expect(html).toContain('href="/register"');
+    }
+  });
+  it("keeps comparisons, cost guidance and integrations linked to existing journeys", () => {
+    const slugs = new Set(blogPosts.map((post) => post.slug));
+    const guidePaths = new Set(guides.map((guide) => `/integraciones/${guide.slug}`));
+    expect(blogPosts.filter((post) => post.category === "Comparativas")).toHaveLength(3);
+    expect(slugs.has("actualizar-costos-precios-proveedores")).toBe(true);
+    for (const post of blogPosts) {
+      for (const link of post.relatedLinks) {
+        if (link.href.startsWith("/blog/")) expect(slugs.has(link.href.slice(6))).toBe(true);
+        if (link.href.startsWith("/integraciones/")) expect(guidePaths.has(link.href)).toBe(true);
+      }
+      const linkedArticle = post.relatedLinks.find((link) => link.href.startsWith("/blog/"));
+      if (linkedArticle) expect(post.relatedLinks.map((link) => link.href)).toContain(`/blog/${getRelatedBlogPosts(post)[0].slug}`);
     }
   });
   it("does not advertise the unimplemented new Defontana posting flow", () => {

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+<title id="title">Leer no es terminar el registro.</title><desc id="desc">Texto y campos frente a Producto y unidad. Proveedor y folio frente a Reglas y duplicados. Datos para revisar frente a Resultado en el destino</desc>
+<rect width="1200" height="630" fill="#f5f6fc"/>
+<text x="60" y="62" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#4f5ce7">Ruka · Guía práctica</text>
+<text x="60" y="133" font-family="Arial,sans-serif" font-size="44" font-weight="700" fill="#171827">Leer no es terminar el registro.</text>
+<rect x="60" y="178" width="510" height="338" rx="12" fill="white"/>
+<rect x="630" y="178" width="510" height="338" rx="12" fill="#171827"/>
+<g font-family="Arial,sans-serif"><text x="90" y="226" font-size="23" font-weight="700" fill="#505b70">EXTRACCIÓN</text><text x="660" y="226" font-size="23" font-weight="700" fill="#bfc6ff">REGISTRO</text>
+<text x="90" y="296" font-size="29" fill="#171827">Texto y campos</text><text x="660" y="296" font-size="29" fill="#ffffff">Producto y unidad</text><path d="M90 318H540 M660 318H1110" stroke="#8a94b0" stroke-opacity=".25"/>
+<text x="90" y="378" font-size="29" fill="#171827">Proveedor y folio</text><text x="660" y="378" font-size="29" fill="#ffffff">Reglas y duplicados</text><path d="M90 400H540 M660 400H1110" stroke="#8a94b0" stroke-opacity=".25"/>
+<text x="90" y="460" font-size="29" fill="#171827">Datos para revisar</text><text x="660" y="460" font-size="29" fill="#ffffff">Resultado en el destino</text>
+<text x="60" y="573" font-size="23" fill="#505b70">Alcances complementarios: una solución puede cubrir ambos.</text></g></svg>

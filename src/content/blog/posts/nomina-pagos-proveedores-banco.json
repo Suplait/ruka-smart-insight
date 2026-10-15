@@ -38,11 +38,31 @@
       "example": {
         "title": "Ejemplo de control antes de exportar",
         "rows": [
-          { "label": "Factura A", "detail": "$120.000 · Revisada y con datos completos", "result": "Incluida" },
-          { "label": "Factura B", "detail": "$80.000 · Revisada y con datos completos", "result": "Incluida" },
-          { "label": "Factura C", "detail": "$50.000 · Recepción por aclarar", "result": "Fuera del lote del ejemplo" },
-          { "label": "Factura D", "detail": "$30.000 · Cuenta bancaria incompleta", "result": "Fuera hasta resolver los datos" },
-          { "label": "Control", "detail": "Seleccionado: $280.000", "result": "Archivo esperado: $200.000" }
+          {
+            "label": "Factura A",
+            "detail": "$120.000 · Revisada y con datos completos",
+            "result": "Incluida"
+          },
+          {
+            "label": "Factura B",
+            "detail": "$80.000 · Revisada y con datos completos",
+            "result": "Incluida"
+          },
+          {
+            "label": "Factura C",
+            "detail": "$50.000 · Recepción por aclarar",
+            "result": "Fuera del lote del ejemplo"
+          },
+          {
+            "label": "Factura D",
+            "detail": "$30.000 · Cuenta bancaria incompleta",
+            "result": "Fuera hasta resolver los datos"
+          },
+          {
+            "label": "Control",
+            "detail": "Seleccionado: $280.000",
+            "result": "Archivo esperado: $200.000"
+          }
         ],
         "note": "Reglas ilustrativas, no una promesa de validación bancaria. Comprueba titular, cuenta, documentos, total y formato antes de autorizar en el banco."
       }
@@ -95,6 +115,20 @@
         "Los errores recurrentes muestran dónde mejorar el proceso anterior. Si faltan cuentas bancarias, el maestro necesita una regla de actualización. Si aparecen facturas duplicadas, el registro debe fortalecer su control. La automatización vuelve visibles estas causas porque mantiene el recorrido completo.",
         "Ruka puede tomar la información validada, aplicar las reglas de pago y generar la nómina masiva compatible con el banco. El equipo conserva la aprobación y deja de reconstruir el archivo cada vez."
       ]
+    },
+    {
+      "id": "antes-cargar-banco",
+      "title": "El archivo correcto todavía necesita un último control",
+      "paragraphs": [
+        "Antes de subir la nómina, compara su cantidad de destinatarios y monto total con los documentos habilitados. Revisa qué ocurre si un proveedor cambió de cuenta: una cuenta escrita en una factura no basta para confirmar titularidad. Usa el procedimiento autorizado de tu empresa para verificar cambios bancarios por un canal confiable y deja evidencia de quién los aprobó.",
+        "Después de cargar, distingue archivo recibido, registros aceptados, registros rechazados y pagos autorizados. No generes una segunda nómina completa si el banco aceptó solo una parte sin antes revisar qué pasó con cada instrucción. La guía describe controles recomendados: no implica que Ruka lea automáticamente esos estados en cualquier banco ni que la descarga ejecute transferencias."
+      ],
+      "bullets": [
+        "Monto y cantidad del archivo conciliados con la selección.",
+        "Formato vigente del banco confirmado.",
+        "Cambios de cuenta verificados por el procedimiento de la empresa.",
+        "Resultado bancario revisado antes de reintentar."
+      ]
     }
   ],
   "faq": [
@@ -118,7 +152,10 @@
     "description": "Conoce cómo Ruka valida compras y genera el archivo masivo de pago sin reconstruir la información en una planilla."
   },
   "relatedLinks": [
-    { "label": "Probar una conciliación antes del pago", "href": "/herramientas/conciliar-factura-orden-recepcion" },
+    {
+      "label": "Probar una conciliación antes del pago",
+      "href": "/herramientas/conciliar-factura-orden-recepcion"
+    },
     {
       "label": "Conciliación automática",
       "href": "/productos/conciliacion-automatica"
@@ -126,6 +163,14 @@
     {
       "label": "Registro de compras",
       "href": "/productos/registro-de-compras"
+    },
+    {
+      "label": "Qué comprueba una conciliación de dos o tres documentos",
+      "href": "/blog/conciliacion-dos-vs-tres-documentos"
+    },
+    {
+      "label": "XML de compras desde Chipax: alcance de lectura",
+      "href": "/integraciones/chipax"
     }
   ],
   "sources": [

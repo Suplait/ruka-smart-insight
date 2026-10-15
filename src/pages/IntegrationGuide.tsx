@@ -20,7 +20,7 @@ export default function IntegrationGuide({ guide: supplied }: { guide?: typeof g
             <Link to="/integraciones" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#505b70] hover:text-primary focus-visible:ring-2 focus-visible:ring-primary"><ArrowLeft size={16} /> Todas las integraciones</Link>
             <div className="mt-8 grid gap-10 lg:grid-cols-[1.3fr_0.7fr] lg:items-end lg:gap-16">
               <div>
-                <div className="mb-7 flex items-center gap-5"><img src={guide.logo} alt={guide.name} className="h-10 max-w-36 object-contain" /><span className="border-l border-[#cbd2e2] pl-5 text-sm font-medium text-[#505b70]">Ruka + {guide.name}</span></div>
+                <div className="mb-7 flex items-center gap-5"><img src={guide.logo} alt={guide.name} className={`h-10 max-w-36 object-contain${guide.slug === "idtecloud" ? " rounded-md bg-[#171827] px-3 py-2" : ""}`} /><span className="border-l border-[#cbd2e2] pl-5 text-sm font-medium text-[#505b70]">Ruka + {guide.name}</span></div>
                 <h1 className="max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[1.05] tracking-[-0.04em]">{guide.headline}</h1>
                 <p className="mt-6 max-w-2xl text-lg leading-8 text-[#505b70]">{guide.lead}</p>
               </div>

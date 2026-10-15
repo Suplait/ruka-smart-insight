@@ -1,6 +1,7 @@
 import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { bodyText, normalizeText } from "./seo-body-text.mjs";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const siteOrigin = "https://www.ruka.ai";
@@ -343,7 +344,7 @@ async function validateRoute(route, { noIndex = false } = {}) {
   }
 
   if (route.schema?.includes("FAQPage")) {
-    const visibleText = textContent(html);
+    const visibleText = bodyText(html);
     const graph = schema.values.flatMap((value) => value["@graph"] ?? [value]);
     const faqPage = graph
       .find((value) => value?.["@type"] === "FAQPage");
@@ -351,8 +352,8 @@ async function validateRoute(route, { noIndex = false } = {}) {
     assert(Boolean(faqPage?.mainEntity?.length), `${route.path}: FAQPage no contiene preguntas`);
     assert(page?.hasPart?.["@id"] === faqPage?.["@id"], `${route.path}: WebPage no enlaza su FAQPage`);
     for (const question of faqPage?.mainEntity ?? []) {
-      assert(visibleText.includes(question.name), `${route.path}: pregunta FAQ ausente del HTML inicial (${question.name})`);
-      assert(visibleText.includes(question.acceptedAnswer?.text), `${route.path}: respuesta FAQ ausente del HTML inicial (${question.name})`);
+      assert(visibleText.includes(normalizeText(question.name)), `${route.path}: pregunta FAQ ausente del HTML inicial (${question.name})`);
+      assert(visibleText.includes(normalizeText(question.acceptedAnswer?.text ?? "")), `${route.path}: respuesta FAQ ausente del HTML inicial (${question.name})`);
     }
   }
 
@@ -369,8 +370,8 @@ const faqSchema = homeSchemas
   .find((schema) => schema?.["@type"] === "FAQPage");
 assert(faqSchema?.mainEntity?.length === 9, `/: FAQPage debe contener 9 preguntas y contiene ${faqSchema?.mainEntity?.length ?? 0}`);
 for (const question of faqSchema?.mainEntity ?? []) {
-  assert(homeHtml.includes(question.name), `/: pregunta FAQ ausente del HTML visible: ${question.name}`);
-  assert(homeHtml.includes(question.acceptedAnswer?.text), `/: respuesta FAQ ausente del HTML visible: ${question.name}`);
+  assert(bodyText(homeHtml).includes(normalizeText(question.name)), `/: pregunta FAQ ausente del HTML visible: ${question.name}`);
+  assert(bodyText(homeHtml).includes(normalizeText(question.acceptedAnswer?.text ?? "")), `/: respuesta FAQ ausente del HTML visible: ${question.name}`);
 }
 assert(homeHtml.includes('href="/one"'), "/: falta enlace HTML crawleable hacia /one");
 assert(homeHtml.includes("Ver Ruka One"), "/: falta copy contextual del enlace hacia Ruka One");

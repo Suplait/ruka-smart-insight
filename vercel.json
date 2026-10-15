@@ -92,6 +92,10 @@
     }
   ],
   "rewrites": [
+    { "source": "/integraciones/chipax", "destination": "/integraciones/chipax/index.html" },
+    { "source": "/integraciones/chipax/", "destination": "/integraciones/chipax/index.html" },
+    { "source": "/integraciones/idtecloud", "destination": "/integraciones/idtecloud/index.html" },
+    { "source": "/integraciones/idtecloud/", "destination": "/integraciones/idtecloud/index.html" },
     { "source": "/integraciones/sii", "destination": "/integraciones/sii/index.html" },
     { "source": "/integraciones/sii/", "destination": "/integraciones/sii/index.html" },
     { "source": "/integraciones/toteat", "destination": "/integraciones/toteat/index.html" },

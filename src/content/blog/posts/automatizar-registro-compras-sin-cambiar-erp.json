@@ -39,14 +39,33 @@
       "example": {
         "title": "Ejemplo: harina comprada en sacos, usada en kilos",
         "rows": [
-          { "label": "Fuente", "detail": "Factura: 4 sacos × $20.000", "result": "Neto: $80.000" },
-          { "label": "Unidad", "detail": "Cada saco contiene 25 kg", "result": "4 × 25 = 100 kg" },
-          { "label": "Costo", "detail": "$80.000 ÷ 100 kg", "result": "$800 por kg" },
-          { "label": "Destino", "detail": "Producto y código del sistema confirmados", "result": "Registrar solo por el mecanismo habilitado" }
+          {
+            "label": "Fuente",
+            "detail": "Factura: 4 sacos × $20.000",
+            "result": "Neto: $80.000"
+          },
+          {
+            "label": "Unidad",
+            "detail": "Cada saco contiene 25 kg",
+            "result": "4 × 25 = 100 kg"
+          },
+          {
+            "label": "Costo",
+            "detail": "$80.000 ÷ 100 kg",
+            "result": "$800 por kg"
+          },
+          {
+            "label": "Destino",
+            "detail": "Producto y código del sistema confirmados",
+            "result": "Registrar solo por el mecanismo habilitado"
+          }
         ],
         "note": "Ejemplo educativo. Un cambio de unidad requiere una equivalencia comprobada; no se deduce por parecido entre nombres."
       },
-      "action": { "label": "Ver qué aporta la conexión con SII", "href": "/integraciones/sii" }
+      "action": {
+        "label": "Ver qué aporta la conexión con SII",
+        "href": "/integraciones/sii"
+      }
     },
     {
       "id": "donde-esta-el-trabajo-manual",
@@ -96,6 +115,18 @@
         "Para dimensionarlo, toma una semana representativa. Cuenta cuántos documentos entran, cuántas fuentes participan, cuántos minutos se destinan a cada uno y cuántas veces el equipo vuelve sobre el mismo caso. Luego identifica el porcentaje de documentos que sigue reglas repetibles. Esa base permite evaluar el impacto sin recurrir a promesas genéricas.",
         "Antes de ampliar, prueba una compra normal y otra con un dato faltante. Verifica que la primera llegue al destino correcto y que la segunda no aparezca como terminada. Revisa también una factura repetida: reintentar una carga no debería crear un segundo registro. Esa prueba vale más que una lista larga de integraciones."
       ]
+    },
+    {
+      "id": "dos-fuentes-misma-compra",
+      "title": "Cuando la misma factura llega por dos lados",
+      "paragraphs": [
+        "Es común recibir el PDF por correo y después incorporar el XML desde un portal. No son necesariamente dos compras: pueden ser dos respaldos del mismo documento. Antes de registrar de nuevo, define la identidad que usarás, por ejemplo empresa receptora, emisor, tipo y folio. No basta con comparar nombres de archivo o montos, porque pueden repetirse en compras distintas.",
+        "Si las fuentes discrepan, conserva la diferencia y revisa cuál corresponde al documento válido; no sobrescribas silenciosamente un valor confirmado. Prueba también una reejecución después de un error del destino: el registro debe permitir saber si la primera carga falló o ya fue aceptada. La disponibilidad de estos controles se comprueba con el flujo configurado, no por el hecho de que exista una conexión."
+      ],
+      "action": {
+        "label": "Qué cubre OCR y qué cubre el registro",
+        "href": "/blog/ocr-facturas-vs-registro-automatico"
+      }
     }
   ],
   "faq": [
@@ -119,8 +150,14 @@
     "description": "Mira cómo Ruka recibe, lee, ordena y registra la información de compra sobre los sistemas que ya usa tu empresa."
   },
   "relatedLinks": [
-    { "label": "Documentos de Nubox hacia Ruka: alcance y requisitos", "href": "/integraciones/nubox" },
-    { "label": "Compras de Ruka a Toteat: productos, unidades y locales", "href": "/integraciones/toteat" },
+    {
+      "label": "Documentos de Nubox hacia Ruka: alcance y requisitos",
+      "href": "/integraciones/nubox"
+    },
+    {
+      "label": "Compras de Ruka a Toteat: productos, unidades y locales",
+      "href": "/integraciones/toteat"
+    },
     {
       "label": "Integraciones de Ruka",
       "href": "/integraciones"
@@ -128,6 +165,18 @@
     {
       "label": "Conciliación automática",
       "href": "/productos/conciliacion-automatica"
+    },
+    {
+      "label": "Cuándo basta con Excel y cuándo automatizar",
+      "href": "/blog/registro-compras-excel-vs-automatizacion"
+    },
+    {
+      "label": "OCR de facturas o registro completo",
+      "href": "/blog/ocr-facturas-vs-registro-automatico"
+    },
+    {
+      "label": "XML de compras desde iDTECloud",
+      "href": "/integraciones/idtecloud"
     }
   ],
   "sources": [

@@ -38,13 +38,28 @@
       "example": {
         "title": "La misma compra vista desde tres documentos",
         "rows": [
-          { "label": "Harina", "detail": "OC: 10 · Factura: 10 · Recepción: 8", "result": "2 sacos sin respaldo de recepción" },
-          { "label": "Aceite", "detail": "Precio acordado: $2.500 · Facturado: $2.800", "result": "$300 más por bidón" },
-          { "label": "Envases", "detail": "OC, factura y recepción: 100 unidades", "result": "Coincide en los campos del ejemplo" }
+          {
+            "label": "Harina",
+            "detail": "OC: 10 · Factura: 10 · Recepción: 8",
+            "result": "2 sacos sin respaldo de recepción"
+          },
+          {
+            "label": "Aceite",
+            "detail": "Precio acordado: $2.500 · Facturado: $2.800",
+            "result": "$300 más por bidón"
+          },
+          {
+            "label": "Envases",
+            "detail": "OC, factura y recepción: 100 unidades",
+            "result": "Coincide en los campos del ejemplo"
+          }
         ],
         "note": "Montos netos ficticios. Coincidir en estos campos no reemplaza controles de impuestos, duplicados, identidad del proveedor o aprobación de pago."
       },
-      "action": { "label": "Probar esta conciliación", "href": "/herramientas/conciliar-factura-orden-recepcion" }
+      "action": {
+        "label": "Probar esta conciliación",
+        "href": "/herramientas/conciliar-factura-orden-recepcion"
+      }
     },
     {
       "id": "tres-versiones-de-una-compra",
@@ -94,6 +109,18 @@
         "Durante el levantamiento se observan casos normales y casos difíciles. Los normales permiten automatizar volumen. Los difíciles ayudan a diseñar excepciones y responsabilidades. Con el flujo operando, las reglas se ajustan sobre evidencia y luego se incorporan nuevas variantes.",
         "Ruka puede conectar las fuentes existentes, relacionar documentos y ejecutar las reglas acordadas. El objetivo no es que el equipo deje de controlar, sino que deje de buscar manualmente qué necesita control."
       ]
+    },
+    {
+      "id": "quien-resuelve-diferencias",
+      "title": "Una diferencia necesita dueño y respaldo",
+      "paragraphs": [
+        "Separa al menos tres preguntas. Si cambia el precio, compras debe contrastarlo con lo acordado. Si falta cantidad, quien recibió confirma el conteo o una entrega pendiente. Si cambia la unidad, hay que revisar la equivalencia antes de concluir que sobra o falta mercadería. Mandar los tres casos a una misma lista sin explicación obliga a rehacer el cruce.",
+        "Deja anotados documento, línea, valor esperado, valor observado y decisión tomada. No ajustes el respaldo para que el indicador se vea correcto. Si el proveedor emitirá una nota de crédito o completará la entrega, conserva esa resolución como pendiente hasta tener evidencia. La guía comparativa explica qué cambia cuando falta la recepción y por qué una coincidencia documental no reemplaza la aprobación del pago."
+      ],
+      "action": {
+        "label": "Elegir entre dos y tres documentos",
+        "href": "/blog/conciliacion-dos-vs-tres-documentos"
+      }
     }
   ],
   "faq": [
@@ -117,8 +144,14 @@
     "description": "Conoce cómo Ruka cruza documentos, aplica tus reglas y separa los casos que realmente necesitan revisión."
   },
   "relatedLinks": [
-    { "label": "Prueba el ejemplo de factura, orden y recepción", "href": "/herramientas/conciliar-factura-orden-recepcion" },
-    { "label": "Antes de enviar compras a Toteat", "href": "/integraciones/toteat" },
+    {
+      "label": "Prueba el ejemplo de factura, orden y recepción",
+      "href": "/herramientas/conciliar-factura-orden-recepcion"
+    },
+    {
+      "label": "Antes de enviar compras a Toteat",
+      "href": "/integraciones/toteat"
+    },
     {
       "label": "Cuentas por pagar",
       "href": "/productos/cuentas-por-pagar"
@@ -126,6 +159,14 @@
     {
       "label": "Registro de compras",
       "href": "/productos/registro-de-compras"
+    },
+    {
+      "label": "Dos documentos vs. tres: qué añade la recepción",
+      "href": "/blog/conciliacion-dos-vs-tres-documentos"
+    },
+    {
+      "label": "Actualizar costos con unidades comparables",
+      "href": "/blog/actualizar-costos-precios-proveedores"
     }
   ],
   "sources": [

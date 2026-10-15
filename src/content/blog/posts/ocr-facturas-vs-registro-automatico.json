@@ -1,0 +1,139 @@
+{
+  "slug": "ocr-facturas-vs-registro-automatico",
+  "category": "Comparativas",
+  "title": "OCR de facturas o registro automático: qué trabajo resuelve cada uno",
+  "excerpt": "Leer una factura no es lo mismo que dejarla registrada. Cómo elegir según lo que tu equipo sigue haciendo después de extraer los datos.",
+  "metaTitle": "OCR de facturas vs. registro automático | Ruka",
+  "metaDescription": "Compara OCR y registro automático de facturas: extracción, unidades, duplicados y destino. Qué pedir en una prueba antes de elegir una solución.",
+  "targetQuery": "OCR facturas vs registro automatico",
+  "searchIntent": "comparación de enfoques para evaluar una solución",
+  "intro": [
+    "Un OCR convierte una imagen en texto. Una solución de extracción puede ir más lejos y reconocer proveedor, folio, montos y líneas. Eso resuelve una parte valiosa del trabajo, pero no responde por sí solo si ese producto existe en tu ERP, si la unidad coincide o si la compra ya estaba registrada.",
+    "La pregunta para elegir no es cuál usa más inteligencia artificial. Es qué tarea quieres dejar de hacer. Si tu equipo pierde tiempo transcribiendo, la extracción puede bastar. Si sigue corrigiendo códigos, buscando destinos y repitiendo cargas, necesitas revisar el proceso completo."
+  ],
+  "keyTakeaways": [
+    "Compara tareas terminadas, no etiquetas como OCR o IA.",
+    "Un XML estructurado puede evitar reconocer una imagen, pero no resuelve todas las reglas del registro.",
+    "Prueba datos difíciles y el resultado en el destino, no solo una factura que se lee bien."
+  ],
+  "sections": [
+    {
+      "id": "que-resuelve",
+      "title": "Dónde termina la lectura y empieza el registro",
+      "paragraphs": [
+        "El OCR resulta útil cuando la fuente es una foto o un PDF escaneado. Sobre ese texto, otro paso identifica campos y líneas. Si llega un XML legible, esos datos ya pueden venir estructurados; volver a convertirlos en imagen sería un rodeo. En ambos casos aún debes comprobar qué significan los valores para tu operación.",
+        "Registrar implica decidir proveedor, empresa, fecha, producto, unidad y destino. También exige detectar documentos repetidos y conocer el resultado de la escritura. Algunos proveedores de OCR incluyen esas funciones; otros entregan solo los campos. Por eso esta comparación distingue alcances, no clasifica marcas ni asegura que todas las herramientas sean iguales."
+      ],
+      "example": {
+        "title": "La misma línea de factura, dos resultados distintos",
+        "rows": [
+          {
+            "label": "Extracción",
+            "detail": "Harina · 2 sacos · $25.000 por saco",
+            "result": "Datos reconocidos para revisar"
+          },
+          {
+            "label": "Registro",
+            "detail": "Código interno + saco de 25 kg + destino",
+            "result": "Compra registrada o error explicado"
+          }
+        ],
+        "note": "Ejemplo conceptual con datos ficticios. No representa una ejecución ni una configuración predeterminada de Ruka."
+      }
+    },
+    {
+      "id": "cuando-basta",
+      "title": "Cuándo basta con extraer datos",
+      "paragraphs": [
+        "Si recibes pocos documentos, tienes un único destino y el responsable ya revisa cada compra, una extracción asistida puede ser suficiente. No hay que construir una integración compleja para eliminar una transcripción breve. La condición es que el archivo de salida realmente sirva al siguiente paso y que los errores se detecten antes de usarlo.",
+        "En cambio, con varias empresas, locales o unidades, un CSV correcto puede dejar mucho trabajo pendiente. Supón que compras en cajas y consumes por unidad. Leer «2 cajas» no permite actualizar 24 unidades sin una equivalencia confirmada. Automatizar esa conversión sin el dato correcto acelera un error; dejarla siempre a mano mantiene el cuello de botella."
+      ],
+      "bullets": [
+        "Pide ver qué campos entrega la extracción y cuáles debes completar.",
+        "Comprueba si conserva el respaldo original y permite corregir una lectura.",
+        "Cuenta los pasos que quedan después de descargar el resultado."
+      ]
+    },
+    {
+      "id": "como-probar",
+      "title": "Una prueba que muestra el trabajo pendiente",
+      "paragraphs": [
+        "Prepara un conjunto pequeño de documentos autorizados que represente tu operación: un XML, un PDF escaneado, una nota de crédito, una factura repetida y un producto con una unidad distinta. No uses datos sensibles en una demo pública. Acuerda primero qué debería ocurrir con cada caso y quién revisaría la diferencia.",
+        "Durante la prueba, sigue una compra hasta el destino. Observa si el sistema reconoce el documento, relaciona el producto, explica lo que falta y confirma la carga. Si el destino falla, pregunta cómo se reintenta sin duplicar. Un mensaje de «enviado» no demuestra que el ERP haya aceptado el registro; necesitas distinguir ambos estados."
+      ],
+      "bullets": [
+        "Documento legible: campos que requieren corrección.",
+        "Producto desconocido: decisión pendiente y responsable.",
+        "Carga rechazada: evidencia del error y forma de retomarla.",
+        "Documento repetido: tratamiento antes de escribir otra compra."
+      ]
+    },
+    {
+      "id": "alcance-ruka",
+      "title": "Dónde entra Ruka",
+      "paragraphs": [
+        "Ruka trabaja sobre el registro de compras y las fuentes configuradas para la operación. Puede incorporar documentos y relacionar productos y unidades antes de continuar. Eso no significa que escriba en cualquier ERP, ni que todos los documentos se resuelvan sin revisión. La ficha de cada integración debe aclarar el sentido del dato y los requisitos.",
+        "Elige por el tramo que necesitas resolver. Si solo quieres leer, evalúa extracción. Si quieres que la información quede utilizable en tus sistemas, pide demostrar ese recorrido y sus fallos. La guía de registro explica cómo definirlo, y las fichas de Chipax y Nubox muestran por qué incorporar documentos no es lo mismo que escribir contabilidad en su origen."
+      ],
+      "action": {
+        "label": "Ver el alcance del registro de compras",
+        "href": "/productos/registro-de-compras"
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "¿OCR y automatización son alternativas excluyentes?",
+      "answer": "No. El OCR puede ser una etapa dentro de un flujo de registro. La diferencia importante es hasta dónde llega la solución y qué trabajo conserva el equipo."
+    },
+    {
+      "question": "¿Con XML ya no hay que revisar nada?",
+      "answer": "El XML evita parte de la lectura de imágenes, pero todavía hay que comprobar correspondencias, unidades, duplicados y reglas del destino. Un documento estructurado no acredita recepción física."
+    }
+  ],
+  "relatedProduct": {
+    "label": "Ver registro de compras",
+    "href": "/productos/registro-de-compras",
+    "title": "Del documento al registro",
+    "description": "Revisa qué fuentes puede incorporar Ruka y cómo se define el trabajo que sigue."
+  },
+  "relatedLinks": [
+    {
+      "label": "Cómo registrar compras sin cambiar ERP",
+      "href": "/blog/automatizar-registro-compras-sin-cambiar-erp"
+    },
+    {
+      "label": "XML desde Chipax",
+      "href": "/integraciones/chipax"
+    },
+    {
+      "label": "Documentos desde Nubox",
+      "href": "/integraciones/nubox"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Registro de compras: alcance público de Ruka",
+      "url": "https://www.ruka.ai/productos/registro-de-compras"
+    },
+    {
+      "title": "Documentos desde Nubox",
+      "url": "https://www.ruka.ai/integraciones/nubox"
+    }
+  ],
+  "status": "published",
+  "datePublished": "2026-10-14",
+  "dateModified": "2026-10-14",
+  "readingTimeMinutes": 5,
+  "audience": "equipos de operaciones, compras y finanzas en Chile",
+  "author": {
+    "name": "Equipo Ruka",
+    "url": "https://www.ruka.ai/about"
+  },
+  "heroImage": {
+    "kind": "diagram",
+    "src": "/blog/2026-10/ocr-facturas-vs-registro-automatico.svg",
+    "alt": "La misma línea de factura, dos resultados distintos",
+    "caption": "Diagrama explicativo propio de Ruka. Esquema conceptual, no una captura de la plataforma ni un resultado de cliente."
+  }
+}

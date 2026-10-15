@@ -2,12 +2,13 @@
 import { readFile, readdir } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { JSDOM } from "jsdom";
+import { bodyText, normalizeText } from "./seo-body-text.mjs";
 
 const origin = process.argv[2] ?? "https://www.ruka.ai";
 const guides = JSON.parse(await readFile("src/content/integrationGuides.json", "utf8"));
 const posts = await Promise.all((await readdir("src/content/blog/posts")).filter((file) => file.endsWith(".json")).map(async (file) => JSON.parse(await readFile(`src/content/blog/posts/${file}`, "utf8"))));
 const discovery = [...guides.map((guide) => `/integraciones/${guide.slug}`), "/herramientas/conciliar-factura-orden-recepcion"];
-const routes = ["/", "/blog", "/integraciones", ...posts.map((post) => `/blog/${post.slug}`), ...discovery];
+const routes = ["/", "/register", "/restaurantes", "/hoteles", "/retail", "/blog", "/integraciones", ...posts.map((post) => `/blog/${post.slug}`), ...discovery];
 const failures = [];
 let assertions = 0;
 const check = (condition, message) => { assertions++; if (!condition) failures.push(message); };
@@ -34,7 +35,7 @@ for (const route of routes) {
     const actual = schema(remote);
     check(JSON.stringify(actual) === JSON.stringify(expected), `${route}: JSON-LD differs`);
     for (const faq of actual.filter((entry) => entry["@type"] === "FAQPage")) {
-      for (const item of faq.mainEntity) check(text(remote.body).includes(item.acceptedAnswer.text.replace(/\s+/g, " ").trim()), `${route}: FAQ answer absent from source`);
+      for (const item of faq.mainEntity) check(bodyText(html).includes(normalizeText(item.acceptedAnswer.text)), `${route}: FAQ answer absent from source`);
     }
   } catch (error) { check(false, `${route}: invalid JSON-LD (${error.message})`); }
   console.log(`${response.status} ${route} · raw server HTML checked`);
@@ -69,4 +70,4 @@ const missing = await get("/integraciones/no-existe-qa");
 check(missing.status === 404, `unknown integration should return 404, received ${missing.status}`);
 
 if (failures.length) { console.error(failures.join("\n")); process.exit(1); }
-console.log(`Delivery verified: ${assertions} assertions, ${routes.length} pages, 3 screenshots, sitemap, llms, robots, redirects and 404. No browser JS was executed.`);
+console.log(`Delivery verified: ${assertions} assertions, ${routes.length} pages, ${posts.length} article images, sitemap, llms, robots, redirects and 404. No browser JS was executed.`);
