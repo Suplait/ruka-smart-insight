@@ -36,6 +36,7 @@ import BlogIndex from './pages/BlogIndex';
 import BlogArticle from './pages/BlogArticle';
 import IntegrationGuide from './pages/IntegrationGuide';
 import PurchaseProcessDossier from './pages/PurchaseProcessDossier';
+import Partners from './pages/Partners';
 import ReconciliationExample from './pages/ReconciliationExample';
 
 const queryClient = new QueryClient();
@@ -128,6 +129,7 @@ function App() {
             <Route path="/integraciones" element={<Integraciones />} />
             <Route path="/integraciones/:slug" element={<IntegrationGuide />} />
             <Route path="/procesos/registrar-compras-toteat" element={<PurchaseProcessDossier />} />
+            <Route path="/partners" element={<Partners />} />
             <Route path="/herramientas/conciliar-factura-orden-recepcion" element={<ReconciliationExample />} />
             <Route path="/register" element={<Register />} />
             <Route path="/about" element={<AboutUs />} />

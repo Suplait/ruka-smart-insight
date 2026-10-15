@@ -115,6 +115,8 @@
     }
   ],
   "rewrites": [
+    { "source": "/partners", "destination": "/partners/index.html" },
+    { "source": "/partners/", "destination": "/partners/index.html" },
     { "source": "/procesos/registrar-compras-toteat", "destination": "/procesos/registrar-compras-toteat/index.html" },
     { "source": "/procesos/registrar-compras-toteat/", "destination": "/procesos/registrar-compras-toteat/index.html" },
     { "source": "/:path*.md", "destination": "/readable/:path*.md" },

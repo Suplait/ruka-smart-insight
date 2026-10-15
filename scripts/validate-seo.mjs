@@ -119,6 +119,7 @@ const routes = [
 ];
 
 const integrationGuides = JSON.parse(await readFile(path.join(projectRoot, "src/content/integrationGuides.json"), "utf8"));
+routes.push({ path: "/partners", title: "Automatización para consultoras de restaurantes | Ruka", canonical: `${siteOrigin}/partners`, h1: "Más asesoría. Menos carga manual.", schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage"], ogImage: `${siteOrigin}/partners-og.png`, imageAltIncludes: "Ruka para consultoras de restaurantes", lastmod: "2026-10-15" });
 routes.push({ path: "/procesos/registrar-compras-toteat", title: "Registrar compras en Toteat: guía para tu equipo | Ruka", canonical: `${siteOrigin}/procesos/registrar-compras-toteat`, h1: "Llevar una compra a Toteat sin volver a ingresarla a mano.", schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-15" });
 for (const guide of integrationGuides) {
   routes.push({ path: `/integraciones/${guide.slug}`, title: guide.title, canonical: `${siteOrigin}/integraciones/${guide.slug}`, h1: guide.headline, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage"], lastmod: guide.reviewedAt });
@@ -326,8 +327,9 @@ async function validateRoute(route, { noIndex = false } = {}) {
   if (route.ogImage) {
     assert(ogImage === route.ogImage, `${route.path}: og:image inesperada (${ogImage})`);
     assert(twitterImage === route.ogImage, `${route.path}: twitter:image inesperada (${twitterImage})`);
-    assert(ogImageAlt?.includes("Ruka One"), `${route.path}: og:image:alt no identifica Ruka One`);
-    assert(twitterImageAlt?.includes("Ruka One"), `${route.path}: twitter:image:alt no identifica Ruka One`);
+    const imageIdentity = route.imageAltIncludes ?? "Ruka One";
+    assert(ogImageAlt?.includes(imageIdentity), `${route.path}: og:image:alt no identifica ${imageIdentity}`);
+    assert(twitterImageAlt?.includes(imageIdentity), `${route.path}: twitter:image:alt no identifica ${imageIdentity}`);
   }
 
   for (const expectedType of route.schema ?? []) {
