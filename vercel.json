@@ -2,6 +2,22 @@
   "framework": "vite",
   "headers": [
     {
+      "source": "/:path*.md",
+      "headers": [{ "key": "Content-Type", "value": "text/markdown; charset=utf-8" }, { "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
+      "source": "/readable/:path*",
+      "headers": [{ "key": "Content-Type", "value": "text/markdown; charset=utf-8" }, { "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
+      "source": "/llms-full.txt",
+      "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }, { "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
+      "source": "/rss.xml",
+      "headers": [{ "key": "Content-Type", "value": "application/rss+xml; charset=utf-8" }]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         {
@@ -92,6 +108,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/:path*.md", "destination": "/readable/:path*.md" },
     { "source": "/integraciones/chipax", "destination": "/integraciones/chipax/index.html" },
     { "source": "/integraciones/chipax/", "destination": "/integraciones/chipax/index.html" },
     { "source": "/integraciones/idtecloud", "destination": "/integraciones/idtecloud/index.html" },

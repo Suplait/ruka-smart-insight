@@ -7,7 +7,7 @@
   "metaTitle": "Conciliar facturas, órdenes de compra y recepciones | Ruka",
   "metaDescription": "Guía para conciliar facturas, órdenes de compra y recepciones, detectar diferencias y preparar pagos con información validada.",
   "datePublished": "2026-10-09",
-  "dateModified": "2026-10-14",
+  "dateModified": "2026-10-15",
   "readingTimeMinutes": 8,
   "targetQuery": "conciliar facturas ordenes de compra recepciones",
   "searchIntent": "informacional comercial",
@@ -28,6 +28,35 @@
     "Un pago puede prepararse solo después de pasar los controles definidos."
   ],
   "sections": [
+    {
+      "id": "archivos-reproducibles",
+      "title": "Pruébalo con archivos que puedes revisar",
+      "paragraphs": [
+        "El caso de esta guía se puede repetir en la herramienta gratuita con tres CSV. Pulsa Cargar un caso de ejemplo, confirma las columnas y compara con tolerancia de precio de 0%. Obtendrás tres cruces: harina con diferencia de recepción, aceite con diferencia de precio y envases coincidentes. Los datos son ficticios; la comparación sí se ejecuta en tu navegador.",
+        "Para repetirlo con tu información, exporta un lote de un solo proveedor y moneda. Incluye referencia de compra, código, unidad y cantidad en los tres archivos; añade precio neto unitario en la orden y factura. La referencia debe unir la misma compra: el folio de factura y el número de recepción suelen ser diferentes y no sirven como clave común sin relacionarlos primero.",
+        "Revisa las columnas sugeridas y el formato numérico. En 1.234,50 la coma es decimal; en 1,234.50 lo es el punto. No cambies una unidad solo para conseguir una coincidencia: 1 caja y 1 unidad no representan necesariamente lo mismo. La herramienta exige unidades iguales y no hace conversiones.",
+        "Descarga el resultado para conservar las diferencias y las filas de origen. Si una clave aparece varias veces, queda marcada para revisión: no se suman entregas ni facturas automáticamente. Ninguna coincidencia autoriza pagos ni reemplaza controles tributarios, de proveedor o aprobación."
+      ],
+      "action": { "label": "Comparar archivos y descargar el resultado", "href": "/herramientas/conciliar-factura-orden-recepcion" }
+    },
+    {
+      "id": "descargar-orden-ejemplo",
+      "title": "Archivo 1: lo pedido",
+      "paragraphs": ["La orden OC-102 contiene 10 sacos de harina a $1.000 netos, 6 bidones de aceite a $2.500 y 100 envases a $150.", "Abre el archivo en una planilla para revisar las columnas antes de cargarlo. Los códigos HAR-01, ACE-02 y ENV-03 son identificadores ficticios compartidos por los tres documentos."],
+      "action": { "label": "Descargar orden de compra de ejemplo · CSV", "href": "/ejemplos/conciliacion/order.csv", "download": true }
+    },
+    {
+      "id": "descargar-factura-ejemplo",
+      "title": "Archivo 2: lo facturado",
+      "paragraphs": ["La factura conserva las cantidades pedidas, pero el aceite aparece a $2.800 por bidón. Hay una diferencia de $300 por unidad respecto de la orden.", "A tolerancia de 0%, esta línea requiere revisión aunque las cantidades coincidan. La columna referencia mantiene OC-102 para relacionar la factura con la compra; no corresponde al folio tributario de la factura."],
+      "action": { "label": "Descargar factura de ejemplo · CSV", "href": "/ejemplos/conciliacion/invoice.csv", "download": true }
+    },
+    {
+      "id": "descargar-recepcion-ejemplo",
+      "title": "Archivo 3: lo recibido",
+      "paragraphs": ["La recepción registra 8 sacos de harina, 6 bidones de aceite y 100 envases. La harina deja 2 sacos facturados sin respaldo de recepción.", "El archivo no necesita precios: su función es registrar cantidades recibidas en la misma unidad. Comprueba que la columna cantidad represente lo recibido, no lo pedido ni lo facturado."],
+      "action": { "label": "Descargar recepción de ejemplo · CSV", "href": "/ejemplos/conciliacion/receipt.csv", "download": true }
+    },
     {
       "id": "prueba-con-una-compra",
       "title": "Una diferencia de cantidad y otra de precio",

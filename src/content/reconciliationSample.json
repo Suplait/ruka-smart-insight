@@ -1,0 +1,5 @@
+{
+  "order": "referencia;codigo;unidad;cantidad;precio_neto\nOC-102;HAR-01;saco;10;1000\nOC-102;ACE-02;bidon;6;2500\nOC-102;ENV-03;unidad;100;150",
+  "invoice": "referencia;codigo;unidad;cantidad;precio_neto\nOC-102;HAR-01;saco;10;1000\nOC-102;ACE-02;bidon;6;2800\nOC-102;ENV-03;unidad;100;150",
+  "receipt": "referencia;codigo;unidad;cantidad\nOC-102;HAR-01;saco;8\nOC-102;ACE-02;bidon;6\nOC-102;ENV-03;unidad;100"
+}

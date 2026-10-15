@@ -28,6 +28,7 @@ export type BlogFaq = {
 export type BlogLink = {
   label: string;
   href: string;
+  download?: boolean;
 };
 
 export type BlogSource = {

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { MarketingSeo } from "@/components/seo/MarketingSeo";
+import { ProductResources } from "@/components/seo/ProductResources";
 import { organizationId } from "@/utils/structuredData";
 
 export type ProductPageContent = {
@@ -145,6 +146,8 @@ export function ProductLandingPage({ content, visual, demo }: ProductLandingPage
             </div>
           </div>
         </section>
+
+        <ProductResources path={content.path} />
 
         <section className="bg-[#171a29] px-5 py-20 text-white sm:px-8 sm:py-24">
           <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_auto] lg:items-end">

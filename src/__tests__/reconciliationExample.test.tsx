@@ -78,6 +78,7 @@ describe("interactive comparison", () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch");
     const user = userEvent.setup();
     render(<MemoryRouter><ReconciliationExample /></MemoryRouter>);
+    await user.click(screen.getByRole("button", { name: "Ejemplo guiado", exact: true }));
     expect(screen.getByRole("status").textContent).toContain("2 de 3");
     const received = screen.getByLabelText("Cant. recibida: Harina panadera");
     await user.clear(received); await user.type(received, "10");

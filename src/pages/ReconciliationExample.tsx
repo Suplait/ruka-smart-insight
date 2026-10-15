@@ -4,15 +4,17 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { MarketingSeo } from "@/components/seo/MarketingSeo";
+import { ReconciliationFiles } from "@/components/seo/ReconciliationFiles";
 import { compareLine, createExample, formatClp, reconciliationExamplePath, type ExampleLine, type ExamplePreset } from "@/utils/reconciliationExample";
 
 const reconciliationExampleFaqs = [
-  { question: "¿Este ejemplo usa documentos o conexiones reales?", answer: "No. Es un ejemplo educativo con datos ficticios y reglas simplificadas que se ejecuta en tu navegador. No carga archivos, no se conecta a tus sistemas y no autoriza pagos." },
+  { question: "¿Puedo usar mis archivos?", answer: "Sí. En Tus archivos puedes cargar CSV de una orden, factura y recepción, revisar las columnas y descargar las diferencias. Todo se procesa en tu navegador: los archivos no se envían a Ruka. El ejemplo guiado usa datos ficticios. Ningún modo se conecta a tus sistemas ni autoriza pagos." },
   { question: "¿Qué compara?", answer: "Cantidad facturada versus pedida y recibida, y precio unitario facturado versus el acordado. Usa la misma unidad por producto y permite una tolerancia de precio de 0%, 1% o 2%. No incluye impuestos, descuentos, notas de crédito ni múltiples recepciones." },
   { question: "¿Que todo coincida significa que puedo pagar?", answer: "No. Significa que estos campos coinciden bajo las reglas del ejemplo. En una operación real también hay que revisar identidad y relación de documentos, impuestos, aprobaciones, duplicados y datos bancarios." },
 ];
 
 export default function ReconciliationExample() {
+  const [mode, setMode] = useState<"files" | "example">("files");
   const [lines, setLines] = useState(() => createExample());
   const [preset, setPreset] = useState<ExamplePreset | "custom">("differences");
   const [tolerance, setTolerance] = useState(0);
@@ -30,17 +32,19 @@ export default function ReconciliationExample() {
   }
   return (
     <div className="min-h-screen bg-[#f7f8fc] text-[#171827]">
-      <MarketingSeo path={reconciliationExamplePath} name="Ejemplo de conciliación" title="Prueba cómo conciliar factura, orden y recepción | Ruka" description="Cambia cantidades y precios en un ejemplo de conciliación. Compara factura, orden de compra y recepción con datos ficticios, sin registro ni archivos." faqs={reconciliationExampleFaqs} />
+      <MarketingSeo path={reconciliationExamplePath} name="Conciliador de archivos CSV" title="Conciliar factura, orden y recepción en CSV gratis | Ruka" description="Compara tus CSV de facturas, órdenes de compra y recepciones. Encuentra diferencias y descarga el resultado, sin registro y sin subir archivos al servidor." faqs={reconciliationExampleFaqs} />
       <Navbar />
       <main className="px-5 pb-20 pt-28 sm:px-8 sm:pt-36">
         <header className="mx-auto max-w-6xl">
           <Link to="/blog/conciliar-facturas-ordenes-compra-recepciones" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#505b70] hover:text-primary"><ArrowLeft size={16} /> Leer la guía de conciliación</Link>
-          <div className="mt-6 flex flex-wrap gap-2 text-xs font-semibold text-[#424ec0]"><span className="rounded-full bg-[#e9ecff] px-3 py-1.5">Ejemplo interactivo</span><span className="rounded-full bg-[#e9ecff] px-3 py-1.5">Datos ficticios · Sin registro</span></div>
+          <div className="mt-6 flex flex-wrap gap-2 text-xs font-semibold text-[#424ec0]"><span className="rounded-full bg-[#e9ecff] px-3 py-1.5">Herramienta gratuita</span><span className="rounded-full bg-[#e9ecff] px-3 py-1.5">Sin registro · Archivos locales</span></div>
           <h1 className="mt-5 max-w-4xl text-balance text-[clamp(2.3rem,5vw,4.5rem)] font-semibold leading-[1.05] tracking-[-0.04em]">¿Lo que te cobran es lo que pediste y recibiste?</h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-[#505b70]">La compra inicial tiene dos diferencias. Cambia las cantidades o el precio y mira qué necesita revisión. No estás modificando una compra real.</p>
+          <p className="mt-5 max-w-3xl text-lg leading-8 text-[#505b70]">Cruza cantidades y precios de tus planillas y descarga lo que necesita revisión. También puedes partir con un ejemplo, sin tener archivos a mano.</p>
+          <div className="mt-7 flex flex-wrap gap-2" aria-label="Modo de la herramienta">{([{ id: "files", label: "Tus archivos" }, { id: "example", label: "Ejemplo guiado" }] as const).map(item => <button key={item.id} aria-pressed={mode === item.id} onClick={() => setMode(item.id)} className={`min-h-12 rounded-full px-6 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${mode === item.id ? "bg-[#171827] text-white" : "bg-white text-[#424ec0] hover:bg-[#e9ecff]"}`}>{item.label}</button>)}</div>
         </header>
 
-        <section className="mx-auto mt-10 max-w-6xl overflow-hidden rounded-xl border border-[#d6ddec] bg-white" aria-labelledby="comparison-title">
+        <div hidden={mode !== "files"}><ReconciliationFiles /></div>
+        <section hidden={mode !== "example"} className="mx-auto mt-10 max-w-6xl overflow-hidden rounded-xl border border-[#d6ddec] bg-white" aria-labelledby="comparison-title">
           <div className="flex flex-wrap items-center justify-between gap-5 border-b border-[#d6ddec] px-5 py-5 sm:px-7">
             <div><h2 id="comparison-title" className="text-lg font-semibold">Una compra. Tres documentos.</h2><p className="mt-1 text-sm text-[#505b70]">OC 102 · Factura 840 · Recepción 51 · Montos netos en CLP</p></div>
             <button onClick={() => loadPreset("differences")} className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-[#424ec0] hover:bg-[#eef0ff] focus-visible:ring-2 focus-visible:ring-primary"><RotateCcw size={16} /> Reiniciar</button>

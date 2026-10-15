@@ -136,6 +136,8 @@ export function BlogPostSeo({ post }: { post: BlogPost }) {
       type="article"
       publishedTime={post.datePublished}
       modifiedTime={post.dateModified}
+      image={`${origin}/blog/og/${post.slug}.png`}
+      imageAlt={`${post.title} · ${post.heroImage.alt}`}
     />
   );
 }
@@ -148,6 +150,8 @@ function SeoHead({
   type = "website",
   publishedTime,
   modifiedTime,
+  image = defaultImage,
+  imageAlt = "Ruka automatiza trabajo operativo entre los sistemas de una empresa",
 }: {
   title: string;
   description: string;
@@ -156,6 +160,8 @@ function SeoHead({
   type?: "website" | "article";
   publishedTime?: string;
   modifiedTime?: string;
+  image?: string;
+  imageAlt?: string;
 }) {
   return (
     <Helmet htmlAttributes={{ lang: "es-CL" }}>
@@ -164,23 +170,24 @@ function SeoHead({
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
       <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
       <link rel="canonical" href={canonical} />
+      <link rel="alternate" type="application/rss+xml" title="Blog de Ruka" href={`${origin}/rss.xml`} />
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content="Ruka.ai" />
       <meta property="og:locale" content="es_CL" />
       <meta property="og:url" content={canonical} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={defaultImage} />
+      <meta property="og:image" content={image} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content="Ruka automatiza trabajo operativo entre los sistemas de una empresa" />
+      <meta property="og:image:alt" content={imageAlt} />
       {publishedTime ? <meta property="article:published_time" content={publishedTime} /> : null}
       {modifiedTime ? <meta property="article:modified_time" content={modifiedTime} /> : null}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={defaultImage} />
-      <meta name="twitter:image:alt" content="Ruka automatiza trabajo operativo entre los sistemas de una empresa" />
+      <meta name="twitter:image" content={image} />
+      <meta name="twitter:image:alt" content={imageAlt} />
       <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@graph": graph })}</script>
     </Helmet>
   );

@@ -53,3 +53,7 @@ Homepage, onboarding, pricing, commercial terms, critical forms, checkout and sh
 ## Measurement
 
 Use finalized Search Console windows (7/28/90 and reporting 15/30), public-marketing page segmentation, branded/non-branded distinction and experiment-specific evaluation dates. Do not infer leads or revenue from clicks.
+
+During each monthly strategy review, read `EVIDENCE.md` and the `commercial` / `aiObservatory` sections of the prepared context. Refresh bounded CRM observations through the linked-ID read/import procedure before using qualification or customer states to prioritize. Missing source access means unknown coverage, not zero demand; it must not stop independent evidence-backed work.
+
+Collect a fresh complete eight-question AI observation set per accessible provider using the frozen prompts and neutral sessions in `ai-questions.json`. Preserve full responses and sources privately through the importer, including unfavorable or genuinely blocked results. Do not substitute branded answers for discovery answers, infer recommendation market share, or conclude that a change caused a recommendation. Weekly measurement reads the latest saved set and reports coverage/freshness; it need not rerun every question. An unavailable browser/provider is a recorded external limitation, not permission to invent observations.

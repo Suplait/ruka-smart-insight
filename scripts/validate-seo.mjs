@@ -121,7 +121,7 @@ const integrationGuides = JSON.parse(await readFile(path.join(projectRoot, "src/
 for (const guide of integrationGuides) {
   routes.push({ path: `/integraciones/${guide.slug}`, title: guide.title, canonical: `${siteOrigin}/integraciones/${guide.slug}`, h1: guide.headline, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage"], lastmod: guide.reviewedAt });
 }
-routes.push({ path: "/herramientas/conciliar-factura-orden-recepcion", title: "Prueba cómo conciliar factura, orden y recepción | Ruka", canonical: `${siteOrigin}/herramientas/conciliar-factura-orden-recepcion`, h1: "¿Lo que te cobran es lo que pediste y recibiste?", schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage"], lastmod: "2026-10-14" });
+routes.push({ path: "/herramientas/conciliar-factura-orden-recepcion", title: "Conciliar factura, orden y recepción en CSV gratis | Ruka", canonical: `${siteOrigin}/herramientas/conciliar-factura-orden-recepcion`, h1: "¿Lo que te cobran es lo que pediste y recibiste?", schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage"], lastmod: "2026-10-15" });
 
 const blogPostsDirectory = path.join(projectRoot, "src", "content", "blog", "posts");
 const blogPostFiles = (await readdir(blogPostsDirectory)).filter((file) => file.endsWith(".json"));

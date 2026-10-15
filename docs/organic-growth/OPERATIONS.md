@@ -23,13 +23,21 @@
 - SQLite runs in WAL mode with full synchronous writes, a 10-second busy timeout and foreign keys enabled.
 - A successful job completion writes a consistent SQLite backup. The newest 14 backups are retained under `~/.codex/ruka-organic-growth/backups/`.
 - `npm run organic:integrity` validates the live database; `npm run organic:backup` creates an on-demand backup.
-- `.organic-growth/shared-secret` is a legacy migration credential only. Normal execution never reads it or calls Supabase.
+- `.organic-growth/shared-secret` is a legacy migration credential only. Scheduling and engine persistence never read it or depend on Supabase. The optional commercial evidence collector makes read-only requests to the existing lead source; failure produces unavailable evidence, not a failed scheduler or zero leads.
 - Search Console uses the connected Codex account at `~/.search-console-mcp/credentials.json`. The automation refreshes that connection before collection.
 - Product intelligence reads the existing local `ruka-ai` and `ruka_v3` repositories and never writes to them.
 - Git push and PR operations use the user's existing local Git/GitHub connection. No PAT is stored in repository files.
 - Report and incident delivery uses the connected Slack tool in Codex. SQLite records the pending payload before delivery and its delivery reference afterwards.
 
 Secrets must never be written to task output, committed files or automation prompts.
+
+## Evidence and distribution
+
+See `EVIDENCE.md` for the frozen AI question set, collection procedure, source freshness and persistent private storage. `organic:prepare` combines the local opportunity context with read-only commercial coverage and saved IA observations; unavailable sources remain explicit. No existing conversion event, lead write or Calendly behavior is changed.
+
+The reporting job runs in a separate clean worktree and does not run `organic:prepare`; `generate-report.mjs` therefore refreshes the optional read-only commercial snapshot itself. CRM and AI observations are loaded from persistent private evidence, not assumed to exist in a previous worktree. The execution prompt reads `AGENT_PROMPT.md`; monthly strategy reads `STRATEGY.md`, which requires the full observation protocol. No scheduler model, cadence or permission change is needed for these repository instructions to take effect after merge.
+
+`organic:indexnow` is a dry run by default. Pass `-- --urls=/absolute/path/to/changed-canonical-urls.json --submit` only after production verification. The production ownership key, each response's HTTP status, canonical, robots and prerendered main content must pass before submission. Receipts live outside worktrees and suppress immediate identical resubmissions.
 
 ## Operating cadence
 
