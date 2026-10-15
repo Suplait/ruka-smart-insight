@@ -1,0 +1,10 @@
+{
+  "pages": 5,
+  "sources": {
+    "src/pages/PurchaseProcessDossier.tsx": "9c9e7f225c84952e3101ba618409cfc1766c9d0a5a894787897f3b1c2ffdfe77",
+    "public/assets/process-evidence/recepcion-demo.jpg": "b399ea9dff90d325a5d3fbca5e138b8bb2b4812598296122adf9e97a720fb7fd",
+    "public/logo.png": "e9aaa25a1fa6c92a74333804e7a0a3d34e52cf0dbacdc1c676e5c9edaf92c77b",
+    "scripts/generate-process-dossier-pdf.py": "9977b29eb7d0fd48a7f36eb9d8e40ba2d4cbaff3fddcd0cca6f59ceb4ae0736f"
+  },
+  "pdfSha256": "4c8268dba198e4af514e3d5fd37ca3aeb62c1f1d43ab74d2a94a7b301fcef7d8"
+}

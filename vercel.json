@@ -2,6 +2,13 @@
   "framework": "vite",
   "headers": [
     {
+      "source": "/expedientes/registrar-compras-toteat.pdf",
+      "headers": [
+        { "key": "Content-Type", "value": "application/pdf" },
+        { "key": "Link", "value": "<https://www.ruka.ai/procesos/registrar-compras-toteat>; rel=\"canonical\"" }
+      ]
+    },
+    {
       "source": "/:path*.md",
       "headers": [{ "key": "Content-Type", "value": "text/markdown; charset=utf-8" }, { "key": "X-Robots-Tag", "value": "noindex, follow" }]
     },
@@ -108,6 +115,8 @@
     }
   ],
   "rewrites": [
+    { "source": "/procesos/registrar-compras-toteat", "destination": "/procesos/registrar-compras-toteat/index.html" },
+    { "source": "/procesos/registrar-compras-toteat/", "destination": "/procesos/registrar-compras-toteat/index.html" },
     { "source": "/:path*.md", "destination": "/readable/:path*.md" },
     { "source": "/integraciones/chipax", "destination": "/integraciones/chipax/index.html" },
     { "source": "/integraciones/chipax/", "destination": "/integraciones/chipax/index.html" },

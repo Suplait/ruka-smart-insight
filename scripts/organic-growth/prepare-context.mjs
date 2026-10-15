@@ -13,6 +13,7 @@ const file = await writePrivateJson("engine-context.json", {
   capturedAt: new Date().toISOString(),
   opportunities: status.opportunities || [],
   experiments: status.experiments || [],
+  buyerEvidence: status.buyerEvidence || [],
   recentRuns: status.runs || [],
   commercial,
   aiObservatory,

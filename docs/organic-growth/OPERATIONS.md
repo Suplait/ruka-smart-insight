@@ -15,7 +15,7 @@
 - Vercel remains the production deploy mechanism after the automation merges a validated PR to `main`.
 - The full repository lint has pre-existing errors outside this system's scope. Automation therefore runs `organic:lint`, which lints every JavaScript/TypeScript file changed in its branch, while build and SEO validation still cover the complete application.
 - The one-time infrastructure branch is audited with `ORGANIC_GROWTH_BOOTSTRAP=true npm run organic:guard`. Scheduled cycles never receive that flag, so they cannot edit the scheduler or engine infrastructure.
-- Scheduled cycles run only from a clean, current `main`. The automation must copy the guard and manifest validator to a temporary directory before making changes, then use those immutable copies for final validation.
+- Scheduled cycles run only from a clean, current `main`. Before editing, snapshot the guard, manifest validator and their relative module dependencies from that baseline outside the worktree. Preserve their directory structure; copying only `register-cycle.mjs` breaks its imports. Run the snapshot with the execution worktree as the working directory. See `BUYER_EVIDENCE.md` for the pending runtime rollout.
 
 ## Local Codex runtime and persistence
 
@@ -35,7 +35,7 @@ Secrets must never be written to task output, committed files or automation prom
 
 See `EVIDENCE.md` for the frozen AI question set, collection procedure, source freshness and persistent private storage. `organic:prepare` combines the local opportunity context with read-only commercial coverage and saved IA observations; unavailable sources remain explicit. No existing conversion event, lead write or Calendly behavior is changed.
 
-The reporting job runs in a separate clean worktree and does not run `organic:prepare`; `generate-report.mjs` therefore refreshes the optional read-only commercial snapshot itself. CRM and AI observations are loaded from persistent private evidence, not assumed to exist in a previous worktree. The execution prompt reads `AGENT_PROMPT.md`; monthly strategy reads `STRATEGY.md`, which requires the full observation protocol. No scheduler model, cadence or permission change is needed for these repository instructions to take effect after merge.
+The reporting job runs in a separate clean worktree and does not run `organic:prepare`; `generate-report.mjs` therefore refreshes the optional read-only commercial snapshot itself. CRM and AI observations are loaded from persistent private evidence, not assumed to exist in a previous worktree. The execution prompt reads `AGENT_PROMPT.md`; monthly strategy reads `STRATEGY.md`, which requires the full observation protocol. However, the execution schedule inspected on 2026-10-15 explicitly forbids successful `changed=false` runs. The buyer-evidence policy therefore requires a targeted prompt update after rollout; merging repository instructions alone will not enable it. Preserve the model, cadence and existing publication safeguards.
 
 `organic:indexnow` is a dry run by default. Pass `-- --urls=/absolute/path/to/changed-canonical-urls.json --submit` only after production verification. The production ownership key, each response's HTTP status, canonical, robots and prerendered main content must pass before submission. Receipts live outside worktrees and suppress immediate identical resubmissions.
 
@@ -49,7 +49,7 @@ The reporting job runs in a separate clean worktree and does not run `organic:pr
 | 1st and 15th at 09:00 | Deliver the operational growth report | No |
 | 1st of each month at 11:00 | Re-rank clusters, commercial priorities and larger opportunities | No |
 
-Cadence is an opportunity to act, not a content quota. A job may complete successfully with no public change when evidence is insufficient.
+Cadence is an opportunity to advance a buying decision, not a content quota. A cycle without a public change should deliver one useful private evidence artifact through `buyerProgress`; see `BUYER_EVIDENCE.md`. Registration preserves revisions in SQLite without creating a deployed experiment. Identical retries are idempotent. A real access failure must remain visible, not be reported as an invented result.
 
 ## Blog publication path
 

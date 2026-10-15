@@ -64,6 +64,25 @@ export default function IntegrationGuide({ guide: supplied }: { guide?: typeof g
           </div>
         </section>
 
+        {guide.slug === "sii" && <section className="border-t border-[#dce2ed] px-5 py-14 sm:px-8 sm:py-20" aria-labelledby="missing-detail-title">
+          <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+            <div><p className="text-sm font-semibold text-[#424ec0]">Cuando falta información</p><h2 id="missing-detail-title" className="mt-4 scroll-mt-28 text-balance text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">La factura aparece. Los productos, no.</h2><p className="mt-5 text-base leading-8 text-[#505b70]">Tener folio, proveedor y monto permite identificar la compra. No significa que tengas sus cantidades, unidades y precios por línea para actualizar costos o stock.</p></div>
+            <div className="space-y-6 text-base leading-8 text-[#505b70]">
+              <ol className="space-y-6">
+                <li><h3 className="font-semibold text-[#171827]">1. Identifica qué falta.</h3><p>Compara el documento con lo que necesita el siguiente paso: nombre del producto, cantidad, unidad y precio. Marca lo desconocido como pendiente; no como cero.</p></li>
+                <li><h3 className="font-semibold text-[#171827]">2. Busca una fuente que contenga las líneas.</h3><p>Revisa si tienes el XML o un PDF legible. Si ninguno trae el detalle, pídelo al proveedor indicando el folio. Un comprobante de pago no reemplaza la descripción de lo comprado.</p></li>
+                <li><h3 className="font-semibold text-[#171827]">3. Confirma antes de continuar.</h3><p>Compras confirma el detalle; operación, las unidades y lo recibido. Solo entonces puedes definir qué información está lista para alimentar otro sistema.</p></li>
+              </ol>
+              <blockquote className="rounded-xl bg-[#f7f8fc] p-6"><p className="text-sm font-semibold text-[#171827]">Un mensaje que puedes adaptar</p><p className="mt-2">«Tenemos registrada la factura [folio], pero nos falta el detalle de productos, cantidades y unidades. ¿Nos puedes enviar su XML o el documento donde figuren esas líneas?»</p></blockquote>
+              <p className="text-sm leading-7">No compartas credenciales del SII para resolverlo. <Link to="/blog/actualizar-costos-precios-proveedores#presentacion-desconocida" className="font-semibold text-[#424ec0] underline underline-offset-4">Si el detalle llegó pero la unidad no está clara, revisa cómo tratar cajas y kilos.</Link></p>
+            </div>
+          </div>
+        </section>}
+
+        {guide.slug === "toteat" && <section className="border-t border-[#dce2ed] px-5 py-14 sm:px-8" aria-labelledby="dossier-title">
+          <div className="mx-auto flex max-w-6xl flex-col gap-6 md:flex-row md:items-center md:justify-between"><div className="max-w-2xl"><p className="text-sm font-semibold text-[#424ec0]">Para evaluar con tu equipo</p><h2 id="dossier-title" className="mt-3 text-3xl font-semibold tracking-[-0.03em]">Una compra, desde el origen hasta el resultado.</h2><p className="mt-4 text-base leading-8 text-[#505b70]">Qué datos preparar, qué controles se probaron y qué falta verificar en destino. Incluye una hoja de decisión para compartir o imprimir.</p></div><Link to="/procesos/registrar-compras-toteat" className="inline-flex min-h-12 shrink-0 items-center gap-3 rounded-full border border-[#cbd2e2] px-6 font-semibold text-[#424ec0] hover:bg-[#f7f8fc] focus-visible:ring-2 focus-visible:ring-primary">Ver el expediente <ArrowRight size={18} /></Link></div>
+        </section>}
+
         <section className="border-t border-[#dce2ed] px-5 py-14 sm:px-8">
           <div className="mx-auto max-w-6xl"><h2 className="text-3xl font-semibold tracking-[-0.03em]">Antes de conectarlo.</h2><div className="mt-7 divide-y divide-[#dce2ed]">{guide.faq.map((faq) => <details key={faq.question} className="py-5"><summary className="cursor-pointer text-lg font-semibold focus-visible:ring-2 focus-visible:ring-primary">{faq.question}</summary><p className="max-w-3xl pt-4 text-base leading-7 text-[#505b70]">{faq.answer}</p></details>)}</div>
             <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-sm text-[#505b70]">{guide.sources.map((source) => <a key={source.url} href={source.url} className="underline underline-offset-4 hover:text-primary">{source.label}</a>)}</div>

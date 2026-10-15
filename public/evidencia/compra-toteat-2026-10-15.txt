@@ -1,0 +1,46 @@
+Ruka — Revisión acotada del servicio de envío de compras a Toteat
+Fecha: 15 de octubre de 2026
+Expediente: https://www.ruka.ai/procesos/registrar-compras-toteat
+
+RESULTADO Y ALCANCE
+10 pruebas internas, 57 verificaciones, sin errores en la ejecución documentada
+(semilla 23720). Se cargaron clases del servicio real en un arnés aislado, con
+datos ficticios en memoria, resolución y seguimiento controlados y respuestas
+HTTP simuladas. Una protección de sockets impidió conexiones externas.
+
+No se arrancó Rails ni se consultó la base de datos. No se conectó a Toteat.
+No se demuestra la resolución desde la factura original, la persistencia real,
+la interpretación del destino, concurrencia ni ahorro de tiempo de clientes.
+
+IDENTIDAD DEL CÓDIGO REVISADO
+Revisión del producto: b5255d76ec3a4af592f44603eb74d00018a30d97
+SHA-256 del archivo de servicio:
+5066b9a1fc56fb1355f88776bfe37fe29fea02f06632c288bcb7f9e4563e91dc
+Entorno: Ruby 3.3.3, ActiveSupport 7.0.8.4, Minitest 5.25.5.
+El código del producto y el arnés no se publican en esta ficha.
+
+OBSERVACIONES
+- Una respuesta positiva controlada permite revisar referencias, fechas y
+  marcado de resultado del servicio; no confirma una escritura externa.
+- Un documento ya marcado como informado omite el envío en esa condición.
+  No equivale a una garantía general contra duplicados.
+- Una resolución ya clasificada como unidad incompatible o asignación de
+  local bloqueante detiene el envío. No se probó su detección desde el origen.
+- La falta de URL de destino se trata como una condición de fallo.
+- Un fallo parcial o timeout conserva información del intento sin marcar toda
+  la factura como terminada.
+- Con seguimiento previo recuperable, el reintento solicita solo grupos
+  pendientes. Sin él, solicita ambos de nuevo.
+- Una línea no resuelta pero no bloqueante puede excluirse con advertencia
+  mientras se envía otra y el servicio devuelve éxito. Revisar todas las líneas
+  esperadas sigue siendo necesario.
+
+PRUEBA EXTERNA PENDIENTE
+Con una cuenta de prueba autorizada, fijar por adelantado productos, cantidades,
+unidades, locales y ambas fechas esperadas. Revisar el estado anterior y el
+resultado real. Registrar cada caso como aprobado, fallido, indeterminado o no
+ejecutado. Si no se sabe si un envío llegó, detener el reintento hasta aclararlo.
+No inyectar fallos en una operación productiva compartida.
+
+Esta ficha describe una observación histórica acotada. No es certificación,
+garantía comercial, aceptación del cliente ni autorización de acceso.

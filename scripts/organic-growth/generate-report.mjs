@@ -2,6 +2,7 @@ import { engineRequest, readPrivateJson, writePrivateJson } from "./lib.mjs";
 import { readCommercialEvidence } from './commercial-evidence.mjs';
 import { readObservatory } from './ai-observatory.mjs';
 import { collectCommercial } from './collect-commercial.mjs';
+import { summarizeBuyerEvidence } from './buyer-evidence.mjs';
 
 const snapshot = await readPrivateJson("gsc-snapshot.json");
 const status = await engineRequest("status");
@@ -41,6 +42,7 @@ const payload = {
   performance: { days15: { metrics: days15.metrics }, days30: { metrics: days30.metrics } },
   commercial,
   aiObservatory,
+  buyerEvidence: summarizeBuyerEvidence(status.buyerEvidence || [], { since: new Date(Date.now() - 15 * 86400000).toISOString(), until: new Date().toISOString() }),
   winners: topPages.map((row) => `${new URL(row.page).pathname}: ${row.clicks} clics y ${row.impressions} impresiones (90 días)`),
   losers: commercialQueries.map((row) => `“${row.query}”: ${row.impressions} impresiones, posición ${row.position.toFixed(1)}, CTR ${(row.ctr * 100).toFixed(1)}%`),
   changes: recentExperiments.slice(0, 6).map((experiment) => `${experiment.title} · ${experiment.status} · ${(experiment.affected_urls || []).join(", ")}`),
@@ -71,6 +73,10 @@ const slackMessage = [
   ...(payload.changes.length ? payload.changes.map((item) => `• ${item}`) : ["• Sin cambios desplegados en el período."]),
   "",
   `*Pipeline SEO*\n${payload.pipelineSummary}`,
+  '',
+  '*Dudas del comprador · últimos 15 días de trabajo*',
+  `• ${payload.buyerEvidence.updatedQuestions} preguntas con registro actualizado; ${payload.buyerEvidence.supported} sustentadas con evidencia vigente; ${payload.buyerEvidence.needsOwner} pendientes de responsable; ${payload.buyerEvidence.reviewNeeded} requieren revisar vigencia.`,
+  `• ${payload.buyerEvidence.note}`,
   '',
   '*Evidencia comercial · cohorte de captura de 90 días*',
   commercial.state === 'ok'

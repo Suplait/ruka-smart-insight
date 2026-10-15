@@ -3,6 +3,7 @@ import { chmodSync, mkdirSync, readdirSync, unlinkSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { backup as sqliteBackup, DatabaseSync } from "node:sqlite";
+import { migrateBuyerEvidence, readBuyerEvidence, saveBuyerEvidence, archiveBuyerArtifact, validateBuyerEvidence, backupBuyerArtifacts } from './buyer-evidence.mjs';
 
 const timezone = "America/Santiago";
 const allowedKinds = new Set(["execution", "reporting", "monitoring", "measurement", "strategy"]);
@@ -149,6 +150,7 @@ export class LocalOrganicGrowthEngine {
     this.db = new DatabaseSync(this.databasePath);
     this.db.exec("PRAGMA journal_mode = WAL; PRAGMA synchronous = FULL; PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 10000;");
     this.#migrate();
+    migrateBuyerEvidence(this.db);
     chmodSync(this.databasePath, 0o600);
   }
 
@@ -439,7 +441,12 @@ export class LocalOrganicGrowthEngine {
     const opportunities = this.db.prepare("SELECT * FROM opportunities ORDER BY priority_score DESC LIMIT 20").all()
       .map((row) => ({ ...entityFromRow(row), evidence: json(row.evidence_json, []) }));
     const experiments = this.db.prepare("SELECT * FROM experiments ORDER BY updated_at DESC LIMIT 20").all().map(entityFromRow);
-    return { state, runs, opportunities, experiments, storage: { type: "sqlite", path: this.databasePath } };
+    return { state, runs, opportunities, experiments, buyerEvidence: readBuyerEvidence(this.db, this.now()), storage: { type: "sqlite", path: this.databasePath } };
+  }
+
+  recordBuyerEvidence(body) {
+    const validated = validateBuyerEvidence(body, this.now());
+    return saveBuyerEvidence(this.db, archiveBuyerArtifact(validated, this.databasePath), this.now());
   }
 
   snapshot(body = {}) {
@@ -633,9 +640,14 @@ export class LocalOrganicGrowthEngine {
     const destination = path.join(directory, `state-${stamp}-${randomUUID().slice(0, 8)}.sqlite`);
     await sqliteBackup(this.db, destination);
     chmodSync(destination, 0o600);
+    const snapshot = new DatabaseSync(destination, { readOnly: true });
+    let artifacts;
+    try { artifacts = backupBuyerArtifacts(snapshot, this.databasePath, directory); }
+    catch (error) { unlinkSync(destination); throw error; }
+    finally { snapshot.close(); }
     const backups = readdirSync(directory).filter((name) => /^state-.*\.sqlite$/.test(name)).sort().reverse();
     for (const old of backups.slice(14)) unlinkSync(path.join(directory, old));
-    return { path: destination, retained: Math.min(backups.length, 14) };
+    return { path: destination, retained: Math.min(backups.length, 14), artifacts };
   }
 }
 
@@ -643,6 +655,7 @@ export async function localEngineRequest(action, body = {}) {
   const engine = new LocalOrganicGrowthEngine();
   try {
     if (action === "status") return engine.status();
+    if (action === "buyer_evidence") return engine.recordBuyerEvidence(body);
     if (action === "claim") return engine.claim(body);
     if (action === "complete") {
       const result = engine.complete(body);

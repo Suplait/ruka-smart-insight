@@ -1,4 +1,5 @@
 import { readPrivateJson, engineRequest } from "./lib.mjs";
+import { validateBuyerEvidence, verifyBuyerArtifact } from './buyer-evidence.mjs';
 
 const manifest = await readPrivateJson("change-manifest.json");
 const context = await readPrivateJson("engine-context.json");
@@ -31,8 +32,16 @@ if (manifest.changed) {
   if (!manifest.affectedUrls.length || !manifest.evidence.length) throw new Error("Changed cycle requires affectedUrls and evidence");
 }
 
+let buyerProgress = null;
+if (manifest.buyerProgress != null) {
+  if (manifest.changed || manifest.affectedUrls.length || manifest.evidence.length || manifest.experimentUpdates.length) {
+    throw new Error('A private evidence cycle cannot also publish or modify experiments; choose one initiative');
+  }
+  buyerProgress = validateBuyerEvidence(verifyBuyerArtifact(manifest.buyerProgress));
+}
+
 if (validateOnly) {
-  console.log(JSON.stringify({ valid: true, changed: manifest.changed, updatedExperiments: manifest.experimentUpdates.length }, null, 2));
+  console.log(JSON.stringify({ valid: true, changed: manifest.changed, buyerProgress: buyerProgress?.key || null, updatedExperiments: manifest.experimentUpdates.length }, null, 2));
   process.exit(0);
 }
 
@@ -41,6 +50,7 @@ if (manifest.experimentUpdates.length) {
 }
 
 let experimentId = null;
+const recordedProgress = buyerProgress ? await engineRequest('buyer_evidence', buyerProgress) : null;
 if (manifest.changed) {
   const evaluateAfterDays = Math.min(45, Math.max(5, Number(manifest.evaluateAfterDays || 14)));
   const result = await engineRequest("create_experiment", {
@@ -67,4 +77,4 @@ if (manifest.changed) {
   experimentId = result.experimentId;
 }
 
-console.log(JSON.stringify({ changed: manifest.changed, experimentId, updatedExperiments: manifest.experimentUpdates.length }, null, 2));
+console.log(JSON.stringify({ changed: manifest.changed, experimentId, buyerProgress: recordedProgress, updatedExperiments: manifest.experimentUpdates.length }, null, 2));

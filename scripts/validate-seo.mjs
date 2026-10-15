@@ -2,6 +2,7 @@ import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { bodyText, normalizeText } from "./seo-body-text.mjs";
+import { validateProcessDossierPdf } from "./validate-process-dossier-pdf.mjs";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const siteOrigin = "https://www.ruka.ai";
@@ -118,6 +119,7 @@ const routes = [
 ];
 
 const integrationGuides = JSON.parse(await readFile(path.join(projectRoot, "src/content/integrationGuides.json"), "utf8"));
+routes.push({ path: "/procesos/registrar-compras-toteat", title: "Registrar compras en Toteat: alcance y prueba del proceso | Ruka", canonical: `${siteOrigin}/procesos/registrar-compras-toteat`, h1: "Llevar una compra a Toteat sin volver a ingresarla a mano.", schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-15" });
 for (const guide of integrationGuides) {
   routes.push({ path: `/integraciones/${guide.slug}`, title: guide.title, canonical: `${siteOrigin}/integraciones/${guide.slug}`, h1: guide.headline, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage"], lastmod: guide.reviewedAt });
 }
@@ -682,6 +684,8 @@ for (const routePath of [
 }
 assert(appSource.includes('path="/blog"'), "App.tsx: falta ruta /blog");
 assert(appSource.includes('path="/blog/:slug"'), "App.tsx: falta ruta dinámica de artículos");
+
+await validateProcessDossierPdf();
 
 if (failures.length) {
   console.error(`SEO/AEO validation failed: ${failures.length} of ${assertions} assertions failed.`);

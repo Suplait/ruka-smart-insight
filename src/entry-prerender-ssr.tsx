@@ -23,6 +23,7 @@ import BlogIndex from "@/pages/BlogIndex";
 import BlogArticle from "@/pages/BlogArticle";
 import { blogPosts } from "@/content/blog/posts";
 import IntegrationGuide from "@/pages/IntegrationGuide";
+import PurchaseProcessDossier, { purchaseDossierPath, purchaseDossierDescription } from "@/pages/PurchaseProcessDossier";
 import ReconciliationExample from "@/pages/ReconciliationExample";
 import { reconciliationExamplePath } from "@/utils/reconciliationExample";
 import integrationGuides from "@/content/integrationGuides.json";
@@ -46,6 +47,7 @@ const pages: Record<string, ComponentType> = {
   "/one": One,
   "/one/contacto": OneContact,
   "/blog": BlogIndex,
+  [purchaseDossierPath]: PurchaseProcessDossier,
   [reconciliationExamplePath]: ReconciliationExample,
 };
 
@@ -54,6 +56,7 @@ for (const guide of integrationGuides) {
 }
 
 export const discoveryEntries = [
+  { path: purchaseDossierPath, title: "Registrar compras en Toteat: expediente de proceso", description: purchaseDossierDescription, lastmod: "2026-10-15" },
   ...integrationGuides.map((guide) => ({ path: `/integraciones/${guide.slug}`, title: `Ruka y ${guide.name}`, description: guide.description, lastmod: guide.reviewedAt })),
   { path: reconciliationExamplePath, title: "Conciliador de factura, orden y recepción en CSV", description: "Compara tus archivos localmente, revisa diferencias y descarga el resultado. Sin registro ni envío de documentos al servidor.", lastmod: "2026-10-15" },
 ];
