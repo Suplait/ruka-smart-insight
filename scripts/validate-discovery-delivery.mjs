@@ -45,7 +45,7 @@ for (const [route, type] of [["/sitemap.xml", "xml"], ["/llms.txt", "text/plain"
   const response = await get(route);
   const body = await response.text();
   check(response.status === 200 && response.headers.get("content-type")?.includes(type), `${route}: invalid delivery`);
-  if (route !== "/robots.txt") for (const target of discovery) check(body.includes(`https://www.ruka.ai${target}`), `${route}: missing ${target}`);
+  if (route !== "/robots.txt") for (const target of [...discovery, ...posts.map((post) => `/blog/${post.slug}`)]) check(body.includes(`https://www.ruka.ai${target}`), `${route}: missing ${target}`);
   if (route === "/sitemap.xml") {
     const xml = new JSDOM(body, { contentType: "text/xml" }).window.document;
     const urls = [...xml.querySelectorAll("loc")].map((element) => element.textContent);
@@ -58,7 +58,7 @@ for (const post of posts) {
   const expected = await readFile(`public${post.heroImage.src}`);
   const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
   check(response.status === 200 && response.headers.get("content-type")?.startsWith("image/"), `${post.slug}: image not served`);
-  check(hash(delivered) === hash(expected), `${post.slug}: different screenshot delivered`);
+  check(hash(delivered) === hash(expected), `${post.slug}: different article image delivered`);
 }
 for (const [route, target] of [["/v2", "/"], ["/precios", "/#precios"]]) {
   const response = await get(route);
