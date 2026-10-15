@@ -7,6 +7,9 @@ const distIndexPath = path.join(projectRoot, "dist", "index.html");
 const ssrDirectory = path.join(projectRoot, ".prerender-ssr");
 const ssrEntryPath = path.join(ssrDirectory, "entry-prerender-ssr.js");
 const baseHtml = await readFile(distIndexPath, "utf8");
+// React's development Suspense diagnostics contain local filesystem paths.
+// Load the server renderer in production mode before importing the SSR bundle.
+process.env.NODE_ENV = "production";
 const {
   prerenderPaths,
   renderPrerenderedPage,

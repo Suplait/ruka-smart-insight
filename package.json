@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vite build --ssr src/entry-prerender-ssr.tsx --outDir .prerender-ssr && node scripts/generate-prerendered-html.mjs && node scripts/generate-discovery-files.mjs",
+    "build": "vite build && vite build --ssr src/entry-prerender-ssr.tsx --outDir .prerender-ssr && node scripts/generate-prerendered-html.mjs && node scripts/generate-discovery-files.mjs && node scripts/validate-public-content.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "test": "vitest run",

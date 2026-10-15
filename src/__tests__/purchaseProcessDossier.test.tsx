@@ -10,11 +10,13 @@ afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 const renderPage = () => render(<MemoryRouter><PurchaseProcessDossier /></MemoryRouter>);
 
 describe("purchase process dossier", () => {
-  it("renders scope and unproven external result without interaction or a registration gate", () => {
+  it("renders practical guidance and honest scope without exposing the internal QA report", () => {
     renderPage();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-    expect(screen.getByText(/La prueba completa en una cuenta de Toteat sigue pendiente/)).toBeTruthy();
-    expect(screen.getByText(/No es una garantía universal contra duplicados/)).toBeTruthy();
+    expect(screen.getByText(/Ruka puede enviar compras a Toteat en operaciones habilitadas/)).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Antes de dar la compra por cerrada." })).toBeTruthy();
+    expect(document.body.textContent).not.toMatch(/pruebas internas|57 verificaciones|arnés|prueba completa.*pendiente|Controles internos|SHA-256/i);
+    expect(document.querySelector('a[href^="/evidencia/"]')).toBeNull();
     expect(document.querySelector("form")).toBeNull();
     expect(screen.getByRole("link", { name: "Ir a la hoja de decisión" }).getAttribute("href")).toBe("#hoja-decision");
     expect(document.querySelectorAll(".decision-field")).toHaveLength(8);

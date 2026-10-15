@@ -64,7 +64,7 @@ def render(node):
     if tag in ("h1", "h2", "h3"):
         return [para(text(node), tag)]
     if tag == "p":
-        style = "eyebrow" if re.match(r"^0[1-5] /|^Expediente de proceso", text(node)) else "body"
+        style = "eyebrow" if text(node).startswith("Guía de compras") else "body"
         return [para(text(node), style)]
     if tag == "img":
         src = node.get("src")
@@ -110,13 +110,13 @@ def chrome(canvas, doc):
     canvas.drawImage(str(ROOT / "public/logo.png"), 48, A4[1] - 48, width=86, height=20, preserveAspectRatio=True, mask="auto")
     canvas.setFont("Dossier", 8)
     canvas.setFillColor(MUTED)
-    canvas.drawRightString(A4[0] - 48, A4[1] - 41, "EXPEDIENTE DE PROCESO / COMPRAS Y TOTEAT")
+    canvas.drawRightString(A4[0] - 48, A4[1] - 41, "GUÍA DE COMPRAS / RUKA Y TOTEAT")
     canvas.setStrokeColor(LINE)
     canvas.line(48, 47, A4[0] - 48, 47)
     canvas.setFont("Dossier", 7)
     canvas.drawString(48, 33, "ruka.ai/procesos/registrar-compras-toteat")
     canvas.linkURL(URL, (48, 29, 330, 43), relative=0)
-    canvas.drawRightString(A4[0] - 48, 33, f"{doc.page} / 5")
+    canvas.drawRightString(A4[0] - 48, 33, f"{doc.page} / 4")
     canvas.restoreState()
 
 
@@ -124,18 +124,18 @@ def main():
     assert SOURCE.stat().st_mtime >= (ROOT / "src/pages/PurchaseProcessDossier.tsx").stat().st_mtime, "Run npm run build before rendering the PDF"
     tree = html.fromstring(SOURCE.read_text())
     main_node = tree.get_element_by_id("dossier-main")
-    # Strip web-only actions and screen-reader placeholder answers, not evidence.
+    # Strip web-only actions and screen-reader placeholder answers.
     for node in list(main_node.xpath('.//*[contains(concat(" ", normalize-space(@class), " "), " dossier-screen ") or contains(concat(" ", normalize-space(@class), " "), " sr-only ") or contains(concat(" ", normalize-space(@class), " "), " dossier-print-url ")]')):
         if node.getparent() is not None:
             node.getparent().remove(node)
     sections = main_node.xpath("./section")
-    assert len(sections) == 5, "Review PDF layout when dossier structure changes"
+    assert len(sections) == 4, "Review PDF layout when guide structure changes"
     story = render(main_node.xpath("./header")[0])
     story.append(Spacer(1, 10))
     for index, section in enumerate(sections):
         if index:
             story.append(PageBreak())
-        if index == 4:
+        if index == 3:
             # The decision page has genuine writing room, no prefilled answers.
             for node in section.xpath(".//p | .//h2 | .//dl"):
                 if node.tag == "dl":
@@ -157,11 +157,11 @@ def main():
             story.extend(render(section))
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     doc = SimpleDocTemplate(str(OUTPUT), pagesize=A4, leftMargin=48, rightMargin=48,
-                            topMargin=73, bottomMargin=65, title="Registrar compras en Toteat - Expediente de proceso",
-                            author="Ruka.ai", subject="Alcance, evidencia y hoja de decisión. Prueba externa pendiente.")
+                            topMargin=73, bottomMargin=65, title="Registrar compras en Toteat - Guía para tu equipo",
+                            author="Ruka.ai", subject="Qué preparar, qué revisar y cómo organizar el registro de compras.")
     doc.build(story, onFirstPage=chrome, onLaterPages=chrome)
     pages = PdfReader(OUTPUT).pages
-    assert len(pages) == 5, f"Expected five reviewed pages; got {len(pages)}. Do not publish."
+    assert len(pages) == 4, f"Expected four reviewed pages; got {len(pages)}. Do not publish."
     assert "La hoja de decisión" in pages[-1].extract_text()
     source_files = ["src/pages/PurchaseProcessDossier.tsx", "public/assets/process-evidence/recepcion-demo.jpg", "public/logo.png", "scripts/generate-process-dossier-pdf.py"]
     manifest = {"pages": len(pages), "sources": {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in source_files},

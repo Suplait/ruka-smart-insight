@@ -16,7 +16,7 @@ export async function validateProcessDossierPdf() {
     assert.equal(hash(await readFile(path.join(root, source))), manifest.sources[source],
       `PDF is stale after changing ${source}. Rebuild, render and visually inspect the PDF.`);
   }
-  assert.equal(manifest.pages, 5, 'Review pagination before changing the accepted PDF page count');
+  assert.equal(manifest.pages, 4, 'Review pagination before changing the accepted PDF page count');
   for (const directory of ['public', 'dist']) {
     const pdf = await readFile(path.join(root, directory, 'expedientes/registrar-compras-toteat.pdf'));
     assert.equal(pdf.subarray(0, 5).toString(), '%PDF-', `${directory}: not a PDF`);
