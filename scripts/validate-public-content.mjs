@@ -10,6 +10,7 @@ export function publicContentViolations(content) {
     [/(?:Minitest|ActiveSupport|semilla 23720|arnés aislado)/i, 'internal test implementation'],
     [/(?:10 pruebas internas|57 verificaciones|Controles internos revisados|Pendiente: comprobarlo de punta a punta)/i, 'internal QA report'],
     [/\/evidencia\/compra-toteat-2026-10-15\.txt/i, 'retired internal report link'],
+    [/(?:APPROVAL_HANDOFF|PROCESS_PLAYBOOK|INTERVIEW_AND_PILOT|awaiting_user_review|contacto@bgasesores\.cl)/i, 'private partner handoff or prospect record'],
     [/\b(?:b5255d76ec3a4af592f44603eb74d00018a30d97|5066b9a1fc56fb1355f88776bfe37fe29fea02f06632c288bcb7f9e4563e91dc)\b/, 'internal source revision'],
   ].filter(([pattern]) => pattern.test(text) || pattern.test(content)).map(([,label]) => label);
 }
@@ -21,7 +22,7 @@ export async function validatePublicContent(root) {
     for (const entry of await readdir(directory, {withFileTypes:true})) {
       const file = path.join(directory,entry.name);
       if (entry.isDirectory()) { await scan(file,generated); continue; }
-      if (entry.name === 'SOURCES.md' || /[/\\]evidencia[/\\]/.test(file)) failures.push(`${file}: internal document in public output`);
+      if (/^(?:SOURCES|APPROVAL_HANDOFF|PROCESS_PLAYBOOK|INTERVIEW_AND_PILOT|PILOT_KIT|RELEASE_QA)\.md$/i.test(entry.name) || /[/\\]evidencia[/\\]/.test(file)) failures.push(`${file}: internal document in public output`);
       if (!/\.(?:html|md|txt|json)$/i.test(entry.name)) continue;
       let content = await readFile(file,'utf8');
       if (generated && entry.name.endsWith('.html')) content = content.replace(/<script\b[\s\S]*?<\/script>/gi,'');
