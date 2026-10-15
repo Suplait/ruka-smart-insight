@@ -9,10 +9,10 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
   <g font-family="Arial, sans-serif">
     <text x="64" y="186" font-size="21" font-weight="600" fill="#424ec0">Para consultoras de restaurantes</text>
     <g fill="#171827" font-size="70" font-weight="700" letter-spacing="-3">
-      <text x="60" y="280">Más asesoría.</text>
-      <text x="60" y="360">Menos carga manual.</text>
+      <text x="60" y="280">Tu asesoría,</text>
+      <text x="60" y="360">en la operación.</text>
     </g>
-    <text x="64" y="425" font-size="26" fill="#505b70">Sobre los sistemas que tus clientes ya usan.</text>
+    <text x="64" y="425" font-size="26" fill="#505b70">Automatización para los restaurantes que asesoras.</text>
     <path d="M64 480 H1136" stroke="#dce2ed"/>
     <text x="64" y="535" font-size="22" font-weight="600" fill="#171827">Tu consultora define</text>
     <path d="M320 526 H390 M382 519 L390 526 L382 533" fill="none" stroke="#9da6bd" stroke-width="2"/>
