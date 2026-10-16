@@ -3,6 +3,8 @@
 ## Architecture
 
 - **Codex Automations** provides the visible local scheduler and the agentic execution environment. GitHub Actions is not used by this engine.
+- One hourly Codex coordinator reads `job-control.mjs dispatch`; the five business cadences live only in SQLite. Former individual schedules are paused, and their procedures are versioned under `jobs/`. Follow `COORDINATOR.md`.
+- Early wakeups never consume an obligation. A later hourly poll retries due work. Offline periods remain due until Codex runs again.
 - **Local SQLite** stores scheduler state, leases, Search Console snapshots, opportunities, experiments, product signals, reports and run logs at `~/.codex/ruka-organic-growth/state.sqlite`.
 - `LocalOrganicGrowthEngine.claim()` uses an immediate SQLite transaction to decide atomically whether work is due and prevent concurrent mutation.
 - The daily watchdog observes availability, indexation, data freshness and new opportunities without forcing a deployment.
@@ -28,6 +30,8 @@
 - Product intelligence reads the existing local `ruka-ai` and `ruka_v3` repositories and never writes to them.
 - Git push and PR operations use the user's existing local Git/GitHub connection. No PAT is stored in repository files.
 - Report and incident delivery uses the connected Slack tool in Codex. SQLite records the pending payload before delivery and its delivery reference afterwards.
+- Reporting stores the original scheduled period, reuses its outbox on retries, and cannot complete without a Slack permalink. Reconcile the stable report ID in Slack before retrying an ambiguous send.
+- Failures store a separate retry-after time; they preserve the original due date. Expired leases remain reclaimable, including after process termination.
 
 Secrets must never be written to task output, committed files or automation prompts.
 

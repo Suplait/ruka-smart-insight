@@ -35,6 +35,8 @@ if (command === "claim") {
   });
 } else if (command === "status") {
   console.log(JSON.stringify(await engineRequest("status"), null, 2));
+} else if (command === "dispatch") {
+  console.log(JSON.stringify(await engineRequest("dispatch"), null, 2));
 } else if (command === "report-delivered") {
   console.log(JSON.stringify(await engineRequest("report_delivery", {
     reportId: process.env.ORGANIC_GROWTH_REPORT_ID,

@@ -48,6 +48,8 @@ function zonedDateToUtc({ year, month, day, hour = 0, minute = 0, second = 0 }, 
 
 export function nextReportAt(after = new Date()) {
   const local = zonedParts(after, timezone);
+  const today = zonedDateToUtc({ ...local, hour: 9, minute: 0, second: 0 });
+  if ([1, 15].includes(local.day) && today > after) return today;
   if (local.day < 15) return zonedDateToUtc({ year: local.year, month: local.month, day: 15, hour: 9 });
   const nextMonth = new Date(Date.UTC(local.year, local.month, 1));
   return zonedDateToUtc({
@@ -82,7 +84,7 @@ export function nextWeeklyMeasurementAt(after = new Date()) {
   const local = zonedParts(after, timezone);
   const weekday = new Date(Date.UTC(local.year, local.month - 1, local.day)).getUTCDay();
   let daysUntilMonday = (8 - weekday) % 7;
-  if (daysUntilMonday === 0 && (local.hour > 10 || (local.hour === 10 && (local.minute > 0 || local.second > 0)))) {
+  if (daysUntilMonday === 0 && local.hour >= 10) {
     daysUntilMonday = 7;
   }
   const target = new Date(Date.UTC(local.year, local.month - 1, local.day + daysUntilMonday));
@@ -149,8 +151,10 @@ export class LocalOrganicGrowthEngine {
     mkdirSync(path.dirname(this.databasePath), { recursive: true, mode: 0o700 });
     this.db = new DatabaseSync(this.databasePath);
     this.db.exec("PRAGMA journal_mode = WAL; PRAGMA synchronous = FULL; PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 10000;");
-    this.#migrate();
-    migrateBuyerEvidence(this.db);
+    this.#transaction(() => {
+      this.#migrate();
+      migrateBuyerEvidence(this.db);
+    });
     chmodSync(this.databasePath, 0o600);
   }
 
@@ -343,7 +347,16 @@ export class LocalOrganicGrowthEngine {
           .run(iso(nextExecutionAt(new Date(state.last_execution_success_at))), iso(current));
       }
     }
-    this.db.prepare("INSERT OR REPLACE INTO metadata(key, value) VALUES('schema_version', '3')").run();
+    for (const table of ["runs", "reports"]) {
+      if (!this.db.prepare(`PRAGMA table_info(${table})`).all().some((row) => row.name === "scheduled_for")) {
+        this.db.exec(`ALTER TABLE ${table} ADD COLUMN scheduled_for TEXT`);
+      }
+    }
+    for (const { prefix } of Object.values(jobFields)) {
+      if (!columns.has(`${prefix}_retry_after`)) this.db.exec(`ALTER TABLE state ADD COLUMN ${prefix}_retry_after TEXT`);
+    }
+    this.db.exec("CREATE UNIQUE INDEX IF NOT EXISTS reports_schedule_idx ON reports(scheduled_for) WHERE scheduled_for IS NOT NULL");
+    this.db.prepare("INSERT OR REPLACE INTO metadata(key, value) VALUES('schema_version', '4')").run();
   }
 
   #transaction(callback) {
@@ -386,14 +399,17 @@ export class LocalOrganicGrowthEngine {
       if (leaseRunId && leaseExpiresAt && Date.parse(leaseExpiresAt) > now.getTime()) {
         return { claimed: false, run_id: null, reason: "active_lease", next_due_at: nextDueAt };
       }
+      if (!force && state[`${prefix}_retry_after`] && Date.parse(state[`${prefix}_retry_after`]) > now.getTime()) {
+        return { claimed: false, run_id: null, reason: "retry_backoff", next_due_at: state[`${prefix}_retry_after`] };
+      }
       if (!force && Date.parse(nextDueAt) > now.getTime()) {
         return { claimed: false, run_id: null, reason: "not_due", next_due_at: nextDueAt };
       }
       const runId = randomUUID();
       const startedAt = iso(now);
       const leaseExpires = iso(now.getTime() + 2 * 60 * 60 * 1000);
-      this.db.prepare("INSERT INTO runs(id, kind, trigger_source, status, started_at) VALUES(?, ?, ?, 'running', ?)")
-        .run(runId, kind, String(triggerSource || "schedule").slice(0, 80), startedAt);
+      this.db.prepare("INSERT INTO runs(id, kind, trigger_source, status, started_at, scheduled_for) VALUES(?, ?, ?, 'running', ?, ?)")
+        .run(runId, kind, String(triggerSource || "schedule").slice(0, 80), startedAt, iso(nextDueAt));
       this.db.prepare(`UPDATE state SET ${prefix}_lease_run_id = ?, ${prefix}_lease_expires_at = ?, updated_at = ? WHERE engine_key = 'ruka'`)
         .run(runId, leaseExpires, startedAt);
       return { claimed: true, run_id: runId, reason: "claimed", next_due_at: nextDueAt };
@@ -410,7 +426,12 @@ export class LocalOrganicGrowthEngine {
       const { prefix, due: dueField, success: successField } = jobFields[run.kind];
       const state = this.db.prepare("SELECT * FROM state WHERE engine_key = 'ruka'").get();
       if (state[`${prefix}_lease_run_id`] !== body.runId) throw new Error(`Run ${body.runId} no longer owns the ${run.kind} lease`);
+      if (Date.parse(state[`${prefix}_lease_expires_at`]) <= now.getTime()) throw new Error(`Run ${body.runId} lease expired`);
       const success = body.success !== false;
+      if (success && run.kind === "reporting") {
+        const receipt = this.db.prepare("SELECT id FROM reports WHERE scheduled_for = ? AND delivery_status = 'sent' AND delivery_reference IS NOT NULL").get(run.scheduled_for);
+        if (!receipt) throw new Error("Reporting completion requires a confirmed Slack receipt for this scheduled period");
+      }
       this.db.prepare(`
         UPDATE runs SET status = ?, finished_at = ?, data_through_date = COALESCE(?, data_through_date),
           git_sha = COALESCE(?, git_sha), pull_request_url = COALESCE(?, pull_request_url),
@@ -421,14 +442,19 @@ export class LocalOrganicGrowthEngine {
         body.pullRequestUrl || null, body.deploymentUrl || null, JSON.stringify(body.summary || {}),
         success ? null : String(body.errorMessage || "Unknown failure").slice(0, 8000), body.runId,
       );
-      const nextDue = iso(nextDueAt(run.kind, now, success));
+      // Failure delays the retry, never erases the original obligation.
+      // Reports recover each missed reporting date; observations use fresh data.
+      const nextDue = success
+        ? iso(nextDueAt(run.kind, run.kind === "reporting" ? new Date(run.scheduled_for || now) : now, true))
+        : state[dueField];
+      const retryAfter = success ? null : iso(nextDueAt(run.kind, now, false));
       this.db.prepare(`
         UPDATE state SET ${dueField} = ?, ${successField} = CASE WHEN ? THEN ? ELSE ${successField} END,
           last_data_through_date = COALESCE(?, last_data_through_date),
-          ${prefix}_lease_run_id = NULL, ${prefix}_lease_expires_at = NULL, updated_at = ?
+          ${prefix}_lease_run_id = NULL, ${prefix}_lease_expires_at = NULL, ${prefix}_retry_after = ?, updated_at = ?
         WHERE engine_key = 'ruka'
-      `).run(nextDue, success ? 1 : 0, iso(now), body.dataThroughDate || null, iso(now));
-      return { completed: true, next_due_at: nextDue };
+      `).run(nextDue, success ? 1 : 0, iso(now), body.dataThroughDate || null, retryAfter, iso(now));
+      return { completed: true, next_due_at: nextDue, retry_after: retryAfter };
     });
   }
 
@@ -442,6 +468,23 @@ export class LocalOrganicGrowthEngine {
       .map((row) => ({ ...entityFromRow(row), evidence: json(row.evidence_json, []) }));
     const experiments = this.db.prepare("SELECT * FROM experiments ORDER BY updated_at DESC LIMIT 20").all().map(entityFromRow);
     return { state, runs, opportunities, experiments, buyerEvidence: readBuyerEvidence(this.db, this.now()), storage: { type: "sqlite", path: this.databasePath } };
+  }
+
+  dispatch() {
+    return this.#transaction(() => {
+      const now = this.now();
+      this.#recoverExpiredLeases(now);
+      const state = this.db.prepare("SELECT * FROM state WHERE engine_key = 'ruka'").get();
+      const jobs = ["monitoring", "measurement", "strategy", "execution", "reporting"].map((kind) => {
+        const { prefix, due } = jobFields[kind];
+        const effectiveDue = Math.max(Date.parse(state[due]), Date.parse(state[`${prefix}_retry_after`] || state[due]));
+        const active = Boolean(state[`${prefix}_lease_run_id`]);
+        return { kind, scheduledFor: state[due], eligibleAt: iso(effectiveDue), active,
+          due: !active && effectiveDue <= now.getTime(),
+          overdueMinutes: Math.max(0, Math.floor((now - Date.parse(state[due])) / 60000)) };
+      });
+      return { checkedAt: iso(now), timezone, dueKinds: jobs.filter((job) => job.due).map((job) => job.kind), jobs };
+    });
   }
 
   recordBuyerEvidence(body) {
@@ -529,22 +572,41 @@ export class LocalOrganicGrowthEngine {
   }
 
   report(body = {}) {
-    const id = randomUUID();
-    this.db.prepare(`
-      INSERT INTO reports(id, run_id, period_end, payload_json, delivery_status, created_at)
-      VALUES(?, ?, ?, ?, 'pending', ?)
-    `).run(id, body.runId || null, body.periodEnd, JSON.stringify(body.payload || {}), iso(this.now()));
-    return { reportId: id, delivered: false, deliveryRequired: true };
+    return this.#transaction(() => {
+      const run = body.runId ? this.db.prepare("SELECT * FROM runs WHERE id = ?").get(body.runId) : null;
+      if (body.runId && (!run || run.kind !== "reporting" || run.status !== "running")) throw new Error("Report requires a running reporting lease");
+      if (run) {
+        const owner = this.db.prepare("SELECT reporting_lease_run_id, reporting_lease_expires_at FROM state WHERE engine_key = 'ruka'").get();
+        if (owner.reporting_lease_run_id !== run.id) throw new Error("Report run no longer owns lease");
+        if (Date.parse(owner.reporting_lease_expires_at) <= this.now().getTime()) throw new Error("Report lease expired");
+      }
+      const scheduledFor = run?.scheduled_for || null;
+      const existing = scheduledFor ? this.db.prepare("SELECT * FROM reports WHERE scheduled_for = ?").get(scheduledFor) : null;
+      if (existing) return { reportId: existing.id, scheduledFor, payload: json(existing.payload_json), delivered: existing.delivery_status === "sent", deliveryRequired: existing.delivery_status !== "sent", reference: existing.delivery_reference };
+      const id = randomUUID();
+      this.db.prepare(`
+        INSERT INTO reports(id, run_id, period_end, payload_json, delivery_status, created_at, scheduled_for)
+        VALUES(?, ?, ?, ?, 'pending', ?, ?)
+      `).run(id, body.runId || null, body.periodEnd, JSON.stringify(body.payload || {}), iso(this.now()), scheduledFor);
+      return { reportId: id, scheduledFor, payload: body.payload || {}, delivered: false, deliveryRequired: true };
+    });
   }
 
   markReportDelivery(body = {}) {
     if (!body.reportId || !["sent", "failed"].includes(body.status)) throw new Error("Invalid report delivery update");
+    if (body.status === "sent" && !/^https:\/\/[a-z0-9-]+\.slack\.com\/archives\/[^/]+\/p\d+$/.test(body.reference || "")) throw new Error("A sent report requires its Slack message permalink");
+    const existing = this.db.prepare("SELECT * FROM reports WHERE id = ?").get(body.reportId);
+    if (existing?.delivery_status === "sent") return { reportId: body.reportId, delivered: true, reference: existing.delivery_reference };
     const now = iso(this.now());
     const result = this.db.prepare(`
       UPDATE reports SET delivery_status = ?, delivery_reference = ?, delivered_at = CASE WHEN ? = 'sent' THEN ? ELSE delivered_at END
-      WHERE id = ?
+      WHERE id = ? AND delivery_status != 'sent'
     `).run(body.status, body.reference || null, body.status, now, body.reportId);
-    if (!result.changes) throw new Error(`Unknown report ${body.reportId}`);
+    if (!result.changes) {
+      const receipt = this.db.prepare("SELECT * FROM reports WHERE id = ?").get(body.reportId);
+      if (receipt?.delivery_status === "sent") return { reportId: body.reportId, delivered: true, reference: receipt.delivery_reference };
+      throw new Error(`Unknown report ${body.reportId}`);
+    }
     return { reportId: body.reportId, delivered: body.status === "sent" };
   }
 
@@ -655,6 +717,7 @@ export async function localEngineRequest(action, body = {}) {
   const engine = new LocalOrganicGrowthEngine();
   try {
     if (action === "status") return engine.status();
+    if (action === "dispatch") return engine.dispatch();
     if (action === "buyer_evidence") return engine.recordBuyerEvidence(body);
     if (action === "claim") return engine.claim(body);
     if (action === "complete") {
