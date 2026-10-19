@@ -1,5 +1,6 @@
 {
   "slug": "conciliacion-dos-vs-tres-documentos",
+  "subject": "Conciliación de dos y tres documentos",
   "category": "Comparativas",
   "title": "Conciliar dos o tres documentos: cuándo necesitas la recepción",
   "excerpt": "Factura y orden pueden coincidir aunque falte mercadería. Qué añade el tercer documento y cómo tratar compras que no tienen recepción física.",
@@ -128,12 +129,12 @@
   ],
   "status": "published",
   "datePublished": "2026-10-14",
-  "dateModified": "2026-10-15",
+  "dateModified": "2026-10-19",
   "readingTimeMinutes": 5,
   "audience": "equipos de operaciones, compras y finanzas en Chile",
   "author": {
-    "name": "Equipo Ruka",
-    "url": "https://www.ruka.ai/about"
+    "name": "Camilo Silva",
+    "url": "https://www.ruka.ai/about#founder-1"
   },
   "heroImage": {
     "kind": "diagram",

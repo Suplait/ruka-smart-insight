@@ -2,6 +2,8 @@ export type ProductResource = { href: string; title: string; description: string
 
 export const productResources: Record<string, ProductResource[]> = {
   "/productos/registro-de-compras": [
+    { href: "/procesos/registrar-compras-toteat", title: "Del documento a una compra en Toteat", description: "Qué reunir, qué relacionar y qué revisar con tu equipo antes del registro.", kind: "Guía" },
+    { href: "/integraciones/idtecloud", title: "Recupera documentos desde iDTECloud", description: "Cómo incorporar esta fuente al registro de compras, con sus accesos y alcance.", kind: "Integración" },
     { href: "/blog/registro-compras-excel-vs-automatizacion", title: "¿Seguir con Excel o automatizar el registro?", description: "Qué resuelve una planilla y qué trabajo sigue quedando en tu equipo.", kind: "Guía" },
     { href: "/blog/ocr-facturas-vs-registro-automatico", title: "Leer una factura no es lo mismo que registrarla", description: "La diferencia entre extraer datos y dejarlos en el sistema correcto.", kind: "Guía" },
     { href: "/integraciones/sii", title: "Qué información se puede tomar del SII", description: "Fuentes, accesos y límites que conviene revisar antes de empezar.", kind: "Integración" },
@@ -16,10 +18,12 @@ export const productResources: Record<string, ProductResource[]> = {
     { href: "/herramientas/conciliar-factura-orden-recepcion", title: "Revisa diferencias antes de preparar el pago", description: "Un cruce local de cantidades y precios, con un resultado descargable.", kind: "Herramienta" },
   ],
   "/productos/panel-control": [
+    { href: "/blog/registro-compras-excel-vs-automatizacion", title: "El costo de volver a armar la planilla", description: "Cuándo el registro manual deja de ser suficiente para mantener tus datos al día.", kind: "Guía" },
     { href: "/blog/actualizar-costos-precios-proveedores", title: "Cuando cambia el precio del proveedor", description: "Cómo revisar unidades, costos y reglas antes de actualizar el margen.", kind: "Guía" },
     { href: "/integraciones/toteat", title: "Lleva las compras revisadas a Toteat", description: "Productos, unidades y locales que debes relacionar antes del envío.", kind: "Integración" },
   ],
   "/productos/stock": [
+    { href: "/procesos/registrar-compras-toteat", title: "Compras, unidades y recepción en Toteat", description: "Una guía para preparar el registro sin perder de vista lo que realmente llegó.", kind: "Guía" },
     { href: "/blog/actualizar-costos-precios-proveedores", title: "Caja, kilo y unidad no son intercambiables", description: "Cómo evitar que una diferencia de formato termine alterando tus costos.", kind: "Guía" },
     { href: "/blog/conciliar-facturas-ordenes-compra-recepciones", title: "El inventario parte por lo que realmente recibiste", description: "Factura, orden y recepción: los cruces que ayudan a detectar diferencias.", kind: "Guía" },
   ],

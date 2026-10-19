@@ -1,4 +1,6 @@
 import { Helmet } from "react-helmet";
+import { socialPreview } from "@/utils/socialPreview";
+import pageModified from "@/content/pageModified.json";
 import {
   createOrganizationSchema,
   createWebsiteSchema,
@@ -32,6 +34,8 @@ export function MarketingSeo({
   faqs = [],
   primaryEntity,
 }: MarketingSeoProps) {
+  const preview = socialPreview(path);
+  if (preview) { image = preview.image; imageAlt = preview.alt; }
   const canonical = `${origin}${path === "/" ? "/" : path}`;
   const imageUrl = image.startsWith("http") ? image : `${origin}${image}`;
   const breadcrumbId = `${canonical}#breadcrumb`;
@@ -46,6 +50,7 @@ export function MarketingSeo({
       url: canonical,
       name,
       description,
+      dateModified: pageModified[path as keyof typeof pageModified],
       inLanguage: "es-CL",
       isPartOf: { "@id": websiteId },
       publisher: { "@id": organizationId },

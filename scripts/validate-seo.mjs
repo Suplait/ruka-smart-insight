@@ -6,6 +6,7 @@ import { validateProcessDossierPdf } from "./validate-process-dossier-pdf.mjs";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const siteOrigin = "https://www.ruka.ai";
+const pageModified = JSON.parse(await readFile(path.join(projectRoot, "src/content/pageModified.json"), "utf8"));
 const oneDescription = "Con Ruka One llevamos procesos propios de tu empresa a operar sobre tus sistemas, reglas y datos actuales, sin reemplazar el software que ya usas.";
 const oneServiceDescription = "Ruka One es la forma de trabajar con Ruka sobre procesos específicos de una empresa, llevándolos a operar sobre sus sistemas, reglas y datos actuales.";
 
@@ -124,7 +125,7 @@ routes.push({ path: "/procesos/registrar-compras-toteat", title: "Registrar comp
 for (const guide of integrationGuides) {
   routes.push({ path: `/integraciones/${guide.slug}`, title: guide.title, canonical: `${siteOrigin}/integraciones/${guide.slug}`, h1: guide.headline, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage"], lastmod: guide.reviewedAt });
 }
-routes.push({ path: "/herramientas/conciliar-factura-orden-recepcion", title: "Conciliar factura, orden y recepción en CSV gratis | Ruka", canonical: `${siteOrigin}/herramientas/conciliar-factura-orden-recepcion`, h1: "¿Lo que te cobran es lo que pediste y recibiste?", schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage"], lastmod: "2026-10-15" });
+routes.push({ path: "/herramientas/conciliar-factura-orden-recepcion", title: "Conciliar factura, orden y recepción en CSV gratis | Ruka", canonical: `${siteOrigin}/herramientas/conciliar-factura-orden-recepcion`, h1: "¿Lo que te cobran es lo que pediste y recibiste?", schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage", "WebApplication"], lastmod: "2026-10-15" });
 
 const blogPostsDirectory = path.join(projectRoot, "src", "content", "blog", "posts");
 const blogPostFiles = (await readdir(blogPostsDirectory)).filter((file) => file.endsWith(".json"));
@@ -564,7 +565,7 @@ const sitemap = await readFile(path.join(projectRoot, "dist", "sitemap.xml"), "u
 assert(sitemap.startsWith('<?xml version="1.0" encoding="UTF-8"?>'), "sitemap.xml: cabecera XML inválida");
 for (const route of routes) {
   assert(sitemap.includes(`<loc>${route.canonical}</loc>`), `sitemap.xml: falta ${route.canonical}`);
-  const expectedLastmod = route.lastmod ?? "2026-10-08";
+  const expectedLastmod = pageModified[route.path] ?? route.lastmod;
   assert(
     sitemap.includes(`<loc>${route.canonical}</loc>\n    <lastmod>${expectedLastmod}</lastmod>`),
     `sitemap.xml: ${route.path} no refleja la fecha de esta iteración SEO`,

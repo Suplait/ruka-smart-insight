@@ -1,4 +1,6 @@
 import { Helmet } from "react-helmet";
+import { socialPreview } from "@/utils/socialPreview";
+import pageModified from "@/content/pageModified.json";
 import acquisitionFaq from "@/content/acquisitionFaq.json";
 import {
   createOrganizationSchema,
@@ -23,7 +25,9 @@ export function AcquisitionSeo({
   pageName,
   features,
 }: AcquisitionSeoProps) {
-  const imageUrl = "https://www.ruka.ai/ruka-agentes-ia-og.png";
+  const preview = socialPreview(new URL(canonicalUrl).pathname);
+  const imageUrl = preview ? `https://www.ruka.ai${preview.image}` : "https://www.ruka.ai/ruka-agentes-ia-og.png";
+  const imageAlt = preview?.alt ?? "Ruka, agentes IA para trabajo operativo";
   const webpageId = `${canonicalUrl}#webpage`;
   const breadcrumbId = `${canonicalUrl}#breadcrumb`;
   const structuredData = {
@@ -37,6 +41,7 @@ export function AcquisitionSeo({
         url: canonicalUrl,
         name: pageName,
         description,
+        dateModified: pageModified[new URL(canonicalUrl).pathname as keyof typeof pageModified],
         inLanguage: "es-CL",
         isPartOf: { "@id": websiteId },
         about: { "@id": softwareId },
@@ -99,13 +104,13 @@ export function AcquisitionSeo({
       <meta property="og:image:type" content="image/png" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content="Ruka, agentes IA para trabajo operativo" />
+      <meta property="og:image:alt" content={imageAlt} />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={imageUrl} />
-      <meta name="twitter:image:alt" content="Ruka, agentes IA para trabajo operativo" />
+      <meta name="twitter:image:alt" content={imageAlt} />
 
       <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
     </Helmet>

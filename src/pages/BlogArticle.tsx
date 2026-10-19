@@ -7,6 +7,7 @@ import { BlogPostSeo } from "@/components/blog/BlogSeo";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { getBlogPost, getRelatedBlogPosts } from "@/content/blog/posts";
 import type { BlogPost } from "@/content/blog/types";
+import { blogAuthor } from "@/content/blog/author";
 
 type BlogArticleProps = {
   post?: BlogPost;
@@ -54,7 +55,7 @@ export default function BlogArticle({ post: prerenderedPost }: BlogArticleProps)
               <h1 className="mt-5 text-balance text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.04] tracking-[-0.04em]">{post.title}</h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-[#5e6678] sm:text-xl sm:leading-9">{post.excerpt}</p>
               <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-[#dfe3ed] pt-6 text-sm text-[#6a7182]">
-                <span className="font-semibold text-[#303241]">{post.author.name}</span>
+                <a href={post.author.url} rel="author" className="font-semibold text-[#303241] underline decoration-[#bdc4d2] underline-offset-4 hover:text-primary">{post.author.name}</a>
                 <time dateTime={post.datePublished}>{formatDate(post.datePublished)}</time>
                 {post.dateModified !== post.datePublished && <span>Actualizada el <time dateTime={post.dateModified}>{formatDate(post.dateModified)}</time></span>}
                 <span className="inline-flex items-center gap-1.5"><Clock3 className="h-4 w-4" aria-hidden="true" />{post.readingTimeMinutes} min de lectura</span>
@@ -149,6 +150,16 @@ export default function BlogArticle({ post: prerenderedPost }: BlogArticleProps)
                   ) : null}
                 </section>
               ))}
+
+              <aside aria-label="Sobre el autor" className="mb-12 flex items-start gap-5 border-y border-[#e2e6ee] py-7">
+                <img src={blogAuthor.image} alt="" width={64} height={64} loading="lazy" className="h-16 w-16 shrink-0 rounded-full object-cover" />
+                <div>
+                  <a href={blogAuthor.url} rel="author" className="font-semibold text-[#171827] underline underline-offset-4">{blogAuthor.name}</a>
+                  <p className="mt-1 text-sm font-medium text-[#424ec0]">{blogAuthor.role}</p>
+                  <p className="mt-3 text-sm leading-6 text-[#505b70]">{blogAuthor.bio}</p>
+                  <a href={blogAuthor.linkedin} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#424ec0] underline underline-offset-4">LinkedIn de Camilo <ExternalLink size={14} aria-hidden="true" /></a>
+                </div>
+              </aside>
 
               <section aria-labelledby="article-faq" className="border-t border-[#e2e6ee] pt-12">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Preguntas frecuentes</p>

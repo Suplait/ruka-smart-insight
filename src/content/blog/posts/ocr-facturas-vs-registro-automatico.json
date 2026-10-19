@@ -1,5 +1,6 @@
 {
   "slug": "ocr-facturas-vs-registro-automatico",
+  "subject": "OCR de facturas y registro automático de compras",
   "category": "Comparativas",
   "title": "OCR de facturas o registro automático: qué trabajo resuelve cada uno",
   "excerpt": "Leer una factura no es lo mismo que dejarla registrada. Cómo elegir según lo que tu equipo sigue haciendo después de extraer los datos.",
@@ -99,6 +100,10 @@
   },
   "relatedLinks": [
     {
+      "label": "Documentos desde iDTECloud",
+      "href": "/integraciones/idtecloud"
+    },
+    {
       "label": "Cómo registrar compras sin cambiar ERP",
       "href": "/blog/automatizar-registro-compras-sin-cambiar-erp"
     },
@@ -123,12 +128,12 @@
   ],
   "status": "published",
   "datePublished": "2026-10-14",
-  "dateModified": "2026-10-14",
+  "dateModified": "2026-10-19",
   "readingTimeMinutes": 5,
   "audience": "equipos de operaciones, compras y finanzas en Chile",
   "author": {
-    "name": "Equipo Ruka",
-    "url": "https://www.ruka.ai/about"
+    "name": "Camilo Silva",
+    "url": "https://www.ruka.ai/about#founder-1"
   },
   "heroImage": {
     "kind": "diagram",

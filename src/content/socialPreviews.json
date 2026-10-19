@@ -1,0 +1,16 @@
+{
+  "/productos/registro-de-compras": { "label": "Registro de compras", "lines": ["Tus facturas llegan.", "Ruka las registra."], "detail": "SII, XML, PDF y correo → tu sistema actual", "art": "public/assets/registro-compras/facturas-en-bandeja.png" },
+  "/productos/conciliacion-automatica": { "label": "Conciliación automática", "lines": ["Factura, orden", "y recepción.", "Todo debe calzar."], "detail": "Revisa las diferencias. No cada compra.", "art": "public/assets/registro-compras/bloqueo-pago.png" },
+  "/productos/cuentas-por-pagar": { "label": "Cuentas por pagar", "lines": ["Tu nómina de pagos.", "Lista para", "subir al banco."], "detail": "De las compras revisadas al archivo bancario.", "art": "src/assets/planilla-bancaria.png" },
+  "/productos/panel-control": { "label": "Costos y margen", "lines": ["¿Cuánto te deja", "cada producto?"], "detail": "Costos al día, sin rehacer planillas.", "art": "src/assets/panel-control-dashboard.png" },
+  "/productos/stock": { "label": "Stock e inventario", "lines": ["Cada movimiento", "actualiza tu stock."], "detail": "Compras, consumos y existencias conectadas.", "art": "public/stock-inventario.png" },
+  "/integraciones": { "label": "Integraciones", "lines": ["Tus sistemas.", "Trabajando juntos."], "detail": "ERP, POS, facturadores, bancos y archivos.", "logos": ["sii.jpg", "toteat.svg", "nubox.svg", "chipax.png"] },
+  "/integraciones/sii": { "label": "Ruka + SII", "lines": ["Del documento", "al registro", "de la compra."], "detail": "Información tributaria para tu operación.", "logos": ["sii.jpg"] },
+  "/integraciones/toteat": { "label": "Ruka + Toteat", "lines": ["La compra revisada.", "En tu POS."], "detail": "Productos, unidades y locales relacionados.", "logos": ["toteat.svg"] },
+  "/integraciones/nubox": { "label": "Ruka + Nubox", "lines": ["Tus documentos.", "Dentro del flujo", "de compras."], "detail": "Conecta la fuente que ya usa tu equipo.", "logos": ["nubox.svg"] },
+  "/integraciones/chipax": { "label": "Ruka + Chipax", "lines": ["Trae los XML.", "Continúa el trabajo."], "detail": "Documentos de compra para tu operación.", "logos": ["chipax.png"] },
+  "/integraciones/idtecloud": { "label": "Ruka + iDTECloud", "lines": ["Del facturador", "a tu operación."], "detail": "Recupera documentos para el registro de compras.", "logos": ["idtecloud.png"] },
+  "/restaurantes": { "label": "Ruka para restaurantes", "lines": ["Menos planillas.", "Más tiempo", "para tu restaurante."], "detail": "Compras, costos y stock sobre tus sistemas.", "logos": ["sii.jpg", "toteat.svg", "fudo.svg", "bsale.png"] },
+  "/hoteles": { "label": "Ruka para hoteles", "lines": ["Compras y operación.", "Sin volver a", "copiar los datos."], "detail": "Automatiza el trabajo entre tus sistemas.", "logos": ["sii.jpg", "defontana.svg", "nubox.svg", "sap.svg"] },
+  "/retail": { "label": "Ruka para retail", "lines": ["Cada compra.", "Menos trabajo", "administrativo."], "detail": "Registro, costos y stock conectados.", "logos": ["sii.jpg", "bsale.png", "defontana.svg", "nubox.svg"] }
+}

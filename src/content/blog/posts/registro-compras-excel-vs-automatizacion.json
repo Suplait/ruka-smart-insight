@@ -1,5 +1,6 @@
 {
   "slug": "registro-compras-excel-vs-automatizacion",
+  "subject": "Registro de compras en Excel y automatización",
   "category": "Comparativas",
   "title": "Registro de compras en Excel o automatizado: cuándo cambiar",
   "excerpt": "Una planilla puede ser suficiente. La señal para cambiar es el trabajo que exige mantenerla correcta y llevar sus datos al siguiente sistema.",
@@ -113,6 +114,10 @@
   },
   "relatedLinks": [
     {
+      "label": "Preparar la nómina de pagos a proveedores",
+      "href": "/blog/nomina-pagos-proveedores-banco"
+    },
+    {
       "label": "OCR o proceso completo",
       "href": "/blog/ocr-facturas-vs-registro-automatico"
     },
@@ -129,12 +134,12 @@
   ],
   "status": "published",
   "datePublished": "2026-10-14",
-  "dateModified": "2026-10-14",
+  "dateModified": "2026-10-19",
   "readingTimeMinutes": 5,
   "audience": "equipos de operaciones, compras y finanzas en Chile",
   "author": {
-    "name": "Equipo Ruka",
-    "url": "https://www.ruka.ai/about"
+    "name": "Camilo Silva",
+    "url": "https://www.ruka.ai/about#founder-1"
   },
   "heroImage": {
     "kind": "diagram",

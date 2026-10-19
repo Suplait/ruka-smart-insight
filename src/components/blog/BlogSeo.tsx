@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import type { BlogPost } from "@/content/blog/types";
 import { blogPosts } from "@/content/blog/posts";
+import { blogAuthorSchema } from "@/content/blog/author";
 import {
   createOrganizationSchema,
   createWebsiteSchema,
@@ -97,13 +98,9 @@ export function BlogPostSeo({ post }: { post: BlogPost }) {
       inLanguage: "es-CL",
       image: { "@id": `${canonical}#primaryimage` },
       mainEntityOfPage: { "@id": `${canonical}#webpage` },
-      author: {
-        "@type": "Organization",
-        name: post.author.name,
-        url: post.author.url,
-      },
+      author: blogAuthorSchema,
       publisher: { "@id": organizationId },
-      about: post.targetQuery,
+      about: { "@type": "Thing", name: post.subject },
       articleSection: post.category,
       wordCount: countPostWords(post),
     },
