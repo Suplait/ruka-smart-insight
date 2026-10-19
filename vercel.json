@@ -168,10 +168,15 @@
     { "source": "/blog/", "destination": "/blog/index.html" },
     { "source": "/blog/:slug", "destination": "/blog/:slug/index.html" },
     { "source": "/blog/:slug/", "destination": "/blog/:slug/index.html" },
-    { "source": "/home-anterior", "destination": "/index.html" },
-    { "source": "/onboarding-success", "destination": "/index.html" },
-    { "source": "/calendly-success", "destination": "/index.html" },
-    { "source": "/whatsapp", "destination": "/index.html" },
-    { "source": "/webinar", "destination": "/index.html" }
+    { "source": "/home-anterior", "destination": "/home-anterior/index.html" },
+    { "source": "/home-anterior/", "destination": "/home-anterior/index.html" },
+    { "source": "/onboarding-success", "destination": "/onboarding-success/index.html" },
+    { "source": "/onboarding-success/", "destination": "/onboarding-success/index.html" },
+    { "source": "/calendly-success", "destination": "/calendly-success/index.html" },
+    { "source": "/calendly-success/", "destination": "/calendly-success/index.html" },
+    { "source": "/whatsapp", "destination": "/whatsapp/index.html" },
+    { "source": "/whatsapp/", "destination": "/whatsapp/index.html" },
+    { "source": "/webinar", "destination": "/api/webinar" },
+    { "source": "/webinar/", "destination": "/api/webinar" }
   ]
 }

@@ -19,7 +19,7 @@
     "caption": "Captura nueva de la recepción en prueba.ruka.ai, con datos de demostración. Muestra una cantidad recibida distinta de la esperada; no es una captura del cruce de órdenes de compra ni un resultado de cliente."
   },
   "intro": [
-    "Una factura puede estar correcta desde el punto de vista tributario y aun así no corresponder a lo que la empresa pidió o recibió. La conciliación conecta esas tres versiones de la compra antes de que una diferencia avance hacia el pago, el inventario o el cierre contable.",
+    "Conciliar facturas es comparar lo que cobra un proveedor con lo que pediste y recibiste. Se revisan productos, cantidades, unidades y precios para detectar diferencias antes de preparar el pago. Una factura puede estar correcta desde el punto de vista tributario y aun así cobrar mercadería que no llegó o un precio distinto del acordado.",
     "El desafío no es solo comparar totales. Hay que identificar documentos relacionados, homologar productos y unidades, considerar recepciones parciales y aplicar las tolerancias de cada operación. Cuando ese trabajo se hace a mano, el equipo termina revisando todo para encontrar unos pocos casos realmente problemáticos."
   ],
   "keyTakeaways": [

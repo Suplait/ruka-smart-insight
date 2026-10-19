@@ -29,6 +29,8 @@ import { partnersPath, partnersDescription } from "@/content/partnersContent";
 import ReconciliationExample from "@/pages/ReconciliationExample";
 import { reconciliationExamplePath } from "@/utils/reconciliationExample";
 import integrationGuides from "@/content/integrationGuides.json";
+import internalRoutes from "@/content/internalRouteSeo.json";
+import { InternalRouteSeo } from "@/components/seo/InternalRouteSeo";
 
 const pages: Record<string, ComponentType> = {
   "/": LandingV2,
@@ -67,6 +69,21 @@ export const discoveryEntries = [
 
 for (const post of blogPosts) {
   pages[`/blog/${post.slug}`] = () => <BlogArticle post={post} />;
+}
+
+// Operational routes keep their existing client-only flow. Render a safe shell,
+// not the home page or a form with fabricated lead/session state.
+for (const [routePath, metadata] of Object.entries(internalRoutes)) {
+  pages[routePath] = () => (
+    <>
+      <InternalRouteSeo />
+      <main className="mx-auto max-w-xl px-6 py-24">
+        <h1>{metadata.heading}</h1>
+        <p>{metadata.description}</p>
+        <noscript>Activa JavaScript para continuar en esta página.</noscript>
+      </main>
+    </>
+  );
 }
 
 export const prerenderPaths = Object.keys(pages);
