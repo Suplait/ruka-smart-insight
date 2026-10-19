@@ -1,5 +1,5 @@
 {
-  "title": "Agentes IA para automatizar procesos operativos | Ruka",
+  "title": "Agentes IA para automatizar procesos operativos | Ruka.ai",
   "description": "Ruka conecta tu SII, ERP, POS, bancos y otras plataformas para registrar compras, ejecutar conciliaciones y mantener tus sistemas actualizados.",
   "canonicalUrl": "https://www.ruka.ai/",
   "imageUrl": "https://www.ruka.ai/ruka-agentes-ia-operaciones-og.png",
@@ -8,6 +8,10 @@
   "locale": "es_CL",
   "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
   "faq": [
+    {
+      "question": "¿Qué es Ruka.ai?",
+      "answer": "Ruka.ai es una plataforma que automatiza el trabajo administrativo entre los sistemas que ya usa tu empresa. Registra compras, cruza facturas con órdenes y recepciones, y mantiene costos e inventario actualizados según las fuentes y reglas de tu operación. Tu equipo conserva el control y revisa los casos que necesitan una decisión."
+    },
     {
       "question": "¿Tengo que cambiar mi ERP, POS o sistema actual?",
       "answer": "No. Ruka está diseñada para trabajar sobre las herramientas que ya usa tu empresa. Conectamos las fuentes necesarias y dejamos la información actualizada donde corresponda."

@@ -29,7 +29,8 @@ import NotFound from './pages/NotFound';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import WhatsappRedirect from './pages/WhatsappRedirect';
 import CalendlySuccess from './pages/CalendlySuccess';
-import Webinar from './pages/Webinar';
+import WebinarExpired from './pages/WebinarExpired';
+import { InternalRouteSeo } from './components/seo/InternalRouteSeo';
 import One from './pages/One';
 import OneContact from './pages/OneContact';
 import BlogIndex from './pages/BlogIndex';
@@ -112,6 +113,7 @@ function App() {
         <BrowserRouter>
           <ScrollToTopOnRouteChange />
           <LeadAttributionObserver />
+          <InternalRouteSeo />
           <Routes>
             <Route path="/" element={<LandingV2 />} />
             <Route path="/v2" element={<Navigate to="/" replace />} />
@@ -138,7 +140,7 @@ function App() {
             <Route path="/onboarding-success" element={<OnboardingSuccess />} />
             <Route path="/calendly-success" element={<CalendlySuccess />} />
             <Route path="/whatsapp" element={<WhatsappRedirect />} />
-            <Route path="/webinar" element={<Webinar />} />
+            <Route path="/webinar" element={<WebinarExpired />} />
             <Route path="/one" element={<One />} />
             <Route path="/one/contacto" element={<OneContact />} />
             <Route path="/blog" element={<BlogIndex />} />

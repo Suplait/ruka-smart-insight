@@ -53,7 +53,7 @@ export const productPages = {
     faqs: [
       { question: "¿Qué pasa con las facturas que sí coinciden?", answer: "Avanzan sin que una persona tenga que revisarlas una por una. Ruka conserva el resultado y los documentos usados para validarlo." },
       { question: "¿Qué documentos puede conciliar Ruka?", answer: "Puede cruzar facturas, órdenes de compra, recepciones y pagos. El alcance exacto depende de la información a la que podamos acceder." },
-      { question: "¿Esto también sirve para conciliación bancaria?", answer: "Puede incluir movimientos bancarios cuando forman parte del proceso y existe acceso a esa información. La página se enfoca en conciliar cada compra de punta a punta." },
+      { question: "¿Conciliar facturas es lo mismo que conciliar el banco?", answer: "No. Conciliar facturas consiste en comparar lo que cobra el proveedor con lo pedido y lo recibido: productos, cantidades, unidades y precios. La conciliación bancaria compara cobros o pagos registrados con movimientos del banco. Ruka puede trabajar ambos cruces cuando las fuentes están disponibles, pero se definen como controles distintos." },
       { question: "¿Qué pasa con una diferencia pequeña que mi empresa acepta?", answer: "Puedes definir tolerancias para que Ruka reconozca esos casos como válidos y no los envíe a revisión." },
     ],
     image: "/ruka-agentes-ia-operaciones-og.png",

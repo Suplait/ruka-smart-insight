@@ -13,7 +13,7 @@ const oneServiceDescription = "Ruka One es la forma de trabajar con Ruka sobre p
 const routes = [
   {
     path: "/",
-    title: "Agentes IA para automatizar procesos operativos | Ruka",
+    title: "Agentes IA para automatizar procesos operativos | Ruka.ai",
     canonical: `${siteOrigin}/`,
     h1: "Tu empresa ya tiene los sistemas. Ruka hace el trabajo que queda entre medio.",
     schema: ["Organization", "WebSite", "SoftwareApplication", "FAQPage", "WebPage", "BreadcrumbList"],
@@ -169,6 +169,11 @@ const noIndexRoutes = [
     h1: "¿Qué parte de tu operación sigue siendo manual?",
   },
 ];
+
+const internalRoutes = JSON.parse(await readFile(path.join(projectRoot, "src/content/internalRouteSeo.json"), "utf8"));
+for (const [routePath, metadata] of Object.entries(internalRoutes)) {
+  noIndexRoutes.push({ path: routePath, title: metadata.title, canonical: `${siteOrigin}${routePath}`, h1: metadata.heading });
+}
 
 const failures = [];
 let assertions = 0;
@@ -373,7 +378,7 @@ const homeSchemas = parseSchema(homeHtml, "/").values;
 const faqSchema = homeSchemas
   .flatMap((schema) => schema["@graph"] ?? [schema])
   .find((schema) => schema?.["@type"] === "FAQPage");
-assert(faqSchema?.mainEntity?.length === 9, `/: FAQPage debe contener 9 preguntas y contiene ${faqSchema?.mainEntity?.length ?? 0}`);
+assert(faqSchema?.mainEntity?.length === 10, `/: FAQPage debe contener 10 preguntas y contiene ${faqSchema?.mainEntity?.length ?? 0}`);
 for (const question of faqSchema?.mainEntity ?? []) {
   assert(bodyText(homeHtml).includes(normalizeText(question.name)), `/: pregunta FAQ ausente del HTML visible: ${question.name}`);
   assert(bodyText(homeHtml).includes(normalizeText(question.acceptedAnswer?.text ?? "")), `/: respuesta FAQ ausente del HTML visible: ${question.name}`);
@@ -657,6 +662,20 @@ assert(
 const headerBySource = new Map((vercel.headers ?? []).map((entry) => [entry.source, entry.headers]));
 const headerValue = (source, key) =>
   headerBySource.get(source)?.find((header) => header.key.toLowerCase() === key.toLowerCase())?.value;
+for (const routePath of Object.keys(internalRoutes)) {
+  const html = await readFile(routeFile(routePath), "utf8");
+  assert(headerValue(routePath, "X-Robots-Tag")?.includes("noindex"), `${routePath}: falta noindex HTTP`);
+  assert(!robots.includes(`Disallow: ${routePath}`), `${routePath}: el crawler debe poder leer noindex`);
+  assert(getTagAttribute(html, "property", "og:url", "content") === `${siteOrigin}${routePath}`, `${routePath}: og:url debe ser propio`);
+  assert(!html.includes("Tu empresa ya tiene los sistemas"), `${routePath}: recibió contenido del home`);
+  assert(!html.includes('type="application/ld+json"'), `${routePath}: no publicar schema comercial en una pantalla operativa`);
+  for (const source of [routePath, `${routePath}/`]) {
+    assert(vercel.rewrites.some((rule) => rule.source === source && rule.destination === `${routePath}/index.html`), `${source}: rewrite incorrecto`);
+  }
+}
+for (const source of ["/webinar", "/webinar/"]) {
+  assert(vercel.rewrites.some((rule) => rule.source === source && rule.destination === "/api/webinar"), `${source}: debe servir el evento retirado con HTTP 410`);
+}
 assert(
   headerValue("/sitemap.xml", "Content-Type")?.startsWith("application/xml"),
   "vercel.json: sitemap.xml debe servirse como application/xml",

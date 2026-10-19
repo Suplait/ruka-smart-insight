@@ -1,0 +1,22 @@
+{
+  "/home-anterior": {
+    "title": "Versión anterior del sitio | Ruka.ai",
+    "description": "Versión anterior del sitio de Ruka.ai, conservada como archivo.",
+    "heading": "Versión anterior de Ruka.ai"
+  },
+  "/onboarding-success": {
+    "title": "Antes de agendar | Ruka.ai",
+    "description": "Continúa tu solicitud y elige una hora para conversar con el equipo de Ruka.",
+    "heading": "Preparando el siguiente paso"
+  },
+  "/calendly-success": {
+    "title": "Llamada agendada | Ruka.ai",
+    "description": "Confirmación de tu llamada con el equipo de Ruka.",
+    "heading": "Tu llamada con Ruka"
+  },
+  "/whatsapp": {
+    "title": "Conversemos por WhatsApp | Ruka.ai",
+    "description": "Abre una conversación por WhatsApp con el equipo de Ruka.",
+    "heading": "Abriendo WhatsApp"
+  }
+}
