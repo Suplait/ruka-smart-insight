@@ -17,6 +17,7 @@ const validatePost = (post: BlogPost, source: string) => {
     | "metaTitle"
     | "metaDescription"
     | "targetQuery"
+    | "subject"
     | "searchIntent"
     | "audience"
   >> = [
@@ -27,6 +28,7 @@ const validatePost = (post: BlogPost, source: string) => {
     "metaTitle",
     "metaDescription",
     "targetQuery",
+    "subject",
     "searchIntent",
     "audience",
   ];

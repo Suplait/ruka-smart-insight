@@ -1,8 +1,10 @@
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { preservePublicEmails } from "./public-email-html.mjs";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const pageModified = JSON.parse(await readFile(path.join(projectRoot, "src/content/pageModified.json"), "utf8"));
 const distIndexPath = path.join(projectRoot, "dist", "index.html");
 const ssrDirectory = path.join(projectRoot, ".prerender-ssr");
 const ssrEntryPath = path.join(ssrDirectory, "entry-prerender-ssr.js");
@@ -34,7 +36,7 @@ const renderDocument = (pathName) => {
 };
 
 for (const pathName of prerenderPaths) {
-  const html = renderDocument(pathName);
+  const html = preservePublicEmails(renderDocument(pathName), pathName);
   if (pathName === "/") {
     await writeFile(distIndexPath, html, "utf8");
     continue;
@@ -53,7 +55,14 @@ const escapeXml = (value) => value
   .replaceAll("'", "&apos;");
 
 const sitemapPath = path.join(projectRoot, "dist", "sitemap.xml");
-let sitemap = await readFile(sitemapPath, "utf8");
+let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${Object.entries(pageModified).map(([routePath, lastmod]) => {
+  if (!prerenderPaths.includes(routePath)) throw new Error(`Unrendered sitemap route: ${routePath}`);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod)) throw new Error(`Invalid lastmod: ${routePath}`);
+  return `  <url>\n    <loc>https://www.ruka.ai${escapeXml(routePath)}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
+}).join("\n")}
+</urlset>`;
 sitemap = sitemap.replace(/\s*<!-- BLOG:START -->[\s\S]*?<!-- BLOG:END -->\s*/, "\n");
 const sitemapBlog = blogSitemapEntries
   .map(({ path: routePath, lastmod }) => [
@@ -67,13 +76,7 @@ sitemap = sitemap.replace(
   "</urlset>",
   `  <!-- BLOG:START -->\n${sitemapBlog}\n  <!-- BLOG:END -->\n</urlset>`,
 );
-const discoveryXml = discoveryEntries.map((entry) => [
-  "  <url>",
-  `    <loc>https://www.ruka.ai${escapeXml(entry.path)}</loc>`,
-  `    <lastmod>${escapeXml(entry.lastmod)}</lastmod>`,
-  "  </url>",
-].join("\n")).join("\n");
-await writeFile(sitemapPath, sitemap.replace("</urlset>", `${discoveryXml}\n</urlset>`), "utf8");
+await writeFile(sitemapPath, sitemap, "utf8");
 
 const llmsPath = path.join(projectRoot, "dist", "llms.txt");
 let llms = await readFile(llmsPath, "utf8");

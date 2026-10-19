@@ -1,5 +1,6 @@
 {
   "slug": "conciliar-facturas-ordenes-compra-recepciones",
+  "subject": "Conciliación de facturas, órdenes de compra y recepciones",
   "status": "published",
   "category": "Conciliaciones",
   "title": "Cómo conciliar facturas, órdenes de compra y recepciones",
@@ -7,7 +8,7 @@
   "metaTitle": "Conciliar facturas, órdenes de compra y recepciones | Ruka",
   "metaDescription": "Guía para conciliar facturas, órdenes de compra y recepciones, detectar diferencias y preparar pagos con información validada.",
   "datePublished": "2026-10-09",
-  "dateModified": "2026-10-15",
+  "dateModified": "2026-10-19",
   "readingTimeMinutes": 8,
   "targetQuery": "conciliar facturas ordenes de compra recepciones",
   "searchIntent": "informacional comercial",
@@ -209,7 +210,7 @@
     }
   ],
   "author": {
-    "name": "Equipo Ruka",
-    "url": "https://www.ruka.ai/about"
+    "name": "Camilo Silva",
+    "url": "https://www.ruka.ai/about#founder-1"
   }
 }

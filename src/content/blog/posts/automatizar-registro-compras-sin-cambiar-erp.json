@@ -1,5 +1,6 @@
 {
   "slug": "automatizar-registro-compras-sin-cambiar-erp",
+  "subject": "Automatización del registro de compras",
   "status": "published",
   "featured": true,
   "category": "Registro de compras",
@@ -8,7 +9,7 @@
   "metaTitle": "Automatizar el registro de compras sin cambiar tu ERP | Ruka",
   "metaDescription": "Aprende cómo automatizar el registro de compras, desde la recepción de facturas hasta la actualización de tu ERP, sin reemplazar tus sistemas actuales.",
   "datePublished": "2026-10-09",
-  "dateModified": "2026-10-14",
+  "dateModified": "2026-10-19",
   "readingTimeMinutes": 8,
   "targetQuery": "automatizar registro de compras",
   "searchIntent": "informacional comercial",
@@ -190,7 +191,7 @@
     }
   ],
   "author": {
-    "name": "Equipo Ruka",
-    "url": "https://www.ruka.ai/about"
+    "name": "Camilo Silva",
+    "url": "https://www.ruka.ai/about#founder-1"
   }
 }

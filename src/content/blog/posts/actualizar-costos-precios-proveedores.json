@@ -1,5 +1,6 @@
 {
   "slug": "actualizar-costos-precios-proveedores",
+  "subject": "Actualización de costos y precios de proveedores",
   "category": "Costos y margen",
   "title": "Cómo actualizar costos cuando cambia el precio de un proveedor",
   "excerpt": "Antes de comparar precios, iguala unidades y presentaciones. Un ejemplo para seguir el cambio desde la factura hasta el costo de una receta.",
@@ -156,12 +157,12 @@
   ],
   "status": "published",
   "datePublished": "2026-10-14",
-  "dateModified": "2026-10-15",
+  "dateModified": "2026-10-19",
   "readingTimeMinutes": 7,
   "audience": "equipos de operaciones, compras y finanzas en Chile",
   "author": {
-    "name": "Equipo Ruka",
-    "url": "https://www.ruka.ai/about"
+    "name": "Camilo Silva",
+    "url": "https://www.ruka.ai/about#founder-1"
   },
   "heroImage": {
     "kind": "diagram",

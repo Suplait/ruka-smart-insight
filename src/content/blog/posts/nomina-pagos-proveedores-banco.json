@@ -1,5 +1,6 @@
 {
   "slug": "nomina-pagos-proveedores-banco",
+  "subject": "Nóminas de pagos a proveedores",
   "status": "published",
   "category": "Cuentas por pagar",
   "title": "Cómo preparar una nómina de pagos a proveedores para el banco",
@@ -7,7 +8,7 @@
   "metaTitle": "Nómina de pagos a proveedores para el banco | Ruka",
   "metaDescription": "Aprende cómo preparar una nómina de pagos a proveedores, validar los datos y generar un archivo masivo compatible con tu banco.",
   "datePublished": "2026-10-09",
-  "dateModified": "2026-10-14",
+  "dateModified": "2026-10-19",
   "readingTimeMinutes": 8,
   "targetQuery": "nomina pagos proveedores banco",
   "searchIntent": "informacional comercial",
@@ -184,7 +185,7 @@
     }
   ],
   "author": {
-    "name": "Equipo Ruka",
-    "url": "https://www.ruka.ai/about"
+    "name": "Camilo Silva",
+    "url": "https://www.ruka.ai/about#founder-1"
   }
 }

@@ -49,6 +49,7 @@ export type BlogPost = {
   dateModified: string;
   readingTimeMinutes: number;
   targetQuery: string;
+  subject: string;
   searchIntent: string;
   audience: string;
   heroImage: BlogImage;

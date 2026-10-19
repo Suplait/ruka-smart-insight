@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { founders, type FounderProfile } from "@/content/aboutFounders";
 import { AboutReveal } from "./AboutMotion";
@@ -23,7 +24,8 @@ function Founder({ person, index }: { person: FounderProfile; index: number }) {
 
   return (
     <motion.article
-      className="group border-t border-[#cbd3e2] pt-5"
+      id={`founder-${index + 1}`}
+      className="group scroll-mt-28 border-t border-[#cbd3e2] pt-5"
       initial={motionEnabled ? { y: 24 } : false}
       whileInView={motionEnabled ? { y: 0 } : undefined}
       viewport={{ once: true, amount: 0.2 }}
@@ -67,6 +69,16 @@ function Founder({ person, index }: { person: FounderProfile; index: number }) {
 }
 
 export function AboutFounders() {
+  useEffect(() => {
+    // Restore author deep links after React replaces the prerendered document.
+    const id = window.location.hash.slice(1);
+    if (!founders.some((_, index) => id === `founder-${index + 1}`)) return;
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "instant", block: "start" });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
   return (
     <section id="founders" aria-labelledby="founders-heading" className="bg-[#f4f5f8] py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">

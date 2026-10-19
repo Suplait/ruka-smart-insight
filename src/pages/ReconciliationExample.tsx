@@ -32,7 +32,20 @@ export default function ReconciliationExample() {
   }
   return (
     <div className="min-h-screen bg-[#f7f8fc] text-[#171827]">
-      <MarketingSeo path={reconciliationExamplePath} name="Conciliador de archivos CSV" title="Conciliar factura, orden y recepción en CSV gratis | Ruka" description="Compara tus CSV de facturas, órdenes de compra y recepciones. Encuentra diferencias y descarga el resultado, sin registro y sin subir archivos al servidor." faqs={reconciliationExampleFaqs} />
+      <MarketingSeo path={reconciliationExamplePath} name="Conciliador de archivos CSV" title="Conciliar factura, orden y recepción en CSV gratis | Ruka" description="Compara tus CSV de facturas, órdenes de compra y recepciones. Encuentra diferencias y descarga el resultado, sin registro y sin subir archivos al servidor." faqs={reconciliationExampleFaqs} primaryEntity={{
+        "@type": "WebApplication",
+        "@id": `https://www.ruka.ai${reconciliationExamplePath}#application`,
+        name: "Conciliador de factura, orden y recepción en CSV",
+        url: `https://www.ruka.ai${reconciliationExamplePath}`,
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Any",
+        browserRequirements: "Requiere JavaScript y un navegador moderno.",
+        inLanguage: "es-CL",
+        isAccessibleForFree: true,
+        offers: { "@type": "Offer", price: "0", priceCurrency: "CLP" },
+        description: "Compara cantidades y precios de archivos CSV en el navegador y permite descargar diferencias. No se conecta a sistemas, no envía archivos al servidor ni autoriza pagos.",
+        publisher: { "@id": "https://www.ruka.ai/#organization" },
+      }} />
       <Navbar />
       <main className="px-5 pb-20 pt-28 sm:px-8 sm:pt-36">
         <header className="mx-auto max-w-6xl">

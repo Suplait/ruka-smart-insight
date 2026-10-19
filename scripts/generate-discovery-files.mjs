@@ -112,6 +112,8 @@ export async function generateArticlePreview(post, root, dist) {
 }
 
 export async function generateDiscoveryFiles(root = process.cwd()) {
+  const { generateSocialPreviews } = await import("./generate-social-previews.mjs");
+  await generateSocialPreviews(root);
   const dist = path.join(root, "dist");
   const sitemap = new JSDOM(await readFile(path.join(dist, "sitemap.xml"), "utf8"), { contentType: "application/xml" });
   const urls = [...sitemap.window.document.querySelectorAll("loc")].map(node => node.textContent);
