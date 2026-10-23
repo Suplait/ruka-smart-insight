@@ -5,7 +5,7 @@ import { localEngineRequest } from "./local-engine.mjs";
 export const workspace = path.resolve(process.cwd(), ".organic-growth");
 
 export async function ensureWorkspace() {
-  await mkdir(workspace, { recursive: true });
+  await mkdir(workspace, { recursive: true, mode: 0o700 });
   return workspace;
 }
 

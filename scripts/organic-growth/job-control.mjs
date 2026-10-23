@@ -1,5 +1,5 @@
 import { appendFile } from "node:fs/promises";
-import { engineRequest } from "./lib.mjs";
+import { engineRequest, ensureWorkspace } from "./lib.mjs";
 
 const [command, kind = "execution"] = process.argv.slice(2);
 const outputFile = process.env.GITHUB_OUTPUT;
@@ -11,6 +11,9 @@ async function output(values) {
 }
 
 if (command === "claim") {
+  // Auxiliary checks can start as soon as claim returns. Prepare their directory
+  // first; a filesystem error must not leave an acquired lease behind.
+  await ensureWorkspace();
   const result = await engineRequest("claim", {
     kind,
     triggerSource: process.env.ORGANIC_GROWTH_TRIGGER_SOURCE || "codex_automation",
