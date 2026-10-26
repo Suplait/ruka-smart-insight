@@ -112,7 +112,7 @@
     },
     {
       "path": "src/pages/Security.tsx",
-      "sha256": "33ba9886168e226b00ed52848294012b2524d932f938cc284d5e52ad08a59d48"
+      "sha256": "d45f09b025c5ef0e373654a7df7b4127f213780d798297a6a72f7e6dd482427b"
     },
     {
       "path": "src/pages/Suppliers.tsx",
@@ -120,11 +120,11 @@
     },
     {
       "path": "src/pages/Updates.tsx",
-      "sha256": "bba75c0f2d39e17b0a421d729066c967cc8b7e73bd3fde677cec6155266f8c35"
+      "sha256": "9020e8993e8100396734a8cd4bdf87f515c60d488588d1b9691d08222825f4ce"
     },
     {
       "path": "src/pages/IntegrationGuide.tsx",
-      "sha256": "8041a557d17339db5792cee529651144a8a2f825c841f200c166e86a3fb8fa64"
+      "sha256": "06979a58d1398bb1a515831248023a532c74a6306141a4da1935dbc4c8d9ec58"
     },
     {
       "path": "src/components/acquisition/IndustryWorkflow.tsx",
