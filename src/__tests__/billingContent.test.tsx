@@ -16,6 +16,11 @@ describe("billing product", () => {
     expect(document.querySelectorAll("details")).toHaveLength(billingContent.faqs.length);
     for (const faq of billingContent.faqs) expect(document.querySelector("main")?.textContent).toContain(faq.answer);
     expect(document.querySelectorAll("form")).toHaveLength(0);
+    for (const step of [1, 2, 3, 4]) {
+      expect(document.querySelector(`nav a[href="#facturacion-paso-${step}"]`)).not.toBeNull();
+      expect(document.getElementById(`facturacion-paso-${step}`)).not.toBeNull();
+    }
+    expect(document.querySelector('img[src*="revision-importes"]')?.closest("li")?.id).toBe("facturacion-paso-2");
     for (const img of document.querySelectorAll('main img')) {
       expect(existsSync(`public${img.getAttribute("src")}`)).toBe(true);
       expect(img.getAttribute("alt")).toMatch(/fictici/);
