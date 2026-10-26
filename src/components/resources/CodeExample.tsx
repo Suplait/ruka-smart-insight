@@ -2,6 +2,10 @@ import { useState } from "react";
 import { Check, Copy } from "lucide-react";
 
 export function CodeExample({ code, label }: { code: string; label: string }) {
+  return <CodeExampleContent key={code} code={code} label={label} />;
+}
+
+function CodeExampleContent({ code, label }: { code: string; label: string }) {
   const [status, setStatus] = useState<"idle" | "copied" | "failed">("idle");
   async function copy() {
     try { await navigator.clipboard.writeText(code); setStatus("copied"); }
