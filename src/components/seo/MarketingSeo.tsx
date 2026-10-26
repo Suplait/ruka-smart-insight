@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet";
+import { resourceParents } from "@/utils/resourceBreadcrumbs";
 import { socialPreview } from "@/utils/socialPreview";
 import pageModified from "@/content/pageModified.json";
 import {
@@ -72,7 +73,8 @@ export function MarketingSeo({
       "@id": breadcrumbId,
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Ruka", item: `${origin}/` },
-        { "@type": "ListItem", position: 2, name, item: canonical },
+        ...resourceParents(path).map((parent, index) => ({ "@type": "ListItem", position: index + 2, name: parent.name, item: `${origin}${parent.path}` })),
+        { "@type": "ListItem", position: resourceParents(path).length + 2, name, item: canonical },
       ],
     },
   ];

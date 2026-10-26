@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import NotFound from "@/pages/NotFound";
+import { ResourceNextStep } from "@/components/resources/ResourceNextStep";
 import { MarketingSeo } from "@/components/seo/MarketingSeo";
 import { ResourceLayout, resourceLinkClass } from "@/components/resources/ResourceLayout";
 import { GuideNavigation } from "@/components/resources/GuideNavigation";
@@ -65,7 +66,8 @@ export default function PurchaseGuide({ guide: supplied }: { guide?: Guide }) {
             <p className="mt-4 leading-7 text-[#505b70]">Contrastado con las fuentes enlazadas el {dateLabel(guide.reviewedAt)}. Los ejemplos son ilustrativos. Esta guía orienta la revisión del proceso; no determina el tratamiento tributario de una operación particular ni ejecuta trámites ante el SII.</p>
             <ul className="mt-5 divide-y divide-[#e3e7ef]">{guide.sources.map(source => <li key={source.url} className="py-3"><a href={source.url} target="_blank" rel="noopener noreferrer" className={`${resourceLinkClass} text-sm`}>{source.title}<ArrowUpRight size={15} className="shrink-0" aria-hidden="true" /><span className="sr-only"> (abre otra pestaña)</span></a>{"updatedAt" in source && source.updatedAt && <p className="text-xs leading-6 text-[#505b70]">Fecha de la fuente: {dateLabel(source.updatedAt)}</p>}</li>)}</ul>
           </section>
-          <aside className="mt-10 rounded-xl bg-[#f4f5ff] p-6 sm:p-8"><h2 className="text-xl font-semibold">De la revisión al trabajo resuelto.</h2><p className="mt-3 leading-7 text-[#505b70]">Conoce cómo Ruka conecta los documentos con tu operación y conserva el contexto que tu equipo necesita para revisar.</p><Link to={guide.related.href} className={`${resourceLinkClass} mt-4`}>{guide.related.label}<ArrowRight size={17} aria-hidden="true" /></Link></aside>
+          <Link to={guide.related.href} className={`${resourceLinkClass} mt-6`}>{guide.related.label}<ArrowRight size={17} aria-hidden="true" /></Link>
+          <ResourceNextStep path={path} />
           <Link to={purchaseGuidesPath} className={`${resourceLinkClass} mt-8`}>Ver las demás guías <ArrowRight size={17} aria-hidden="true" /></Link>
         </article>
       </div>

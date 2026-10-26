@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import NotFound from "@/pages/NotFound";
+import { ResourceNextStep } from "@/components/resources/ResourceNextStep";
 import { MarketingSeo } from "@/components/seo/MarketingSeo";
 import { resourceLinkClass } from "@/components/resources/ResourceLayout";
 import { GuideNavigation } from "@/components/resources/GuideNavigation";
@@ -47,6 +48,7 @@ export default function ApiGuide({ guide: supplied }: { guide?: Guide }) {
           <section className="mt-10 rounded-xl bg-[#f4f5ff] p-6 sm:p-8"><h2 className="text-xl font-semibold">Ejemplo para tu servidor</h2><p className="mt-3 leading-7 text-[#505b70]">Archivo JavaScript legible, para Node.js 22 o superior. No incluye claves, no se ejecuta al descargarlo y no reemplaza la persistencia ni los controles de tu integración.</p><a href={`/api/examples/${guide.download}`} download className={`${resourceLinkClass} mt-4`}><Download size={18} aria-hidden="true" /> Descargar ejemplo .mjs</a></section>
           <section className="mt-10 border-t border-[#dce2ed] pt-8"><h2 className="text-xl font-semibold">Contrato y mantenimiento</h2><p className="mt-3 leading-7 text-[#505b70]">La guía acompaña el contrato publicado en la fecha indicada. Antes de integrar, revisa permisos, filtros y respuestas vigentes en la referencia. Trabaja primero con datos de prueba autorizados.</p><a href={reference} className={`${resourceLinkClass} mt-4`}>Ver referencia de esta operación <ArrowUpRight size={17} aria-hidden="true" /></a></section>
           <nav aria-label="Otras guías de API" className="mt-10 border-t border-[#dce2ed] pt-8"><h2 className="mb-3 font-semibold">Sigue construyendo</h2>{guides.filter(item => item.slug !== guide.slug).map(item => <Link key={item.slug} to={`${apiGuidePath}/${item.slug}`} className={`${resourceLinkClass} mr-4 text-sm`}>{item.title}</Link>)}</nav>
+          <ResourceNextStep path={path} />
         </article>
       </div>
     </main>

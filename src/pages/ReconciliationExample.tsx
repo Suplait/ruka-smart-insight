@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, RotateCcw, AlertCircle } from "luc
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { ResourceNextStep } from "@/components/resources/ResourceNextStep";
 import { MarketingSeo } from "@/components/seo/MarketingSeo";
 import { ReconciliationFiles } from "@/components/seo/ReconciliationFiles";
 import { compareLine, createExample, formatClp, reconciliationExamplePath, type ExampleLine, type ExamplePreset } from "@/utils/reconciliationExample";
@@ -96,6 +97,7 @@ export default function ReconciliationExample() {
           </div>
         </section>
 
+        <div className="mx-auto max-w-6xl"><ResourceNextStep path={reconciliationExamplePath} /></div>
         <section className="mx-auto mt-14 max-w-6xl"><div className="grid gap-10 lg:grid-cols-2 lg:gap-20"><div><h2 className="text-3xl font-semibold tracking-[-0.03em]">El cruce es el comienzo.</h2><p className="mt-5 text-base leading-8 text-[#505b70]">Si falta mercadería, confirma la entrega con operaciones. Si cambió un precio, revisa lo acordado con compras. El resultado útil es saber qué diferencia resolver, no corregir documentos a la fuerza para que todo salga verde.</p><Link to="/productos/conciliacion-automatica" className="mt-6 inline-flex min-h-12 items-center gap-3 rounded-full bg-primary px-6 text-sm font-semibold text-white focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4">Ver conciliaciones en Ruka <ArrowRight size={17} /></Link></div><div>{reconciliationExampleFaqs.map((faq) => <details key={faq.question} className="border-b border-[#cfd6e5] py-5"><summary className="cursor-pointer text-base font-semibold">{faq.question}</summary><p className="pt-4 text-sm leading-7 text-[#505b70]">{faq.answer}</p></details>)}</div></div></section>
       </main>
       <Footer />

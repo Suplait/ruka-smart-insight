@@ -7,6 +7,9 @@
     "billerProduction": "4505fa7009cfdc3bc306ed8ee67a8e7aea0353cf"
   },
   "files": [
+{"path":"src/components/resources/ResourceNextStep.tsx","sha256":"b1ef4e319ba54c8d903ffd86d889c80a73931c129a21f724e04342d5c2b4da7b"},
+{"path":"src/utils/resourceJourney.ts","sha256":"0b546cf4cd521b5265f424807839f270faf27e052dec90600fb2ddd2c235eaa0"},
+{"path":"src/utils/resourceBreadcrumbs.ts","sha256":"0673f4d6f8fa769d283647e879e16ba4cf276b5bc8c01ca05e56f4a95beac9fe"},
 {"path":"src/components/resources/GuideNavigation.tsx","sha256":"05450f53134dd93be982f314f7d1c59eb99edc745bd0d164a5b7a6abaf46763c"},
 {"path":"src/components/resources/CodeExample.tsx","sha256":"7ae8b0db3a35b3582807e172b68b98ea00a5f4aad89b8797af8be32ccbf9d91d"},
 {"path":"src/components/resources/ResourceLoading.tsx","sha256":"9065e05586c24e0d28402e9a037f2b02fd630665a65117e8f4339bb099ad6ca1"},
@@ -14,7 +17,7 @@
 {"path":"src/utils/margin.ts","sha256":"7d9fafbbdef4439482c9399dab2b855520f43e0161c059ac5eb87a5de611bc42"},
 {"path":"src/utils/purchaseCost.ts","sha256":"4e5f69122a82ab4da3166ac857247b306448ea24b354a07a4a820a4d68e0fb36"},
 {"path":"src/utils/helpSearch.ts","sha256":"a535797a53054c5f23f54003964a15bd3818ff1bb1c15afaef271aba23561b22"},
-{"path":"src/components/resources/ResourceLayout.tsx","sha256":"4170dbae106ab770470d09ac1772fca355e444c56e7d6e8862dc0c03fec271b4"},
+{"path":"src/components/resources/ResourceLayout.tsx","sha256":"24dcf66948dbbdd4b50d816dd7f9ade99a3738a18be2a086f0a8d8ab9cfd093a"},
     {
       "path": "config/capabilities.json",
       "sha256": "2ef1f5f48c62da309f0d30e2e876a23f3384a231424f2ef60504a2648f483789"
@@ -77,15 +80,15 @@
     },
     {
       "path": "src/pages/ApiGuide.tsx",
-      "sha256": "68430c872e23bf78fdbec47fdae12464526169d2409c194518838f9b34a8db47"
+      "sha256": "bcab4dff3794b40010f7a7531356973229b693bdf21ec6c6327ab87d0c77d6a7"
     },
     {
       "path": "src/pages/Compare.tsx",
-      "sha256": "4aed3b02b69501e9c2bac72a6d4688f884d8840e55efc1694c6914ad9aa19e84"
+      "sha256": "b2d00b5acb4dbe13a23a26df54dd3a7f588f5ba143160f470badd19adf317f94"
     },
     {
       "path": "src/pages/Developers.tsx",
-      "sha256": "322b7014fbb665da996b03bd9756d999df88f8fb7a14afb068e304c3d1386ec1"
+      "sha256": "8207386b68342a52edafa9d3b62474fb72ae0b11f2b94cb16730bdfdbcf4ce53"
     },
     {
       "path": "src/pages/FacturacionElectronica.tsx",
@@ -93,19 +96,19 @@
     },
     {
       "path": "src/pages/Help.tsx",
-      "sha256": "71da776f1b2b07ccade83d24d41b3244c263d76399b94a19463286e7e3f68c1c"
+      "sha256": "6dcd1ad3692e758d44efe33d3dea012cbbea94ad675b642c86bdbd57aa6627ef"
     },
     {
       "path": "src/pages/MarginTool.tsx",
-      "sha256": "9a04bd03f840d4188db8521f4377dce1ae1f61a3b439a329e8536f8857cc8b16"
+      "sha256": "6758036225b8f442680259dfa8f431690836147e5672f863d9f4ca5ddcfa11ff"
     },
     {
       "path": "src/pages/PurchaseCostTool.tsx",
-      "sha256": "0273c56f71750a9a97801d3c56a46073287c7f9b62248bbfc2fe5bf1ffb8ddb5"
+      "sha256": "84e37430e3b376e5ec426e866418308c78d7e2fd44666ddd8500117971441bb9"
     },
     {
       "path": "src/pages/PurchaseGuides.tsx",
-      "sha256": "aa4dc1331088b092d5fc9699a403d69e515747c9225cbceb157479da973d4b4f"
+      "sha256": "297891997e1369c28b7386e663dae696fde412d1b172bb94ad865ef4a3502f9b"
     },
     {
       "path": "src/pages/Resources.tsx",
@@ -117,7 +120,7 @@
     },
     {
       "path": "src/pages/Suppliers.tsx",
-      "sha256": "d7accadb6b063827ac70eda1ae2cf58217b8b4818cf415f8dd1707d7032d25aa"
+      "sha256": "2380258f6ac39893fc53105c633814455d014958792e24d802178b4adb9e7b02"
     },
     {
       "path": "src/pages/Updates.tsx",

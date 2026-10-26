@@ -18,7 +18,9 @@ export const productResources: Record<string, ProductResource[]> = {
     { href: "/herramientas/conciliar-factura-orden-recepcion", title: "Revisa diferencias antes de preparar el pago", description: "Un cruce local de cantidades y precios, con un resultado descargable.", kind: "Herramienta" },
   ],
   "/productos/panel-control": [
-    { href: "/blog/registro-compras-excel-vs-automatizacion", title: "El costo de volver a armar la planilla", description: "Cuándo el registro manual deja de ser suficiente para mantener tus datos al día.", kind: "Guía" },
+    { href: "/herramientas/costo-unitario", title: "Calcula tu costo por kilo, litro o unidad", description: "Convierte cajas y envases a una base comparable, con descuento e IVA separados.", kind: "Herramienta" },
+    { href: "/herramientas/variacion-costos", title: "¿Subió el costo o cambió el formato?", description: "Compara dos compras del mismo insumo y descarga el resultado.", kind: "Herramienta" },
+    { href: "/herramientas/margen-markup", title: "Distingue margen de markup antes de fijar un precio", description: "Prueba ambos porcentajes y calcula un precio con margen objetivo.", kind: "Herramienta" },
     { href: "/blog/actualizar-costos-precios-proveedores", title: "Cuando cambia el precio del proveedor", description: "Cómo revisar unidades, costos y reglas antes de actualizar el margen.", kind: "Guía" },
     { href: "/integraciones/toteat", title: "Lleva las compras revisadas a Toteat", description: "Productos, unidades y locales que debes relacionar antes del envío.", kind: "Integración" },
   ],
