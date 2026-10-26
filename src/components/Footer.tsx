@@ -16,6 +16,8 @@ const oneLinks = [
 
 const companyLinks = [
   { label: "Para consultoras", to: "/partners" },
+  { label: "Para contadores", to: "/contadores" },
+  { label: "Seguridad", to: "/seguridad" },
   { label: "Quiénes somos", to: "/about" },
   { label: "Blog", to: "/blog" },
   { label: "Privacidad", to: "/privacy" },
@@ -23,6 +25,9 @@ const companyLinks = [
 ] as const;
 
 const exploreLinks = [
+  { label: "Recursos y herramientas", to: "/recursos" },
+  { label: "Centro de ayuda", to: "/ayuda" },
+  { label: "Desarrolladores", to: "/desarrolladores" },
   { label: "Integraciones", to: "/integraciones" },
   { label: "Precios", to: "/#precios" },
   { label: "Restaurantes", to: "/restaurantes" },

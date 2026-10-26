@@ -1,28 +1,67 @@
 {
   "framework": "vite",
   "headers": [
+    { "source": "/supplier-data/:path*", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nosnippet" }, { "key": "Content-Type", "value": "application/json; charset=utf-8" }] },
     {
       "source": "/expedientes/registrar-compras-toteat.pdf",
       "headers": [
-        { "key": "Content-Type", "value": "application/pdf" },
-        { "key": "Link", "value": "<https://www.ruka.ai/procesos/registrar-compras-toteat>; rel=\"canonical\"" }
+        {
+          "key": "Content-Type",
+          "value": "application/pdf"
+        },
+        {
+          "key": "Link",
+          "value": "<https://www.ruka.ai/procesos/registrar-compras-toteat>; rel=\"canonical\""
+        }
       ]
     },
     {
       "source": "/:path*.md",
-      "headers": [{ "key": "Content-Type", "value": "text/markdown; charset=utf-8" }, { "key": "X-Robots-Tag", "value": "noindex, follow" }]
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
     },
     {
       "source": "/readable/:path*",
-      "headers": [{ "key": "Content-Type", "value": "text/markdown; charset=utf-8" }, { "key": "X-Robots-Tag", "value": "noindex, follow" }]
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
     },
     {
       "source": "/llms-full.txt",
-      "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }, { "key": "X-Robots-Tag", "value": "noindex, follow" }]
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
     },
     {
       "source": "/rss.xml",
-      "headers": [{ "key": "Content-Type", "value": "application/rss+xml; charset=utf-8" }]
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/rss+xml; charset=utf-8"
+        }
+      ]
     },
     {
       "source": "/(.*)",
@@ -52,39 +91,84 @@
     },
     {
       "source": "/onboarding-success",
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
     },
     {
       "source": "/calendly-success",
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
     },
     {
       "source": "/whatsapp",
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
     },
     {
       "source": "/webinar",
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
     },
     {
       "source": "/productos/ejemplo",
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
     },
     {
       "source": "/one/contacto",
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
     },
     {
       "source": "/robots.txt",
-      "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }]
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
     },
     {
       "source": "/llms.txt",
-      "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }]
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
     },
     {
       "source": "/sitemap.xml",
-      "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }]
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        }
+      ]
     }
   ],
   "redirects": [
@@ -115,68 +199,503 @@
     }
   ],
   "rewrites": [
-    { "source": "/partners", "destination": "/partners/index.html" },
-    { "source": "/partners/", "destination": "/partners/index.html" },
-    { "source": "/procesos/registrar-compras-toteat", "destination": "/procesos/registrar-compras-toteat/index.html" },
-    { "source": "/procesos/registrar-compras-toteat/", "destination": "/procesos/registrar-compras-toteat/index.html" },
-    { "source": "/:path*.md", "destination": "/readable/:path*.md" },
-    { "source": "/integraciones/chipax", "destination": "/integraciones/chipax/index.html" },
-    { "source": "/integraciones/chipax/", "destination": "/integraciones/chipax/index.html" },
-    { "source": "/integraciones/idtecloud", "destination": "/integraciones/idtecloud/index.html" },
-    { "source": "/integraciones/idtecloud/", "destination": "/integraciones/idtecloud/index.html" },
-    { "source": "/integraciones/sii", "destination": "/integraciones/sii/index.html" },
-    { "source": "/integraciones/sii/", "destination": "/integraciones/sii/index.html" },
-    { "source": "/integraciones/toteat", "destination": "/integraciones/toteat/index.html" },
-    { "source": "/integraciones/toteat/", "destination": "/integraciones/toteat/index.html" },
-    { "source": "/integraciones/nubox", "destination": "/integraciones/nubox/index.html" },
-    { "source": "/integraciones/nubox/", "destination": "/integraciones/nubox/index.html" },
-    { "source": "/herramientas/conciliar-factura-orden-recepcion", "destination": "/herramientas/conciliar-factura-orden-recepcion/index.html" },
-    { "source": "/herramientas/conciliar-factura-orden-recepcion/", "destination": "/herramientas/conciliar-factura-orden-recepcion/index.html" },
-    { "source": "/about", "destination": "/about/index.html" },
-    { "source": "/about/", "destination": "/about/index.html" },
-    { "source": "/register", "destination": "/register/index.html" },
-    { "source": "/register/", "destination": "/register/index.html" },
-    { "source": "/restaurantes", "destination": "/restaurantes/index.html" },
-    { "source": "/restaurantes/", "destination": "/restaurantes/index.html" },
-    { "source": "/hoteles", "destination": "/hoteles/index.html" },
-    { "source": "/hoteles/", "destination": "/hoteles/index.html" },
-    { "source": "/retail", "destination": "/retail/index.html" },
-    { "source": "/retail/", "destination": "/retail/index.html" },
-    { "source": "/productos/ejemplo", "destination": "/productos/ejemplo/index.html" },
-    { "source": "/productos/ejemplo/", "destination": "/productos/ejemplo/index.html" },
-    { "source": "/productos/panel-control", "destination": "/productos/panel-control/index.html" },
-    { "source": "/productos/panel-control/", "destination": "/productos/panel-control/index.html" },
-    { "source": "/productos/cuentas-por-pagar", "destination": "/productos/cuentas-por-pagar/index.html" },
-    { "source": "/productos/cuentas-por-pagar/", "destination": "/productos/cuentas-por-pagar/index.html" },
-    { "source": "/productos/registro-de-compras", "destination": "/productos/registro-de-compras/index.html" },
-    { "source": "/productos/registro-de-compras/", "destination": "/productos/registro-de-compras/index.html" },
-    { "source": "/productos/conciliacion-automatica", "destination": "/productos/conciliacion-automatica/index.html" },
-    { "source": "/productos/conciliacion-automatica/", "destination": "/productos/conciliacion-automatica/index.html" },
-    { "source": "/productos/stock", "destination": "/productos/stock/index.html" },
-    { "source": "/productos/stock/", "destination": "/productos/stock/index.html" },
-    { "source": "/integraciones", "destination": "/integraciones/index.html" },
-    { "source": "/integraciones/", "destination": "/integraciones/index.html" },
-    { "source": "/privacy", "destination": "/privacy/index.html" },
-    { "source": "/privacy/", "destination": "/privacy/index.html" },
-    { "source": "/terms", "destination": "/terms/index.html" },
-    { "source": "/terms/", "destination": "/terms/index.html" },
-    { "source": "/one", "destination": "/one/index.html" },
-    { "source": "/one/", "destination": "/one/index.html" },
-    { "source": "/one/contacto", "destination": "/one/contacto/index.html" },
-    { "source": "/one/contacto/", "destination": "/one/contacto/index.html" },
-    { "source": "/blog", "destination": "/blog/index.html" },
-    { "source": "/blog/", "destination": "/blog/index.html" },
-    { "source": "/blog/:slug", "destination": "/blog/:slug/index.html" },
-    { "source": "/blog/:slug/", "destination": "/blog/:slug/index.html" },
-    { "source": "/home-anterior", "destination": "/home-anterior/index.html" },
-    { "source": "/home-anterior/", "destination": "/home-anterior/index.html" },
-    { "source": "/onboarding-success", "destination": "/onboarding-success/index.html" },
-    { "source": "/onboarding-success/", "destination": "/onboarding-success/index.html" },
-    { "source": "/calendly-success", "destination": "/calendly-success/index.html" },
-    { "source": "/calendly-success/", "destination": "/calendly-success/index.html" },
-    { "source": "/whatsapp", "destination": "/whatsapp/index.html" },
-    { "source": "/whatsapp/", "destination": "/whatsapp/index.html" },
-    { "source": "/webinar", "destination": "/api/webinar" },
-    { "source": "/webinar/", "destination": "/api/webinar" }
+    { "source": "/novedades", "destination": "/novedades/index.html" },
+    { "source": "/novedades/", "destination": "/novedades/index.html" },
+    { "source": "/proveedores", "destination": "/proveedores/index.html" },
+    { "source": "/proveedores/", "destination": "/proveedores/index.html" },
+    { "source": "/proveedores/:slug", "destination": "/proveedores/:slug/index.html" },
+    { "source": "/proveedores/:slug/", "destination": "/proveedores/:slug/index.html" },
+    {
+      "source": "/seguridad",
+      "destination": "/seguridad/index.html"
+    },
+    {
+      "source": "/seguridad/",
+      "destination": "/seguridad/index.html"
+    },
+    {
+      "source": "/contadores",
+      "destination": "/contadores/index.html"
+    },
+    {
+      "source": "/contadores/",
+      "destination": "/contadores/index.html"
+    },
+    {
+      "source": "/ayuda",
+      "destination": "/ayuda/index.html"
+    },
+    {
+      "source": "/ayuda/",
+      "destination": "/ayuda/index.html"
+    },
+    {
+      "source": "/ayuda/preparar-conexion",
+      "destination": "/ayuda/preparar-conexion/index.html"
+    },
+    {
+      "source": "/ayuda/preparar-conexion/",
+      "destination": "/ayuda/preparar-conexion/index.html"
+    },
+    {
+      "source": "/ayuda/revisar-factura-compra",
+      "destination": "/ayuda/revisar-factura-compra/index.html"
+    },
+    {
+      "source": "/ayuda/revisar-factura-compra/",
+      "destination": "/ayuda/revisar-factura-compra/index.html"
+    },
+    {
+      "source": "/ayuda/homologar-insumo-unidad",
+      "destination": "/ayuda/homologar-insumo-unidad/index.html"
+    },
+    {
+      "source": "/ayuda/homologar-insumo-unidad/",
+      "destination": "/ayuda/homologar-insumo-unidad/index.html"
+    },
+    {
+      "source": "/ayuda/registrar-recepcion",
+      "destination": "/ayuda/registrar-recepcion/index.html"
+    },
+    {
+      "source": "/ayuda/registrar-recepcion/",
+      "destination": "/ayuda/registrar-recepcion/index.html"
+    },
+    {
+      "source": "/ayuda/resolver-diferencia-recepcion",
+      "destination": "/ayuda/resolver-diferencia-recepcion/index.html"
+    },
+    {
+      "source": "/ayuda/resolver-diferencia-recepcion/",
+      "destination": "/ayuda/resolver-diferencia-recepcion/index.html"
+    },
+    {
+      "source": "/ayuda/preparar-nomina-banco",
+      "destination": "/ayuda/preparar-nomina-banco/index.html"
+    },
+    {
+      "source": "/ayuda/preparar-nomina-banco/",
+      "destination": "/ayuda/preparar-nomina-banco/index.html"
+    },
+    {
+      "source": "/ayuda/comenzar-rukafactura",
+      "destination": "/ayuda/comenzar-rukafactura/index.html"
+    },
+    {
+      "source": "/ayuda/comenzar-rukafactura/",
+      "destination": "/ayuda/comenzar-rukafactura/index.html"
+    },
+    {
+      "source": "/ayuda/preparar-cierre-contable",
+      "destination": "/ayuda/preparar-cierre-contable/index.html"
+    },
+    {
+      "source": "/ayuda/preparar-cierre-contable/",
+      "destination": "/ayuda/preparar-cierre-contable/index.html"
+    },
+    {
+      "source": "/guias/compras/clasificacion-compras-entrega-contable",
+      "destination": "/guias/compras/clasificacion-compras-entrega-contable/index.html"
+    },
+    {
+      "source": "/guias/compras/clasificacion-compras-entrega-contable/",
+      "destination": "/guias/compras/clasificacion-compras-entrega-contable/index.html"
+    },
+    {
+      "source": "/guias/compras/factura-compra-dte-46",
+      "destination": "/guias/compras/factura-compra-dte-46/index.html"
+    },
+    {
+      "source": "/guias/compras/factura-compra-dte-46/",
+      "destination": "/guias/compras/factura-compra-dte-46/index.html"
+    },
+    {
+      "source": "/guias/compras/xml-pdf-documento-compra",
+      "destination": "/guias/compras/xml-pdf-documento-compra/index.html"
+    },
+    {
+      "source": "/guias/compras/xml-pdf-documento-compra/",
+      "destination": "/guias/compras/xml-pdf-documento-compra/index.html"
+    },
+    {
+      "source": "/guias/compras/nota-credito-proveedor",
+      "destination": "/guias/compras/nota-credito-proveedor/index.html"
+    },
+    {
+      "source": "/guias/compras/nota-credito-proveedor/",
+      "destination": "/guias/compras/nota-credito-proveedor/index.html"
+    },
+    {
+      "source": "/guias/compras/pendientes-registro-compras-fechas",
+      "destination": "/guias/compras/pendientes-registro-compras-fechas/index.html"
+    },
+    {
+      "source": "/guias/compras/pendientes-registro-compras-fechas/",
+      "destination": "/guias/compras/pendientes-registro-compras-fechas/index.html"
+    },
+    {
+      "source": "/guias/compras/factura-no-corresponde-reclamo",
+      "destination": "/guias/compras/factura-no-corresponde-reclamo/index.html"
+    },
+    {
+      "source": "/guias/compras/factura-no-corresponde-reclamo/",
+      "destination": "/guias/compras/factura-no-corresponde-reclamo/index.html"
+    },
+    {
+      "source": "/guias/compras/recepcion-revision-acuse-sii",
+      "destination": "/guias/compras/recepcion-revision-acuse-sii/index.html"
+    },
+    {
+      "source": "/guias/compras/recepcion-revision-acuse-sii/",
+      "destination": "/guias/compras/recepcion-revision-acuse-sii/index.html"
+    },
+    {
+      "source": "/guias/compras",
+      "destination": "/guias/compras/index.html"
+    },
+    {
+      "source": "/guias/compras/",
+      "destination": "/guias/compras/index.html"
+    },
+    {
+      "source": "/desarrolladores/guias/dashboard-costos",
+      "destination": "/desarrolladores/guias/dashboard-costos/index.html"
+    },
+    {
+      "source": "/desarrolladores/guias/dashboard-costos/",
+      "destination": "/desarrolladores/guias/dashboard-costos/index.html"
+    },
+    {
+      "source": "/desarrolladores/guias/compras-revisadas-erp",
+      "destination": "/desarrolladores/guias/compras-revisadas-erp/index.html"
+    },
+    {
+      "source": "/desarrolladores/guias/compras-revisadas-erp/",
+      "destination": "/desarrolladores/guias/compras-revisadas-erp/index.html"
+    },
+    {
+      "source": "/desarrolladores/guias/recibir-webhooks",
+      "destination": "/desarrolladores/guias/recibir-webhooks/index.html"
+    },
+    {
+      "source": "/desarrolladores/guias/recibir-webhooks/",
+      "destination": "/desarrolladores/guias/recibir-webhooks/index.html"
+    },
+    {
+      "source": "/productos/facturacion-electronica",
+      "destination": "/productos/facturacion-electronica/index.html"
+    },
+    {
+      "source": "/productos/facturacion-electronica/",
+      "destination": "/productos/facturacion-electronica/index.html"
+    },
+    {
+      "source": "/herramientas/margen-markup",
+      "destination": "/herramientas/margen-markup/index.html"
+    },
+    {
+      "source": "/herramientas/margen-markup/",
+      "destination": "/herramientas/margen-markup/index.html"
+    },
+    {
+      "source": "/comparar",
+      "destination": "/comparar/index.html"
+    },
+    {
+      "source": "/comparar/",
+      "destination": "/comparar/index.html"
+    },
+    {
+      "source": "/comparar/ruka-vs-tupana",
+      "destination": "/comparar/ruka-vs-tupana/index.html"
+    },
+    {
+      "source": "/comparar/ruka-vs-tupana/",
+      "destination": "/comparar/ruka-vs-tupana/index.html"
+    },
+    {
+      "source": "/desarrolladores",
+      "destination": "/desarrolladores/index.html"
+    },
+    {
+      "source": "/desarrolladores/",
+      "destination": "/desarrolladores/index.html"
+    },
+    {
+      "source": "/recursos",
+      "destination": "/recursos/index.html"
+    },
+    {
+      "source": "/recursos/",
+      "destination": "/recursos/index.html"
+    },
+    {
+      "source": "/herramientas/costo-unitario",
+      "destination": "/herramientas/costo-unitario/index.html"
+    },
+    {
+      "source": "/herramientas/costo-unitario/",
+      "destination": "/herramientas/costo-unitario/index.html"
+    },
+    {
+      "source": "/herramientas/variacion-costos",
+      "destination": "/herramientas/variacion-costos/index.html"
+    },
+    {
+      "source": "/herramientas/variacion-costos/",
+      "destination": "/herramientas/variacion-costos/index.html"
+    },
+    {
+      "source": "/partners",
+      "destination": "/partners/index.html"
+    },
+    {
+      "source": "/partners/",
+      "destination": "/partners/index.html"
+    },
+    {
+      "source": "/procesos/registrar-compras-toteat",
+      "destination": "/procesos/registrar-compras-toteat/index.html"
+    },
+    {
+      "source": "/procesos/registrar-compras-toteat/",
+      "destination": "/procesos/registrar-compras-toteat/index.html"
+    },
+    {
+      "source": "/:path*.md",
+      "destination": "/readable/:path*.md"
+    },
+    {
+      "source": "/integraciones/chipax",
+      "destination": "/integraciones/chipax/index.html"
+    },
+    {
+      "source": "/integraciones/chipax/",
+      "destination": "/integraciones/chipax/index.html"
+    },
+    {
+      "source": "/integraciones/idtecloud",
+      "destination": "/integraciones/idtecloud/index.html"
+    },
+    {
+      "source": "/integraciones/idtecloud/",
+      "destination": "/integraciones/idtecloud/index.html"
+    },
+    {
+      "source": "/integraciones/sii",
+      "destination": "/integraciones/sii/index.html"
+    },
+    {
+      "source": "/integraciones/sii/",
+      "destination": "/integraciones/sii/index.html"
+    },
+    {
+      "source": "/integraciones/toteat",
+      "destination": "/integraciones/toteat/index.html"
+    },
+    {
+      "source": "/integraciones/toteat/",
+      "destination": "/integraciones/toteat/index.html"
+    },
+    {
+      "source": "/integraciones/nubox",
+      "destination": "/integraciones/nubox/index.html"
+    },
+    {
+      "source": "/integraciones/nubox/",
+      "destination": "/integraciones/nubox/index.html"
+    },
+    {
+      "source": "/herramientas/conciliar-factura-orden-recepcion",
+      "destination": "/herramientas/conciliar-factura-orden-recepcion/index.html"
+    },
+    {
+      "source": "/herramientas/conciliar-factura-orden-recepcion/",
+      "destination": "/herramientas/conciliar-factura-orden-recepcion/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about/index.html"
+    },
+    {
+      "source": "/about/",
+      "destination": "/about/index.html"
+    },
+    {
+      "source": "/register",
+      "destination": "/register/index.html"
+    },
+    {
+      "source": "/register/",
+      "destination": "/register/index.html"
+    },
+    {
+      "source": "/restaurantes",
+      "destination": "/restaurantes/index.html"
+    },
+    {
+      "source": "/restaurantes/",
+      "destination": "/restaurantes/index.html"
+    },
+    {
+      "source": "/hoteles",
+      "destination": "/hoteles/index.html"
+    },
+    {
+      "source": "/hoteles/",
+      "destination": "/hoteles/index.html"
+    },
+    {
+      "source": "/retail",
+      "destination": "/retail/index.html"
+    },
+    {
+      "source": "/retail/",
+      "destination": "/retail/index.html"
+    },
+    {
+      "source": "/productos/ejemplo",
+      "destination": "/productos/ejemplo/index.html"
+    },
+    {
+      "source": "/productos/ejemplo/",
+      "destination": "/productos/ejemplo/index.html"
+    },
+    {
+      "source": "/productos/panel-control",
+      "destination": "/productos/panel-control/index.html"
+    },
+    {
+      "source": "/productos/panel-control/",
+      "destination": "/productos/panel-control/index.html"
+    },
+    {
+      "source": "/productos/cuentas-por-pagar",
+      "destination": "/productos/cuentas-por-pagar/index.html"
+    },
+    {
+      "source": "/productos/cuentas-por-pagar/",
+      "destination": "/productos/cuentas-por-pagar/index.html"
+    },
+    {
+      "source": "/productos/registro-de-compras",
+      "destination": "/productos/registro-de-compras/index.html"
+    },
+    {
+      "source": "/productos/registro-de-compras/",
+      "destination": "/productos/registro-de-compras/index.html"
+    },
+    {
+      "source": "/productos/conciliacion-automatica",
+      "destination": "/productos/conciliacion-automatica/index.html"
+    },
+    {
+      "source": "/productos/conciliacion-automatica/",
+      "destination": "/productos/conciliacion-automatica/index.html"
+    },
+    {
+      "source": "/productos/stock",
+      "destination": "/productos/stock/index.html"
+    },
+    {
+      "source": "/productos/stock/",
+      "destination": "/productos/stock/index.html"
+    },
+    {
+      "source": "/integraciones",
+      "destination": "/integraciones/index.html"
+    },
+    {
+      "source": "/integraciones/",
+      "destination": "/integraciones/index.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy/index.html"
+    },
+    {
+      "source": "/privacy/",
+      "destination": "/privacy/index.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms/index.html"
+    },
+    {
+      "source": "/terms/",
+      "destination": "/terms/index.html"
+    },
+    {
+      "source": "/one",
+      "destination": "/one/index.html"
+    },
+    {
+      "source": "/one/",
+      "destination": "/one/index.html"
+    },
+    {
+      "source": "/one/contacto",
+      "destination": "/one/contacto/index.html"
+    },
+    {
+      "source": "/one/contacto/",
+      "destination": "/one/contacto/index.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog/index.html"
+    },
+    {
+      "source": "/blog/",
+      "destination": "/blog/index.html"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog/:slug/index.html"
+    },
+    {
+      "source": "/blog/:slug/",
+      "destination": "/blog/:slug/index.html"
+    },
+    {
+      "source": "/home-anterior",
+      "destination": "/home-anterior/index.html"
+    },
+    {
+      "source": "/home-anterior/",
+      "destination": "/home-anterior/index.html"
+    },
+    {
+      "source": "/onboarding-success",
+      "destination": "/onboarding-success/index.html"
+    },
+    {
+      "source": "/onboarding-success/",
+      "destination": "/onboarding-success/index.html"
+    },
+    {
+      "source": "/calendly-success",
+      "destination": "/calendly-success/index.html"
+    },
+    {
+      "source": "/calendly-success/",
+      "destination": "/calendly-success/index.html"
+    },
+    {
+      "source": "/whatsapp",
+      "destination": "/whatsapp/index.html"
+    },
+    {
+      "source": "/whatsapp/",
+      "destination": "/whatsapp/index.html"
+    },
+    {
+      "source": "/webinar",
+      "destination": "/api/webinar"
+    },
+    {
+      "source": "/webinar/",
+      "destination": "/api/webinar"
+    }
   ]
 }

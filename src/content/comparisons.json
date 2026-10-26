@@ -1,0 +1,118 @@
+[
+  {
+    "slug": "ruka-vs-tupana",
+    "title": "Ruka vs. Tupana: qué proceso necesitas resolver",
+    "description": "Compara Ruka y Tupana por tareas: emisión, cobranza, compras, costos e integración. Alcances, fuentes y preguntas para elegir sin confundir productos.",
+    "reviewedAt": "2026-10-26",
+    "headline": "No elijas por la lista de funciones. Elige por el trabajo pendiente.",
+    "intro": "Ambos tienen facturación y trabajan con documentos de compra. La diferencia útil está en el recorrido que necesitas completar y en qué parte del proceso quieres dejar de intervenir.",
+    "profiles": [
+      {
+        "title": "Si tu cuello de botella es cobrar lo vendido.",
+        "text": "Tupana presenta un recorrido de emisión, recordatorios de cobro, recaudación y conciliación bancaria. Es una opción a evaluar cuando necesitas ese conjunto. Pide una demostración con tu banco, medios de pago y tipos de documento.",
+        "href": "https://www.tupana.ai/cobranza",
+        "label": "Revisar la propuesta de cobranza de Tupana",
+        "external": true
+      },
+      {
+        "title": "Si tu cuello de botella está entre la compra y la operación.",
+        "text": "Ruka conecta la información del proveedor con tus insumos, unidades, recepción, costos y sistemas. Es un punto de partida para equipos que hoy vuelven a digitar, homologar o cruzar esa información a mano.",
+        "href": "/productos/registro-de-compras",
+        "label": "Ver cómo trabaja Ruka con tus compras",
+        "external": false
+      }
+    ],
+    "rows": [
+      {
+        "task": "Emitir documentos",
+        "ruka": "Ruka cuenta con un facturador: preparación, revisión, emisión y consulta de estados. El tipo de documento y la habilitación se confirman para cada empresa.",
+        "tupana": "Ofrece emisión individual, masiva y programada, con su facturador o el del SII.",
+        "question": "¿Puedes mostrar mi tipo de documento, su corrección y sus requisitos de habilitación?",
+        "source": "https://www.tupana.ai/facturacion"
+      },
+      {
+        "task": "Cobrar a clientes",
+        "ruka": "Si necesitas recordatorios, links de pago o cargos automáticos, confírmalos por separado. No los presupongas por contratar la gestión de compras.",
+        "tupana": "Publica recordatorios por correo y WhatsApp y enlaces de pago, asociados a sus módulos.",
+        "question": "¿Qué detiene un cobro cuando ya pagaron? ¿Cómo se resuelven disputas y pagos parciales?",
+        "source": "https://www.tupana.ai/cobranza"
+      },
+      {
+        "task": "Revisar compras",
+        "ruka": "Trabaja con documentos, detalle, productos relacionados y recepción. La revisión interna no reemplaza el acuse del SII ni la confirmación física.",
+        "tupana": "Publica consulta de facturas recibidas, aprobaciones, reglas y reportes de gastos.",
+        "question": "¿Qué revisa el sistema: el documento, los productos, lo recibido o los tres?",
+        "source": "https://www.tupana.ai/compras"
+      },
+      {
+        "task": "Comparar costos de insumos",
+        "ruka": "Relaciona productos del proveedor con tus insumos maestros y unidades. El costo comparable depende de configurar esas equivalencias.",
+        "tupana": "Su página de compras describe análisis por proveedor, categoría y período. Consulta cómo aborda presentaciones y conversiones de insumos.",
+        "question": "¿Cómo compara una caja de 6 kilos con un saco de 25, sin tratar ambos como una unidad?",
+        "source": "https://www.tupana.ai/compras"
+      },
+      {
+        "task": "Conciliar",
+        "ruka": "Distingue el cruce operativo de factura, orden y recepción de la revisión bancaria. Generar una nómina para el banco tampoco ejecuta el pago.",
+        "tupana": "Presenta conexión bancaria de lectura y cruces entre movimientos y documentos, con sugerencias y revisión.",
+        "question": "¿Qué se cruza exactamente y qué ocurre con una diferencia que no se puede resolver sola?",
+        "source": "https://www.tupana.ai/conciliacion-bancaria"
+      },
+      {
+        "task": "Conectar sistemas propios",
+        "ruka": "La API pública de compras ofrece reportes, clasificación, documentos y webhooks. Ruka One permite evaluar otros flujos e integraciones; no es un conector universal sin configuración.",
+        "tupana": "Publica una oferta de API para integrar facturación y otros servicios. Revisa el contrato específico para las empresas que necesitas conectar.",
+        "question": "¿Qué endpoint necesito, qué permisos exige y cómo recupero una actualización fallida?",
+        "source": "https://www.tupana.ai/"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Lleva una operación representativa.",
+        "text": "Una factura, una corrección, una compra con formatos distintos y un caso que hoy resuelvas a mano. Usa datos ficticios o autorizados, no credenciales ni documentos de clientes en una página pública."
+      },
+      {
+        "title": "Pide ver el resultado y la excepción.",
+        "text": "No basta con cargar un archivo. Revisa dónde termina el dato, qué pasa cuando falta información y quién debe intervenir. Anota qué queda manual en cada alternativa."
+      },
+      {
+        "title": "Acordar el alcance antes del cambio.",
+        "text": "Confirma empresas, usuarios, documentos, integraciones, soporte, exportación del historial y condiciones vigentes. No supongas que una función de la marca viene incluida en cualquier contratación."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Tupana: facturación electrónica",
+        "url": "https://www.tupana.ai/facturacion"
+      },
+      {
+        "label": "Tupana: cobranza",
+        "url": "https://www.tupana.ai/cobranza"
+      },
+      {
+        "label": "Tupana: gestión de compras",
+        "url": "https://www.tupana.ai/compras"
+      },
+      {
+        "label": "Tupana: conciliación bancaria",
+        "url": "https://www.tupana.ai/conciliacion-bancaria"
+      },
+      {
+        "label": "Tupana: producto y acceso a API",
+        "url": "https://www.tupana.ai/"
+      },
+      {
+        "label": "Ruka: registro de compras",
+        "url": "https://www.ruka.ai/productos/registro-de-compras"
+      },
+      {
+        "label": "Ruka: API pública de compras",
+        "url": "https://api.rukafactura.cl/api_docs"
+      },
+      {
+        "label": "Ruka: procesos a medida",
+        "url": "https://www.ruka.ai/one"
+      }
+    ]
+  }
+]

@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/suppliers/generate-directory.mjs",
     "dev": "vite",
-    "build": "vite build && vite build --ssr src/entry-prerender-ssr.tsx --outDir .prerender-ssr && node scripts/generate-prerendered-html.mjs && node scripts/generate-discovery-files.mjs && node scripts/validate-public-content.mjs",
+    "build": "node scripts/editorial/validate-source-lock.mjs && node scripts/api/generate-openapi.mjs && node scripts/suppliers/generate-directory.mjs && vite build && vite build --ssr src/entry-prerender-ssr.tsx --outDir .prerender-ssr && node scripts/generate-prerendered-html.mjs && node scripts/generate-discovery-files.mjs && node scripts/validate-public-content.mjs && node scripts/editorial/validate-publications.mjs && node scripts/suppliers/validate-built-directory.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "test": "vitest run",

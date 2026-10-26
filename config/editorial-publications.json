@@ -1,0 +1,639 @@
+{
+  "version": 1,
+  "publications": [
+    {"path":"/novedades","kind":"navigation","intent":"Encontrar mejoras y recursos publicados sin confundirlos con habilitaciones de producto","capabilities":["local-cost-tools","customer-api","purchase-guides","public-supplier-directory"],"sources":["https://www.ruka.ai/recursos","https://api.rukafactura.cl/api_docs"],"owner":"Ruka · Editorial","author":"Camilo Silva","reviewer":"Contraste con entregables enlazados y disponibles en este despliegue","reviewedAt":"2026-10-26","reviewWithinDays":90,"status":"approved"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores","kind":"navigation","intent":"Encontrar una empresa por marca, razón social o RUT","sources":["https://www.ruka.ai/proveedores"]},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/icb","kind":"supplier","intent":"Identificar a ICB S.A. y acceder a su canal oficial","sources":["https://www.icboutlet.cl/terminos-y-condiciones","https://www.icboutlet.cl/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/icb-food-service","kind":"supplier","intent":"Identificar a Importadora y Alimentos ICB Food Service SpA y acceder a su canal oficial","sources":["https://www.bcn.cl/leychile/navegar?idNorma=1195836","https://www.icbfs.cl/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/bidfood-chile","kind":"supplier","intent":"Identificar a Bidfood Chile S.A. y acceder a su canal oficial","sources":["https://www.bcn.cl/leychile/navegar?idNorma=1136155","https://www.bidfood.cl/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/agrosuper","kind":"supplier","intent":"Identificar a Agrosuper Comercializadora de Alimentos Limitada y acceder a su canal oficial","sources":["https://www.agrosuperventas.com/termsAndConditions","https://www.agrosuperventas.com/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/colun","kind":"supplier","intent":"Identificar a Cooperativa Agrícola y Lechera de La Unión Ltda. y acceder a su canal oficial","sources":["https://www.micolun.cl/terminos-y-condiciones/","https://www.colun.cl/","https://www.colun.cl/contactanos/quiero-ser-cliente"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/nestle-chile","kind":"supplier","intent":"Identificar a Nestlé Chile S.A. y acceder a su canal oficial","sources":["https://www.familynes.cl/bases-legales-promocion-ascenda","https://www.nestle.cl/","https://www.nestleprofessional-latam.com/cl/contactanos"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/puratos","kind":"supplier","intent":"Identificar a Puratos de Chile SpA y acceder a su canal oficial","sources":["https://www.puratos.cl/es/system-pages/terminos-y-condiciones","https://www.puratos.cl/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/gourmet","kind":"supplier","intent":"Identificar a Good Food S.A. y acceder a su canal oficial","sources":["https://www.gourmet.cl/terminos-y-condiciones/","https://www.gourmet.cl/","https://b2b.gourmet.cl/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/dimerc","kind":"supplier","intent":"Identificar a Dimerc S.A. y acceder a su canal oficial","sources":["https://www.dimerc.cl/quienes-somos/","https://www.dimerc.cl/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/soprole-operativa","kind":"supplier","intent":"Identificar a Soprole S.A. y acceder a su canal oficial","sources":["https://www.soprole.cl/nosotros/informacion-emisor","https://www.soprole.cl/","https://www.soprolefoodprofessionals.cl/contacto"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/pf-alimentos","kind":"supplier","intent":"Identificar a Productos Fernández S.A. y acceder a su canal oficial","sources":["https://www.pfalimentos.cl/wp-content/uploads/2025/03/Reporte-de-sostenibilidad-2024.pdf","https://www.pfalimentos.cl/","https://tiendapfalimentos.cl/extcompany/account/login"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/empresas-carozzi","kind":"supplier","intent":"Identificar a Empresas Carozzi S.A. y acceder a su canal oficial","sources":["https://carozzicorp.com/proveedores/","https://www.carozzicorp.com/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/tresmontes-lucchetti","kind":"supplier","intent":"Identificar a Tresmontes Lucchetti S.A. y acceder a su canal oficial","sources":["https://www.tmluc.com/terminos-y-condiciones/","https://www.tmluc.com/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/sodimac","kind":"supplier","intent":"Identificar a Sodimac S.A. y acceder a su canal oficial","sources":["https://conveniomarco.mercadopublico.cl/aseo3/marketplace/seller/profile/shop/73717-5802374","https://empresas.sodimac.cl/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/abastible","kind":"supplier","intent":"Identificar a Abastible S.A. y acceder a su canal oficial","sources":["https://abastible.cl/terminos-y-condiciones-app-abastible/","https://abastible.cl/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/lipigas","kind":"supplier","intent":"Identificar a Empresas Lipigas S.A. y acceder a su canal oficial","sources":["https://www.cmfchile.cl/institucional/mercados/entidad.php?control=svs&grupo=&mercado=V&pestania=1&row=AABbBQABwAAAA5vAAH&rut=96928510&tipoentidad=RVEMI&vig=VI","https://lipigas.cl/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/gasco-glp","kind":"supplier","intent":"Identificar a Gasco GLP S.A. y acceder a su canal oficial","sources":["https://conveniomarco.mercadopublico.cl/gas/marketplace/seller/profile/shop/27100-5802336-001","https://www.gasco.cl/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/transbank","kind":"supplier","intent":"Identificar a Transbank S.A. y acceder a su canal oficial","sources":["https://publico.transbank.cl/onepay/terminos-y-condiciones","https://publico.transbank.cl/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/cambiaso","kind":"supplier","intent":"Identificar a Cambiaso Hnos. S.A.C. y acceder a su canal oficial","sources":["https://www.sii.cl/documentos/resoluciones/2010/reso198.htm","https://www.cambiaso.cl/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+{"owner":"Ruka","author":"Camilo Silva","reviewer":"Contraste editorial de fuentes primarias y validaciones automáticas de identidad y publicación","reviewedAt":"2026-10-26","reviewWithinDays":180,"status":"approved","capabilities":["public-supplier-directory"],"path":"/proveedores/bredenmaster","kind":"supplier","intent":"Identificar a Bredenmaster S.A. y acceder a su canal oficial","sources":["https://infofirma.sea.gob.cl/DocumentosSEA/MostrarDocumento?docId=43%2Ff7%2F48a79442400a677467acd715a34384437dfa","https://www.bredenmaster.com/"],"legalEntityVerified":true,"publicationBasis":"public-primary-sources"},
+    {
+      "path": "/herramientas/margen-markup",
+      "kind": "calculator",
+      "intent": "Distinguir el margen sobre venta del recargo sobre costo y calcular un precio objetivo",
+      "capabilities": [
+        "local-cost-tools"
+      ],
+      "sources": [
+        "https://www.ruka.ai/productos/panel-control"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Fórmulas explícitas, casos de denominador cero, pérdida, decimales y objetivo inalcanzable",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 365,
+      "status": "approved"
+    },
+    {
+      "path": "/productos/facturacion-electronica",
+      "kind": "product",
+      "intent": "Conocer el facturador existente, sus requisitos y el acceso correcto",
+      "capabilities": [
+        "billing"
+      ],
+      "sources": [
+        "https://plataforma.rukafactura.cl/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste de producto, versión desplegada, demo sintética y límites por emisor",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved"
+    },
+    {
+      "path": "/comparar",
+      "kind": "navigation",
+      "intent": "Elegir software y enfoques según tarea",
+      "capabilities": [
+        "comparisons"
+      ],
+      "sources": [
+        "https://www.ruka.ai/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste factual con fuentes primarias y revisión crítica de alcances",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 180,
+      "status": "approved"
+    },
+    {
+      "path": "/comparar/ruka-vs-tupana",
+      "kind": "comparison",
+      "intent": "Evaluar Ruka y Tupana por recorrido operativo, no por pricing",
+      "capabilities": [
+        "comparisons",
+        "customer-api",
+        "purchase-intake",
+        "billing"
+      ],
+      "sources": [
+        "https://www.tupana.ai/facturacion",
+        "https://www.tupana.ai/cobranza",
+        "https://www.tupana.ai/compras",
+        "https://www.tupana.ai/conciliacion-bancaria",
+        "https://www.tupana.ai/",
+        "https://www.ruka.ai/productos/registro-de-compras",
+        "https://api.rukafactura.cl/api_docs",
+        "https://www.ruka.ai/one"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste factual con fuentes primarias y revisión crítica de alcances",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 30,
+      "status": "approved"
+    },
+    {
+      "path": "/desarrolladores/guias/dashboard-costos",
+      "kind": "api",
+      "intent": "Una carga paginada de líneas, con importes y clasificaciones disponibles para tu modelo de análisis. No una suma que mezcla kilos, cajas y unidades.",
+      "capabilities": [
+        "customer-api"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste del contrato público, pruebas aisladas de API y ejemplos ejecutables",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved",
+      "sources": [
+        "https://api.rukafactura.cl/api_docs#v1-purchase-lines"
+      ]
+    },
+    {
+      "path": "/desarrolladores/guias/compras-revisadas-erp",
+      "kind": "api",
+      "intent": "Un flujo de lectura con paginación y reconciliación. Tu integración decide cómo registrar cada documento en el ERP, sin confundir revisión interna con aceptación ante el SII.",
+      "capabilities": [
+        "customer-api"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste del contrato público, pruebas aisladas de API y ejemplos ejecutables",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved",
+      "sources": [
+        "https://api.rukafactura.cl/api_docs#v1-purchase-book"
+      ]
+    },
+    {
+      "path": "/desarrolladores/guias/recibir-webhooks",
+      "kind": "api",
+      "intent": "Un receptor preparado para entregas repetidas, retrasos y fallos. Recibir un evento de pago registrado en Ruka no demuestra que el banco haya ejecutado una transferencia.",
+      "capabilities": [
+        "customer-api"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste del contrato público, pruebas aisladas de API y ejemplos ejecutables",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved",
+      "sources": [
+        "https://api.rukafactura.cl/api_docs#webhooks-guide"
+      ]
+    },
+    {
+      "path": "/recursos",
+      "kind": "navigation",
+      "intent": "Resolver tareas de compras y costos",
+      "capabilities": [
+        "local-cost-tools",
+        "purchase-reconciliation",
+        "customer-api"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Verificación de rutas y producto",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 180,
+      "status": "approved",
+      "sources": [
+        "https://www.ruka.ai/productos/registro-de-compras"
+      ]
+    },
+    {
+      "path": "/herramientas/costo-unitario",
+      "kind": "calculator",
+      "intent": "Calcular costo neto por unidad física",
+      "capabilities": [
+        "local-cost-tools"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contrato aritmético y pruebas automatizadas",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 365,
+      "status": "approved",
+      "sources": [
+        "https://www.ruka.ai/productos/panel-control"
+      ]
+    },
+    {
+      "path": "/herramientas/variacion-costos",
+      "kind": "calculator",
+      "intent": "Comparar costos de compras con distinto formato",
+      "capabilities": [
+        "local-cost-tools"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contrato aritmético y pruebas automatizadas",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 365,
+      "status": "approved",
+      "sources": [
+        "https://www.ruka.ai/productos/panel-control"
+      ]
+    },
+    {
+      "path": "/desarrolladores",
+      "kind": "api",
+      "intent": "Integrar datos de compras de Ruka con sistemas propios",
+      "capabilities": [
+        "customer-api"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste de referencia pública y contrato API",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved",
+      "sources": [
+        "https://api.rukafactura.cl/api_docs"
+      ]
+    },
+    {
+      "path": "/guias/compras",
+      "kind": "navigation",
+      "intent": "Distinguir controles operativos y tributarios de compras",
+      "capabilities": [
+        "purchase-guides"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Revisión editorial y enlaces",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved",
+      "sources": [
+        "https://www.sii.cl/factura_electronica/GUIA_aceptacion_reclamo_dte.pdf"
+      ]
+    },
+    {
+      "path": "/guias/compras/recepcion-revision-acuse-sii",
+      "reviewedContentSha256": "3066e7d62bee2ab6c4163ac501292ed16f71615e656f87dc2facc6d4e82d3d80",
+      "kind": "tax",
+      "intent": "Distingue recepción física, aprobación interna y acuse ante el SII. Qué revisar antes de aceptar una factura y qué excepciones debes considerar.",
+      "capabilities": [
+        "purchase-guides"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales públicas",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved",
+      "sources": [
+        "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6598.htm",
+        "https://www.sii.cl/factura_electronica/GUIA_aceptacion_reclamo_dte.pdf",
+        "https://www.sii.cl/documentos/circulares/2017/circu4.pdf",
+        "https://www.sii.cl/normativa_legislacion/circulares/2017/circu35.pdf",
+        "https://api.rukafactura.cl/api_docs#v1-purchase-book"
+      ],
+      "taxReview": {
+        "method": "official-source-verification",
+        "checkedAt": "2026-10-26",
+        "scope": "Recibir mercadería, revisar una factura y dar acuse no son lo mismo",
+        "verifiedFacts": [
+          "La recepción confirma lo que llegó. La revisión interna comprueba que la compra está bien registrada. El acuse informado al SII tiene efectos tributarios. Una marca en tu software no sustituye automáticamente las otras dos acciones.",
+          "La guía del SII sitúa las acciones del receptor dentro de ocho días desde la recepción de la factura electrónica en el Servicio. Sin una acción dentro de ese plazo, pueden operar la aceptación y el recibo por presunción legal. Revisa la fecha y el estado que informa el SII; no uses la fecha en que alguien abrió el archivo como sustituto.",
+          "No existe una regla de acuse idéntica para cualquier documento. La Circular 35 contempla documentos que dan derecho a crédito fiscal cuyo emisor informa pago al contado, sin saldo pendiente. La Circular 4 también recoge la excepción relacionada con el artículo 55 de la ley de IVA. El acuse, además, no reemplaza los demás requisitos del crédito fiscal."
+        ]
+      }
+    },
+    {
+      "path": "/guias/compras/factura-no-corresponde-reclamo",
+      "reviewedContentSha256": "f542c78574761e7a9e39fecec1199713f78a570b508d607870b10bbe9e24f101",
+      "kind": "tax",
+      "intent": "Ordena la evidencia de una factura incorrecta, distingue el reclamo formal de una gestión con el proveedor y conserva el resultado de la revisión.",
+      "capabilities": [
+        "purchase-guides"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales públicas",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved",
+      "sources": [
+        "https://www.sii.cl/factura_electronica/GUIA_aceptacion_reclamo_dte.pdf",
+        "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6915.htm",
+        "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_7010.htm"
+      ],
+      "taxReview": {
+        "method": "official-source-verification",
+        "checkedAt": "2026-10-26",
+        "scope": "Llegó una factura que no corresponde. ¿Qué revisas primero?",
+        "verifiedFacts": [
+          "Primero identifica el documento y la diferencia. Luego verifica su estado y fecha de recepción en el SII antes de decidir una acción. Escribirle al proveedor o marcar una incidencia interna no demuestra que un reclamo haya quedado registrado ante el Servicio.",
+          "La guía oficial contempla reclamos por contenido y por falta total o parcial de mercaderías o servicios. El período se cuenta desde la recepción del documento en el SII, no desde su carga a una planilla. La misma guía advierte que, después de otorgar acuse, no se puede reclamar; si se reclama, no se puede después otorgar acuse.",
+          "El SII indica que una factura reclamada dentro del plazo no permite al receptor usar el crédito fiscal contenido en ella. Por eso conviene resolver con antecedentes, dentro del plazo aplicable y con una persona autorizada; no aceptar solo para despejar una bandeja de pendientes."
+        ]
+      }
+    },
+    {
+      "path": "/guias/compras/pendientes-registro-compras-fechas",
+      "reviewedContentSha256": "86d9be7f7197613b681978dda6a0ab1f8db5f7d0cd7b30e90fa2df76bca054a3",
+      "kind": "tax",
+      "intent": "Revisa pendientes del Registro de Compras sin confundir emisión, recepción SII, acuse y período. Un método para conciliar diferencias al cierre.",
+      "capabilities": [
+        "purchase-guides"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales públicas",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved",
+      "sources": [
+        "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6972.htm",
+        "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6976.htm",
+        "https://www.sii.cl/normativa_legislacion/circulares/2017/circu35.pdf",
+        "https://api.rukafactura.cl/api_docs#v1-purchase-book"
+      ],
+      "taxReview": {
+        "method": "official-source-verification",
+        "checkedAt": "2026-10-26",
+        "scope": "Por qué una factura está pendiente y qué fecha revisar",
+        "verifiedFacts": [
+          "Pendiente no significa necesariamente que falte descargar la factura. El SII usa esa sección para documentos que requieren recibo de mercaderías o servicios y aún lo tienen pendiente. Su fecha de emisión no determina por sí sola el período del Registro de Compras.",
+          "La respuesta oficial sobre período considera cuándo se otorga o se entiende otorgado el recibo. Si no hubo acuse ni reclamo, contempla el transcurso de ocho días corridos desde la recepción en el SII. Esto explica por qué una factura puede quedar en un período diferente de su emisión.",
+          "Hay condiciones y excepciones: por ejemplo, la Circular 35 se refiere a documentos con pago al contado informado por el emisor, sin saldo pendiente. Esta guía no determina automáticamente el crédito fiscal de una empresa ni sustituye la revisión del documento y sus requisitos."
+        ]
+      }
+    },
+    {
+      "path": "/guias/compras/nota-credito-proveedor",
+      "reviewedContentSha256": "388678669fee16a32f20dd324a5a596f3a52689059a17e26da184fcd23653bae",
+      "kind": "tax",
+      "intent": "Vincula la nota de crédito con la factura original, revisa qué corrige y evita descontar dos veces el mismo importe del saldo de tu proveedor.",
+      "capabilities": [
+        "purchase-guides"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales públicas",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved",
+      "sources": [
+        "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6925.htm",
+        "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_7010.htm",
+        "https://api.rukafactura.cl/api_docs#v1-purchase-invoices"
+      ],
+      "taxReview": {
+        "method": "official-source-verification",
+        "checkedAt": "2026-10-26",
+        "scope": "Llegó una nota de crédito. No pierdas la compra original.",
+        "verifiedFacts": [
+          "Una nota de crédito debe revisarse junto a la factura que referencia. Identifica qué corrige, por cuánto y cómo afecta el saldo. No borres el documento original ni confundas una corrección documental con un abono bancario.",
+          "El SII responde un caso específico: factura aceptada, nota de crédito emitida dentro del mismo plazo de ocho días y sin reclamo del receptor. En ese supuesto, describe el uso del crédito de la factura y el recargo del IVA indicado en la nota recibida. No debe generalizarse esa respuesta a cualquier nota, período o estado.",
+          "Para el tratamiento de tu caso, contrasta el estado de la factura, fechas, motivo y referencia con las instrucciones vigentes. Una conciliación comercial del saldo no determina por sí sola cómo declarar el IVA."
+        ]
+      }
+    },
+    {
+      "path": "/guias/compras/xml-pdf-documento-compra",
+      "reviewedContentSha256": "3979c4dd35c9c51e6927517745a11418e0a1bee94eb483b954d951521e82d0d6",
+      "kind": "guide",
+      "intent": "Qué consultar en el XML, para qué usar el PDF y por qué un documento legible no acredita por sí solo aceptación, recepción o validación tributaria.",
+      "capabilities": [
+        "purchase-guides"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales públicas",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved",
+      "sources": [
+        "https://api.rukafactura.cl/api_docs#v1-purchase-document",
+        "https://api.rukafactura.cl/api_docs#v1-purchase-book",
+        "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6598.htm"
+      ]
+    },
+    {
+      "path": "/guias/compras/factura-compra-dte-46",
+      "reviewedContentSha256": "031c1cfad42bad766cac192a98de473cfccd14604f7675934defdb67fdb6ac20",
+      "kind": "tax",
+      "intent": "Distingue el DTE 46 emitido por el comprador de una factura de proveedor recibida. Revisa requisitos y evita elegir un tipo documental incorrecto.",
+      "capabilities": [
+        "purchase-guides"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales públicas",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved",
+      "sources": [
+        "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_3664.htm",
+        "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_3665.htm"
+      ],
+      "taxReview": {
+        "method": "official-source-verification",
+        "checkedAt": "2026-10-26",
+        "scope": "Factura de compra DTE 46 no significa cualquier factura que recibes",
+        "verifiedFacts": [
+          "En la operación diaria puedes llamar «factura de compra» a una factura recibida de un proveedor. El DTE 46 es un tipo tributario específico: lo emite el comprador en los casos habilitados. No se elige solo porque estés comprando.",
+          "La respuesta oficial incluye a agentes retenedores autorizados que deben retener parte o todo el IVA en operaciones determinadas. La proporción y condiciones dependen del cambio de sujeto aplicable: no hay una tasa de retención universal que pueda copiarse a todos los casos.",
+          "Antes de emitir, verifica la situación del emisor, operación, autorizaciones y documento que corresponde. Que una aplicación muestre un formulario o un tipo de DTE no acredita que tu empresa esté habilitada para usarlo. No emitas un DTE 46 solo porque el proveedor no te ha enviado su factura."
+        ]
+      }
+    },
+    {
+      "path": "/guias/compras/clasificacion-compras-entrega-contable",
+      "reviewedContentSha256": "6fa4e966d30ee1cf680e9f7b854dd0aff12d271ba2b93f47075f7d9fa128eece",
+      "kind": "tax",
+      "intent": "Prepara documentos, clasificación y diferencias para el cierre. Distingue categorías operativas de IVA y entrega una base contable trazable.",
+      "capabilities": [
+        "purchase-guides",
+        "customer-api"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales públicas",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved",
+      "sources": [
+        "https://www.sii.cl/destacados/f29/clasificacompras.htm",
+        "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6988.htm",
+        "https://api.rukafactura.cl/api_docs#v1-purchase-book"
+      ],
+      "taxReview": {
+        "method": "official-source-verification",
+        "checkedAt": "2026-10-26",
+        "scope": "Entrega compras que tu contador pueda revisar, no reconstruir",
+        "verifiedFacts": [
+          "Una categoría de gasto, un centro de costo y una clasificación de IVA responden preguntas distintas. Entrega las tres con su contexto y deja identificadas las decisiones pendientes. Una compra bien ordenada no implica, por sí sola, derecho a crédito fiscal.",
+          "El SII pide revisar la naturaleza de las compras en el RCV y corregir la clasificación cuando no corresponda la categoría por defecto. Distingue, entre otras, activo fijo, IVA de uso común, IVA no recuperable y no incluir. Para uso común, la orientación oficial contempla un factor de proporcionalidad; no basta con dividir todo el IVA de una factura por una cifra elegida a ojo.",
+          "La API de Ruka permite consultar el libro y sus datos de clasificación, según permisos y campos disponibles. Esa entrega no acredita una contabilización ni modifica por sí sola el RCV. El SII describe mecanismos propios para caracterizar documentos individualmente o mediante carga masiva; valida el resultado en el sistema donde se ejecutó cada acción."
+        ]
+      }
+    },
+    {
+      "path": "/ayuda",
+      "kind": "navigation",
+      "intent": "Encontrar una tarea y completarla con requisitos y recuperación de errores",
+      "capabilities": [
+        "purchase-intake"
+      ],
+      "sources": [
+        "https://prueba.ruka.ai/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste de interfaz demo, permisos y código vigente; sin operaciones fiscales o bancarias",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved"
+    },
+    {
+      "path": "/ayuda/preparar-conexion",
+      "kind": "guide",
+      "intent": "Un alcance claro y una primera compra contrastada con su documento de origen.",
+      "capabilities": [
+        "purchase-intake"
+      ],
+      "sources": [
+        "https://prueba.ruka.ai/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste de interfaz demo, permisos y código vigente; sin operaciones fiscales o bancarias",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved"
+    },
+    {
+      "path": "/ayuda/revisar-factura-compra",
+      "kind": "guide",
+      "intent": "Una compra identificada y sus diferencias ubicadas, sin confundir sus estados.",
+      "capabilities": [
+        "purchase-intake"
+      ],
+      "sources": [
+        "https://prueba.ruka.ai/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste de interfaz demo, permisos y código vigente; sin operaciones fiscales o bancarias",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved"
+    },
+    {
+      "path": "/ayuda/homologar-insumo-unidad",
+      "kind": "guide",
+      "intent": "Un ítem asociado al insumo correcto y una unidad que permite comparar compras.",
+      "capabilities": [
+        "purchase-intake"
+      ],
+      "sources": [
+        "https://prueba.ruka.ai/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste de interfaz demo, permisos y código vigente; sin operaciones fiscales o bancarias",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved"
+    },
+    {
+      "path": "/ayuda/registrar-recepcion",
+      "kind": "guide",
+      "intent": "La recepción queda vinculada a la factura con el resultado que constató tu equipo.",
+      "capabilities": [
+        "purchase-intake"
+      ],
+      "sources": [
+        "https://prueba.ruka.ai/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste de interfaz demo, permisos y código vigente; sin operaciones fiscales o bancarias",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved"
+    },
+    {
+      "path": "/ayuda/resolver-diferencia-recepcion",
+      "kind": "guide",
+      "intent": "Una diferencia identificada, un responsable y un saldo revisado antes de preparar el pago.",
+      "capabilities": [
+        "purchase-intake"
+      ],
+      "sources": [
+        "https://prueba.ruka.ai/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste de interfaz demo, permisos y código vigente; sin operaciones fiscales o bancarias",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved"
+    },
+    {
+      "path": "/ayuda/preparar-nomina-banco",
+      "kind": "guide",
+      "intent": "Un archivo de nómina revisado para continuar en el portal de tu banco.",
+      "capabilities": [
+        "purchase-intake"
+      ],
+      "sources": [
+        "https://prueba.ruka.ai/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste de interfaz demo, permisos y código vigente; sin operaciones fiscales o bancarias",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved"
+    },
+    {
+      "path": "/ayuda/comenzar-rukafactura",
+      "kind": "guide",
+      "intent": "Una empresa y un tipo de documento correctamente identificados antes de emitir.",
+      "capabilities": [
+        "billing"
+      ],
+      "sources": [
+        "https://plataforma.rukafactura.cl/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste de interfaz demo, permisos y código vigente; sin operaciones fiscales o bancarias",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved"
+    },
+    {
+      "path": "/ayuda/preparar-cierre-contable",
+      "kind": "guide",
+      "intent": "Un período con sus fuentes y diferencias identificadas para la revisión del responsable contable.",
+      "capabilities": [
+        "billing"
+      ],
+      "sources": [
+        "https://plataforma.rukafactura.cl/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste de interfaz demo, permisos y código vigente; sin operaciones fiscales o bancarias",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved"
+    },
+    {
+      "path": "/seguridad",
+      "kind": "security",
+      "intent": "Revisar datos, permisos y alcance por servicio antes de conectar la operación",
+      "capabilities": [
+        "customer-api",
+        "billing"
+      ],
+      "sources": [
+        "https://www.ruka.ai/privacy",
+        "https://www.ruka.ai/terms",
+        "https://api.rukafactura.cl/api_docs"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste de producto y configuración comprobada; límites y dependencias explícitos",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved"
+    },
+    {
+      "path": "/contadores",
+      "kind": "product",
+      "intent": "Preparar una entrega contable por empresa y período con compras, Biller o API",
+      "capabilities": [
+        "purchase-intake",
+        "billing",
+        "customer-api"
+      ],
+      "sources": [
+        "https://plataforma.rukafactura.cl/",
+        "https://api.rukafactura.cl/api_docs"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste de producto y configuración comprobada; límites y dependencias explícitos",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 90,
+      "status": "approved"
+    }
+  ]
+}

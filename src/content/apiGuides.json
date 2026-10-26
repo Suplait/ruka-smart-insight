@@ -1,0 +1,161 @@
+[
+  {
+    "slug": "dashboard-costos",
+    "metaTitle": "Dashboard de costos con la API de Ruka: guía y ejemplo",
+    "title": "Lleva el detalle de compras a tu dashboard.",
+    "description": "Consulta las líneas de compra de Ruka, conserva sus unidades y clasificaciones y prepara una base útil para analizar costos por proveedor, insumo o centro de costo.",
+    "result": "Una carga paginada de líneas, con importes y clasificaciones disponibles para tu modelo de análisis. No una suma que mezcla kilos, cajas y unidades.",
+    "prerequisites": [
+      "Una clave de la cuenta con permiso para ver reportes y acceso a las empresas que vas a analizar.",
+      "Un proceso en tu servidor. El ejemplo descargable usa Node.js 22 o superior, sin dependencias adicionales.",
+      "Un destino propio donde guardar o transformar los datos. Ruka no crea un dashboard externo al ejecutar esta consulta."
+    ],
+    "sections": [
+      {
+        "title": "1. Define qué compras quieres analizar.",
+        "paragraphs": [
+          "Usa purchase_lines cuando necesites el detalle de cada línea. issued_from e issued_to son obligatorios y ambos extremos se incluyen; su diferencia no puede superar 31 días. Para períodos mayores, divide la extracción en ventanas.",
+          "El filtro por emisión es el predeterminado. date_basis=reporting tiene otra lógica: usa mes de reporte y, si falta, acuse y después emisión. No combines ambas bases en una serie sin identificar cuál usaste."
+        ],
+        "code": "curl --fail-with-body --get \\\n  'https://api.rukafactura.cl/api/v1/reports/purchase_lines' \\\n  --header \"Authorization: Bearer $RUKA_API_KEY\" \\\n  --data-urlencode 'issued_from=2026-10-01' \\\n  --data-urlencode 'issued_to=2026-10-26' \\\n  --data-urlencode 'per_page=100' \\\n  --data-urlencode 'page=1'"
+      },
+      {
+        "title": "2. Recorre todas las páginas.",
+        "paragraphs": [
+          "La respuesta contiene data y meta. Continúa por page hasta total_pages y conserva exactamente los mismos filtros. El límite es 100 registros por página. Una respuesta vacía puede ser correcta: comprueba el rango y los permisos antes de tratarla como una falla.",
+          "El ejemplo descargable entrega una página por vez y se detiene ante un error. Guarda cada lote antes de avanzar tu checkpoint. No registra tokens ni datos de compras, no sigue redirecciones y no hace reintentos ilimitados."
+        ],
+        "code": "import { purchaseLinePages } from './ruka-purchases.mjs';\n\nfor await (const page of purchaseLinePages({\n  issued_from: '2026-10-01',\n  issued_to: '2026-10-26',\n}, { token: process.env.RUKA_API_KEY })) {\n  // Guarda page.data en tu destino antes de continuar.\n  // Define aquí tu persistencia; el ejemplo no escribe una base.\n}"
+      },
+      {
+        "title": "3. Modela el costo, no solo el importe.",
+        "paragraphs": [
+          "Montos y cantidades llegan como strings decimales; conserva esa precisión en una columna decimal o una biblioteca decimal. null significa que falta una asignación, no que su valor sea cero. Un costo unitario comparable exige cantidades y unidades compatibles.",
+          "cost_center_allocations contiene las divisiones sin multiplicar la fila original. No sumes el importe completo de la línea y, además, todos sus repartos. Si incluyes notas con include_credit_notes=true, se agregan DTE 61 y 56 con sus montos originales, sin invertir automáticamente el signo: define el tratamiento por tipo documental en tu modelo."
+        ]
+      },
+      {
+        "title": "4. Comprueba el resultado antes de automatizar.",
+        "paragraphs": [
+          "Contrasta una muestra autorizada con Ruka: misma empresa, período, filtros, unidades y tratamiento de notas. Una diferencia entre total de factura y líneas filtradas no demuestra por sí sola un error: son alcances distintos.",
+          "Ante 401 revisa la clave; ante 403, los permisos; ante 422, los filtros. Un 429 requiere espaciar solicitudes y respetar Retry-After cuando esté presente. Conserva el lote incompleto y reconcilia antes de dar por terminada la carga."
+        ]
+      }
+    ],
+    "checks": [
+      "La segunda página conserva los filtros de la primera.",
+      "Una clasificación null permanece desconocida.",
+      "Las notas no se restan dos veces.",
+      "Los repartos no duplican la compra.",
+      "La clave nunca llega al navegador ni al repositorio."
+    ],
+    "reference": "v1-purchase-lines",
+    "download": "ruka-purchases.mjs"
+  },
+  {
+    "slug": "compras-revisadas-erp",
+    "metaTitle": "Integra compras revisadas con tu ERP | API de Ruka",
+    "title": "Entrega las compras revisadas a tu ERP.",
+    "description": "Usa el libro de compras aceptadas para consultar documentos con revisión interna y conservar sus códigos, líneas y referencias en tu integración contable.",
+    "result": "Un flujo de lectura con paginación y reconciliación. Tu integración decide cómo registrar cada documento en el ERP, sin confundir revisión interna con aceptación ante el SII.",
+    "prerequisites": [
+      "Clave de la cuenta con permiso de reportes y empresas autorizadas.",
+      "Documentos revisados internamente en Ruka, no reclamados ni excluidos.",
+      "Un mapeo explícito de empresas, proveedores y cuentas contables entre Ruka y tu ERP. Los IDs de V3 no tienen por qué coincidir con una integración anterior."
+    ],
+    "sections": [
+      {
+        "title": "1. Define la ventana y el alcance.",
+        "paragraphs": [
+          "GET /api/v1/reports/purchase_book usa start_date y end_date, no los filtros de fecha de purchase_lines. Las fechas son inclusivas y el final debe ser anterior al mismo día del mes siguiente al inicio. Por ejemplo, del 1 al 31 de octubre cabe; del 1 de octubre al 1 de noviembre no.",
+          "date_basis=updated permite encontrar documentos emitidos antes que cambiaron durante la ventana. El corte usa America/Santiago. Por defecto se excluyen documentos sin XML; include_without_xml=true permite incluirlos, pero no fabrica el archivo que falta."
+        ],
+        "code": "curl --fail-with-body --get \\\n  'https://api.rukafactura.cl/api/v1/reports/purchase_book' \\\n  --header \"Authorization: Bearer $RUKA_API_KEY\" \\\n  --data-urlencode 'start_date=2026-10-01' \\\n  --data-urlencode 'end_date=2026-10-26' \\\n  --data-urlencode 'date_basis=updated' \\\n  --data-urlencode 'per_page=100'"
+      },
+      {
+        "title": "2. Continúa por cursor, no por número de página.",
+        "paragraphs": [
+          "Toma meta.next_after_id y envíalo como after_id, conservando todos los filtros. Termina cuando next_after_id sea null. El ejemplo descargable rechaza cursores que se repiten para no quedarse en un bucle.",
+          "Guarda documentos por su identidad y api_changed_at en tu destino; el nombre concreto de tu tabla depende de tu integración. Solo confirma el avance después de persistir el lote. Un fallo intermedio no debe transformarse en un período marcado como completo."
+        ],
+        "code": "import { purchaseBookPages } from './ruka-purchases.mjs';\n\nfor await (const page of purchaseBookPages({\n  start_date: '2026-10-01',\n  end_date: '2026-10-26',\n  date_basis: 'updated',\n}, { token: process.env.RUKA_API_KEY })) {\n  // Actualiza tu destino por identidad y versión.\n  // Persiste page.data antes de guardar el checkpoint.\n}"
+      },
+      {
+        "title": "3. Recupera el documento que necesitas.",
+        "paragraphs": [
+          "GET /api/v1/purchase_documents identifica el documento por folio, dte_type y vendor_tax_id. Conserva los ceros iniciales del folio. Si la misma identidad corresponde a varias empresas receptoras autorizadas, recibirás 409 ambiguous_document: agrega company_id.",
+          "response_format=json convierte el XML almacenado y conserva sus etiquetas, atributos y valores como texto. xml entrega el archivo almacenado. pdf genera una representación de Ruka; no es el PDF original del proveedor. Un XML ausente devuelve 404 xml_not_available; un fallo del generador PDF puede devolver 503 pdf_unavailable."
+        ]
+      },
+      {
+        "title": "4. Reconciliar también es parte de integrar.",
+        "paragraphs": [
+          "El libro expone el estado actual, no un historial de eliminaciones. Un documento que después se reclama, excluye o deja de estar revisado puede desaparecer del resultado. Solapa ventanas, deduplica por identidad y programa una reconciliación de los documentos que ya guardaste; no interpretes ausencia en una página como autorización para borrar datos contables.",
+          "Comprueba en tu muestra que revisión interna, recepción física y acuse del SII se mantienen separados. Esta consulta no declara IVA, no presenta el F29 ni registra automáticamente un asiento en tu ERP."
+        ]
+      }
+    ],
+    "checks": [
+      "La carga termina al recibir next_after_id=null.",
+      "Repetir una ventana actualiza, no duplica.",
+      "Una falla no adelanta el checkpoint.",
+      "La ambigüedad de empresa se resuelve explícitamente.",
+      "Existe reconciliación para documentos que dejan de aparecer."
+    ],
+    "reference": "v1-purchase-book",
+    "download": "ruka-purchases.mjs"
+  },
+  {
+    "slug": "recibir-webhooks",
+    "metaTitle": "Webhooks de Ruka: firma, reintentos y duplicados",
+    "title": "Recibe cambios de facturas sin consultar todo el día.",
+    "description": "Configura un receptor de webhooks que valide la firma, guarde la entrega y procese los cambios sin duplicarlos. Los eventos son avisos: también necesitas reconciliación.",
+    "result": "Un receptor preparado para entregas repetidas, retrasos y fallos. Recibir un evento de pago registrado en Ruka no demuestra que el banco haya ejecutado una transferencia.",
+    "prerequisites": [
+      "Una clave permanente de la dueña o dueño de la cuenta, con administración y reportes autorizados.",
+      "Una URL HTTPS pública en el puerto 443 que pueda responder a la comprobación HEAD con 2xx o 405.",
+      "Almacenamiento durable para los eventos y un worker propio. El verificador descargable no reemplaza esos componentes."
+    ],
+    "sections": [
+      {
+        "title": "1. Suscribe solo los cambios que necesitas.",
+        "paragraphs": [
+          "POST /api/v1/webhooks registra tu URL. Hay 17 eventos disponibles y hasta 20 URLs activas por cuenta. Sin events se conserva invoice.created. Para compras listas para integrar, revisa invoice.accepted: se refiere a revisión interna, no al acuse del SII.",
+          "Guarda signing_secret cuando lo recibas: solo se muestra al crear. No lo subas a Git ni lo copies a un frontend. Puedes limitar por company_id. PATCH reemplaza la selección completa de events; agregar eventos no recupera el pasado. Cambiar URL, empresa o signing_secret exige eliminar y registrar nuevamente."
+        ],
+        "code": "curl --fail-with-body \\\n  'https://api.rukafactura.cl/api/v1/webhooks' \\\n  --header \"Authorization: Bearer $RUKA_API_KEY\" \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"webhook_url\": \"https://tu-dominio.example/ruka/events\",\n    \"events\": [\"invoice.accepted\", \"invoice.status_changed\"],\n    \"payload_format\": \"event_envelope\"\n  }'"
+      },
+      {
+        "title": "2. Verifica los bytes antes de interpretar el JSON.",
+        "paragraphs": [
+          "La firma HMAC-SHA256 usa tu signing_secret y la secuencia timestamp + punto + cuerpo crudo. Compara con X-Ruka-Signature, que empieza por sha256=. No serialices de nuevo el JSON antes de verificarlo: incluso un cambio de espacios altera la firma.",
+          "Rechaza timestamps fuera de una tolerancia de cinco minutos y usa comparación de tiempo constante. Mantén el reloj sincronizado y limita el tamaño del cuerpo según tu infraestructura. El archivo descargable incluye la verificación; lee el cuerpo como Buffer antes del middleware JSON."
+        ],
+        "code": "import { verifyRukaWebhook } from './verify-ruka-webhook.mjs';\n\nconst valid = verifyRukaWebhook({\n  rawBody, // Buffer con los bytes exactos recibidos\n  timestamp: headers['x-ruka-timestamp'],\n  signature: headers['x-ruka-signature'],\n  secret: process.env.RUKA_SIGNING_SECRET,\n});\n// Si no es válido, rechaza sin procesar el evento."
+      },
+      {
+        "title": "3. Guarda primero. Procesa después.",
+        "paragraphs": [
+          "Usa X-Ruka-Event-Id como clave única junto a la identidad de tu suscripción o cuenta. Inserta el evento y el trabajo pendiente en una transacción durable; responde 2xx después de confirmar esa escritura. Si ya estaba guardado, reconoce el duplicado sin aplicar de nuevo sus efectos.",
+          "Si tu cola vive fuera de la base, usa un patrón outbox o equivalente: una respuesta 2xx antes de garantizar la persistencia puede perder el evento. El worker aplica cambios idempotentes. No prometas orden de llegada ni que un evento refleja el estado más reciente: contrasta versiones y reconcilia por API."
+        ]
+      },
+      {
+        "title": "4. Diseña la recuperación antes de habilitarlo.",
+        "paragraphs": [
+          "Ruka realiza hasta seis intentos. Tras el primero, los intervalos son 1 minuto, 5 minutos, 30 minutos, 2 horas y 8 horas. Un reintento conserva el ID y el cuerpo capturado en el primer intento, pero firma con un timestamp nuevo. Tu deduplicación no debe depender de la firma.",
+          "Revocar acceso o quitar un evento puede cancelar pendientes. No hay recuperación automática de todo el historial al crear la suscripción. Programa una conciliación periódica con el libro y prueba duplicados, firma incorrecta, caída de tu worker y caída de tu base antes de conectar una operación real."
+        ]
+      }
+    ],
+    "checks": [
+      "Cambiar un byte del cuerpo invalida la firma.",
+      "Un timestamp vencido se rechaza.",
+      "Dos entregas del mismo ID producen un solo efecto.",
+      "Una caída antes de persistir no recibe 2xx.",
+      "La recuperación consulta estado actual, no presupone orden de eventos."
+    ],
+    "reference": "webhooks-guide",
+    "download": "verify-ruka-webhook.mjs"
+  }
+]

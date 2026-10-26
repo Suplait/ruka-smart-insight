@@ -18,7 +18,7 @@ for (const url of urls) {
   assert.ok(!markdown.includes("<script")); checks += 4;
   const doc = new JSDOM(await readFile(path.join(dist, pathname, "index.html"), "utf8")).window.document;
   if (pathname.startsWith("/productos/")) {
-    const links = [...doc.querySelectorAll('main a[href]')].filter(link => /\/(blog|herramientas|integraciones)\//.test(link.getAttribute("href")));
+    const links = [...doc.querySelectorAll('main a[href]')].filter(link => /\/(blog|herramientas|integraciones|guias|ayuda)\//.test(link.getAttribute("href")));
     assert.ok(links.length >= 2, `${pathname}: missing contextual resources`); checks++;
     for (const link of links) { assert.ok(urls.includes(new URL(link.getAttribute("href"), url).href)); checks++; }
   }

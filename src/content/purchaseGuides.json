@@ -1,0 +1,151 @@
+[
+  {
+    "slug": "recepcion-revision-acuse-sii",
+    "title": "Recibir mercadería, revisar una factura y dar acuse no son lo mismo",
+    "metaTitle": "Recepción, revisión y acuse de recibo SII | Ruka",
+    "description": "Distingue recepción física, aprobación interna y acuse ante el SII. Qué revisar antes de aceptar una factura y qué excepciones debes considerar.",
+    "category": "Recepción y control",
+    "answer": "La recepción confirma lo que llegó. La revisión interna comprueba que la compra está bien registrada. El acuse informado al SII tiene efectos tributarios. Una marca en tu software no sustituye automáticamente las otras dos acciones.",
+    "reviewedAt": "2026-10-26",
+    "sections": [
+      { "id": "tres-controles", "title": "Tres preguntas, tres respaldos", "paragraphs": ["En bodega, la pregunta es cuánto llegó y en qué estado. En administración, si proveedor, precio, cantidades y destino coinciden con lo acordado. Ante el SII, qué evento corresponde informar respecto del documento. Conviene que cada control conserve su responsable, fecha y evidencia.", "El SII identifica el acuse relevante para el crédito fiscal como el recibo de mercaderías o servicios. Su Circular 35 de 2017 precisa el registro que debe utilizarse para ese efecto. No confundas el correo que confirma la llegada de un XML con ese evento." ] },
+      { "id": "ejemplo", "title": "Una entrega incompleta no es un detalle administrativo", "paragraphs": ["Ejemplo: la factura dice diez cajas y en la recepción se cuentan ocho. Guarda el documento, la orden, el conteo y la evidencia de la diferencia. Deja identificada la persona que resolverá el caso con el proveedor antes de que otro integrante del equipo acepte el documento por rutina.", "La comparación ayuda a decidir, pero no decide ni presenta un reclamo tributario por ti. Una diferencia de cantidades tampoco permite concluir por sí sola qué importe debe pagarse: puede existir una entrega parcial acordada, una devolución o una corrección pendiente." ] },
+      { "id": "plazo-excepciones", "title": "El plazo no parte cuando abres el correo", "paragraphs": ["La guía del SII sitúa las acciones del receptor dentro de ocho días desde la recepción de la factura electrónica en el Servicio. Sin una acción dentro de ese plazo, pueden operar la aceptación y el recibo por presunción legal. Revisa la fecha y el estado que informa el SII; no uses la fecha en que alguien abrió el archivo como sustituto.", "No existe una regla de acuse idéntica para cualquier documento. La Circular 35 contempla documentos que dan derecho a crédito fiscal cuyo emisor informa pago al contado, sin saldo pendiente. La Circular 4 también recoge la excepción relacionada con el artículo 55 de la ley de IVA. El acuse, además, no reemplaza los demás requisitos del crédito fiscal." ] },
+      { "id": "ruka", "title": "Cómo separar estos controles en Ruka", "paragraphs": ["Mantén la recepción de mercadería junto a sus diferencias y respaldos. Después revisa el registro de la compra. En la API, una compra revisada internamente no equivale al acuse SII: la documentación del libro de compras lo distingue expresamente.", "Antes de automatizar, acuerda quién puede registrar recepción, quién revisa y quién autoriza una acción ante el SII. Si tu flujo contempla esa acción, confirma su alcance y resultado en el canal correspondiente; no lo deduzcas de un estado interno." ] }
+    ],
+    "sources": [
+      { "title": "SII: acuse para uso del crédito fiscal", "url": "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6598.htm", "updatedAt": "2025-06-25" },
+      { "title": "SII: guía de aceptación o reclamo de un DTE", "url": "https://www.sii.cl/factura_electronica/GUIA_aceptacion_reclamo_dte.pdf" },
+      { "title": "SII: Circular 4 de 2017", "url": "https://www.sii.cl/documentos/circulares/2017/circu4.pdf", "updatedAt": "2017-01-11" },
+      { "title": "SII: Circular 35 de 2017", "url": "https://www.sii.cl/normativa_legislacion/circulares/2017/circu35.pdf", "updatedAt": "2017-06-23" },
+      { "title": "Ruka: contrato del libro de compras", "url": "https://api.rukafactura.cl/api_docs#v1-purchase-book" }
+    ],
+    "related": { "href": "/productos/cuentas-por-pagar", "label": "Recepción y cuentas por pagar en Ruka" }
+  },
+  {
+    "slug": "factura-no-corresponde-reclamo",
+    "title": "Llegó una factura que no corresponde. ¿Qué revisas primero?",
+    "metaTitle": "Factura que no corresponde: revisión y reclamo SII | Ruka",
+    "description": "Ordena la evidencia de una factura incorrecta, distingue el reclamo formal de una gestión con el proveedor y conserva el resultado de la revisión.",
+    "category": "Correcciones",
+    "answer": "Primero identifica el documento y la diferencia. Luego verifica su estado y fecha de recepción en el SII antes de decidir una acción. Escribirle al proveedor o marcar una incidencia interna no demuestra que un reclamo haya quedado registrado ante el Servicio.",
+    "reviewedAt": "2026-10-26",
+    "sections": [
+      { "id": "identidad", "title": "Asegura que estás mirando la misma factura", "paragraphs": ["Revisa RUT emisor, empresa receptora, tipo de documento, folio y monto. Un folio puede repetirse entre proveedores o entre tipos de DTE. Si administras varios locales o sociedades, confirma a quién corresponde la compra antes de concluir que es ajena.", "Clasifica la diferencia: contenido incorrecto, mercadería o servicio no recibido, entrega parcial, documento repetido en tu sistema o una compra que nadie reconoce todavía. Estas situaciones necesitan evidencia distinta; no conviertas cualquier alerta de tu software en un reclamo automático." ] },
+      { "id": "evidencia", "title": "Arma un respaldo que otra persona pueda entender", "paragraphs": ["Reúne factura y XML disponible, orden de compra, recepción, detalle de la diferencia y conversaciones pertinentes. Anota quién detectó el problema y quién tiene atribuciones para resolverlo. Conserva la respuesta del proveedor y el resultado final, no solo una captura inicial.", "Ejemplo: el local recibe veinte unidades, pero la factura cobra veinticuatro. Un registro útil muestra ambos números, el producto y su unidad, la fecha del conteo y la persona responsable. Un comentario que diga «está mal» obliga a investigar todo de nuevo." ] },
+      { "id": "accion", "title": "Reclamar y aceptar son decisiones con efectos", "paragraphs": ["La guía oficial contempla reclamos por contenido y por falta total o parcial de mercaderías o servicios. El período se cuenta desde la recepción del documento en el SII, no desde su carga a una planilla. La misma guía advierte que, después de otorgar acuse, no se puede reclamar; si se reclama, no se puede después otorgar acuse.", "El SII indica que una factura reclamada dentro del plazo no permite al receptor usar el crédito fiscal contenido en ella. Por eso conviene resolver con antecedentes, dentro del plazo aplicable y con una persona autorizada; no aceptar solo para despejar una bandeja de pendientes." ] },
+      { "id": "cierre", "title": "No cierres el caso solo porque llegó una respuesta", "paragraphs": ["Comprueba qué ocurrió con el documento: corrección, nota de crédito, nueva factura o aclaración respaldada. El SII explica que, para el emisor de un DTE reclamado, corresponde una nota de crédito asociada y, cuando proceda, una nueva factura. Una promesa por correo no es todavía ese documento.", "En el control operativo, conserva el vínculo entre el original y la corrección. Revisa también el saldo por pagar para no descontar dos veces el mismo importe. Ruka puede ayudarte a ordenar compras y diferencias; esta guía no presenta acciones ante el SII ni autoriza a una persona a efectuarlas." ] }
+    ],
+    "sources": [
+      { "title": "SII: guía de aceptación o reclamo", "url": "https://www.sii.cl/factura_electronica/GUIA_aceptacion_reclamo_dte.pdf" },
+      { "title": "SII: efecto de una factura reclamada", "url": "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6915.htm", "updatedAt": "2025-05-19" },
+      { "title": "SII: qué debe hacer el emisor ante un reclamo", "url": "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_7010.htm", "updatedAt": "2025-05-29" }
+    ],
+    "related": { "href": "/herramientas/conciliar-factura-orden-recepcion", "label": "Comparar factura, orden y recepción" }
+  },
+  {
+    "slug": "pendientes-registro-compras-fechas",
+    "title": "Por qué una factura está pendiente y qué fecha revisar",
+    "metaTitle": "Facturas pendientes en el Registro de Compras SII | Ruka",
+    "description": "Revisa pendientes del Registro de Compras sin confundir emisión, recepción SII, acuse y período. Un método para conciliar diferencias al cierre.",
+    "category": "Registro y cierre",
+    "answer": "Pendiente no significa necesariamente que falte descargar la factura. El SII usa esa sección para documentos que requieren recibo de mercaderías o servicios y aún lo tienen pendiente. Su fecha de emisión no determina por sí sola el período del Registro de Compras.",
+    "reviewedAt": "2026-10-26",
+    "sections": [
+      { "id": "fechas", "title": "Conserva las fechas por separado", "paragraphs": ["La emisión pertenece al documento. La recepción en el SII describe cuándo lo recibió el Servicio. El recibo de mercaderías o servicios, expreso o entendido otorgado, es otro hecho. La fecha en que tu equipo registra la compra en un sistema interno también puede ser distinta.", "Ejemplo: una factura emitida al cierre de un mes puede tener recepción o acuse en otro. Antes de buscar una diferencia de monto, comprueba si los dos reportes están seleccionando el mismo período y usando la misma fecha. No alteres la fecha original para que los totales coincidan." ] },
+      { "id": "secciones", "title": "Mira el estado antes de repetir una gestión", "paragraphs": ["El Registro de Compras separa Registro, Pendiente, Reclamados y No incluir. La sección pendiente se vincula al requisito de recibo; un documento reclamado no es simplemente otro pendiente. El SII señala que las facturas reclamadas oportunamente se asignan a Reclamadas y no pueden trasladarse a otra sección del RC.", "Para cada diferencia, anota estado consultado, momento de consulta y próxima acción. Repetir descargas puede servir para actualizar información, pero no resuelve por sí solo un evento tributario pendiente ni una clasificación incorrecta." ] },
+      { "id": "periodo", "title": "No uses una sola regla para cualquier compra", "paragraphs": ["La respuesta oficial sobre período considera cuándo se otorga o se entiende otorgado el recibo. Si no hubo acuse ni reclamo, contempla el transcurso de ocho días corridos desde la recepción en el SII. Esto explica por qué una factura puede quedar en un período diferente de su emisión.", "Hay condiciones y excepciones: por ejemplo, la Circular 35 se refiere a documentos con pago al contado informado por el emisor, sin saldo pendiente. Esta guía no determina automáticamente el crédito fiscal de una empresa ni sustituye la revisión del documento y sus requisitos." ] },
+      { "id": "conciliar", "title": "Cierra la diferencia, no solo la planilla", "paragraphs": ["Compara una lista por identidad de documento, no solo el total mensual. Separa documentos faltantes, diferencias de estado, diferencias de período y diferencias de importe. Asigna responsable y conserva el respaldo que explica cada ajuste.", "Al integrar Ruka, revisa la fecha base de cada endpoint. Los reportes de facturas y el libro de compras no tienen necesariamente los mismos filtros. Para una sincronización por cambios, el contrato del libro permite consultar modificaciones y paginar por ID; un corte por emisión puede dejar fuera cambios de documentos antiguos." ] }
+    ],
+    "sources": [
+      { "title": "SII: secciones del Registro de Compras", "url": "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6972.htm", "updatedAt": "2025-06-27" },
+      { "title": "SII: acuse y período de registro", "url": "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6976.htm", "updatedAt": "2025-05-29" },
+      { "title": "SII: Circular 35 de 2017", "url": "https://www.sii.cl/normativa_legislacion/circulares/2017/circu35.pdf", "updatedAt": "2017-06-23" },
+      { "title": "Ruka: filtros del libro de compras", "url": "https://api.rukafactura.cl/api_docs#v1-purchase-book" }
+    ],
+    "related": { "href": "/productos/registro-de-compras", "label": "Ordenar el registro de compras" }
+  },
+  {
+    "slug": "nota-credito-proveedor",
+    "title": "Llegó una nota de crédito. No pierdas la compra original.",
+    "metaTitle": "Nota de crédito de proveedor: control de compras | Ruka",
+    "description": "Vincula la nota de crédito con la factura original, revisa qué corrige y evita descontar dos veces el mismo importe del saldo de tu proveedor.",
+    "category": "Correcciones",
+    "answer": "Una nota de crédito debe revisarse junto a la factura que referencia. Identifica qué corrige, por cuánto y cómo afecta el saldo. No borres el documento original ni confundas una corrección documental con un abono bancario.",
+    "reviewedAt": "2026-10-26",
+    "sections": [
+      { "id": "vinculo", "title": "Parte por la referencia, no por el monto", "paragraphs": ["Comprueba emisor, receptor, tipo, folio y referencia al documento original. Revisa el motivo y si la corrección es total o parcial. Dos documentos por el mismo monto no son necesariamente una pareja válida.", "Ejemplo: una factura corresponde a cien unidades y el proveedor emite una nota por diez devueltas. Conserva la factura, la nota y la recepción o devolución que explica la diferencia. Si solo cambias cien por noventa en tu planilla, desaparece la historia que necesita quien revisa después." ] },
+      { "id": "saldo", "title": "Separa documento, devolución y pago", "paragraphs": ["Una nota de crédito corrige un documento. Un pago registra dinero aplicado a una deuda. Una devolución de mercadería describe un movimiento físico. Pueden relacionarse, pero no son el mismo evento y no siempre ocurren el mismo día.", "Revisa el saldo usando una misma regla y conserva las aplicaciones anteriores. Si tu ERP ya descontó la nota, no vuelvas a restarla al preparar la nómina del banco. Si la factura estaba pagada, la resolución comercial requiere revisar el crédito o devolución con el proveedor, no inventar un nuevo pago negativo." ] },
+      { "id": "iva", "title": "El IVA también necesita revisar ambos documentos", "paragraphs": ["El SII responde un caso específico: factura aceptada, nota de crédito emitida dentro del mismo plazo de ocho días y sin reclamo del receptor. En ese supuesto, describe el uso del crédito de la factura y el recargo del IVA indicado en la nota recibida. No debe generalizarse esa respuesta a cualquier nota, período o estado.", "Para el tratamiento de tu caso, contrasta el estado de la factura, fechas, motivo y referencia con las instrucciones vigentes. Una conciliación comercial del saldo no determina por sí sola cómo declarar el IVA." ] },
+      { "id": "integracion", "title": "Cuida el signo cuando exportas", "paragraphs": ["En los reportes de la API de Ruka, include_credit_notes incorpora los tipos documentales indicados en la referencia con sus montos originales, sin cambiarles el signo automáticamente. No sumes cada monto positivo como si siempre aumentara la compra.", "Define el tratamiento por tipo de documento y valida una factura, una corrección parcial y una anulación antes de construir un total. Mantén la referencia y el tipo en la exportación para que quien recibe los datos pueda reconstruir el cálculo." ] }
+    ],
+    "sources": [
+      { "title": "SII: factura aceptada y nota de crédito dentro del plazo", "url": "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6925.htm", "updatedAt": "2023-01-30" },
+      { "title": "SII: corrección del emisor ante reclamo", "url": "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_7010.htm", "updatedAt": "2025-05-29" },
+      { "title": "Ruka: reportes y notas de crédito", "url": "https://api.rukafactura.cl/api_docs#v1-purchase-invoices" }
+    ],
+    "related": { "href": "/productos/cuentas-por-pagar", "label": "Revisar cuentas por pagar" }
+  },
+  {
+    "slug": "xml-pdf-documento-compra",
+    "title": "XML y PDF: el mismo documento, usos diferentes",
+    "metaTitle": "XML y PDF de una factura: diferencias al integrar | Ruka",
+    "description": "Qué consultar en el XML, para qué usar el PDF y por qué un documento legible no acredita por sí solo aceptación, recepción o validación tributaria.",
+    "category": "Documentos e integración",
+    "answer": "El XML contiene la estructura del documento. El PDF permite leer una representación. Antes de integrar, aclara de dónde viene cada archivo y qué conserva: un PDF generado por tu software no es necesariamente el PDF original del proveedor.",
+    "reviewedAt": "2026-10-26",
+    "sections": [
+      { "id": "origen", "title": "Pregunta de dónde salió el archivo", "paragraphs": ["En un proceso de compras puedes recibir un XML, un PDF adjunto o una imagen. No tienen el mismo grado de estructura ni la misma procedencia. Mantén el archivo recibido, su origen y la relación con la compra; no sustituyas el original por una extracción de texto sin dejar constancia.", "Ejemplo: un PDF permite leer seis bolsas de un producto, pero el dato extraído debe revisarse junto a su unidad y presentación. «6» no basta para saber si son seis kilos, seis bolsas de veinticinco kilos o seis cajas. El OCR ayuda a leer; la homologación resuelve qué significa ese dato en tu catálogo." ] },
+      { "id": "ruka", "title": "Qué entrega la API de Ruka", "paragraphs": ["El endpoint de documentos permite pedir el XML almacenado, su conversión a JSON o una representación PDF generada por Ruka. Consulta por folio, tipo DTE y RUT emisor; cuando una identidad coincide en varias empresas receptoras, company_id permite desambiguar.", "La respuesta JSON del documento conserva etiquetas del XML y valores de texto. No es el mismo contrato que el libro de compras. Los cambios de clasificación y la información operativa de Ruka se consultan en el libro, no se deben buscar necesariamente dentro del XML original." ] },
+      { "id": "faltantes", "title": "Un archivo faltante no equivale a una factura inexistente", "paragraphs": ["La referencia contempla XML no disponible y PDF temporalmente no disponible como situaciones distintas. El PDF puede generarse con datos guardados aunque falte el XML. No lo presentes como recuperación del archivo original ni como certificación fiscal.", "En tu integración, diferencia permiso insuficiente, documento fuera de alcance, identidad ambigua y un error transitorio de generación. Reintentar indefinidamente cualquier 404 no resuelve una falta de autorización o de archivo." ] },
+      { "id": "control", "title": "Guarda evidencia sin duplicar información sensible", "paragraphs": ["Conserva identidad, tipo de representación, fecha de obtención y referencia de almacenamiento. Limita quién puede descargar documentos y evita ponerlos en URLs públicas. Para ejemplos, capturas y pruebas utiliza documentos ficticios identificados como tales.", "Ni leer un PDF ni recibir un XML acredita que la mercadería llegó, que un usuario revisó la compra o que se informó un evento al SII. Son comprobaciones separadas. Diseña la integración para mostrar qué sabe y qué no sabe de cada una." ] }
+    ],
+    "sources": [
+      { "title": "Ruka: contrato de documentos JSON, XML y PDF", "url": "https://api.rukafactura.cl/api_docs#v1-purchase-document" },
+      { "title": "Ruka: libro de compras", "url": "https://api.rukafactura.cl/api_docs#v1-purchase-book" },
+      { "title": "SII: acuse de recibo", "url": "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6598.htm", "updatedAt": "2025-06-25" }
+    ],
+    "related": { "href": "/desarrolladores", "label": "Explorar la API de compras" }
+  },
+  {
+    "slug": "factura-compra-dte-46",
+    "title": "Factura de compra DTE 46 no significa cualquier factura que recibes",
+    "metaTitle": "Factura de compra DTE 46 vs factura recibida | Ruka",
+    "description": "Distingue el DTE 46 emitido por el comprador de una factura de proveedor recibida. Revisa requisitos y evita elegir un tipo documental incorrecto.",
+    "category": "Documentos e integración",
+    "answer": "En la operación diaria puedes llamar «factura de compra» a una factura recibida de un proveedor. El DTE 46 es un tipo tributario específico: lo emite el comprador en los casos habilitados. No se elige solo porque estés comprando.",
+    "reviewedAt": "2026-10-26",
+    "sections": [
+      { "id": "diferencia", "title": "Quién emite cambia el significado", "paragraphs": ["Si tu proveedor emite una factura por una venta y tu empresa la recibe, para ti es una compra. Esa perspectiva comercial no cambia el tipo de DTE. El documento mantiene el tipo con que fue emitido.", "El SII define la Factura de Compra Electrónica como un documento emitido por el comprador en lugar de la factura de venta del vendedor cuando corresponde el cambio de sujeto. Su respuesta sobre cuándo emitir también contempla operaciones específicas con vendedores o prestadores sin documentación tributaria, bajo la resolución que identifica." ] },
+      { "id": "requisitos", "title": "No es una alternativa para resolver una factura que falta", "paragraphs": ["La respuesta oficial incluye a agentes retenedores autorizados que deben retener parte o todo el IVA en operaciones determinadas. La proporción y condiciones dependen del cambio de sujeto aplicable: no hay una tasa de retención universal que pueda copiarse a todos los casos.", "Antes de emitir, verifica la situación del emisor, operación, autorizaciones y documento que corresponde. Que una aplicación muestre un formulario o un tipo de DTE no acredita que tu empresa esté habilitada para usarlo. No emitas un DTE 46 solo porque el proveedor no te ha enviado su factura." ] },
+      { "id": "ejemplo", "title": "Un ejemplo para evitar el error de clasificación", "paragraphs": ["Un restaurante compra insumos y recibe del proveedor una factura tipo 33. La registra como una compra recibida, conservando ese tipo documental. No la convierte a DTE 46 ni emite otro documento para poder ingresarla a su sistema.", "Si se trata de una operación efectivamente sujeta a una regla que exige factura de compra, el flujo es distinto: se debe verificar la habilitación y emitir con los requisitos de ese caso. Esta guía explica la diferencia, no determina si una operación concreta está autorizada." ] },
+      { "id": "sistemas", "title": "Conserva el tipo original al integrar", "paragraphs": ["No derives el tipo documental a partir del nombre de una sección como «Compras». Exporta tipo DTE, emisor, receptor y folio como campos separados. Así el sistema de destino puede distinguir una factura recibida de un documento emitido bajo una operación especial.", "En Ruka, el registro de compras y el facturador resuelven tareas distintas. Antes de diseñar una integración o proceso de emisión, identifica cuál necesitas y confirma su alcance. No conviertas una etiqueta de marketing en una decisión tributaria." ] }
+    ],
+    "sources": [
+      { "title": "SII: definición de Factura de Compra Electrónica", "url": "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_3664.htm", "updatedAt": "2025-02-26" },
+      { "title": "SII: cuándo se emite Factura de Compra Electrónica", "url": "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_3665.htm", "updatedAt": "2022-10-18" }
+    ],
+    "related": { "href": "/productos/registro-de-compras", "label": "Conocer el registro de compras recibidas" }
+  },
+  {
+    "slug": "clasificacion-compras-entrega-contable",
+    "title": "Entrega compras que tu contador pueda revisar, no reconstruir",
+    "metaTitle": "Clasificación de compras e IVA: entrega contable | Ruka",
+    "description": "Prepara documentos, clasificación y diferencias para el cierre. Distingue categorías operativas de IVA y entrega una base contable trazable.",
+    "category": "Registro y cierre",
+    "answer": "Una categoría de gasto, un centro de costo y una clasificación de IVA responden preguntas distintas. Entrega las tres con su contexto y deja identificadas las decisiones pendientes. Una compra bien ordenada no implica, por sí sola, derecho a crédito fiscal.",
+    "reviewedAt": "2026-10-26",
+    "sections": [
+      { "id": "clasificaciones", "title": "No uses una etiqueta para tres decisiones", "paragraphs": ["Tu equipo puede clasificar una compra como insumos de cocina, asignarla al local centro y proponer una cuenta contable. Esa organización ayuda a entender el negocio, pero no determina automáticamente el tratamiento de IVA de la factura.", "El SII pide revisar la naturaleza de las compras en el RCV y corregir la clasificación cuando no corresponda la categoría por defecto. Distingue, entre otras, activo fijo, IVA de uso común, IVA no recuperable y no incluir. Para uso común, la orientación oficial contempla un factor de proporcionalidad; no basta con dividir todo el IVA de una factura por una cifra elegida a ojo." ] },
+      { "id": "ejemplo", "title": "Un cierre claro deja las dudas a la vista", "paragraphs": ["Ejemplo: compras ingredientes, un equipo de refrigeración y un servicio utilizado por más de una actividad. Administración puede reunir documentos, destinos y responsables. La revisión contable debe resolver el tratamiento que corresponda a cada operación, en vez de aceptar una sola regla por el nombre del proveedor.", "Si no hay información suficiente, marca la decisión pendiente e identifica qué antecedente falta. No reemplaces un dato desconocido por cero ni asignes una categoría solo para que el archivo pase una validación. Una excepción visible se puede resolver; una clasificación incorrecta puede sobrevivir varios cierres." ] },
+      { "id": "entrega", "title": "Qué debe conservar la entrega", "paragraphs": ["Incluye empresa receptora, proveedor, tipo DTE, folio, fechas, moneda, neto, exento, IVA y total. Conserva las referencias de notas de crédito y el vínculo al respaldo. Agrega la clasificación interna y los repartos disponibles sin mezclarlos con la identidad tributaria del documento.", "Acompaña los datos con el criterio de corte: período, fecha base y momento de extracción. Separa diferencias de recepción, documentos reclamados y decisiones tributarias pendientes. El contador debería poder volver de una fila a su respaldo y saber quién resolvió cada excepción." ] },
+      { "id": "comprobacion", "title": "Prueba la entrega antes de automatizarla", "paragraphs": ["Elige una factura normal, otra con clasificación pendiente y una con nota de crédito. Verifica que el destino conserve identidad y referencia, interprete los signos correctamente y no duplique una compra al importar el mismo archivo dos veces. Compara el detalle, no solo el total del lote.", "La API de Ruka permite consultar el libro y sus datos de clasificación, según permisos y campos disponibles. Esa entrega no acredita una contabilización ni modifica por sí sola el RCV. El SII describe mecanismos propios para caracterizar documentos individualmente o mediante carga masiva; valida el resultado en el sistema donde se ejecutó cada acción." ] }
+    ],
+    "sources": [
+      { "title": "SII: clasificación de compras y uso del IVA", "url": "https://www.sii.cl/destacados/f29/clasificacompras.htm" },
+      { "title": "SII: caracterización de documentos en el Registro de Compras", "url": "https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_6988.htm", "updatedAt": "2025-05-29" },
+      { "title": "Ruka: datos y filtros del libro de compras", "url": "https://api.rukafactura.cl/api_docs#v1-purchase-book" }
+    ],
+    "related": { "href": "/desarrolladores", "label": "Consultar compras para tu sistema contable" }
+  }
+]

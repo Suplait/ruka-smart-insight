@@ -1,0 +1,887 @@
+[
+  {
+    "slug": "icb",
+    "name": "ICB",
+    "legalName": "ICB S.A.",
+    "rut": "93.178.000-K",
+    "aliases": [],
+    "category": "Alimentos y distribución",
+    "summary": "ICB Outlet ofrece alimentos y productos de consumo por caja. Su catálogo está orientado a liquidación de inventario, incluidas partidas con vida útil avanzada.",
+    "identityNote": "ICB S.A. y la sociedad ICB Food Service tienen RUT distintos. Identifica al emisor de tu factura antes de unir ambos nombres en el maestro de proveedores.",
+    "website": "https://www.icboutlet.cl/",
+    "channel": {
+      "label": "Consultar ICB Outlet",
+      "url": "https://www.icboutlet.cl/",
+      "note": "La disponibilidad, vida útil y condiciones dependen de cada producto y del canal Outlet."
+    },
+    "checks": [
+      {
+        "title": "Vencimiento antes que descuento",
+        "text": "En una compra de vida útil avanzada, contrasta fecha de vencimiento y consumo previsto. Un menor precio por caja no compensa unidades que tu cocina no alcanzará a usar."
+      },
+      {
+        "title": "Caja y contenido efectivo",
+        "text": "Guarda unidades por caja y contenido de cada unidad desde la oferta confirmada. Compara el costo normalizado; no mezcles el precio de liquidación con otra presentación."
+      },
+      {
+        "title": "Emisor del documento",
+        "text": "Revisa razón social y RUT de la factura del canal utilizado. Mantén separados los documentos de ICB S.A. y de ICB Food Service, aunque compartan parte de su nombre."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://www.icboutlet.cl/terminos-y-condiciones",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.icboutlet.cl/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "icb-food-service",
+    "name": "ICB Food Service",
+    "legalName": "Importadora y Alimentos ICB Food Service SpA",
+    "rut": "77.965.620-9",
+    "aliases": [],
+    "category": "Alimentos y distribución",
+    "summary": "ICB Food Service tiene un canal dirigido a restaurantes, hoteles y otros negocios gastronómicos, con un recorrido de compra para empresas separado del de personas.",
+    "identityNote": "La referencia del SII identifica esta SpA. No confundas su RUT con ICB S.A. ni interpretes esta ficha como una certificación de situación tributaria actual.",
+    "website": "https://www.icbfs.cl/",
+    "channel": {
+      "label": "Ver canal Food Service",
+      "url": "https://www.icbfs.cl/",
+      "note": "El sitio distingue compras de empresa con factura y compras personales. Confirma el recorrido que corresponde a tu negocio."
+    },
+    "checks": [
+      {
+        "title": "Elegir el canal de empresa",
+        "text": "Antes de pedir, confirma que el registro esté asociado a la empresa que necesita la factura. Comprar como persona y corregir el documento después agrega trabajo evitable."
+      },
+      {
+        "title": "Comparar el formato gastronómico",
+        "text": "Registra si el ítem se cotiza por caja, bolsa, kilo o unidad. Conserva el contenido de la presentación y la unidad usada por cocina para que el costo sea comparable."
+      },
+      {
+        "title": "Revisar cada recepción",
+        "text": "Si el pedido combina productos de conservación distinta, revisa cantidades y condiciones por línea. Deja el respaldo de un faltante junto a la factura correspondiente."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://www.bcn.cl/leychile/navegar?idNorma=1195836",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.icbfs.cl/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "bidfood-chile",
+    "name": "Bidfood Chile",
+    "legalName": "Bidfood Chile S.A.",
+    "rut": "76.111.152-3",
+    "aliases": [],
+    "category": "Alimentos y distribución",
+    "summary": "Bidfood Chile presenta un catálogo Foodservice que incluye alimentos y NonFood: insumos para cocina, limpieza y operación gastronómica.",
+    "identityNote": "La fuente oficial identifica a Bidfood Chile S.A. con este RUT. Una marca o sucursal puede aparecer con otra sociedad; prevalece el emisor de tu documento.",
+    "website": "https://www.bidfood.cl/",
+    "channel": {
+      "label": "Explorar Bidfood Chile",
+      "url": "https://www.bidfood.cl/",
+      "note": "Consulta productos y atención en su sitio oficial. Esta ficha no informa stock ni condiciones de despacho en tiempo real."
+    },
+    "checks": [
+      {
+        "title": "Separar alimento y operación",
+        "text": "Distingue alimentos de utensilios o artículos de limpieza al clasificar la compra. Una sola factura puede cubrir trabajos y centros de costo diferentes."
+      },
+      {
+        "title": "Unidad de compra y consumo",
+        "text": "Para un lácteo registra contenido neto; para NonFood, unidades por empaque. No compares precio por kilo con precio por pack aunque la descripción del pedido sea breve."
+      },
+      {
+        "title": "Controlar entregas por línea",
+        "text": "Contrasta pedido, entrega y factura en cada familia. Conserva las diferencias y notas de crédito vinculadas, sin dar toda la compra por resuelta por recibir una parte."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://www.bcn.cl/leychile/navegar?idNorma=1136155",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.bidfood.cl/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "agrosuper",
+    "name": "Agrosuper",
+    "legalName": "Agrosuper Comercializadora de Alimentos Limitada",
+    "rut": "79.984.240-8",
+    "aliases": [],
+    "category": "Carnes y cecinas",
+    "summary": "Agrosuper Ventas es el canal de compra en línea de Agrosuper Comercializadora de Alimentos. Ofrece registro de clientes y consulta de pedidos para negocios.",
+    "identityNote": "Los términos del canal identifican esta comercializadora, no cualquier sociedad del grupo Agrosuper. Contrasta siempre el emisor y la empresa receptora del DTE.",
+    "website": "https://www.agrosuperventas.com/",
+    "channel": {
+      "label": "Entrar a Agrosuper Ventas",
+      "url": "https://www.agrosuperventas.com/",
+      "note": "El catálogo y las condiciones de compra se consultan en el canal oficial; pueden depender de la cuenta y del lugar de entrega."
+    },
+    "checks": [
+      {
+        "title": "Peso real frente a cajas",
+        "text": "Si compras un corte cotizado por kilo, conserva el peso facturado y recibido además del número de cajas. La cantidad de envases por sí sola no explica el importe."
+      },
+      {
+        "title": "Frío, fecha y formato",
+        "text": "Revisa si pediste refrigerado o congelado, corte y presentación. Una sustitución aceptada necesita quedar reflejada en el registro de recepción, no solo por teléfono."
+      },
+      {
+        "title": "Pedido y documento final",
+        "text": "Relaciona la confirmación del pedido con el DTE definitivo y las diferencias de entrega. No uses un pedido preliminar como prueba de que toda la mercadería llegó."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://www.agrosuperventas.com/termsAndConditions",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.agrosuperventas.com/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "colun",
+    "name": "Colun",
+    "legalName": "Cooperativa Agrícola y Lechera de La Unión Ltda.",
+    "rut": "81.094.100-6",
+    "aliases": [],
+    "category": "Lácteos",
+    "summary": "Colun publica productos lácteos y un canal para solicitar atención como cliente. Mi Tienda Colun identifica a la cooperativa como operadora del sitio.",
+    "identityNote": "Colun es la marca; la razón social corresponde a una cooperativa. El nombre abreviado en una planilla no debe reemplazar la identificación completa del documento.",
+    "website": "https://www.colun.cl/",
+    "channel": {
+      "label": "Consultar atención para negocios",
+      "url": "https://www.colun.cl/contactanos/quiero-ser-cliente",
+      "note": "Usa el contacto oficial para confirmar el canal, formatos y cobertura apropiados para tu empresa."
+    },
+    "checks": [
+      {
+        "title": "Litros y unidades separados",
+        "text": "Para leche o crema registra unidades y volumen de cada envase. Un pack y una caja no representan la misma cantidad, aunque el precio visible se vea parecido."
+      },
+      {
+        "title": "Queso por pieza o por peso",
+        "text": "Confirma si el queso está cotizado por pieza, bolsa o kilo y conserva el peso efectivo. No conviertas automáticamente una unidad a un kilo."
+      },
+      {
+        "title": "Recepción y conservación",
+        "text": "Anota lotes o vencimientos cuando tu procedimiento los requiera y deja una diferencia vinculada a la factura. El registro administrativo no sustituye el control de frío."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://www.micolun.cl/terminos-y-condiciones/",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.colun.cl/",
+        "supports": "activity"
+      },
+      {
+        "label": "Canal oficial para negocios",
+        "url": "https://www.colun.cl/contactanos/quiero-ser-cliente",
+        "supports": "channel"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "nestle-chile",
+    "name": "Nestlé Chile",
+    "legalName": "Nestlé Chile S.A.",
+    "rut": "90.703.000-8",
+    "aliases": [],
+    "category": "Alimentos y distribución",
+    "summary": "Nestlé Chile tiene un portafolio de alimentos y bebidas. Nestlé Professional ofrece un canal específico para negocios gastronómicos y consultas comerciales.",
+    "identityNote": "Las bases corporativas identifican Nestlé Chile S.A. Un distribuidor o una comercializadora de productos Nestlé puede facturar con otra razón social y RUT.",
+    "website": "https://www.nestle.cl/",
+    "channel": {
+      "label": "Conocer Nestlé Professional",
+      "url": "https://www.nestleprofessional-latam.com/cl/contactanos",
+      "note": "Consulta el canal gastronómico para identificar productos, formatos y atención disponibles para tu negocio."
+    },
+    "checks": [
+      {
+        "title": "Fabricante no siempre es vendedor",
+        "text": "Revisa si te factura Nestlé Chile o un distribuidor. La marca del producto ayuda a homologar el insumo, pero no identifica por sí sola al proveedor del DTE."
+      },
+      {
+        "title": "Rendimiento y contenido neto",
+        "text": "Para productos concentrados o en polvo, separa gramos comprados de porciones preparadas. El costo de receta depende del rendimiento que uses realmente."
+      },
+      {
+        "title": "Equipos y consumibles",
+        "text": "Si una propuesta incluye equipos o servicios junto a café u otros insumos, conserva las condiciones por separado. No asumas que comprar el consumible incluye un equipo."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Nestlé: identificación corporativa en bases legales",
+        "url": "https://www.familynes.cl/bases-legales-promocion-ascenda",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.nestle.cl/",
+        "supports": "activity"
+      },
+      {
+        "label": "Canal oficial para negocios",
+        "url": "https://www.nestleprofessional-latam.com/cl/contactanos",
+        "supports": "channel"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "puratos",
+    "name": "Puratos",
+    "legalName": "Puratos de Chile SpA",
+    "rut": "96.511.330-4",
+    "aliases": [],
+    "category": "Panadería y repostería",
+    "summary": "Puratos Chile organiza su oferta en panadería, pastelería y chocolatería, con catálogos, recetas y un canal de compra en línea.",
+    "identityNote": "Los términos identifican a Puratos de Chile SpA. Usa ese dato para contrastar el documento; una marca de ingrediente no sustituye la razón social del vendedor.",
+    "website": "https://www.puratos.cl/",
+    "channel": {
+      "label": "Consultar Puratos Chile",
+      "url": "https://www.puratos.cl/",
+      "note": "El canal publica productos y atención comercial. La disponibilidad se confirma al comprar, no en este directorio."
+    },
+    "checks": [
+      {
+        "title": "Dosis frente a precio por kilo",
+        "text": "Compara un mejorador o premezcla considerando la dosificación de tu receta. Dos bolsas del mismo peso pueden tener usos y rendimientos distintos."
+      },
+      {
+        "title": "Contenido y presentación",
+        "text": "Conserva gramos o kilos por envase y unidades compradas. Si cambia el tamaño de la bolsa, normaliza antes de concluir que subió o bajó el precio."
+      },
+      {
+        "title": "Fecha de despacho y recepción",
+        "text": "Distingue la fecha de salida informada por el proveedor de la llegada a tu local. Mantén la recepción real y cualquier faltante asociados al pedido."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://www.puratos.cl/es/system-pages/terminos-y-condiciones",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.puratos.cl/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "gourmet",
+    "name": "Gourmet",
+    "legalName": "Good Food S.A.",
+    "rut": "96.665.460-0",
+    "aliases": [],
+    "category": "Condimentos y abarrotes",
+    "summary": "Gourmet es la marca del sitio operado por Good Food S.A. Su oferta incluye condimentos, bases, salsas y productos de repostería, con un acceso de compras por mayor.",
+    "identityNote": "El emisor puede figurar como Good Food S.A., no Gourmet. Conserva ambos nombres relacionados, sin reemplazar el RUT por el nombre comercial.",
+    "website": "https://www.gourmet.cl/",
+    "channel": {
+      "label": "Ver compras por mayor",
+      "url": "https://b2b.gourmet.cl/",
+      "note": "La tienda mayorista y el canal de consumidor tienen recorridos distintos. Confirma las condiciones del canal utilizado."
+    },
+    "checks": [
+      {
+        "title": "Homologar marca y sociedad",
+        "text": "Relaciona Gourmet con Good Food para encontrar sus documentos, pero no combines otros proveedores que vendan esa marca. El RUT debe seguir distinguiendo al vendedor."
+      },
+      {
+        "title": "Formato pequeño o Food Service",
+        "text": "Anota contenido por frasco, bolsa o bidón. Comparar una presentación doméstica con una gastronómica exige llevar ambas a la misma unidad neta."
+      },
+      {
+        "title": "Base, salsa o producto preparado",
+        "text": "No trates como equivalentes un concentrado y una salsa lista para usar. Revisa descripción y rendimiento antes de unirlos bajo el mismo insumo maestro."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://www.gourmet.cl/terminos-y-condiciones/",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.gourmet.cl/",
+        "supports": "activity"
+      },
+      {
+        "label": "Canal oficial para negocios",
+        "url": "https://b2b.gourmet.cl/",
+        "supports": "channel"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "dimerc",
+    "name": "Dimerc",
+    "legalName": "Dimerc S.A.",
+    "rut": "96.670.840-9",
+    "aliases": [],
+    "category": "Insumos para la operación",
+    "summary": "Dimerc se presenta como distribuidor de artículos de oficina y abastecimiento para empresas. Su ficha corporativa publica razón social y RUT.",
+    "identityNote": "La ficha de Dimerc S.A. no identifica a todas las empresas del grupo Dimeiggs. Mantén separado el emisor aunque compres artículos similares en distintos canales.",
+    "website": "https://www.dimerc.cl/",
+    "channel": {
+      "label": "Consultar catálogo de Dimerc",
+      "url": "https://www.dimerc.cl/",
+      "note": "Revisa catálogo y atención en el sitio oficial. Convenios, cobertura y condiciones se confirman con el proveedor."
+    },
+    "checks": [
+      {
+        "title": "Resma, caja y unidad",
+        "text": "En papelería, distingue hojas por resma y resmas por caja. Una compra de dos cajas no debe registrarse como dos resmas ni compararse con ese precio."
+      },
+      {
+        "title": "Asignar el gasto correcto",
+        "text": "Separa oficina, limpieza y equipamiento cuando compartan factura. La clasificación depende del uso en tu empresa, no de que todo venga del mismo proveedor."
+      },
+      {
+        "title": "Modelo y compatibilidad",
+        "text": "Para tóner o consumibles, conserva código y modelo compatible además del nombre. Homologar solo por una descripción abreviada puede unir productos que no sirven al mismo equipo."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://www.dimerc.cl/quienes-somos/",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.dimerc.cl/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "soprole-operativa",
+    "name": "Soprole",
+    "legalName": "Soprole S.A.",
+    "rut": "76.101.812-4",
+    "aliases": [],
+    "category": "Lácteos",
+    "summary": "Soprole tiene productos lácteos y un canal Food Professionals para negocios. Su información corporativa distingue la sociedad operativa de la matriz con el mismo nombre.",
+    "identityNote": "Esta ficha corresponde a la filial operativa, RUT 76.101.812-4. La matriz Soprole S.A. tiene RUT 77.729.737-6. No son intercambiables: revisa el emisor del DTE.",
+    "website": "https://www.soprole.cl/",
+    "channel": {
+      "label": "Consultar Food Professionals",
+      "url": "https://www.soprolefoodprofessionals.cl/contacto",
+      "note": "El canal profesional permite solicitar atención como cliente. Confirma la sociedad y las condiciones que aplican a tu compra."
+    },
+    "checks": [
+      {
+        "title": "No unir sociedades por nombre",
+        "text": "Una coincidencia exacta de nombre no basta: la matriz y la operativa publican RUT distintos. Conserva el RUT como llave para evitar mezclar documentos."
+      },
+      {
+        "title": "Formato de cocina",
+        "text": "Registra contenido neto y unidades por caja de crema, leche o queso. El costo por envase no permite comparar presentaciones profesionales de tamaños distintos."
+      },
+      {
+        "title": "Conservación y devolución",
+        "text": "Cuando haya diferencias, documenta cantidad y presentación recibida y conserva el respaldo. Vincula la corrección comercial o nota de crédito al documento original."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://www.soprole.cl/nosotros/informacion-emisor",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.soprole.cl/",
+        "supports": "activity"
+      },
+      {
+        "label": "Canal oficial para negocios",
+        "url": "https://www.soprolefoodprofessionals.cl/contacto",
+        "supports": "channel"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "pf-alimentos",
+    "name": "PF Alimentos",
+    "legalName": "Productos Fernández S.A.",
+    "rut": "91.004.000-6",
+    "aliases": [],
+    "category": "Carnes y cecinas",
+    "summary": "PF Alimentos es la marca de Productos Fernández, una empresa de alimentos con origen en cecinas. Tiene catálogo y un portal de atención y compra para clientes.",
+    "identityNote": "El reporte corporativo identifica Productos Fernández S.A. con este RUT. La marca PF ayuda a buscar, pero la factura debe contrastarse con la razón social completa.",
+    "website": "https://www.pfalimentos.cl/",
+    "channel": {
+      "label": "Consultar Tienda PF Alimentos",
+      "url": "https://tiendapfalimentos.cl/extcompany/account/login",
+      "note": "El portal distingue clientes registrados y solicitudes de acceso. No se crea una cuenta ni un pedido desde Ruka."
+    },
+    "checks": [
+      {
+        "title": "Unidad comercial y porción",
+        "text": "Para cecinas registra peso o unidades del envase y el uso en cocina. Una bolsa no equivale a una porción y no debería entrar así al costo de receta."
+      },
+      {
+        "title": "Código antes de agrupar",
+        "text": "Conserva el código y la variedad del producto. Presentaciones de similar nombre pueden cambiar gramaje, preparación o conservación y no ser equivalentes."
+      },
+      {
+        "title": "Diferencias respaldadas",
+        "text": "Si una caja llega incompleta, registra lo recibido y la diferencia antes de cerrar el control. Sigue la solución del proveedor sin dar por corregido el saldo hasta tener respaldo."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://www.pfalimentos.cl/wp-content/uploads/2025/03/Reporte-de-sostenibilidad-2024.pdf",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.pfalimentos.cl/",
+        "supports": "activity"
+      },
+      {
+        "label": "Canal oficial para negocios",
+        "url": "https://tiendapfalimentos.cl/extcompany/account/login",
+        "supports": "channel"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "empresas-carozzi",
+    "name": "Carozzi",
+    "legalName": "Empresas Carozzi S.A.",
+    "rut": "96.591.040-9",
+    "aliases": [],
+    "category": "Condimentos y abarrotes",
+    "summary": "Empresas Carozzi participa en elaboración y comercialización de alimentos. Su sitio corporativo incluye marcas y una sección separada para quienes le venden a la empresa.",
+    "identityNote": "Esta ficha identifica Empresas Carozzi S.A., no cualquier sociedad Carozzi ni distribuidor de sus marcas. La sección corporativa Proveedores está dirigida a vendedores de Carozzi.",
+    "website": "https://www.carozzicorp.com/",
+    "channel": {
+      "label": "Consultar sitio corporativo",
+      "url": "https://www.carozzicorp.com/",
+      "note": "Distingue comprar productos Carozzi de facturarle a Carozzi. Son relaciones y canales diferentes."
+    },
+    "checks": [
+      {
+        "title": "Comprador o proveedor de Carozzi",
+        "text": "Si buscas comprar alimentos, no apliques automáticamente instrucciones de su portal para proveedores. Ese portal describe cómo le venden y facturan a la empresa."
+      },
+      {
+        "title": "Marca y emisor independientes",
+        "text": "Conserva la marca para identificar el insumo y el RUT para identificar al vendedor. Comprar una pasta Carozzi a un mayorista no hace a Carozzi el emisor de esa factura."
+      },
+      {
+        "title": "Peso y variedad de abarrotes",
+        "text": "Para pastas, arroz u otros secos, compara el mismo tipo y contenido neto. Una caja de formatos distintos no puede reducirse a una sola cantidad sin revisar sus líneas."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://carozzicorp.com/proveedores/",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.carozzicorp.com/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "tresmontes-lucchetti",
+    "name": "Tresmontes Lucchetti",
+    "legalName": "Tresmontes Lucchetti S.A.",
+    "rut": "99.550.580-0",
+    "aliases": [],
+    "category": "Condimentos y abarrotes",
+    "summary": "Tresmontes Lucchetti reúne marcas de alimentos y bebidas y publica información corporativa y de sus productos en el sitio del grupo.",
+    "identityNote": "Los términos del sitio identifican a Tresmontes Lucchetti S.A. Otras sociedades operativas, marcas o distribuidores pueden aparecer como emisores de una compra.",
+    "website": "https://www.tmluc.com/",
+    "channel": {
+      "label": "Consultar marcas y contacto",
+      "url": "https://www.tmluc.com/",
+      "note": "El sitio corporativo orienta hacia productos y contacto. No acredita una condición comercial para tu cuenta."
+    },
+    "checks": [
+      {
+        "title": "Revisar la sociedad de cada compra",
+        "text": "No deduzcas el RUT solo por encontrar Lucchetti o Tresmontes en una descripción. Compara razón social y documento del proveedor que realmente realizó la venta."
+      },
+      {
+        "title": "Envase y preparación",
+        "text": "Si compras bebidas en polvo o bases, separa peso del envase y volumen preparado. El rendimiento de tu preparación es distinto de la cantidad que figura en la factura."
+      },
+      {
+        "title": "Agrupar sin borrar diferencias",
+        "text": "Al homologar abarrotes conserva variedad y presentación cuando afecten el costo o uso. Dos nombres parecidos no justifican convertir productos diferentes en un único insumo."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://www.tmluc.com/terminos-y-condiciones/",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.tmluc.com/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "sodimac",
+    "name": "Sodimac",
+    "legalName": "Sodimac S.A.",
+    "rut": "96.792.430-K",
+    "aliases": [],
+    "category": "Insumos para la operación",
+    "summary": "Sodimac tiene un canal Empresas para compras de materiales y equipamiento. Sus términos identifican la cuenta de empresa y al vendedor del canal.",
+    "identityNote": "El RUT publicado corresponde a Sodimac S.A. Comprueba quién vende y factura cada artículo; una marca de herramienta no identifica al emisor.",
+    "website": "https://empresas.sodimac.cl/",
+    "channel": {
+      "label": "Ver Sodimac Empresas",
+      "url": "https://empresas.sodimac.cl/",
+      "note": "La cuenta y los permisos comerciales se gestionan con Sodimac. Este enlace no constituye un convenio con Ruka."
+    },
+    "checks": [
+      {
+        "title": "Materiales o activo",
+        "text": "Distingue consumibles, reparación y equipamiento según el uso y criterio contable de tu empresa. Una factura de mantención puede mezclar las tres categorías."
+      },
+      {
+        "title": "Medida y unidad",
+        "text": "En materiales conserva dimensión, unidad de venta y cantidad: metro, plancha, rollo o pieza. No normalices presentaciones incompatibles solo porque comparten descripción."
+      },
+      {
+        "title": "Destino de la compra",
+        "text": "Relaciona cada pedido con local o centro de costo y su recepción real. Si retiras en tienda, conserva el respaldo de retiro separado del documento tributario."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Mercado Público: identidad de Sodimac",
+        "url": "https://conveniomarco.mercadopublico.cl/aseo3/marketplace/seller/profile/shop/73717-5802374",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://empresas.sodimac.cl/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "abastible",
+    "name": "Abastible",
+    "legalName": "Abastible S.A.",
+    "rut": "91.806.000-6",
+    "aliases": [],
+    "category": "Energía y servicios",
+    "summary": "Abastible publica servicios de gas, canales digitales y atención al cliente. Sus términos identifican a Abastible S.A. como operadora de la aplicación.",
+    "identityNote": "El RUT de Abastible S.A. no debe asignarse a cualquier distribuidor que comercialice su marca. Revisa quién emitió el documento y el tipo de suministro.",
+    "website": "https://abastible.cl/",
+    "channel": {
+      "label": "Consultar canales de Abastible",
+      "url": "https://abastible.cl/",
+      "note": "Distingue cilindro, suministro a granel y otros servicios antes de pedir información o revisar una cuenta."
+    },
+    "checks": [
+      {
+        "title": "Tipo de suministro",
+        "text": "No compares un precio de cilindro con una factura de granel sin revisar unidades y cargos. Conserva por separado producto, servicio y conceptos adicionales del documento."
+      },
+      {
+        "title": "Local y período",
+        "text": "Vincula la compra o suministro con el local y las fechas correctas. Una fecha de emisión no siempre coincide con el período de consumo que estás analizando."
+      },
+      {
+        "title": "Distribuidor y emisor",
+        "text": "Si la compra pasó por un distribuidor, verifica su RUT en vez de reemplazarlo por Abastible. El nombre de la marca del cilindro no identifica necesariamente al vendedor."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://abastible.cl/terminos-y-condiciones-app-abastible/",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://abastible.cl/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "lipigas",
+    "name": "Lipigas",
+    "legalName": "Empresas Lipigas S.A.",
+    "rut": "96.928.510-K",
+    "aliases": [],
+    "category": "Energía y servicios",
+    "summary": "Lipigas publica soluciones de energía para hogares y negocios. La CMF identifica a Empresas Lipigas S.A. y su nombre de fantasía Lipigas.",
+    "identityNote": "Esta identidad corresponde a Empresas Lipigas S.A., no necesariamente a un distribuidor de cilindros. Usa el documento de tu compra para determinar al emisor.",
+    "website": "https://lipigas.cl/",
+    "channel": {
+      "label": "Consultar Lipigas",
+      "url": "https://lipigas.cl/",
+      "note": "El sitio distingue clientes y modalidades de suministro. Confirma canal y datos de la cuenta directamente allí."
+    },
+    "checks": [
+      {
+        "title": "Cilindro o consumo a granel",
+        "text": "Registra la modalidad y la unidad de cada documento antes de comparar costos entre meses. Cambiar de presentación puede explicar una diferencia sin que haya cambiado el precio unitario."
+      },
+      {
+        "title": "Cargos por separado",
+        "text": "Conserva el detalle de suministro y servicios asociados tal como aparece en tu documento. No trates el total de una cuenta con varios cargos como precio de una sola unidad."
+      },
+      {
+        "title": "Compra por local",
+        "text": "Asigna la cuenta o pedido al local que lo utiliza. Al repartir un gasto entre sucursales, conserva un criterio revisable en vez de duplicar la misma factura."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://www.cmfchile.cl/institucional/mercados/entidad.php?control=svs&grupo=&mercado=V&pestania=1&row=AABbBQABwAAAA5vAAH&rut=96928510&tipoentidad=RVEMI&vig=VI",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://lipigas.cl/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "gasco-glp",
+    "name": "Gasco GLP",
+    "legalName": "Gasco GLP S.A.",
+    "rut": "96.568.740-8",
+    "aliases": [],
+    "category": "Energía y servicios",
+    "summary": "Gasco ofrece canales de suministro de gas y atención a clientes. Mercado Público publica una ficha de Gasco GLP S.A. con su identificación jurídica.",
+    "identityNote": "Gasco GLP S.A. y otras sociedades que incluyan Gasco en su nombre no son equivalentes. La ficha no sustituye la identidad del emisor que aparece en la factura.",
+    "website": "https://www.gasco.cl/",
+    "channel": {
+      "label": "Consultar Gasco",
+      "url": "https://www.gasco.cl/",
+      "note": "Confirma en el canal oficial qué modalidad y atención corresponden a tu suministro; no publicamos tarifas."
+    },
+    "checks": [
+      {
+        "title": "Identificar GLP y sociedad",
+        "text": "Conserva el RUT completo del documento: no lo reemplaces por otra sociedad del grupo. Esto evita conciliar un saldo con una empresa distinta por coincidencia de marca."
+      },
+      {
+        "title": "Cantidad y concepto",
+        "text": "Para analizar variación de costo, separa cantidad de gas y otros cargos si están detallados. Un cambio en el total no demuestra por sí solo una subida del valor unitario."
+      },
+      {
+        "title": "Recepción o período de servicio",
+        "text": "Distingue una entrega puntual del suministro facturado por período. Registra la evidencia apropiada en cada caso sin exigir una recepción de mercadería a todo servicio."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://conveniomarco.mercadopublico.cl/gas/marketplace/seller/profile/shop/27100-5802336-001",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.gasco.cl/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "transbank",
+    "name": "Transbank",
+    "legalName": "Transbank S.A.",
+    "rut": "96.689.310-9",
+    "aliases": [],
+    "category": "Energía y servicios",
+    "summary": "Transbank ofrece servicios de pago para comercios. Sus términos identifican la sociedad; los abonos de ventas y los cobros por servicios son conceptos distintos.",
+    "identityNote": "Esta ficha identifica al proveedor de servicios Transbank S.A. No valida un enlace de pago, una cuenta bancaria ni los movimientos de tu comercio.",
+    "website": "https://publico.transbank.cl/",
+    "channel": {
+      "label": "Consultar Transbank",
+      "url": "https://publico.transbank.cl/",
+      "note": "Usa el canal oficial y tu cuenta para revisar servicios y documentos. Ruka no procesa pagos desde este directorio."
+    },
+    "checks": [
+      {
+        "title": "Abono no es factura de compra",
+        "text": "Separa el dinero recibido por ventas del documento que cobra comisiones o servicios. Mezclar ambos puede duplicar ingresos o convertir un abono neto en gasto."
+      },
+      {
+        "title": "Fechas y descuentos",
+        "text": "Contrasta ventas, período de abono y descuentos antes de comparar el depósito con la venta bruta. Mantén las diferencias explicadas por concepto y no solo por total."
+      },
+      {
+        "title": "Respaldo del servicio",
+        "text": "Para registrar un gasto conserva el documento correspondiente y su período. No uses un pantallazo de liquidación como sustituto automático de la factura."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://publico.transbank.cl/onepay/terminos-y-condiciones",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://publico.transbank.cl/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "cambiaso",
+    "name": "Cambiaso Hnos.",
+    "legalName": "Cambiaso Hnos. S.A.C.",
+    "rut": "91.438.000-6",
+    "aliases": [],
+    "category": "Insumos para la operación",
+    "summary": "Cambiaso reúne marcas de té, yerba mate, infusiones e insumos para el hogar. Su sitio permite distinguir las familias de productos y consultar sus canales.",
+    "identityNote": "La identificación aparece en una resolución histórica del SII de 2010. Se usa como referencia de nombre y RUT, no como prueba de régimen tributario o habilitación vigente.",
+    "website": "https://www.cambiaso.cl/",
+    "channel": {
+      "label": "Consultar Cambiaso",
+      "url": "https://www.cambiaso.cl/",
+      "note": "Revisa las familias y canales en su sitio. Esta ficha no afirma que todos sus productos se vendan directamente a cualquier negocio."
+    },
+    "checks": [
+      {
+        "title": "Marca, formato y material",
+        "text": "En insumos de operación registra medidas y material además de la marca. Dos bolsas o envases de tamaño parecido pueden tener capacidad y uso diferentes."
+      },
+      {
+        "title": "Unidades del empaque",
+        "text": "Conserva unidades por rollo, paquete o caja cuando corresponda. Comparar el precio del empaque sin su contenido puede ocultar un cambio de presentación."
+      },
+      {
+        "title": "Separar familias de gasto",
+        "text": "No agrupes automáticamente toda la factura bajo un solo insumo por venir de Cambiaso. Conserva las líneas y su uso para distinguir alimentos de materiales operativos."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://www.sii.cl/documentos/resoluciones/2010/reso198.htm",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.cambiaso.cl/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "slug": "bredenmaster",
+    "name": "BredenMaster",
+    "legalName": "Bredenmaster S.A.",
+    "rut": "96.606.310-6",
+    "aliases": [],
+    "category": "Panadería y repostería",
+    "summary": "BredenMaster presenta productos de panadería y pastelería y un catálogo para clientes. El formato de compra y la preparación importan para comparar su costo.",
+    "identityNote": "La fuente del SEA identifica a Bredenmaster S.A. en un expediente de 2016. Es una referencia histórica de identidad, no una certificación de permisos o estado actual.",
+    "website": "https://www.bredenmaster.com/",
+    "channel": {
+      "label": "Ver BredenMaster",
+      "url": "https://www.bredenmaster.com/",
+      "note": "Consulta el catálogo y la atención oficial. No damos por disponibles productos o condiciones que dependen de tu cuenta."
+    },
+    "checks": [
+      {
+        "title": "Unidades y peso por pieza",
+        "text": "Guarda piezas por caja y gramaje del producto. Un precio por caja no permite comparar panes de distinto peso ni asumir que una pieza sirve a la misma porción."
+      },
+      {
+        "title": "Estado antes de preparar",
+        "text": "Distingue congelado, precocido o listo según la ficha del producto que compras. El costo operativo puede incluir preparación y merma que no aparecen en el precio de compra."
+      },
+      {
+        "title": "Recepción consistente",
+        "text": "Contrasta unidades recibidas y estado del empaque antes de cerrar la compra. Documenta una diferencia con su pedido y factura para seguir después la solución comercial."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Identidad: fuente corporativa u oficial",
+        "url": "https://infofirma.sea.gob.cl/DocumentosSEA/MostrarDocumento?docId=43%2Ff7%2F48a79442400a677467acd715a34384437dfa",
+        "supports": "identity"
+      },
+      {
+        "label": "Sitio oficial y actividad",
+        "url": "https://www.bredenmaster.com/",
+        "supports": "activity"
+      }
+    ],
+    "reviewedAt": "2026-10-26"
+  }
+]

@@ -7,10 +7,13 @@ import { validateProcessDossierPdf } from "./validate-process-dossier-pdf.mjs";
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const siteOrigin = "https://www.ruka.ai";
 const pageModified = JSON.parse(await readFile(path.join(projectRoot, "src/content/pageModified.json"), "utf8"));
+const suppliers = JSON.parse(await readFile(path.join(projectRoot, "config/supplier-profiles.json"), "utf8"));
 const oneDescription = "Con Ruka One llevamos procesos propios de tu empresa a operar sobre tus sistemas, reglas y datos actuales, sin reemplazar el software que ya usas.";
 const oneServiceDescription = "Ruka One es la forma de trabajar con Ruka sobre procesos específicos de una empresa, llevándolos a operar sobre sus sistemas, reglas y datos actuales.";
 
 const routes = [
+  { path: "/herramientas/margen-markup", title: "Calculadora de margen y markup: no son lo mismo | Ruka", h1: "Un margen de 40% no es sumar 40%.", canonical: `${siteOrigin}/herramientas/margen-markup`, schema: ["Organization", "WebSite", "WebApplication", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" },
+  { path: "/productos/facturacion-electronica", title: "Facturación electrónica y gestión contable en Chile | Ruka", h1: "De la venta a la factura. Con todo en su lugar.", canonical: `${siteOrigin}/productos/facturacion-electronica`, schema: ["Organization", "WebSite", "Service", "WebPage", "BreadcrumbList", "FAQPage"], lastmod: "2026-10-26" },
   {
     path: "/",
     title: "Agentes IA para automatizar procesos operativos | Ruka.ai",
@@ -120,6 +123,28 @@ const routes = [
 ];
 
 const integrationGuides = JSON.parse(await readFile(path.join(projectRoot, "src/content/integrationGuides.json"), "utf8"));
+const purchaseGuides = JSON.parse(await readFile(path.join(projectRoot, "src/content/purchaseGuides.json"), "utf8"));
+const apiGuides = JSON.parse(await readFile(path.join(projectRoot, "src/content/apiGuides.json"), "utf8"));
+const comparisons = JSON.parse(await readFile(path.join(projectRoot, "src/content/comparisons.json"), "utf8"));
+const helpGuides = JSON.parse(await readFile(path.join(projectRoot, "src/content/helpGuides.json"), "utf8"));
+routes.push({ path: "/proveedores", title: "Directorio de proveedores: RUT y canales oficiales | Ruka", h1: "La empresa correcta. Los datos a mano.", canonical: `${siteOrigin}/proveedores`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" });
+for (const profile of suppliers) routes.push({ path: `/proveedores/${profile.slug}`, title: `${profile.name}: RUT, razón social y contacto oficial | Ruka`, h1: profile.name, canonical: `${siteOrigin}/proveedores/${profile.slug}`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: profile.reviewedAt });
+routes.push({ path: "/seguridad", title: "Seguridad y tratamiento de datos en Ruka | Ruka", h1: "Tus datos son parte de tu operación.", canonical: `${siteOrigin}/seguridad`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" });
+routes.push({ path: "/contadores", title: "Ruka para contadores: compras y gestión contable | Ruka", h1: "Menos perseguir documentos. Más tiempo para revisar.", canonical: `${siteOrigin}/contadores`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" });
+routes.push({ path: "/ayuda", title: "Ayuda de Ruka: compras, recepción, pagos y facturación | Ruka", h1: "Encuentra el paso que te falta.", canonical: `${siteOrigin}/ayuda`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" });
+for (const guide of helpGuides) routes.push({ path: `/ayuda/${guide.slug}`, title: `${guide.title} | Ayuda Ruka`, h1: guide.title, canonical: `${siteOrigin}/ayuda/${guide.slug}`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "TechArticle"], lastmod: "2026-10-26" });
+routes.push({ path: "/comparar", title: "Compara software y formas de automatizar tu operación | Ruka", h1: "La mejor opción depende de lo que quieres dejar de hacer.", canonical: `${siteOrigin}/comparar`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" });
+for (const comparison of comparisons) routes.push({ path: `/comparar/${comparison.slug}`, title: comparison.title, h1: comparison.headline, canonical: `${siteOrigin}/comparar/${comparison.slug}`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: comparison.reviewedAt });
+for (const guide of apiGuides) routes.push({ path: `/desarrolladores/guias/${guide.slug}`, title: guide.metaTitle, h1: guide.title, canonical: `${siteOrigin}/desarrolladores/guias/${guide.slug}`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "TechArticle"], lastmod: "2026-10-26" });
+routes.push({ path: "/guias/compras", title: "Guías de compras, documentos y revisión SII | Ruka", h1: "Una compra. Varias decisiones que conviene separar.", canonical: `${siteOrigin}/guias/compras`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" });
+for (const guide of purchaseGuides) routes.push({ path: `/guias/compras/${guide.slug}`, title: guide.metaTitle, h1: guide.title, canonical: `${siteOrigin}/guias/compras/${guide.slug}`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "Article"], lastmod: guide.reviewedAt });
+for (const [routePath, title, h1, tool] of [
+  ["/novedades", "Novedades de Ruka: recursos, guías y mejoras | Ruka", "Lo nuevo. Y para qué te sirve.", false],
+  ["/recursos", "Recursos para compras, costos y automatización | Ruka", "Resuelve una tarea. Sigue con tu operación.", false],
+  ["/desarrolladores", "API de Ruka: compras, documentos y webhooks | Ruka", "Tus datos operativos. En lo que quieras construir.", false],
+  ["/herramientas/costo-unitario", "Calculadora de costo unitario por kilo, litro o unidad | Ruka", "Cajas distintas. Un costo comparable.", true],
+  ["/herramientas/variacion-costos", "Calculadora de variación de costos de compra | Ruka", "¿Subió el precio o cambió el formato?", true],
+]) routes.push({ path: routePath, title, h1, canonical: `${siteOrigin}${routePath}`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", ...(tool ? ["WebApplication"] : [])], lastmod: "2026-10-26" });
 routes.push({ path: "/partners", title: "Automatización para consultoras de restaurantes | Ruka", canonical: `${siteOrigin}/partners`, h1: "Tu experiencia. Más alcance.", schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage", "Service"], ogImage: `${siteOrigin}/partners-og.png`, imageAltIncludes: "Ruka para consultoras de restaurantes", lastmod: "2026-10-15" });
 routes.push({ path: "/procesos/registrar-compras-toteat", title: "Registrar compras en Toteat: guía para tu equipo | Ruka", canonical: `${siteOrigin}/procesos/registrar-compras-toteat`, h1: "Llevar una compra a Toteat sin volver a ingresarla a mano.", schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-15" });
 for (const guide of integrationGuides) {
@@ -625,7 +650,8 @@ const vercel = JSON.parse(await readFile(path.join(projectRoot, "vercel.json"), 
 const rewriteSources = new Set((vercel.rewrites ?? []).map((rewrite) => rewrite.source));
 for (const route of [...routes, ...noIndexRoutes].filter((route) => route.path !== "/")) {
   const hasBlogWildcard = route.path.startsWith("/blog/") && rewriteSources.has("/blog/:slug");
-  assert(rewriteSources.has(route.path) || hasBlogWildcard, `vercel.json: falta rewrite explícito para ${route.path}`);
+  const hasSupplierWildcard = route.path.startsWith("/proveedores/") && rewriteSources.has("/proveedores/:slug");
+  assert(rewriteSources.has(route.path) || hasBlogWildcard || hasSupplierWildcard, `vercel.json: falta rewrite explícito para ${route.path}`);
 }
 assert(
   !(vercel.rewrites ?? []).some((rewrite) => rewrite.source === "/(.*)" || rewrite.source === "/:path*"),

@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import { vi } from "vitest";
 import guides from "@/content/integrationGuides.json";
-import registry from "@/content/capabilities.json";
+import registry from "../../config/capabilities.json";
 import IntegrationGuide from "@/pages/IntegrationGuide";
 import { blogPosts, getRelatedBlogPosts } from "@/content/blog/posts";
 
@@ -20,10 +20,12 @@ describe("discovery content contracts", () => {
       expect(capability?.allowedClaims.length).toBeGreaterThan(0);
       expect(guide.requirements.length).toBeGreaterThanOrEqual(3);
       expect(guide.limits.length).toBeGreaterThanOrEqual(3);
+      for (const key of ["method", "frequency", "stays", "ruka", "failure"] as const) expect(guide.operating[key].length).toBeGreaterThan(40);
       const html = renderToStaticMarkup(<StaticRouter location={`/integraciones/${guide.slug}`}><IntegrationGuide guide={guide} /></StaticRouter>);
       expect(html).toContain(guide.headline);
       expect(html).toContain(guide.direction.replace(/>/g, "&gt;"));
       expect(html).toContain(guide.limits[0]);
+      expect(html).toContain(guide.operating.failure);
       expect(html).toContain('href="/register"');
     }
   });

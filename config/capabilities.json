@@ -2,6 +2,69 @@
   "reviewedAt": "2026-10-14",
   "policy": "La revisión de implementación no prueba disponibilidad universal ni es una prueba E2E contra servicios externos. Publicar solo el alcance acotado y sus requisitos. Una demo no acredita resultados de clientes.",
   "capabilities": [
+    { "id": "public-supplier-directory", "assessment": "public-curated-data", "basis": "Fuentes corporativas u oficiales, separadas del maestro operacional privado.", "allowedClaims": ["Consultar razón social, RUT empresarial y canales publicados con fuentes visibles"], "notEstablished": ["Vigencia o solvencia certificada", "Relación comercial con Ruka", "Cuenta bancaria o datos personales"], "publicSources": ["https://www.ruka.ai/proveedores"] },
+    {
+      "id": "customer-api",
+      "assessment": "implemented-conditional",
+      "owner": "Ruka · Ingeniería",
+      "reviewedAt": "2026-10-26",
+      "sourceVersion": "ruka_v3@9ec95fa97fe64f9ee95119454dddc76395029b3c",
+      "basis": "Diez contratos públicos exportados del catálogo V3; 127 pruebas aisladas de requests, permisos, documentos, ejemplos y webhooks, con factories locales y HTTP externo bloqueado.",
+      "allowedClaims": ["Reportes y documentos de compras sujetos a permisos", "Webhooks firmados con HMAC y reintentos"],
+      "notEstablished": ["API pública de emisión", "Entrega real de eventos a un cliente", "Escritura en cualquier ERP"],
+      "publicSources": ["https://api.rukafactura.cl/api_docs"]
+    },
+    {
+      "id": "billing",
+      "assessment": "implemented-conditional",
+      "owner": "Ruka · Facturación",
+      "reviewedAt": "2026-10-26",
+      "sourceVersion": "ruka_biller release 4505fa70; revisión privada G01–G07",
+      "basis": "Código de Biller y agregados productivos consultados en modo lectura. Separar tipos implementados, habilitados y actividad observada; no se volvió a emitir ni consultar el SII.",
+      "allowedClaims": ["Facturador existente con preparación, revisión, emisión y estados", "Habilitación específica por empresa y tipo documental"],
+      "notEstablished": ["Todos los tipos disponibles para cualquier empresa", "API pública de emisión", "Presentación o pago automático del F29"],
+      "publicSources": ["https://www.ruka.ai/"]
+    },
+    {
+      "id": "purchase-intake",
+      "assessment": "implemented-conditional",
+      "owner": "Ruka · Operación",
+      "reviewedAt": "2026-10-26",
+      "basis": "Síntesis de purchase-registration y sii-purchase-intake; no amplía sus límites.",
+      "allowedClaims": ["Recepción y revisión de información de compras"],
+      "notEstablished": ["XML disponible para toda compra", "Recepción física o acuse implícito"],
+      "publicSources": ["https://www.ruka.ai/productos/registro-de-compras"]
+    },
+    {
+      "id": "local-cost-tools",
+      "assessment": "local-tested",
+      "owner": "Ruka · Sitio",
+      "reviewedAt": "2026-10-26",
+      "basis": "Funciones puras, 23 fixtures de costo y comparación, export CSV y QA responsive. No backend, persistencia ni analytics de inputs.",
+      "allowedClaims": ["Cálculo local de costo comparable", "Comparación de unidades y monedas compatibles"],
+      "notEstablished": ["Costo tributario individual", "Precisión contable ilimitada"],
+      "publicSources": ["https://www.ruka.ai/herramientas/costo-unitario"]
+    },
+    {
+      "id": "purchase-guides",
+      "assessment": "source-reviewed",
+      "owner": "Ruka · Editorial",
+      "reviewedAt": "2026-10-26",
+      "basis": "Siete guías originales que consolidan doce temas. Verificación de fuentes SII, fechas y excepciones, sin certificación profesional atribuida.",
+      "allowedClaims": ["Orientación documentada para revisión de compras"],
+      "notEstablished": ["Asesoría tributaria personalizada", "Garantía de cumplimiento fiscal"],
+      "publicSources": ["https://www.sii.cl/"]
+    },
+    {
+      "id": "comparisons",
+      "assessment": "source-reviewed",
+      "owner": "Ruka · Editorial",
+      "reviewedAt": "2026-10-26",
+      "basis": "Fuentes primarias de ambos proveedores. Capacidades del tercero declaradas, no pruebas de su servicio. Sin copiar pricing.",
+      "allowedClaims": ["Diferencias de alcance comunicadas por los proveedores"],
+      "notEstablished": ["Ausencia universal de funciones no publicadas", "Superioridad de rendimiento o precio"],
+      "publicSources": ["https://www.tupana.ai/facturacion", "https://www.tupana.ai/cobranza", "https://www.tupana.ai/compras", "https://www.tupana.ai/conciliacion-bancaria", "https://www.ruka.ai/"]
+    },
     {
       "id": "sii-purchase-intake",
       "assessment": "implemented-conditional",
