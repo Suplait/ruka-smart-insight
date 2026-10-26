@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown, Download, RotateCcw, ShieldCheck } from "lucide-react";
+import { ResourceNextStep } from "@/components/resources/ResourceNextStep";
 import { ResourceLayout, resourceLinkClass } from "@/components/resources/ResourceLayout";
 import { calculatePurchaseCost, comparePurchaseCosts, costUnits, examplePurchase, purchaseCostCsv, type CostField, type CostUnit, type PurchaseCostInput } from "@/utils/purchaseCost";
 
@@ -46,7 +47,7 @@ export default function PurchaseCostTool({ comparison = false }: { comparison?: 
     document.body.appendChild(link); link.click(); link.remove();
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
-  return <ResourceLayout compact path={path} title={comparison ? "Calculadora de variación de costos de compra | Ruka" : "Calculadora de costo unitario por kilo, litro o unidad | Ruka"} heading={heading} description={description} eyebrow={comparison ? "Comparador de costos" : "Calculadora de costo unitario"}>
+  return <ResourceLayout compact showContact={false} path={path} title={comparison ? "Calculadora de variación de costos de compra | Ruka" : "Calculadora de costo unitario por kilo, litro o unidad | Ruka"} heading={heading} description={description} eyebrow={comparison ? "Comparador de costos" : "Calculadora de costo unitario"}>
     <div className="mb-5 flex flex-wrap items-center justify-between gap-3 text-sm">
       <p className="flex items-center gap-2 text-[#505b70]"><ShieldCheck size={18} aria-hidden="true" /> Cálculo en tu navegador · Sin registro</p>
       <div className="flex flex-wrap gap-x-5"><a href="#resultado" className={`${resourceLinkClass} lg:hidden`}>Ver resultado ↓</a><button type="button" onClick={reset} className={resourceLinkClass}><RotateCcw size={16} aria-hidden="true" /> Restablecer ejemplo</button></div>
@@ -70,6 +71,7 @@ export default function PurchaseCostTool({ comparison = false }: { comparison?: 
         <p className="mt-4 text-xs leading-5 text-[#60687a]">Ejemplo editable. No incluye flete, merma ni otros gastos. No calcula crédito fiscal ni reemplaza una revisión contable.</p>
       </section>
     </div>
+    <ResourceNextStep path={path} />
     <section className="mt-16 grid gap-8 border-t border-[#dce2ed] pt-10 md:grid-cols-[0.8fr_1.2fr]">
       <h2 className="text-2xl font-semibold tracking-tight">La cuenta, sin letra chica.</h2>
       <div className="space-y-5 leading-7 text-[#505b70]"><p><strong className="text-[#171827]">Costo unitario = total neto con descuento ÷ cantidad total.</strong> Multiplicamos envases por contenido y convertimos gramos a kilos o mililitros a litros. No mezclamos peso y volumen.</p>{comparison && <p>Variación = (costo actual − costo anterior) ÷ costo anterior × 100. Compara el mismo insumo, calidad y moneda: un resultado menor no significa por sí solo una mejor compra.</p>}<p>Si marcas IVA incluido, dividimos el precio descontado por (1 + tasa / 100). Si ya ingresaste un precio neto, deja esa opción desmarcada. El descuento se aplica una sola vez sobre el total.</p><p>Los datos de esta calculadora no se guardan ni se envían a un servidor. Al recargar vuelves al ejemplo. Ingresa números sin separadores de miles; puedes usar coma o punto decimal.</p>

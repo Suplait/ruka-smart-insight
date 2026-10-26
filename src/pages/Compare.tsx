@@ -5,7 +5,7 @@ import NotFound from "@/pages/NotFound";
 import comparisons from "@/content/comparisons.json";
 
 export function CompareIndex() {
-  return <ResourceLayout catalog path="/comparar" title="Compara software y formas de automatizar tu operación | Ruka" heading="La mejor opción depende de lo que quieres dejar de hacer." description="Comparativas por tarea, no por cantidad de checks. Revisa alcances, diferencias y preguntas para llevar a una demostración." eyebrow="Elegir con contexto" showContact={false}>
+  return <ResourceLayout catalog path="/comparar" title="Compara software y formas de automatizar tu operación | Ruka" heading="La mejor opción depende de lo que quieres dejar de hacer." description="Comparativas por tarea, no por cantidad de checks. Revisa alcances, diferencias y preguntas para llevar a una demostración." eyebrow="Elegir con contexto" showContact>
     <div className="grid gap-5 lg:grid-cols-3">{[
       { href: "/comparar/ruka-vs-tupana", title: "Ruka y Tupana", text: "Emisión, cobranza, compras y costos. Dónde se encuentran y qué conviene probar en cada uno." },
       { href: "/blog/registro-compras-excel-vs-automatizacion", title: "Planilla o registro automático", text: "Cuándo una planilla alcanza y cuándo mantenerla actualizada ya se convirtió en otro trabajo." },
@@ -19,7 +19,7 @@ export default function Comparison({ comparison: supplied }: { comparison?: type
   const { slug } = useParams();
   const comparison = supplied ?? comparisons.find(item => item.slug === slug);
   if (!comparison) return <NotFound />;
-  return <ResourceLayout catalog path={`/comparar/${comparison.slug}`} title={comparison.title} heading={comparison.headline} description={comparison.description} lead={comparison.intro} eyebrow="Ruka y Tupana · Comparativa por tareas" showContact={false}>
+  return <ResourceLayout catalog path={`/comparar/${comparison.slug}`} title={comparison.title} heading={comparison.headline} description={comparison.description} lead={comparison.intro} eyebrow="Ruka y Tupana · Comparativa por tareas" showContact>
     <p className="mb-10 max-w-3xl text-sm leading-7 text-[#505b70]">Por Camilo Silva · CEO y Founder de Ruka. Revisado el <time dateTime={comparison.reviewedAt}>26 de octubre de 2026</time>. Esta comparación está escrita por Ruka. Las capacidades de Tupana se describen a partir de sus páginas oficiales, no de una prueba de su servicio.</p>
     <section aria-label="Qué alternativa evaluar primero" className="grid gap-8 border-y border-[#dce2ed] py-10 md:grid-cols-2 md:gap-14">{comparison.profiles.map(profile => <article key={profile.title}><h2 className="text-balance text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">{profile.title}</h2><p className="mt-5 leading-8 text-[#505b70]">{profile.text}</p>{profile.external ? <a href={profile.href} className={`${resourceLinkClass} mt-4`}>{profile.label}<ArrowUpRight className="shrink-0" size={18} aria-hidden="true" /></a> : <Link to={profile.href} className={`${resourceLinkClass} mt-4`}>{profile.label}<ArrowRight className="shrink-0" size={18} aria-hidden="true" /></Link>}</article>)}</section>
     <section className="mt-16"><header className="mb-8 max-w-3xl"><h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">La misma palabra puede esconder trabajos distintos.</h2><p className="mt-5 leading-8 text-[#505b70]">“Conciliación” puede ser comparar lo recibido con lo facturado, o un abono con una factura. Pregunta por el resultado concreto, no solo por el nombre del módulo.</p></header>
