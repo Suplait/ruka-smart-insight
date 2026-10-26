@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import NotFound from "@/pages/NotFound";
 import { MarketingSeo } from "@/components/seo/MarketingSeo";
 import { ResourceLayout, resourceLinkClass } from "@/components/resources/ResourceLayout";
+import { GuideNavigation } from "@/components/resources/GuideNavigation";
 import guides from "@/content/purchaseGuides.json";
 import { blogAuthor } from "@/content/blog/author";
 
@@ -16,13 +17,13 @@ type Guide = typeof guides[number];
 const dateLabel = (date: string) => new Intl.DateTimeFormat("es-CL", { dateStyle: "long", timeZone: "UTC" }).format(new Date(`${date}T12:00:00Z`));
 
 export function PurchaseGuidesIndex() {
-  return <ResourceLayout path={purchaseGuidesPath} title={purchaseGuidesTitle} heading={purchaseGuidesHeading} description={purchaseGuidesDescription} eyebrow="Guías de compras">
-    <div className="grid gap-x-14 sm:grid-cols-2">{guides.map(guide => <article key={guide.slug} className="border-t border-[#dce2ed] py-8">
-      <p className="text-sm font-medium text-[#505b70]">{guide.category}</p>
-      <h2 className="mt-3 max-w-lg text-2xl font-semibold leading-tight tracking-tight"><Link to={`${purchaseGuidesPath}/${guide.slug}`} className="rounded hover:text-[#424ec0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{guide.title}</Link></h2>
-      <p className="mt-4 max-w-lg leading-7 text-[#505b70]">{guide.description}</p>
-      <Link to={`${purchaseGuidesPath}/${guide.slug}`} className={`${resourceLinkClass} mt-4`}>Leer guía <ArrowRight size={17} aria-hidden="true" /><span className="sr-only">: {guide.title}</span></Link>
-    </article>)}</div>
+  return <ResourceLayout catalog path={purchaseGuidesPath} title={purchaseGuidesTitle} heading={purchaseGuidesHeading} description={purchaseGuidesDescription} eyebrow="Guías de compras">
+    <nav aria-label="Temas de compras" className="mb-10 flex flex-wrap gap-x-6 gap-y-1 border-y border-[#dce2ed] py-3">{[...new Set(guides.map(guide => guide.category))].map((category, index) => <a key={category} href={`#tema-${index}`} className={`${resourceLinkClass} text-sm`}>{category}</a>)}</nav>
+    <div className="space-y-12">{[...new Set(guides.map(guide => guide.category))].map((category, index) => <section key={category} id={`tema-${index}`} className="scroll-mt-28"><h2 className="mb-5 text-xl font-semibold">{category}</h2><div className="grid gap-5 sm:grid-cols-2">{guides.filter(guide => guide.category === category).map(guide => <article key={guide.slug} className="flex flex-col rounded-xl border border-[#dce2ed] p-6">
+      <h3 className="max-w-lg text-xl font-semibold leading-7 tracking-tight"><Link to={`${purchaseGuidesPath}/${guide.slug}`} className="rounded hover:text-[#424ec0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{guide.title}</Link></h3>
+      <p className="mb-4 mt-3 max-w-lg text-sm leading-7 text-[#505b70]">{guide.description}</p>
+      <div className="mt-auto flex flex-wrap items-center justify-between gap-3"><Link to={`${purchaseGuidesPath}/${guide.slug}`} className={`${resourceLinkClass} text-sm`}>Leer guía <ArrowRight size={17} aria-hidden="true" /><span className="sr-only">: {guide.title}</span></Link><span className="text-xs text-[#60687a]">{guide.sources.length} fuentes para consultar</span></div>
+    </article>)}</div></section>)}</div>
   </ResourceLayout>;
 }
 
@@ -39,7 +40,7 @@ export default function PurchaseGuide({ guide: supplied }: { guide?: Guide }) {
     publisher: { "@id": "https://www.ruka.ai/#organization" }, mainEntityOfPage: { "@id": `${url}#webpage` },
     citation: guide.sources.map(source => source.url),
   };
-  const navigation = <>{guide.sections.map(section => <a key={section.id} href={`#${section.id}`} className="block rounded py-3 text-sm leading-6 text-[#505b70] hover:text-[#424ec0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{section.title}</a>)}<a href="#fuentes" className="block rounded py-3 text-sm font-semibold text-[#424ec0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">Fuentes y alcance</a></>;
+  const navigation = [...guide.sections.map(section => ({ id: section.id, title: section.title })), { id: "fuentes", title: "Fuentes y alcance" }];
 
   return <div className="min-h-screen bg-white text-[#171827]">
     <MarketingSeo path={path} title={guide.metaTitle} description={guide.description} name={guide.title} primaryEntity={article} />
@@ -47,18 +48,17 @@ export default function PurchaseGuide({ guide: supplied }: { guide?: Guide }) {
     <Navbar />
     <main id="contenido" className="mx-auto max-w-6xl px-5 pb-24 pt-28 sm:px-8 sm:pt-36">
       <Link to={purchaseGuidesPath} className={`${resourceLinkClass} mb-8 text-sm`}>Guías de compras <span aria-hidden="true">/</span> {guide.category}</Link>
-      <header className="max-w-4xl">
-        <h1 className="text-balance text-[clamp(2.2rem,4.6vw,3.9rem)] font-semibold leading-[1.1] tracking-[-0.04em]">{guide.title}</h1>
-        <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm leading-6 text-[#505b70]"><a href={blogAuthor.url} rel="author" className="font-semibold underline underline-offset-4">Camilo Silva · CEO y Founder de Ruka</a><span>Revisado el <time dateTime={guide.reviewedAt}>{dateLabel(guide.reviewedAt)}</time></span></div>
-        <p className="mt-8 border-l-4 border-primary bg-[#f4f5ff] p-6 text-lg leading-8 sm:text-xl sm:leading-9">{guide.answer}</p>
+      <header className="max-w-[720px] lg:ml-[280px]">
+        <h1 className="text-balance text-[clamp(2rem,3.5vw,2.75rem)] font-semibold leading-[1.15] tracking-[-0.035em]">{guide.title}</h1>
+        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs leading-6 text-[#505b70]"><a href={blogAuthor.url} rel="author" className="font-semibold underline underline-offset-4">Camilo Silva · CEO y Founder de Ruka</a><span>Revisado el <time dateTime={guide.reviewedAt}>{dateLabel(guide.reviewedAt)}</time></span></div>
+        <div className="mt-6 rounded-xl border border-[#dce2ed] bg-[#f8f9fc] p-5 sm:p-6"><p className="mb-3 text-sm font-semibold text-[#424ec0]">La respuesta corta</p><p className="text-base leading-8 text-[#444e61]">{guide.answer}</p><a href="#fuentes" className={`${resourceLinkClass} mt-3 text-sm`}>Consultar fuentes y alcance <ArrowRight size={16} aria-hidden="true" /></a></div>
       </header>
-      <div className="mt-12 grid gap-10 lg:grid-cols-[220px_minmax(0,720px)] lg:gap-16">
-        <aside><nav aria-label="En esta guía" className="sticky top-28 hidden border-t border-[#dce2ed] pt-4 lg:block"><p className="mb-3 text-sm font-semibold">En esta guía</p>{navigation}</nav><details className="rounded-lg border border-[#dce2ed] px-5 lg:hidden"><summary className="cursor-pointer py-4 font-semibold">En esta guía</summary><nav aria-label="Contenido de la guía" className="border-t border-[#dce2ed] py-2">{navigation}</nav></details></aside>
+      <div className="mt-9 grid gap-7 lg:grid-cols-[232px_minmax(0,720px)] lg:gap-12">
+        <GuideNavigation items={navigation} />
         <article className="min-w-0">
-          {guide.sections.map((section, index) => <section key={section.id} id={section.id} className="scroll-mt-28 border-t border-[#dce2ed] pb-10 pt-7">
-            <p aria-hidden="true" className="mb-3 text-sm font-semibold text-[#424ec0]">0{index + 1}</p>
-            <h2 className="text-balance text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">{section.title}</h2>
-            <div className="mt-5 space-y-5 text-base leading-8 text-[#444e61] sm:text-lg">{section.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div>
+          {guide.sections.map(section => <section key={section.id} id={section.id} className="scroll-mt-28 pb-10">
+            <h2 className="text-balance text-2xl font-semibold leading-tight tracking-tight">{section.title}</h2>
+            <div className="mt-5 space-y-5 text-base leading-8 text-[#444e61]">{section.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div>
           </section>)}
           <section id="fuentes" className="scroll-mt-28 border-t border-[#dce2ed] pt-8">
             <h2 className="text-2xl font-semibold tracking-tight">Fuentes y alcance</h2>

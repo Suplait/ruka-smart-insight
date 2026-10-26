@@ -79,7 +79,7 @@
     },
     {
       "path": "src/pages/Compare.tsx",
-      "sha256": "0413acf88e64b4d9d39c1e6bbf556115e83105af446ee1c4091e00bbd23876bb"
+      "sha256": "4aed3b02b69501e9c2bac72a6d4688f884d8840e55efc1694c6914ad9aa19e84"
     },
     {
       "path": "src/pages/Developers.tsx",
@@ -91,7 +91,7 @@
     },
     {
       "path": "src/pages/Help.tsx",
-      "sha256": "3419994a705fb8ae10f10e83548993e2226a68dc3903a4326e38aafdab1892d3"
+      "sha256": "71da776f1b2b07ccade83d24d41b3244c263d76399b94a19463286e7e3f68c1c"
     },
     {
       "path": "src/pages/MarginTool.tsx",
@@ -103,7 +103,7 @@
     },
     {
       "path": "src/pages/PurchaseGuides.tsx",
-      "sha256": "f782161b0040a4a7c55b194c9e6b08aad148851f1b39ea40e8ce74923a0b6042"
+      "sha256": "aa4dc1331088b092d5fc9699a403d69e515747c9225cbceb157479da973d4b4f"
     },
     {
       "path": "src/pages/Resources.tsx",
