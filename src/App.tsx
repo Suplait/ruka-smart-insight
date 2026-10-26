@@ -39,6 +39,7 @@ import IntegrationGuide from './pages/IntegrationGuide';
 import PurchaseProcessDossier from './pages/PurchaseProcessDossier';
 import Partners from './pages/Partners';
 import ReconciliationExample from './pages/ReconciliationExample';
+import { ResourceLoading } from './components/resources/ResourceLoading';
 const Resources = React.lazy(() => import('./pages/Resources'));
 const Updates = React.lazy(() => import('./pages/Updates'));
 const SuppliersIndex = React.lazy(() => import('./pages/Suppliers').then(module => ({ default: module.SuppliersIndex })));
@@ -58,7 +59,7 @@ const CompareIndex = React.lazy(() => import('./pages/Compare').then(module => (
 const PurchaseGuidesIndex = React.lazy(() => import('./pages/PurchaseGuides').then(module => ({ default: module.PurchaseGuidesIndex })));
 
 function ResourceRoute({ children }: { children: React.ReactNode }) {
-  return <React.Suspense fallback={<main className="mx-auto max-w-7xl px-6 py-32" aria-busy="true"><p role="status">Cargando recurso…</p></main>}>{children}</React.Suspense>;
+  return <React.Suspense fallback={<ResourceLoading />}>{children}</React.Suspense>;
 }
 
 const queryClient = new QueryClient();

@@ -20,3 +20,27 @@ it("keeps code selectable and explains a clipboard failure", async () => {
   expect(screen.getByRole("status").textContent).toContain("manualmente");
   expect(screen.getByLabelText("Código: cURL").textContent).toBe("curl example.test");
 });
+
+it("resets copy feedback when the displayed example changes", async () => {
+  const user = userEvent.setup();
+  const copy = vi.spyOn(navigator.clipboard, "writeText").mockResolvedValue();
+  const view = render(<CodeExample code="curl first.test" label="cURL" />);
+  await user.click(screen.getByRole("button", { name: "Copiar código" }));
+  expect(screen.getByRole("button", { name: "Copiado" })).toBeTruthy();
+  view.rerender(<CodeExample code="curl second.test" label="cURL" />);
+  expect(screen.getByRole("status").textContent).toBe("");
+  await user.click(screen.getByRole("button", { name: "Copiar código" }));
+  expect(copy).toHaveBeenLastCalledWith("curl second.test");
+});
+
+it("does not apply a late clipboard response to a different example", async () => {
+  const user = userEvent.setup();
+  let resolveCopy!: () => void;
+  vi.spyOn(navigator.clipboard, "writeText").mockImplementation(() => new Promise<void>(resolve => { resolveCopy = resolve; }));
+  const view = render(<CodeExample code="curl first.test" label="cURL" />);
+  await user.click(screen.getByRole("button", { name: "Copiar código" }));
+  view.rerender(<CodeExample code="curl second.test" label="cURL" />);
+  resolveCopy();
+  expect(screen.getByRole("status").textContent).toBe("");
+  expect(screen.getByRole("button", { name: "Copiar código" })).toBeTruthy();
+});
