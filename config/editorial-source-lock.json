@@ -72,7 +72,7 @@
     },
     {
       "path": "src/pages/Accountants.tsx",
-      "sha256": "c3aace065e72eed25838346d948ab49a1bc7fcafef8f51d421b76a2a1e433a4e"
+      "sha256": "c75f41df3b94ee7085f136035784126393ba134ff2f331b76d9910c727d26135"
     },
     {
       "path": "src/pages/ApiGuide.tsx",
@@ -128,7 +128,7 @@
     },
     {
       "path": "src/components/acquisition/IndustryWorkflow.tsx",
-      "sha256": "25f0895740ec3525592e18b8dffe1b61362dffe159b897354f64ef550c8e3693"
+      "sha256": "75cb6177bb3cf5f6c6a4ddacff376baf52d8166ebfe87dd7dd8f97bf5dd8183c"
     },
     {
       "path": "public/api/examples/ruka-purchases.mjs",
