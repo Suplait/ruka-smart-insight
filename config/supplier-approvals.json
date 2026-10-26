@@ -1,0 +1,162 @@
+[
+  {
+    "slug": "icb",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "27786a9d30c845ab3984ac779f71c6e6b543067534e834cc2af1e035cf7a0e34"
+  },
+  {
+    "slug": "icb-food-service",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "758ab68450b7fc202dcb7a8983e3ec72cac7cfb311b06f2cf0c72b66179fca61"
+  },
+  {
+    "slug": "bidfood-chile",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "4653e4d950898bc5d8ad054bc69e7649c58249afad4b3fd4e4d4dcafaf847fd2"
+  },
+  {
+    "slug": "agrosuper",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "cafc4ce1a1bd03981418795e8f130d84990096fbb3a66230b4865447cc5f1078"
+  },
+  {
+    "slug": "colun",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "ff41fffef80c6e319d426ae64e60624a8135c65ada1aa0b933eda270f291ac20"
+  },
+  {
+    "slug": "nestle-chile",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "13adde13a29f73fb3798d1dc2722c52585c0cce306194d14a50804a1f522071d"
+  },
+  {
+    "slug": "puratos",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "a157a946cf0bc3b0ccc35fe14a808d7a83365e7149c34bb2db62ac93634e8655"
+  },
+  {
+    "slug": "gourmet",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "8719eedb0cf506a81f7fe1303b080b0cc623511c5c05c78586b160ede0eea97b"
+  },
+  {
+    "slug": "dimerc",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "a753074b918705305857b8504b5c05cd081788b7a3cac41863d87930fbcfa49c"
+  },
+  {
+    "slug": "soprole-operativa",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "82ff48ee79dc336b3b6ff89a206a614e4dce59691eded3077c4abc98192f3ce9"
+  },
+  {
+    "slug": "pf-alimentos",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "f5df0cdaea494ecd57575a98ca694650afb87e001e1c71613f7364873a6c2e5b"
+  },
+  {
+    "slug": "empresas-carozzi",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "a6e00b0ce474cea4e5e80cff52955c2419f70ce043d2dad281964d1dfb326a54"
+  },
+  {
+    "slug": "tresmontes-lucchetti",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "61572125850a14d45284857c4d942b5df6dee919999f0ed087618045f39ae517"
+  },
+  {
+    "slug": "sodimac",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "83d34f9ad04865fae986868c2535ddfcd525602ccbc9ff514fe2654d8721fb5e"
+  },
+  {
+    "slug": "abastible",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "c6411beb6d0172b6d17580d07635e31c4bbe968e7a859e0f8508024f2cea0f7a"
+  },
+  {
+    "slug": "lipigas",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "76bd72008882d9609f66b2e3ca44a6a826c272602a872293c650d64176c04113"
+  },
+  {
+    "slug": "gasco-glp",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "758422f0801a0857346dc2783636bccc3831acd0abd9284ec4a07bf578d0a7f8"
+  },
+  {
+    "slug": "transbank",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "4ba49df63cdd2166260e593799fe82a5b3537fb5a17045df290502074ceed07f"
+  },
+  {
+    "slug": "cambiaso",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "328b09465d53aebb5e4fac71f96be26b498b0202824674894353bae718f9eaf2"
+  },
+  {
+    "slug": "bredenmaster",
+    "status": "approved",
+    "entityType": "legal",
+    "basis": "public-primary-sources",
+    "reviewedBy": "Revisión editorial asistida: fuente primaria de identidad y canal corporativo, sin certificación de vigencia",
+    "sha256": "ef631326da1a58a52a4f80e5a892ed034be958055f9d837b7433edfd45d14325"
+  }
+]

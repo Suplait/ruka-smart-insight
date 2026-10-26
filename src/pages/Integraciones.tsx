@@ -143,6 +143,7 @@ export default function Integraciones() {
               <p className="text-sm font-semibold text-primary">Cómo conectamos</p>
               <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.04em]">La integración empieza por el proceso.</h2>
               <p className="mt-5 text-lg leading-8 text-[#5d6578]">No conectamos herramientas por acumular logos. Definimos qué información necesita Ruka y qué debe hacer con ella.</p>
+              <Link to="/desarrolladores" className="mt-5 inline-flex min-h-11 items-center gap-2 rounded font-semibold text-[#424ec0] underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">¿Construyes tu propia integración? Explora la API <ArrowRight size={17} className="shrink-0" aria-hidden="true" /></Link>
             </div>
             <ol className="grid gap-4 sm:grid-cols-3">
               {["Muéstranos el trabajo manual", "Revisamos fuentes y accesos", "Conectamos el flujo necesario"].map((step, index) => (

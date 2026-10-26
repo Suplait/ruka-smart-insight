@@ -1,3 +1,4 @@
+import { IndustryWorkflow } from "@/components/acquisition/IndustryWorkflow";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, DatabaseZap, ReceiptText, RefreshCcw, ScanSearch } from "lucide-react";
@@ -140,6 +141,8 @@ export default function Retail() {
                     { name: "Sistema propio", icon: "system" },
                   ]}
                 />
+
+                <IndustryWorkflow industry="retail" />
 
                 <AcquisitionSystemNote
                   title="La información termina en los mismos sistemas."

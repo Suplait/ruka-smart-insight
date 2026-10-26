@@ -20,6 +20,7 @@ const productLinks = [
   { label: "Cuentas por pagar", href: "/productos/cuentas-por-pagar" },
   { label: "Costos y margen", href: "/productos/panel-control" },
   { label: "Stock e inventario", href: "/productos/stock" },
+  { label: "Facturación electrónica", href: "/productos/facturacion-electronica" },
   {
     label: "Ruka One",
     href: "/one",

@@ -1,0 +1,40 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowUpRight, RotateCcw } from "lucide-react";
+import { ResourceLayout, resourceLinkClass } from "@/components/resources/ResourceLayout";
+import { marginMetrics, priceForMargin } from "@/utils/margin";
+
+export const marginPath = "/herramientas/margen-markup";
+export const marginTitle = "Calculadora de margen y markup: no son lo mismo | Ruka";
+export const marginDescription = "Calcula margen sobre venta y markup sobre costo. Compara ambos porcentajes y estima un precio objetivo con importes netos, sin registro ni envío de datos.";
+const control = "mt-2 min-h-12 w-full rounded-lg border border-[#cbd2df] bg-white px-4 text-base outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 aria-[invalid=true]:border-red-600";
+const number = (value: number) => new Intl.NumberFormat("es-CL", { maximumFractionDigits: 2 }).format(value);
+
+export default function MarginTool() {
+  const [cost, setCost] = useState("6000");
+  const [price, setPrice] = useState("10000");
+  const [target, setTarget] = useState("40");
+  const [touched, setTouched] = useState(false);
+  const [targetTouched, setTargetTouched] = useState(false);
+  const metrics = marginMetrics(cost, price);
+  const targetPrice = priceForMargin(cost, target);
+  const hint = "Mayor que 0, hasta un billón, máximo 6 decimales. Sin separador de miles.";
+  function reset() { setCost("6000"); setPrice("10000"); setTarget("40"); setTouched(false); setTargetTouched(false); }
+  return <ResourceLayout compact showContact={false} path={marginPath} title={marginTitle} description={marginDescription} heading="Un margen de 40% no es sumar 40%." eyebrow="Calculadora de margen y markup" lead="La diferencia está en la base: el margen se calcula sobre la venta; el markup, sobre el costo. Cambia el ejemplo y mira ambos.">
+    <div className="mb-5 flex flex-wrap items-center justify-between gap-3 text-sm"><p className="text-[#505b70]">Cálculo local · Sin registro</p><button onClick={reset} className={resourceLinkClass}><RotateCcw size={16} aria-hidden="true" /> Restablecer ejemplo</button></div>
+    <div className="grid items-start gap-6 lg:grid-cols-[.85fr_1.15fr]">
+      <fieldset className="rounded-2xl border border-[#dce2ed] p-6 sm:p-8"><legend className="px-2 text-xl font-semibold">Compara sobre la misma base</legend><p className="mb-6 text-sm leading-6 text-[#505b70]">Usa la misma moneda y unidad. Ingresa costo y venta <strong>sin IVA</strong>. No mezclamos un costo por caja con una venta por unidad.</p>
+        <div className="space-y-6">{([
+          ["margin-cost", "Costo neto por unidad", cost, setCost, metrics.ok === false && metrics.costInvalid],
+          ["margin-price", "Precio de venta neto por unidad", price, setPrice, metrics.ok === false && metrics.priceInvalid],
+        ] as const).map(([id, label, value, setter, invalid]) => <div key={id}><label htmlFor={id} className="font-medium">{label}</label><input id={id} type="text" inputMode="decimal" autoComplete="off" value={value} onChange={event => setter(event.target.value)} onBlur={() => setTouched(true)} className={control} aria-invalid={touched && invalid} aria-describedby={`${id}-hint`} /><p id={`${id}-hint`} className={`mt-2 text-xs leading-5 ${touched && invalid ? "text-red-700" : "text-[#60687a]"}`}>{touched && invalid ? "Revisa el importe. " : ""}{hint}</p></div>)}</div>
+        <Link to="/herramientas/costo-unitario" className={`${resourceLinkClass} mt-6 text-sm`}>Primero calcular mi costo unitario <ArrowUpRight size={16} aria-hidden="true" /></Link>
+      </fieldset>
+      <section aria-label="Resultado del margen y markup" className="rounded-2xl bg-[#eef0ff] p-6 sm:p-8"><div role="status" aria-live="polite" aria-atomic="true">
+        {metrics.ok ? <><p className="text-sm font-medium text-[#424ec0]">Mismo importe. Dos porcentajes distintos.</p><dl className="mt-6 grid gap-6 sm:grid-cols-2"><div><dt className="text-sm">Margen sobre venta</dt><dd className="mt-2 break-all text-5xl font-semibold tracking-tight tabular-nums">{number(metrics.margin)}<span className="text-2xl">%</span></dd><dd className="mt-3 text-sm leading-6 text-[#505b70]">{metrics.margin < 0 ? `Por cada 100 vendidos, pierdes ${number(Math.abs(metrics.margin))} frente al costo ingresado.` : `De cada 100 vendidos, ${number(metrics.margin)} quedan después del costo ingresado.`}</dd></div><div className="border-t border-[#ccd2ef] pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0"><dt className="text-sm">Markup sobre costo</dt><dd className="mt-2 break-all text-4xl font-semibold tracking-tight tabular-nums">{number(metrics.markup)}<span className="text-2xl">%</span></dd><dd className="mt-3 text-sm leading-6 text-[#505b70]">El precio está {number(Math.abs(metrics.markup))}% {metrics.markup < 0 ? "por debajo" : "por encima"} del costo.</dd></div></dl><div className="mt-7 border-t border-[#ccd2ef] pt-5"><p className="text-sm">Venta menos costo por unidad</p><p className="mt-2 break-all text-2xl font-semibold tabular-nums">{number(metrics.contribution)}</p><p className="mt-2 text-sm leading-6 text-[#505b70]">{metrics.contribution < 0 ? "Estás vendiendo por debajo del costo ingresado. " : ""}No es utilidad neta: faltan los gastos e impuestos que no hayas incluido.</p></div></> : <p className="py-8 leading-7">Ingresa un costo y un precio válidos. No mostramos un porcentaje con una base cero o incompleta.</p>}
+      </div></section>
+    </div>
+    <section className="mt-10 grid gap-7 border-y border-[#dce2ed] py-8 md:grid-cols-2"><div><h2 className="text-2xl font-semibold tracking-tight">¿Qué precio necesito para mi margen?</h2><p className="mt-3 max-w-lg leading-7 text-[#505b70]">Usamos el mismo costo anterior. Este es un cálculo orientativo, no una recomendación de precio: revisa demanda, merma, comisiones y otros gastos.</p></div><div><label htmlFor="target-margin" className="font-medium">Margen objetivo sobre venta (%)</label><input id="target-margin" onBlur={() => setTargetTouched(true)} aria-invalid={targetTouched && targetPrice === null} value={target} onChange={e => setTarget(e.target.value)} type="text" inputMode="decimal" className={control} aria-describedby="target-margin-hint" /><p id="target-margin-hint" className="mt-2 text-xs leading-5 text-[#60687a]">Desde 0 y menor que 100. Un margen de 100% no tiene precio finito con costo positivo.</p><p role="status" className="mt-5 break-words text-xl font-semibold">{targetPrice === null ? "Revisa el costo y el margen objetivo." : `Precio neto orientativo: ${number(targetPrice)}`}</p></div></section>
+    <section className="mt-10 grid gap-8 lg:grid-cols-2"><div><h2 className="text-2xl font-semibold">Las fórmulas, a la vista.</h2><dl className="mt-5 space-y-5 leading-7"><div><dt className="font-semibold">Margen (%)</dt><dd>(Precio − costo) ÷ precio × 100</dd></div><div><dt className="font-semibold">Markup (%)</dt><dd>(Precio − costo) ÷ costo × 100</dd></div><div><dt className="font-semibold">Precio con margen objetivo</dt><dd>Costo ÷ (1 − margen ÷ 100)</dd></div></dl></div><div><h2 className="text-2xl font-semibold">Un ejemplo que evita confusiones.</h2><p className="mt-5 leading-7 text-[#505b70]">Con costo 6.000 y venta 10.000, quedan 4.000: margen 40% y markup 66,67%. Si solo sumas 40% al costo, vendes a 8.400 y el margen baja a 28,57%.</p><p className="mt-4 leading-7 text-[#505b70]">Para un plato, incluye cantidades y rendimientos consistentes. Esta calculadora no construye una receta ni convierte peso en volumen. Los resultados se redondean solo al mostrarlos.</p><Link to="/productos/panel-control" className={`${resourceLinkClass} mt-5`}>Mantener costos y márgenes en Ruka <ArrowUpRight size={18} aria-hidden="true" /></Link></div></section>
+  </ResourceLayout>;
+}

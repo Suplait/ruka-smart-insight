@@ -143,6 +143,7 @@ export default function Partners() {
             </ol>
             <div className="mt-10 grid gap-6 border-t border-[#cbd2eb] pt-7 md:grid-cols-2"><p className="text-sm leading-7 text-[#505b70]"><strong className="text-[#171827]">El insumo es el punto de unión.</strong> Distintos nombres y formatos pueden relacionarse con un insumo maestro. Así puedes comparar costos por kilo, litro o unidad, no solo totales de facturas.</p><p className="text-sm leading-7 text-[#505b70]"><strong className="text-[#171827]">Los accesos se acuerdan por cliente.</strong> Definimos los datos, permisos y actualización que necesita tu análisis. La API no da acceso automático a otras cuentas.</p></div>
             <a href="#colaboracion" className={`${link} mt-6`}>Exploremos tu forma de trabajar <ArrowRight size={17} aria-hidden="true" /></a>
+            <Link to="/desarrolladores" className={`${link} mt-3 block w-fit`}>Ver la API y sus permisos <ArrowRight size={17} aria-hidden="true" /></Link>
           </div>
         </section>
 

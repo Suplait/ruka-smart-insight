@@ -1,3 +1,4 @@
+import { IndustryWorkflow } from "@/components/acquisition/IndustryWorkflow";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, DatabaseZap, ReceiptText, RefreshCcw, Tags } from "lucide-react";
@@ -121,6 +122,8 @@ export default function Hoteles() {
                     },
                   ]}
                 />
+
+                <IndustryWorkflow industry="hoteles" />
 
                 <AcquisitionSystemNote
                   title="Tu PMS, ERP y sistema contable siguen siendo los mismos."

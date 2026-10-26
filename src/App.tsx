@@ -39,6 +39,27 @@ import IntegrationGuide from './pages/IntegrationGuide';
 import PurchaseProcessDossier from './pages/PurchaseProcessDossier';
 import Partners from './pages/Partners';
 import ReconciliationExample from './pages/ReconciliationExample';
+const Resources = React.lazy(() => import('./pages/Resources'));
+const Updates = React.lazy(() => import('./pages/Updates'));
+const SuppliersIndex = React.lazy(() => import('./pages/Suppliers').then(module => ({ default: module.SuppliersIndex })));
+const SupplierProfile = React.lazy(() => import('./pages/Suppliers'));
+const FacturacionElectronica = React.lazy(() => import('./pages/FacturacionElectronica'));
+const MarginTool = React.lazy(() => import('./pages/MarginTool'));
+const HelpGuide = React.lazy(() => import('./pages/Help'));
+const Security = React.lazy(() => import('./pages/Security'));
+const Accountants = React.lazy(() => import('./pages/Accountants'));
+const HelpIndex = React.lazy(() => import('./pages/Help').then(module => ({ default: module.HelpIndex })));
+const Developers = React.lazy(() => import('./pages/Developers'));
+const PurchaseCostTool = React.lazy(() => import('./pages/PurchaseCostTool'));
+const PurchaseGuide = React.lazy(() => import('./pages/PurchaseGuides'));
+const ApiGuide = React.lazy(() => import('./pages/ApiGuide'));
+const Comparison = React.lazy(() => import('./pages/Compare'));
+const CompareIndex = React.lazy(() => import('./pages/Compare').then(module => ({ default: module.CompareIndex })));
+const PurchaseGuidesIndex = React.lazy(() => import('./pages/PurchaseGuides').then(module => ({ default: module.PurchaseGuidesIndex })));
+
+function ResourceRoute({ children }: { children: React.ReactNode }) {
+  return <React.Suspense fallback={<main className="mx-auto max-w-7xl px-6 py-32" aria-busy="true"><p role="status">Cargando recurso…</p></main>}>{children}</React.Suspense>;
+}
 
 const queryClient = new QueryClient();
 
@@ -116,6 +137,8 @@ function App() {
           <InternalRouteSeo />
           <Routes>
             <Route path="/" element={<LandingV2 />} />
+            <Route path="/proveedores" element={<ResourceRoute><SuppliersIndex /></ResourceRoute>} />
+            <Route path="/proveedores/:slug" element={<ResourceRoute><SupplierProfile /></ResourceRoute>} />
             <Route path="/v2" element={<Navigate to="/" replace />} />
             <Route path="/home-anterior" element={<Index />} />
             <Route path="/restaurantes" element={<Restaurantes />} />
@@ -127,11 +150,27 @@ function App() {
             <Route path="/productos/registro-de-compras" element={<RegistroDeCompras />} />
             <Route path="/productos/conciliacion-automatica" element={<ConciliacionAutomatica />} />
             <Route path="/productos/stock" element={<Stock />} />
+            <Route path="/productos/facturacion-electronica" element={<ResourceRoute><FacturacionElectronica /></ResourceRoute>} />
             <Route path="/precios" element={<Navigate to="/#precios" replace />} />
             <Route path="/integraciones" element={<Integraciones />} />
             <Route path="/integraciones/:slug" element={<IntegrationGuide />} />
             <Route path="/procesos/registrar-compras-toteat" element={<PurchaseProcessDossier />} />
             <Route path="/partners" element={<Partners />} />
+            <Route path="/recursos" element={<ResourceRoute><Resources /></ResourceRoute>} />
+            <Route path="/novedades" element={<ResourceRoute><Updates /></ResourceRoute>} />
+            <Route path="/guias/compras" element={<ResourceRoute><PurchaseGuidesIndex /></ResourceRoute>} />
+            <Route path="/guias/compras/:slug" element={<ResourceRoute><PurchaseGuide /></ResourceRoute>} />
+            <Route path="/desarrolladores" element={<ResourceRoute><Developers /></ResourceRoute>} />
+            <Route path="/desarrolladores/guias/:slug" element={<ResourceRoute><ApiGuide /></ResourceRoute>} />
+            <Route path="/comparar" element={<ResourceRoute><CompareIndex /></ResourceRoute>} />
+            <Route path="/herramientas/margen-markup" element={<ResourceRoute><MarginTool /></ResourceRoute>} />
+            <Route path="/ayuda" element={<ResourceRoute><HelpIndex /></ResourceRoute>} />
+            <Route path="/seguridad" element={<ResourceRoute><Security /></ResourceRoute>} />
+            <Route path="/contadores" element={<ResourceRoute><Accountants /></ResourceRoute>} />
+            <Route path="/ayuda/:slug" element={<ResourceRoute><HelpGuide /></ResourceRoute>} />
+            <Route path="/comparar/:slug" element={<ResourceRoute><Comparison /></ResourceRoute>} />
+            <Route path="/herramientas/costo-unitario" element={<ResourceRoute><PurchaseCostTool /></ResourceRoute>} />
+            <Route path="/herramientas/variacion-costos" element={<ResourceRoute><PurchaseCostTool comparison /></ResourceRoute>} />
             <Route path="/herramientas/conciliar-factura-orden-recepcion" element={<ReconciliationExample />} />
             <Route path="/register" element={<Register />} />
             <Route path="/about" element={<AboutUs />} />

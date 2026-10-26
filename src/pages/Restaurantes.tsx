@@ -1,3 +1,4 @@
+import { IndustryWorkflow } from "@/components/acquisition/IndustryWorkflow";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Calculator, DatabaseZap, ReceiptText, RefreshCcw } from "lucide-react";
@@ -145,6 +146,8 @@ export default function Restaurantes() {
                     { name: "Excel", icon: "excel" },
                   ]}
                 />
+
+                <IndustryWorkflow industry="restaurantes" />
 
                 <AcquisitionSystemNote
                   title="Tu POS y tu ERP no cambian."

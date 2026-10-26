@@ -1,6 +1,6 @@
 # Capacidades: evidencia antes que contenido
 
-La fuente consultable es `src/content/capabilities.json`. Las fichas de `src/content/integrationGuides.json` referencian una capacidad mediante `capabilityId`.
+La fuente de revisión, solo para build/tests, es `config/capabilities.json`. No importarla desde componentes ni exportarla al sitio. Las fichas de `src/content/integrationGuides.json` referencian una capacidad mediante `capabilityId`.
 
 ## Qué significa la revisión
 

@@ -1,6 +1,13 @@
 [
   {
     "slug": "sii",
+    "operating": {
+      "method": "Consulta de documentos por empresa y período, con autorización y detalle sujeto a disponibilidad.",
+      "frequency": "Consultas programadas según el flujo habilitado. El momento en que un documento queda disponible depende también del SII; no es una sincronización instantánea.",
+      "stays": "El SII conserva los registros y eventos tributarios. Tu equipo mantiene la responsabilidad de revisar lo que corresponde informar.",
+      "ruka": "Ruka lleva el documento y su detalle disponible a la revisión de compras, las equivalencias y el siguiente paso operativo.",
+      "failure": "Si falta el XML, una autorización o el servicio no responde, revisa el estado y recupera el respaldo antes de dar la compra por completa. Que el total aparezca no significa que estén sus líneas."
+    },
     "name": "SII",
     "logo": "/integrations/sii.jpg",
     "title": "Integra las compras del SII con tu operación | Ruka",
@@ -9,7 +16,7 @@
     "lead": "La compra ya está informada. No debería obligarte a volver a ingresarla para poder trabajar con ella.",
     "direction": "SII → Ruka",
     "scope": "Consulta e incorporación de documentos de compra, con acceso autorizado.",
-    "reviewedAt": "2026-10-15",
+    "reviewedAt": "2026-10-26",
     "evidenceLevel": "implementation-reviewed",
     "capabilityId": "sii-purchase-intake",
     "input": "Documentos tributarios de compra y detalle disponible en XML.",
@@ -80,6 +87,13 @@
   },
   {
     "slug": "toteat",
+    "operating": {
+      "method": "Envío al destino configurado, después de relacionar producto, unidad y local.",
+      "frequency": "El envío depende de la acción y las reglas habilitadas para tu operación. No hay un intervalo universal ni sincronización de todos los módulos.",
+      "stays": "Tu equipo sigue trabajando en Toteat. Sus ventas, locales y códigos de productos no se reemplazan por activar este flujo.",
+      "ruka": "Ruka prepara las líneas de compra y sus equivalencias, envía al local definido y permite revisar el resultado.",
+      "failure": "Si Toteat no responde o acepta solo parte de la compra, revisa qué se registró antes de repetir. Corrige el dato o acceso pendiente sin tratar todo el documento como exitoso."
+    },
     "name": "Toteat",
     "logo": "/integrations/toteat.svg",
     "title": "Compras de Ruka a Toteat: alcance y requisitos | Ruka",
@@ -88,7 +102,7 @@
     "lead": "El salto entre la factura del proveedor y Toteat no debería depender de volver a escribir cada producto.",
     "direction": "Ruka → Toteat",
     "scope": "Envío de líneas de compra a Toteat en operaciones con este flujo habilitado.",
-    "reviewedAt": "2026-10-14",
+    "reviewedAt": "2026-10-26",
     "evidenceLevel": "implementation-reviewed",
     "capabilityId": "toteat-purchase-posting",
     "input": "Compra revisada, productos relacionados y destino por local.",
@@ -155,6 +169,13 @@
   },
   {
     "slug": "nubox",
+    "operating": {
+      "method": "Acceso autorizado a los PDF disponibles y lectura del respaldo en Ruka. No escritura automática de asientos.",
+      "frequency": "El flujo programado de descarga contempla una consulta diaria en cuentas habilitadas. Confirma su activación y ventana de documentos para tu empresa; no es tiempo real.",
+      "stays": "Nubox sigue siendo el sistema donde tu equipo trabaja con su información contable. Incorporar un PDF a Ruka no modifica por sí solo ese registro.",
+      "ruka": "Ruka incorpora el respaldo a la lectura de compras, conserva la revisión y prepara la información necesaria para tu operación.",
+      "failure": "Si vence el acceso o falla una descarga, se debe resolver la autorización o recuperar el archivo. Un PDF inválido no equivale a una compra lista; revisa los datos antes de continuar."
+    },
     "name": "Nubox",
     "logo": "/integrations/nubox.svg",
     "title": "Documentos de Nubox en Ruka: alcance y requisitos",
@@ -163,7 +184,7 @@
     "lead": "Si el respaldo ya está en Nubox, el trabajo es llevar su información al proceso. No descargarlo para volver a escribirlo todo.",
     "direction": "Nubox → Ruka",
     "scope": "Incorporación de documentos de compra disponibles en Nubox, en operaciones configuradas.",
-    "reviewedAt": "2026-10-14",
+    "reviewedAt": "2026-10-26",
     "evidenceLevel": "implementation-reviewed",
     "capabilityId": "nubox-document-intake",
     "input": "Documentos PDF de compra accesibles en la cuenta configurada.",
@@ -230,6 +251,13 @@
   },
   {
     "slug": "chipax",
+    "operating": {
+      "method": "Lectura de XML descargables desde el registro de compras. Por separado, Ruka puede preparar un archivo de conciliación para importar en Chipax.",
+      "frequency": "La lectura trabaja por fechas y lotes. La frecuencia se acuerda al habilitar el flujo; la descarga de XML y la exportación de conciliación son tareas distintas.",
+      "stays": "Chipax conserva el trabajo financiero de tu equipo. Descargar XML o preparar una planilla no reemplaza la revisión dentro de Chipax.",
+      "ruka": "Ruka utiliza los XML para leer compras. Para pagos registrados, el formato de conciliación lleva los documentos de respaldo a un archivo que tu equipo importa.",
+      "failure": "Si el acceso necesita revalidación o un XML no está disponible, revisa el período pendiente. En la planilla, comprueba advertencias y documentos omitidos antes de importarla; exportar no ejecuta pagos ni confirma conciliación."
+    },
     "name": "Chipax",
     "logo": "/integrations/chipax.png",
     "title": "Compras de Chipax a Ruka: XML y requisitos | Ruka",
@@ -290,7 +318,7 @@
       "href": "/productos/registro-de-compras",
       "label": "Ver registro de compras"
     },
-    "reviewedAt": "2026-10-14",
+    "reviewedAt": "2026-10-26",
     "evidenceLevel": "implementation-reviewed",
     "sources": [
       {
@@ -305,6 +333,13 @@
   },
   {
     "slug": "idtecloud",
+    "operating": {
+      "method": "Consulta de documentos recibidos por empresa y fecha, descarga XML y envío al ingreso de Ruka si está habilitado.",
+      "frequency": "Procesamiento por días dentro del período solicitado. La ejecución depende de la programación acordada; no promete aparición inmediata de cada documento.",
+      "stays": "iDTECloud conserva sus documentos y el acceso de tu empresa. Esta conexión no emite ni modifica documentos en ese sistema.",
+      "ruka": "Ruka recibe los XML disponibles para revisar compras y continuar con productos, unidades y reglas de tu operación.",
+      "failure": "Si la sesión vence o una descarga queda incompleta, recupera el período pendiente y comprueba el resultado de ingreso. Tener un archivo descargado no prueba que terminó su registro en Ruka."
+    },
     "name": "iDTECloud",
     "logo": "/integrations/idtecloud.png",
     "title": "XML de iDTECloud a Ruka: alcance y requisitos | Ruka",
@@ -365,7 +400,7 @@
       "href": "/productos/registro-de-compras",
       "label": "Ver registro de compras"
     },
-    "reviewedAt": "2026-10-14",
+    "reviewedAt": "2026-10-26",
     "evidenceLevel": "implementation-reviewed",
     "sources": [
       {

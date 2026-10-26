@@ -1,0 +1,1911 @@
+{
+  "reviewedAt": "2026-10-26",
+  "reference": "https://api.rukafactura.cl/api_docs",
+  "entries": [
+    {
+      "id": "v1-ping",
+      "method": "GET",
+      "path": "/api/v1/ping",
+      "summary": "Comprobar acceso",
+      "description": "Valida la clave y devuelve su API ID.",
+      "permission": "Clave activa",
+      "parameters": [],
+      "responses": [
+        {
+          "status": 200,
+          "label": "Respuesta de ejemplo",
+          "body": {
+            "ok": true,
+            "api_id": "api_ID"
+          }
+        },
+        {
+          "status": 401,
+          "label": "Clave inválida, revocada, acceso inactivo o cuenta distinta del host",
+          "body": {
+            "error": "invalid_token"
+          }
+        },
+        {
+          "status": 429,
+          "label": "Límite de solicitudes",
+          "body": {
+            "error": "rate_limit_exceeded"
+          }
+        }
+      ],
+      "notes": [
+        "No requiere permiso de reportes: sirve para validar la clave y la conexión."
+      ]
+    },
+    {
+      "id": "v1-purchase-invoices",
+      "method": "GET",
+      "path": "/api/v1/reports/purchase_invoices",
+      "summary": "Facturas de compra",
+      "description": "Pagina facturas con line_items anidados y meta. Montos y cantidades decimales como strings.",
+      "permission": "Clave activa y Ver módulo de reportes",
+      "parameters": [
+        {
+          "name": "issued_from",
+          "location": "query",
+          "type": "date",
+          "required": true,
+          "description": "Inicio inclusivo, YYYY-MM-DD.",
+          "default": null,
+          "values": null,
+          "example": "2026-08-01"
+        },
+        {
+          "name": "issued_to",
+          "location": "query",
+          "type": "date",
+          "required": true,
+          "description": "Fin inclusivo, YYYY-MM-DD. Diferencia máxima: 31 días.",
+          "default": null,
+          "values": null,
+          "example": "2026-08-31"
+        },
+        {
+          "name": "page",
+          "location": "query",
+          "type": "integer",
+          "required": false,
+          "description": "Entero positivo. Página solicitada.",
+          "default": 1,
+          "values": null,
+          "example": 1
+        },
+        {
+          "name": "per_page",
+          "location": "query",
+          "type": "integer",
+          "required": false,
+          "description": "Entero positivo; valores mayores a 100 se reducen a 100. ",
+          "default": 50,
+          "values": null,
+          "example": 50
+        },
+        {
+          "name": "vendor_tax_id",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "RUT exacto del proveedor; sin coincidencia devuelve datos vacíos.",
+          "default": null,
+          "values": null,
+          "example": "76123456-0"
+        },
+        {
+          "name": "folio",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "Folio exacto.",
+          "default": null,
+          "values": null,
+          "example": "1001"
+        },
+        {
+          "name": "dte_type",
+          "location": "query",
+          "type": "integer",
+          "required": false,
+          "description": "Tipo DTE positivo; restringe 33/34 o 33/34/61/56 al incluir notas.",
+          "default": null,
+          "values": null,
+          "example": 33
+        },
+        {
+          "name": "include_credit_notes",
+          "location": "query",
+          "type": "boolean",
+          "required": false,
+          "description": "Agrega NC 61 y ND 56; usa montos originales cuando existen, sin cambiar su signo.",
+          "default": false,
+          "values": [
+            "true",
+            "false",
+            "1",
+            "0"
+          ],
+          "example": true
+        },
+        {
+          "name": "include_excluded",
+          "location": "query",
+          "type": "boolean",
+          "required": false,
+          "description": "Incluye excluidos, nunca reclamados.",
+          "default": false,
+          "values": [
+            "true",
+            "false",
+            "1",
+            "0"
+          ],
+          "example": true
+        },
+        {
+          "name": "company_ids",
+          "location": "query",
+          "type": "integer[]",
+          "required": false,
+          "description": "IDs positivos por comas o array (company_ids[]). Intersecta empresas autorizadas.",
+          "default": null,
+          "values": null,
+          "example": [
+            1,
+            2
+          ]
+        },
+        {
+          "name": "cost_center_ids",
+          "location": "query",
+          "type": "integer[]",
+          "required": false,
+          "description": "IDs positivos por comas o array. División → línea → factura; expone solo centros coincidentes.",
+          "default": null,
+          "values": null,
+          "example": [
+            1,
+            2
+          ]
+        },
+        {
+          "name": "due_from",
+          "location": "query",
+          "type": "date",
+          "required": false,
+          "description": "Vencimiento desde, YYYY-MM-DD; opcional e inclusivo.",
+          "default": null,
+          "values": null,
+          "example": "2026-09-01"
+        },
+        {
+          "name": "due_to",
+          "location": "query",
+          "type": "date",
+          "required": false,
+          "description": "Vencimiento hasta, YYYY-MM-DD; no anterior al inicio.",
+          "default": null,
+          "values": null,
+          "example": "2026-09-30"
+        },
+        {
+          "name": "reviewed",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "Estado de revisión.",
+          "default": "all",
+          "values": [
+            "all",
+            "yes",
+            "no"
+          ],
+          "example": "yes"
+        },
+        {
+          "name": "acknowledged",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "Presencia de acuse SII.",
+          "default": "all",
+          "values": [
+            "all",
+            "yes",
+            "no"
+          ],
+          "example": "yes"
+        },
+        {
+          "name": "style_mode",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "Materia prima (incluye sin estilo), ambos o solo administrativos. Prevalece sobre include_g_adm.",
+          "default": "raw_material_and_gadm",
+          "values": [
+            "raw_material_only",
+            "raw_material_and_gadm",
+            "gadm_only"
+          ],
+          "example": "raw_material_and_gadm"
+        },
+        {
+          "name": "date_basis",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "Emisión o mes de reporte completo; sin mes, acuse y luego emisión.",
+          "default": "issued",
+          "values": [
+            "issued",
+            "reporting"
+          ],
+          "example": "reporting"
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "label": "Respuesta de ejemplo",
+          "body": {
+            "data": [
+              {
+                "id": 900001,
+                "folio": "1001",
+                "dte_type": 33,
+                "issued_on": "2026-08-12",
+                "due_on": "2026-09-12",
+                "reporting_date": "2026-08-12",
+                "acknowledged_on": null,
+                "received_on": null,
+                "reporting_month": null,
+                "reviewed_at": null,
+                "status": "registered",
+                "payment_status": "payable",
+                "company": {
+                  "id": 900001,
+                  "name": "Empresa de ejemplo SpA",
+                  "tax_id": "76123456-0"
+                },
+                "vendor": {
+                  "id": 900001,
+                  "name": "Proveedor de ejemplo SpA",
+                  "tax_id": "76234567-4"
+                },
+                "net_amount": "1000.0",
+                "exempt_amount": "0.0",
+                "vat_amount": "190.0",
+                "total_amount": "1190.0",
+                "other_tax_amount": "0.0",
+                "cost_center": {
+                  "id": 900001,
+                  "name": "Cocina"
+                },
+                "accounting": {
+                  "mode": "none",
+                  "effective": null,
+                  "resolved_from": "none",
+                  "dimensions": {
+                    "invoice": null
+                  },
+                  "splits": []
+                },
+                "line_items": [
+                  {
+                    "id": 900001,
+                    "line_number": 1,
+                    "name": "Harina de ejemplo",
+                    "description": "Saco de ejemplo",
+                    "quantity": "2.0",
+                    "unit_price": "500.0",
+                    "amount": "1000.0",
+                    "vat_amount": "190.0",
+                    "additional_tax_amount": "0.0",
+                    "discount": "0.0",
+                    "surcharge": "0.0",
+                    "product_id": 900001,
+                    "unit": null,
+                    "classification": {
+                      "supply": {
+                        "id": 900001,
+                        "name": "Harina"
+                      },
+                      "style": {
+                        "id": 900001,
+                        "name": "Harinas"
+                      },
+                      "product_type": {
+                        "id": 900001,
+                        "name": "Abarrotes"
+                      },
+                      "general_category": {
+                        "id": 900001,
+                        "name": "Alimentos"
+                      },
+                      "included_in_report": true
+                    },
+                    "cost_center_allocations": [
+                      {
+                        "cost_center": {
+                          "id": 900001,
+                          "name": "Cocina"
+                        },
+                        "quantity": "2.0",
+                        "amount": "1000.0",
+                        "percentage": "100.0",
+                        "vat_amount": "190.0",
+                        "additional_tax_amount": "0.0",
+                        "discount": "0.0",
+                        "surcharge": "0.0"
+                      }
+                    ],
+                    "accounting": {
+                      "mode": "single",
+                      "effective": {
+                        "id": 900001,
+                        "name": "Materia prima",
+                        "path": [
+                          {
+                            "id": 900001,
+                            "level": 0,
+                            "name": "Materia prima"
+                          }
+                        ]
+                      },
+                      "resolved_from": "line_item",
+                      "dimensions": {
+                        "line_item": {
+                          "id": 900001,
+                          "name": "Materia prima",
+                          "path": [
+                            {
+                              "id": 900001,
+                              "level": 0,
+                              "name": "Materia prima"
+                            }
+                          ]
+                        },
+                        "supply": {
+                          "id": 900001,
+                          "name": "Materia prima",
+                          "path": [
+                            {
+                              "id": 900001,
+                              "level": 0,
+                              "name": "Materia prima"
+                            }
+                          ]
+                        },
+                        "product": null,
+                        "invoice": null
+                      },
+                      "splits": []
+                    }
+                  }
+                ]
+              }
+            ],
+            "meta": {
+              "page": 1,
+              "per_page": 50,
+              "total": 1,
+              "total_pages": 1
+            }
+          }
+        },
+        {
+          "status": 200,
+          "label": "Sin resultados",
+          "body": {
+            "data": [],
+            "meta": {
+              "page": 1,
+              "per_page": 50,
+              "total": 0,
+              "total_pages": 0
+            }
+          }
+        },
+        {
+          "status": 401,
+          "label": "Clave inválida, revocada, acceso inactivo o cuenta distinta del host",
+          "body": {
+            "error": "invalid_token"
+          }
+        },
+        {
+          "status": 403,
+          "label": "Sin permiso de reportes",
+          "body": {
+            "error": "reports_forbidden"
+          }
+        },
+        {
+          "status": 422,
+          "label": "Filtros inválidos (ejemplo: fecha sin formato)",
+          "body": {
+            "error": "issued_from debe usar YYYY-MM-DD"
+          }
+        },
+        {
+          "status": 429,
+          "label": "Límite de solicitudes",
+          "body": {
+            "error": "rate_limit_exceeded"
+          }
+        }
+      ],
+      "notes": [
+        "Rango obligatorio: issued_from e issued_to en YYYY-MM-DD, ambos inclusivos; la diferencia entre ellos no puede superar 31 días. Los filtros se aplican antes de contar y paginar.",
+        "Filtra por emisión e incluye todos los estilos por defecto. date_basis=reporting usa mes de reporte completo; si falta, acuse y luego emisión.",
+        "Los filtros de estilo y centro eligen facturas con al menos una línea coincidente; cada factura conserva los montos del documento completo. Orden: emisión e ID de factura.",
+        "Paginación con page y per_page (default 50, máximo 100). La respuesta trae data y meta con page, per_page, total y total_pages.",
+        "Incluye DTE 33 y 34. include_credit_notes agrega 61 y 56 con sus montos originales cuando existen, sin cambiar el signo.",
+        "Centro de costo por división, luego línea y luego factura. Los montos divididos ya son absolutos; IVA, impuestos, descuento y recargo se prorratean. DTE 34 y líneas exentas no generan IVA.",
+        "accounting trae mode, effective, resolved_from, dimensions y splits. Precedencia: línea, insumo, producto y factura. Una división usa mode: split. Porcentajes en escala humana: 75.0 es 75 %.",
+        "Montos y cantidades llegan como strings decimales. Los valores desconocidos pueden ser null."
+      ]
+    },
+    {
+      "id": "v1-purchase-lines",
+      "method": "GET",
+      "path": "/api/v1/reports/purchase_lines",
+      "summary": "Líneas de compra",
+      "description": "Pagina líneas con invoice y cost_center_allocations; no multiplica filas por centro. Decimales como strings.",
+      "permission": "Clave activa y Ver módulo de reportes",
+      "parameters": [
+        {
+          "name": "issued_from",
+          "location": "query",
+          "type": "date",
+          "required": true,
+          "description": "Inicio inclusivo, YYYY-MM-DD.",
+          "default": null,
+          "values": null,
+          "example": "2026-08-01"
+        },
+        {
+          "name": "issued_to",
+          "location": "query",
+          "type": "date",
+          "required": true,
+          "description": "Fin inclusivo, YYYY-MM-DD. Diferencia máxima: 31 días.",
+          "default": null,
+          "values": null,
+          "example": "2026-08-31"
+        },
+        {
+          "name": "page",
+          "location": "query",
+          "type": "integer",
+          "required": false,
+          "description": "Entero positivo. Página solicitada.",
+          "default": 1,
+          "values": null,
+          "example": 1
+        },
+        {
+          "name": "per_page",
+          "location": "query",
+          "type": "integer",
+          "required": false,
+          "description": "Entero positivo; valores mayores a 100 se reducen a 100. ",
+          "default": 50,
+          "values": null,
+          "example": 50
+        },
+        {
+          "name": "vendor_tax_id",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "RUT exacto del proveedor; sin coincidencia devuelve datos vacíos.",
+          "default": null,
+          "values": null,
+          "example": "76123456-0"
+        },
+        {
+          "name": "folio",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "Folio exacto.",
+          "default": null,
+          "values": null,
+          "example": "1001"
+        },
+        {
+          "name": "dte_type",
+          "location": "query",
+          "type": "integer",
+          "required": false,
+          "description": "Tipo DTE positivo; restringe 33/34 o 33/34/61/56 al incluir notas.",
+          "default": null,
+          "values": null,
+          "example": 33
+        },
+        {
+          "name": "include_credit_notes",
+          "location": "query",
+          "type": "boolean",
+          "required": false,
+          "description": "Agrega NC 61 y ND 56; usa montos originales cuando existen, sin cambiar su signo.",
+          "default": false,
+          "values": [
+            "true",
+            "false",
+            "1",
+            "0"
+          ],
+          "example": true
+        },
+        {
+          "name": "include_excluded",
+          "location": "query",
+          "type": "boolean",
+          "required": false,
+          "description": "Incluye excluidos, nunca reclamados.",
+          "default": false,
+          "values": [
+            "true",
+            "false",
+            "1",
+            "0"
+          ],
+          "example": true
+        },
+        {
+          "name": "company_ids",
+          "location": "query",
+          "type": "integer[]",
+          "required": false,
+          "description": "IDs positivos por comas o array (company_ids[]). Intersecta empresas autorizadas.",
+          "default": null,
+          "values": null,
+          "example": [
+            1,
+            2
+          ]
+        },
+        {
+          "name": "cost_center_ids",
+          "location": "query",
+          "type": "integer[]",
+          "required": false,
+          "description": "IDs positivos por comas o array. División → línea → factura; expone solo centros coincidentes.",
+          "default": null,
+          "values": null,
+          "example": [
+            1,
+            2
+          ]
+        },
+        {
+          "name": "due_from",
+          "location": "query",
+          "type": "date",
+          "required": false,
+          "description": "Vencimiento desde, YYYY-MM-DD; opcional e inclusivo.",
+          "default": null,
+          "values": null,
+          "example": "2026-09-01"
+        },
+        {
+          "name": "due_to",
+          "location": "query",
+          "type": "date",
+          "required": false,
+          "description": "Vencimiento hasta, YYYY-MM-DD; no anterior al inicio.",
+          "default": null,
+          "values": null,
+          "example": "2026-09-30"
+        },
+        {
+          "name": "reviewed",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "Estado de revisión.",
+          "default": "all",
+          "values": [
+            "all",
+            "yes",
+            "no"
+          ],
+          "example": "yes"
+        },
+        {
+          "name": "acknowledged",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "Presencia de acuse SII.",
+          "default": "all",
+          "values": [
+            "all",
+            "yes",
+            "no"
+          ],
+          "example": "yes"
+        },
+        {
+          "name": "style_mode",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "Materia prima (incluye sin estilo), ambos o solo administrativos. Prevalece sobre include_g_adm.",
+          "default": "raw_material_and_gadm",
+          "values": [
+            "raw_material_only",
+            "raw_material_and_gadm",
+            "gadm_only"
+          ],
+          "example": "raw_material_and_gadm"
+        },
+        {
+          "name": "date_basis",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "Emisión o mes de reporte completo; sin mes, acuse y luego emisión.",
+          "default": "issued",
+          "values": [
+            "issued",
+            "reporting"
+          ],
+          "example": "reporting"
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "label": "Respuesta de ejemplo",
+          "body": {
+            "data": [
+              {
+                "id": 900001,
+                "line_number": 1,
+                "name": "Harina de ejemplo",
+                "description": "Saco de ejemplo",
+                "quantity": "2.0",
+                "unit_price": "500.0",
+                "amount": "1000.0",
+                "vat_amount": "190.0",
+                "additional_tax_amount": "0.0",
+                "discount": "0.0",
+                "surcharge": "0.0",
+                "product_id": 900001,
+                "unit": null,
+                "classification": {
+                  "supply": {
+                    "id": 900001,
+                    "name": "Harina"
+                  },
+                  "style": {
+                    "id": 900001,
+                    "name": "Harinas"
+                  },
+                  "product_type": {
+                    "id": 900001,
+                    "name": "Abarrotes"
+                  },
+                  "general_category": {
+                    "id": 900001,
+                    "name": "Alimentos"
+                  },
+                  "included_in_report": true
+                },
+                "cost_center_allocations": [
+                  {
+                    "cost_center": {
+                      "id": 900001,
+                      "name": "Cocina"
+                    },
+                    "quantity": "2.0",
+                    "amount": "1000.0",
+                    "percentage": "100.0",
+                    "vat_amount": "190.0",
+                    "additional_tax_amount": "0.0",
+                    "discount": "0.0",
+                    "surcharge": "0.0"
+                  }
+                ],
+                "accounting": {
+                  "mode": "single",
+                  "effective": {
+                    "id": 900001,
+                    "name": "Materia prima",
+                    "path": [
+                      {
+                        "id": 900001,
+                        "level": 0,
+                        "name": "Materia prima"
+                      }
+                    ]
+                  },
+                  "resolved_from": "line_item",
+                  "dimensions": {
+                    "line_item": {
+                      "id": 900001,
+                      "name": "Materia prima",
+                      "path": [
+                        {
+                          "id": 900001,
+                          "level": 0,
+                          "name": "Materia prima"
+                        }
+                      ]
+                    },
+                    "supply": {
+                      "id": 900001,
+                      "name": "Materia prima",
+                      "path": [
+                        {
+                          "id": 900001,
+                          "level": 0,
+                          "name": "Materia prima"
+                        }
+                      ]
+                    },
+                    "product": null,
+                    "invoice": null
+                  },
+                  "splits": []
+                },
+                "invoice": {
+                  "id": 900001,
+                  "folio": "1001",
+                  "dte_type": 33,
+                  "issued_on": "2026-08-12",
+                  "due_on": "2026-09-12",
+                  "reporting_month": null,
+                  "status": "registered",
+                  "company": {
+                    "id": 900001,
+                    "name": "Empresa de ejemplo SpA",
+                    "tax_id": "76123456-0"
+                  },
+                  "vendor": {
+                    "id": 900001,
+                    "name": "Proveedor de ejemplo SpA",
+                    "tax_id": "76234567-4"
+                  }
+                }
+              }
+            ],
+            "meta": {
+              "page": 1,
+              "per_page": 50,
+              "total": 1,
+              "total_pages": 1
+            }
+          }
+        },
+        {
+          "status": 200,
+          "label": "Sin resultados",
+          "body": {
+            "data": [],
+            "meta": {
+              "page": 1,
+              "per_page": 50,
+              "total": 0,
+              "total_pages": 0
+            }
+          }
+        },
+        {
+          "status": 401,
+          "label": "Clave inválida, revocada, acceso inactivo o cuenta distinta del host",
+          "body": {
+            "error": "invalid_token"
+          }
+        },
+        {
+          "status": 403,
+          "label": "Sin permiso de reportes",
+          "body": {
+            "error": "reports_forbidden"
+          }
+        },
+        {
+          "status": 422,
+          "label": "Filtros inválidos (ejemplo: fecha sin formato)",
+          "body": {
+            "error": "issued_from debe usar YYYY-MM-DD"
+          }
+        },
+        {
+          "status": 429,
+          "label": "Límite de solicitudes",
+          "body": {
+            "error": "rate_limit_exceeded"
+          }
+        }
+      ],
+      "notes": [
+        "Rango obligatorio: issued_from e issued_to en YYYY-MM-DD, ambos inclusivos; la diferencia entre ellos no puede superar 31 días. Los filtros se aplican antes de contar y paginar.",
+        "Filtra por emisión e incluye todos los estilos por defecto. date_basis=reporting usa mes de reporte completo; si falta, acuse y luego emisión.",
+        "Los filtros de estilo y centro devuelven sólo las líneas coincidentes; cost_center_allocations no multiplica filas. Orden: emisión, ID de factura e ID de línea.",
+        "Paginación con page y per_page (default 50, máximo 100). La respuesta trae data y meta con page, per_page, total y total_pages.",
+        "Incluye DTE 33 y 34. include_credit_notes agrega 61 y 56 con sus montos originales cuando existen, sin cambiar el signo.",
+        "Centro de costo por división, luego línea y luego factura. Los montos divididos ya son absolutos; IVA, impuestos, descuento y recargo se prorratean. DTE 34 y líneas exentas no generan IVA.",
+        "accounting trae mode, effective, resolved_from, dimensions y splits. Precedencia: línea, insumo, producto y factura. Una división usa mode: split. Porcentajes en escala humana: 75.0 es 75 %.",
+        "Montos y cantidades llegan como strings decimales. Los valores desconocidos pueden ser null."
+      ]
+    },
+    {
+      "id": "v1-product-classification",
+      "method": "GET",
+      "path": "/api/v1/products/:id/classification",
+      "summary": "Clasificación de producto",
+      "description": "Insumo, estilo, tipo y categoría general del producto autorizado. Los niveles sin asignar son null.",
+      "permission": "Clave activa y Ver módulo de reportes",
+      "parameters": [
+        {
+          "name": "id",
+          "location": "path",
+          "type": "integer",
+          "required": true,
+          "description": "ID de producto de V3 dentro del alcance autorizado.",
+          "default": null,
+          "values": null,
+          "example": 1
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "label": "Respuesta de ejemplo",
+          "body": {
+            "data": {
+              "id": 900001,
+              "name": "Harina de ejemplo",
+              "supply": {
+                "id": 900001,
+                "name": "Harina"
+              },
+              "style": {
+                "id": 900001,
+                "name": "Harinas"
+              },
+              "product_type": {
+                "id": 900001,
+                "name": "Abarrotes"
+              },
+              "general_category": {
+                "id": 900001,
+                "name": "Alimentos"
+              },
+              "included_in_report": true
+            }
+          }
+        },
+        {
+          "status": 401,
+          "label": "Clave inválida, revocada, acceso inactivo o cuenta distinta del host",
+          "body": {
+            "error": "invalid_token"
+          }
+        },
+        {
+          "status": 403,
+          "label": "Sin permiso de reportes",
+          "body": {
+            "error": "reports_forbidden"
+          }
+        },
+        {
+          "status": 404,
+          "label": "Producto inexistente o fuera de alcance",
+          "body": {
+            "error": "product_not_found"
+          }
+        },
+        {
+          "status": 429,
+          "label": "Límite de solicitudes",
+          "body": {
+            "error": "rate_limit_exceeded"
+          }
+        }
+      ],
+      "notes": [
+        "Sólo responde productos de tu cuenta; los niveles sin asignar llegan como null."
+      ]
+    },
+    {
+      "id": "v1-purchase-book",
+      "method": "GET",
+      "path": "/api/v1/reports/purchase_book",
+      "summary": "Libro de compras aceptadas",
+      "description": "Detalle del libro de compras con aprobación interna en Ruka. Incluye líneas, impuestos, referencias, clasificaciones y datos originales del libro; no incluye el XML.",
+      "permission": "Clave activa y Ver módulo de reportes",
+      "parameters": [
+        {
+          "name": "start_date",
+          "location": "query",
+          "type": "date",
+          "required": true,
+          "description": "Fecha inicial inclusiva, YYYY-MM-DD.",
+          "default": null,
+          "values": null,
+          "example": "2026-09-01"
+        },
+        {
+          "name": "end_date",
+          "location": "query",
+          "type": "date",
+          "required": true,
+          "description": "Fecha final inclusiva; máximo un mes.",
+          "default": null,
+          "values": null,
+          "example": "2026-09-30"
+        },
+        {
+          "name": "date_basis",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "Emisión o última modificación. Cambios usa America/Santiago e incluye cambios en líneas y catálogos.",
+          "default": "issued",
+          "values": [
+            "issued",
+            "updated"
+          ],
+          "example": "updated"
+        },
+        {
+          "name": "include_without_xml",
+          "location": "query",
+          "type": "boolean",
+          "required": false,
+          "description": "Incluye también documentos cuyo XML no está disponible.",
+          "default": false,
+          "values": null,
+          "example": true
+        },
+        {
+          "name": "company_id",
+          "location": "query",
+          "type": "integer",
+          "required": false,
+          "description": "ID de la empresa receptora autorizada. Obligatorio si la identidad coincide en varias empresas.",
+          "default": null,
+          "values": null,
+          "example": 900001
+        },
+        {
+          "name": "after_id",
+          "location": "query",
+          "type": "integer",
+          "required": false,
+          "description": "next_after_id recibido en la página anterior. Omitir en la primera página.",
+          "default": null,
+          "values": null,
+          "example": 900001
+        },
+        {
+          "name": "per_page",
+          "location": "query",
+          "type": "integer",
+          "required": false,
+          "description": "Documentos por página: de 1 a 100. Continuar hasta next_after_id=null.",
+          "default": 50,
+          "values": null,
+          "example": 50
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "label": "Respuesta de ejemplo",
+          "body": {
+            "data": [
+              {
+                "id": 900001,
+                "folio": "1001",
+                "dte_type": 33,
+                "issued_on": "2026-08-12",
+                "due_on": "2026-09-12",
+                "reporting_date": "2026-08-12",
+                "acknowledged_on": null,
+                "received_on": null,
+                "reporting_month": null,
+                "reviewed_at": "2026-08-12T08:00:00.000-04:00",
+                "status": "registered",
+                "payment_status": "payable",
+                "company": {
+                  "id": 900001,
+                  "name": "Empresa de ejemplo SpA",
+                  "tax_id": "76123456-0"
+                },
+                "vendor": {
+                  "id": 900001,
+                  "name": "Proveedor de ejemplo SpA",
+                  "tax_id": "76234567-4"
+                },
+                "net_amount": "1000.0",
+                "exempt_amount": "0.0",
+                "vat_amount": "190.0",
+                "total_amount": "1190.0",
+                "other_tax_amount": "0.0",
+                "cost_center": {
+                  "id": 900001,
+                  "name": "Cocina",
+                  "code": null
+                },
+                "accounting": {
+                  "mode": "none",
+                  "effective": null,
+                  "resolved_from": "none",
+                  "dimensions": {
+                    "invoice": null
+                  },
+                  "splits": []
+                },
+                "line_items": [
+                  {
+                    "id": 900001,
+                    "line_number": 1,
+                    "name": "Harina de ejemplo",
+                    "description": "Saco de ejemplo",
+                    "quantity": "2.0",
+                    "unit_price": "500.0",
+                    "amount": "1000.0",
+                    "vat_amount": "190.0",
+                    "additional_tax_amount": "0.0",
+                    "discount": "0.0",
+                    "surcharge": "0.0",
+                    "product_id": 900001,
+                    "unit": null,
+                    "classification": {
+                      "supply": {
+                        "id": 900001,
+                        "name": "Harina"
+                      },
+                      "style": {
+                        "id": 900001,
+                        "name": "Harinas"
+                      },
+                      "product_type": {
+                        "id": 900001,
+                        "name": "Abarrotes"
+                      },
+                      "general_category": {
+                        "id": 900001,
+                        "name": "Alimentos"
+                      },
+                      "included_in_report": true
+                    },
+                    "cost_center_allocations": [
+                      {
+                        "cost_center": {
+                          "id": 900001,
+                          "name": "Cocina",
+                          "code": null
+                        },
+                        "quantity": "2.0",
+                        "amount": "1000.0",
+                        "percentage": "100.0",
+                        "vat_amount": "190.0",
+                        "additional_tax_amount": "0.0",
+                        "discount": "0.0",
+                        "surcharge": "0.0"
+                      }
+                    ],
+                    "accounting": {
+                      "mode": "single",
+                      "effective": {
+                        "id": 900001,
+                        "name": "Materia prima",
+                        "path": [
+                          {
+                            "id": 900001,
+                            "level": 0,
+                            "name": "Materia prima",
+                            "code": null
+                          }
+                        ],
+                        "code": null
+                      },
+                      "resolved_from": "line_item",
+                      "dimensions": {
+                        "line_item": {
+                          "id": 900001,
+                          "name": "Materia prima",
+                          "path": [
+                            {
+                              "id": 900001,
+                              "level": 0,
+                              "name": "Materia prima",
+                              "code": null
+                            }
+                          ],
+                          "code": null
+                        },
+                        "supply": {
+                          "id": 900001,
+                          "name": "Materia prima",
+                          "path": [
+                            {
+                              "id": 900001,
+                              "level": 0,
+                              "name": "Materia prima",
+                              "code": null
+                            }
+                          ],
+                          "code": null
+                        },
+                        "product": null,
+                        "invoice": null
+                      },
+                      "splits": []
+                    },
+                    "source_code_type": null,
+                    "source_code_value": null,
+                    "source_product_name": null,
+                    "source_price": null,
+                    "stock_conversion_factor": "1.0",
+                    "fundamental_unit": null,
+                    "fundamental_multiplier": null
+                  }
+                ],
+                "api_changed_at": "2026-08-12T12:00:00.000000Z",
+                "xml_available": true,
+                "purchase_book_data": null,
+                "purchase_transaction_type": null,
+                "non_recoverable_vat_code": null,
+                "taxes": {
+                  "vat_rate": null,
+                  "fixed_asset_net_amount": null,
+                  "fixed_asset_vat_amount": null,
+                  "common_use_vat_amount": null,
+                  "non_recoverable_vat_amount": null,
+                  "non_creditable_tax_amount": null,
+                  "non_withheld_vat_amount": null,
+                  "purchase_invoice_adjustment_amount": null,
+                  "cigarette_tax_amount": null,
+                  "cigar_tax_amount": null,
+                  "processed_tobacco_tax_amount": null
+                },
+                "other_taxes": [],
+                "references": []
+              }
+            ],
+            "meta": {
+              "per_page": 50,
+              "next_after_id": null,
+              "date_basis": "issued",
+              "start_date": "2026-08-01",
+              "end_date": "2026-08-31",
+              "time_zone": "America/Santiago"
+            }
+          }
+        },
+        {
+          "status": 200,
+          "label": "Sin resultados",
+          "body": {
+            "data": [],
+            "meta": {
+              "per_page": 50,
+              "next_after_id": null,
+              "date_basis": "issued",
+              "start_date": "2026-07-01",
+              "end_date": "2026-07-31",
+              "time_zone": "America/Santiago"
+            }
+          }
+        },
+        {
+          "status": 401,
+          "label": "Clave inválida o acceso inactivo",
+          "body": {
+            "error": "invalid_token"
+          }
+        },
+        {
+          "status": 403,
+          "label": "Sin permiso de reportes",
+          "body": {
+            "error": "reports_forbidden"
+          }
+        },
+        {
+          "status": 422,
+          "label": "Parámetros inválidos (ejemplo: faltan parámetros)",
+          "body": {
+            "error": "invalid_parameters",
+            "message": "start_date debe ser texto"
+          }
+        },
+        {
+          "status": 429,
+          "label": "Límite de solicitudes",
+          "body": {
+            "error": "rate_limit_exceeded"
+          }
+        }
+      ],
+      "notes": [
+        "Acuse de Ruka = reviewed_at presente. El acuse del SII y la recepción de mercadería son independientes. Se excluyen documentos reclamados o excluidos.",
+        "Ambas fechas son inclusivas; el final debe ser anterior al mismo día del mes siguiente al inicio. date_basis=updated consulta modificaciones, incluso de documentos emitidos antes.",
+        "Paginación por ID: conserva los filtros y usa next_after_id como after_id hasta recibir null. Para sincronizar, repite días solapados y actualiza por id; api_changed_at identifica la versión. No es un historial de eliminaciones."
+      ]
+    },
+    {
+      "id": "v1-purchase-document",
+      "method": "GET",
+      "path": "/api/v1/purchase_documents",
+      "summary": "Documento de compra JSON, XML o PDF",
+      "description": "Busca por folio, tipo DTE y RUT emisor. Devuelve el XML almacenado, su contenido convertido a JSON o el PDF generado por Ruka. Solo documentos aprobados internamente en Ruka.",
+      "permission": "Clave activa y Ver módulo de reportes",
+      "parameters": [
+        {
+          "name": "folio",
+          "location": "query",
+          "type": "string",
+          "required": true,
+          "description": "Folio exacto, conservando ceros iniciales.",
+          "default": null,
+          "values": null,
+          "example": "1001"
+        },
+        {
+          "name": "dte_type",
+          "location": "query",
+          "type": "integer",
+          "required": true,
+          "description": "Tipo tributario del documento: por ejemplo 33, 34, 56 o 61.",
+          "default": null,
+          "values": null,
+          "example": 33
+        },
+        {
+          "name": "vendor_tax_id",
+          "location": "query",
+          "type": "string",
+          "required": true,
+          "description": "RUT emisor, con o sin puntos y guion.",
+          "default": null,
+          "values": null,
+          "example": "76234567-4"
+        },
+        {
+          "name": "response_format",
+          "location": "query",
+          "type": "string",
+          "required": false,
+          "description": "XML original, conversión a JSON o representación PDF de Ruka.",
+          "default": "json",
+          "values": [
+            "json",
+            "xml",
+            "pdf"
+          ],
+          "example": "json"
+        },
+        {
+          "name": "company_id",
+          "location": "query",
+          "type": "integer",
+          "required": false,
+          "description": "ID de la empresa receptora autorizada. Obligatorio si la identidad coincide en varias empresas.",
+          "default": null,
+          "values": null,
+          "example": 900001
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "label": "Respuesta JSON del XML",
+          "body": {
+            "data": {
+              "DTE": {
+                "@attributes": {
+                  "version": "1.0",
+                  "xmlns": "http://www.sii.cl/SiiDte"
+                },
+                "Documento": {
+                  "@attributes": {
+                    "ID": "DEMO1001"
+                  },
+                  "Encabezado": {
+                    "IdDoc": {
+                      "TipoDTE": "33",
+                      "Folio": "1001",
+                      "FchEmis": "2026-08-12"
+                    },
+                    "Emisor": {
+                      "RUTEmisor": "76234567-4",
+                      "RznSoc": "Proveedor de ejemplo SpA"
+                    },
+                    "Receptor": {
+                      "RUTRecep": "76123456-0",
+                      "RznSocRecep": "Empresa de ejemplo SpA"
+                    },
+                    "Totales": {
+                      "MntNeto": "1000",
+                      "TasaIVA": "19",
+                      "IVA": "190",
+                      "MntTotal": "1190"
+                    }
+                  },
+                  "Detalle": {
+                    "NroLinDet": "1",
+                    "NmbItem": "Harina de ejemplo",
+                    "QtyItem": "2",
+                    "PrcItem": "500",
+                    "MontoItem": "1000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "status": 200,
+          "label": "Respuesta XML original",
+          "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<DTE version=\"1.0\" xmlns=\"http://www.sii.cl/SiiDte\">\n  <Documento ID=\"DEMO1001\">\n    <Encabezado>\n      <IdDoc><TipoDTE>33</TipoDTE><Folio>1001</Folio><FchEmis>2026-08-12</FchEmis></IdDoc>\n      <Emisor><RUTEmisor>76234567-4</RUTEmisor><RznSoc>Proveedor de ejemplo SpA</RznSoc></Emisor>\n      <Receptor><RUTRecep>76123456-0</RUTRecep><RznSocRecep>Empresa de ejemplo SpA</RznSocRecep></Receptor>\n      <Totales><MntNeto>1000</MntNeto><TasaIVA>19</TasaIVA><IVA>190</IVA><MntTotal>1190</MntTotal></Totales>\n    </Encabezado>\n    <Detalle><NroLinDet>1</NroLinDet><NmbItem>Harina de ejemplo</NmbItem><QtyItem>2</QtyItem><PrcItem>500</PrcItem><MontoItem>1000</MontoItem></Detalle>\n  </Documento>\n</DTE>\n"
+        },
+        {
+          "status": 200,
+          "label": "Respuesta PDF (bytes binarios, abreviados)",
+          "body": "%PDF-1.7\nSynthetic example"
+        },
+        {
+          "status": 401,
+          "label": "Clave inválida o acceso inactivo",
+          "body": {
+            "error": "invalid_token"
+          }
+        },
+        {
+          "status": 403,
+          "label": "Sin permiso de reportes",
+          "body": {
+            "error": "reports_forbidden"
+          }
+        },
+        {
+          "status": 422,
+          "label": "Parámetros inválidos (ejemplo: faltan parámetros)",
+          "body": {
+            "error": "invalid_parameters",
+            "message": "vendor_tax_id debe ser texto"
+          }
+        },
+        {
+          "status": 429,
+          "label": "Límite de solicitudes",
+          "body": {
+            "error": "rate_limit_exceeded"
+          }
+        },
+        {
+          "status": 404,
+          "label": "Documento inexistente, sin aprobación o fuera de alcance",
+          "body": {
+            "error": "document_not_found"
+          }
+        },
+        {
+          "status": 404,
+          "label": "XML todavía no disponible",
+          "body": {
+            "error": "xml_not_available"
+          }
+        },
+        {
+          "status": 409,
+          "label": "Falta identificar la empresa receptora",
+          "body": {
+            "error": "ambiguous_document",
+            "message": "Indique company_id para identificar la empresa receptora."
+          }
+        },
+        {
+          "status": 422,
+          "label": "No se puede convertir el XML a JSON",
+          "body": {
+            "error": "invalid_xml"
+          }
+        },
+        {
+          "status": 503,
+          "label": "Generador de PDF no disponible: reintentar",
+          "body": {
+            "error": "pdf_unavailable"
+          }
+        }
+      ],
+      "notes": [
+        "dte_type es el tipo tributario numérico. response_format selecciona json, xml o pdf (default json). company_id desambigua empresas receptoras.",
+        "El JSON conserva nombres de etiquetas y valores como texto, agrupa etiquetas repetidas en arrays y representa atributos en @attributes. Los cambios de clasificación en Ruka se consultan en el libro.",
+        "response_format=xml devuelve application/xml con el contenido original. Un documento sin XML devuelve 404 xml_not_available para json y xml. PDF genera la representación de Ruka con los datos guardados, aunque falte XML; no es un archivo original ni una certificación fiscal."
+      ]
+    },
+    {
+      "id": "v1-webhooks-list",
+      "method": "GET",
+      "path": "/api/v1/webhooks",
+      "summary": "Listar webhooks",
+      "description": "Consulta las URLs registradas, sus eventos y su configuración de entrega. Los secretos nunca se incluyen en la respuesta.",
+      "permission": "Administrar cuenta y reportes",
+      "parameters": [],
+      "responses": [
+        {
+          "status": 200,
+          "label": "Webhooks de la cuenta",
+          "body": {
+            "data": [
+              {
+                "id": 900001,
+                "webhook_url": "https://integracion.example.com/ruka/invoices",
+                "company_id": null,
+                "events": [
+                  "invoice.created"
+                ],
+                "event": "invoice.created",
+                "payload_format": "event_envelope",
+                "authentication": null,
+                "created_at": "2026-08-12T08:00:00.000000-04:00"
+              }
+            ]
+          }
+        },
+        {
+          "status": 401,
+          "label": "Clave inválida o temporal",
+          "body": {
+            "error": "invalid_token"
+          }
+        },
+        {
+          "status": 403,
+          "label": "Falta permiso de administración o reportes",
+          "body": {
+            "error": "webhooks_forbidden"
+          }
+        },
+        {
+          "status": 429,
+          "label": "Límite de solicitudes",
+          "body": {
+            "error": "rate_limit_exceeded"
+          }
+        }
+      ],
+      "notes": [
+        "signing_secret sólo se muestra al crear. authentication.configured indica si hay un token guardado, sin revelarlo."
+      ]
+    },
+    {
+      "id": "v1-webhooks-create",
+      "method": "POST",
+      "path": "/api/v1/webhooks",
+      "summary": "Registrar webhook",
+      "description": "Registra una URL para recibir los eventos seleccionados mediante POST application/json. Puedes enviar un mismo evento a varios destinos.",
+      "permission": "Administrar cuenta y reportes",
+      "parameters": [
+        {
+          "name": "webhook_url",
+          "location": "body",
+          "type": "string",
+          "required": true,
+          "description": "URL HTTPS pública que recibirá los POST con las facturas.",
+          "default": null,
+          "values": null,
+          "example": "https://integracion.example.com/ruka/invoices"
+        },
+        {
+          "name": "events",
+          "location": "body",
+          "type": "array[string]",
+          "required": false,
+          "description": "Uno o varios eventos de la guía de webhooks. La lista reemplaza la selección completa; no admite null, lista vacía, comodines ni nombres desconocidos. Los duplicados se eliminan. Omitir al crear mantiene invoice.created.",
+          "default": [
+            "invoice.created"
+          ],
+          "values": null,
+          "example": [
+            "invoice.reviewed",
+            "invoice.paid"
+          ]
+        },
+        {
+          "name": "payload_format",
+          "location": "body",
+          "type": "string",
+          "required": false,
+          "description": "event_envelope (default al crear): id/event/occurred_at/data/details. invoice: factura directamente. PATCH omitido conserva el valor. Los cuerpos ya intentados no cambian.",
+          "default": null,
+          "values": [
+            "event_envelope",
+            "invoice"
+          ],
+          "example": "invoice"
+        },
+        {
+          "name": "authentication",
+          "location": "body",
+          "type": "object",
+          "required": false,
+          "description": "Autenticación opcional del receptor. Consulta el header admitido y sus límites en la guía. null la elimina; omitir en PATCH la conserva. Los cambios se validan con HEAD.",
+          "default": null,
+          "values": null,
+          "example": {
+            "type": "header",
+            "header_name": "X-ADAMAS-TOKEN",
+            "token": "TOKEN_DEL_RECEPTOR"
+          }
+        },
+        {
+          "name": "company_id",
+          "location": "body",
+          "type": "integer",
+          "required": false,
+          "description": "Limita los avisos a una empresa autorizada; omitir para todas las empresas permitidas.",
+          "default": null,
+          "values": null,
+          "example": 900001
+        }
+      ],
+      "responses": [
+        {
+          "status": 201,
+          "label": "Webhook registrado (secreto ficticio)",
+          "body": {
+            "data": {
+              "id": 900001,
+              "webhook_url": "https://integracion.example.com/ruka/invoices",
+              "company_id": null,
+              "events": [
+                "invoice.created"
+              ],
+              "event": "invoice.created",
+              "payload_format": "event_envelope",
+              "authentication": null,
+              "created_at": "2026-08-12T08:00:00.000000-04:00",
+              "signing_secret": "synthetic_signing_secret_for_documentation_only"
+            }
+          }
+        },
+        {
+          "status": 401,
+          "label": "Clave inválida o temporal",
+          "body": {
+            "error": "invalid_token"
+          }
+        },
+        {
+          "status": 403,
+          "label": "Falta permiso de administración o reportes",
+          "body": {
+            "error": "webhooks_forbidden"
+          }
+        },
+        {
+          "status": 429,
+          "label": "Límite de solicitudes",
+          "body": {
+            "error": "rate_limit_exceeded"
+          }
+        },
+        {
+          "status": 422,
+          "label": "URL inválida o inaccesible",
+          "body": {
+            "error": "invalid_webhook_url",
+            "message": "La URL no está disponible (HTTP 404)."
+          }
+        },
+        {
+          "status": 422,
+          "label": "Empresa no autorizada",
+          "body": {
+            "error": "invalid_company"
+          }
+        },
+        {
+          "status": 422,
+          "label": "Máximo de 20 webhooks activos",
+          "body": {
+            "error": "webhook_limit_reached"
+          }
+        },
+        {
+          "status": 409,
+          "label": "URL ya registrada",
+          "body": {
+            "error": "webhook_exists"
+          }
+        },
+        {
+          "status": 422,
+          "label": "Autenticación del receptor inválida",
+          "body": {
+            "error": "invalid_webhook_authentication"
+          }
+        },
+        {
+          "status": 422,
+          "label": "Formato de entrega inválido",
+          "body": {
+            "error": "invalid_payload_format"
+          }
+        },
+        {
+          "status": 422,
+          "label": "Selección de eventos inválida",
+          "body": {
+            "error": "invalid_events",
+            "allowed_events": [
+              "invoice.created",
+              "invoice.xml_available",
+              "invoice.updated",
+              "invoice.accepted",
+              "invoice.reviewed",
+              "invoice.reception_recorded",
+              "invoice.assignment_changed",
+              "invoice.payment_registered",
+              "invoice.paid",
+              "invoice.payment_reversed",
+              "invoice.payment_blocked",
+              "invoice.payment_unblocked",
+              "invoice.credit_note_linked",
+              "invoice.credit_note_unlinked",
+              "invoice.status_changed",
+              "invoice.sii_event_confirmed",
+              "invoice.overdue"
+            ]
+          }
+        }
+      ],
+      "notes": [
+        "Hasta 20 URLs activas por cuenta. Una URL duplicada devuelve 409 webhook_exists: usa PATCH para cambiar su selección.",
+        "Guarda signing_secret al recibirlo; no podrás consultarlo después. La URL se valida antes de guardar."
+      ]
+    },
+    {
+      "id": "v1-webhooks-update",
+      "method": "PATCH",
+      "path": "/api/v1/webhooks/:id",
+      "summary": "Actualizar webhook",
+      "description": "Cambia los eventos, el formato o la autenticación de un webhook. Los campos omitidos conservan su valor.",
+      "permission": "Administrar cuenta y reportes",
+      "parameters": [
+        {
+          "name": "id",
+          "location": "path",
+          "type": "integer",
+          "required": true,
+          "description": "ID del webhook que conserva su URL, empresa y secreto.",
+          "default": null,
+          "values": null,
+          "example": 900001
+        },
+        {
+          "name": "events",
+          "location": "body",
+          "type": "array[string]",
+          "required": false,
+          "description": "Uno o varios eventos de la guía de webhooks. La lista reemplaza la selección completa; no admite null, lista vacía, comodines ni nombres desconocidos. Los duplicados se eliminan. Omitir al crear mantiene invoice.created.",
+          "default": null,
+          "values": null,
+          "example": [
+            "invoice.reviewed",
+            "invoice.paid"
+          ]
+        },
+        {
+          "name": "payload_format",
+          "location": "body",
+          "type": "string",
+          "required": false,
+          "description": "event_envelope (default al crear): id/event/occurred_at/data/details. invoice: factura directamente. PATCH omitido conserva el valor. Los cuerpos ya intentados no cambian.",
+          "default": null,
+          "values": [
+            "event_envelope",
+            "invoice"
+          ],
+          "example": "invoice"
+        },
+        {
+          "name": "authentication",
+          "location": "body",
+          "type": "object",
+          "required": false,
+          "description": "Autenticación opcional del receptor. Consulta el header admitido y sus límites en la guía. null la elimina; omitir en PATCH la conserva. Los cambios se validan con HEAD.",
+          "default": null,
+          "values": null,
+          "example": {
+            "type": "header",
+            "header_name": "X-ADAMAS-TOKEN",
+            "token": "TOKEN_DEL_RECEPTOR"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "label": "Selección de eventos actualizada",
+          "body": {
+            "data": {
+              "id": 900001,
+              "webhook_url": "https://integracion.example.com/ruka/invoices",
+              "company_id": null,
+              "events": [
+                "invoice.reviewed",
+                "invoice.paid"
+              ],
+              "event": null,
+              "payload_format": "event_envelope",
+              "authentication": null,
+              "created_at": "2026-08-12T08:00:00.000000-04:00"
+            }
+          }
+        },
+        {
+          "status": 401,
+          "label": "Clave inválida o temporal",
+          "body": {
+            "error": "invalid_token"
+          }
+        },
+        {
+          "status": 403,
+          "label": "Falta permiso de administración o reportes",
+          "body": {
+            "error": "webhooks_forbidden"
+          }
+        },
+        {
+          "status": 429,
+          "label": "Límite de solicitudes",
+          "body": {
+            "error": "rate_limit_exceeded"
+          }
+        },
+        {
+          "status": 422,
+          "label": "Autenticación del receptor inválida",
+          "body": {
+            "error": "invalid_webhook_authentication"
+          }
+        },
+        {
+          "status": 422,
+          "label": "Formato de entrega inválido",
+          "body": {
+            "error": "invalid_payload_format"
+          }
+        },
+        {
+          "status": 422,
+          "label": "Selección de eventos inválida",
+          "body": {
+            "error": "invalid_events",
+            "allowed_events": [
+              "invoice.created",
+              "invoice.xml_available",
+              "invoice.updated",
+              "invoice.accepted",
+              "invoice.reviewed",
+              "invoice.reception_recorded",
+              "invoice.assignment_changed",
+              "invoice.payment_registered",
+              "invoice.paid",
+              "invoice.payment_reversed",
+              "invoice.payment_blocked",
+              "invoice.payment_unblocked",
+              "invoice.credit_note_linked",
+              "invoice.credit_note_unlinked",
+              "invoice.status_changed",
+              "invoice.sii_event_confirmed",
+              "invoice.overdue"
+            ]
+          }
+        },
+        {
+          "status": 422,
+          "label": "URL, empresa y signing_secret son inmutables",
+          "body": {
+            "error": "immutable_webhook_fields"
+          }
+        },
+        {
+          "status": 422,
+          "label": "PATCH sin campos modificables",
+          "body": {
+            "error": "invalid_webhook_configuration"
+          }
+        },
+        {
+          "status": 422,
+          "label": "Receptor rechaza autenticación o no está disponible",
+          "body": {
+            "error": "invalid_webhook_url",
+            "message": "La URL no está disponible (HTTP 401)."
+          }
+        },
+        {
+          "status": 404,
+          "label": "Webhook inexistente o fuera de alcance",
+          "body": {
+            "error": "webhook_not_found"
+          }
+        }
+      ],
+      "notes": [
+        "events reemplaza toda la selección y cancela pendientes de eventos quitados. Agregar eventos no recupera el pasado.",
+        "URL, empresa y signing_secret son inmutables; para cambiarlos, elimina el webhook y registra otro."
+      ]
+    },
+    {
+      "id": "v1-webhooks-delete",
+      "method": "DELETE",
+      "path": "/api/v1/webhooks/:id",
+      "summary": "Eliminar webhook",
+      "description": "Da de baja un webhook y cancela sus entregas pendientes. Una petición que ya comenzó puede finalizar.",
+      "permission": "Administrar cuenta y reportes",
+      "parameters": [
+        {
+          "name": "id",
+          "location": "path",
+          "type": "integer",
+          "required": true,
+          "description": "ID devuelto al registrar o listar el webhook.",
+          "default": null,
+          "values": null,
+          "example": 900001
+        }
+      ],
+      "responses": [
+        {
+          "status": 204,
+          "label": "Sin contenido",
+          "body": ""
+        },
+        {
+          "status": 401,
+          "label": "Clave inválida o temporal",
+          "body": {
+            "error": "invalid_token"
+          }
+        },
+        {
+          "status": 403,
+          "label": "Falta permiso de administración o reportes",
+          "body": {
+            "error": "webhooks_forbidden"
+          }
+        },
+        {
+          "status": 429,
+          "label": "Límite de solicitudes",
+          "body": {
+            "error": "rate_limit_exceeded"
+          }
+        },
+        {
+          "status": 404,
+          "label": "Webhook inexistente o fuera de alcance",
+          "body": {
+            "error": "webhook_not_found"
+          }
+        }
+      ],
+      "notes": [
+        "La baja no se puede deshacer. Puedes registrar nuevamente la URL para recibir eventos futuros."
+      ]
+    }
+  ]
+}
