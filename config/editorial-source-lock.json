@@ -7,6 +7,7 @@
     "billerProduction": "4505fa7009cfdc3bc306ed8ee67a8e7aea0353cf"
   },
   "files": [
+{"path":"src/components/resources/GuideNavigation.tsx","sha256":"05450f53134dd93be982f314f7d1c59eb99edc745bd0d164a5b7a6abaf46763c"},
 {"path":"src/utils/supplierDirectory.ts","sha256":"3113e3ea9d4fccceab58a7df4cdec7ade875bdacc5f2ab7c2d5cf0e71038cf0a"},
 {"path":"src/utils/margin.ts","sha256":"7d9fafbbdef4439482c9399dab2b855520f43e0161c059ac5eb87a5de611bc42"},
 {"path":"src/utils/purchaseCost.ts","sha256":"4e5f69122a82ab4da3166ac857247b306448ea24b354a07a4a820a4d68e0fb36"},
@@ -90,7 +91,7 @@
     },
     {
       "path": "src/pages/Help.tsx",
-      "sha256": "e5d96346cfe9cf25d8db99d830c2ce0bc37c947d0349d9b1ce2b67d027111f0a"
+      "sha256": "3419994a705fb8ae10f10e83548993e2226a68dc3903a4326e38aafdab1892d3"
     },
     {
       "path": "src/pages/MarginTool.tsx",
