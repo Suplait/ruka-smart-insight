@@ -11,7 +11,7 @@
 {"path":"src/utils/margin.ts","sha256":"7d9fafbbdef4439482c9399dab2b855520f43e0161c059ac5eb87a5de611bc42"},
 {"path":"src/utils/purchaseCost.ts","sha256":"4e5f69122a82ab4da3166ac857247b306448ea24b354a07a4a820a4d68e0fb36"},
 {"path":"src/utils/helpSearch.ts","sha256":"a535797a53054c5f23f54003964a15bd3818ff1bb1c15afaef271aba23561b22"},
-{"path":"src/components/resources/ResourceLayout.tsx","sha256":"9ab66ba63b37e2910dfc69efab08c6f37f9cdac2c8d6394974cd5fa54cef61cf"},
+{"path":"src/components/resources/ResourceLayout.tsx","sha256":"d351554ab504e71a0b8e01101c7cdd8569f11f49de2ff6833713692d30c4c2f2"},
     {
       "path": "config/capabilities.json",
       "sha256": "2ef1f5f48c62da309f0d30e2e876a23f3384a231424f2ef60504a2648f483789"
@@ -106,7 +106,7 @@
     },
     {
       "path": "src/pages/Resources.tsx",
-      "sha256": "6622ec05d72d249a56c15f3627450df66a03915237eedf817b07b2400f30391e"
+      "sha256": "2581fb8dbfa1c259b3f056ef0c9e330ab824af8db4908b09bed4417ec197ab6a"
     },
     {
       "path": "src/pages/Security.tsx",
