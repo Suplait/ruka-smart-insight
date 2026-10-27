@@ -52,7 +52,7 @@
       "owner": "Ruka",
       "author": "Camilo Silva",
       "reviewer": "Fórmulas explícitas, casos de denominador cero, pérdida, decimales y objetivo inalcanzable",
-      "reviewedAt": "2026-10-26",
+      "reviewedAt": "2026-10-27",
       "reviewWithinDays": 365,
       "status": "approved"
     },
@@ -68,8 +68,8 @@
       ],
       "owner": "Ruka",
       "author": "Camilo Silva",
-      "reviewer": "Contraste de producto, versión desplegada, demo sintética y límites por emisor",
-      "reviewedAt": "2026-10-26",
+      "reviewer": "Alcance del facturador revisado, documentos por operación, estados, demo sintética, pauta personal y límites por emisor; sin nuevas capacidades tributarias",
+      "reviewedAt": "2026-10-27",
       "reviewWithinDays": 90,
       "status": "approved"
     },
@@ -354,7 +354,7 @@
       "owner": "Ruka",
       "author": "Camilo Silva",
       "reviewer": "Verificación de rutas y producto",
-      "reviewedAt": "2026-10-26",
+      "reviewedAt": "2026-10-27",
       "reviewWithinDays": 180,
       "status": "approved",
       "sources": [
@@ -371,7 +371,7 @@
       "owner": "Ruka",
       "author": "Camilo Silva",
       "reviewer": "Contrato aritmético y pruebas automatizadas",
-      "reviewedAt": "2026-10-26",
+      "reviewedAt": "2026-10-27",
       "reviewWithinDays": 365,
       "status": "approved",
       "sources": [
@@ -388,7 +388,7 @@
       "owner": "Ruka",
       "author": "Camilo Silva",
       "reviewer": "Contrato aritmético y pruebas automatizadas",
-      "reviewedAt": "2026-10-26",
+      "reviewedAt": "2026-10-27",
       "reviewWithinDays": 365,
       "status": "approved",
       "sources": [

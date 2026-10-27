@@ -14,7 +14,7 @@ const oneServiceDescription = "Ruka One es la forma de trabajar con Ruka sobre p
 
 const routes = [
   { path: "/herramientas/margen-markup", title: "Calculadora de margen y markup: no son lo mismo | Ruka", h1: "Un margen de 40% no es sumar 40%.", canonical: `${siteOrigin}/herramientas/margen-markup`, schema: ["Organization", "WebSite", "WebApplication", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" },
-  { path: "/productos/facturacion-electronica", title: "Facturación electrónica y gestión contable en Chile | Ruka", h1: "De la venta a la factura. Con todo en su lugar.", canonical: `${siteOrigin}/productos/facturacion-electronica`, schema: ["Organization", "WebSite", "Service", "WebPage", "BreadcrumbList", "FAQPage"], lastmod: "2026-10-26" },
+  { path: "/productos/facturacion-electronica", title: "Facturación electrónica y gestión contable en Chile | Ruka", h1: "Facturación electrónica. Todo a mano.", canonical: `${siteOrigin}/productos/facturacion-electronica`, schema: ["Organization", "WebSite", "Service", "WebPage", "BreadcrumbList", "FAQPage"], lastmod: "2026-10-27" },
   {
     path: "/",
     title: "Agentes IA para automatizar procesos operativos | Ruka.ai",

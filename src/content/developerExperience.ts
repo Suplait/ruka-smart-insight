@@ -5,12 +5,12 @@ export type ApiOperation = typeof catalog.entries[number];
 export type ApiLanguage = "curl" | "node";
 
 // Examples are built from the same reviewed catalog as OpenAPI. No API is called.
-export function requestExample(operation: ApiOperation, language: ApiLanguage) {
+export function requestExample(operation: ApiOperation, language: ApiLanguage, overrides: Record<string, string> = {}) {
   let path = operation.path;
   for (const field of operation.parameters.filter(field => field.location === "path")) {
-    path = path.replace(`:${field.name}`, encodeURIComponent(String(field.example)));
+    path = path.replace(`:${field.name}`, encodeURIComponent(overrides[field.name] ?? String(field.example)));
   }
-  const query = operation.parameters.filter(field => field.location === "query" && (field.required || ["page", "per_page"].includes(field.name)));
+  const query = operation.parameters.filter(field => field.location === "query" && (field.required || ["page", "per_page"].includes(field.name))).map(field => ({ ...field, example: overrides[field.name] ?? field.example }));
   const body = Object.fromEntries(operation.parameters.filter(field => field.location === "body" && field.required).map(field => [field.name, field.example]));
   const hasBody = Object.keys(body).length > 0;
   // PATCH has no required individual field, but requires at least one change.

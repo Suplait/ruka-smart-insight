@@ -26,7 +26,7 @@ describe("tool experience upgrade", () => {
   });
   it("does not compare kilograms with litres or offer an invalid download", async () => {
     const user = userEvent.setup(); mount(<PurchaseCostTool comparison />);
-    await user.selectOptions(within(screen.getByRole("group", { name: "Compra actual" })).getByLabelText("Unidad"), "l");
+    await user.selectOptions(within(screen.getByRole("group", { name: "Compra actual" })).getByLabelText("Unidad del contenido"), "l");
     expect(output().textContent).toContain("No convertimos kilos en litros");
     expect(screen.queryByText("Impacto en esta compra")).toBeNull();
     expect((screen.getByRole("button", { name: "Descargar resultado CSV" }) as HTMLButtonElement).disabled).toBe(true);

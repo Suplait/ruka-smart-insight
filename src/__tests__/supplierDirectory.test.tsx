@@ -31,7 +31,7 @@ describe("supplier directory", () => {
       expect(html).toContain("No envíes facturas ni datos bancarios.");
       expect(Helmet.renderStatic().script.toString()).toContain("supplier-profile-data");
     }
-  });
+  }, 15000); // Renders 1,000 complete pages; keep assertions and allow shared-CI CPU contention.
   it("index has real search labels, unambiguous identity and crawlable profile links", () => {
     const html = renderToString(<StaticRouter location="/proveedores"><SuppliersIndex /></StaticRouter>);
     expect(html).toContain('id="supplier-search"');
