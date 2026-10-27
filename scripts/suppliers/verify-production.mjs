@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 import { JSDOM } from "jsdom";
 import { supplierDigest } from "./validate-directory.mjs";
+import { supplierPageTitle } from "../../src/utils/supplierMetadata.mjs";
 
 const origin = "https://www.ruka.ai";
 const records = JSON.parse(await readFile("config/supplier-profiles.json", "utf8"));
@@ -30,6 +31,9 @@ await Promise.all(Array.from({ length: 4 }, async () => {
       dom = new JSDOM(text);
       const doc = dom.window.document;
       assert.equal(doc.querySelector("h1")?.textContent, row.name);
+      assert.equal(doc.querySelector("title")?.textContent, supplierPageTitle(row));
+      assert.ok(!/noindex/i.test(doc.querySelector('meta[name="robots"]')?.content ?? ""));
+      assert.ok(!/noindex/i.test(response.headers.get("x-robots-tag") ?? ""));
       assert.equal(doc.querySelector('link[rel="canonical"]')?.href, `${origin}${route}`);
       assert.equal(doc.querySelector('meta[property="og:url"]')?.content, `${origin}${route}`);
       assert.equal(doc.querySelector('meta[name="description"]')?.content, row.summary);
