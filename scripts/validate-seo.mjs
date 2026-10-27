@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { bodyText, normalizeText } from "./seo-body-text.mjs";
 import { validateProcessDossierPdf } from "./validate-process-dossier-pdf.mjs";
+import { supplierPageTitle } from "../src/utils/supplierMetadata.mjs";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const siteOrigin = "https://www.ruka.ai";
@@ -127,8 +128,11 @@ const purchaseGuides = JSON.parse(await readFile(path.join(projectRoot, "src/con
 const apiGuides = JSON.parse(await readFile(path.join(projectRoot, "src/content/apiGuides.json"), "utf8"));
 const comparisons = JSON.parse(await readFile(path.join(projectRoot, "src/content/comparisons.json"), "utf8"));
 const helpGuides = JSON.parse(await readFile(path.join(projectRoot, "src/content/helpGuides.json"), "utf8"));
-routes.push({ path: "/proveedores", title: "Directorio de proveedores: RUT y canales oficiales | Ruka", h1: "La empresa correcta. Los datos a mano.", canonical: `${siteOrigin}/proveedores`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" });
-for (const profile of suppliers) routes.push({ path: `/proveedores/${profile.slug}`, title: `${profile.name}: RUT, razón social y contacto oficial | Ruka`, h1: profile.name, canonical: `${siteOrigin}/proveedores/${profile.slug}`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: profile.reviewedAt });
+routes.push({ path: "/proveedores", title: "Proveedores en Chile: busca por nombre o RUT | Ruka", h1: "Encuentra la empresa. Ten claro con quién compras.", canonical: `${siteOrigin}/proveedores`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" });
+const supplierManifest = JSON.parse(await readFile(path.join(projectRoot, "src/content/supplierManifest.json"), "utf8"));
+const supplierPages = Math.ceil(suppliers.length / supplierManifest.pageSize);
+for (let page = 2; page <= supplierPages; page++) routes.push({ path: `/proveedores/pagina/${page}`, title: `Proveedores en Chile — página ${page} de ${supplierPages} | Ruka`, h1: "Encuentra la empresa. Ten claro con quién compras.", canonical: `${siteOrigin}/proveedores/pagina/${page}`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" });
+for (const profile of suppliers) routes.push({ path: `/proveedores/${profile.slug}`, title: supplierPageTitle(profile), h1: profile.name, canonical: `${siteOrigin}/proveedores/${profile.slug}`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage"], lastmod: profile.reviewedAt });
 routes.push({ path: "/seguridad", title: "Seguridad y tratamiento de datos en Ruka | Ruka", h1: "Tus datos son parte de tu operación.", canonical: `${siteOrigin}/seguridad`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" });
 routes.push({ path: "/contadores", title: "Ruka para contadores: compras y gestión contable | Ruka", h1: "Menos perseguir documentos. Más tiempo para revisar.", canonical: `${siteOrigin}/contadores`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" });
 routes.push({ path: "/ayuda", title: "Ayuda de Ruka: compras, recepción, pagos y facturación | Ruka", h1: "Encuentra el paso que te falta.", canonical: `${siteOrigin}/ayuda`, schema: ["Organization", "WebSite", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" });

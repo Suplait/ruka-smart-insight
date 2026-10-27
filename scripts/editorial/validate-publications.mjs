@@ -60,6 +60,7 @@ export async function validatePublications(root = process.cwd()) {
   const sitemap = await readFile(path.join(root, "dist/sitemap.xml"), "utf8");
   const sitemapDom = new JSDOM(sitemap, { contentType: "application/xml" });
   const indexedPaths = [...sitemapDom.window.document.querySelectorAll("loc")].map(node => new URL(node.textContent).pathname);
+  sitemapDom.window.close();
   const legacy = JSON.parse(await readFile(path.join(root, "config/editorial-legacy-routes.json"), "utf8"));
   const failures = [];
   const seen = new Set();
@@ -75,7 +76,8 @@ export async function validatePublications(root = process.cwd()) {
       try { await readFile(path.join(root, "dist", record.path, "index.html")); failures.push(`${record.path}: draft/retired HTML must not be generated`); } catch (error) { if (error.code !== "ENOENT") throw error; }
     } else {
       const html = await readFile(path.join(root, "dist", record.path, "index.html"), "utf8");
-      const document = new JSDOM(html).window.document;
+      const dom = new JSDOM(html);
+      const document = dom.window.document;
       const main = document.querySelector("main");
       if (!main || main.textContent.trim().length < 200) failures.push(`${record.path}: substantive server-rendered content missing`);
       if (record.kind === "tax") {
@@ -84,6 +86,7 @@ export async function validatePublications(root = process.cwd()) {
         for (const source of record.sources) if (![...main.querySelectorAll("a[href]")].some(a => a.getAttribute("href") === source)) failures.push(`${record.path}: source absent from visible server HTML: ${source}`);
         if (!main.textContent.includes(record.author) || !main.querySelector(`time[datetime="${record.reviewedAt}"]`)) failures.push(`${record.path}: public author/review date missing`);
       }
+      dom.window.close();
     }
   }
   for (const route of indexedPaths) if (!seen.has(route) && !legacy.routes.includes(route)) failures.push(`${route}: new indexable route has no editorial approval`);

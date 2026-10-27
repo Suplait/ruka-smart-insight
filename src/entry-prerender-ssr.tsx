@@ -30,8 +30,10 @@ import ReconciliationExample from "@/pages/ReconciliationExample";
 import Resources from "@/pages/Resources";
 import Updates from "@/pages/Updates";
 import { updatesPath, updatesTitle, updatesDescription } from "@/content/releaseNotes";
-import { SuppliersIndex, SupplierProfileView, suppliersPath, suppliersTitle, suppliersDescription } from "@/pages/Suppliers";
+import { SuppliersIndex, SupplierProfileView } from "@/pages/Suppliers";
+import { suppliersPath, suppliersTitle, suppliersDescription } from "@/components/suppliers/SuppliersIndex";
 import suppliers from "../config/supplier-profiles.json";
+import { supplierListing } from "./utils/supplierListing.mjs";
 import FacturacionElectronica from "@/pages/FacturacionElectronica";
 import MarginTool, { marginPath, marginTitle, marginDescription } from "@/pages/MarginTool";
 import HelpGuide, { HelpIndex, helpPath, helpTitle, helpDescription, helpReviewedAt } from "@/pages/Help";
@@ -100,6 +102,7 @@ for (const guide of purchaseGuides) {
 export const discoveryEntries = [
   { path: updatesPath, title: updatesTitle, description: updatesDescription, lastmod: "2026-10-26" },
   { path: suppliersPath, title: suppliersTitle, description: suppliersDescription, lastmod: "2026-10-26" },
+  ...supplierListing(suppliers).pages.slice(1).map((_, index) => ({ path: `${suppliersPath}/pagina/${index + 2}`, title: `Proveedores · página ${index + 2}`, description: `Página ${index + 2} del directorio de empresas, RUT y actividades económicas.`, lastmod: "2026-10-26" })),
   ...suppliers.map(profile => ({ path: `${suppliersPath}/${profile.slug}`, title: `${profile.name}: RUT y razón social`, description: profile.summary, lastmod: profile.reviewedAt })),
   { path: securityPath, title: securityTitle, description: securityDescription, lastmod: "2026-10-26" },
   { path: accountantsPath, title: accountantsTitle, description: accountantsDescription, lastmod: "2026-10-26" },
@@ -128,6 +131,9 @@ for (const post of blogPosts) {
 for (const profile of suppliers) {
   pages[`${suppliersPath}/${profile.slug}`] = () => <SupplierProfileView profile={profile} />;
 }
+supplierListing(suppliers).pages.forEach((page, index) => {
+  pages[index === 0 ? suppliersPath : `${suppliersPath}/pagina/${index + 1}`] = () => <SuppliersIndex page={index + 1} entries={page.entries} />;
+});
 for (const guide of helpGuides) {
   pages[`${helpPath}/${guide.slug}`] = () => <HelpGuide guide={guide} />;
 }

@@ -57,7 +57,7 @@ const escapeXml = (value) => value
 const sitemapPath = path.join(projectRoot, "dist", "sitemap.xml");
 let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${Object.entries(pageModified).map(([routePath, lastmod]) => {
+${Object.entries({ ...Object.fromEntries(discoveryEntries.map(entry => [entry.path, entry.lastmod])), ...pageModified }).map(([routePath, lastmod]) => {
   if (!prerenderPaths.includes(routePath)) throw new Error(`Unrendered sitemap route: ${routePath}`);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod)) throw new Error(`Invalid lastmod: ${routePath}`);
   return `  <url>\n    <loc>https://www.ruka.ai${escapeXml(routePath)}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;

@@ -11,7 +11,8 @@ const escapeInline = value => value.replace(/[\\`*_[\]<>]/g, "\\$&");
 
 /** Uses only public indexed server HTML: one authoring source, no shadow copy. */
 export function htmlToMarkdown(html, canonical) {
-  const document = new JSDOM(html).window.document;
+  const dom = new JSDOM(html);
+  const document = dom.window.document;
   if (document.querySelector('meta[name="robots"]')?.content.includes("noindex")) throw new Error(`Refusing noindex content: ${canonical}`);
   const main = document.querySelector("main");
   if (!main) throw new Error(`Missing main landmark: ${canonical}`);
@@ -63,6 +64,7 @@ export function htmlToMarkdown(html, canonical) {
   }
   const title = document.querySelector("title")?.textContent || "Ruka";
   const body = convert(main).replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+  dom.window.close();
   return `<!-- Public source: ${canonical} -->\n<!-- Title: ${escapeInline(title)} -->\n\n${body}\n\nFuente original: ${canonical}\n`;
 }
 
