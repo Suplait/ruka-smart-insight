@@ -1,91 +1,4016 @@
 {
   "version": 1,
-  "id": "2026-10-26-public-pilot",
-  "previous": null,
+  "id": "2026-10-26-sii-1000",
+  "previous": "2026-10-26-public-pilot",
   "reviewedAt": "2026-10-26",
-  "review": "20 public-primary-source legal entities; documentary agent review and complete mobile/desktop UI QA; not human-independent certification",
-  "count": 20,
-  "datasetSha256": "5ab8b052aec87c15f6bfe5fe697c9f956a404ecd98509d63a324bb23408e3bac",
+  "review": "Public SII identity/activity join, all 20 existing URLs preserved; dated registry data; no private invoice metrics, contacts or bank data.",
+  "count": 1000,
+  "datasetSha256": "62b201068e8bb71b9838badffc1052d29476be468f1b3bc4fd245fbe40333305",
+  "sourceHashes": {
+    "PUB_NOMBRES_PJ.zip": "ac7157c4ccd422aeed836e4de18c08f9f26171f3fcc7b17506178f4b1689da34",
+    "PUB_NOM_ACTECOS.zip": "27787338253953e16ab17d3f29e697963b96d622e5b06de3f5cd80744dddef36",
+    "PUB_EMPRESAS_PJ_2020_A_2024.zip": "2d68ba953db7dbf2aac7451acd6e3e80bea265eea962535c72a5e311c03c4092"
+  },
   "records": [
     {
-      "slug": "icb",
-      "sha256": "27786a9d30c845ab3984ac779f71c6e6b543067534e834cc2af1e035cf7a0e34"
+      "slug": "bidfood-chile",
+      "sha256": "9d16d368faaa51914755e965d27d724967d538b27ce2b39020a998f767da3a92"
     },
     {
       "slug": "icb-food-service",
-      "sha256": "758ab68450b7fc202dcb7a8983e3ec72cac7cfb311b06f2cf0c72b66179fca61"
-    },
-    {
-      "slug": "bidfood-chile",
-      "sha256": "4653e4d950898bc5d8ad054bc69e7649c58249afad4b3fd4e4d4dcafaf847fd2"
+      "sha256": "183431c01e83ddba5c68088ae6ff6a910d74e4f555400ba242a144fa7c4e6cb3"
     },
     {
       "slug": "agrosuper",
-      "sha256": "cafc4ce1a1bd03981418795e8f130d84990096fbb3a66230b4865447cc5f1078"
-    },
-    {
-      "slug": "colun",
-      "sha256": "ff41fffef80c6e319d426ae64e60624a8135c65ada1aa0b933eda270f291ac20"
-    },
-    {
-      "slug": "nestle-chile",
-      "sha256": "13adde13a29f73fb3798d1dc2722c52585c0cce306194d14a50804a1f522071d"
-    },
-    {
-      "slug": "puratos",
-      "sha256": "a157a946cf0bc3b0ccc35fe14a808d7a83365e7149c34bb2db62ac93634e8655"
-    },
-    {
-      "slug": "gourmet",
-      "sha256": "8719eedb0cf506a81f7fe1303b080b0cc623511c5c05c78586b160ede0eea97b"
-    },
-    {
-      "slug": "dimerc",
-      "sha256": "a753074b918705305857b8504b5c05cd081788b7a3cac41863d87930fbcfa49c"
-    },
-    {
-      "slug": "soprole-operativa",
-      "sha256": "82ff48ee79dc336b3b6ff89a206a614e4dce59691eded3077c4abc98192f3ce9"
-    },
-    {
-      "slug": "pf-alimentos",
-      "sha256": "f5df0cdaea494ecd57575a98ca694650afb87e001e1c71613f7364873a6c2e5b"
-    },
-    {
-      "slug": "empresas-carozzi",
-      "sha256": "a6e00b0ce474cea4e5e80cff52955c2419f70ce043d2dad281964d1dfb326a54"
-    },
-    {
-      "slug": "tresmontes-lucchetti",
-      "sha256": "61572125850a14d45284857c4d942b5df6dee919999f0ed087618045f39ae517"
+      "sha256": "11112b5361b2e62d178ca3887f8d01a576f3e2c86877fd4840f5bf68ba445a83"
     },
     {
       "slug": "sodimac",
-      "sha256": "83d34f9ad04865fae986868c2535ddfcd525602ccbc9ff514fe2654d8721fb5e"
-    },
-    {
-      "slug": "abastible",
-      "sha256": "c6411beb6d0172b6d17580d07635e31c4bbe968e7a859e0f8508024f2cea0f7a"
-    },
-    {
-      "slug": "lipigas",
-      "sha256": "76bd72008882d9609f66b2e3ca44a6a826c272602a872293c650d64176c04113"
-    },
-    {
-      "slug": "gasco-glp",
-      "sha256": "758422f0801a0857346dc2783636bccc3831acd0abd9284ec4a07bf578d0a7f8"
+      "sha256": "351ebfa8572e1bfcb5ccbf7068d7cf37ffeaa7aaf5e2150ee82e2ada1f4338bb"
     },
     {
       "slug": "transbank",
-      "sha256": "4ba49df63cdd2166260e593799fe82a5b3537fb5a17045df290502074ceed07f"
+      "sha256": "156f7674afaa4076336d37074e800fb72dc76c62e89068818c447c2c4c8ffa6b"
     },
     {
-      "slug": "cambiaso",
-      "sha256": "328b09465d53aebb5e4fac71f96be26b498b0202824674894353bae718f9eaf2"
+      "slug": "colun",
+      "sha256": "cbf38235396d20769d3eb543066b72c97e83b935b0b3d91b68a7aba929f66764"
+    },
+    {
+      "slug": "pf-alimentos",
+      "sha256": "a3c6c947c1e3ab98b65d032d1a85f9a3a7b47d976a2a39b85db3e10f34f30107"
+    },
+    {
+      "slug": "lipigas",
+      "sha256": "b4dd140ece03ab610e4af8f983a3100bbca941a8fdf42651dd524385977c2a5c"
     },
     {
       "slug": "bredenmaster",
-      "sha256": "ef631326da1a58a52a4f80e5a892ed034be958055f9d837b7433edfd45d14325"
+      "sha256": "93bf46bd858774d350a7fff5b6e888555463efc77375e043979eeb86d034770e"
+    },
+    {
+      "slug": "nestle-chile",
+      "sha256": "e7027085bcd0a65aaa6605fe11d0b080d0ae5d047d7dfe43bbc6b4cf1d9bbfec"
+    },
+    {
+      "slug": "icb",
+      "sha256": "84c244a9310091baddc7127ad21c1d42070dcf5018cc40ef29cde17beceb0e3f"
+    },
+    {
+      "slug": "abastible",
+      "sha256": "f59e7bb6c2b971c7d2e7c61708b8504aceb23cdd4f2844efcb2345cb8df2e4dd"
+    },
+    {
+      "slug": "gasco-glp",
+      "sha256": "e0d9ef38c8cf158426dbee6444c29fe0d7727f241fd36dc52321ccec0790448e"
+    },
+    {
+      "slug": "dimerc",
+      "sha256": "047dfb600985c1fc26aaa1d43da3ab31735453df0e99c4581198612aa6308917"
+    },
+    {
+      "slug": "puratos",
+      "sha256": "19f879bbcb45e89225e64d08bd83028a1e78fc8fccc6243bee72160e29183312"
+    },
+    {
+      "slug": "gourmet",
+      "sha256": "d66659a37a47e3649c2d4b61ac0057a1e2b4258869ca5069ef11b361c4cc56b1"
+    },
+    {
+      "slug": "soprole-operativa",
+      "sha256": "0c96b61e412c2bf0ebf44ae74163bbd725230217dac9458aa6a61ff84525838f"
+    },
+    {
+      "slug": "empresas-carozzi",
+      "sha256": "a2ae5db6d561dd14cb7eeefeb67c12adc07b053033a198c4eed5757f5e8d496a"
+    },
+    {
+      "slug": "tresmontes-lucchetti",
+      "sha256": "6ac3785dbda395d52441b19b434f9fce73ec6a12bc323005a8915c77ca818717"
+    },
+    {
+      "slug": "cambiaso",
+      "sha256": "e66deaddfad194ddee955dab771d8aaf73555178999bd43fdb2d2baf24b0e817"
+    },
+    {
+      "slug": "comercial-ccu-sa-995545608",
+      "sha256": "dc0d85280f7f78bd2b51119e21a4118ff7c8088da713e56951802498423de286"
+    },
+    {
+      "slug": "embotelladora-andina-s-a-911440008",
+      "sha256": "3f8656d91d6adca2d27b20c18ac2835c3710d915aec67de0823e73f83aeb4466"
+    },
+    {
+      "slug": "cencosud-retail-s-a-81201000k",
+      "sha256": "db278a28fe76ae86d358c210f1141991aa2fa11c340b4a452c0c8e8e5c929e2e"
+    },
+    {
+      "slug": "coca-cola-embonor-s-a-93281000k",
+      "sha256": "8bdda3bd452e3368531a8519e8f8463ae6c5a223a24097a99cce24b3a84b05ec"
+    },
+    {
+      "slug": "uber-portier-chile-spa-772094434",
+      "sha256": "deeef817805400b0dcf44e3ca3c84b10aed389981dd929494e429a2f2ea4be94"
+    },
+    {
+      "slug": "rappi-chile-spa-768372233",
+      "sha256": "d6412de9b11b1d5f5e6ff3349da4552230aa70b8a5099f15e73a2fa6ac1595b6"
+    },
+    {
+      "slug": "paltas-puerto-varas-spa-772043058",
+      "sha256": "2617c4ceba22f45846b16d4675d4e3651f2eaed2c400698828dcfa6fe9f25635"
+    },
+    {
+      "slug": "administradora-de-supermercados-express-limitada-761349465",
+      "sha256": "08d21c143482a3503c4509ce5085f2effcd75538d035bca12bd30402840bb56f"
+    },
+    {
+      "slug": "mercadolibre-chile-limitada-773982201",
+      "sha256": "9ab93690b8c62b6465b3466aae1b2c91d402454163844daa0c5025cf51246f13"
+    },
+    {
+      "slug": "distribucion-y-excelencia-s-a-965689702",
+      "sha256": "3db19497808c75e570353f544f03fdb6d3397896dc2f3e6b83be6357aff0ac1a"
+    },
+    {
+      "slug": "rendic-hermanos-s-a-815376005",
+      "sha256": "897451920ec1af1f97390e9796f5f9f61b79e731ba185baab355a2201c2ec174"
+    },
+    {
+      "slug": "agricola-del-valle-spa-766221165",
+      "sha256": "f758856b0867b002ed0397a4e58a4fe35c45c686f170feb5c069906a3aa36495"
+    },
+    {
+      "slug": "delivery-hero-e-commerce-chile-spa-762114259",
+      "sha256": "c68efdc09cb50212d7c2f0c7c9dd95b359028d2f96c72120c5387ef21e509a00"
+    },
+    {
+      "slug": "empresa-bagno-spa-765016649",
+      "sha256": "7316f7b3213771d645abbf8c1a160bd75f59e5448e55d8bc906edd96b70485d3"
+    },
+    {
+      "slug": "i-m-company-spa-772351267",
+      "sha256": "d3b70a8ecd1b0465522694bf42664f22c0f02e3c754632edf442c5007a88e326"
+    },
+    {
+      "slug": "administradora-de-supermercados-hiper-limitada-761349414",
+      "sha256": "7380149f56cb0ec92297743edf95dd750e75f6ba201096474668ed8cdf527c46"
+    },
+    {
+      "slug": "fresh-spa-770750814",
+      "sha256": "0537369808ef1203550a18954909b749618ea63ca3d527f519ec2e431b5231af"
+    },
+    {
+      "slug": "banco-santander-chile-97036000k",
+      "sha256": "17bee560b5794fcc1cfffebda26d3a3411cbc43f67781b7dd87f588e8fe65e8c"
+    },
+    {
+      "slug": "la-vinoteca-spa-787664903",
+      "sha256": "cf80415745ac01b9fcf1b3732bd7c551caf6306fc73130363b173cddf08f527e"
+    },
+    {
+      "slug": "frigorifico-de-osorno-s-a-965180907",
+      "sha256": "3ca8f4b1687d701a76abcfb28f334b55bf3e6cf84c0dc80333e4ad0839a0e279"
+    },
+    {
+      "slug": "justo-spa-769429530",
+      "sha256": "c62263d4fdad3ad6649f56f8d7a3cf221ecf02a4240a90024152f3bb98ffa21c"
+    },
+    {
+      "slug": "walmart-chile-mayorista-limitada-762326477",
+      "sha256": "3c97ac88b0a558123943d7409a01c1a9cf997eda2774362e656d184abfc9311d"
+    },
+    {
+      "slug": "gastronomia-barem-limitada-760894737",
+      "sha256": "5f57d404c1e4c5aab411d6de8733f506592cde6b01488f53f27f0d2ec3ce1fe1"
+    },
+    {
+      "slug": "distribucion-y-logistica-v-l-spa-767401345",
+      "sha256": "67fe463a681a870af58f220c5292afe789b8cc7a908243e7a6bd9c8f59b105a0"
+    },
+    {
+      "slug": "hipermercados-tottus-sa-786272106",
+      "sha256": "dc175d600c88a043f867905f8d060c0401be1053371016e85a85115f015968d6"
+    },
+    {
+      "slug": "banco-de-chile-970040005",
+      "sha256": "bdeba1214aa87aadbad67a649b4ca10e1ce8ce66435efb44f54c4877d8892687"
+    },
+    {
+      "slug": "comercial-santa-elena-s-a-844724004",
+      "sha256": "850b297ecb45edb9bde8248c09d6c7db2999309bb20380d5e97275cf344058bf"
+    },
+    {
+      "slug": "ramay-spa-772623658",
+      "sha256": "845c112501b3817e253215fbea22a90bfbe92d75beb5e8d67efa51728e120987"
+    },
+    {
+      "slug": "distribuidora-y-comercial-dimak-limitada-788095600",
+      "sha256": "a48109c7f4fca9340ac4f114d921d3e8abd838157eb866cab6de28149a1964a7"
+    },
+    {
+      "slug": "modus-vivendi-spa-763299856",
+      "sha256": "db5ff463316f8f071527cd46487e7949a1f109d4cbe5d2aed7fb53a64c99deae"
+    },
+    {
+      "slug": "comercial-colorado-spa-776539678",
+      "sha256": "71c9b05b8881425402fea9bd758eaa9c07fd29c07de6c472ca210c5f46cc3481"
+    },
+    {
+      "slug": "enel-distribucion-chile-s-a-968005707",
+      "sha256": "e5e56c0a55729fb3d363b4161499459aaa5befc9e4838016366a42a61f3cbc40"
+    },
+    {
+      "slug": "tres-puntas-spa-76988937k",
+      "sha256": "bd603db9366b25aed9dc0e882a3b531e9464c9c1cbeaaae5c6f6e44192f999db"
+    },
+    {
+      "slug": "eyp-gestiones-spa-777773658",
+      "sha256": "728b3135d65c3b1e0b3cd65f0a1f6acba135be6703116bff3ac9494a545cf010"
+    },
+    {
+      "slug": "emrs-spa-767910096",
+      "sha256": "466886d9b7b4dbd7bdcc45d287ea087e6444c3803b4be629d9da5a588f3f78ea"
+    },
+    {
+      "slug": "fabrica-de-bandejas-limitada-769798501",
+      "sha256": "db25978e5d65c0899bb2074f92057f52051e3fe68d8676f1b1366c90de7473c8"
+    },
+    {
+      "slug": "servicios-gastronomicos-gofa-spa-761696653",
+      "sha256": "369d1601a124c930249ee0ced76aeb67a1f26af2db0634eb46e0165002dc854d"
+    },
+    {
+      "slug": "comercial-cahi-spa-777125079",
+      "sha256": "ec3de73262c01f7e611edfc9bd14fda1b14040900076b2bae6e1883f38df5b78"
+    },
+    {
+      "slug": "sociedad-operadora-de-tarjetas-de-pago-santander-getnet-chile-s-a-771906923",
+      "sha256": "0b5c97118c1e341d3e0368fe529cfb2a32aeae019600e600bc830187c8f5a8d0"
+    },
+    {
+      "slug": "nagoy-spa-760967475",
+      "sha256": "d960a1b64398a76cb892d101a5e138fb687d7457c51162481fdac409f67607b2"
+    },
+    {
+      "slug": "banco-de-credito-e-inversiones-970060006",
+      "sha256": "890dbec48ec0c6009445ec7b2c99bb5ac08dbbd8c585c5752966e97938bd5ecb"
+    },
+    {
+      "slug": "ariztia-comercial-limitada-836148002",
+      "sha256": "baba82255bbb9f53caab258f5f7cdeb3aa8ef0caeea653193ed60f9f780cf5ad"
+    },
+    {
+      "slug": "quillayes-surlat-comercial-spa-969542102",
+      "sha256": "40153046d20fe836b213bf6c5cecbeef9275010c2a0e08e0b9995e3f6ff43a5b"
+    },
+    {
+      "slug": "copec-s-a-995200007",
+      "sha256": "84b3c3639dc6276a30529e59561799791b705cbc5ba6e2b47d64db7a44ec5dee"
+    },
+    {
+      "slug": "fbs-food-beverage-supply-spa-762703742",
+      "sha256": "d3a32ba5cb09b5bc91ce7761197ff8897b5aa0ce8e56a12dabc84cc483fd1ac6"
+    },
+    {
+      "slug": "comercial-y-pesquera-south-wind-s-a-966979100",
+      "sha256": "0ddf3f0304d08a247b2311235e81529be37d282b39fe4745f7836e06f470e0b8"
+    },
+    {
+      "slug": "bat-chile-s-a-885029000",
+      "sha256": "4f078c038fa1b1302b89cf12f8d2be56cf15bbb5ce4171a91a6d9714ccab5d4a"
+    },
+    {
+      "slug": "toteat-spa-763635791",
+      "sha256": "4373a28be0e00a161780874789e1e9845367641047631906a3cd5abbc257aeb9"
+    },
+    {
+      "slug": "panificadora-pan-bol-ltda-859629008",
+      "sha256": "c52c07bd0a6efa276fd66a5892c9b40532385a1e1fbddc649338dd068740124a"
+    },
+    {
+      "slug": "easy-retail-s-a-765686601",
+      "sha256": "5335d9bd66d664f9d5778fa32461f487abbbfc2db6ae192928cf81bae30e7d39"
+    },
+    {
+      "slug": "puente-pacific-limitada-765944767",
+      "sha256": "c0c0f84e8aefb740aa2b08bd54ea5b2400baa2f02bf2f0b479eae83928e12a84"
+    },
+    {
+      "slug": "ideal-s-a-826235004",
+      "sha256": "862725ac95c4daa88b0501b1f6e7b98d69974af8589520fbbc1ac09e64baea7e"
+    },
+    {
+      "slug": "comercial-peumo-limitada-850379009",
+      "sha256": "14df7bed3fc8b22f8afb52ab60b565f45544229465649accb9d4dbcafabb69f2"
+    },
+    {
+      "slug": "com-carlos-hidalgo-valles-eirl-768682402",
+      "sha256": "e3507ea6fb3be0ff2e93ae4db2a04f23142d2d6e2d28169fb82a7f22b6436350"
+    },
+    {
+      "slug": "panificadora-las-rosas-chicas-limitada-889974001",
+      "sha256": "cdc7c037deb3025dbf0f30a00bb5e82503f58087175f18d78f52d797d32cd2d4"
+    },
+    {
+      "slug": "sodifrut-limitada-760409626",
+      "sha256": "e7457b2bfabd4bc287dcc6e4ed032f0a2e261a3bc9197e0a0a4c55d5470d8baf"
+    },
+    {
+      "slug": "verde-vertical-spa-775526289",
+      "sha256": "e92bca5d15b89b0554ef82c54b7820b42753c9d8ca4bb6e3ccc6765e46d63ef5"
+    },
+    {
+      "slug": "distribuidora-prisca-spa-76221217k",
+      "sha256": "0db021f61d9ab9543740b32cff02acc76d29fd9c5fca20d5775efd640d0ee3d6"
+    },
+    {
+      "slug": "metrogas-s-a-96722460k",
+      "sha256": "77172ccfae34a2968510735d022d14f8247487482f222a85a1c4bced53b0c700"
+    },
+    {
+      "slug": "panificadora-jhvb-spa-771436633",
+      "sha256": "ee539f6930289d6110df1ec684fac0d4fdb67c8af297546529cbfec89acc155e"
+    },
+    {
+      "slug": "alimentos-y-frutos-s-a-965579109",
+      "sha256": "70b778b3efa0ff49332958e06b260ed65d6c98afcf4c549ecc11442f93b59a07"
+    },
+    {
+      "slug": "modinger-hermanos-sociedad-anonima-806348007",
+      "sha256": "b9df5e6aa97a7798dee6cf7995db3727f54b6e81a6cb74dc211aa4cf97404859"
+    },
+    {
+      "slug": "comercial-los-chilcos-spa-778900505",
+      "sha256": "269ff7262f146ece360668fee01d59b0e89137657b1cffbbe6c7c7e0e5ea68c0"
+    },
+    {
+      "slug": "telefonica-chile-s-a-906350009",
+      "sha256": "b0c53d1478eef543e8e4fa93a3d556e067b0306aef324c570e138d4d089eb3cf"
+    },
+    {
+      "slug": "global-frozen-spa-766895409",
+      "sha256": "4251c728836634cb06f9148cf942eca6f033cb89f6a615952f4a181eeebcd40a"
+    },
+    {
+      "slug": "verisure-chile-spa-760586471",
+      "sha256": "bf9a13b61b58fb7f9f504cd1e05465907f34b466f4d644551b23bd4e3d7a1465"
+    },
+    {
+      "slug": "comercial-gestapack-spa-761812076",
+      "sha256": "bb008a4e60245e6e6b72e6228f3fb284c107c0f8ffd4ec47e22bd8f5834e144a"
+    },
+    {
+      "slug": "sociedad-comercial-corte-criollo-spa-761979345",
+      "sha256": "1ceb07af0f7538086cb93c85572cff6c65306f7d1cc7d5119068d0dae719885e"
+    },
+    {
+      "slug": "comercial-sud-americana-ltda-845476004",
+      "sha256": "9773b3eb0bf1ccaa9070c87031f93d10fb618297bd3897d262d82aa0e8754c34"
+    },
+    {
+      "slug": "jose-rivero-llamazales-y-compania-limitada-865205007",
+      "sha256": "1cf12b24420706a1f1b0b175332c99ea99106191f0b11abd6705db94cec38e53"
+    },
+    {
+      "slug": "distribuidora-de-alimentos-gaeliano-spa-774606025",
+      "sha256": "5d8c189ab7aa533731fec0ac75ddb2311308a0445d9696d757c7215e9d5aafae"
+    },
+    {
+      "slug": "bastien-spa-969233207",
+      "sha256": "eaae1c733ca8c064f110b5df5561dcbb2f75b610948bb6b35f95001b13c8b811"
+    },
+    {
+      "slug": "comercial-oceano-limitada-772658508",
+      "sha256": "188bba158ec91af71d1ed35f50b31721e42355e64e86909c0b4add8e576adad3"
+    },
+    {
+      "slug": "ganadera-rio-bueno-s-a-968630903",
+      "sha256": "f41c742df6b3e732bcb931c32c30b3304750fffa67c384b0864e9a5055cf3a01"
+    },
+    {
+      "slug": "comercial-blanco-y-compania-limitada-788440901",
+      "sha256": "c5ff8d8d06c35ad737e87bc09d4e13165b26a1dd6fe85c6bde3170f6f2036c9e"
+    },
+    {
+      "slug": "premium-brands-chile-spa-760477265",
+      "sha256": "a8923f2180c63a1cb6145988daa7d15c291f3daba6384080696a7435ec13612d"
+    },
+    {
+      "slug": "comercial-agricola-la-excelencia-spa-770608147",
+      "sha256": "d967a1deda0e82856a4ea3ec5a808661b3c63b20bd5262f0d82fcfed6e859212"
+    },
+    {
+      "slug": "inversiones-toro-ortiz-spa-778648156",
+      "sha256": "8d9a4f5c091604160eb1d9606cc1067b71a2346f227e2b693c0a54d9e21a0ec1"
+    },
+    {
+      "slug": "finestra-spa-761025546",
+      "sha256": "84cb1015d8e11c10495d34ff2cff7b87225c8314ed548a5f243b5f7c737f6f4f"
+    },
+    {
+      "slug": "consorcio-industrial-de-alimentos-s-a-801863000",
+      "sha256": "3e870531fee908f0ab610382cf8ede1af0d025235a986d25abd86059c2f5193a"
+    },
+    {
+      "slug": "qifood-spa-763192865",
+      "sha256": "29931e2dd4a0cdcc520f3408e11516ee1fa8bfcb31b372f21a2bbbf1d90a79b2"
+    },
+    {
+      "slug": "empresa-nacional-de-telecomunicaciones-s-a-925800007",
+      "sha256": "a3d27fcb5b0d1251b8bea922d52781a512d547e12b48ecb4a2c805399b310f93"
+    },
+    {
+      "slug": "carnes-los-lopez-spa-765574765",
+      "sha256": "4f64817507b1dfc273f64ca71db9286921eea71782c0f4efab154a968e7bcb31"
+    },
+    {
+      "slug": "xfood-spa-767884966",
+      "sha256": "2d3eac6a3d74e780209008ba96c0904f4ca23fe3369ca2d74a38fc8a452efa27"
+    },
+    {
+      "slug": "sociedad-comercial-ofimaster-spa-783071606",
+      "sha256": "4b4e7abb977d3c44da56059ea1307af8b97a32c13915bdc609d63df79005da0f"
+    },
+    {
+      "slug": "promerco-s-a-796847905",
+      "sha256": "24495a77bfb6a4eab6055f59532783dcaf2bed29642769fbe307feb8a5ca0d09"
+    },
+    {
+      "slug": "comercializadora-paltas-royal-spa-771923267",
+      "sha256": "bcc1e9e4b4da993999ca86f8b98cbe6cf0921f6116528c11f70deb6cdd9fbecc"
+    },
+    {
+      "slug": "hod-foods-spa-766406750",
+      "sha256": "515cef5db4cbb540c9ca974ecaad450ab8f0d7724f274362a276633e0985bd96"
+    },
+    {
+      "slug": "comercial-abasto-spa-760177482",
+      "sha256": "1b86921ee4c8718b96ac847080649bfc917d8b272b1b14fb5250b7b5d607d8d5"
+    },
+    {
+      "slug": "la-plantacion-spa-77184183k",
+      "sha256": "18fa2aec04cce9e2b32ae651de82dda0ca1010621abc286bcbb6d7ad7af6b37b"
+    },
+    {
+      "slug": "comercial-lupulos-spa-765054125",
+      "sha256": "02b5a82fa33887d73deb6947a7d6539c70c345a86a50ce2f28e64ee50c54567e"
+    },
+    {
+      "slug": "vitalfreshco-spa-780158867",
+      "sha256": "8a193b055fe575541f75c9250ce4d930380dc8f6efbd38033fc415cb2b880c07"
+    },
+    {
+      "slug": "alimex-s-a-969382008",
+      "sha256": "e8ff36f18029f3ab25b4f8ede26c5e50f2b68a451789c6a2c263a3bec5ddf9cc"
+    },
+    {
+      "slug": "telefonica-moviles-chile-s-a-761248901",
+      "sha256": "67e0fddc194af3f8d24ecff8a5db7c2c93ad07e8156de6e16dbf9d9dfb8e2075"
+    },
+    {
+      "slug": "mercado-pago-operadora-s-a-76516950k",
+      "sha256": "eec555f3eb1f953719a96673fa48d643b19d71700ebb40303db7f5c003f30866"
+    },
+    {
+      "slug": "avicola-cachagua-spa-771437370",
+      "sha256": "3ee18dc2e9c41cbda163e2a46d513f3b3e3bc76cb0cbe9eee5126d176c2236c8"
+    },
+    {
+      "slug": "importadora-y-exportadora-los-cholitos-limitada-776159980",
+      "sha256": "1f5f54e7ad7fa7d6c2da25fa07c9c021ba57f86b4ecdf5b78e1686c46f9ab78d"
+    },
+    {
+      "slug": "evercrisp-snack-productos-de-chile-s-a-94528000k",
+      "sha256": "a3df1ab6d292e766b1153af88a63a0bee3726e9dcc6a15834435e01e1830cea3"
+    },
+    {
+      "slug": "suplait-spa-775251247",
+      "sha256": "abdcd35867cce5d9fe48f8c86d7b168d11188e09b9660143c6d6060797aa495b"
+    },
+    {
+      "slug": "vancouver-spa-76053692k",
+      "sha256": "4d64a7a4f66858a29afc62d4adb7069c7c1c46c67648da3277d1bcc6209a52e5"
+    },
+    {
+      "slug": "innovacion-y-tecnologia-empresarial-item-limitada-789363307",
+      "sha256": "35425b25eb6d356e3d4044c2a4c25fe2a556259e4c267508697b843e3177856d"
+    },
+    {
+      "slug": "comercial-julia-del-carmen-gomez-solis-e-i-r-l-761662031",
+      "sha256": "ca1269d5498cea9c56ee71eb414af87ece6fc6927a97913f56e72befc11adfee"
+    },
+    {
+      "slug": "con-agallas-spa-764928911",
+      "sha256": "eac554fa6c3321b844785faa2ded217fe3d2e0eabc4d4d993babd600a0b1cc0a"
+    },
+    {
+      "slug": "aguas-andinas-s-a-618080005",
+      "sha256": "95079baa6c7e50033302710684829c7797c956f2f9cd742b269a9bd854077100"
+    },
+    {
+      "slug": "micro-greens-service-spa-76900937k",
+      "sha256": "8a7b8616c0ca97f598f64bcb8105efa64dc109d27e21d61d5348f8eaca01b9a2"
+    },
+    {
+      "slug": "avicola-y-comercial-el-toco-ltda-783837307",
+      "sha256": "dc58de98840fc9d836125cc7950a9a2787e42248f8b0093e022ccf5b0d2a7275"
+    },
+    {
+      "slug": "embotelladora-iquique-sa-965173102",
+      "sha256": "1b3711da694344daf9066626de2f2c30da60d8d493d010262e6721fcd4e04fbc"
+    },
+    {
+      "slug": "comercializadora-f-f-spa-772566948",
+      "sha256": "6c74058fe982966ebf8711c4f797925591f29de0cfd4346daf581045d531635b"
+    },
+    {
+      "slug": "mt-distribuidora-limitada-772105657",
+      "sha256": "035de0d59363b96f41217b8718a2075782d5538b08341ed9410763a414f900a3"
+    },
+    {
+      "slug": "servicefood-spa-762975149",
+      "sha256": "1389c9fe548f916e463c9b556d2add548b5e0650ad548f356800f87608dd9983"
+    },
+    {
+      "slug": "fabrica-de-productos-alimenticios-amadeus-limitada-761301713",
+      "sha256": "0186f8031d0a74feb7a5acc89ae7dd03c44070c9344e46f0cce178f5612dc4c7"
+    },
+    {
+      "slug": "agua-purificada-fernando-maldonado-meneses-e-i-r-l-766134459",
+      "sha256": "36a2bf1ca6e95901d9f14dcb100f1b2a44567f5cf9b48cfc9f16c6fc5c8cd62e"
+    },
+    {
+      "slug": "carnes-nuble-s-a-965180702",
+      "sha256": "6ab91ceac2d5d4ade6b81d1f94b0ccaae88ca0a981f2998b9515d64ce702064d"
+    },
+    {
+      "slug": "loa-chile-spa-770054265",
+      "sha256": "78ac7eb2cc55b2886316cbb7a8248a1baa329cb046d76387dbe01972a15cf786"
+    },
+    {
+      "slug": "jorge-alejandro-leiva-olivares-ventas-de-hortalizas-eirl-764664876",
+      "sha256": "4383c362080edf52be3847e9c2cf5fcf9dbedf662fff445a147cd5c4024cbb01"
+    },
+    {
+      "slug": "soc-concesionaria-autopista-central-s-a-969454408",
+      "sha256": "525ebe8b51205a8e7ad14bd3974591c3a8bf7feeb58e2926f209b81be293044b"
+    },
+    {
+      "slug": "comercializadora-y-transportes-malhue-hermanos-limitada-768155755",
+      "sha256": "ffc9ecf734012c93d65de467198eb272f45067e69efbbd957f28ff6ea0e9cd31"
+    },
+    {
+      "slug": "sociedad-concesionaria-costanera-norte-s-a-764961307",
+      "sha256": "b5a518f3749cc531ab524291634a79c2ae522929ad51faff56a5922561ea2f25"
+    },
+    {
+      "slug": "comercial-chau-sociedad-anonima-776826200",
+      "sha256": "ae9c269e4de78e5b924812ee68746e332fd965d745d480f6d70041d447f57934"
+    },
+    {
+      "slug": "comercial-almapan-spa-768662053",
+      "sha256": "251120b6a801831e8122b68e9c2e8ac637ffa641df89b5ece8468082a57b0506"
+    },
+    {
+      "slug": "distribuidora-el-chercan-spa-778456141",
+      "sha256": "7341c8791d11413c8f13a4918e09c92704d670f3864c294d5c53c4bcd0b2efd3"
+    },
+    {
+      "slug": "dps-chile-comercial-limitada-799213303",
+      "sha256": "66020b42c2d44e5296f793469ee8d7493f5955552cea39a4fe356938515cd963"
+    },
+    {
+      "slug": "soc-vinicola-miguel-torres-sa-85980800k",
+      "sha256": "f54fb4c16c5df62dc442697d0ff3483ff3ce5d2850a8ce85db60a74f6d0b00c2"
+    },
+    {
+      "slug": "servicios-y-rentas-g-v-spa-789910804",
+      "sha256": "53d6fc4956fa202ffe76ba2e0bc2429c4cfb85ff23a8fd2972ef3b115d5ae901"
+    },
+    {
+      "slug": "sociedad-comercializadora-macan-spa-769101608",
+      "sha256": "6fee7167f6804d088763c94f6e563fd3c9cadf255bae26bfd594640dff8ce2ce"
+    },
+    {
+      "slug": "imp-y-dist-de-alimentos-gran-gourmet-italia-ltda-767725507",
+      "sha256": "a493389f41eff0516030951dd2e88c32057b140e2e29a448caef87a794aaadef"
+    },
+    {
+      "slug": "comercial-y-distribuidora-chm-spa-772363656",
+      "sha256": "8302c4baadc34685d75b48db83a0f9db876cf306af3fb7b8243790604dad31d6"
+    },
+    {
+      "slug": "nutrisco-chile-s-a-776432962",
+      "sha256": "4ecfe823cb596563633e3a36611c3c4db02909f2a14e9e0227d9f46e25bbcb41"
+    },
+    {
+      "slug": "comercializadora-gag-chile-spa-761570188",
+      "sha256": "8d223eaff8fa3b9270d4010fd657b05db5d47678083eaf85d5625544b0b36505"
+    },
+    {
+      "slug": "adelfa-vallejos-e-hijas-limitada-780764600",
+      "sha256": "2e0b2df5e6b359111abcd1785e81c841e6603ba1fc36331c5628f27e4c3c4fbb"
+    },
+    {
+      "slug": "tamango-brebajes-spa-767386621",
+      "sha256": "f1b7a3e3167342adf5fe7eed12d2596fab83fda0916a593d2b03fa9991374eac"
+    },
+    {
+      "slug": "alimentos-cerro-pacifico-spa-770419522",
+      "sha256": "df8061e6c32682701ada3306ebf883a56040503b91b4f60611f6e8b11c66a496"
+    },
+    {
+      "slug": "comercial-sea-garden-spa-760959065",
+      "sha256": "f886813b4355f465bb475f6121c8942cca3241774f8c169fc4e9b6e5e8af82bd"
+    },
+    {
+      "slug": "comercial-escocia-limitada-776651508",
+      "sha256": "2d2882ff308dbdda3d8a5c2395d0a05bc7d20a90631c8cd01f10c43af05107b8"
+    },
+    {
+      "slug": "todo-licores-d-y-e-spa-76613601k",
+      "sha256": "b5ce49e8e4562a3a68c4a2fa20c19d978980ea82dca6d918a35a00600737cae2"
+    },
+    {
+      "slug": "sociedad-distribuidora-de-alimentos-agrobraz-limitada-761062387",
+      "sha256": "8b90843ce6f2b878216dfd95c00a9d4826a4753248270b7ab45326f3c54ee651"
+    },
+    {
+      "slug": "entel-pcs-telecomunicaciones-s-a-968069802",
+      "sha256": "cbcafb02dd79838110690e835d4963a7898ad2c9c4dfc46a76dd96360e65ecf2"
+    },
+    {
+      "slug": "vivalvos-limitada-769020136",
+      "sha256": "57e29e1c31a28715d19118fd013258f53ac31d3bb40491bcb9ec278cc5e4f54b"
+    },
+    {
+      "slug": "comercial-albatros-limitada-764490975",
+      "sha256": "7fd82bd0aa4ad2385dde3bab7711ef80aabca93f17a700804b4a9558ed44afb6"
+    },
+    {
+      "slug": "australis-retail-limitada-768995788",
+      "sha256": "0f9b106a2901f9d49123f450f0571d71de78d3860482c32204bdd84cad56c032"
+    },
+    {
+      "slug": "rayo-fontecilla-marketing-limitada-762835568",
+      "sha256": "4d219f01608045f91000a9f25441d9f980234c7072e5763ae708e46388609117"
+    },
+    {
+      "slug": "comercializadora-de-alimentos-gustavo-natero-carrillo-e-i-r-l-76073909k",
+      "sha256": "e1fb7419b08f8b118c740c20f5594a445281239ad1310cebd2d4ddb47781d246"
+    },
+    {
+      "slug": "sociedad-comercial-nessa-spa-773128162",
+      "sha256": "1738fe46c105701e6337e6cdb000923cd5e687b4b4b987284a0012b7c2e7e996"
+    },
+    {
+      "slug": "solo-hass-spa-774061681",
+      "sha256": "e674f419dea5cff88151d0a1bdeaa5395b3ad460953a70fffd9a5f24e72796b0"
+    },
+    {
+      "slug": "alvi-supermercado-mayorista-s-a-760297437",
+      "sha256": "c332114148e9fce70f3301cb2ecb59564de225fa06b4206b6dbf54c4b5906497"
+    },
+    {
+      "slug": "comercializadora-de-combustibles-el-socorro-spa-762171643",
+      "sha256": "a4682b447e1ebd242655cd92746d9b95df28652923094d8e36f15cb4664e44e0"
+    },
+    {
+      "slug": "distribuidora-y-abastecedora-de-productos-alimenticios-promont-limitada-761794884",
+      "sha256": "b9358040115bf5068b153a07be03dbd0d54c2ddca689477354f958a7ff8e7436"
+    },
+    {
+      "slug": "comercializadora-protier-limitada-772873301",
+      "sha256": "1e57760980537fbb8f6650a1b4de631df9f3bb4034e5ed201ee52fb133052873"
+    },
+    {
+      "slug": "fdd-innovacion-crecimiento-s-a-760321079",
+      "sha256": "3167c6ce6aa331287cc76709e4a48aa550d14276097fbee8ed5124c5ed640d6e"
+    },
+    {
+      "slug": "comercializadora-jh-spa-765246741",
+      "sha256": "21b4a88f02b4639ecd7008f42e1f722df1da2c9da9d6ff39a9211d6f9a8cc40a"
+    },
+    {
+      "slug": "aguahojas-spa-771924646",
+      "sha256": "ceb84b2835df1c83682f644759a199c65b8f1d31e4bcfc9815cc58e071851a70"
+    },
+    {
+      "slug": "comercial-cm-spa-776917222",
+      "sha256": "4b9e2704304819620b6b83470e04823a4f18320140fc9c5f1a851e45ef1911a0"
+    },
+    {
+      "slug": "inversiones-y-comercial-vichuquen-spa-763076458",
+      "sha256": "ec04c67ddc2c74470b062255b2b1b3ac1d2f252c9c997df684e476c5fd6a7408"
+    },
+    {
+      "slug": "sociedad-bravo-y-hermanos-spa-765200245",
+      "sha256": "0778150b329779203ecf3a354c8c8dd3b5849824928bc33f3a8a81bc2a8ae2de"
+    },
+    {
+      "slug": "fruv-spa-777755471",
+      "sha256": "9a244b8a359701831339cfe8a0ada985814f0c50946216e8cf2eede04bf071f0"
+    },
+    {
+      "slug": "supermercados-central-limitada-764075056",
+      "sha256": "f2da8646e69dbb0b3cc7b601462a5ed0c58e152798ba186d30d8f8b3a71e5316"
+    },
+    {
+      "slug": "comercial-arturito-sociedad-anonima-969280809",
+      "sha256": "b7ed772f1fcfb71a2dedf9893588fab88a5aa30e15f1890aed4da4ef9ff83384"
+    },
+    {
+      "slug": "helados-foca-s-a-767158408",
+      "sha256": "db505e14bd71442ba0732610da71eda0eb0822cef4b701daf192676bcc4c2f60"
+    },
+    {
+      "slug": "comercializadora-yds-spa-766286283",
+      "sha256": "853e70d81504a3be6f9b8300513be116b05edb406a79a6dca6de910513f6bbac"
+    },
+    {
+      "slug": "sociedad-de-alimentos-leefood-spa-763193241",
+      "sha256": "a21389b4052eb818e9af505f3ca87a47fd30022a6d6229b5743d949e84faedcc"
+    },
+    {
+      "slug": "balmaceda-y-compania-limitada-760280348",
+      "sha256": "d260f455f5cd6c6c470919cae094422aa375f4e0063297a0b729ebdef8d879f4"
+    },
+    {
+      "slug": "big-food-spa-77568576k",
+      "sha256": "28f0bfa74cf8a60d50210bf714ac40628368ed7302e64e86e07c8769c4e00135"
+    },
+    {
+      "slug": "transportes-y-comercial-mgs-limitada-76194777k",
+      "sha256": "628eae3aeb90d00c6eed03bc13250cc7b17ffe8614dbb16ee0f2b00d515f98be"
+    },
+    {
+      "slug": "transportes-corve-ltda-764454928",
+      "sha256": "e057b4b618e337540e4583c87c91ff9fb500474790efe59aec2d5e5c6bbf16a5"
+    },
+    {
+      "slug": "ekono-limitada-764735803",
+      "sha256": "ae82a7daf17f203cee533d2a9bcaf0b508a1efa8644c9d9e9ce182242a2eed45"
+    },
+    {
+      "slug": "comercial-altos-del-valle-spa-765859026",
+      "sha256": "3b31600b0b817e463c7b1679c884cf7078f600c5e20881a0fbfe3e39cdd932d3"
+    },
+    {
+      "slug": "ingenieria-y-construcciones-spa-995008602",
+      "sha256": "39ed6c64a61b43438aa718517e042dc7fa6df876bdeee43a2c11ea2ef272b2b5"
+    },
+    {
+      "slug": "ferreteria-y-materiales-de-construccion-comercio-ltda-788532202",
+      "sha256": "1b6b96c7479e3312dab74db6ac6ce1caae38fffb5fa9b65ffc0ebf562dd5979f"
+    },
+    {
+      "slug": "cerveceria-kross-s-a-995273004",
+      "sha256": "8b16c38b1ae90b2f4934a883815a27f2bc982662826e345ab275f068a4958acb"
+    },
+    {
+      "slug": "chilena-de-revisiones-tecnicas-spa-763073890",
+      "sha256": "a4d93c9417339c1e4a5d468b91d6e06784baf1ddbeb41b15dad6354f831fa75a"
+    },
+    {
+      "slug": "sociedad-concesionaria-autopista-nueva-vespucio-sur-s-a-760529273",
+      "sha256": "f988b2eac220a60cf9c2c30dbd93bc559b5dccf098ea6a1ac52ab767fb7c616f"
+    },
+    {
+      "slug": "maryun-seguridad-industrial-spa-770847303",
+      "sha256": "38f14f828343764f5de5f261d67c5b8d6863609af956161b0aa33da0cac8ce6f"
+    },
+    {
+      "slug": "proveedores-integrales-prisa-s-a-965569405",
+      "sha256": "5f42db3bdfe6d1803e8f37b4ad3d043f562c8a97ee111f36475245d8fc36473a"
+    },
+    {
+      "slug": "bci-seguros-generales-s-a-99147000k",
+      "sha256": "f7fdea7e0b5764d4c42df55f15c3365fa2838b43f7b19b20888cb0ea30dca7e1"
+    },
+    {
+      "slug": "distribuidora-pez-fresco-spa-765670683",
+      "sha256": "0088e543d55b2d82c1414084d1cff4c5b607b2ff1297379040c0c6fc03a39689"
+    },
+    {
+      "slug": "importadora-yunaplas-spa-76456149k",
+      "sha256": "28d5d5d73d3e3afb18484a767a24f5e2639e9f9aad5d95c4cdbcf435ae8c0689"
+    },
+    {
+      "slug": "angela-hernandez-valenzuela-gastronomia-eirl-761819933",
+      "sha256": "a9061300ee9bd327bf1cafcbd4e0edaa1a54c1f4371c533ec3369a8f19889617"
+    },
+    {
+      "slug": "comercializadora-hermanos-martinez-limitada-776323217",
+      "sha256": "5a6892c3571af45a69d2de32b2d46a1a5d03a3984c524603b3df5e8700a08efc"
+    },
+    {
+      "slug": "alimentos-y-aceites-spa-765058082",
+      "sha256": "d762e9ca59ad7b79967d506d250b7ceb58f74a58f4bba5679477f438b0e7351d"
+    },
+    {
+      "slug": "g-alimentos-spa-77254393k",
+      "sha256": "93186a3b7634adeeebe4bd36bd5765f9a9f0ed52d5601bcce559ccdc6454ba05"
+    },
+    {
+      "slug": "aquality-limitada-785820304",
+      "sha256": "d3fb3bd774cd3a3516b12754fb8946ede272daac5196d147a76656435f8de240"
+    },
+    {
+      "slug": "distribuidora-de-alimentos-rapa-nui-ltda-799692600",
+      "sha256": "41a0cc181a1ccf4c9503b316a1f3c6a0e11ebb4a7194a10a7037aa1fa33de0e2"
+    },
+    {
+      "slug": "atf-company-spa-764427025",
+      "sha256": "2dd859ccdf7e9bb6d94095605c45d799d43d4174a5a38799ba9f55b3df243b66"
+    },
+    {
+      "slug": "agricola-industrial-lo-valledor-aasa-s-a-92196000k",
+      "sha256": "e73339069f93e5ef92e0f7346ab3f40536f9f648f6d497ce6ed1f1ab807fbbf4"
+    },
+    {
+      "slug": "climaq-ingenieria-y-climatizacion-spa-777704311",
+      "sha256": "bbd94f301d43a108f84cdc79f70ac814e05e20f03375caa1774ccbef505581b9"
+    },
+    {
+      "slug": "comercializadora-jbj-spa-771541674",
+      "sha256": "19d537cd09a13f67eeeabc4e145cd525df8167451bcc4040752c6a1d20cac645"
+    },
+    {
+      "slug": "comercial-deandes-limitada-798456709",
+      "sha256": "190fc9a04895b43c4f01c495bdc2f47af16ea422f1511d0aaacfa86bd8c05dc0"
+    },
+    {
+      "slug": "vallefruits-spa-777469282",
+      "sha256": "da5cf2e8a88cc1518c7c5e97d6b4560571c8c89a542620f481156e9da117f725"
+    },
+    {
+      "slug": "master-martini-chile-spa-760997323",
+      "sha256": "85d6f86b11a04a6e8cb58118afd22900e747d52673194f43ea6c65df61be0269"
+    },
+    {
+      "slug": "inversiones-depa-limitada-765379091",
+      "sha256": "7a772c49f6fb804c6d9037e906171630747274c426d97b780d5cdbd337ebe30a"
+    },
+    {
+      "slug": "importadora-y-comercializadora-floka-ltda-774240306",
+      "sha256": "72a13a743dbb00f0b3b057f51adf9e1492d1d663f57c0676ec65d4cd0fe66c79"
+    },
+    {
+      "slug": "nilo-arroyo-chilelift-limitada-763450953",
+      "sha256": "a9c3631638c4735c52761f74dfc22e8ee7f662ba47b7b527174524acaa100e7f"
+    },
+    {
+      "slug": "zurich-santander-seguros-generales-chile-s-a-76590840k",
+      "sha256": "7bddc91d88849ba3b63bcbe890620c3c3f09a6fcc04bb9e8a39b009223e05e58"
+    },
+    {
+      "slug": "comercializadora-san-diego-spa-774918078",
+      "sha256": "1618739d708d8d5218b7da6c015bf27d658a78f16c135da415d2660abbb10c6f"
+    },
+    {
+      "slug": "chile-distribucion-spa-770795532",
+      "sha256": "958f898f6d00639b85cef78dfd91eb2686e10145c00731be89b989e846c4bdba"
+    },
+    {
+      "slug": "comercial-nafcom-limitada-761773488",
+      "sha256": "5e9bace719e6f2a39561947e8d82ea136e5081d416e16070a564c0a4e6bea9d7"
+    },
+    {
+      "slug": "abarrotes-economicos-limitada-768337209",
+      "sha256": "436fd39c9d4a3ceed33dc6ad178ad2539adaaf57928497f6ab37de3bc0e04d6e"
+    },
+    {
+      "slug": "fe-alimentos-spa-777758292",
+      "sha256": "f39c2bd2e14ff0f97104269db7b63a3e9318a3a129c026702df711d295df8451"
+    },
+    {
+      "slug": "pasteleria-mestiere-spa-780475897",
+      "sha256": "2b906b73efcb1cdde13368cdb452c67f267c08b10cb4db66890d28383d6f6907"
+    },
+    {
+      "slug": "restomarket-spa-763362868",
+      "sha256": "d00f56fe5c2479ef228c2965b96aaf4264ea60b1e1a4ab72298c05729adc5921"
+    },
+    {
+      "slug": "comercial-las-invernadas-s-a-76228541k",
+      "sha256": "0a36945a4df701a07908b6a44b8a25f8d97bd93f94ca70495d813c6cc9a0ec9e"
+    },
+    {
+      "slug": "comercializadora-ernesto-alejandro-ibarra-arroyo-e-i-r-l-768239649",
+      "sha256": "ab89e391897401eaebcc545acc334e50c2f125dfcee2a123a8e30f8174fa284f"
+    },
+    {
+      "slug": "elaboracion-de-hielo-demian-vega-catalan-e-i-r-l-769333843",
+      "sha256": "cf40f7aee18f781fa688377fe93b525f08bd57e94673857a6ad76c2fa946d06d"
+    },
+    {
+      "slug": "frigo-arca-spa-776997773",
+      "sha256": "bd5bf049e5c87254853d580da3c400bab67ce663a53446676e042bd03a49b9da"
+    },
+    {
+      "slug": "distribuidora-inicio-spa-763067238",
+      "sha256": "e3ff834f386d42f08decad0aa7380eaede317a7eb5dfd9d70c23a55cc3669f80"
+    },
+    {
+      "slug": "sociedad-concesionaria-vespucio-oriente-s-a-763760618",
+      "sha256": "261b5a314e3caffad7f020f7d6bedf2ae75926815a83394fe0704632b40778a4"
+    },
+    {
+      "slug": "proquimia-s-a-966953500",
+      "sha256": "3b8e8a43f38abdcf84e3b89f0bdf1fa4daedddf1add27a62a063a76f14f78eff"
+    },
+    {
+      "slug": "soc-pesquera-y-procesadora-aqua-luna-limitada-776345008",
+      "sha256": "6e40eee0076bed866f86aad20a3d8522785e7308294d018b239ed77c8f531ba5"
+    },
+    {
+      "slug": "chubb-seguros-chile-s-a-992250003",
+      "sha256": "9778a0c2bb428e1f895aa91ad00550df2f76a0a5796b8b45e095f8e43ae5157d"
+    },
+    {
+      "slug": "comercial-slm-limitada-760737135",
+      "sha256": "19a08a756309fca445947f87e036ca52ca3eb094a56273393924d784c6ab02ac"
+    },
+    {
+      "slug": "comercial-carnes-el-quincho-limitada-762490668",
+      "sha256": "457a2f67cdfeceff3ca85cf2085e4cf9d7b81f40a7a71df7a8eba0117f033d1b"
+    },
+    {
+      "slug": "comercializadora-diaz-limitada-764619005",
+      "sha256": "4fd32e06018e068fddff03e7488269957985756ef25d6eb6f547b69f04f85e15"
+    },
+    {
+      "slug": "distribuidora-gilco-sa-815336003",
+      "sha256": "c88a73d8536720dd455b51f1cccf3c9d2d5ca7385fba66bf90a349d72bb888d5"
+    },
+    {
+      "slug": "comercial-san-fermin-limitada-782407708",
+      "sha256": "1ad68e6aee7b2e0fd7779ab6446e85113a10f43386eced4bea64c306284c70b6"
+    },
+    {
+      "slug": "comercializadora-comech-spa-761557637",
+      "sha256": "8076278b0883bb852b5904744792252cbe026a0664f215114414f5ce0d28ecd2"
+    },
+    {
+      "slug": "comercial-binder-limitada-776448206",
+      "sha256": "41c9dc620c4537a05a09c1e1eba8ae015824bc8443dda2072fefeb9f2df8a881"
+    },
+    {
+      "slug": "sabores-de-asia-spa-766017665",
+      "sha256": "ecab66cb4500ae50c9b8750d67240bced90213cfd3395ef607c345f3ed126f46"
+    },
+    {
+      "slug": "procarne-comercial-s-a-761303856",
+      "sha256": "ef94b475c489e944c5669d6e57ad8682e6b485fc08747f5dc759a2c71943e5e5"
+    },
+    {
+      "slug": "inversiones-marmar-spa-773262950",
+      "sha256": "ef63a16a50fa16e9141534d317f1f6fb5eb55d7bc0de9a884c994e513bba1022"
+    },
+    {
+      "slug": "distribuidora-u-y-v-limitada-776749001",
+      "sha256": "97dc579b3da286b9ecc00d4514646f3a59d4bf10847abbe8b68df5745f2f4c47"
+    },
+    {
+      "slug": "klibra-metrologia-y-calibracion-spa-769479384",
+      "sha256": "362051778c4dab50375df804616ca542f6090590b9f1c96587303eb7e961bea7"
+    },
+    {
+      "slug": "comercial-f-h-engel-s-a-892255008",
+      "sha256": "4ec157f32c700df1ed07a58428fda9fa28fb7023e9842559d957c68558691598"
+    },
+    {
+      "slug": "nespresso-chile-s-a-761137832",
+      "sha256": "489fc275c43968c54155f6c91857a94cfc8c060c79e569af8a975f5ff1431ff2"
+    },
+    {
+      "slug": "imahe-s-a-851101004",
+      "sha256": "fb3704bfff622770e2184f37faf96f0bd17de935d1c2967d79b8178078d6766d"
+    },
+    {
+      "slug": "dismer-integral-services-limitada-760036919",
+      "sha256": "30f6916128d8e3bc91912122082d149051cbf9fce35e13cd21f3d9061dbcafb6"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-san-andres-y-compania-limitada-762588900",
+      "sha256": "f7cf16f018c0b4236ddcc13fb8f15765ccf096fd22317e8380c89b690a6ceafc"
+    },
+    {
+      "slug": "skc-s-a-841963008",
+      "sha256": "e4242ef6526720b90c7095a35e42ae196bb088456ddce5d492e867677b002f50"
+    },
+    {
+      "slug": "edenred-chile-sociedad-anonima-967813508",
+      "sha256": "ae80866f3d2f99d364c6ca992d626745a3e302d1582aa8acb7b4131bb5628349"
+    },
+    {
+      "slug": "diprosel-spa-761719416",
+      "sha256": "0795805ca3c59d2a2d7ad58400760158e2c801724d4da7039effcf0f3c0afd6f"
+    },
+    {
+      "slug": "comercial-dach-spa-769185704",
+      "sha256": "fc958d0617e845f5d536ce98320f5639ae32842894cbeb8abd25637813629c84"
+    },
+    {
+      "slug": "soc-comercial-e-industrial-alimentos-shen-limitada-787454607",
+      "sha256": "7f6c01fcc4936ac82ad9504d13ab857ecbae3aa074e04fa93bb072cef5744603"
+    },
+    {
+      "slug": "buk-spa-76691442k",
+      "sha256": "a0beab67be58925b3a39cad4b5a9e179d71d45f8447efa8908b0740587e283df"
+    },
+    {
+      "slug": "comercializadora-dagomla-spa-780230460",
+      "sha256": "b63364ae7f2ff02a1d93cedba32e0a41b0227664ab0bc8efeb412b796ec320c9"
+    },
+    {
+      "slug": "fruton-spa-772285884",
+      "sha256": "5e0321a4ac654956d93680852b1d86c5c8143a0dac9d2d188a42c35e5b9c6525"
+    },
+    {
+      "slug": "distribuidora-de-maderas-dimensionadas-y-materiales-de-construc-ltda-775046902",
+      "sha256": "78de2c2583e0f662090ff22c4f64964d16d516f11165fb6fdf824688235f5529"
+    },
+    {
+      "slug": "comercializadora-de-productos-hortofruticolas-sarai-limitada-76059718k",
+      "sha256": "a7b5ea17d52469dc69b609d02ce8c2573760fa669e6cf145d925de9980923d40"
+    },
+    {
+      "slug": "gi-group-spa-767417411",
+      "sha256": "0b64b0615b8db910f2507732ef6d83f293280dce3655e55547881f0f3a9ab5ef"
+    },
+    {
+      "slug": "pluxee-chile-s-a-965569308",
+      "sha256": "1be08902b7c251da4adbc9d868dea3647d6d2920b7809a2236126974197276fb"
+    },
+    {
+      "slug": "by-maria-conservas-spa-763714950",
+      "sha256": "f204cb20d9e76f8328eff2435b27511828e3c631746f7494129aedb7e4c8788f"
+    },
+    {
+      "slug": "la-casa-de-la-limpieza-spa-773409757",
+      "sha256": "0a23db2dd7a4a403d96e2a9077ef0783d032aac102200d60346d5a98fb0387dd"
+    },
+    {
+      "slug": "kb-spa-777162012",
+      "sha256": "b10cc545078d2b88179886d03310da0fb502088866853889acf8d1a29058e1e4"
+    },
+    {
+      "slug": "bcg-imporex-spa-762533499",
+      "sha256": "17928f5aa0c1ed0399b39fd564a5c7e9150847000429df11cb9769faf575b087"
+    },
+    {
+      "slug": "inversiones-la-latteria-spa-770260043",
+      "sha256": "2a2b34f37134464d423ee41e206738d89dc4907832d1f91ff9ff3b1507363852"
+    },
+    {
+      "slug": "huerto-urbano-spa-772426143",
+      "sha256": "376354035b32075cc1b8ec68b603df3e1e988326976f74e716fc68591291e84f"
+    },
+    {
+      "slug": "comercializadora-los-causitas-spa-779194698",
+      "sha256": "a9e8f517d1ab8dfdd02aff17f50818702a28ab41796ccdd40cf62f7ad06dcdac"
+    },
+    {
+      "slug": "soc-agricola-los-girasoles-ltda-786367204",
+      "sha256": "d78f6d4980f7700d0f510ab4eeeaf270e1184b0cb71768fc6d8a355159189583"
+    },
+    {
+      "slug": "steward-s-a-966441003",
+      "sha256": "f44591d9024c0da0d3ee5377dddcdfdff29a46970dc3369b798cc816fbb0a790"
+    },
+    {
+      "slug": "tiendas-la-vinoteca-spa-995323907",
+      "sha256": "99eedd172b35497f1476b6fc15db58612aa0e9b7ca18a18f4c42e287a335b464"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-papofrut-spa-770925592",
+      "sha256": "08e1fe5ca300687909588d25bc5080c6de49098f7e7cd9dc360d4bd212cb4048"
+    },
+    {
+      "slug": "comercializadora-congefruits-spa-772661398",
+      "sha256": "d2c3a97c946d3d576f46c2215a5554d94e8ae4e219588f8075d2a7fce360c259"
+    },
+    {
+      "slug": "comercial-bacriva-spa-777799371",
+      "sha256": "0c96b4699ed4d3002b1950c0a6b3c760ff06a48744c6c3cf69d707ce80f57cff"
+    },
+    {
+      "slug": "agrourbana-spa-768712182",
+      "sha256": "15a479837578a515fa6f93b6c3bee22ec4da9df776e9a966fc9c8dd4d6aa1964"
+    },
+    {
+      "slug": "gourmet-select-limitada-760692123",
+      "sha256": "91677b12ed9b8904a2e0d409d9dbea38514c6ddb045564afaf1c0ba6b6fc7080"
+    },
+    {
+      "slug": "xcitus-spa-77130625k",
+      "sha256": "6a985e76f7665b4383dee34cc48af7ea534b61a6bdfbb23a6463656a9fe9d128"
+    },
+    {
+      "slug": "heca-spa-764127013",
+      "sha256": "14556a229116a2d2e2af909e253b46ecc0f2b45e226286bcad71ed17f5690254"
+    },
+    {
+      "slug": "ilop-s-a-804782001",
+      "sha256": "ce55538e78404dd67a8ceeafdab98115aa58c18053d64d34b0c741c36585d627"
+    },
+    {
+      "slug": "agricola-y-comercial-don-clemente-limitada-761413007",
+      "sha256": "f2b98e780782f5fe78dee82f76f9209664ca8b5d717705f4d379464e110dd0ee"
+    },
+    {
+      "slug": "distribuidora-andes-blend-spa-771736432",
+      "sha256": "2a7579aa28d2e53a64e8716049950409f5d613926de910f0cf8914d9cba1b43e"
+    },
+    {
+      "slug": "verfrut-spa-780445246",
+      "sha256": "b308deba847905957d552294c67f4ce278eec765821713396c1491e552a90045"
+    },
+    {
+      "slug": "sociedad-austral-de-electricidad-s-a-760731625",
+      "sha256": "0b9d19cc2e3039adbe59a94c30ae310939a7c367b3088e12aa3b61a065e2103f"
+    },
+    {
+      "slug": "superdespacho-spa-764748913",
+      "sha256": "c00cf63c76a5384e545741dcc98747544704fc733ac262d96a8bc30b38f752cd"
+    },
+    {
+      "slug": "asf-logistica-spa-764815769",
+      "sha256": "d3ab432a679b964e907ca9f671b347cc78c2ba9fded8b967d4d1d395cdce9cad"
+    },
+    {
+      "slug": "mario-oryan-y-compania-limitada-760569658",
+      "sha256": "570754007351f70d1bdbc65dec4edfd08aef12b473f7ed820fd0080fd8c554a4"
+    },
+    {
+      "slug": "la-oferta-comercial-ltda-965321209",
+      "sha256": "bb16468880257aa809a5c47a09be1369480a8679d9bf12e32816f8b0973987bb"
+    },
+    {
+      "slug": "inversiones-everest-spa-765123933",
+      "sha256": "0f2004fe50991a33a51a0847fb33792a6bf157304ba6618949c77318271fdd7f"
+    },
+    {
+      "slug": "inversiones-bantu-spa-762018713",
+      "sha256": "1a947651493a9ac640bc2e8886edff097708475d9fc75dc67d2a176bad1b7856"
+    },
+    {
+      "slug": "broambientes-spa-765922321",
+      "sha256": "beeb268aeb1d2deb382329ca9505650039daac391f09a2b619208de36a8f18fc"
+    },
+    {
+      "slug": "interam-comercial-sa-811508004",
+      "sha256": "2f64dbc6e5bd82454f96147620fef17bdda5ac4d1baf84c3e067956774872610"
+    },
+    {
+      "slug": "omenaca-s-a-811455008",
+      "sha256": "d9d053d1ae90907eaa192fd9c994840fd90b74953a26a10d535cd490122fd32e"
+    },
+    {
+      "slug": "directv-chile-television-limitada-871611009",
+      "sha256": "39593c9ad20e57508914c2a5df6d55e884a453e2d8745bc2273e915063f65d50"
+    },
+    {
+      "slug": "aguas-cordillera-s-a-96809310k",
+      "sha256": "5f9b6bfd3e76dfaf0fad04e4e7a7ea760ad2324cbd8e12614e5b4474d66c5006"
+    },
+    {
+      "slug": "comercializadora-yanela-espinoza-e-i-r-l-77766025k",
+      "sha256": "e90aec9fa688d0cf798866dc426fd99b2c549809ac5bddc80b869cfd8ba17706"
+    },
+    {
+      "slug": "soc-industrial-kunstmann-s-a-908890000",
+      "sha256": "27634879c12039512b01cd90e06cc9514649298de74fb647a8bcd340275c3fb2"
+    },
+    {
+      "slug": "hormibal-maule-spa-764999444",
+      "sha256": "8766b78d366ee0ae86af62cf413579c37a04d1c759789e93b6f8d6aaf8ed61ce"
+    },
+    {
+      "slug": "pasteleria-y-panaderia-diparma-spa-772842635",
+      "sha256": "611a0ee6f454f528c5fd46b3172045691b05196b3fa44fbcd52b14739dab0258"
+    },
+    {
+      "slug": "grupo-f-inversiones-spa-767760558",
+      "sha256": "72957b94edcd64cf9e490d660aeb84ced157e9bb618e35e6255736ad6de81eac"
+    },
+    {
+      "slug": "operadora-de-sistemas-electronicos-spa-776304395",
+      "sha256": "78b0479962ebf033f3b1fc39e0ce5bf0e5bb69c13fe4d79050264681cea31bad"
+    },
+    {
+      "slug": "soc-concesionaria-vespucio-norte-express-s-a-969920301",
+      "sha256": "f7bfafb72f78f56e413925cab5ab3c1c205c76431c2204b869cbfcd84162b3fe"
+    },
+    {
+      "slug": "eco-silky-spa-770658578",
+      "sha256": "f770240d8a09c844a3da15b8f7ecf9d50f5b7f0eff2bdf5e64d36cd343dd4caf"
+    },
+    {
+      "slug": "agricola-curacavi-spa-775426241",
+      "sha256": "b912e0f119b5308ad59fbe9f448891d97ff54735e77dd363dc06f40e8f730a3e"
+    },
+    {
+      "slug": "gtd-manquehue-s-a-937370008",
+      "sha256": "b7dc77b678ee27c7f7ec8ac10c314b70bf72dd7c92fb38934c0ae3e0393225ed"
+    },
+    {
+      "slug": "cecinas-braunau-spa-778797909",
+      "sha256": "75524d97e1d2732322ab24bfd0c08cc1a24837b92f06e25b8c4607f96e4c0b92"
+    },
+    {
+      "slug": "central-de-compras-la-calera-sa-702511003",
+      "sha256": "8c0c3d9dff1b84f211eb44bf20c6abdf1e1471dcc76f61b4691f2259886b7dc7"
+    },
+    {
+      "slug": "congelados-tio-pepe-spa-760662992",
+      "sha256": "070b48ddb654f67a06e8d9a28b05d00efca33239fc1afa024e1634c9901fe5eb"
+    },
+    {
+      "slug": "procesadora-y-distribuidora-de-carnes-y-alimentos-alto-gourmet-spa-760497568",
+      "sha256": "9b8b11246d77dc259b5a7b95942059963776fd27462bd2547390162ed9343ddf"
+    },
+    {
+      "slug": "comercializadora-martinez-cordero-limitada-761727664",
+      "sha256": "99d0244825ebdd1f738ebcdcd6e9f3f5c6b9bb3012a697da83bc1128333ea1c1"
+    },
+    {
+      "slug": "inversiones-sipo-spa-765852234",
+      "sha256": "3bc9693f743756224285dba34bf1afb64f586ef82d99ee6c9de2a78ef7c0e454"
+    },
+    {
+      "slug": "agroproductos-bauza-limitada-879387000",
+      "sha256": "7adbc4fd512c31cb794d1d60fbd3a0da5564663adf15bc940224b9da529b85d6"
+    },
+    {
+      "slug": "codifrut-spa-775824549",
+      "sha256": "b6f04c5cce0e6c4c0ed70b837f54f5a5a497c4b35bdabbb2ad5e082ddf3e083e"
+    },
+    {
+      "slug": "helados-pudu-spa-765653932",
+      "sha256": "3b6581687b53a809ec56bbbe6570a7a4cec9e0034bb8febd41df9d6df2c34786"
+    },
+    {
+      "slug": "fl-comercial-limitada-764578511",
+      "sha256": "bc9b0765a1714ffe760ada1048c1df9ac30db2a4173a876d3b926b4bfa969e29"
+    },
+    {
+      "slug": "compania-pisquera-de-chile-s-a-995862808",
+      "sha256": "1612866e441993362adf83693a045a764e78e63d2252e8678fce2030783192e3"
+    },
+    {
+      "slug": "comercializadora-de-alimentos-pehuen-limitada-789996806",
+      "sha256": "047951422d6582e850c343422fefd4a16593c0e2f71065b83d62f8b88db57752"
+    },
+    {
+      "slug": "distribuidora-frio-express-limitada-764323688",
+      "sha256": "1fb3518b75c1fd9be6e4106ac1a40d1eb5c0efc0c5b39374f874c6bdaa5c3a73"
+    },
+    {
+      "slug": "cerveceria-principal-s-a-767635508",
+      "sha256": "d97c049a13c150ae9a11a0131c670e8c63dce5708db1d588629ac553a268808e"
+    },
+    {
+      "slug": "ikso-spa-769938591",
+      "sha256": "d9ad315dc513272e1eb455d4a419b2c0831460a95a66ec8eb2149c45a0817002"
+    },
+    {
+      "slug": "levin-y-villegas-compania-spa-769370544",
+      "sha256": "03caaaa492bf340af1e5ff29441239bf844f9717004efd8ee637fff0464e6483"
+    },
+    {
+      "slug": "transportes-mcastillo-spa-774778233",
+      "sha256": "58429c8210e91c226cd09b45bd0c881d0fc92abfaeb57cbd41d687d89e7d7f30"
+    },
+    {
+      "slug": "marsol-s-a-914430003",
+      "sha256": "21f704a36420638c4cc9e74836d3269e8aa2dfedbf548e2096bcb5d31504723e"
+    },
+    {
+      "slug": "ostra-antica-spa-779139123",
+      "sha256": "6366cf660593174a246c7fada94dffefb3f7a25a705f7bb4cd07c31bd18032a4"
+    },
+    {
+      "slug": "jehova-jireh-spa-779184447",
+      "sha256": "b013732f6bbc04fb768c75c544abfd0bb67075b629a85b863f28c59bc742d3ca"
+    },
+    {
+      "slug": "soc-comercial-eco-market-limitada-777759000",
+      "sha256": "90d3aa5a6b2216d3768b97227870aea13190596d3c2f451f7bd5bc71e140d408"
+    },
+    {
+      "slug": "mil-sabores-food-spa-761478028",
+      "sha256": "495fb5f83537ff22a8c19cf931e381ad183a0e9620b4d0fa17b0a9f339914043"
+    },
+    {
+      "slug": "sociedad-comercial-y-distribuidora-hn-spa-766039804",
+      "sha256": "2e1415813bc60e403fa86171214b27ab7366a145519f240ff86a4fb36eb8ae46"
+    },
+    {
+      "slug": "jaime-silva-e-hijos-spa-969743000",
+      "sha256": "59a188b37eeb9ad49cf7bb423fdc8b1f427bd55b70cd016f21cc80013963468f"
+    },
+    {
+      "slug": "inversiones-mmt-spa-762648539",
+      "sha256": "2868944c325819684e59dc1743347f0a9c56478e0e00b49ffea8b6932e06222c"
+    },
+    {
+      "slug": "comercial-vitafrut-spa-763373533",
+      "sha256": "3c30acd70778a488b27938f1e285489d0a128db1418072f4a2d81f4c43f85cc0"
+    },
+    {
+      "slug": "distribuidora-el-mar-spa-773244286",
+      "sha256": "2d0e85753a3f05c876a3b81ea2a4e6f796ed09ba19c6b7b0d6e40a9d43fc55ea"
+    },
+    {
+      "slug": "sociedad-concesionaria-ruta-5-chillan-collipulli-s-a-777227580",
+      "sha256": "c62a9ebf427baa35723fd6138b00e741cb4f02086ac575dddcf0cebf05bb277b"
+    },
+    {
+      "slug": "agrocomercial-maturana-spa-779745120",
+      "sha256": "3565756a644eca957d654f15a512088fe8423128259bb3ce2b62224100e32f51"
+    },
+    {
+      "slug": "sph-s-a-968443100",
+      "sha256": "7c569541d0c5d729c8d20402ef2cd08b959f63b205ba400337b7c214dd3f2848"
+    },
+    {
+      "slug": "picoteando-spa-765011841",
+      "sha256": "205924446620dba3dc980a50b8c780d39cc28ffd280437ec19f95b2276ff197c"
+    },
+    {
+      "slug": "rentokil-initial-chile-spa-763609030",
+      "sha256": "b28bec3f8fe63703b4095b1037e3a136a3133013c45a0509b92cb7040722d895"
+    },
+    {
+      "slug": "agricola-vertigreen-limitada-772951582",
+      "sha256": "df3a4405ec3e895adb1216ed91cc9ac78aa6a05941fadf08f832511a23ee6e96"
+    },
+    {
+      "slug": "comercial-y-ferreteria-tampe-spa-761752472",
+      "sha256": "4d936eb352a6652ee0ae395c39d460bfa219a82a1c5c6a2ffb195ea40340f816"
+    },
+    {
+      "slug": "compania-general-de-electricidad-s-a-764113217",
+      "sha256": "97e1665d27e127dadb1f0e6bb989ebf922ae93f8e2718c7bc65e38e7d7bf30ea"
+    },
+    {
+      "slug": "bsale-chile-s-a-761361449",
+      "sha256": "300ecf318f6ee0adb72543db7aa7a52aee31dd7a71720720f4bd7815839a08bc"
+    },
+    {
+      "slug": "inversiones-eggservice-spa-767077831",
+      "sha256": "76874a1c7b7154ba0d63c30870fd36ab6e061270db9fd2fa029a147f81ffc696"
+    },
+    {
+      "slug": "paraiso-del-sur-s-a-767332300",
+      "sha256": "426f94a34697412f6e7fe99c089570f47c9af2825c40ea38ee79f279c30121a9"
+    },
+    {
+      "slug": "orca-spa-761410199",
+      "sha256": "9bdef855cd6823b69e8e431716bd06b3ab81dcc248ce383a529447fae335ebf7"
+    },
+    {
+      "slug": "agrofood-spa-769698337",
+      "sha256": "4cf10ec1cc3db0d6c254cf6743801c8bfab10f34b812224590f1de607773fe16"
+    },
+    {
+      "slug": "surfish-spa-769575693",
+      "sha256": "dfa940a081f3c93e6700ac85848c60fe8304d0000e08fa08f0a9ad0d28a3759d"
+    },
+    {
+      "slug": "soc-comercial-y-promotora-la-uva-limitada-761200100",
+      "sha256": "1a18add58510748658eec33d4128c23f895b48c0fdc7ad97cf66298c25bc44ee"
+    },
+    {
+      "slug": "vtr-comunicaciones-spa-761141430",
+      "sha256": "3ffb207170876aa7e570eab16d0c3f2c6f784af36579d069fa7d421c65381547"
+    },
+    {
+      "slug": "esmax-red-limitada-797061204",
+      "sha256": "97d6998f404cb8a4395978cde6ec0c3189d8917c87b5876fa574bb55b54c27a1"
+    },
+    {
+      "slug": "better-food-spa-763074145",
+      "sha256": "1b393e5635409d0755970082a7d53d6baf70796d93c0642e38e022267358604e"
+    },
+    {
+      "slug": "comercial-larenas-spa-771037437",
+      "sha256": "c83b5c1f4b0a94659d457993cb3ffe47859124d8ba7dcbbd06e227f25070df62"
+    },
+    {
+      "slug": "pibamour-sociedad-comercial-y-de-representaciones-ltda-846507000",
+      "sha256": "2c657713f9df51e02a47fde6279f1d0b36fd529c80dd26367c624ae1c7116b83"
+    },
+    {
+      "slug": "comercial-sanpro-spa-770094615",
+      "sha256": "24cfcb71156c35f2740bf078ba65f9a0b740c6ed2cadb47480da3160d247a8a9"
+    },
+    {
+      "slug": "ravera-y-cia-ltda-819223009",
+      "sha256": "a63cc1bd71e1253392231738fc7cc3d64db336ff2f5d112375a9082c9184ff86"
+    },
+    {
+      "slug": "morfy-spa-779057917",
+      "sha256": "6f323f0b36d7752ce0f1d1480c96a33263da95684028ba726b6bc1c99f85e79e"
+    },
+    {
+      "slug": "espinoza-e-hijo-spa-760557854",
+      "sha256": "407964a0d673aa3c2901f8e1a6b99f08a734b5a7c5d5b7b33c6158c58781caf4"
+    },
+    {
+      "slug": "limones-piura-chile-spa-76813426k",
+      "sha256": "bc082482622a1912954060e1da5d3097e033c462ff9edf1a82c694e5c708e033"
+    },
+    {
+      "slug": "comercializadora-de-insumos-para-puntos-de-venta-limitada-776169307",
+      "sha256": "4097d1bda52009f53b12daf3ae6f9665ac332089c5e6cb92622eb159f6452f7c"
+    },
+    {
+      "slug": "comercializadora-c-y-b-spa-778008521",
+      "sha256": "c6ccdf16229a393f17c2ac6e260a798569d496731c9e41698e204a57230123f3"
+    },
+    {
+      "slug": "benito-campos-y-cia-ltda-838913008",
+      "sha256": "2b25fae377d1ad86715480331c662aff3d988c9684fac1e4d6d1178015d0133f"
+    },
+    {
+      "slug": "vina-san-pedro-tarapaca-s-a-910410008",
+      "sha256": "195b73cd92230e647bb58c76ce7172a10a0e2884566da72b5db336d952869582"
+    },
+    {
+      "slug": "carnes-donoso-limitada-767206704",
+      "sha256": "9e24abcfa760cac95d0475669700cc895a9f308ba8ef2684225242eeb9f6b839"
+    },
+    {
+      "slug": "materias-primas-mpcec-spa-764903005",
+      "sha256": "9309741820e325622e88590918f2ea1a8290c5ad6d8715f21a873a51970ebe1a"
+    },
+    {
+      "slug": "transportes-c-y-g-limitada-763014967",
+      "sha256": "196ebbbed2b53dd80cb216c2477e8197f82ab9ee54973ff228ddc41b9b6b0b4b"
+    },
+    {
+      "slug": "chilena-de-cafes-spa-765495024",
+      "sha256": "2f67380bf58092dfb4e81817fce3175b33018c167ca56dc2d45912d985c83b71"
+    },
+    {
+      "slug": "hdi-seguros-s-a-990610002",
+      "sha256": "a215beaf2157b082be17686e12318a8524c68f92092f94a54ffbf9f256f59bad"
+    },
+    {
+      "slug": "distribuidora-kento-limitada-762657449",
+      "sha256": "131b344c1f3b6ec1dd6563e56451fd8fd181b3663961609a7ce6ddda2b96647a"
+    },
+    {
+      "slug": "comercial-dibor-limitada-768960607",
+      "sha256": "7f606ab39b6fd7ed09d0e1a13a6c901e5cd78dbd4c99eed64f76043ccaa20793"
+    },
+    {
+      "slug": "cavas-reunidas-s-a-968569805",
+      "sha256": "512f8996a77734c70602f18139bc7290688940e9e40f098fc1cc746a7d6beff7"
+    },
+    {
+      "slug": "globalant-spa-76469385k",
+      "sha256": "61b224a8dedd866c3d56421a0ad27ee0583df5c3f352d563b79cea9df14244e0"
+    },
+    {
+      "slug": "destileria-alto-colchagua-spa-768865183",
+      "sha256": "6343f3dbfef4b106418c461509a0f78c7346c908ef697e35b1b7a426ffb8861b"
+    },
+    {
+      "slug": "luis-ernesto-chodil-palma-dist-de-carnes-y-alimentos-eirl-767601808",
+      "sha256": "ecac83e6098e740030576f0827204b497e6ec5fd9a94e1e3f6b8ba0e18600596"
+    },
+    {
+      "slug": "sociedad-comercial-y-distribuidora-my-gas-limitada-770101921",
+      "sha256": "9eea38ba8855d650fb290e64877cb4748a84ca7d27ec0dd2a9a5d2d6d3f1b818"
+    },
+    {
+      "slug": "f-h-m-alimentos-spa-785705505",
+      "sha256": "8cb3ae8d071eef17182a41fecce3d5c42b33c65d2d86ee9c917c22a1f5a307db"
+    },
+    {
+      "slug": "truly-nolen-chile-s-a-965917608",
+      "sha256": "d62c9b7a65df46789d795a71c2039f16c0844a5d65a4f0485d12cdf600ba4703"
+    },
+    {
+      "slug": "chilean-marketing-corporation-chmc-spa-774590102",
+      "sha256": "3d5c666ff4a9d64fab7c82d05ff76196ced2538588a29240187eb44484802cd4"
+    },
+    {
+      "slug": "comercializadora-hieloso-limitada-78719270k",
+      "sha256": "955ef687553ccc1266789da185f41f69430278bd7a3039feab39512c71c0a0c8"
+    },
+    {
+      "slug": "sociedad-comercializadora-de-aguas-h2osorno-limitada-769506454",
+      "sha256": "f515f8d8d3b44389c112b0aed20a3972789f1a61a0b20a2adb7313aa798ac9be"
+    },
+    {
+      "slug": "distribuidora-y-comercializadora-divad-spa-772606893",
+      "sha256": "c7488f3dbe364d6ded6f36ce049f75370195f67b95abcb864939881412ebd2db"
+    },
+    {
+      "slug": "distribuidora-de-alimentos-globe-italia-spa-789867402",
+      "sha256": "917aaddcbd16bab0338f22f1450fd9afb409bc60b43ab2ff421feff54ed3fdee"
+    },
+    {
+      "slug": "transportes-cruz-del-sur-limitada-809835006",
+      "sha256": "60a5588fe1a7ebc38e833cbefa4bbb3815f40d2fe3b38d11ceee8832f9417c10"
+    },
+    {
+      "slug": "comercial-figaro-spa-76080987k",
+      "sha256": "2fc6b31380cf89474bc5b7dd0efab008c7ef5f182ca04e54382e2a0780c9da3b"
+    },
+    {
+      "slug": "los-socios-spa-776796832",
+      "sha256": "5dda0d8be3b570fc2abbed4a33256f284cd951b50c7acb5dce68c29b02ebf061"
+    },
+    {
+      "slug": "sociedad-distribuidora-san-benito-spa-762322072",
+      "sha256": "785a986b3b7c0682297090ebf83302ba6dcbdf07323bfc0d1a07bfc1390bf229"
+    },
+    {
+      "slug": "importadora-mozzen-limitada-768453241",
+      "sha256": "476d2d5e1fbb77cb2a58dd81a07e22eb102da982358de6c4cd74edec9269b898"
+    },
+    {
+      "slug": "virop-spa-770385415",
+      "sha256": "dad899058bb7e145cd3069f3676c07c930c0f4e9e5989d757adc524b88b103d2"
+    },
+    {
+      "slug": "distribuidora-providencia-limitada-787593402",
+      "sha256": "0474bf10a26505d083216508609ac723259e01c68ff212eb5d5a9ec807d6e8f7"
+    },
+    {
+      "slug": "comercial-agricovial-s-a-766185207",
+      "sha256": "a86b7b96aae2b07a7accffb77dc4a067e1cfa0e0e2c38fde90134a1206ec5d8c"
+    },
+    {
+      "slug": "citricos-del-campo-spa-770961475",
+      "sha256": "ffdc4b7763dccf5373e7ffe445784fb47872855fc22f97d0e3d83fae41000aef"
+    },
+    {
+      "slug": "comercial-cas-spa-776637149",
+      "sha256": "1145c65fafa3817504487028253390d12042e8057031a891559b5f158ba1e2bf"
+    },
+    {
+      "slug": "banco-del-estado-de-chile-970300007",
+      "sha256": "22ca991070a70fbfda576299a16570adfcf88883511d29b9f7172b48464b6077"
+    },
+    {
+      "slug": "manuel-diez-y-cia-spa-834689006",
+      "sha256": "ca7ee87beaec2bbd330d67b52378301149067a99de521a0b3886e966d62d7e2e"
+    },
+    {
+      "slug": "comercializadora-coimbra-limitada-761370820",
+      "sha256": "60d0a500dbeee00a733a5ec44835684f6c5a9b7a55b47f02d5e8467964bc9c85"
+    },
+    {
+      "slug": "doctor-hielo-ltda-761811045",
+      "sha256": "f72f3de7befd1aeff4fcee46c02dae6c783fca520b329095ad390e73d29c3812"
+    },
+    {
+      "slug": "inversiones-e-inmobiliaria-lanfra-spa-763547809",
+      "sha256": "87f4c62b31a7aded1fadf874f06ced8e6ba199974153fbacea5b91074220b3b5"
+    },
+    {
+      "slug": "envases-buenaventura-spa-770504368",
+      "sha256": "093c168388b65abe15c94a5fbd5a9728fcd8ad3950ca370493ee280c170ecd32"
+    },
+    {
+      "slug": "grupo-atlantic-spa-773225834",
+      "sha256": "9c0b0baa1a5b214689517ef45600fb9f7512266e06870f6ffd03ba1650ee5aa5"
+    },
+    {
+      "slug": "armonia-wines-spa-778948508",
+      "sha256": "83418961b9913e7aed88f03b16855a65928a8228c516d5237b37684d056e2b1c"
+    },
+    {
+      "slug": "comercializadora-de-carnes-el-parral-spa-76945165k",
+      "sha256": "7aaaa7ada60016107dc8101d3f9a07303f01af15d40f2607b5d7892e74781f09"
+    },
+    {
+      "slug": "sabores-patagonicos-spa-761147919",
+      "sha256": "94ceea4cfbd746c3547e4253e71be35d47790a43f63497feeebf26c8469ff5e0"
+    },
+    {
+      "slug": "masvial-spa-768034796",
+      "sha256": "65f6ef38d47b74ea1df5159148cc3b0998544bde81843effea4849d341fd1627"
+    },
+    {
+      "slug": "adt-security-services-s-a-967196207",
+      "sha256": "d7216ad61c01d9ac234c73ff80ffe686fe043f977da6a7654549fc78efd1d082"
+    },
+    {
+      "slug": "sociedad-inversiones-koyam-spa-77188377k",
+      "sha256": "ab6a41d52c23312d149e021655be23d4664cac276b8203298d78a66c8c7fe03f"
+    },
+    {
+      "slug": "wom-spa-789216908",
+      "sha256": "d203d419c1c684eaede359a6c3433d218d78cadbefa35e0ea72f462c324e1ec8"
+    },
+    {
+      "slug": "sociedad-de-inversiones-bahia-salado-limitada-763182894",
+      "sha256": "0d4ea00952540b0a03007c862b2f818e1b7245d590b6f7f1fdc080306f3c7ab2"
+    },
+    {
+      "slug": "ruta-del-maipo-sociedad-concesionaria-s-a-968752308",
+      "sha256": "cf4355462ec02625e5c50f4f1656066edaa9d31a74ad46946313d9d0721273ce"
+    },
+    {
+      "slug": "mediterraneo-automotores-spa-968894404",
+      "sha256": "85e73ed9c3bb9037600ed2e48e3e9e4a63a001f17ba65c1a0b87019ac59b3b62"
+    },
+    {
+      "slug": "nubox-spa-761039156",
+      "sha256": "93240ec771cd2dc8b1c6223331b5ccb6ff2d4c870da81afb9c0fa29fe69280b4"
+    },
+    {
+      "slug": "winterhalter-cono-sur-spa-769052372",
+      "sha256": "5175cebdce57bd984f2edd6a6b8b004af27aae1efdc7aba7969ceb2c0e9cfdf3"
+    },
+    {
+      "slug": "comercial-y-servicios-myr-limitada-769499628",
+      "sha256": "67396a4dcebd4eb1f2301aa6d93be041040522828cf122576593513dfa96fc73"
+    },
+    {
+      "slug": "jbj-fs-spa-773712948",
+      "sha256": "7bf85b8d0770d8f39c1bc8aea437febfcaefbaeba1fa4917a4cfb09aaa59ce52"
+    },
+    {
+      "slug": "pampa-chile-spa-776188352",
+      "sha256": "6fbbd7de69d22d6e960daf07af7c66d86ae836bf8c54214ec6dd4db28a7a4d5e"
+    },
+    {
+      "slug": "cia-molinera-san-cristobal-s-a-900600003",
+      "sha256": "58d1d21613c117bd2833755b740bc92649f3c150e9f511a639a0a56f841a2bfa"
+    },
+    {
+      "slug": "enuss-spa-771763766",
+      "sha256": "60866d575d1b7c8ff1775634d051547d5f0ab5f7ec08db4f65544a6038027e22"
+    },
+    {
+      "slug": "transporte-y-comercializacion-de-productos-del-mar-ltda-768314705",
+      "sha256": "b200b70a407ee12f13a9cd6c417de9deedc7987fcdbdbd5f7c325c44dc28e235"
+    },
+    {
+      "slug": "agricola-asf-spa-764890701",
+      "sha256": "3ccb3a3d9df6c73b6b472a0a4656aadd8dcb8b2450852378544af24013fd8bc7"
+    },
+    {
+      "slug": "panaderia-la-madre-spa-773922667",
+      "sha256": "f2af4310a407ebcfbbfea336da714989a95a6879366bf7a4be8602c1770159c1"
+    },
+    {
+      "slug": "cataldo-y-compania-abogados-limitada-777006428",
+      "sha256": "1b2c3ec6375699c0d4f11e281c053b0fc67760bce9145042345bb12e912ee026"
+    },
+    {
+      "slug": "constructora-pavitek-spa-777545523",
+      "sha256": "fc6cdd6f7c5cfd60fb889ef96d46c4b07c72f80b65b27c4792a17fefb01ac3e3"
+    },
+    {
+      "slug": "lemon-for-the-world-spa-772949014",
+      "sha256": "8d605585e3c0ab6303e45f3e5819160ddca19f3695ef4ad7dbaa91d07f55dd0a"
+    },
+    {
+      "slug": "comercial-central-chile-limitada-760266191",
+      "sha256": "55b53d87d121de9380038b4a7ffa75e67b826dfc45bb65980e092fb2b63255c4"
+    },
+    {
+      "slug": "lautaro-saldana-e-hijos-limitada-763559440",
+      "sha256": "72e3dacffd462293573719494435341a5f29db1e6c00ebd565f8196b8f7956a9"
+    },
+    {
+      "slug": "comercial-iris-aglae-cespedes-molina-e-i-r-l-768703213",
+      "sha256": "f405e682bf1451b1c0a5cf31e185abfbc8fa2f7d3f92d18731e6591624c337c9"
+    },
+    {
+      "slug": "administradora-de-ventas-al-detalle-limitada-772156405",
+      "sha256": "4ee68a63f4a1db832eee1fb078e68c153d3f149220199b3ca00cf820d7e5a2e0"
+    },
+    {
+      "slug": "comercializadora-hector-arturo-cid-padilla-e-i-r-l-773585539",
+      "sha256": "e378763d1f37a21d22ac482a1ce5668e1789f4a40263f38b742bc9b5489165d3"
+    },
+    {
+      "slug": "impo-paper-limitada-76633699k",
+      "sha256": "7c4433ff8adbdf15b9c82b65659fcd33b0ecc9304c1bf19f33349e799481bdf8"
+    },
+    {
+      "slug": "ferreteria-garachena-spa-967029505",
+      "sha256": "f3e5dd95d52711e472327d38b525c7f1d90677c244a6c716c6866bedc1b5a837"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-de-productos-alimenticios-adn-limitada-761424688",
+      "sha256": "e4c3dd85e917b2b718c03c5b41cb99ebf37fb9a4799ce716b61d88d93fc71053"
+    },
+    {
+      "slug": "asesorias-e-inversiones-la-fragua-limitada-763759873",
+      "sha256": "0a9cd3194ec4cc92c19868a0a454c0b480b85a898437772fa7ceb5b485ca9ce2"
+    },
+    {
+      "slug": "transoto-spa-774181148",
+      "sha256": "0848d14ad39c9a9af5e9f694e409d57b298a328096db5290c009a0886cbcc1f3"
+    },
+    {
+      "slug": "tres-arauco-spa-995779609",
+      "sha256": "63603ea209c686486d0beac171bc9dce6fa8558302a0721b8754d1d2c7495d53"
+    },
+    {
+      "slug": "dimont-spa-769767312",
+      "sha256": "5018aa719d3ad0d55f00eb7eda3da35ebb3140953690454f45d01bad444c09ad"
+    },
+    {
+      "slug": "comercializadora-c-m-spa-781406074",
+      "sha256": "8ca95022768ddaf46a27cdbd03e46d2059a3add64c39dca5a50a9b8ce3c0520f"
+    },
+    {
+      "slug": "cherry-chile-importadora-spa-764153278",
+      "sha256": "e6c7162cad1a124a7683a551ca7e070ad65b44fe9442a3610a206946ec6a3590"
+    },
+    {
+      "slug": "santorini-spa-773275742",
+      "sha256": "579a63f6a91d9832d6081a991ae7260546b311d4fed2df9a86b989fa72de7ab6"
+    },
+    {
+      "slug": "baqer-spa-774296468",
+      "sha256": "d62552ba76b3fe010c34b71197c719472c991f3b0499cc2e759d7aa6f1a9dff7"
+    },
+    {
+      "slug": "comercial-tyt-spa-770289025",
+      "sha256": "fe3423e348f2fd7eac7096ad2ac96feeb81a4900fc3047a802819a7d5995a8ec"
+    },
+    {
+      "slug": "sociedad-elaboradora-y-comercializadora-de-productos-alimenticios-vasque-762631458",
+      "sha256": "b2e8689ce91cb1bb113b3dd500e98b4fc368cbd03cdf3ba1c50b327cdf04dfc6"
+    },
+    {
+      "slug": "kiosclub-american-supermarket-spa-763608689",
+      "sha256": "83cf50236a1e744c7f30c606ce86ad49874b09a40daeeb327db36550bd33a0a6"
+    },
+    {
+      "slug": "ecoleben-spa-771291783",
+      "sha256": "593fab2d2754b7209a89e6a10e8c01d3e56695bd88fb314e3dc07f23029bd394"
+    },
+    {
+      "slug": "natural-fungi-spa-768688451",
+      "sha256": "46d45338e390a3012c7d5448712f53d3ec3bbfaa47e804a661525a65fc913f64"
+    },
+    {
+      "slug": "pacel-s-a-850678006",
+      "sha256": "aec1b4ec6f0446de198802f33378b9930054ea01304f38ffc00f1388d04dd316"
+    },
+    {
+      "slug": "comercial-figueroa-y-compania-limitada-762644797",
+      "sha256": "e942aed9cfb5f21fc532133585225c8661d6b18f2f60ae7da8ce753b185f1468"
+    },
+    {
+      "slug": "comercial-tres-vertientes-limitada-771414028",
+      "sha256": "a1f11508ab7a266ad684afa27643861a8ee499a45bde40188fe3eb218cf034bc"
+    },
+    {
+      "slug": "agricola-droppelmann-spa-797469904",
+      "sha256": "15dc6c69e8f1f2b4022f926abf7dfa459f22027f7c0523bf4411f8ce30834eec"
+    },
+    {
+      "slug": "levaduras-collico-s-a-847508000",
+      "sha256": "eacde2456773ecf36930ba7036ee29d032e60db56f7c3f9b15d37d9a1de952a0"
+    },
+    {
+      "slug": "vina-undurraga-s-a-92461000k",
+      "sha256": "59ede20895fcc47c06f48f3b837c0e03d4eed04221fd6a0df6ea056f7800cdd9"
+    },
+    {
+      "slug": "grupo-maizal-spa-765723426",
+      "sha256": "658695f784409dbaa9ea8976ca814fbd0f7866c2631fe37861d9c4542753281b"
+    },
+    {
+      "slug": "soc-del-canto-herrera-ltda-785802500",
+      "sha256": "ee35d3391ac317bd8c74921dddd75c31f2e58e8233240afd8c3cf48fcebb5fe4"
+    },
+    {
+      "slug": "roberto-ignacio-nunez-puertas-comercializadora-de-productos-del-mar-e-i-766449220",
+      "sha256": "9576942ad1a94eeca4802eef2cc3223cab1aaf676551e252843aa00c3f282fe1"
+    },
+    {
+      "slug": "comercial-guillermo-vargas-spa-771621783",
+      "sha256": "358def6946ce02e761ce5155b3c7ee7370600d7e21416af411a3813778e6a23c"
+    },
+    {
+      "slug": "atento-gas-spa-771951848",
+      "sha256": "1add64f3200dce9386629d887cd1e71a008bc9d558756a44628ac2a2bbbf5086"
+    },
+    {
+      "slug": "comercial-e-industrial-arizona-limitada-777001108",
+      "sha256": "66eecef072b351e02e76f30e732a7f8402566d6fe93296e1c004b13caefb2a13"
+    },
+    {
+      "slug": "magnere-y-magnere-limitada-789326401",
+      "sha256": "c9eb9bcc27a3fd9f817fc90adbf2e6639692aa1b452da27ec176d54315bf4c83"
+    },
+    {
+      "slug": "inmobiliaria-puente-limitada-760466514",
+      "sha256": "1f5b8fb0ddcbc44e49f10545f07194c6efc905f20f9c571e6f82bc322cbdd9c8"
+    },
+    {
+      "slug": "sociedad-comercial-maclaro-limitada-771541283",
+      "sha256": "75af129bbd2fa2afd5747b048263d1c3d21deb936a629bb1ee473482ac6fd444"
+    },
+    {
+      "slug": "ecolab-spa-966044608",
+      "sha256": "aa62445775b914e7e71fcd218e45f4157e2aec30ef7e449eba440b018e644aa3"
+    },
+    {
+      "slug": "soluciones-master-floor-limitada-776205508",
+      "sha256": "686a125a2feeb29ce8b3e6b86b8a7a4aedae281c74552e4edc5e2ff34a1032a9"
+    },
+    {
+      "slug": "henriquez-hermanos-limitada-846873007",
+      "sha256": "b102fc5ce456e39c06d8fe3f3cb83dc0b7d89f9b751a2d240ce0276020310864"
+    },
+    {
+      "slug": "alimentos-daily-fresh-spa-777043404",
+      "sha256": "97a74fde57d8d9f34916278a8d3a43d75761eb8b2e4ea627b1c182e3cd80338a"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-t-c-spa-760591823",
+      "sha256": "0da670f8081156581e2b1c11fb08b761c715732df64c7eac90e8ab9835e40694"
+    },
+    {
+      "slug": "lubricentro-colbun-spa-767735987",
+      "sha256": "a654f990e84ba12503ca4e5a602fbd42ad00003386ac408d2de8941e3a417d5e"
+    },
+    {
+      "slug": "comercial-rio-frio-spa-775689811",
+      "sha256": "192a1b83beee3941a025f2ede5dd64b99d41a679a356d6533c1ab7fd548ea589"
+    },
+    {
+      "slug": "servicios-en-construccion-jose-baquedano-spa-765510457",
+      "sha256": "22bd2f903034884092147a3fac7fec3b6e67d961dc7f41cff7aba6e64f697b1c"
+    },
+    {
+      "slug": "falabella-retail-s-a-77261280k",
+      "sha256": "9cbc1e43d3ffac3ce9eb8d9340ed5b386c1225b84184d36d42bec39626111ca1"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-barros-spa-77452066k",
+      "sha256": "d3ed934a8d8865c99af327e7feebf82100bec5caa9319c94a494e96feeec1970"
+    },
+    {
+      "slug": "personal-computer-factory-sociedad-anonima-788855508",
+      "sha256": "6b4a4301443a60f80ba17f637254a6fb5727904d8e1e54313cf3aa13f8dd51b6"
+    },
+    {
+      "slug": "jose-zapata-e-hijos-s-a-795769404",
+      "sha256": "909bc172f62c37ad041e6edb1dcfb318efbc49c867992d2d74bab85e882d108e"
+    },
+    {
+      "slug": "zeal-chile-s-a-968413902",
+      "sha256": "ac0e9d431da6a001088ad7f32a10cf7ce7e8a22e63706328f74c84cd4ceff0fe"
+    },
+    {
+      "slug": "servicios-de-lavanderia-y-lavaseco-master-matic-spa-762699079",
+      "sha256": "bf27ab99400ac112def27a2e9a77c12dd40ed10e9cc8cabab4f89c5d398c5262"
+    },
+    {
+      "slug": "sociedad-comercial-beit-jala-spa-762427435",
+      "sha256": "279532ab8665b59e1debbeff3849cc09cd911c501bda9878dc8ffb43a798a90b"
+    },
+    {
+      "slug": "mercado-pago-limitada-76123174k",
+      "sha256": "aced27b9709434e2f48b34de682be2956f02c2d8cae9b7684796e6d0dcc54697"
+    },
+    {
+      "slug": "comercial-lorenzo-vasquez-ulloa-e-i-r-l-76219242k",
+      "sha256": "01aa6e275c49a6151ea05f1026ec2ad683872529f442d747dbdf31e0985ce251"
+    },
+    {
+      "slug": "comercial-klapp-chile-limitada-768288801",
+      "sha256": "92dae3316dfb4000e92e124082e046cdc919f8de4746ed036f90673de29e5638"
+    },
+    {
+      "slug": "comercializadora-sr-spa-768886865",
+      "sha256": "465c9f6f3313b2c21a96c9b34218bb6c02e1a1ff9bcf2984784010f1fe58a84c"
+    },
+    {
+      "slug": "comercial-grek-o-lite-ltda-785081803",
+      "sha256": "4bbe6ed68e7e5e0ef1a088cfa6edc7597340d5c008d151a35182f1618475f60f"
+    },
+    {
+      "slug": "distribuidora-chiloe-s-a-76122123k",
+      "sha256": "b60c0ce7220d68665e02713b3a8f7f5dbe893dc0c567a64998dfffa0ddaf5bdc"
+    },
+    {
+      "slug": "f-o-alimentos-spa-764432940",
+      "sha256": "c00654cce2cfbc6f54c380481470774b8893d04cf8d04fa3b1f381e980787999"
+    },
+    {
+      "slug": "comercializadora-ricardo-rojas-torres-e-i-r-l-766823173",
+      "sha256": "dfb1960434b2f1fa4f079600b2ad67c5efab0df75bbdcfb4fdb777d95afa35e4"
+    },
+    {
+      "slug": "cigus-spa-767701918",
+      "sha256": "c31233c1f8893b1ff6bc7a71aa6c750c49a0cb06a1b0741d4aabb09faf77dc87"
+    },
+    {
+      "slug": "meat-corp-spa-772103174",
+      "sha256": "f985e9c3f418bb2ade5e681a145e24f495a56f5fef90adfc2de11d44de471b80"
+    },
+    {
+      "slug": "comercializadora-luz-spa-777213822",
+      "sha256": "f4425fd955fb5eca94b702db13716cce60992583b84205ad2115412f97bd3251"
+    },
+    {
+      "slug": "comercializadora-la-selecta-spa-774472568",
+      "sha256": "b87afcbc8521cce0c6599771844ef5ba5ac9fb0883ff0cd1859887917f711863"
+    },
+    {
+      "slug": "distribuidora-de-tabacos-del-mar-spa-77843802k",
+      "sha256": "e96501fa161fa373ee900cf14c4d5b83082d949f29e011abf4db80b904151171"
+    },
+    {
+      "slug": "brem-spa-778438186",
+      "sha256": "896c32d603ca250877cfbfbae16f260579017ee97b3a3b5951045176ce981af8"
+    },
+    {
+      "slug": "empresa-de-transportes-varmontt-limitada-760332135",
+      "sha256": "5cd0037bb1b9dc0d98d6d15c5bf62df4b3a9ded3700a1fb4ed136c2509f33bd4"
+    },
+    {
+      "slug": "supplag-spa-763826880",
+      "sha256": "8f81c754efb47993e495df6e46303229898434c4d45d6f8ff8fed7e081c85bfd"
+    },
+    {
+      "slug": "helados-timaukel-spa-764817923",
+      "sha256": "73240c9b9b8e116348913a3544a16043688019c8cc0acbea266729aa375ed7ff"
+    },
+    {
+      "slug": "keylogistics-chile-s-a-969304406",
+      "sha256": "0ca3317bab22d4ba94d7488860ea4d9762323f2ab0ae2d1d0482e381e58ba572"
+    },
+    {
+      "slug": "seguros-generales-suramericana-s-a-990170002",
+      "sha256": "7a985fea41ead3dd9dc3d8311cd122d686374c90497512eb8dab3798622cf36c"
+    },
+    {
+      "slug": "santana-y-sassen-limitada-761572601",
+      "sha256": "ceee3078133bcdb533dd8f9b87f9fb5a7add9627ac03f318a439a5f57d4c1aef"
+    },
+    {
+      "slug": "krumbs-spa-777396412",
+      "sha256": "a996b73a1f03afa363e58dde0247b783b656398ab70e6dff62512f7bc26c2e0a"
+    },
+    {
+      "slug": "ferreteria-mdc-spa-774424059",
+      "sha256": "a4334cf07441dfeb93af649a81394bb08ab965f1fed12ce7315f9ac80b777266"
+    },
+    {
+      "slug": "conservera-federico-weinstein-ltda-81538900k",
+      "sha256": "6032674ceebd43f605d68e1173acb72592b31054a309b48d146d04d6b84b29e7"
+    },
+    {
+      "slug": "fernando-nogara-y-compania-limitada-831750006",
+      "sha256": "dd8e92daea33f827e2b42824b52290716ec98260c577b2f3c61725992399dbd5"
+    },
+    {
+      "slug": "latam-airlines-group-s-a-898622002",
+      "sha256": "4a99c6920279361d1b04fef6a3fcafb005f43b0d2b98d2a1011b54c8b10438a0"
+    },
+    {
+      "slug": "comercial-h-m-hugo-christian-larenas-godoy-empresa-individual-de-respons-766826911",
+      "sha256": "4b126f0680156f16bc45e6c93e2f00a444152e80d2053166ada5a491e458e922"
+    },
+    {
+      "slug": "sivori-combustibles-spa-773851387",
+      "sha256": "1863ace02bc1c6936f634d46a9497960405be726f8db28a7ea8a2010a037657a"
+    },
+    {
+      "slug": "rb-panaderia-spa-774275487",
+      "sha256": "eea58f15b0ca72d8ab2e45ef42e77a93599087d03e6c0835339e62d9f99dc674"
+    },
+    {
+      "slug": "confiteria-mega-marina-spa-775800674",
+      "sha256": "1d933dd7a27848aa57510c7bf6076a45f334d95034f853f8e96341381fc9fd51"
+    },
+    {
+      "slug": "administradora-de-mercado-spa-760539325",
+      "sha256": "ba5f31a754354b08e8f02695d6d9a63285df5193a004d08e32176318e62776c0"
+    },
+    {
+      "slug": "rivera-food-hnos-spa-767787898",
+      "sha256": "28b18fc52012ae6220ca972b3eb1a9b67c7f2fc886ba9cdab7a4debd6e750725"
+    },
+    {
+      "slug": "comercializadora-carla-andrea-demarchi-silva-e-i-r-l-768395381",
+      "sha256": "c796528377ca966e9e32142036965092c515c7b5d349b50999f9be60e6733889"
+    },
+    {
+      "slug": "comercial-liquidos-off-spa-770388465",
+      "sha256": "250b442cdc0c8c0201d191e01c723557fde8ece9b7b3a8560e70fc65ce05dc1e"
+    },
+    {
+      "slug": "empresa-nacional-de-energia-enex-s-a-920110002",
+      "sha256": "496b6e815a4c6cbb1ad3fa212ade354be932832099724ba3a5717fd65078d821"
+    },
+    {
+      "slug": "comercializadora-de-papeles-y-articulos-de-aseo-spa-762726955",
+      "sha256": "7c3202a598ea95436185b5f21490f505fb139268c7db653f3954bb908060ec09"
+    },
+    {
+      "slug": "comercializadora-sudaca-limitada-766158838",
+      "sha256": "9f364aa18d37c12d59197131545a70b821b30f7a1e38d8a7436198618082756a"
+    },
+    {
+      "slug": "servicios-y-inversiones-godoy-nunez-spa-769354255",
+      "sha256": "8c55569c9585050face667bb71c5e90d1b2beae22017af58693bc3dbb79a17d1"
+    },
+    {
+      "slug": "macro-food-spa-967335800",
+      "sha256": "dc1ef04aaf595d0b49568201442391762e06509d243cff5814e22000fb37f94e"
+    },
+    {
+      "slug": "banco-itau-chile-970230009",
+      "sha256": "494a5e5e7f95eb34599d80157d45ff56e586e5f53bb08e696b19cf2142237f7f"
+    },
+    {
+      "slug": "lavin-viera-spa-764226771",
+      "sha256": "724682f7b94f9ff59e7ef1a75c32fc020aa87c1433f47767bf2d87c6637be4a2"
+    },
+    {
+      "slug": "haulmer-chile-spa-767955618",
+      "sha256": "42974915ed2b01de00817215ae6f60688b93d9193f664f1c351ba81c4dfb05ca"
+    },
+    {
+      "slug": "specialist-logic-exclusive-businesses-spa-774271090",
+      "sha256": "6f98080a1fd667cfc4f50b97bde9fe86bd458d3ac016450be0684e499f9a8afb"
+    },
+    {
+      "slug": "artel-s-a-926420003",
+      "sha256": "ed81c0400b3a40edecfa34bf211f5d994cced760b2c48cda9d552921e319af0e"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-ibiza-spa-769240756",
+      "sha256": "1573f645d3953a3fbab9a1806807db1e29c269bdc73c1cea2d318fd6b16ef704"
+    },
+    {
+      "slug": "alimentos-fyc-spa-774277870",
+      "sha256": "94fadef90b79b692dbba1749b0f9e0658dd9492e4fb5b29e22d35534da8db225"
+    },
+    {
+      "slug": "comercial-mauco-spa-778799006",
+      "sha256": "f7b06a94e16b917b58a299e2001eb74eea74eaa6f14df757532e9901ec7ca16c"
+    },
+    {
+      "slug": "sociedad-frutos-de-lonquen-limitada-761740334",
+      "sha256": "3fb2c41ee63594b72ef93ca1f5f00b74bb2b8e47c68d4f1c7dfe2f646f5cb312"
+    },
+    {
+      "slug": "sociedad-comercial-carlitos-mendez-y-compania-limitada-764408209",
+      "sha256": "404af2830e1f4257b3f2b429b9273c567bd480533d52ccf1ba25345f304c419d"
+    },
+    {
+      "slug": "pompon-spa-764727878",
+      "sha256": "56cef45b71548e0473168c35a737345fb6471de56ab1e420f8a7122833846191"
+    },
+    {
+      "slug": "agricola-pobena-s-a-76658280k",
+      "sha256": "7a4c48a1ee723ed61e440e959b0fbbb86041d7322b44068d77b51138a3f4c49d"
+    },
+    {
+      "slug": "salamanca-foods-s-a-788435304",
+      "sha256": "0381a0f21bcac32f5d102f5c6c7b8b347a25c4f2a48bf712b029433ebca47b08"
+    },
+    {
+      "slug": "soc-fabrica-de-bolsas-plasticas-junaplas-ltda-787809901",
+      "sha256": "c9fe9a6be9e42c1308862bdcf915a89e5bacd9f5477234591c5fa86625ea9f61"
+    },
+    {
+      "slug": "suralis-s-a-965798005",
+      "sha256": "0b271580d4f1f2a570215cc13efdd469cb47e525f80d2a680401542108cb2584"
+    },
+    {
+      "slug": "sociedad-comercial-world-food-spa-763568520",
+      "sha256": "e25c85e8572252ab880bb49241b67ea10aa54614ad08ca3ebdde40f6f2487cdb"
+    },
+    {
+      "slug": "comercial-bote-de-pesca-spa-771702430",
+      "sha256": "4f790be81bc08bdeebb1588077a2925c9c29ddcbeacd6241ff33d1101463a1e3"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-san-pablo-limitada-77081782k",
+      "sha256": "4d9027cc445ac7687833955ea8e0337637586dc87d6e67c0dcbca48fe004b67c"
+    },
+    {
+      "slug": "sociedad-comercial-escorpion-limitada-763416631",
+      "sha256": "b541f0bb2284926cf40b5bc92c5f17491d45c420ed001185d5f75b70cb27d047"
+    },
+    {
+      "slug": "la-popular-pizza-y-pan-spa-766591221",
+      "sha256": "dcf5239b7a26a8e8b9f88695f2f7cb05280d2f551be7299ae9119478066d5720"
+    },
+    {
+      "slug": "comercializadora-mc-el-conejo-spa-773366365",
+      "sha256": "25f5fd9554a110878d0227ed8bf83fd188c68b9f8c43e9708d49c61ceb498f7c"
+    },
+    {
+      "slug": "comercializadora-de-productos-del-mar-spa-767776276",
+      "sha256": "b0f879c7e852585fc8760e2a75d90a0c5588f36ea33369e9ce724ddfe382cdba"
+    },
+    {
+      "slug": "constructora-tricam-spa-787159907",
+      "sha256": "7bf9b81b533623a051352afcf6f335e5a4e7ab8f8cb225ce93ff09b45f908fe4"
+    },
+    {
+      "slug": "ecoterra-spa-761787381",
+      "sha256": "ffa29573b4d894f850186765bccd17179d0a2bbc06a80b6811ddd7f0924725cc"
+    },
+    {
+      "slug": "agricola-osvaldo-vergara-del-valle-empresa-individual-de-responsabilidad-76375667k",
+      "sha256": "e80ae561a9fd7b1a70cc66f18b16ab23a80a7ff3aede41f59759d8ab363c7b1b"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-pizarro-y-hermanos-limitada-766097057",
+      "sha256": "3c3b862cc5d56cf4cc809e90433a4b9e44be6f6555d6d31cbf57f7e964fd8f54"
+    },
+    {
+      "slug": "microgreen-chile-spa-769287388",
+      "sha256": "876a9684e59b1e64e3f55b61c20d7100f6cb3b2f077a71f8043aaec7cceba7fb"
+    },
+    {
+      "slug": "comercializadora-benbo-spa-771685935",
+      "sha256": "b4fe8177ab9195697df4a33b05839b25845161af06ec1f0c7c703d1ccfd5bc6c"
+    },
+    {
+      "slug": "alca-spa-779341100",
+      "sha256": "a2749feebe85278319c804bced467f0023597818e307f29334ebad08df1c7b0a"
+    },
+    {
+      "slug": "agricola-y-ganadera-don-gaspar-spa-779405249",
+      "sha256": "e9427fcebf1de1111ac24bb86d0cc712cf74c00638303c633f6c96931df4bad1"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-dilen-spa-768712638",
+      "sha256": "ae2dc5396a3cf32117753b9946e9002173cde0df7e085cc4834d95558ba6bdb8"
+    },
+    {
+      "slug": "santiaguina-group-spa-777881795",
+      "sha256": "51db6689c8ab41b1281820b607244762a287f660eafbb3ce421bfff089c842bb"
+    },
+    {
+      "slug": "comercializadora-vama-pack-limitada-761224948",
+      "sha256": "2986dcdff2f4005e541da16ab4f2d397bec734835e509b435d41451a39ece887"
+    },
+    {
+      "slug": "olimpia-spa-774193278",
+      "sha256": "998c4047303e2f177c98ddb6d8e9ef4313085f3f2da7a5ec1e260b85410ce9e8"
+    },
+    {
+      "slug": "sociedad-comercializadora-de-repuestos-spa-767627408",
+      "sha256": "6cf7c7009346fb757b18693de55e5dc68c0c6be1c08ba6a5e377771ca23c91d1"
+    },
+    {
+      "slug": "protteina-spa-768005664",
+      "sha256": "40a7962e176ca549965c9c887a9fa687f5be1c86f079070ab845d4ab6f6aba92"
+    },
+    {
+      "slug": "pagos-y-servicios-s-a-771906613",
+      "sha256": "50701c63b2afd4ce8972ea64d721647e59b4c8d85746a3fb2ba9f85b7d1c9c32"
+    },
+    {
+      "slug": "sweet-ban-spa-776491535",
+      "sha256": "199ae93b2ecd76bace74b37861094cd9824f83a20678b0ae4a1d5371ebe13e26"
+    },
+    {
+      "slug": "inversiones-pacifico-sur-spa-763699765",
+      "sha256": "8aa7a2b8c316e32524168f09d0cc72904d540e8db739f87cf2d02d8267ec484b"
+    },
+    {
+      "slug": "sociedad-concesionaria-ruta-5-talca-chillan-s-a-773377529",
+      "sha256": "a0c5c1e9aa9dd56e31a9e7092d2cdcbf3aee15bb5a4ac81cc8af549d50c17c6d"
+    },
+    {
+      "slug": "los-delfines-spa-780729090",
+      "sha256": "9b0d24a47c801751e02a54aa2d2c303d4cc99ac971b50a5f8dcc9db20268c397"
+    },
+    {
+      "slug": "epiroc-chile-s-a-c-917620008",
+      "sha256": "a6ce0e4b7930883b0a4053429050a1ee1e1ef2d07c56e03b63bed29ecb5228ca"
+    },
+    {
+      "slug": "ds-dronestore-spa-761985795",
+      "sha256": "25cdc682e75ce43a8e4b08c0c766e5b72790d32982025c4de8688f16bd08e438"
+    },
+    {
+      "slug": "comercializadora-alegria-y-compania-limitada-764997158",
+      "sha256": "a5ca599038f0a51130a15e7772b89ac6489dd146b61004f27dc99c8be4e96a24"
+    },
+    {
+      "slug": "sociedad-hidro-natura-limitada-767288883",
+      "sha256": "e67e57f0249914eae08e5e2cc1469ec01d431f25d62ffea58d5895aaa4f859c7"
+    },
+    {
+      "slug": "d-y-l-liquors-store-spa-772949111",
+      "sha256": "9cf986fa7213d5c25d448fdf3c9b00c272177bcc8f13d633a46cc9969eaa6c0c"
+    },
+    {
+      "slug": "supermercado-barros-arana-limitada-775677139",
+      "sha256": "235184c2dcebb01f3ab8f2edbfbbb269b2588b78d965c3801dbc49fcfabaffb2"
+    },
+    {
+      "slug": "comercial-el-monte-s-a-796855002",
+      "sha256": "50b17dc7f346588bff3501b128f7eecd68f8932ef7663131e98eb5319a66003d"
+    },
+    {
+      "slug": "cia-nacional-de-telefonos-telefonica-del-sur-s-a-902990003",
+      "sha256": "94125e64bb0bbe181a00f55c65954c0c1819ce48dae674e2556295275ee21be7"
+    },
+    {
+      "slug": "comercializadora-de-pescados-y-mariscos-mauricio-esteban-moraga-alvear-e-765850630",
+      "sha256": "607ea69e19ede50fdccd9fd16d2629e0fc4b44e2fc4aa81ec402db0ac7ae0286"
+    },
+    {
+      "slug": "comercial-cordova-spa-772166958",
+      "sha256": "8ddaa93b8873532974bebc839ad5878bbd383683949d55805ed085840e327f5d"
+    },
+    {
+      "slug": "back2bio-spa-773490252",
+      "sha256": "21c7655743ee0a96d017b8d4fa2da6f0d08f85e9a8955d7ae708bef060c8d2dd"
+    },
+    {
+      "slug": "lacteos-y-turismo-playa-venado-limitada-76120078k",
+      "sha256": "3afc46908182f7ae83fa76e5837a94cffa267573a47479f7b6facd4282d5e976"
+    },
+    {
+      "slug": "kombuchacha-spa-767925360",
+      "sha256": "6ced965d433a6ba800412e0397ed80bcedcb68d83aee03b6446eda66e1aa5591"
+    },
+    {
+      "slug": "comercial-alo-santiago-spa-795323805",
+      "sha256": "40d624dbdf6672fad219e1ef392e5ac7df4d724920f866236557478f937adcf0"
+    },
+    {
+      "slug": "empresas-dmg-sociedad-anonima-968036904",
+      "sha256": "669202257940a75e8c9f2f5dace4704824159e25e6205675b64f9e4694088dda"
+    },
+    {
+      "slug": "comercial-guaioio-spa-765872251",
+      "sha256": "b910ee8aa1c921df3075d76bb29d4ecc9557cf90494a4bd6b6e723ff6290f6bc"
+    },
+    {
+      "slug": "molino-la-estampa-sa-908280008",
+      "sha256": "2871838151fadc9d54093f96ea9540e19a95658fa3a5a86356a3684dee838bec"
+    },
+    {
+      "slug": "terminal-pacifico-sur-valparaiso-s-a-969088703",
+      "sha256": "c1cae238e41ec1f1dd3b512470f0d36ab6a2f489bb63b4eeb4f54797d22887f7"
+    },
+    {
+      "slug": "distribuidora-y-comercializadora-el-comienzo-limitada-76149418k",
+      "sha256": "a3907cd7118d0a534be55c8b5aec60e8afc55c92a652f9979de1d2c471454182"
+    },
+    {
+      "slug": "kbd-spa-763382435",
+      "sha256": "08cbb22097fe68175b5f3addc86f007d0ef66f8e76a80ceb5aa19fa7b47aea8b"
+    },
+    {
+      "slug": "comercializadora-la-favorita-limitada-767899351",
+      "sha256": "cf7960d220b11528d5616e1bf3475af39f22186650d1a14b576910699ab3272d"
+    },
+    {
+      "slug": "distribuidora-de-frutas-y-verduras-felipe-andres-poblete-ahumada-empresa-769642854",
+      "sha256": "fcff1c4dbfc49bfc40748a02573cbfe9c3d58b2c53202748b1bb9d945a7a80fc"
+    },
+    {
+      "slug": "servicios-gastronomicos-marcelo-costamaillere-e-i-r-l-778990067",
+      "sha256": "67d92a88ca0302593d251bcedf3a30132c597438124d3413fd5e21e148faf80c"
+    },
+    {
+      "slug": "electricidad-gobantes-s-a-804098003",
+      "sha256": "1f6ba4e51f9c55bec1f45dedb19728bc5615b78cfbb1ed31a6c7bd7e6affce2a"
+    },
+    {
+      "slug": "comercial-gastronomica-spa-771323030",
+      "sha256": "afab0830be96ea03e406fc0814318a971f7fa8518921b186e1625a0987b6e86e"
+    },
+    {
+      "slug": "costa-arena-spa-771970087",
+      "sha256": "01fa6d4d13a7c15149f71628470b2ed2a7c14c76c477aa1170245694bc71c478"
+    },
+    {
+      "slug": "distribuidora-y-comercializadora-jotave-spa-768007373",
+      "sha256": "52d848d94a1eff3d3057f350ce7b628a62474f1ff3f5505435100f2a62770b64"
+    },
+    {
+      "slug": "imp-y-exp-multibrand-ltda-768671001",
+      "sha256": "8d002f6a691ace3a76780114083a714c5329d8790f906915d4f84f4b5f83b66d"
+    },
+    {
+      "slug": "comercial-vergel-y-compania-limitada-776322601",
+      "sha256": "f5a3d186abfd498bdcad2e30fbd6b11062b023c560d9bdf5e759fa37886dff5f"
+    },
+    {
+      "slug": "grupo-dk-servicios-limitada-765561841",
+      "sha256": "580c4a1d166ccf983784f398fd96ddd6a712547fccc56ad446b4332c712e9124"
+    },
+    {
+      "slug": "terramensura-spa-76940404k",
+      "sha256": "fcaf80ab534db192d6dc936f79c84987f1968438ed52bdffada53d6d3449f27d"
+    },
+    {
+      "slug": "agricola-y-fruticola-titopal-limitada-767205406",
+      "sha256": "0b6dde3963229a6c88a2a5cd40bd4283342113720bd448a3b35f4fd66abfea85"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-ziege-limitada-769546774",
+      "sha256": "03cbbb57ef140bd812dfa78dc23bad54b01b864e1dd1ef5eac22cd4cb4dc78b9"
+    },
+    {
+      "slug": "soc-importadora-y-distribuidora-pacifico-sur-limitada-775937408",
+      "sha256": "fcd1144f7ca9e22e3b57fa1931cb5aa7f814d028212665a70bfdbadb4a1e6926"
+    },
+    {
+      "slug": "klein-y-zachlehner-limitada-780964006",
+      "sha256": "9101ba0e8a42336b47a31471e2dcda16462e270e55aac8cfd020e2900484a202"
+    },
+    {
+      "slug": "grupo-morchio-montes-spa-781456918",
+      "sha256": "0e50d1fe32006a957d79429bf7167f6eecda76dc1513a6c3ae44eaee0a1ed801"
+    },
+    {
+      "slug": "imega-ventus-spa-995222604",
+      "sha256": "1531bd7dadbfbf4fce2291b0d1122cf8e7796276d400d9d3c919c30db23a936e"
+    },
+    {
+      "slug": "comercial-y-panificadora-marcelo-limitada-760520446",
+      "sha256": "d35f155dfb6d08bc094a6a7332fa42d72eab0dd3a01fec122776416f5bbb5daf"
+    },
+    {
+      "slug": "carnicorp-spa-773727341",
+      "sha256": "bfe37f824abf99177e50c4477444d15d358dbb866848cc94abd3e04ab3a25616"
+    },
+    {
+      "slug": "benditovino-s-p-a-765017815",
+      "sha256": "67c64e45c25d9060e697e1504ee5ec4f53ab25842010e471d56c85986d8c38cc"
+    },
+    {
+      "slug": "plagasur-spa-765549124",
+      "sha256": "73c4f1431cc821308af519fa3f951172153247307f7cab7afdbc6b4bd0c7c89d"
+    },
+    {
+      "slug": "cetec-spa-771649467",
+      "sha256": "f29754dd6375746875edd39ea31afca3cc994c8265526735602dec3b2a862283"
+    },
+    {
+      "slug": "insumos-doca-spa-771895166",
+      "sha256": "a228537074cbdb265380471b20817f7e37dc81f44b64259d34f2108d0a0b9f56"
+    },
+    {
+      "slug": "comercializadora-e-inmobiliaria-bertel-spa-772015488",
+      "sha256": "a3a2efb1efa519faaacc0cb5d979f5661ee6b26c9b9a6cefb4c38be6640d12b9"
+    },
+    {
+      "slug": "cervecera-totoral-spa-774842608",
+      "sha256": "14865b3c9d824c123c0355195bdb570cbb5667afcba5f40fe6bccd5fac895da7"
+    },
+    {
+      "slug": "daccarett-y-cia-ltda-836168003",
+      "sha256": "50d2d2bdf18e81f4dd8c532f16b2026a5c00101d379d2f1de1094bd35a77e860"
+    },
+    {
+      "slug": "sepulveda-gutierrez-hermanos-spa-864743005",
+      "sha256": "8e716187f10abdf10f02c9e0752165f3cdbeb03f6dcf2af42df2bf46958b0542"
+    },
+    {
+      "slug": "distribuidora-geoexpress-limitada-762109697",
+      "sha256": "d6d34152fe117ec3b4ef293d9eb9ee2afd9b20b8dc3930e289b3b33f76a6d874"
+    },
+    {
+      "slug": "cimentalia-chile-spa-764108566",
+      "sha256": "0c84d0cac7a356501515cf0f9e5dc6ea01b243bbff79e2d48a3b037516fdda10"
+    },
+    {
+      "slug": "gallegos-producciones-spa-767026749",
+      "sha256": "2c2c92d7787c501d800bbe8fd77d6d02ed892550f490fe3672fbe0d55fe68151"
+    },
+    {
+      "slug": "food-in-y-compania-limitada-768001499",
+      "sha256": "e2c271a208acb81ba116940e59771963fa58f8cea7c0d052b7c3055b6495ff3b"
+    },
+    {
+      "slug": "sociedad-protein-king-spa-774390790",
+      "sha256": "85b16d3c898c370de78fe03518677a4896dd83655fc9e054e46d145aefb655b2"
+    },
+    {
+      "slug": "juan-carlos-buraschi-trading-spa-760973645",
+      "sha256": "2db91d8a43dd9240ba49c013ced3b10c1d13509b1f4917a103954debd7bcd088"
+    },
+    {
+      "slug": "comercial-agricola-santiago-y-asociados-limitada-769539875",
+      "sha256": "2535b5102dac709a44883722d986fc5be8b4b067ebaaebeb300f41f169ee4957"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-jorquera-limitada-77266625k",
+      "sha256": "70b7dc25114cc6050f3b7e7dc1e605df80763801000b55381f7d11e39ca33332"
+    },
+    {
+      "slug": "apg-logistic-spa-775042613",
+      "sha256": "1ed29c8ba349062cc5e88d5dbc5ad492c06427b140542968c6f678b123decd8c"
+    },
+    {
+      "slug": "inversiones-tres-frutos-spa-762691590",
+      "sha256": "0016f3fbd6f365af7653727b751099a3a643792586158ab424c9ec160ff934b6"
+    },
+    {
+      "slug": "mayorista-talca-spa-769717390",
+      "sha256": "87039c7c7493dd752d2903a013728295046ce2339a44bbc46d25a239b71f9527"
+    },
+    {
+      "slug": "comercial-don-jose-s-a-96784540k",
+      "sha256": "67ef5e62fd1728b13913a9b5f86240efe2f6b9d5cf981b107462e66c80147d97"
+    },
+    {
+      "slug": "diseno-y-soporte-para-servicios-de-alimentacion-spa-969341905",
+      "sha256": "22754c2bbdb6a46e1c4ac33dd31d96c39030d7b590e0ff92f1d079cc328d2587"
+    },
+    {
+      "slug": "embotelladora-y-comercializadora-aguas-santa-amalia-s-a-761438743",
+      "sha256": "bea688cba781fff14de5e342cd3a947b28903ff486139985a1bdff3b36118609"
+    },
+    {
+      "slug": "victoria-spa-761885871",
+      "sha256": "8d15e0ecd8f595d96a389957679c4e4886730c8de4aa9c9ed8f2de96f313cfd9"
+    },
+    {
+      "slug": "arata-arata-comercial-limitada-762926202",
+      "sha256": "8bc8721eb32583fa1e2168aed74dd6f544233549993befe6c448ac8c31026412"
+    },
+    {
+      "slug": "abc-s-a-96874030k",
+      "sha256": "ede4f088c00303c534c9debe83323fb57e190fd24bd062dbf35608048f38e560"
+    },
+    {
+      "slug": "comercializadora-san-andres-limitada-764481070",
+      "sha256": "51cef8cc4d3a0b4e54b32400792cfbf17afab8bad2f6688d81db28808e7d421b"
+    },
+    {
+      "slug": "vinder-chile-spa-77147523k",
+      "sha256": "8c555d48db35c3deba01777a713f9913513aef8c7e8bc11dbdbf378fdcf8fe02"
+    },
+    {
+      "slug": "cabezas-y-compania-limitada-775766301",
+      "sha256": "b63b9ce057aed13c89b6a5c72a5aef334ce0946322c2dadda57af04d6cdeaded"
+    },
+    {
+      "slug": "cmc-hermanos-spa-777380680",
+      "sha256": "c5b4e68b6ae7a4585b79fc5f2ea134a11b3ebd0de14e32f81683bb6b18284c14"
+    },
+    {
+      "slug": "inversiones-martinspain-spa-779714578",
+      "sha256": "7adf418c6fcab1c89754eb99784bdaf8dd37ed135df6c46e569998823d90bee4"
+    },
+    {
+      "slug": "pacifico-cable-spa-967224006",
+      "sha256": "1d8955f4028f1a77a27cb7e140cb74682f3ebac961d1f0b0304ac55bb34a808e"
+    },
+    {
+      "slug": "jose-antonio-diaz-fernandez-y-compania-limitada-770324106",
+      "sha256": "ab7cdf03c7c9de9c8ae9a0205b39a7755cdb54fb3cd1195a268fd4f5cc88615e"
+    },
+    {
+      "slug": "comercial-campos-flores-spa-76291607k",
+      "sha256": "b00360add3fb06f578174f774868042c2eb7bfeeee33a8e850ead854c6909bac"
+    },
+    {
+      "slug": "e-y-c-construcciones-y-enfierradura-spa-778778459",
+      "sha256": "13c7402f6b775dea734ba0cd91b9672d71e7c1cc150fa6bd98dbdfad6a97ac07"
+    },
+    {
+      "slug": "comercial-plasticos-mauricio-gaune-villarroel-e-i-r-l-760713554",
+      "sha256": "cbc5af7ff0c0a60a73da037471e679d0fe31d17b23bb21d8fb156f505873ad69"
+    },
+    {
+      "slug": "comercial-nortplas-limitada-766461867",
+      "sha256": "57c26a6dbeea5ec7b0fc855a2fdd10d329b6f2fc91180588cdd10d52392a2f75"
+    },
+    {
+      "slug": "comercial-scrucial-world-co-limitada-766642969",
+      "sha256": "b30122c435fb71d97a2a12926c72f0239254cceb10137ad82fe5e5495741d66d"
+    },
+    {
+      "slug": "mardones-y-rosales-amortiguacion-y-tren-delantero-compania-limitada-769166254",
+      "sha256": "c3ba08cbb8e6e62e6f01dfa9dfeaaba0b1c72e2e01c64ee45e9295dc32368385"
+    },
+    {
+      "slug": "d-d-spa-769208763",
+      "sha256": "5f20eb93d59521bbc1c7da75c806cd247708fdf73fa76c3db660724173cc673a"
+    },
+    {
+      "slug": "ferales-distribution-spa-76933176k",
+      "sha256": "b703e0d9387648bae28bf3596ef5210fc0e49e0586e667a4c5a95716dd1cd22e"
+    },
+    {
+      "slug": "comercializadora-de-alimentos-granel-spa-771527698",
+      "sha256": "e13bc99f600a4dd564ad9931f758043773af6b46494665d38ae7d1ad838ea02f"
+    },
+    {
+      "slug": "gastronomia-francisco-jose-espinosa-baentsch-e-i-r-l-772353979",
+      "sha256": "af53e13ad18b26b8786c6a991f32ae8d5a083549d0dd64c30186f357bdb42efc"
+    },
+    {
+      "slug": "we-tripantu-spa-773368457",
+      "sha256": "0ba907436a5603b25ee7bc3891024f740d81211f07c2e0baaa2af576ad6b8a5b"
+    },
+    {
+      "slug": "distribuidora-de-combustibles-petrogas-spa-770891957",
+      "sha256": "14ad48b29351872741cc9c02d5ec6aa655c131bb7e2666bae3cb96632ab8ff07"
+    },
+    {
+      "slug": "ferreteria-j-garachena-s-a-967027103",
+      "sha256": "ae98ab865b8a94f2f943da641b824cfb0c13cad2e63e272e61f666e265e6fb4b"
+    },
+    {
+      "slug": "gestion-ecologica-de-residuos-s-a-967224405",
+      "sha256": "4ab3fe354a482877778cb7a2acc6aebd94ab0fb08b70236c9a9bd37a9c57bb90"
+    },
+    {
+      "slug": "hutchings-y-ricci-compania-limitada-76165358k",
+      "sha256": "a294acdf1d38e1a6b28598fc22fc35709fae2958faa64282d2fc02034526c786"
+    },
+    {
+      "slug": "sociedad-comercial-martinez-calderon-spa-763072096",
+      "sha256": "4c1d46e61380d3b1250857df9f7357e6e566052525225752772f2c90c73cde66"
+    },
+    {
+      "slug": "multicaja-s-a-768287902",
+      "sha256": "4634697ea79663650effb4b778c6385d9484b2221d8aeec8f4841c19786f3c9b"
+    },
+    {
+      "slug": "comercial-myl-spa-776257621",
+      "sha256": "53273d5c6ebc7c5327639a6ee9e000823bbb7f2c406b733ca3596ac74d9c8915"
+    },
+    {
+      "slug": "distribuidora-karmac-spa-784311503",
+      "sha256": "47f9ed5f4b45f50d9f6aa8cc6b1ebcecd2afaa3f4fccd7e26d5cc3244d9359bb"
+    },
+    {
+      "slug": "food-pack-spa-784936503",
+      "sha256": "c8afef9983591686bf42b7914340a8b90336f37a40125076f55eec6939c012b5"
+    },
+    {
+      "slug": "patagones-frios-spa-76468138k",
+      "sha256": "706626e8b4eef61cea1bbc426934d7d493dcf117e077bdf328fa90d424376ee7"
+    },
+    {
+      "slug": "soc-comercial-e-industrial-tassara-y-alfaro-limitada-77412490k",
+      "sha256": "dd9628e22527226875f78b3cdce4d1bb67de3240d9efa92a165cc36384a99605"
+    },
+    {
+      "slug": "molino-linderos-s-a-921560001",
+      "sha256": "03b753e994c8f12f7a3adb7281dda6f33daecba54a5f64291e24aa88d0295aae"
+    },
+    {
+      "slug": "chilquinta-distribucion-s-a-968135201",
+      "sha256": "800416d41b402acbfa1def8b8272d62b8ce2b77374e2ca425b1affc453f26edd"
+    },
+    {
+      "slug": "matriz-ideas-s-a-763225909",
+      "sha256": "6cc879effbeb0c137bfd5e4445204c98c924656123885464f5aa51fc2e5d3f0c"
+    },
+    {
+      "slug": "aseguradora-porvenir-sa-765986257",
+      "sha256": "e755b62e56f08be445a465e387f94bf9fd884d7e4998431e50e8c820288b5c7d"
+    },
+    {
+      "slug": "sociedad-molina-y-molina-spa-774983805",
+      "sha256": "407fdc74318bec582f1b87aed7dc9fb9bac5f8b21066e9f2cc822b89981634a3"
+    },
+    {
+      "slug": "talca-group-spa-776350958",
+      "sha256": "f3aaf8fec56b13b720060d946dcbeaba38b8c7b9eaf4e1a2ad082049894669f6"
+    },
+    {
+      "slug": "josemar-spa-780649151",
+      "sha256": "034e41e52548611e9660bc829d8bac9ca858ca8d3df1be081db9c1b05e7f14f7"
+    },
+    {
+      "slug": "segurycel-sa-995109107",
+      "sha256": "9b3a510efe9c245dc1b2efd2583d7ee4b8d792551b7a6341966dadb71100add1"
+    },
+    {
+      "slug": "soc-de-prest-de-serv-de-laboratorios-de-suelo-y-hormigones-ltda-764426509",
+      "sha256": "75abe999515d79e5968126d147e0983ebf66a610c16dff0eda7ef566f10c895e"
+    },
+    {
+      "slug": "rhino-works-spa-768846537",
+      "sha256": "a4725670c216a9a83dc0b3cc23ee18d75c9863786e1df643694f4cd363f918c5"
+    },
+    {
+      "slug": "sociedad-comercial-lena-y-guerra-limitada-769899456",
+      "sha256": "5ccb487efbc9e1fbf5fb723ce2124554a3006625bad42e129170bcd1ea886167"
+    },
+    {
+      "slug": "mercafood-spa-770426154",
+      "sha256": "d1a2d54fda1212f886d963905086c97637c5d0df204330cdec40ad443aae2a48"
+    },
+    {
+      "slug": "everest-brands-spa-771422918",
+      "sha256": "c3574e1d410d9b612b42a3f7419610ec4ec1e168d716f77e1b3a28f5610f0c36"
+    },
+    {
+      "slug": "comercial-parada-y-compania-limitada-839700008",
+      "sha256": "72382869024ae42a00189bacef344d1d44b967606a967192cfa0a97dce123741"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-dos-fuentes-spa-767831471",
+      "sha256": "4f100a721082cdbed537a00df9160bcf40f21ba58704877765479796f41f7829"
+    },
+    {
+      "slug": "nomads-foods-spa-767908881",
+      "sha256": "e9898c1b272d82c1ada9b2cc5da1b18147acd0edd7194ea76fcabc4e584d5165"
+    },
+    {
+      "slug": "distribuidora-y-comercializadora-coppelia-spa-76865798k",
+      "sha256": "b1d437c63c1e3945400f934143c80bd29d0d79e4f2f1336bb3409eaf5528ef14"
+    },
+    {
+      "slug": "marmix-spa-770849098",
+      "sha256": "d98bd6b4f0700e60e35670aac9ef56cb77398849abca59f643a39f24280f7bac"
+    },
+    {
+      "slug": "inversiones-via-k-spa-77564110k",
+      "sha256": "4ba679fe8dee8751a3a0fe6b84bf03e3a3e15967d4f9dfd88369757880c48a84"
+    },
+    {
+      "slug": "delifast-spa-777378457",
+      "sha256": "d454ac8f1d001c5ea6fe08a68dc8f0ed2b9418f8692618225b918f80b758c368"
+    },
+    {
+      "slug": "cohesa-spa-779275078",
+      "sha256": "66cf3f38cc4f8b5a01bc3261e5672029b2cc0e4ae96c0435b94eb8658dd89180"
+    },
+    {
+      "slug": "chinese-mark-alimentos-limitada-789529302",
+      "sha256": "d3abe4c294fd32cc84d3bf94b19fca083fb6bf8213684bca740040ded0b28331"
+    },
+    {
+      "slug": "axis-logistica-de-chile-s-a-995633809",
+      "sha256": "31cf8be856f1caa36a9673514a9fbf91d7b5cfe929d2f4f6958e5e27396e3e90"
+    },
+    {
+      "slug": "leonprodal-s-a-760538353",
+      "sha256": "cbd242a3c6fc066ee59a5329674dd4eeae76351b968502bc298ddd827896e826"
+    },
+    {
+      "slug": "gyg-servicios-spa-777834363",
+      "sha256": "dae1d5ba7be7bc55ec5d5a0c4f133e1b8bad58546bbee6a72e60a48944168c10"
+    },
+    {
+      "slug": "naviera-cruz-del-sur-ltda-868945001",
+      "sha256": "5a0c4d972b2e90217c348337816949ac066dd3e0e2e79cd5fd5179d5836e1bdb"
+    },
+    {
+      "slug": "inversiones-3b-spa-765576571",
+      "sha256": "991386c2783e7339150c7a341cb6f253b4f062b3f13b8d464071f39d02dc37aa"
+    },
+    {
+      "slug": "alimentos-veganos-daniela-pino-gay-e-i-r-l-773240469",
+      "sha256": "abeba0264c55783411e7a0c63459b78b54679406b0f7645f3f8c3e3ae33195d9"
+    },
+    {
+      "slug": "inversiones-chf-spa-775878479",
+      "sha256": "11416a720be77f16f87894323032ae36086710bc6454f557c437906bc1e299fb"
+    },
+    {
+      "slug": "soc-concesionaria-autopista-del-aconcagua-s-a-968206303",
+      "sha256": "85518aed632c4a9b72aac1c0c5c84ee269921f9e6e839e848d09570d9a7f3bb4"
+    },
+    {
+      "slug": "comercializadora-la-casa-del-pan-limitada-761774697",
+      "sha256": "e8e50f1a8ca8697bc8c30b72df399331221e7074b4c91db63e01f91cf66ddfb3"
+    },
+    {
+      "slug": "distribuidora-ditago-s-a-762858657",
+      "sha256": "f13d686982dc1928836e31ecd5c214dbe24ab708ab77fc731e262003523b3988"
+    },
+    {
+      "slug": "miguel-angel-gonzalez-von-dessauer-servicios-graficos-y-publicitarios-e-766001645",
+      "sha256": "364530256b62eb154f1fce9c8a8b52740b31b44b708ec6539ed97edc1281c81a"
+    },
+    {
+      "slug": "comercial-j-o-limitada-768485259",
+      "sha256": "58a6e6d5b940a7e7b40638f429927cb21f60b0d4b2132dbb9fed0644c2d1b04e"
+    },
+    {
+      "slug": "distribuidora-arcb-spa-773469539",
+      "sha256": "b41b3deb2fe9db071dc02806da3a07404262ac4b5804e56338cb54bb2714f92a"
+    },
+    {
+      "slug": "la-mendocina-spa-77450415k",
+      "sha256": "989c24daf903965b9e55c59cb9fe5b2aef3971c98c50041e68ca9999eb7f7a14"
+    },
+    {
+      "slug": "bles-spa-778551837",
+      "sha256": "b3287f799ae2ea678322dd4fe254f6518d00e7cddba4673aac35066e2464a316"
+    },
+    {
+      "slug": "sociedad-inmobiliaria-schmauck-limitada-765098610",
+      "sha256": "98944d7aa895b0c8ba5f20cedb034e0e80c1c4d30b7faa8d9010e62d15e0347f"
+    },
+    {
+      "slug": "amasanderia-ruben-antonio-sivira-acevedo-e-i-r-l-773788073",
+      "sha256": "85ef70122162ff5c1a138bca6bdaf167014b8753a9bce57f8a6719691559d94c"
+    },
+    {
+      "slug": "t-villard-fine-wines-limitada-965614109",
+      "sha256": "2572f6f514400cfae2dc9a7673c08ed1463b08c094efe229ed2f13ee7ec1561f"
+    },
+    {
+      "slug": "creccu-s-a-760412279",
+      "sha256": "d7ee822019b95133357313b8a261abcf66a548114a750abcbc5503d293f9f3d6"
+    },
+    {
+      "slug": "comercializadora-puromar-limitada-763348040",
+      "sha256": "559e64a07a9ec351b9d3e7b2edc2feab93cd4ca168e65d2bd2e78d663f49a78a"
+    },
+    {
+      "slug": "prisma-water-spa-765575613",
+      "sha256": "5d0285e9d1c3e3ec3e242923b89373f739441ccb68bc0c8b16abdb72437b4457"
+    },
+    {
+      "slug": "monro-spa-767764197",
+      "sha256": "c942be119a072ae32264417fb0b0907ee39771541150efdd1078f2edcec59b2b"
+    },
+    {
+      "slug": "importadora-y-comercializadora-de-todo-limitada-774570063",
+      "sha256": "3143a490c38de05b7d55d29a3f147f5074a57f126f76c3bfb3aa4070a743e176"
+    },
+    {
+      "slug": "agrocomercial-codigua-spa-774712704",
+      "sha256": "5a2a8f4d96cfcbf521b913acaa77812631f88433b14f2b216385acec4980bbe3"
+    },
+    {
+      "slug": "inversiones-rabba-limitada-796415401",
+      "sha256": "d84c5eed80c3d133e5de15d704122c4aaa8e4639ac28998910bdc32cfc0a528f"
+    },
+    {
+      "slug": "electronica-retail-limitada-830306005",
+      "sha256": "b7f489f9afa1ae9f51fc32702677739a969188fe0ea4c2f616762f00a9ca671d"
+    },
+    {
+      "slug": "comercializadora-crecer-spa-76285872k",
+      "sha256": "8f8057c95cfd17c0af0ee80256c5d83a78c07f820d4126603d529f6175d44537"
+    },
+    {
+      "slug": "bdebueno-spa-766244254",
+      "sha256": "1612e12c671d7b6dbe63fa157a5d129b5c7aa82f25507b9333865e0b60f71ec9"
+    },
+    {
+      "slug": "comercial-costanera-limitada-768449392",
+      "sha256": "fdfc04336a3092f928490ae6ca464b5428ac0b76ed091471a5440fdf6a48b019"
+    },
+    {
+      "slug": "comercial-frutiver-rc-spa-771216226",
+      "sha256": "fce21ab57a69b98d63e8165a77b7d78eca19b08136fba7e07a9f04d439432db9"
+    },
+    {
+      "slug": "carne-pampeana-spa-772905017",
+      "sha256": "d7e8429884a5a6dcf1595600981988196d7cd925540a03b891b2f4ac2aebed49"
+    },
+    {
+      "slug": "comercial-e-industrial-indugan-limitada-787509207",
+      "sha256": "1ac6a504a5c7da675952c1bbce4d9befcc6c4cabc8e3565339b171aed8e0398a"
+    },
+    {
+      "slug": "britt-brands-chile-spa-766859658",
+      "sha256": "d7d8ac27ae96e710a4db35de0414fa1219872340666a6703131acd9a3d99b606"
+    },
+    {
+      "slug": "comercial-sur-energy-spa-768563845",
+      "sha256": "9f0f11f0ac6d23b077fec232df870a94b96d2962c33668f09589b06cd91a1977"
+    },
+    {
+      "slug": "vinateria-y-licoreria-1926-spa-77712577k",
+      "sha256": "4d67db1a8fe891f9d06dd95851af7ef31bedd176a3f965ef38b2472764974e0b"
+    },
+    {
+      "slug": "sociedad-agricola-ganadera-y-comercial-aliante-y-compania-limitada-761964089",
+      "sha256": "8d641bb1c215c1dc461a4afaf9f3a4a788969007c1b88b9c690d20d32d202b3d"
+    },
+    {
+      "slug": "panaderia-nuevo-trigal-limitada-762778386",
+      "sha256": "b9921aa4513dc39a119ce15286b00ed52ac7f6df6aeaf6c265910bec784b4ac5"
+    },
+    {
+      "slug": "chipax-spa-765500818",
+      "sha256": "168c2ce58e32baa30dd98d248c46a346bf42d8f5859be412ca197bbf829efafe"
+    },
+    {
+      "slug": "comercializadora-distribucion-productos-del-mar-y-pesca-roberto-aguero-s-771342027",
+      "sha256": "9e91262b07e9ab6492ae52a93589e394123664beb5fd8e4bdec25bf495bc57ef"
+    },
+    {
+      "slug": "comercial-pmr-limitada-773331731",
+      "sha256": "77688d102a7c762638b2d44159753b8b883037605d41b581b9e50a2a900cbb4d"
+    },
+    {
+      "slug": "coaquira-spa-775502843",
+      "sha256": "fb244a83aa46389f8a2e3723b08d882cb64f33b1aad647554353d4732e088fbd"
+    },
+    {
+      "slug": "jugos-rusticos-spa-764671511",
+      "sha256": "712c5c16a4fb85377719ce780ee0f7691b4e14fa126ef99fc059007ab28d6e41"
+    },
+    {
+      "slug": "cerveceria-craft-spa-765129133",
+      "sha256": "67a87eb708f14f153d65fc70ae6562e9dfecbfa0d896b949fcd59c8a29ffec8c"
+    },
+    {
+      "slug": "comercializadora-denisse-levinson-empresa-individual-de-responsabilidad-767443285",
+      "sha256": "228cd8478cbccb71ab4fc3d56aa7cd8787f1e8dec9f086afa4ae5733e5d38f42"
+    },
+    {
+      "slug": "v-carusi-spa-768660670",
+      "sha256": "1874592d8782509d16bc0f11eb1d5f94503bf620d138f416a545d36b421261b0"
+    },
+    {
+      "slug": "comercial-lastovo-spa-772586922",
+      "sha256": "bf9b5a036337493110bf0fcd640c779f4172f5946faccaa536e65d3bc6aa6158"
+    },
+    {
+      "slug": "distribuidora-y-comercializadora-the-cook-spa-773258686",
+      "sha256": "93c40f84450d66902d18e360b452551c911239b37f613603446d7d4e70eca85b"
+    },
+    {
+      "slug": "alimentos-bilbao-ltda-78559570k",
+      "sha256": "1600e36566f56723779917331290269dffaa7f4fdd9f3642c32806380c5808ac"
+    },
+    {
+      "slug": "comercial-caterbeef-compania-limitada-763089185",
+      "sha256": "2bf3f4769ced5eb7d4f53042cdaf5d820faeb9c7d40c8aaebaccf9f9297af62c"
+    },
+    {
+      "slug": "pescaderia-bilagay-spa-765745837",
+      "sha256": "97b922f3b0b1afb251855ec11e55d520b49534f281193540c0a0ba1865439f0f"
+    },
+    {
+      "slug": "cultura-gastronomica-spa-767661053",
+      "sha256": "d456f71cac806c3c45902c25815d887df8ad224f1c3fc6a1aef7c17ffa07e14c"
+    },
+    {
+      "slug": "com-aldo-patricio-balkenhol-flores-spa-768035806",
+      "sha256": "d4c05d2f39d16fab9c6ad03f98e68885e3f336d578dae40f6a3d7de18c125c9f"
+    },
+    {
+      "slug": "ferreteria-cavem-s-p-a-768265801",
+      "sha256": "da2da46ff4b2bea8b5403f1d59954e7d6c081159c6e3373eb446c78c5e91f84f"
+    },
+    {
+      "slug": "quarzo-agua-purificada-y-hielo-spa-768405131",
+      "sha256": "9bb2e2ecdb668f316b5b331090f75b056dbcdbd44293d75e0eedfffbdd4e1810"
+    },
+    {
+      "slug": "yolito-balart-hermanos-limitada-805659009",
+      "sha256": "0f4df798442558b24a01f0b393865609b9576cf66faa875a1a8f7a17539d108b"
+    },
+    {
+      "slug": "soc-comerc-mery-pellegrini-ltda-853914002",
+      "sha256": "989cc502923be1ed98caa66edfa00b3844966c002bcb91b8967c6023b8026759"
+    },
+    {
+      "slug": "chilexpress-s-a-967564303",
+      "sha256": "c2e3e1c06b3c9b8d62de09412865e865d8ce4b977507dc4fa4085fda16350528"
+    },
+    {
+      "slug": "vina-casas-patronales-s-a-969669005",
+      "sha256": "1975ce713edba17a333075bc2a5c47f4f8b9a83d4c0f92b4fb8a0f1bf0edae6c"
+    },
+    {
+      "slug": "bianca-spa-765715490",
+      "sha256": "662d13409b5fa41c5416874f039b7f15389abad8ecfb61de311cf0970c69eb51"
+    },
+    {
+      "slug": "fresherb-spa-774116982",
+      "sha256": "1712a3a16879036e724c4344c4e6a1a70db5f0806af121d5dd2f4c75f02b2deb"
+    },
+    {
+      "slug": "envases-y-reposteria-pol-limitada-762265311",
+      "sha256": "1e631203b693d97a108a1bff14725646491316acb0cba7c288dd312f9923926e"
+    },
+    {
+      "slug": "comercial-v-v-huevos-el-bosque-spa-765842964",
+      "sha256": "041870d22968c699d3da451bf28b914a15e2e4dc178f162e769b09cfd78ff363"
+    },
+    {
+      "slug": "wadaya-food-service-spa-768780455",
+      "sha256": "60b883ad95c3d6a3d65bf84146d307bc0b5e611c1309b07d523068161d378c28"
+    },
+    {
+      "slug": "comercializadora-fch-chile-limitada-773787913",
+      "sha256": "f3c0e36c860bec80b8a68e543638582ef55a76ad1c328f08d515402dd4e1b8d3"
+    },
+    {
+      "slug": "simple-burger-spa-775149825",
+      "sha256": "1fef2c7f372326d2204177c95233875bfce5c604c3286a23e2e51fa144c38651"
+    },
+    {
+      "slug": "servicios-profesionales-novoacia-limitada-776845523",
+      "sha256": "2f77cb7444657a44b722ac9ddb45889740d04ba7258b1977d25da7f4703cce12"
+    },
+    {
+      "slug": "comercial-g-q-limitada-777219804",
+      "sha256": "3183468d44f02d767c77e17aa679dd64d80c2488335f087340daf20a3821198c"
+    },
+    {
+      "slug": "hydroponia-siempre-verde-spa-780843470",
+      "sha256": "a150b8483c3172ce6a84c691b76065fa5271a4688ef9141c9bccecde7e770f7f"
+    },
+    {
+      "slug": "comercial-san-sebastian-limitada-765256003",
+      "sha256": "812c15d7b3a139a4638a60138cb2849d653dc6956ef4dd4666cc7f2ae77c6dc6"
+    },
+    {
+      "slug": "industria-de-barquillos-bric-bric-ltda-771167403",
+      "sha256": "f7b95ef2492b2650ef8457047b6b54ca0a0c2f1a95f5c12d7429fb0024556578"
+    },
+    {
+      "slug": "el-pacifico-spa-768514410",
+      "sha256": "fda40513881250325930152447bafd3279ea63befc99d08f9cebf96d3b4c5c7d"
+    },
+    {
+      "slug": "dist-girasol-ltda-769141901",
+      "sha256": "f6a1c438481ed594094d21bd74a16fb2d33284b8cd6671e1a71f2c63f5ea620f"
+    },
+    {
+      "slug": "comercializadora-de-productos-alimenticios-san-sebastian-spa-770790506",
+      "sha256": "10b01d4cd06ff4885bf3ac734a14562ff42083b1b35d0f1ed29baae23642709e"
+    },
+    {
+      "slug": "distribuidora-manar-spa-774285903",
+      "sha256": "927b47bd7c4a295be372e30fae38410a6699f7f0e3456d0ba78d5ddc9606b7b8"
+    },
+    {
+      "slug": "sociedad-comercial-alpes-spa-774440135",
+      "sha256": "fb0fef43e57aea5bceeb04d010da4456c677b06fddcdc091f952b1fa0d4bb3d7"
+    },
+    {
+      "slug": "inversiones-h-y-s-spa-774671846",
+      "sha256": "fcb711ff8904fadd4908595cff42e8b806f9b56bcfc0eaecf7c1e7a7ab7d5626"
+    },
+    {
+      "slug": "gotru-alimentos-spa-785494504",
+      "sha256": "ac7a5154b7f517eb19f4118ddad3505912a174aa1f4a21522b880e316be147ce"
+    },
+    {
+      "slug": "chilemaq-s-a-968783807",
+      "sha256": "b2b3194b59607f553c6872721513125acdd2a1eb7846c6a1d855de4fd9d91a8d"
+    },
+    {
+      "slug": "mapfre-compania-de-seguros-de-vida-de-chile-s-a-96933030k",
+      "sha256": "e3f382fba515d764c5c353ff7ee8cef596bf3617a0fa33cc0b38eeaaaa913642"
+    },
+    {
+      "slug": "comercial-granja-marina-limitada-760719234",
+      "sha256": "5387506082a896b8356cbf62ed3e4ff9d37158c29f40c274b1ee531bd51ef051"
+    },
+    {
+      "slug": "kaudat-spa-76211240k",
+      "sha256": "aed8ca45ed7d181ba3bf85c582dbf732fabedabc95d601530535a4b635384672"
+    },
+    {
+      "slug": "culinaria-spa-76231505k",
+      "sha256": "e56f978a77974b648cd2e00b1c99a5faa2ecde38cc9bf13b60bf6a8bafd34126"
+    },
+    {
+      "slug": "dienco-spa-771395945",
+      "sha256": "695876239ae49366c38d21ebbfc866976401d14c0972b8abcae69a81fd2d1cc7"
+    },
+    {
+      "slug": "yapo-cl-spa-761690035",
+      "sha256": "03beed67009b9acf6cd6b18b289959ede411c1072df64bbb0f00b3098bd1000b"
+    },
+    {
+      "slug": "emprelim-spa-764776623",
+      "sha256": "112660d5483507338a636e2b48af06107e193ff7201cddf9c7378664855f6566"
+    },
+    {
+      "slug": "distribuidora-y-comercializadora-ly-l-spa-768838097",
+      "sha256": "d481a0e17885f98536d7227484d1100b587d61c83058503daa430a6b04b8cf51"
+    },
+    {
+      "slug": "comercial-clover-i-limitada-76992308k",
+      "sha256": "af965e4b83f6e8a161cef68a3ed7fe973c8b7e62f62b3151f7b34c482d5ab809"
+    },
+    {
+      "slug": "comercializadora-leonel-ascueta-e-i-r-l-770109876",
+      "sha256": "1d046082363fdabf60dd2d051a151f3441dec5d2674474e3bb5fdeb2da236091"
+    },
+    {
+      "slug": "granarolo-chile-spa-764156021",
+      "sha256": "ee0668eaa43ce7acadf380152acab47a5f425b8eecad15c780620654d7ac33ab"
+    },
+    {
+      "slug": "elaboradora-y-comercializadora-de-alimentos-osorno-spa-770169607",
+      "sha256": "b487de35515f5cf46cfe59b9fe7f44a90db48d271bf02b7a44ed0b0b6c5183e6"
+    },
+    {
+      "slug": "supermercado-pucon-oriente-limitada-775877707",
+      "sha256": "343491719904e062d5c070b885c5f9f2eb4085ad1e26340749d084a6a98e54e4"
+    },
+    {
+      "slug": "abumusa-spa-778758490",
+      "sha256": "5a81314a96b31025e2ee529c89d14be44497267b576405e580ddfd82eb021623"
+    },
+    {
+      "slug": "comercializadora-el-mirador-s-a-782897306",
+      "sha256": "756d65b1d6da930de4d5fd47860306321891575485e06112e7b793be40661bd5"
+    },
+    {
+      "slug": "super-10-s-a-760128333",
+      "sha256": "27f2af6e64d82c48a823203de85f38cdbcc34ca827191fb23b29934826629d57"
+    },
+    {
+      "slug": "comercializadora-icefish-spa-769126724",
+      "sha256": "c1c5c5168e60654d1c99ada4444a1ea0a63ec40eae233eb38b11d185f3b4f537"
+    },
+    {
+      "slug": "galo-spa-781078476",
+      "sha256": "d461a2248be226f55d992b5a407b700c29670c402d4755c4da9902ca5bd73628"
+    },
+    {
+      "slug": "construmart-s-a-965114602",
+      "sha256": "02d3f4c2a28418c6c0e8cd2b01958c038f2798e5497cc7ffe9d0f0e2dac937a0"
+    },
+    {
+      "slug": "mejor-comercial-limitada-760502553",
+      "sha256": "f56d63d2898da8b95194ba91aa5da994101eb15ea7a7b81231c0d0bb229025a8"
+    },
+    {
+      "slug": "agricola-e-hidroponica-marianela-bordones-diaz-e-i-r-l-762690896",
+      "sha256": "17542201b54fa8907a82363cb1b6d41f853e2af80ff065a883b18d6221cd8c93"
+    },
+    {
+      "slug": "inmobiliaria-power-center-limitada-76409851k",
+      "sha256": "9e8e4ef22404f4d89182897a3b525c0a6ac8e86c0e9999a0dcc84c3b33f66da6"
+    },
+    {
+      "slug": "ecoitalia-spa-765748496",
+      "sha256": "a9646be712e5652a0e6c51b0c226e69c4587fcddf9d84751ee6fc7db9267d503"
+    },
+    {
+      "slug": "comercial-logistic-service-spa-770546494",
+      "sha256": "ca02738c97a1ac34bfb2f15083d61778e51477a8b36e9184d8d863d51167473b"
+    },
+    {
+      "slug": "food-factory-spa-772237642",
+      "sha256": "ba0651cec897513012dcc37954b9629b021407db1d6436563e38279da22814f6"
+    },
+    {
+      "slug": "comercializadora-de-alimentos-sandra-mendoza-e-i-r-l-775234776",
+      "sha256": "0691af2324c7692ed352bcd9f339644db07962a0162b87263724bc375d515e77"
+    },
+    {
+      "slug": "comercial-e-inversiones-algarrobal-spa-779311015",
+      "sha256": "b8ffc88c20c5e9867827efb5da025eca89e211b6ba367d3d3dd461703f53301f"
+    },
+    {
+      "slug": "electrocom-s-a-963550006",
+      "sha256": "fbe6361aafd2ef398b7e34cfe8a90f8c131429382aaa495226e1857ee6ff21f7"
+    },
+    {
+      "slug": "servicios-de-limpieza-spa-760071161",
+      "sha256": "30c3d09b049acc0b798295de8648507a88dcfa954b212488450c8739cdc423d9"
+    },
+    {
+      "slug": "comercial-matias-diamante-spa-765091748",
+      "sha256": "ab1728dd77933a0b366896f57028e47d656ec85890dbc53aedd61c0c75b501f1"
+    },
+    {
+      "slug": "apruebo-verduras-y-mas-spa-771589022",
+      "sha256": "7a020c21124cfac768c25ab815e2c9478249b3ca4c587438e999763cb5c411fc"
+    },
+    {
+      "slug": "frutiferia-spa-771601332",
+      "sha256": "f586a59ceab5a689fbc19e3ca4033e288a077fa0c70af6327def88b128e1eea8"
+    },
+    {
+      "slug": "distribuidora-y-comercializadora-jb-spa-772050453",
+      "sha256": "554c1b3393bc15d03b9309f0e53f62b7ba2b420fe37e044effab6ba7d3a15bfe"
+    },
+    {
+      "slug": "comercializadora-jvj-spa-780213035",
+      "sha256": "c357a9fe1418d474d39ecf5e37b1b75232088b4446ba82c3c3a0df6181947e1a"
+    },
+    {
+      "slug": "jaime-soler-e-hijos-s-a-809418006",
+      "sha256": "fcd00dc7fde505d6f6e27ad54d30e330ec3fa82e071ab3f990827ba4c5727de8"
+    },
+    {
+      "slug": "aquavitae-chile-spa-761432532",
+      "sha256": "30c5a02dd87365918534e016ee71859202443a3dba58a4ce329a60b90ba29537"
+    },
+    {
+      "slug": "comercial-lorenzo-inostroza-y-compania-limitada-764687574",
+      "sha256": "862be4633d40199876bfde1bf38c6214802fe4f72445821c339bb8bca25564ee"
+    },
+    {
+      "slug": "distribuidora-rodrigo-ignacio-sanhueza-jauregui-e-i-r-l-766905943",
+      "sha256": "09199073232fccbfa64f0418778847f27c47a6da4be2e9091dd226ea79b737fe"
+    },
+    {
+      "slug": "molitos-chile-spa-769155635",
+      "sha256": "53c2a111ddfd9355edce76f33761976c600934deb8e458640ede7f0abf28e4ea"
+    },
+    {
+      "slug": "distribuidora-victoria-spa-769821546",
+      "sha256": "e912250ccb8d896c4f709ab4d7f654706ee160b552b1bee906b5683cce38c0e1"
+    },
+    {
+      "slug": "j-pack-spa-770868785",
+      "sha256": "f9588bca0e22594cae3f9796b9854b05a8f199a4c532ee0ef51a481843d8410a"
+    },
+    {
+      "slug": "the-standards-co-chile-spa-779712389",
+      "sha256": "340ed441788d7e9abbf29c87ad5c4438fcef6efbcc20c8fd4479223079b5daf0"
+    },
+    {
+      "slug": "librerias-tucan-sa-769263306",
+      "sha256": "37fa6b515e9033f40a9db2688c571e37abf00cd25a53b432fb810967f74d9391"
+    },
+    {
+      "slug": "sidra-outcider-distribucion-s-a-769930949",
+      "sha256": "faa5467d8a990bf5f893ebea805ee1de826b377da6b766f52def1ec9b83dbe31"
+    },
+    {
+      "slug": "distribuidora-covadonga-spa-777547771",
+      "sha256": "a6de60735d8f25cdef21421813c63984db650a5a556e50bdd47a469bd7bcb67c"
+    },
+    {
+      "slug": "comercial-center-limitada-887557004",
+      "sha256": "96e7d517595f00ba9401e4273b6dfab1ec7cde6daec31f0e4e4b17b359e0350d"
+    },
+    {
+      "slug": "carnes-y-cecinas-andres-aybar-eirl-761737198",
+      "sha256": "789a143c2fc79b3201990a8712c2ef622a2556ceaa030989b72404e740d92bd2"
+    },
+    {
+      "slug": "inversiones-enex-s-a-946250007",
+      "sha256": "04495aeff8e2957c24a88993cbac94fd81f9f9de0c793ae1d6a3e9d6c83059e8"
+    },
+    {
+      "slug": "banchile-corredores-de-bolsa-s-a-965712208",
+      "sha256": "8ac3af6a07307af8a44a4bb0b63cd81a65fdd6788dbdbcc5046637ff3d457741"
+    },
+    {
+      "slug": "radiadores-jl-spa-776817619",
+      "sha256": "95e67667cc935e205d311a8829b3caf633667e5bf3892709dec6a5d6bf082203"
+    },
+    {
+      "slug": "three-bees-co-spa-777839667",
+      "sha256": "de47b2ed6ce2c36ee2688ff6266ae9baa4ac1e5bf0a6b5b1dd23d3831453a814"
+    },
+    {
+      "slug": "servicios-equifax-chile-limitada-858961009",
+      "sha256": "c019ec939f8ea6af9b56224edd6647d63b921553e53f9c12f86acc2c0a4cdfca"
+    },
+    {
+      "slug": "inversiones-y-comercial-grecka-spa-968055305",
+      "sha256": "1b9b960f28ed759bfd3cfe019471e46932088d0519a6b0b61ad3c46bd18548fa"
+    },
+    {
+      "slug": "comercial-de-campo-s-a-969182904",
+      "sha256": "13a754d8722fff55d84a395e1b2876531e1390da845d48237502c3218ce2b3ba"
+    },
+    {
+      "slug": "plagaccion-proteccion-contra-plagas-limitada-760605492",
+      "sha256": "e8f627657c0a2fbb211320c18a34126badf436111e763342a8984774caa43395"
+    },
+    {
+      "slug": "asia-wok-alimentos-limitada-763825507",
+      "sha256": "0a1ed33afbf7fb8d3c4a0f6278964735932d907ca64c36be6297e1c94e35d367"
+    },
+    {
+      "slug": "distribuidora-full-envases-limitada-764014731",
+      "sha256": "e0a23c587b8239d36916c175abc68e6b54bf6294160a405f2decbd43fc6457ae"
+    },
+    {
+      "slug": "nutrapal-spa-764504224",
+      "sha256": "20a9c42c7218ff7d561b681955fe16c48752dab77d9ba0a0f7919d404cf03390"
+    },
+    {
+      "slug": "inversiones-agasnar-spa-767357273",
+      "sha256": "799fe84797b6a1f2fb7bf66301821c0c9539beb8b1bda82931f838795bc5ede8"
+    },
+    {
+      "slug": "tanico-spa-771131034",
+      "sha256": "450fba9fcc52d5295cb128c98e0ce46ee301b9dfbeba274f383bb3b4facfec2f"
+    },
+    {
+      "slug": "cria-de-aves-de-corral-para-la-produccion-y-comercializacion-de-huevos-p-77136246k",
+      "sha256": "fd9ce83ba7a82dbd399b3d83dd7466e7b892c0414eb16c95c50a92b2d727f2c8"
+    },
+    {
+      "slug": "agricola-los-lirios-spa-776730017",
+      "sha256": "2b09a0a8345041420860ab1ba6ef1b2d959d2a740a02f26857c8eabbf9943205"
+    },
+    {
+      "slug": "jfv-spa-776928666",
+      "sha256": "a745c935e84bfda39ed81cd6a3f6daaed59ed8331fcd151f1c29dd04f12395d8"
+    },
+    {
+      "slug": "distribuidora-miguel-uslar-e-i-r-l-766491596",
+      "sha256": "7cf72f9bdafb070388aff82cd2744ea14d0b8dfa30df9cd01af0c811eea346f1"
+    },
+    {
+      "slug": "comercializadora-agricola-rodito-spa-768751463",
+      "sha256": "b33659a0ee521ff0c60c8a23d3502f7035db8f0eb2a3d6f414f608d3d4d1c47e"
+    },
+    {
+      "slug": "cerveceria-kunstmann-ltda-770513308",
+      "sha256": "6c9fc93c4865d939ed796d947f9b6b83cbdc58f6b8bd567528ec5c68d43970b3"
+    },
+    {
+      "slug": "agencia-traful-spa-773048282",
+      "sha256": "b47cf65e807a7de2499b91a7167a0dc5debff4da92bc14b4f4f73078e7c37d3c"
+    },
+    {
+      "slug": "snack-gourmet-spa-773987866",
+      "sha256": "b1f8a65c8f06efd945a42e1eca81d0784f1ea06480736f4f80460e2c7b04380b"
+    },
+    {
+      "slug": "casa-vegana-spa-774572058",
+      "sha256": "dd85be1b781dc67ed6ade8c19b2a64766d09ced1cf3e3fb3916912529410a247"
+    },
+    {
+      "slug": "comercial-rogus-spa-778077817",
+      "sha256": "72a4748a8e6b015dca43257e1f8c5af6467472ab0d36b2e3ababd451e1b785d1"
+    },
+    {
+      "slug": "emilio-soto-y-cia-ltda-840894002",
+      "sha256": "19a9a7701758ece1a23d7422540cbb60467853169f1406dc2cd65b35fe12db75"
+    },
+    {
+      "slug": "comercializadora-casa-italia-spa-761910663",
+      "sha256": "f85b53e65bfd0eef3224cdec065acabc661b6391e2dbb9e912f70fc005d2a599"
+    },
+    {
+      "slug": "industria-de-plasticos-verschae-s-a-76308034k",
+      "sha256": "dfcf694cdde9fe635e741b05170df862ce60d2a1486c42a0878940a85df593f3"
+    },
+    {
+      "slug": "marine-food-limitada-76454417k",
+      "sha256": "0b0d0de5b9dcc540339163d27d27c49d6a918be443840b9e9f47c40bb2654003"
+    },
+    {
+      "slug": "karamele-spa-766331106",
+      "sha256": "e7a06c59d49ff7f050cb07dcc2d799f2cc529a4816595d2f5ed452dc8ea7f02b"
+    },
+    {
+      "slug": "soc-comercial-cintec-limitada-773382506",
+      "sha256": "5f2a0633a9aa24f17c7ec2c8bfabd3553f9517a4cdf729e590bce8671f466d84"
+    },
+    {
+      "slug": "asesoria-ingenieria-y-comercio-ravcor-spa-776891258",
+      "sha256": "81e54f4327085d799aee124c946dbe1a3cd3fbb52948c089a281930bfb127231"
+    },
+    {
+      "slug": "soc-inmobiliaria-y-de-inversiones-las-vertientes-spa-784441806",
+      "sha256": "d4b8b668bb6d8b325fbae155bac38dbdba0da6b897502d7cb9971a758283efa5"
+    },
+    {
+      "slug": "winkler-limitada-797228605",
+      "sha256": "1a7e3c927f6c8d89690d0d24ba8e67036acc7c01fe8d589e4ffdb66c9985284e"
+    },
+    {
+      "slug": "cia-comercializadora-de-alimentos-onza-s-a-967605603",
+      "sha256": "64e0fe8fd62cbf1986347ccd6cf4ea6f39c8b3a6e01ece15336bb20d2453ac8a"
+    },
+    {
+      "slug": "servicios-gastronomicos-giuliano-capelli-spa-764983556",
+      "sha256": "491695a039f23464d620d4a062e5046e25e7cc4ef8b3919dbb77fba6ff9715e2"
+    },
+    {
+      "slug": "ostricultura-quihua-s-a-96513820k",
+      "sha256": "be56528736d86fc9709d41c27c3a4cf6a8b3308621a29609d4b44bc394175abb"
+    },
+    {
+      "slug": "inversiones-astros-limitada-760977446",
+      "sha256": "6d328f1ca7df7f86127e534cc831852df83817e525142e1a5ab766425b2b933c"
+    },
+    {
+      "slug": "comercializadora-de-carnes-gutierrez-y-gutierrez-ltda-761813706",
+      "sha256": "97c51276e40ef59eed9be7957a298a03dc2af258f6baa15a77a24c242290a8a8"
+    },
+    {
+      "slug": "worldquery-spa-766575099",
+      "sha256": "2336487644364106ded8098411c057abb9a21e1fd3cb0a6ec33a262f93e1b779"
+    },
+    {
+      "slug": "onda-del-mare-spa-771921558",
+      "sha256": "d79dc94334e688d5b885050ab9aa9a5902b8fb696c1bbd91683641dc2720b230"
+    },
+    {
+      "slug": "comercializadora-aseomagico-limitada-774099832",
+      "sha256": "573b089429421df0b2c4a6b12bfbc66f1bbe4e51aaf17c62084c9e9deaf75879"
+    },
+    {
+      "slug": "andes-frost-spa-778388049",
+      "sha256": "b009a562d5a22d9de19fe90f7ea56b892a54dea61f2a7fc960774668817721ee"
+    },
+    {
+      "slug": "distribuidora-nacional-de-carnes-limitada-795181008",
+      "sha256": "fc3298639439d8855e3d36608373d0c6a41d1090198e5bf3ea21c019c6076767"
+    },
+    {
+      "slug": "comercial-la-liquidadora-limitada-761200801",
+      "sha256": "185aea30e88df775e25c1923679c796b1cce0b59926217b482abb9ff22438db4"
+    },
+    {
+      "slug": "comercial-marena-foods-spa-764979982",
+      "sha256": "773e9c0b678de4733152fbfc1f3b408ec0355a07d3b49edadf4d3454962d83d1"
+    },
+    {
+      "slug": "sociedad-comercial-fredy-venegas-y-antilef-limitada-766355420",
+      "sha256": "c4e357fe934c0830281ff276d7d75c5d6f81a561670e64de8f696e7834dfddb9"
+    },
+    {
+      "slug": "plaza-oeste-spa-966536500",
+      "sha256": "a33c5647c5613d942ae66aef2cd49054942d7d34e9f71781219511bcf9dab266"
+    },
+    {
+      "slug": "soc-avicola-rio-maipo-limitada-760100005",
+      "sha256": "363f7c3e633be1f36991b7428b3952ae3ee62fbc9851030bf7ec9ef2aad4540b"
+    },
+    {
+      "slug": "comercializadora-inversiones-e-inmobiliaria-rayma-spa-76118668k",
+      "sha256": "847111034ed96ad4c52ad4c78f7c5ee2b0d8cc48a4cea6ff0663f2e799643d6c"
+    },
+    {
+      "slug": "fuenzalida-y-cabello-limitada-774384871",
+      "sha256": "200a82dfe70891d58112561235805f2516237157aab396a6620db90345804491"
+    },
+    {
+      "slug": "distribuidora-san-francisco-spa-764004639",
+      "sha256": "fc8600801d1e5862eda6b91e3508dda7752fefb890ef26e315363d89f6942741"
+    },
+    {
+      "slug": "segafredo-zanetti-chile-s-a-767205805",
+      "sha256": "9d5de53aed8672fb1366477ed48b109a4496d34e96e242d9b6b3002fc7a4be2f"
+    },
+    {
+      "slug": "estacion-de-servicio-comercializadora-y-distribuidora-perez-silva-limita-767413793",
+      "sha256": "eee39d872f0be2c97582c32a67294d1f3642eb81ad15d5c5f37df8a06f60fce7"
+    },
+    {
+      "slug": "sociedad-comercial-martinez-limitada-767884524",
+      "sha256": "3a675065a0c72010aff333920a42954013c1891d175af1dd715a9a1ff30635d9"
+    },
+    {
+      "slug": "comercial-los-maldonados-spa-770111293",
+      "sha256": "a756370228b8ad2775a42e239f62763858657e361c5d491882e8f967c045e2a2"
+    },
+    {
+      "slug": "comercial-castro-spa-770386209",
+      "sha256": "77786fefd851958107155b3ef82822a22d5f519aeb321fb346cb454d47854078"
+    },
+    {
+      "slug": "jaime-vasquez-y-compania-limitada-774491503",
+      "sha256": "03420ffd5b26c4f1e3569781bbea0341046d9091555efe4fddfceb446e0605b0"
+    },
+    {
+      "slug": "distribuidora-de-licores-ampuero-spa-775133597",
+      "sha256": "5a2eadd34373755a8bbd00b5cf1644a13e31bc7e9b6647b09a67327975731c1a"
+    },
+    {
+      "slug": "importadora-y-distribudora-eco-plastic-limitada-777595970",
+      "sha256": "ff5cb24bd5d26f6d6a3567a893c995b6b133af58f0fe89d5583f51c1a535cfdc"
+    },
+    {
+      "slug": "soc-comercial-flores-hermanos-ltda-782123300",
+      "sha256": "22c16611e38c2a297979934cbcad5502d774896640983c3f32d3de958283faf8"
+    },
+    {
+      "slug": "banco-bice-97080000k",
+      "sha256": "9fb434eda4bdde08f6763b41be51c3cd7c026bba5e5a36d7e51401bd2aebd4fb"
+    },
+    {
+      "slug": "metlife-chile-seguros-de-vida-s-a-992890002",
+      "sha256": "1e5fc5c6c44bea1ce8a617b31a14de6f0a146bc7cc276577c245610d779442fb"
+    },
+    {
+      "slug": "inmobiliaria-administradora-y-comercial-mall-sport-spa-995181401",
+      "sha256": "392967e603e094136cbd4b439cd0af15066f5a5832db5f603a9e4de51fa03c02"
+    },
+    {
+      "slug": "sociedad-comercial-edow-limitada-760274623",
+      "sha256": "e2de31fa401b597cb8846da60ac791177716ad218ebab289417e802f5b77f524"
+    },
+    {
+      "slug": "maxi-mobility-chile-ii-spa-762370190",
+      "sha256": "63308134e001480e452ea939fec64a4c70974037433572610432e0fd8c89d08f"
+    },
+    {
+      "slug": "comercial-k-spa-771378609",
+      "sha256": "b15fb87faa26f5bf51e53190008f0074bc1104969a4650ee4422d4b31937fdb0"
+    },
+    {
+      "slug": "soc-comercial-n-r-ltda-773351902",
+      "sha256": "7557204b4a92df1690cc6dc86d6ad254f59df62fed5baf63791685ede9026ada"
+    },
+    {
+      "slug": "empresa-electrometalmecanica-metasol-limitada-779682803",
+      "sha256": "a5fa30a6203804859be7d4ecda1c6ae267c7a5e934071bd51214bafa9c7d223c"
+    },
+    {
+      "slug": "cerveceria-derek-way-e-i-r-l-761027352",
+      "sha256": "e8733910f474e926de2e5c8c6ab7c6faf5b4e9f54b9ebd77b07db48a313d55fb"
+    },
+    {
+      "slug": "agricola-la-oveja-vasca-limitada-761545396",
+      "sha256": "76f1dddc7fa02e9a2cfa331d5f40fc0821ba59c43e940e167bf24d88cc4b312b"
+    },
+    {
+      "slug": "comercial-ck-limitada-763301419",
+      "sha256": "b064ef3e2cf79915b7334fe5b5d0927d81880ae53c0a79d0dfe415270cfc715f"
+    },
+    {
+      "slug": "union-del-maule-spa-768534772",
+      "sha256": "2cbff3821d105b514e49a31f3ed045c82b0870624f1f670591f99e29cd9ed5f1"
+    },
+    {
+      "slug": "anda-y-sale-spa-769015167",
+      "sha256": "b7c21ecfc090fddc00947c4b8abaef92003fc8620c298fa7a578a83b0d51d49e"
+    },
+    {
+      "slug": "mercat-spa-772663080",
+      "sha256": "5ff7c830478062429f11fdcd21252bb41142692590b1df85e2987cab9bfde1e4"
+    },
+    {
+      "slug": "fabian-lopez-electricidad-y-montaje-e-i-r-l-77291606k",
+      "sha256": "06b155b8f49492d93c2ad4b92541b4a4b4e9232817357d80f8500edc27c3c271"
+    },
+    {
+      "slug": "distribuidora-comercializadora-y-transportes-de-productos-del-mar-aranci-774538518",
+      "sha256": "eba4226e5db1c45cf0f5e9451df03b86cced9d89e1f446d0699c7a3ea923d13f"
+    },
+    {
+      "slug": "acenor-aceros-del-norte-spa-776609609",
+      "sha256": "eb423ea25f8f6a7fe37313a06b55a6e469f65dbafbd9efda6539dafc3e6b4494"
+    },
+    {
+      "slug": "agricola-porto-fino-spa-96638980k",
+      "sha256": "177bab25b82c232e23b0e20a6f01f24d5d0fb58dee8e40eafb472c5d73a133e5"
+    },
+    {
+      "slug": "mauricio-veliz-gajardo-laboratorio-spa-520051961",
+      "sha256": "d44d32bdf8f59e8a609263aad7d2528910a3c68766b169abb233f24885d3b959"
+    },
+    {
+      "slug": "fiweex-spa-767717873",
+      "sha256": "653865517b29fd20a3daef9b946070fdad3d315c30fb0de1ce7d7ad6c4e3bcee"
+    },
+    {
+      "slug": "lastarria-shop-spa-770065437",
+      "sha256": "ff326a7650b0a05f208f2d0f95fb84e60f2ef1ecf533508f7e4f70407e14acb6"
+    },
+    {
+      "slug": "agricola-travesia-spa-771906443",
+      "sha256": "b65d46a9ff7331e0356913db820fa651304f640d7f75f6620290603378bddc27"
+    },
+    {
+      "slug": "the-king-salmon-spa-772149689",
+      "sha256": "d10643224ed68b5fcb7074245d3ba070b0a6e618f06bb6ce1164da88cdf2afc3"
+    },
+    {
+      "slug": "comercial-pan-y-mas-spa-772376030",
+      "sha256": "487c4a4ee5923d659a3db1e8989d29d2ac4e709d0706c3836609aacc3024e4fd"
+    },
+    {
+      "slug": "fabrica-laminadora-de-masas-flm-spa-778227460",
+      "sha256": "f0747c813d0ce62a614d6f07655450e7402ee2b0a280b83140674a3ba74f223b"
+    },
+    {
+      "slug": "lbb-produccion-spa-779813495",
+      "sha256": "7f20aab9924ce76cae309aef47b06763c1ed7e436ef14442a59625e335d5a178"
+    },
+    {
+      "slug": "zurich-chile-seguros-generales-s-a-990370001",
+      "sha256": "d3b08036928855f4bfe04a36f3a0996a820b4c5a0b48fc4947e9a5e24479a047"
+    },
+    {
+      "slug": "pasteleria-tibaldo-y-leone-limitada-764155033",
+      "sha256": "fe7d41671b012e0116d55d508ee04a088d00203a76f90bce7c443ec63256c0e5"
+    },
+    {
+      "slug": "alital-spa-764736990",
+      "sha256": "36fa97c49bf2b8982ae6c206454ade4d39ea11e3ada595ed312aefcddb54a96f"
+    },
+    {
+      "slug": "comercial-y-servicios-barlovento-limitada-767723695",
+      "sha256": "6eab98491cadcde2163a5ebf087c3e634614d9179bbc766235ac4d02d636a381"
+    },
+    {
+      "slug": "panificadora-castrodeza-spa-769087168",
+      "sha256": "c0398be191f1e969288f1f5f6fa35d59c87a3b65a1a8ea821709a80d7c1b2bda"
+    },
+    {
+      "slug": "mirai-ramen-spa-771359418",
+      "sha256": "ec39e33df994bff0c0128c2c8dc8af7732984d0d13d86ecc081d2ecf569a2efc"
+    },
+    {
+      "slug": "distribuidora-pacar-spa-772345313",
+      "sha256": "753bfe656a92b9cf4904238b06f049fa0b6ffacb98da5d21c60cf3d93557f00e"
+    },
+    {
+      "slug": "distribuidora-gas-licuado-kler-gas-spa-777367099",
+      "sha256": "057901aade4e0a82532bc35b224a3c15d0991c1a90949403592f636d469a357a"
+    },
+    {
+      "slug": "alto-de-casablanca-s-a-967629901",
+      "sha256": "2eb51689f68f6bed2fafcec62dac5f98edb343d45941929e13a493e55aa2d44f"
+    },
+    {
+      "slug": "inmobiliaria-hispano-chilena-s-a-969647605",
+      "sha256": "4ce511a0451e694069b0732d7c036478923a0632ae5c027874dee75602c825a3"
+    },
+    {
+      "slug": "manfredpack-spa-76046693k",
+      "sha256": "b43688842ac918bfe396ece910bef2b19bfe37adbd4a02417585e7f5244d2dcb"
+    },
+    {
+      "slug": "comercial-cerda-spa-763166473",
+      "sha256": "70ebcd3b2b868796084ccd09d647f23a80b019d9b6e04cea402a069e352497e7"
+    },
+    {
+      "slug": "comercializadora-de-maderas-y-materiales-de-construccion-limitada-773907803",
+      "sha256": "accc0625595f03235fd8331089c573758451a452872d47198e9659b96324140b"
+    },
+    {
+      "slug": "comercial-e-importadora-marie-paltas-limitada-776013382",
+      "sha256": "22ea3f9497116a98f329a59c9a5e3dc95bd93e6786b698d2066450a973ba6c4e"
+    },
+    {
+      "slug": "empresa-distribuidora-de-papeles-y-cartones-spa-88566900k",
+      "sha256": "c511afaaa409a2276a18aea59dca3a1252fa02f7e476a3a93940596aaac3b10e"
+    },
+    {
+      "slug": "importadora-comercializadora-distribuidora-y-transportes-punto-entrega-s-766890040",
+      "sha256": "91aae99340eb5f516ab7fdc2778319ada8f8f2630409cfffe489ad6022767724"
+    },
+    {
+      "slug": "cintac-s-a-i-c-767219105",
+      "sha256": "fa06434921e712ad2dbe7967bf95af0c7a71963777c9c352d6d6ca2bf2bb1b0d"
+    },
+    {
+      "slug": "comercializadora-jano-spa-767375166",
+      "sha256": "e6e7c0afaf7b520837a009df672f3a3e83895d71fb104985879090e782c54a67"
+    },
+    {
+      "slug": "comercial-nathalie-venegas-valdes-empresa-individual-de-responsabilidad-771515541",
+      "sha256": "49d9e041bb1338b58b3183fc79b1a36779553210ef4dcf2f6ea2d31786dc7b83"
+    },
+    {
+      "slug": "world-golden-brands-chile-spa-771573681",
+      "sha256": "bc809d63b0e8e7493a1b6c0c8b0a3c6d4a846087454223fb977b79dde5adbcdf"
+    },
+    {
+      "slug": "del-campo-spa-773094322",
+      "sha256": "2cb38200959a718c5a8e99b0e7f0a3c29b61584b773b38e43cc56809dbee0668"
+    },
+    {
+      "slug": "bullpack-spa-773593361",
+      "sha256": "87ba526df110f459faea6b14427dfaf706cac6c17b5fafa3ae11c1a7844d45af"
+    },
+    {
+      "slug": "comercializadora-temaisi-spa-774234659",
+      "sha256": "6958933105905e39cbb2aa78c2ef2f3f974851586b33c37f4e53a4015c81e695"
+    },
+    {
+      "slug": "ayg-insumos-limitada-776027782",
+      "sha256": "dc356be76ee3b94adda174b9e10ad4dd7225aeaf5b5f03144d54005f0bf8a68b"
+    },
+    {
+      "slug": "ferreterias-weitzler-s-a-928740005",
+      "sha256": "1e6c4fad274bf59d061ef751aadc2ef25992495f8fc916c69d01a6f2ccc34a42"
+    },
+    {
+      "slug": "productora-y-comercializadora-jorge-alejandro-leon-barrera-e-i-r-l-520041885",
+      "sha256": "94b4a671d86748f3353183eed304b3f5fb29611cc2a315043abf98ecac94c7e0"
+    },
+    {
+      "slug": "comercializadora-ex-golosin-limitada-760050857",
+      "sha256": "5c607289ba6075c968510dc0f083acb3634821c0061805d108d96d13e1a20200"
+    },
+    {
+      "slug": "comercial-punto-plast-limitada-760055751",
+      "sha256": "ec855f40110f1911c6d7ec718920598ec30af83949c291461459dbe5ae30d3fe"
+    },
+    {
+      "slug": "europastry-chile-spa-760469521",
+      "sha256": "00c0d505f4b6b47e9309c3f4c31d98f23a3f70fad6cabd5ccfec1f87ad135c6c"
+    },
+    {
+      "slug": "green-pest-control-spa-762206641",
+      "sha256": "aeb90c2590d7daa8fe943aa2ba9b744bafd3904e988cb54861b428c8e9e098c7"
+    },
+    {
+      "slug": "chacras-del-norte-limitada-768946418",
+      "sha256": "fd48f054bfe9f7ce41f3699b9b1fec4ae9400c8af6d5b16da8cbd2ffd182f762"
+    },
+    {
+      "slug": "gpi-spa-769508015",
+      "sha256": "05337b2bab951f4e56aa6aa74128cc00176c93bdb8e08833824805ed651588b2"
+    },
+    {
+      "slug": "comercial-dlc-limitada-770131227",
+      "sha256": "b07c88b53058ace9b7ee9398f1df57eda6005917dbbeee31fe206fedaf1ed89c"
+    },
+    {
+      "slug": "transportes-valran-limitada-770847753",
+      "sha256": "1236e289b831acb9763b505684ac0e4e67dfd6eadc504668a2e81824fb968f55"
+    },
+    {
+      "slug": "dialon-spa-776513725",
+      "sha256": "5de22dc0d164754e6e3f47e60ed9d21a8485a4bcc57624bbd4234dfa2b0a99e4"
+    },
+    {
+      "slug": "soc-sanchez-labarca-limitada-776871907",
+      "sha256": "207ad2109c01c6de092802779f1004658cd9553f50b42b579f3854848629d2e1"
+    },
+    {
+      "slug": "kami-chicken-spa-777028480",
+      "sha256": "5abd5c65e28dc2720870f3f24fbc099551931759d22e916652270fbde1d972bb"
+    },
+    {
+      "slug": "sociedad-comercial-aranguiz-y-compania-limitada-763558258",
+      "sha256": "94cbe0308b407363a1485345243f21ea828d4151fd1710662d5931da621ffdf1"
+    },
+    {
+      "slug": "comercializadora-santa-luisa-de-nava-del-rey-limitada-764955528",
+      "sha256": "af5d7df6237dcc3ed593e777d79967dd89baa93a5dd2fda52df3ab09f217cc91"
+    },
+    {
+      "slug": "comercial-ramon-ernesto-ramirez-jimenez-e-i-r-l-767060904",
+      "sha256": "bd7ab1fa71ac1006e6428eab09dd7e827305fe8ebcc189a454fe3095964a0796"
+    },
+    {
+      "slug": "comercial-de-productos-del-mar-alexander-felipe-giron-maturrano-e-i-r-l-767730241",
+      "sha256": "45345c382cdcc7bda326f48630053c1c87ba205222e61c97fb7597023803b029"
+    },
+    {
+      "slug": "imperial-s-a-768213305",
+      "sha256": "74acff68c5cb580316d85577e60581ad89c865c637e51430cf3e1bc35bb292f0"
+    },
+    {
+      "slug": "sociedad-comercial-de-restaurante-y-carnicerias-meatcenter-spa-778975661",
+      "sha256": "a85a791905acdcf59472bacfb9ab8f6450f5a0a94a30254f42b8bf3998ca09b2"
+    },
+    {
+      "slug": "comercializadora-h-y-m-limitada-761296981",
+      "sha256": "959045308387a495d87bd7df613b07eead031fc222c28fd800581c08fc53987e"
+    },
+    {
+      "slug": "sociedad-comercial-nuestra-feria-spa-766944698",
+      "sha256": "55fd561ef5de1db2f2bcbba0b6a044dbfbe2b8f3c5a51ac2fe5c65cd5b28b2c7"
+    },
+    {
+      "slug": "inversiones-blanco-ltda-767860501",
+      "sha256": "c0bc7e7af57018ff5b76100f8dc13ac3926803f8a0631449e0238135742d4642"
+    },
+    {
+      "slug": "grupo-pb-spa-769130349",
+      "sha256": "e520ed9cc15aae5ba65f6b5ce73e48902525e286f1425510fe5a0628721f7d2a"
+    },
+    {
+      "slug": "mercado-de-las-carnes-concon-spa-77180618k",
+      "sha256": "17716ecd3ba183ca98da06f73a43ad4983887bcd14b2937f76317d98aaf4ce00"
+    },
+    {
+      "slug": "comercializadora-sur-del-mundo-limitada-783775409",
+      "sha256": "a72a9f962cb8bf5197930ff301232c5d00c7f72185f584a76b3ec49f772be27b"
+    },
+    {
+      "slug": "plaspak-maquinarias-spa-787322301",
+      "sha256": "be87de82c36ee3459653644fe56cce8f3417f630a53fcb7688998fb044c158cb"
+    },
+    {
+      "slug": "comercializadora-de-alimentos-los-cisnes-spa-796900601",
+      "sha256": "10cfbbbce72b6bec68d1b94f46b2a1e624d3b001c45f19e86ba231c48f96bc84"
+    },
+    {
+      "slug": "comercializadora-campo-mix-limitada-761262491",
+      "sha256": "f59786df85d46a867fffa74a46008db48ea493e8d0a6bedd9958307b82ee45a9"
+    },
+    {
+      "slug": "acuna-y-mermet-spa-765331463",
+      "sha256": "dd50cacdc6f073225c96ab64a86939f5bf9639c2e6fe1665261da8cb1a016b58"
+    },
+    {
+      "slug": "comercial-ekam-limitada-766436390",
+      "sha256": "e1d14b20301de5cffa5bcb5af0dbab2234fa6fb4bb03acb0ab7fe4cef397ef81"
+    },
+    {
+      "slug": "fudge-company-s-a-766940307",
+      "sha256": "70b713a02d77c6b2be2b8a615a958c65aefa8f18144c9943ddab78280bc0a258"
+    },
+    {
+      "slug": "meathouse-spa-767240570",
+      "sha256": "f88bfb204ba19578015c689b6c16bd6d5a5d7af1fcc6e50ccd67fa83f3b8e4d9"
+    },
+    {
+      "slug": "par-cuatro-s-a-768337500",
+      "sha256": "3165509252e0bca888a1c45c87f9d8822f8ab7c80162a0a1af66c1265197069e"
+    },
+    {
+      "slug": "agricola-los-nietos-limitada-77481891k",
+      "sha256": "a331bfc6116d901137f0b9e6acdefe56c8cc8a0c2f3fd3f951c607825083e409"
+    },
+    {
+      "slug": "cavalieri-y-compania-spa-845078009",
+      "sha256": "bf320dfb5b7b5ebe8133ca8a6d288ba16241c7b8af60786e8b37da0c28881d79"
+    },
+    {
+      "slug": "elbelman-corp-s-a-966804807",
+      "sha256": "4d840ce88affc7c2ae6880c865119b49fa19a61a796a5d6df2e7d7cb1b27ab29"
+    },
+    {
+      "slug": "comercial-quinto-centro-spa-760963739",
+      "sha256": "a3a3778800148b076751040a2d1068760b6aa96e3be0e8b79af258ca694662fb"
+    },
+    {
+      "slug": "distribuidora-soley-spa-766483011",
+      "sha256": "d35cd951b2e34b7cfa7418724faaa0910b54e5de32656f42bf3004ed15c91183"
+    },
+    {
+      "slug": "sociedad-comercial-patricio-cabion-e-i-r-l-767786441",
+      "sha256": "ae65f5589f251fba9d48d591dab246f5311afe0a425802962aa54feb34b75dd0"
+    },
+    {
+      "slug": "mia-palta-spa-774769048",
+      "sha256": "cdcfdee1391e4bc136e9297e4a5d83c62a8180f8538bbeaa08a08bb6d3c2f473"
+    },
+    {
+      "slug": "comercializadora-y-servicios-agricolas-frutillar-spa-780884649",
+      "sha256": "9e362c311720aa82fa649abaa08b8507bc172a9bfcd05f2a231a8fdb96c1435b"
+    },
+    {
+      "slug": "miguel-bustos-sotomayor-distribuidora-y-representaciones-e-i-r-l-760741051",
+      "sha256": "5104bd9eb0c9d2af57898aac8d7456ed122ed5dd093bf037f0a9603611a1c6fc"
+    },
+    {
+      "slug": "mahou-andina-spa-762014157",
+      "sha256": "48f1851c9ea6c7a1f8d7384431b9be1229317a6b269b22072f8bdbe6ec9c28f0"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-olmos-spa-762031353",
+      "sha256": "f34c93a7fc0157316613b16a71a874724615d93c5b2e7568151781e6a0a488ae"
+    },
+    {
+      "slug": "del-pedregal-puerto-montt-spa-765392632",
+      "sha256": "62ffcda5f9ac3cf789dbaf43aaaf459d231703298aea6cb1fb646a0e5c3fc8af"
+    },
+    {
+      "slug": "inversiones-cuenca-norte-limitada-766264964",
+      "sha256": "a0f118c81ee6c29ba94c9393070917c8f5c1987cf4ba547e698f6d5df418d1ef"
+    },
+    {
+      "slug": "prosegur-activa-chile-servicios-ltda-768800707",
+      "sha256": "80507c4c1ae1e9af8b716f5b96ccaca56e9543002bd1c0f792318651ef772781"
+    },
+    {
+      "slug": "carolina-maria-postres-limitada-779328058",
+      "sha256": "72a4d78862e6786d66d9845f1462fd37b79cf9a53ccb285ad873ae4a16209537"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-vla-spa-780467630",
+      "sha256": "6cd10e3797c55fdb4af016871dd476c985b0038cc6f35e85e3181b396ca6e1a7"
+    },
+    {
+      "slug": "comercializadora-y-distribuidora-faci-limitada-761315862",
+      "sha256": "9e469ab5af0fe70ef39bcf21117e16e7eba5597a6deac60d79888e40e7087e06"
+    },
+    {
+      "slug": "sociedad-comercial-alfomega-fijaciones-limitada-763008762",
+      "sha256": "51b4f40240dd9596b8fea8108996ff9bccbab685360532ef65fa7df8afda3826"
+    },
+    {
+      "slug": "comercial-adele-spa-766465145",
+      "sha256": "48009481bb9b78e864251e79f8521b4bb995f148cb7d3dec7db73799ed8381a0"
+    },
+    {
+      "slug": "importadora-y-exportadora-casa-brillante-spa-766953468",
+      "sha256": "3d1488dbde565d92bac106f9e76f3f7929f7e2548742805062838197d968d2b5"
+    },
+    {
+      "slug": "inversiones-sanchez-cyg-limitada-768056153",
+      "sha256": "ac797678e9b35e918ec800f3db69c79f3dab947f27eaf22a13b5de789521038c"
+    },
+    {
+      "slug": "larregui-rodriguez-spa-768105766",
+      "sha256": "e1cb70f26822a49b1138478ed32ad7973330a28ea87ec3c0ba8f6bf3fda9b4ec"
+    },
+    {
+      "slug": "pgb-distribution-chile-spa-769497226",
+      "sha256": "59100ad50729f8be745f5bed6345ca224c241da31a61fe6bdd8016c1c36f5d16"
+    },
+    {
+      "slug": "pesquera-patagones-spa-772729987",
+      "sha256": "ceb0571e1307c9096051b6e83af43060ca522204dff024fb923eb7b3de559226"
+    },
+    {
+      "slug": "soc-hormitec-limitada-775716207",
+      "sha256": "77811b5e6b7f74bd2f6441fb22ef58ce6d4e1496db031c4b202ce1b1b2947a06"
+    },
+    {
+      "slug": "supermercado-eltit-limitada-775753404",
+      "sha256": "5fed6bc885878fa47874c2ef1eed766a0f28a1b8d9df34a44dc8a6077d885240"
+    },
+    {
+      "slug": "masterfrut-spa-778289695",
+      "sha256": "32efa74074edf5fb3ab2039c7de42da0832f5419172e8a1d1ff08f204eead74e"
+    },
+    {
+      "slug": "comercializadora-maquipan-chile-spa-967024201",
+      "sha256": "c0fc69fd666054e6148a2eb6b647b4565ea140144e36316147a691d1ffc81b42"
+    },
+    {
+      "slug": "bana-y-compania-limitada-760056189",
+      "sha256": "e7bd7166e2cb2c91930d6903249ae0d333c659b2b8a7581b6714be682211c8ad"
+    },
+    {
+      "slug": "grupo-am-spa-764545192",
+      "sha256": "524dea19a94bf652238e79e9ac4ef89eeb8f1376286a92b7d9028e131a919b80"
+    },
+    {
+      "slug": "global-ve-spa-768391548",
+      "sha256": "5ba50d27b278b54194424e23de577600bfbac1a1902c1d2a2f6331ba07fcd35c"
+    },
+    {
+      "slug": "la-peninsula-limitada-773317259",
+      "sha256": "b64c0d58bc3374ed785473bc8c4d0c446537a04178e3bf64f00ef42adba77787"
+    },
+    {
+      "slug": "cotiledon-spa-77381998k",
+      "sha256": "5350ada3f0cd485d7db42a8171110201e62c06fdb9eecfea9c1708f8115008cc"
+    },
+    {
+      "slug": "comercial-master-spa-774758259",
+      "sha256": "aab5cb7acee14a4f6d5c8e3c6ed59d23f7fece80d6772f5c6cbc5a8d563d6197"
+    },
+    {
+      "slug": "el-riko-mar-spa-780498854",
+      "sha256": "d536eb1bab46daa5651ec8f7680cf868c3f440d85775d238705a3417f7de41e2"
+    },
+    {
+      "slug": "comercial-san-pablo-limitada-797157309",
+      "sha256": "16483dbccc6b04ea73090f86b1b94b7097a1b15b5fda65237c440b7d0a37d1ae"
+    },
+    {
+      "slug": "brocha-limitada-764713036",
+      "sha256": "e514f5b42a52a7075d7f1b4238430631285810ed62192db83314f28e72667c50"
+    },
+    {
+      "slug": "zoom-express-spa-769484469",
+      "sha256": "d36e1368f793244395ae3973c30401d6a83f0686312f48e52e67586176cb7d8e"
+    },
+    {
+      "slug": "mecanica-y-automatizacion-industrial-intekpro-spa-770527317",
+      "sha256": "369ca11d0c9587d4984c39c9ec1ec07b2e3f1e6ec868766f4d9c0127ff7b1e13"
+    },
+    {
+      "slug": "comercial-caf-spa-77080616k",
+      "sha256": "1a89f3bc2c60652af198d3e78fea20235ac5eed523312d615161782c8b8edc87"
+    },
+    {
+      "slug": "fun-alimentos-spa-771062660",
+      "sha256": "c8fd614c8320790e6b0ff774e098706f343be7d91702b8187c2abc14db4d67b6"
+    },
+    {
+      "slug": "vadel-spa-771310338",
+      "sha256": "8527e4b9595a67af2e2aef75fb936723af5831d2a5618d46dadf9f79e7562364"
+    },
+    {
+      "slug": "distribuidora-cancino-henriquez-spa-774208194",
+      "sha256": "f5e4942d4665f85a463e87bab97c3775c10cfd5ef2782a302a39f83fbc999deb"
+    },
+    {
+      "slug": "dimacofi-s-a-920830005",
+      "sha256": "cb55ef5aac261acaacdfc3075033feb5d3e8d1fc65ca46bf0101f57caeaea42f"
+    },
+    {
+      "slug": "olivos-del-sur-s-a-995737604",
+      "sha256": "5c8ab018d9aa1ac8cc54689a6fb644a8b2cd04f359ca2cb924dcc3bf66c0fa28"
+    },
+    {
+      "slug": "comercial-alisur-limitada-761100440",
+      "sha256": "a0bdebafc80eddd9e7838886dee53ddfb13a0aad19422c7b0d8f9548424f545b"
+    },
+    {
+      "slug": "comercializadora-oasis-de-lampa-limitada-761492691",
+      "sha256": "8357d3eed5d387421489be31d6a38a0e53efabac04e4a494f82de1e88eb37936"
+    },
+    {
+      "slug": "comercial-allipen-limitada-761769014",
+      "sha256": "d7eba1fe80b4782ff23cf354709d926b436b72c501fe63a31927130414ae0c4d"
+    },
+    {
+      "slug": "impresiones-y-embalajes-yapak-limitada-766436935",
+      "sha256": "f9e68ddc9cad4cd87bd4f860983e26546da8f587dc811bf3bd156479b8890de7"
+    },
+    {
+      "slug": "comercializadora-de-carnes-b-d-spa-770968364",
+      "sha256": "b03c2f172a06089293160bd412dfe57c4e38d1093b2ea0a5a157e61f199cae90"
+    },
+    {
+      "slug": "comercializadora-y-transportes-wendt-spa-772271395",
+      "sha256": "0aee8f9695da5e3f4c4e8b4d6bf68341aa4045dd739caa96fc1b3679c0fab8b7"
+    },
+    {
+      "slug": "inversiones-ulala-spa-772485573",
+      "sha256": "29eb4ca505c00ca2805031efe5c4daa2871e1c73dface34bc2b44aea0ad43810"
+    },
+    {
+      "slug": "el-quintal-panaderia-spa-773025371",
+      "sha256": "c4a3e6240b73e3a9ebb5f501fe7a23a91f15838aa1c697b7508011bcc351f035"
+    },
+    {
+      "slug": "distribuidora-yimk-spa-773226571",
+      "sha256": "087ee02239325b68c07c242d40e3b52ddb148cbd6a4329fe5ded49a129eba284"
+    },
+    {
+      "slug": "la-cumbre-estaciones-de-servicios-limitada-775045817",
+      "sha256": "5c7fd32adcc0300545c430dab47fe7bbd6d0fa0136ea2fd234401e0dc4347d0f"
+    },
+    {
+      "slug": "comercial-maquinet-ltda-77534640k",
+      "sha256": "76636114d55028da27e628d4d86528665ce7107e1587d00036dee5a8dfebe23c"
+    },
+    {
+      "slug": "hassmi-distribucion-spa-775529695",
+      "sha256": "2ca749f7f4d90bbeecff2c46d176451716ce9384dff2bd585a97b4a364217f50"
+    },
+    {
+      "slug": "comercial-lida-2184-limitada-778878488",
+      "sha256": "21fe5bfd17274bb8b839e9adcb5b109080e5a470597e125fb8cf5f46e0497950"
+    },
+    {
+      "slug": "susaron-comercial-limitada-779964000",
+      "sha256": "2e0066ce127ac9070937d5c58d8a3d583d0c07029473d3c58d10a5e6cac965cf"
+    },
+    {
+      "slug": "contigraf-limitada-787184103",
+      "sha256": "7f5bb485083b7076f18551ba7d0af43906bd02f59c46ce23740edaf25f845f48"
+    },
+    {
+      "slug": "sherwin-williams-chile-s-a-96803460k",
+      "sha256": "25e4e7c56e349228749db9d80cb2a0f2e7c42f413f538bdd40450fa5879ab459"
+    },
+    {
+      "slug": "comercial-valenzuela-y-compania-limitada-762585642",
+      "sha256": "f1a79f2353ed0b1c57b63dc1ad4ca210ec15ea89df0be99d1dea3c3985aaab65"
+    },
+    {
+      "slug": "panesco-chile-spa-76378746k",
+      "sha256": "5348767ccd40ad6c3c3592c611ccb4dd4989a71b85be51d325595f06ed1f37e9"
+    },
+    {
+      "slug": "soc-de-mat-primas-de-past-conf-almac-y-c-de-eventos-en-gral-ltda-766006809",
+      "sha256": "4059c56f60c877a75cbbf11776b73a7bc978c2fa55749ecdbe0d906a53e90315"
+    },
+    {
+      "slug": "am-servicios-ambientales-limitada-766072194",
+      "sha256": "2774af8ae02411c275cfdd52246f4f8651674d28a6c962e792829df6782c0524"
+    },
+    {
+      "slug": "distribuidora-harinas-jorge-luis-arevalo-lorca-empresa-individual-de-res-773176957",
+      "sha256": "7dc70bd5bb51ff993e843272e502ce3971015f3fd9ce6090c02bbb78d6a9f344"
+    },
+    {
+      "slug": "huerta-meli-limitada-773422370",
+      "sha256": "431ed3b63cf88a2efc395401f612bf07da921a56936e5354ef948a28ffe2b043"
+    },
+    {
+      "slug": "productos-artesanales-nomades-spa-774513167",
+      "sha256": "85874bff1139bbdf258ea47c68ccdf4a615d4798c7f5f43cedb7748b28634f44"
+    },
+    {
+      "slug": "berni-farm-spa-77929725k",
+      "sha256": "47019d65baa2484ba1c57c677dda9b84df290c25f23e2599634611ce7f32b4b4"
+    },
+    {
+      "slug": "compania-de-seguros-de-vida-consorcio-nacional-de-seguros-s-a-990120005",
+      "sha256": "7a53671cdee802c7bfea8c314dec76327b50048e8823eb4c1ce5ed4fc7a868c5"
+    },
+    {
+      "slug": "vina-casa-donoso-spa-760660124",
+      "sha256": "213877f944efded98eb49488eea68d6f2fbc25cb3358ee7b273e00dad2f3f3a0"
+    },
+    {
+      "slug": "defontana-chile-spa-76389469k",
+      "sha256": "ed2e38c0a21709a0c7a192b9234e9277ff74d594e5c7b05206b07f731f9f8f69"
     }
   ]
 }

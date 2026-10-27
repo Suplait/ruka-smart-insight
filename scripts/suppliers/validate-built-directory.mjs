@@ -12,7 +12,8 @@ const sitemap = await readFile(path.join(root, "dist/sitemap.xml"), "utf8");
 for (const row of records) {
   const url = `https://www.ruka.ai/proveedores/${row.slug}`;
   const html = await readFile(path.join(root, "dist/proveedores", row.slug, "index.html"), "utf8");
-  const doc = new JSDOM(html).window.document;
+  const dom = new JSDOM(html);
+  const doc = dom.window.document;
   assert.equal(doc.querySelector("h1")?.textContent, row.name);
   assert.ok(doc.querySelector("main")?.textContent.includes(row.legalName));
   assert.ok(doc.querySelector("main")?.textContent.includes(row.rut));
@@ -28,9 +29,35 @@ for (const row of records) {
   assert.equal(supplier?.taxID, row.rut);
   assert.equal(supplier?.legalName, row.legalName);
   assert.ok(!supplier?.aggregateRating);
+  const faq = graph.find(node => node["@type"] === "FAQPage");
+  assert.ok(faq?.mainEntity.length >= 3);
+  for (const question of faq.mainEntity) {
+    assert.ok(doc.querySelector("main").textContent.includes(question.name));
+    assert.ok(doc.querySelector("main").textContent.includes(question.acceptedAnswer.text));
+  }
+  dom.window.close();
 }
 const manifest = JSON.parse(await readFile(path.join(root, "src/content/supplierManifest.json"), "utf8"));
-const expected = new Set([...records.map(row => `${row.slug}.json`), ...manifest.shards.map(file => path.basename(file))]);
+const pageCount = Math.ceil(records.length / manifest.pageSize);
+const expected = new Set([...records.map(row => `${row.slug}.json`), ...manifest.shards.map(file => path.basename(file)), ...Array.from({ length: pageCount }, (_, index) => `page-${index + 1}.json`)]);
+const linked = new Set();
+for (let page = 1; page <= pageCount; page++) {
+  const route = page === 1 ? "/proveedores" : `/proveedores/pagina/${page}`;
+  const dom = new JSDOM(await readFile(path.join(root, "dist", route, "index.html"), "utf8"));
+  const doc = dom.window.document;
+  assert.equal(doc.querySelector('link[rel="canonical"]')?.href, `https://www.ruka.ai${route}`);
+  const embedded = JSON.parse(doc.querySelector("#supplier-index-data").textContent);
+  assert.equal(embedded.page, page);
+  assert.ok(embedded.entries.length <= manifest.pageSize);
+  for (const entry of embedded.entries) {
+    assert.ok(doc.querySelector(`main a[href="/proveedores/${entry.slug}"]`));
+    assert.ok(!linked.has(entry.slug), "Each company must occur once across directory pages");
+    linked.add(entry.slug);
+  }
+  if (page < pageCount) assert.ok(doc.querySelector(`a[href="/proveedores/pagina/${page + 1}"]`));
+  dom.window.close();
+}
+assert.equal(linked.size, records.length);
 assert.deepEqual(new Set(await readdir(path.join(root, "dist/supplier-data"))), expected, "Retired data must not remain public");
 const xml = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;");
 const batches = [];

@@ -6,6 +6,8 @@ import { StaticRouter } from "react-router-dom/server";
 import { matchesSupplier, normalizeSupplierSearch, validCompanyRut } from "@/utils/supplierDirectory";
 import { SupplierProfileView, SuppliersIndex } from "@/pages/Suppliers";
 import records from "../../config/supplier-profiles.json";
+import manifest from "@/content/supplierManifest.json";
+import { supplierPagination, supplierFaqs } from "@/utils/supplierPresentation";
 
 describe("supplier directory", () => {
   it("validates check digits and rejects malformed values", () => {
@@ -24,16 +26,29 @@ describe("supplier directory", () => {
     for (const profile of records) {
       const html = renderToString(<StaticRouter location={`/proveedores/${profile.slug}`}><SupplierProfileView profile={profile} /></StaticRouter>);
       expect(html).toContain(profile.rut);
-      expect(html).toContain(profile.legalName);
-      expect(html).toContain("No son requisitos comerciales impuestos por el proveedor.");
-      expect(html).toContain("No envíes facturas, datos personales ni información bancaria.");
+      expect(html).toContain(profile.legalName.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+      expect(html).toContain("Consejos de Ruka, no condiciones comerciales del proveedor.");
+      expect(html).toContain("No envíes facturas ni datos bancarios.");
       expect(Helmet.renderStatic().script.toString()).toContain("supplier-profile-data");
     }
   });
   it("index has real search labels, unambiguous identity and crawlable profile links", () => {
     const html = renderToString(<StaticRouter location="/proveedores"><SuppliersIndex /></StaticRouter>);
     expect(html).toContain('id="supplier-search"');
-    expect(html).toContain('href="/proveedores/colun"');
+    expect(html).toContain(`href="/proveedores/${manifest.initial[0].slug}"`);
+    expect(html).toContain('href="/proveedores/pagina/2"');
     expect(html).not.toContain("placeholder-logo");
+  });
+  it("has 1000 unique legal identities and paginates every result", () => {
+    expect(records).toHaveLength(1000);
+    expect(new Set(records.map(row => row.rut)).size).toBe(1000);
+    expect(manifest.initial).toHaveLength(25);
+    expect(supplierPagination(20, 40)).toEqual([1, "gap", 19, 20, 21, "gap", 40]);
+    expect(supplierPagination(1, 40)).toEqual([1, 2, "gap", 40]);
+    expect(supplierPagination(40, 40)).toEqual([1, "gap", 39, 40]);
+    records.forEach(row => {
+      expect(row.registry.activities.length).toBeGreaterThan(0);
+      expect(supplierFaqs(row).length).toBeGreaterThanOrEqual(3);
+    });
   });
 });

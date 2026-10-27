@@ -9,7 +9,7 @@ export async function validateSourceLock(root = process.cwd()) {
   if (lock.version !== 1 || !lock.reviewedAt || !lock.files?.length) throw new Error("Missing editorial source review");
   const failures = [];
   for (const entry of lock.files) {
-    if (!/^(src\/(content|pages|utils|components\/(acquisition|resources))|config|public\/api\/examples)\/[a-zA-Z0-9_./-]+$/.test(entry.path) || entry.path.includes("..")) throw new Error("Unsafe source review path");
+    if (!/^(src\/(content|pages|utils|components\/(acquisition|resources|suppliers))|config|public\/api\/examples)\/[a-zA-Z0-9_./-]+$/.test(entry.path) || entry.path.includes("..")) throw new Error("Unsafe source review path");
     const text = await readFile(path.join(root, entry.path), "utf8");
     if (sourceHash(text) !== entry.sha256) failures.push(entry.path);
   }

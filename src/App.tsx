@@ -139,6 +139,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingV2 />} />
             <Route path="/proveedores" element={<ResourceRoute><SuppliersIndex /></ResourceRoute>} />
+            <Route path="/proveedores/pagina/:page" element={<ResourceRoute><SuppliersIndex /></ResourceRoute>} />
             <Route path="/proveedores/:slug" element={<ResourceRoute><SupplierProfile /></ResourceRoute>} />
             <Route path="/v2" element={<Navigate to="/" replace />} />
             <Route path="/home-anterior" element={<Index />} />

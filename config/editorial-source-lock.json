@@ -7,17 +7,50 @@
     "billerProduction": "4505fa7009cfdc3bc306ed8ee67a8e7aea0353cf"
   },
   "files": [
-{"path":"src/components/resources/ResourceNextStep.tsx","sha256":"b1ef4e319ba54c8d903ffd86d889c80a73931c129a21f724e04342d5c2b4da7b"},
-{"path":"src/utils/resourceJourney.ts","sha256":"0b546cf4cd521b5265f424807839f270faf27e052dec90600fb2ddd2c235eaa0"},
-{"path":"src/utils/resourceBreadcrumbs.ts","sha256":"0673f4d6f8fa769d283647e879e16ba4cf276b5bc8c01ca05e56f4a95beac9fe"},
-{"path":"src/components/resources/GuideNavigation.tsx","sha256":"05450f53134dd93be982f314f7d1c59eb99edc745bd0d164a5b7a6abaf46763c"},
-{"path":"src/components/resources/CodeExample.tsx","sha256":"7ae8b0db3a35b3582807e172b68b98ea00a5f4aad89b8797af8be32ccbf9d91d"},
-{"path":"src/components/resources/ResourceLoading.tsx","sha256":"9065e05586c24e0d28402e9a037f2b02fd630665a65117e8f4339bb099ad6ca1"},
-{"path":"src/utils/supplierDirectory.ts","sha256":"3113e3ea9d4fccceab58a7df4cdec7ade875bdacc5f2ab7c2d5cf0e71038cf0a"},
-{"path":"src/utils/margin.ts","sha256":"7d9fafbbdef4439482c9399dab2b855520f43e0161c059ac5eb87a5de611bc42"},
-{"path":"src/utils/purchaseCost.ts","sha256":"4e5f69122a82ab4da3166ac857247b306448ea24b354a07a4a820a4d68e0fb36"},
-{"path":"src/utils/helpSearch.ts","sha256":"a535797a53054c5f23f54003964a15bd3818ff1bb1c15afaef271aba23561b22"},
-{"path":"src/components/resources/ResourceLayout.tsx","sha256":"24dcf66948dbbdd4b50d816dd7f9ade99a3738a18be2a086f0a8d8ab9cfd093a"},
+    {
+      "path": "src/components/resources/ResourceNextStep.tsx",
+      "sha256": "b1ef4e319ba54c8d903ffd86d889c80a73931c129a21f724e04342d5c2b4da7b"
+    },
+    {
+      "path": "src/utils/resourceJourney.ts",
+      "sha256": "0b546cf4cd521b5265f424807839f270faf27e052dec90600fb2ddd2c235eaa0"
+    },
+    {
+      "path": "src/utils/resourceBreadcrumbs.ts",
+      "sha256": "0673f4d6f8fa769d283647e879e16ba4cf276b5bc8c01ca05e56f4a95beac9fe"
+    },
+    {
+      "path": "src/components/resources/GuideNavigation.tsx",
+      "sha256": "05450f53134dd93be982f314f7d1c59eb99edc745bd0d164a5b7a6abaf46763c"
+    },
+    {
+      "path": "src/components/resources/CodeExample.tsx",
+      "sha256": "7ae8b0db3a35b3582807e172b68b98ea00a5f4aad89b8797af8be32ccbf9d91d"
+    },
+    {
+      "path": "src/components/resources/ResourceLoading.tsx",
+      "sha256": "9065e05586c24e0d28402e9a037f2b02fd630665a65117e8f4339bb099ad6ca1"
+    },
+    {
+      "path": "src/utils/supplierDirectory.ts",
+      "sha256": "3113e3ea9d4fccceab58a7df4cdec7ade875bdacc5f2ab7c2d5cf0e71038cf0a"
+    },
+    {
+      "path": "src/utils/margin.ts",
+      "sha256": "7d9fafbbdef4439482c9399dab2b855520f43e0161c059ac5eb87a5de611bc42"
+    },
+    {
+      "path": "src/utils/purchaseCost.ts",
+      "sha256": "4e5f69122a82ab4da3166ac857247b306448ea24b354a07a4a820a4d68e0fb36"
+    },
+    {
+      "path": "src/utils/helpSearch.ts",
+      "sha256": "a535797a53054c5f23f54003964a15bd3818ff1bb1c15afaef271aba23561b22"
+    },
+    {
+      "path": "src/components/resources/ResourceLayout.tsx",
+      "sha256": "24dcf66948dbbdd4b50d816dd7f9ade99a3738a18be2a086f0a8d8ab9cfd093a"
+    },
     {
       "path": "config/capabilities.json",
       "sha256": "2ef1f5f48c62da309f0d30e2e876a23f3384a231424f2ef60504a2648f483789"
@@ -28,19 +61,19 @@
     },
     {
       "path": "config/editorial-publications.json",
-      "sha256": "ff932603a4962d77dbdf07d7e740aeebd4838b5f6ccd6daad493606c4134982a"
+      "sha256": "69cd29a8da69f77abba1c4382b4dacf5cf840e1b23d13fa9571c915034a89a93"
     },
     {
       "path": "config/supplier-profiles.json",
-      "sha256": "833e1d3c18460f16663f90940a5cd93f1e0a212b936d966cb52d2f44395e8251"
+      "sha256": "2981562fb729837ee46955c3c60920ed9b7c9b3e98764802c6690654e25fad49"
     },
     {
       "path": "config/supplier-approvals.json",
-      "sha256": "c875058e36b3251d4380447383c0c78c6e8f61cc49b7687f77331739a4697435"
+      "sha256": "55224f772b039a0e1cc36a3cce089169f2f77e46f227a075542ae079f6339cd4"
     },
     {
       "path": "config/supplier-release.json",
-      "sha256": "2af0dd99a05e69e08905249bfbde4efea6b4887c7d7c80daa693d9b0e61c8233"
+      "sha256": "49bf2815f2514dbf5b6c971cafe9fae6082be809c33c6746a045f64b6fd739d7"
     },
     {
       "path": "src/content/apiGuides.json",
@@ -120,7 +153,7 @@
     },
     {
       "path": "src/pages/Suppliers.tsx",
-      "sha256": "2380258f6ac39893fc53105c633814455d014958792e24d802178b4adb9e7b02"
+      "sha256": "dae7850c7b7056349458124bd972121ba091b8b095ac8f8682b660c9e33918d2"
     },
     {
       "path": "src/pages/Updates.tsx",
@@ -141,6 +174,30 @@
     {
       "path": "public/api/examples/verify-ruka-webhook.mjs",
       "sha256": "af4361f3a1e6e7a119478df4fe179c4a07e8f8b6b6323e926050ef86f681350e"
+    },
+    {
+      "path": "src/components/suppliers/SuppliersIndex.tsx",
+      "sha256": "a70457842a5ee5f32be1082b91d8de2bd6c96df02ffc5c4b4c6ccfd01db65b9e"
+    },
+    {
+      "path": "src/components/suppliers/SupplierProfileView.tsx",
+      "sha256": "b8500ac25425fcb51fe0c9a9e46f997f677248db5b21b688e18a50fb2f1c953f"
+    },
+    {
+      "path": "src/components/suppliers/SupplierShell.tsx",
+      "sha256": "1df13fde16e9cb71ab382fc1d0a26d24b17b45d5e8fe224175d99dc641219177"
+    },
+    {
+      "path": "src/utils/supplierPresentation.ts",
+      "sha256": "66b89b101666a70e52629b220f39067c3103af504be53578a12055e46cd222e0"
+    },
+    {
+      "path": "src/utils/supplierMetadata.mjs",
+      "sha256": "541daeda9f96e37d9182775b1352f4e020c6b8e2a4d71b38678f6b6f05d8956b"
+    },
+    {
+      "path": "src/utils/supplierListing.mjs",
+      "sha256": "ef58bda0dc19dc17d6842f158fc0abb6f1854860c9949960b6c19c9e96f21673"
     }
   ]
 }

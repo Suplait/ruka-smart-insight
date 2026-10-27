@@ -203,6 +203,8 @@
     { "source": "/novedades/", "destination": "/novedades/index.html" },
     { "source": "/proveedores", "destination": "/proveedores/index.html" },
     { "source": "/proveedores/", "destination": "/proveedores/index.html" },
+    { "source": "/proveedores/pagina/:page", "destination": "/proveedores/pagina/:page/index.html" },
+    { "source": "/proveedores/pagina/:page/", "destination": "/proveedores/pagina/:page/index.html" },
     { "source": "/proveedores/:slug", "destination": "/proveedores/:slug/index.html" },
     { "source": "/proveedores/:slug/", "destination": "/proveedores/:slug/index.html" },
     {
