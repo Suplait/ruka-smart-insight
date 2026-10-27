@@ -1,118 +1,896 @@
 [
   {
-    "slug": "ruka-vs-tupana",
-    "title": "Ruka vs. Tupana: qué proceso necesitas resolver",
-    "description": "Compara Ruka y Tupana por tareas: emisión, cobranza, compras, costos e integración. Alcances, fuentes y preguntas para elegir sin confundir productos.",
-    "reviewedAt": "2026-10-26",
-    "headline": "No elijas por la lista de funciones. Elige por el trabajo pendiente.",
-    "intro": "Ambos tienen facturación y trabajan con documentos de compra. La diferencia útil está en el recorrido que necesitas completar y en qué parte del proceso quieres dejar de intervenir.",
-    "profiles": [
-      {
-        "title": "Si tu cuello de botella es cobrar lo vendido.",
-        "text": "Tupana presenta un recorrido de emisión, recordatorios de cobro, recaudación y conciliación bancaria. Es una opción a evaluar cuando necesitas ese conjunto. Pide una demostración con tu banco, medios de pago y tipos de documento.",
-        "href": "https://www.tupana.ai/cobranza",
-        "label": "Revisar la propuesta de cobranza de Tupana",
-        "external": true
-      },
-      {
-        "title": "Si tu cuello de botella está entre la compra y la operación.",
-        "text": "Ruka conecta la información del proveedor con tus insumos, unidades, recepción, costos y sistemas. Es un punto de partida para equipos que hoy vuelven a digitar, homologar o cruzar esa información a mano.",
-        "href": "/productos/registro-de-compras",
-        "label": "Ver cómo trabaja Ruka con tus compras",
-        "external": false
-      }
-    ],
+    "brand": "Emisso",
+    "category": "API y automatización",
+    "slug": "ruka-vs-emisso",
+    "headline": "Conectar los datos es el comienzo. Ruka trabaja con lo que viene después.",
+    "description": "Ruka vs. Emisso: compara infraestructura de conexiones, API y automatización operativa. Alcance, responsabilidades y una prueba para elegir con contexto.",
+    "intro": "Ruka lleva documentos, reglas y datos hasta el trabajo operativo. Emisso Connect ofrece conexiones para construir software: dos alcances que conviene distinguir antes de elegir.",
+    "verdict": "La decisión no es quién tiene más conectores. Es quién va a construir y mantener el proceso después de conectar los datos.",
+    "otherFit": "Evalúa Emisso Connect si tienes un producto o equipo técnico y necesitas acceso programático al SII, bancos o Previred. Su propuesta separa la infraestructura de conexión de las pantallas y reglas que construyes tú.",
+    "rukaFit": "Evalúa Ruka si el objetivo es dejar de registrar compras, relacionar insumos o cruzar información manualmente. Ruka One permite definir un flujo propio con fuentes, reglas y responsabilidades acordadas.",
+    "coexist": "Pueden resolver capas diferentes, pero no hay que asumir una integración entre ambos. Antes de sumar proveedores, dibuja qué sistema obtiene el dato, quién aplica la regla y quién responde por el resultado.",
     "rows": [
       {
-        "task": "Emitir documentos",
-        "ruka": "Ruka cuenta con un facturador: preparación, revisión, emisión y consulta de estados. El tipo de documento y la habilitación se confirman para cada empresa.",
-        "tupana": "Ofrece emisión individual, masiva y programada, con su facturador o el del SII.",
-        "question": "¿Puedes mostrar mi tipo de documento, su corrección y sus requisitos de habilitación?",
-        "source": "https://www.tupana.ai/facturacion"
+        "task": "Acceso a sistemas",
+        "alternative": "Connect ofrece una entrada por API y MCP a su catálogo de conexiones.",
+        "ruka": "La API de Ruka entrega información de compras ya organizada; no es una API general para todos los portales de Chile.",
+        "source": 0
       },
       {
-        "task": "Cobrar a clientes",
-        "ruka": "Si necesitas recordatorios, links de pago o cargos automáticos, confírmalos por separado. No los presupongas por contratar la gestión de compras.",
-        "tupana": "Publica recordatorios por correo y WhatsApp y enlaces de pago, asociados a sus módulos.",
-        "question": "¿Qué detiene un cobro cuando ya pagaron? ¿Cómo se resuelven disputas y pagos parciales?",
-        "source": "https://www.tupana.ai/cobranza"
+        "task": "Quién construye el flujo",
+        "alternative": "La propuesta de Connect deja la aplicación y sus reglas en tu equipo. Emisso también ofrece trabajo de ingeniería por separado.",
+        "ruka": "Con Ruka One se acuerda el proceso a implementar, además de las conexiones que necesita.",
+        "source": 1
       },
       {
-        "task": "Revisar compras",
-        "ruka": "Trabaja con documentos, detalle, productos relacionados y recepción. La revisión interna no reemplaza el acuse del SII ni la confirmación física.",
-        "tupana": "Publica consulta de facturas recibidas, aprobaciones, reglas y reportes de gastos.",
-        "question": "¿Qué revisa el sistema: el documento, los productos, lo recibido o los tres?",
-        "source": "https://www.tupana.ai/compras"
+        "task": "Facturación",
+        "alternative": "La documentación describe emisión SII y conexión con Notta. Son recorridos con autorizaciones propias.",
+        "ruka": "Ruka tiene facturador con preparación, revisión, emisión y estados, sujeto a habilitación por empresa.",
+        "source": 2
       },
       {
-        "task": "Comparar costos de insumos",
-        "ruka": "Relaciona productos del proveedor con tus insumos maestros y unidades. El costo comparable depende de configurar esas equivalencias.",
-        "tupana": "Su página de compras describe análisis por proveedor, categoría y período. Consulta cómo aborda presentaciones y conversiones de insumos.",
-        "question": "¿Cómo compara una caja de 6 kilos con un saco de 25, sin tratar ambos como una unidad?",
-        "source": "https://www.tupana.ai/compras"
+        "task": "Detalle de compras",
+        "alternative": "Consulta el contrato del conector: obtener documentos no define por sí solo un catálogo de insumos maestros.",
+        "ruka": "Ruka relaciona productos del proveedor y unidades con los insumos de tu operación.",
+        "source": 0
       },
       {
-        "task": "Conciliar",
-        "ruka": "Distingue el cruce operativo de factura, orden y recepción de la revisión bancaria. Generar una nómina para el banco tampoco ejecuta el pago.",
-        "tupana": "Presenta conexión bancaria de lectura y cruces entre movimientos y documentos, con sugerencias y revisión.",
-        "question": "¿Qué se cruza exactamente y qué ocurre con una diferencia que no se puede resolver sola?",
-        "source": "https://www.tupana.ai/conciliacion-bancaria"
+        "task": "Permisos y seguimiento",
+        "alternative": "Connect documenta autorización por organización y registro de llamadas.",
+        "ruka": "La API de compras exige permisos y contempla webhooks firmados. El seguimiento del proceso se define según el flujo.",
+        "source": 0
       },
       {
-        "task": "Conectar sistemas propios",
-        "ruka": "La API pública de compras ofrece reportes, clasificación, documentos y webhooks. Ruka One permite evaluar otros flujos e integraciones; no es un conector universal sin configuración.",
-        "tupana": "Publica una oferta de API para integrar facturación y otros servicios. Revisa el contrato específico para las empresas que necesitas conectar.",
-        "question": "¿Qué endpoint necesito, qué permisos exige y cómo recupero una actualización fallida?",
-        "source": "https://www.tupana.ai/"
+        "task": "Resultado que se entrega",
+        "alternative": "Una conexión útil para construir software no equivale automáticamente a una operación terminada.",
+        "ruka": "Con Ruka One, el proceso se diseña hasta la acción final: registrar, actualizar o dejar una excepción para revisión. El alcance se acuerda antes de implementarlo.",
+        "source": 1
       }
     ],
-    "steps": [
+    "scenario": {
+      "title": "Del documento a la compra que tu equipo puede usar.",
+      "text": "Una conexión entrega datos; todavía falta interpretar el producto, relacionarlo con un insumo y decidir qué hacer si no coincide. Ruka reúne ese recorrido dentro del proceso acordado, con las excepciones visibles para quien tiene que resolverlas.",
+      "evidence": [
+        "Documento y detalle de compra en el mismo recorrido.",
+        "Productos relacionados con insumos y unidades de operación.",
+        "Acciones y pendientes según las reglas del proceso."
+      ]
+    },
+    "migration": [
+      "Define si compras infraestructura o un proceso operado. Son responsabilidades distintas, aunque ambos usen una API.",
+      "Acuerda credenciales, permisos mínimos, retiro de acceso y responsable de cada integración.",
+      "Prueba un fallo y su recuperación antes de extenderlo a más empresas o sistemas."
+    ],
+    "faqs": [
       {
-        "title": "Lleva una operación representativa.",
-        "text": "Una factura, una corrección, una compra con formatos distintos y un caso que hoy resuelvas a mano. Usa datos ficticios o autorizados, no credenciales ni documentos de clientes en una página pública."
+        "question": "¿Ruka y Emisso son el mismo tipo de producto?",
+        "answer": "No necesariamente. Emisso Connect se presenta como infraestructura para conectar aplicaciones y agentes. Ruka se enfoca en procesos operativos y también ofrece una API de compras. Compara el alcance contratado, no solo la presencia de una API."
       },
       {
-        "title": "Pide ver el resultado y la excepción.",
-        "text": "No basta con cargar un archivo. Revisa dónde termina el dato, qué pasa cuando falta información y quién debe intervenir. Anota qué queda manual en cada alternativa."
+        "question": "¿Ruka tiene API?",
+        "answer": "Sí. Su API pública de compras contempla reportes, documentos, clasificación y webhooks, con permisos. No implica acceso universal a portales externos ni una API pública de emisión."
       },
       {
-        "title": "Acordar el alcance antes del cambio.",
-        "text": "Confirma empresas, usuarios, documentos, integraciones, soporte, exportación del historial y condiciones vigentes. No supongas que una función de la marca viene incluida en cualquier contratación."
+        "question": "¿Puedo usar Emisso sin desarrollar una aplicación?",
+        "answer": "Consulta la modalidad concreta. La propuesta de Connect está orientada a software y agentes; Emisso también publica servicios de ingeniería. Conviene separar el servicio de conexión del desarrollo que necesitas."
+      },
+      {
+        "question": "¿Qué debería demostrar Ruka One?",
+        "answer": "Un flujo acotado con entrada, reglas, revisión de excepciones y resultado definido. Pide precisar sistemas, responsables y qué ocurre si la información no alcanza para completar la tarea."
       }
     ],
     "sources": [
       {
-        "label": "Tupana: facturación electrónica",
+        "label": "Emisso Connect: producto y conexiones",
+        "url": "https://www.emisso.ai/es"
+      },
+      {
+        "label": "Emisso: alcance de sus servicios",
+        "url": "https://www.emisso.ai/es/terms"
+      },
+      {
+        "label": "Emisso Connect: requisitos para emitir en SII",
+        "url": "https://connect.emisso.ai/docs/como-conectar/emision-sii"
+      }
+    ],
+    "title": "Ruka vs. Emisso: procesos operativos, API y conexiones",
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "brand": "Tupana",
+    "category": "Facturación y cobranza",
+    "slug": "ruka-vs-tupana",
+    "headline": "Que tus compras no terminen en otra planilla.",
+    "description": "Compara Ruka y Tupana en facturación, compras, costos, cobranza y conciliación. Conoce el aporte de Ruka, sus diferencias y cuándo conviene cada solución.",
+    "intro": "Ruka convierte las facturas de tus proveedores en compras, insumos y costos con los que puedes trabajar. Tupana concentra su propuesta en emitir, cobrar y conciliar: aquí comparamos qué resuelve cada uno.",
+    "verdict": "El valor de Ruka está en lo que haces con la compra: entender qué llegó, relacionarlo con tus insumos y mantener costos comparables. Si tu prioridad es emitir ventas y perseguir cobros, Tupana tiene un enfoque específico para ese circuito.",
+    "otherFit": "Tupana merece una revisión si emites documentos recurrentes o masivos y necesitas seguirlos hasta el cobro. Sus páginas explican programación, recordatorios y conciliación de pagos.",
+    "rukaFit": "Ruka encaja cuando el trabajo está en recibir documentos, reconocer los productos comprados, llevarlos a una unidad comparable y mantener la información operativa actualizada. También tiene facturador.",
+    "coexist": "Tener un facturador no obliga a mover toda la operación. Puedes conservar la emisión que ya funciona y evaluar por separado qué necesitas resolver en compras. Cualquier intercambio entre ambos requiere confirmar acceso y alcance.",
+    "rows": [
+      {
+        "task": "Emitir documentos",
+        "alternative": "Publica emisión individual, por lotes desde planilla y programada, con su facturador o el del SII.",
+        "ruka": "Cuenta con facturador para preparar, revisar, emitir y consultar estados según la habilitación de la empresa.",
+        "source": 0
+      },
+      {
+        "task": "Recordar y cobrar",
+        "alternative": "Describe recordatorios por correo y WhatsApp, enlaces de pago y detención de la cobranza al conciliar.",
+        "ruka": "Ruka se enfoca en controlar compras y preparar pagos a proveedores. Los recordatorios de cobranza a tus clientes no forman parte del alcance aquí descrito.",
+        "source": 1
+      },
+      {
+        "task": "Conciliación bancaria",
+        "alternative": "Cruza abonos y cargos con facturas; contempla sugerencias y revisión de casos dudosos.",
+        "ruka": "Cruza factura, orden y recepción según el flujo para detectar diferencias operativas. No equivale a conciliar abonos y cargos bancarios.",
+        "source": 2
+      },
+      {
+        "task": "Detalle de la compra",
+        "alternative": "Su conciliación contempla facturas de compra. Eso no permite concluir cómo trabaja equivalencias de insumos.",
+        "ruka": "Relaciona productos y unidades del proveedor con insumos maestros para revisar compras y costos.",
+        "source": 2
+      },
+      {
+        "task": "Información para otros sistemas",
+        "alternative": "Ofrece documentación para integrar sus servicios por API.",
+        "ruka": "La API pública de compras permite consultar información y recibir webhooks según permisos.",
+        "source": 3
+      },
+      {
+        "task": "Alcance del cambio",
+        "alternative": "Evalúa el recorrido de la venta: emisión, corrección, cobro y conciliación.",
+        "ruka": "Trabaja desde el documento hasta el detalle utilizable: productos, equivalencias, unidades, revisión y acciones del proceso acordado.",
+        "source": 0
+      }
+    ],
+    "scenario": {
+      "title": "Dos proveedores. El mismo insumo. Un costo comparable.",
+      "text": "Un proveedor factura cajas de seis kilos; otro, sacos de veinticinco. Comparar el total de ambas facturas no te dice cuál conviene. En Ruka, relacionas los productos con el mismo insumo maestro y trabajas con sus equivalencias para comparar por kilo. La factura conserva su detalle; tu equipo deja de reconstruirlo en una planilla.",
+      "evidence": [
+        "Un insumo maestro para relacionar distintas presentaciones.",
+        "Cantidades y costos expresados en la unidad de tu operación.",
+        "Detalle de la compra disponible para revisar el origen del costo."
+      ]
+    },
+    "migration": [
+      "Separa emisión y cobranza de compras y costos. Decide qué circuito necesitas mejorar primero.",
+      "Si cambias de facturador, confirma habilitación, documentos pendientes y acceso al historial antes de cortar el anterior.",
+      "Prueba un período acotado y revisa con tu equipo que los pendientes no desaparezcan entre sistemas."
+    ],
+    "faqs": [
+      {
+        "question": "¿Ruka también tiene facturación electrónica?",
+        "answer": "Sí. Ruka cuenta con un facturador. La habilitación, los tipos de documento y el alcance se confirman por empresa; no hace falta reducir la comparación a quién emite facturas."
+      },
+      {
+        "question": "¿La conciliación es equivalente en ambos?",
+        "answer": "No por el nombre. La conciliación bancaria relaciona movimientos con documentos. La operativa revisa factura, orden y recepción según el flujo. Antes de elegir, identifica qué diferencia necesitas encontrar."
+      },
+      {
+        "question": "¿Tupana gestiona insumos y costos unitarios?",
+        "answer": "Las fuentes revisadas aquí respaldan emisión, cobranza y conciliación. Para insumos maestros, presentaciones y costos por unidad, pide una demostración específica. No encontrar esa explicación no prueba que la función no exista."
+      },
+      {
+        "question": "¿Tengo que reemplazar mi facturador para usar Ruka?",
+        "answer": "No necesariamente. Puede evaluarse el flujo de compras sobre las fuentes disponibles. La compatibilidad y los permisos deben confirmarse; no se promete una conexión automática entre cualquier par de sistemas."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Tupana: facturación individual, masiva y programada",
         "url": "https://www.tupana.ai/facturacion"
       },
       {
-        "label": "Tupana: cobranza",
+        "label": "Tupana: recordatorios y cobranza",
         "url": "https://www.tupana.ai/cobranza"
-      },
-      {
-        "label": "Tupana: gestión de compras",
-        "url": "https://www.tupana.ai/compras"
       },
       {
         "label": "Tupana: conciliación bancaria",
         "url": "https://www.tupana.ai/conciliacion-bancaria"
       },
       {
-        "label": "Tupana: producto y acceso a API",
-        "url": "https://www.tupana.ai/"
-      },
-      {
-        "label": "Ruka: registro de compras",
-        "url": "https://www.ruka.ai/productos/registro-de-compras"
-      },
-      {
-        "label": "Ruka: API pública de compras",
-        "url": "https://api.rukafactura.cl/api_docs"
-      },
-      {
-        "label": "Ruka: procesos a medida",
-        "url": "https://www.ruka.ai/one"
+        "label": "Tupana: API para empresas",
+        "url": "https://www.tupana.ai/api-factura"
       }
-    ]
+    ],
+    "title": "Ruka vs. Tupana: facturación, compras y costos",
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "brand": "Wasabil",
+    "category": "Facturación y cobranza",
+    "slug": "ruka-vs-wasabil",
+    "headline": "Vender por varios canales no es lo mismo que controlar tus compras.",
+    "description": "Ruka vs. Wasabil: emisión para ecommerce, servicios digitales, compras y costos. Compara el alcance de cada solución y qué probar con tu operación.",
+    "intro": "Ruka te ayuda a controlar lo que compras, sus unidades y sus costos. Wasabil conecta ventas online con facturación e inventario; la diferencia empieza por el trabajo que quieres automatizar.",
+    "verdict": "Si el problema aparece cada vez que vendes, revisa la automatización comercial. Si aparece cada vez que recibes una factura de proveedor, empieza por compras y costos.",
+    "otherFit": "Evalúa Wasabil para emitir documentos a partir de ventas online, coordinar catálogo y stock entre canales o gestionar documentación de servicios digitales del extranjero.",
+    "rukaFit": "Evalúa Ruka cuando los proveedores usan nombres y presentaciones distintas, las compras se vuelven a ingresar o cuesta seguir los costos. El facturador es otra capacidad, no un reemplazo implícito de tu ecommerce.",
+    "coexist": "La venta y la compra alimentan datos distintos. Una convivencia puede tener sentido si se define quién mantiene el catálogo, el stock y el costo. No conviene permitir que dos herramientas actualicen el mismo dato sin una regla.",
+    "rows": [
+      {
+        "task": "Ventas online",
+        "alternative": "Describe emisión por venta en tiendas y marketplaces, con documento enviado al comprador.",
+        "ruka": "Ruka trabaja del lado de las compras: incorpora documentos de proveedores y prepara su detalle para la operación. No reemplaza la gestión de tus canales de venta.",
+        "source": 1
+      },
+      {
+        "task": "Catálogo y stock",
+        "alternative": "Publica sincronización de precios y stock entre canales conectados.",
+        "ruka": "Relaciona las presentaciones y nombres que usa cada proveedor con tus insumos maestros y unidades.",
+        "source": 1
+      },
+      {
+        "task": "Servicios del extranjero",
+        "alternative": "Ofrece documentación de gastos en servicios digitales. El tratamiento tributario debe revisarse para cada contribuyente.",
+        "ruka": "El registro de compras conserva el documento del proveedor. No equivale a resolver automáticamente su tratamiento tributario o emitir el DTE correspondiente.",
+        "source": 0
+      },
+      {
+        "task": "Costos comparables",
+        "alternative": "Para comparar compras en cajas, kilos o litros, consulta cómo normaliza esas presentaciones.",
+        "ruka": "Ruka relaciona unidades e insumos para comparar costos con una base común.",
+        "source": 0
+      },
+      {
+        "task": "Conciliación",
+        "alternative": "La página consultada presenta la conciliación bancaria en beta; confirma disponibilidad y condiciones.",
+        "ruka": "El cruce operativo de documentos y recepción se define según las fuentes y reglas de tu proceso.",
+        "source": 0
+      },
+      {
+        "task": "API y automatización",
+        "alternative": "Publica acceso para desarrolladores y automatización desde agentes.",
+        "ruka": "Ruka ofrece API de compras y Ruka One para evaluar otros procesos.",
+        "source": 0
+      }
+    ],
+    "scenario": {
+      "title": "Las ventas avanzan. Las compras también tienen que hacerlo.",
+      "text": "Mientras tu tienda emite documentos por las ventas, tus proveedores siguen enviando facturas con nombres y formatos distintos. Ruka trabaja sobre esa entrada: relaciona el detalle con tus insumos y unidades para que el control del costo no dependa de armar otra planilla.",
+      "evidence": [
+        "Detalle de la compra separado del circuito de venta.",
+        "Presentaciones del proveedor relacionadas con tus insumos.",
+        "Costos comparables en una misma unidad."
+      ]
+    },
+    "migration": [
+      "Lista tiendas, marketplaces y facturadores actuales. Identifica qué conexión quieres mantener.",
+      "Define qué aplicación gobierna catálogo, stock y costos para evitar actualizaciones contradictorias.",
+      "Revisa con contabilidad los documentos y el tratamiento de servicios extranjeros; no lo deduzcas de un mensaje comercial."
+    ],
+    "faqs": [
+      {
+        "question": "¿Wasabil y Ruka automatizan el mismo trabajo?",
+        "answer": "Comparten terreno en documentos e integraciones, pero sus propuestas destacadas difieren. Wasabil presenta emisión ligada a ventas y servicios digitales; Ruka pone foco en compras, insumos y procesos operativos."
+      },
+      {
+        "question": "¿Registrar una factura de proveedor es emitir una factura de compra?",
+        "answer": "No. Registrar información de una compra y emitir un documento tributario de compra son acciones distintas. El documento que corresponde y sus efectos requieren revisar la operación y los requisitos tributarios."
+      },
+      {
+        "question": "¿Puedo usar Ruka con mi tienda online?",
+        "answer": "Hay que definir qué información necesitas y dónde debe terminar. Tener una API no garantiza una integración lista con cualquier tienda, ni que el flujo de compras incluya el manejo de pedidos."
+      },
+      {
+        "question": "¿La conciliación de Wasabil está disponible para todos?",
+        "answer": "La página oficial revisada la identifica como beta. Confirma con Wasabil bancos, habilitación y alcance vigente antes de basar una decisión en esa función."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Wasabil: capacidades y estado de sus módulos",
+        "url": "https://wasabil.com/"
+      },
+      {
+        "label": "Wasabil: ecommerce, documentos y devoluciones",
+        "url": "https://wasabil.com/ecommerce/"
+      }
+    ],
+    "title": "Ruka vs. Wasabil: facturación online y control de compras",
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "brand": "Nubox",
+    "category": "ERP y contabilidad",
+    "slug": "ruka-vs-nubox",
+    "headline": "Una contabilidad al día y una compra bien registrada son trabajos distintos.",
+    "description": "Ruka vs. Nubox: contabilidad, facturación, documentos de compra y costos operativos. Diferencias, convivencia y preguntas para una demostración útil.",
+    "intro": "Ruka prepara el detalle operativo de tus compras: insumos, unidades y costos. Nubox cubre el trabajo contable. Entender esa diferencia ayuda a mejorar el proceso sin reemplazar lo que ya funciona.",
+    "verdict": "Si necesitas libros, balances y trabajo contable, evalúa una solución contable. Si ese sistema ya existe pero tu equipo aún reconstruye compras a mano, revisa qué falta antes del asiento.",
+    "otherFit": "Nubox es una alternativa para contadores y empresas que buscan contabilidad, facturación y administración. Su propuesta contable incluye conciliación de cartolas con documentos y generación de asientos.",
+    "rukaFit": "Ruka es una alternativa para ordenar la información operativa de compras: productos, unidades, recepción y costos. No se presenta como sustituto de una suite de contabilidad o remuneraciones.",
+    "coexist": "Puede tener sentido conservar Nubox para contabilidad y resolver por separado el trabajo previo sobre compras. En Ruka, el acceso a documentos de Nubox se confirma por cuenta; no implica escritura de asientos ni sincronización de todos los módulos.",
+    "rows": [
+      {
+        "task": "Libros y balances",
+        "alternative": "Nubox publica libros, balances, centralización de movimientos y reportes contables.",
+        "ruka": "Ruka organiza la compra para la operación: productos, unidades y costos. No sustituye los libros y balances de un sistema contable.",
+        "source": 0
+      },
+      {
+        "task": "Conciliación y asientos",
+        "alternative": "Su propuesta bancaria cruza cartola y documentos, con sugerencias que el usuario confirma.",
+        "ruka": "Cruza información de factura, orden y recepción según el proceso. Ese control detecta diferencias operativas; no reemplaza la conciliación bancaria o el asiento contable.",
+        "source": 1
+      },
+      {
+        "task": "Documentos de compra",
+        "alternative": "Su API documenta inserción de compras en contabilidad, con autenticación y una llave de partner.",
+        "ruka": "Incorpora y revisa información de compras, con detalle por producto. Registrar esa compra en Nubox requiere una integración con ese alcance.",
+        "source": 2
+      },
+      {
+        "task": "Productos y unidades",
+        "alternative": "Para equivalencias de insumos y presentaciones, revisa el flujo específico con Nubox.",
+        "ruka": "Ruka relaciona descripciones y unidades del proveedor con tus insumos maestros.",
+        "source": 0
+      },
+      {
+        "task": "Facturación",
+        "alternative": "Nubox separa Factura y Administración de su oferta de Contabilidad.",
+        "ruka": "Ruka dispone de facturador; su habilitación y alcance deben confirmarse por empresa.",
+        "source": 3
+      },
+      {
+        "task": "Integración",
+        "alternative": "La documentación pública permite revisar operaciones disponibles antes de desarrollar.",
+        "ruka": "La API de compras entrega datos con permisos; cualquier envío a contabilidad requiere confirmar su implementación.",
+        "source": 2
+      }
+    ],
+    "scenario": {
+      "title": "Una factura. Dos trabajos que necesitan ese dato.",
+      "text": "Contabilidad necesita registrar el documento; operaciones necesita saber cuánto costó cada insumo. Ruka trabaja con el detalle de la compra y sus equivalencias. Tu equipo puede revisar productos y costos sin confundir ese control con los libros y asientos que resuelve el sistema contable.",
+      "evidence": [
+        "Documento original junto a su detalle de compra.",
+        "Producto comprado relacionado con el insumo utilizado.",
+        "Costo por unidad para el control operativo."
+      ]
+    },
+    "migration": [
+      "Habla con contabilidad antes de reemplazar su herramienta. Una mejora operativa no exige cambiar de sistema contable.",
+      "Aclara si el flujo lee documentos, exporta datos o escribe registros. Son alcances diferentes.",
+      "Prueba el cierre de un período con documentos corregidos y confirma que cada equipo obtiene lo que necesita."
+    ],
+    "faqs": [
+      {
+        "question": "¿Ruka reemplaza a Nubox Contabilidad?",
+        "answer": "No se plantea como un reemplazo completo. Ruka trabaja con procesos operativos; Nubox publica una oferta contable con libros, balances y asientos. La decisión depende del trabajo que quieras resolver."
+      },
+      {
+        "question": "¿Ruka puede trabajar con información de Nubox?",
+        "answer": "Hay flujos de incorporación de documentos accesibles en cuentas configuradas. Deben confirmarse permisos, documentos y alcance. Esto no promete crear asientos en Nubox ni sincronizar todos sus módulos."
+      },
+      {
+        "question": "¿Ambos tienen facturación?",
+        "answer": "Sí, ambos tienen oferta de facturación. Compara el producto concreto, tipos de documento y requisitos de habilitación, sin asumir que cada función está incluida en cualquier contratación."
+      },
+      {
+        "question": "¿Dónde aporta Ruka si mi contador ya registra las compras?",
+        "answer": "En el detalle que operaciones necesita además del asiento: relacionar productos, convertir presentaciones, revisar recepción y seguir costos. Si ese trabajo ya está resuelto, primero identifica qué queda realmente manual."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Nubox: software de contabilidad",
+        "url": "https://www.nubox.com/software-contabilidad"
+      },
+      {
+        "label": "Nubox: conciliación bancaria",
+        "url": "https://www.nubox.com/software-contabilidad/conciliacion-bancaria"
+      },
+      {
+        "label": "Nubox Developers: documentos de compra",
+        "url": "https://developers.nubox.com/compra"
+      },
+      {
+        "label": "Nubox: productos de su ecosistema",
+        "url": "https://www.nubox.com/"
+      }
+    ],
+    "title": "Ruka vs. Nubox: contabilidad y automatización de compras",
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "brand": "Defontana",
+    "category": "ERP y contabilidad",
+    "slug": "ruka-vs-defontana",
+    "headline": "¿Cambiar el ERP o sacar el trabajo manual que quedó alrededor?",
+    "description": "Ruka vs. Defontana: compara ERP, automatización de compras, integraciones y responsabilidades. Una guía para decidir qué conservar y qué mejorar.",
+    "intro": "Ruka automatiza trabajo operativo sobre los sistemas que ya usas. Si estás evaluando Defontana o ya tienes su ERP, esta guía ayuda a separar lo que cubre el sistema de lo que tu equipo sigue haciendo a mano.",
+    "verdict": "Primero distingue una falta de sistema de una falta de ejecución. Si ya tienes ERP, el problema puede estar en cómo llegan los datos, no en dónde se guardan.",
+    "otherFit": "Evalúa Defontana si buscas una plataforma para centralizar ventas, compras, inventario y contabilidad. Su oferta distingue soluciones por tamaño de empresa y contempla integraciones.",
+    "rukaFit": "Evalúa Ruka si conservarás tus sistemas pero necesitas automatizar el ingreso y revisión de compras, relacionar insumos o resolver un flujo entre áreas. El alcance se define por proceso.",
+    "coexist": "No des por hecha una escritura directa desde Ruka a cualquier módulo de Defontana. Hay que acordar versión, acceso, campos y destino. Si el ERP ya ejecuta el flujo completo, agregar otra herramienta puede no aportar.",
+    "rows": [
+      {
+        "task": "Sistema central",
+        "alternative": "Defontana ofrece ERP para gestionar varias áreas del negocio en una plataforma.",
+        "ruka": "Ruka no exige reemplazar toda la administración para empezar por un proceso.",
+        "source": 0
+      },
+      {
+        "task": "Compras y proveedores",
+        "alternative": "Su portal de proveedores relaciona órdenes, facturas y pagos con el ERP.",
+        "ruka": "Ruka trabaja con documentos y detalle de compras, más reglas y revisión operativa.",
+        "source": 1
+      },
+      {
+        "task": "Inventario",
+        "alternative": "El ERP incluye gestión de inventario dentro del conjunto comercial y contable.",
+        "ruka": "Ruka relaciona productos y unidades de compra; el destino y su actualización deben acordarse.",
+        "source": 0
+      },
+      {
+        "task": "Conexiones",
+        "alternative": "Publica APIs para conectar el ERP con otras plataformas y definir flujos de datos.",
+        "ruka": "Ruka One permite evaluar conexiones y reglas propias; no es un permiso universal de escritura en el ERP.",
+        "source": 2
+      },
+      {
+        "task": "Control de la recepción",
+        "alternative": "Revisa en la solución de Defontana elegida el recorrido entre orden, factura y recepción.",
+        "ruka": "Permite registrar la recepción y sus diferencias junto a la compra. El cruce con órdenes u otras fuentes se define para el proceso.",
+        "source": 1
+      },
+      {
+        "task": "Implementación",
+        "alternative": "Centralizar áreas implica acordar maestros, procesos y uso del ERP.",
+        "ruka": "Parte de un proceso concreto: sus documentos, equivalencias, reglas y acciones. El equipo acuerda qué automatizar y qué conservar en el ERP.",
+        "source": 0
+      }
+    ],
+    "scenario": {
+      "title": "La compra que ya no necesita otra transcripción.",
+      "text": "Tener un ERP no evita que una factura llegue por fuera, con productos que alguien debe identificar y convertir. Ruka aborda ese trabajo de entrada: reúne el documento, relaciona el detalle y separa lo que requiere revisión. La actualización en el ERP se define según el módulo y la integración acordados.",
+      "evidence": [
+        "Datos de compra con referencia al documento original.",
+        "Insumos y unidades preparados para la operación.",
+        "Pendientes visibles antes de completar el flujo acordado."
+      ]
+    },
+    "migration": [
+      "Documenta lo que el ERP ya resuelve. Conserva sus controles, responsables y datos maestros útiles.",
+      "Pide confirmar el alcance técnico antes de prometer una integración: leer un documento no es registrar una compra.",
+      "Empieza con una empresa y un flujo; revisa fallos, duplicados y reconciliación de resultados antes de ampliar."
+    ],
+    "faqs": [
+      {
+        "question": "¿Ruka es otro ERP como Defontana?",
+        "answer": "La propuesta principal es distinta. Defontana centraliza áreas en un ERP. Ruka se enfoca en automatizar procesos y trabajar sobre sistemas existentes. Puede haber funciones en común sin que sean reemplazos completos."
+      },
+      {
+        "question": "¿Ruka registra automáticamente en Defontana?",
+        "answer": "No hay una garantía universal. Debe confirmarse el flujo específico, los accesos y el destino. La existencia de una API o de lectura de documentos no demuestra que la escritura esté disponible para tu caso."
+      },
+      {
+        "question": "¿Cuándo conviene revisar primero el ERP?",
+        "answer": "Cuando faltan el sistema central, la estructura de inventario o la contabilidad integrada. Si ya existen, identifica si el problema está en la configuración o en las tareas manuales que alimentan esos módulos."
+      },
+      {
+        "question": "¿Cómo comparar una implementación completa con un proceso acotado?",
+        "answer": "Define un resultado común y revisa qué cambia en usuarios, datos, soporte y responsabilidades. No compares una transformación de todas las áreas con automatizar una sola tarea como si fueran el mismo alcance."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Defontana: ERP para pymes",
+        "url": "https://www.defontana.com/cl/erp-genesis"
+      },
+      {
+        "label": "Defontana: portal de proveedores",
+        "url": "https://www.defontana.com/cl/portal-proveedores/"
+      },
+      {
+        "label": "Defontana: APIs e integraciones",
+        "url": "https://www.defontana.com/cl/funcionalidades_erp_integraciones"
+      }
+    ],
+    "title": "Ruka vs. Defontana: ERP y automatización operativa",
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "brand": "Chipax",
+    "category": "Finanzas y tesorería",
+    "slug": "ruka-vs-chipax",
+    "headline": "Saber qué pagaste no explica todo lo que compraste.",
+    "description": "Ruka vs. Chipax: conciliación bancaria, cuentas por pagar y control operativo de compras. Diferencias, complementariedad y pruebas para decidir.",
+    "intro": "Ruka conecta tus compras con insumos, costos y recepción. Chipax ordena el movimiento financiero. Comparamos ambos recorridos para que un pago conciliado no se confunda con una compra controlada.",
+    "verdict": "El banco explica el movimiento de dinero. Para entender cantidades, presentaciones o diferencias de recepción, necesitas mirar también el detalle operativo de la compra.",
+    "otherFit": "Chipax es una alternativa cuando necesitas visibilidad de caja, cuentas por cobrar y pagar, y relación entre movimientos bancarios y documentos. También publica un flujo de pagos llamado Chipay.",
+    "rukaFit": "Ruka encaja cuando necesitas revisar qué productos compraste, cómo se relacionan con tus insumos, qué se recibió y cómo cambian los costos. Preparar una nómina bancaria no equivale a ejecutar una transferencia.",
+    "coexist": "Ambos pueden cubrir necesidades diferentes. Ruka contempla incorporación de XML disponibles de Chipax en operaciones autorizadas. Ese ingreso no es sincronización bidireccional, conciliación bancaria ni confirmación del registro completo.",
+    "rows": [
+      {
+        "task": "Caja y pendientes",
+        "alternative": "Chipax reúne información de bancos y SII para mostrar cobros, pagos y proyección de caja.",
+        "ruka": "El foco operativo de Ruka no sustituye por sí solo una herramienta de tesorería.",
+        "source": 0
+      },
+      {
+        "task": "Conciliación bancaria",
+        "alternative": "Su conciliación avanzada vincula movimientos bancarios con documentos, incluso en casos agrupados.",
+        "ruka": "La conciliación operativa aborda diferencias entre factura, orden y recepción según el proceso.",
+        "source": 1
+      },
+      {
+        "task": "Pagar proveedores",
+        "alternative": "Chipay permite iniciar pagos desde Chipax bajo su flujo y condiciones.",
+        "ruka": "Ruka prepara nóminas en formatos bancarios disponibles; tu equipo carga y autoriza en el banco.",
+        "source": 2
+      },
+      {
+        "task": "Detalle de insumos",
+        "alternative": "Para equivalencias entre productos, cajas y kilos, pide revisar esa necesidad específica.",
+        "ruka": "Ruka relaciona productos de proveedor e insumos maestros con sus unidades.",
+        "source": 0
+      },
+      {
+        "task": "Documentos compartidos",
+        "alternative": "La ayuda de Chipax describe carga de XML cuando falta un documento.",
+        "ruka": "La incorporación desde Chipax requiere XML disponible, acceso y envío habilitado.",
+        "source": 3
+      },
+      {
+        "task": "Información para decidir",
+        "alternative": "Los reportes financieros ayudan a entender dinero y compromisos.",
+        "ruka": "El detalle normalizado permite analizar compras y costos operativos desde otra perspectiva.",
+        "source": 0
+      }
+    ],
+    "scenario": {
+      "title": "La factura cuadra. La entrega tiene una diferencia.",
+      "text": "El banco puede mostrar el pago correcto y aun así haber llegado menos mercadería. En Ruka, el equipo registra la recepción y sus diferencias junto a la compra. Ese control operativo permite entender qué falta revisar sin depender de una conversación perdida o del estado del pago.",
+      "evidence": [
+        "Factura y recepción dentro del recorrido de compra.",
+        "Cantidades recibidas e incidencias visibles.",
+        "Contexto para resolver la diferencia antes de seguir."
+      ]
+    },
+    "migration": [
+      "Separa tesorería de control operativo. Conserva la información que ya sirve para cerrar caja.",
+      "Si compartes XML, confirma disponibilidad, permisos y revisión del resultado del ingreso.",
+      "Prueba una entrega parcial y un pago agrupado antes de decidir que un flujo reemplaza al otro."
+    ],
+    "faqs": [
+      {
+        "question": "¿Ruka reemplaza la conciliación bancaria de Chipax?",
+        "answer": "No hay que asumirlo. Chipax vincula bancos y documentos. Ruka trabaja con procesos operativos, incluido el cruce de factura, orden y recepción según alcance. Son conciliaciones distintas."
+      },
+      {
+        "question": "¿Ruka puede recibir documentos desde Chipax?",
+        "answer": "En operaciones habilitadas puede incorporar XML disponibles de una cuenta autorizada. No significa que todas las compras tengan XML ni que exista sincronización en ambas direcciones."
+      },
+      {
+        "question": "¿Chipay y la nómina de Ruka hacen lo mismo?",
+        "answer": "No. Chipay describe un flujo de pagos desde Chipax. Ruka prepara un archivo de nómina en formatos disponibles; cargarlo y autorizar el pago en el banco sigue a cargo del equipo."
+      },
+      {
+        "question": "¿Cuándo podría necesitar ambos?",
+        "answer": "Cuando necesitas control de caja y también resolver el detalle operativo de compras. Primero define qué dato mantiene cada sistema y confirma el intercambio, para no duplicar trabajo."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Chipax: gestión financiera",
+        "url": "https://www.chipax.com/"
+      },
+      {
+        "label": "Chipax: conciliación avanzada",
+        "url": "https://ayuda.chipax.com/es/articles/2580711-que-es-la-conciliacion-avanzada"
+      },
+      {
+        "label": "Chipax: cómo funciona Chipay",
+        "url": "https://ayuda.chipax.com/es/articles/6093546-que-es-chipay-y-como-funciona"
+      },
+      {
+        "label": "Chipax: movimientos sin factura y carga de XML",
+        "url": "https://ayuda.chipax.com/es/articles/2694388-como-concilio-un-movimiento-bancario-si-no-tengo-la-factura-cargada-en-chipax"
+      }
+    ],
+    "title": "Ruka vs. Chipax: finanzas y control de compras",
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "brand": "KAME",
+    "category": "ERP y contabilidad",
+    "slug": "ruka-vs-kame",
+    "headline": "Un ERP puede ordenar la compra. Ruka puede quitar trabajo para mantenerla al día.",
+    "description": "Ruka vs. KAME: ERP, órdenes de compra, recepción, inventario y automatización operativa. Compara alcances y dónde puede aportar Ruka a tu proceso.",
+    "intro": "Ruka trabaja en las tareas manuales que quedan entre tus documentos y la operación. KAME ya integra compras, recepción, inventario y contabilidad: el aporte debe estar en completar ese recorrido, no en duplicarlo.",
+    "verdict": "Si el control ya existe en KAME, consérvalo. Ruka tiene sentido cuando preparar los datos que alimentan ese control —identificar productos, convertir unidades o registrar compras— todavía consume el tiempo de tu equipo.",
+    "otherFit": "Evalúa Siigo KAME si buscas un ERP con ventas, compras, inventario y contabilidad integrados. Su módulo de compras describe órdenes, aprobaciones, recepción y relación con facturas.",
+    "rukaFit": "Ruka aporta cuando incorporar documentos, relacionar productos y mantener costos todavía exige intervención repetida. Puede evaluarse un proceso sobre tus sistemas, sin convertirlo en un cambio completo de ERP.",
+    "coexist": "Antes de sumar otra herramienta, revisa qué resuelve tu configuración de KAME. Si queda un proceso manual claro, define el dato de entrada, sus reglas y el destino. La presencia de KAME en un ecosistema no garantiza cualquier integración.",
+    "rows": [
+      {
+        "task": "Orden y recepción",
+        "alternative": "KAME describe órdenes en distintas monedas, aprobaciones y recepciones totales o parciales.",
+        "ruka": "Permite registrar recepción y revisar diferencias. El cruce con órdenes depende de las fuentes y reglas del flujo, y puede complementar los controles que ya usas.",
+        "source": 0
+      },
+      {
+        "task": "Factura y SII",
+        "alternative": "Publica sincronización de documentos y cruce entre orden y factura.",
+        "ruka": "Ruka incorpora y revisa información disponible de compras, conservando el detalle para la operación.",
+        "source": 0
+      },
+      {
+        "task": "Stock y bodegas",
+        "alternative": "KAME integra compras, ventas, traspasos y ajustes de inventario.",
+        "ruka": "Ruka relaciona productos del proveedor con insumos y unidades; la actualización en destino se confirma.",
+        "source": 1
+      },
+      {
+        "task": "Costo de importaciones",
+        "alternative": "Su módulo de compras contempla asignar flete, aduanas y otros gastos a productos.",
+        "ruka": "Relaciona insumos y unidades para comparar costos de compra. No reemplaza una carpeta de importación ni el reparto de sus gastos.",
+        "source": 0
+      },
+      {
+        "task": "Contabilidad",
+        "alternative": "KAME publica integración contable y conciliación apoyada en sus módulos.",
+        "ruka": "Aporta información operativa de compras y costos; conserva la suite contable cuando ese trabajo ya está resuelto.",
+        "source": 2
+      },
+      {
+        "task": "Flujo entre sistemas",
+        "alternative": "La cobertura depende de módulos, configuración y conexiones disponibles.",
+        "ruka": "Ruka One permite definir un proceso específico sobre fuentes accesibles.",
+        "source": 2
+      }
+    ],
+    "scenario": {
+      "title": "La recepción está controlada. El ingreso aún toma tiempo.",
+      "text": "Piensa en una compra con diez productos que el proveedor nombra distinto a tu catálogo. Aunque el ERP tenga recepción y orden, alguien debe dejar esos productos utilizables. Ahí conviene medir el aporte de Ruka: entrada del documento, equivalencias, unidades y pendientes que el equipo necesita resolver.",
+      "evidence": [
+        "Productos reconocidos y productos pendientes claramente separados.",
+        "Conversión a la unidad usada por la operación.",
+        "Dato final disponible en el sistema y módulo acordados."
+      ]
+    },
+    "migration": [
+      "Revisa los módulos de KAME que ya tienes antes de contratar una función equivalente.",
+      "Identifica tareas repetidas concretas: descarga, digitación, equivalencias o revisión de diferencias.",
+      "Define un piloto con un catálogo acotado y un destino confirmado; amplía solo cuando el resultado sea consistente."
+    ],
+    "faqs": [
+      {
+        "question": "¿KAME ya tiene recepción y órdenes de compra?",
+        "answer": "Sí. Su página de gestión de compras describe órdenes, aprobaciones, recepción total o parcial y cruce con factura. La comparación con Ruka debe reconocer esas capacidades."
+      },
+      {
+        "question": "¿Para qué sumar Ruka si ya tengo KAME?",
+        "answer": "Para un trabajo manual que siga pendiente, como incorporar información o relacionar productos y unidades. Si tu ERP y su configuración ya completan ese proceso, primero evalúa si necesitas otra herramienta."
+      },
+      {
+        "question": "¿Ruka reemplaza el inventario de KAME?",
+        "answer": "No necesariamente. Puede evaluarse la información de compras que alimenta tu operación, manteniendo el inventario en su sistema actual. Hay que confirmar el destino y las reglas de actualización."
+      },
+      {
+        "question": "¿El costo por unidad incluye los gastos de importación?",
+        "answer": "No automáticamente. Normalizar cajas, kilos o litros es distinto de distribuir fletes, seguros o aduanas. Define los componentes que necesitas antes de comparar resultados."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Siigo KAME: gestión de compras",
+        "url": "https://www.kame.cl/sistema-de-gestion-compras/"
+      },
+      {
+        "label": "Siigo KAME: inventario y bodegas",
+        "url": "https://www.kame.cl/software-de-inventario/"
+      },
+      {
+        "label": "Siigo KAME: contabilidad",
+        "url": "https://www.kame.cl/software-de-contabilidad/"
+      }
+    ],
+    "title": "Ruka vs. KAME: ERP, compras e insumos",
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "brand": "Bsale",
+    "category": "Ventas e inventario",
+    "slug": "ruka-vs-bsale",
+    "headline": "La venta mueve el stock. La compra necesita su propio control.",
+    "description": "Ruka vs. Bsale: punto de venta, inventario, documentos e insumos. Descubre dónde aporta Ruka sin confundir automatizar compras con reemplazar tu POS.",
+    "intro": "Ruka relaciona lo que compras con los insumos, unidades y costos de tu negocio. Bsale organiza ventas y stock. Puedes mejorar la entrada de compras sin empezar por cambiar tu punto de venta.",
+    "verdict": "No cambies el punto de venta para resolver un problema que nace en la factura del proveedor. Identifica primero si necesitas vender mejor o mantener mejor la información de compras.",
+    "otherFit": "Bsale es una alternativa si necesitas punto de venta, emisión de documentos, inventario y ecommerce. Su propuesta está orientada a la gestión comercial de negocios físicos y online.",
+    "rukaFit": "Ruka encaja cuando el problema está en recibir y registrar compras, reconocer insumos y comparar costos. Eso puede ser valioso aunque tu caja y tus canales de venta ya funcionen bien.",
+    "coexist": "Venta, stock y costo deben tener responsables claros. Evalúa el intercambio de información según la configuración disponible; no se promete una conexión automática a todos los módulos de Bsale.",
+    "rows": [
+      {
+        "task": "Venta en caja",
+        "alternative": "Bsale ofrece punto de venta, emisión de documentos y cierre de caja.",
+        "ruka": "Se ocupa de la entrada de compras, no de reemplazar tu punto de venta.",
+        "source": 0
+      },
+      {
+        "task": "Canales online",
+        "alternative": "Su oferta incluye ecommerce y conexiones con otras plataformas comerciales.",
+        "ruka": "Trabaja con documentos de tus proveedores. La administración de pedidos online permanece en la herramienta que uses para vender.",
+        "source": 0
+      },
+      {
+        "task": "Stock",
+        "alternative": "Bsale describe control de inventario y movimientos ligados a la operación comercial.",
+        "ruka": "Ruka relaciona productos y unidades de compra antes de llevar información al destino acordado.",
+        "source": 1
+      },
+      {
+        "task": "Información del proveedor",
+        "alternative": "Revisa cómo ingresan en tu configuración documentos y productos comprados.",
+        "ruka": "Ruka incorpora y revisa la compra con su detalle, no solo el monto total.",
+        "source": 0
+      },
+      {
+        "task": "Costo comparable",
+        "alternative": "Para equivalencias entre envases e insumos, revisa el recorrido con tus productos.",
+        "ruka": "Ruka lleva las presentaciones a una unidad comparable mediante equivalencias configuradas.",
+        "source": 1
+      },
+      {
+        "task": "Otras herramientas",
+        "alternative": "Bsale publica un marketplace de integraciones comerciales, logísticas y contables.",
+        "ruka": "Ruka One permite evaluar procesos e integraciones propias, con alcance definido.",
+        "source": 2
+      }
+    ],
+    "scenario": {
+      "title": "Vendes unidades. Compras cajas.",
+      "text": "Una caja no siempre contiene la misma cantidad. Ruka relaciona la presentación del proveedor con la unidad que usa tu operación, para que puedas comparar costos y entender lo comprado. Si el flujo incluye actualizar otro sistema, se define el destino y el alcance antes de activarlo.",
+      "evidence": [
+        "Presentación de compra relacionada con su equivalencia.",
+        "Costo por unidad, sin confundir la caja con su contenido.",
+        "Detalle disponible para el flujo operativo acordado."
+      ]
+    },
+    "migration": [
+      "No interrumpas la caja ni los canales de venta para probar un flujo de compras.",
+      "Selecciona productos con presentaciones distintas y documenta su equivalencia antes de conectar destinos.",
+      "Acuerda qué sistema actualiza stock, catálogo y costos, y cómo se revisan las diferencias."
+    ],
+    "faqs": [
+      {
+        "question": "¿Ruka es un punto de venta como Bsale?",
+        "answer": "No es su propuesta principal. Bsale ofrece POS y gestión comercial. Ruka se enfoca en procesos operativos, especialmente compras, insumos y costos."
+      },
+      {
+        "question": "¿Puedo mantener Bsale y evaluar Ruka?",
+        "answer": "Sí, puede evaluarse esa forma de trabajo. Primero hay que confirmar qué información se necesita, qué acceso existe y dónde debe quedar. No se garantiza toda integración por el solo hecho de usar ambas marcas."
+      },
+      {
+        "question": "¿Qué pasa si compro por caja y vendo por unidad?",
+        "answer": "Necesitas una equivalencia explícita. Una compra de una caja no debe convertirse automáticamente en una unidad de stock o en un costo unitario sin conocer su contenido."
+      },
+      {
+        "question": "¿Cuándo debería revisar primero Bsale?",
+        "answer": "Cuando la necesidad principal es punto de venta, documentos de venta, caja o ecommerce. Si esos procesos ya funcionan y el cuello de botella son las compras, evalúa ese flujo por separado."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Bsale: funcionalidades y preguntas frecuentes",
+        "url": "https://www.bsale.cl/sheet/faq-bsale"
+      },
+      {
+        "label": "Bsale: inventario sin planillas",
+        "url": "https://www.bsale.cl/article/como-llevar-tu-inventario-sin-excel-y-sin-perder-ventas"
+      },
+      {
+        "label": "Bsale: marketplace de integraciones",
+        "url": "https://www.bsale.cl/sheet/integraciones"
+      }
+    ],
+    "title": "Ruka vs. Bsale: ventas, inventario y compras",
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "brand": "Clay",
+    "category": "Finanzas y tesorería",
+    "slug": "ruka-vs-clay",
+    "headline": "El cierre contable no reemplaza el control de cada compra.",
+    "description": "Ruka vs. Clay: contabilidad, conciliación bancaria y operación de compras. Compara qué información trabaja cada uno y dónde puede aportar Ruka.",
+    "intro": "Ruka convierte el detalle de tus compras en insumos y costos que puedes controlar. Clay conecta finanzas y contabilidad. Una compra puede necesitar ambos trabajos, pero no son intercambiables.",
+    "verdict": "Una compra puede estar conciliada y contabilizada, pero todavía tener productos mal relacionados o una diferencia de recepción. Son problemas distintos que conviene resolver sin mezclar promesas.",
+    "otherFit": "Clay es una alternativa para trabajar finanzas y contabilidad desde bancos y SII. Su oferta incluye conciliación y automatización contable; también distingue software de servicio contable.",
+    "rukaFit": "Ruka aporta en la información que operaciones necesita además del asiento: productos, presentaciones, insumos, recepción y costos. No reemplaza por sí solo una obligación contable ni al equipo responsable de ella.",
+    "coexist": "Si Clay ya resuelve tu trabajo financiero, el aporte de Ruka debe justificarse en un proceso operativo pendiente. No se presume una integración entre ambos: define qué dato compartir, por qué y con qué autorización.",
+    "rows": [
+      {
+        "task": "Finanzas y contabilidad",
+        "alternative": "Clay presenta una plataforma conectada a bancos y SII con reportes y contabilidad.",
+        "ruka": "Ruka se enfoca en ejecutar y ordenar procesos operativos entre sistemas.",
+        "source": 0
+      },
+      {
+        "task": "Conciliación",
+        "alternative": "Su documentación describe matches entre movimientos bancarios y documentos tributarios.",
+        "ruka": "El cruce de factura, orden y recepción busca diferencias operativas según el flujo.",
+        "source": 1
+      },
+      {
+        "task": "Automatización",
+        "alternative": "Clay documenta reglas para conciliación y contabilización automática.",
+        "ruka": "Ruka usa equivalencias y reglas del proceso para relacionar información de compras.",
+        "source": 1
+      },
+      {
+        "task": "Detalle de insumos",
+        "alternative": "Para normalización de productos y presentaciones, consulta esa necesidad concreta.",
+        "ruka": "Ruka relaciona productos del proveedor e insumos maestros con una unidad de comparación.",
+        "source": 0
+      },
+      {
+        "task": "Equipo y servicio",
+        "alternative": "Clay ofrece un servicio contable con profesionales además de su plataforma.",
+        "ruka": "Ruka automatiza procesos operativos. No incluye un servicio de contadores que asuma el cierre de tu empresa.",
+        "source": 2
+      },
+      {
+        "task": "Integraciones y agentes",
+        "alternative": "Clay publica integraciones para consultar información con asistentes de IA.",
+        "ruka": "Ruka dispone de API de compras y permite evaluar procesos propios con Ruka One.",
+        "source": 3
+      }
+    ],
+    "scenario": {
+      "title": "El gasto subió. Ahora puedes entender qué cambió.",
+      "text": "Compraste el mismo insumo en envases distintos. El total por sí solo no explica si cambió la cantidad o el precio. Ruka permite trabajar sobre una unidad comparable y volver al detalle de cada compra. Ese contexto complementa el registro financiero; no lo reemplaza.",
+      "evidence": [
+        "Productos del proveedor relacionados con tus insumos.",
+        "Presentaciones llevadas a una unidad comparable.",
+        "Origen del costo disponible en el detalle de compra."
+      ]
+    },
+    "migration": [
+      "Aclara si evalúas software financiero, servicio contable o automatización operativa. No son el mismo contrato.",
+      "Conserva la responsabilidad del cierre y define qué información necesita cada equipo.",
+      "Prueba una compra corregida y una diferencia de recepción antes de ampliar el intercambio de datos."
+    ],
+    "faqs": [
+      {
+        "question": "¿Ruka hace lo mismo que Clay?",
+        "answer": "No en todo su alcance. Clay se presenta como software financiero y contable. Ruka se enfoca en procesos operativos. Pueden coincidir en documentos e integraciones sin resolver el mismo trabajo."
+      },
+      {
+        "question": "¿Conciliar una factura confirma lo recibido?",
+        "answer": "No. La conciliación bancaria relaciona dinero con documentos. La recepción registra lo que llegó. Para controlar una compra, puede ser necesario revisar ambas dimensiones."
+      },
+      {
+        "question": "¿Ruka incluye un servicio contable?",
+        "answer": "No debe asumirse. Esta comparación aborda software y procesos operativos de Ruka. Si necesitas profesionales que lleven la contabilidad, ese es un alcance diferente que debes contratar y evaluar expresamente."
+      },
+      {
+        "question": "¿Una integración con IA reemplaza el proceso?",
+        "answer": "No por sí sola. Consultar información, proponer una acción y ejecutarla con controles son capacidades distintas. Define el resultado esperado, los permisos y quién revisa las excepciones."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Clay: software financiero y contable",
+        "url": "https://www.clay.cl/software-gestion-financiera-y-contable"
+      },
+      {
+        "label": "Clay: configuración de automatizaciones",
+        "url": "https://ayuda.clay.cl/es/article/guia-definitiva-para-automatizar-tus-procesos-en-clay-xlkjm8/"
+      },
+      {
+        "label": "Clay: servicio contable",
+        "url": "https://www.clay.cl/servicio-contable"
+      },
+      {
+        "label": "Clay: integración con asistentes de IA",
+        "url": "https://www.clay.cl/contabilidad-con-ia"
+      }
+    ],
+    "title": "Ruka vs. Clay: contabilidad y operación de compras",
+    "reviewedAt": "2026-10-26"
   }
 ]

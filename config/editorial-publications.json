@@ -91,9 +91,31 @@
       "status": "approved"
     },
     {
+      "path": "/comparar/ruka-vs-emisso",
+      "kind": "comparison",
+      "intent": "¿Necesitas una conexión o un proceso funcionando?",
+      "capabilities": [
+        "comparisons",
+        "customer-api",
+        "purchase-intake",
+        "billing"
+      ],
+      "sources": [
+        "https://www.emisso.ai/es",
+        "https://www.emisso.ai/es/terms",
+        "https://connect.emisso.ai/docs/como-conectar/emision-sii"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales y límites comprobados de Ruka; sin prueba del servicio de terceros",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 30,
+      "status": "approved"
+    },
+    {
       "path": "/comparar/ruka-vs-tupana",
       "kind": "comparison",
-      "intent": "Evaluar Ruka y Tupana por recorrido operativo, no por pricing",
+      "intent": "¿El trabajo pendiente está en cobrar o en comprar?",
       "capabilities": [
         "comparisons",
         "customer-api",
@@ -103,16 +125,168 @@
       "sources": [
         "https://www.tupana.ai/facturacion",
         "https://www.tupana.ai/cobranza",
-        "https://www.tupana.ai/compras",
         "https://www.tupana.ai/conciliacion-bancaria",
-        "https://www.tupana.ai/",
-        "https://www.ruka.ai/productos/registro-de-compras",
-        "https://api.rukafactura.cl/api_docs",
-        "https://www.ruka.ai/one"
+        "https://www.tupana.ai/api-factura"
       ],
       "owner": "Ruka",
       "author": "Camilo Silva",
-      "reviewer": "Contraste factual con fuentes primarias y revisión crítica de alcances",
+      "reviewer": "Contraste documental con fuentes oficiales y límites comprobados de Ruka; sin prueba del servicio de terceros",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 30,
+      "status": "approved"
+    },
+    {
+      "path": "/comparar/ruka-vs-wasabil",
+      "kind": "comparison",
+      "intent": "Vender por varios canales no es lo mismo que controlar tus compras.",
+      "capabilities": [
+        "comparisons",
+        "customer-api",
+        "purchase-intake",
+        "billing"
+      ],
+      "sources": [
+        "https://wasabil.com/",
+        "https://wasabil.com/ecommerce/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales y límites comprobados de Ruka; sin prueba del servicio de terceros",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 30,
+      "status": "approved"
+    },
+    {
+      "path": "/comparar/ruka-vs-nubox",
+      "kind": "comparison",
+      "intent": "Una contabilidad al día y una compra bien registrada son trabajos distintos.",
+      "capabilities": [
+        "comparisons",
+        "customer-api",
+        "purchase-intake",
+        "billing"
+      ],
+      "sources": [
+        "https://www.nubox.com/software-contabilidad",
+        "https://www.nubox.com/software-contabilidad/conciliacion-bancaria",
+        "https://developers.nubox.com/compra",
+        "https://www.nubox.com/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales y límites comprobados de Ruka; sin prueba del servicio de terceros",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 30,
+      "status": "approved"
+    },
+    {
+      "path": "/comparar/ruka-vs-defontana",
+      "kind": "comparison",
+      "intent": "¿Cambiar el ERP o sacar el trabajo manual que quedó alrededor?",
+      "capabilities": [
+        "comparisons",
+        "customer-api",
+        "purchase-intake",
+        "billing"
+      ],
+      "sources": [
+        "https://www.defontana.com/cl/erp-genesis",
+        "https://www.defontana.com/cl/portal-proveedores/",
+        "https://www.defontana.com/cl/funcionalidades_erp_integraciones"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales y límites comprobados de Ruka; sin prueba del servicio de terceros",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 30,
+      "status": "approved"
+    },
+    {
+      "path": "/comparar/ruka-vs-chipax",
+      "kind": "comparison",
+      "intent": "Saber qué pagaste no explica todo lo que compraste.",
+      "capabilities": [
+        "comparisons",
+        "customer-api",
+        "purchase-intake",
+        "billing"
+      ],
+      "sources": [
+        "https://www.chipax.com/",
+        "https://ayuda.chipax.com/es/articles/2580711-que-es-la-conciliacion-avanzada",
+        "https://ayuda.chipax.com/es/articles/6093546-que-es-chipay-y-como-funciona",
+        "https://ayuda.chipax.com/es/articles/2694388-como-concilio-un-movimiento-bancario-si-no-tengo-la-factura-cargada-en-chipax"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales y límites comprobados de Ruka; sin prueba del servicio de terceros",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 30,
+      "status": "approved"
+    },
+    {
+      "path": "/comparar/ruka-vs-kame",
+      "kind": "comparison",
+      "intent": "Un ERP puede ordenar la compra. Ruka puede quitar trabajo para mantenerla al día.",
+      "capabilities": [
+        "comparisons",
+        "customer-api",
+        "purchase-intake",
+        "billing"
+      ],
+      "sources": [
+        "https://www.kame.cl/sistema-de-gestion-compras/",
+        "https://www.kame.cl/software-de-inventario/",
+        "https://www.kame.cl/software-de-contabilidad/"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales y límites comprobados de Ruka; sin prueba del servicio de terceros",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 30,
+      "status": "approved"
+    },
+    {
+      "path": "/comparar/ruka-vs-bsale",
+      "kind": "comparison",
+      "intent": "La venta mueve el stock. La compra necesita su propio control.",
+      "capabilities": [
+        "comparisons",
+        "customer-api",
+        "purchase-intake",
+        "billing"
+      ],
+      "sources": [
+        "https://www.bsale.cl/sheet/faq-bsale",
+        "https://www.bsale.cl/article/como-llevar-tu-inventario-sin-excel-y-sin-perder-ventas",
+        "https://www.bsale.cl/sheet/integraciones"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales y límites comprobados de Ruka; sin prueba del servicio de terceros",
+      "reviewedAt": "2026-10-26",
+      "reviewWithinDays": 30,
+      "status": "approved"
+    },
+    {
+      "path": "/comparar/ruka-vs-clay",
+      "kind": "comparison",
+      "intent": "El cierre contable no reemplaza el control de cada compra.",
+      "capabilities": [
+        "comparisons",
+        "customer-api",
+        "purchase-intake",
+        "billing"
+      ],
+      "sources": [
+        "https://www.clay.cl/software-gestion-financiera-y-contable",
+        "https://ayuda.clay.cl/es/article/guia-definitiva-para-automatizar-tus-procesos-en-clay-xlkjm8/",
+        "https://www.clay.cl/servicio-contable",
+        "https://www.clay.cl/contabilidad-con-ia"
+      ],
+      "owner": "Ruka",
+      "author": "Camilo Silva",
+      "reviewer": "Contraste documental con fuentes oficiales y límites comprobados de Ruka; sin prueba del servicio de terceros",
       "reviewedAt": "2026-10-26",
       "reviewWithinDays": 30,
       "status": "approved"
