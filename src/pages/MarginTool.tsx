@@ -1,48 +1,541 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, RotateCcw } from "lucide-react";
+import { ArrowRight, ArrowUpRight, RotateCcw, Download } from "lucide-react";
+import {
+  CopyResult,
+  ResultAnnouncement,
+  toolButton,
+  ToolPrivacy,
+  WorkingState,
+} from "@/components/resources/ToolActions";
+import { ToolDecision } from "@/components/resources/ToolDecision";
 import { ResourceNextStep } from "@/components/resources/ResourceNextStep";
-import { ResourceLayout, resourceLinkClass } from "@/components/resources/ResourceLayout";
+import {
+  ResourceLayout,
+  resourceLinkClass,
+} from "@/components/resources/ResourceLayout";
 import { marginMetrics, priceForMargin } from "@/utils/margin";
 import { ToolQuestions } from "@/components/resources/ToolQuestions";
 import { marginFaqs } from "@/content/toolGuides";
 
 export const marginPath = "/herramientas/margen-markup";
-export const marginTitle = "Calculadora de margen y markup: no son lo mismo | Ruka";
-export const marginDescription = "Calcula margen sobre venta y markup sobre costo. Compara ambos porcentajes y estima un precio objetivo con importes netos, sin registro ni envío de datos.";
-const control = "mt-2 min-h-12 w-full rounded-lg border border-[#808ca2] bg-white px-4 text-base outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 aria-[invalid=true]:border-red-600";
-const number = (value: number) => new Intl.NumberFormat("es-CL", { maximumFractionDigits: 2 }).format(value);
+export const marginTitle =
+  "Calculadora de margen y markup: no son lo mismo | Ruka";
+export const marginDescription =
+  "Calcula margen sobre venta y markup sobre costo. Compara ambos porcentajes y estima un precio objetivo con importes netos, sin registro ni envío de datos.";
+const control =
+  "mt-2 min-h-12 w-full rounded-lg border border-[#808ca2] bg-white px-4 text-base outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 aria-[invalid=true]:border-red-600";
+const number = (value: number) =>
+  new Intl.NumberFormat("es-CL", { maximumFractionDigits: 2 }).format(value);
 
 export default function MarginTool() {
   const [cost, setCost] = useState("6000");
   const [price, setPrice] = useState("10000");
   const [target, setTarget] = useState("40");
-  const [touched, setTouched] = useState(false);
   const [targetTouched, setTargetTouched] = useState(false);
+  const [priceBeforeTarget, setPriceBeforeTarget] = useState<string | null>(
+    null,
+  );
+  const [notice, setNotice] = useState("");
+  const [exportError, setExportError] = useState("");
+  const [visited, setVisited] = useState<Record<string, boolean>>({});
   const metrics = marginMetrics(cost, price);
   const targetPrice = priceForMargin(cost, target);
+  const summary = metrics.ok
+    ? `Margen sobre venta: ${number(metrics.margin)}%\nMarkup sobre costo: ${number(metrics.markup)}%\nCosto neto: ${number(metrics.cost)}\nPrecio neto: ${number(metrics.price)}\nVenta menos costo: ${number(metrics.contribution)}${targetPrice !== null ? `\nPrecio para ${target}% de margen: ${number(targetPrice)}` : ""}\nImportes en la misma moneda y unidad. No es utilidad final. Calculado con Ruka.`
+    : "";
+  function applyTarget() {
+    if (targetPrice === null || targetPrice > 1e12) return;
+    setPriceBeforeTarget(price);
+    setPrice(String(Math.ceil(targetPrice * 1e6) / 1e6));
+    setNotice(
+      "Precio objetivo aplicado a la venta. Revisa los nuevos porcentajes arriba.",
+    );
+  }
+  function download() {
+    if (!metrics.ok) return;
+    setExportError("");
+    try {
+      const csv =
+        "\uFEFFCosto neto;Precio neto;Margen (%);Markup (%);Venta menos costo;Margen objetivo (%);Precio objetivo neto\r\n" +
+        [
+          metrics.cost,
+          metrics.price,
+          metrics.margin,
+          metrics.markup,
+          metrics.contribution,
+          targetPrice === null ? "" : Number(target.replace(",", ".")),
+          targetPrice ?? "",
+        ].join(";") +
+        "\r\nImportes sin IVA en la misma moneda y unidad. No es utilidad final.\r\n";
+      const url = URL.createObjectURL(
+        new Blob([csv], { type: "text/csv;charset=utf-8" }),
+      );
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "ruka-margen-markup.csv";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setNotice("CSV preparado. Revisa tus descargas.");
+    } catch {
+      setExportError(
+        "No pudimos preparar el CSV. Tus datos siguen aquí; puedes copiar el resumen.",
+      );
+    }
+  }
   const hint = "Ingresa un importe mayor que 0, sin separador de miles.";
-  const examples = [{ label: "40% de margen", cost: "6000", price: "10000" }, { label: "40% de recargo", cost: "6000", price: "8400" }, { label: "Venta bajo costo", cost: "6000", price: "5000" }];
-  function reset() { setCost("6000"); setPrice("10000"); setTarget("40"); setTouched(false); setTargetTouched(false); }
-  return <ResourceLayout compact showContact={false} path={marginPath} faqs={marginFaqs} title={marginTitle} description={marginDescription} heading="Un margen de 40% no es sumar 40%." eyebrow="Calculadora de margen y markup" lead="La diferencia está en la base: el margen se calcula sobre la venta; el markup, sobre el costo. Cambia el ejemplo y mira ambos.">
-    <div className="mb-5 flex flex-wrap items-center justify-between gap-3 text-sm"><p className="text-[#505b70]">Cálculo local · Sin registro</p><button onClick={reset} className={resourceLinkClass}><RotateCcw size={16} aria-hidden="true" /> Restablecer ejemplo</button></div>
-    <div className="mb-6 flex flex-wrap items-center gap-3 rounded-lg bg-[#f6f7fc] px-5 py-4" aria-label="Ejemplos de margen"><p className="mr-2 text-sm font-semibold">Mismo costo, distinta venta</p><select aria-label="Cargar un ejemplo de margen" value={examples.findIndex(example => example.cost === cost && example.price === price)} onChange={event => { const example = examples[Number(event.target.value)]; setCost(example.cost); setPrice(example.price); setTouched(false); }} className="min-h-11 w-full rounded-lg border border-[#808ca2] bg-white px-3 text-base focus-visible:outline-primary md:hidden"><option value={-1} disabled>Tus propios datos</option>{examples.map((example, index) => <option key={example.label} value={index}>{example.label}</option>)}</select>{examples.map(example => <button type="button" key={example.label} aria-pressed={cost === example.cost && price === example.price} onClick={() => { setCost(example.cost); setPrice(example.price); setTouched(false); }} className={`hidden min-h-11 rounded-md md:inline-flex md:items-center border px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${cost === example.cost && price === example.price ? "border-[#424ec0] bg-white text-[#343fad]" : "border-transparent text-[#505b70] hover:bg-white"}`}>{example.label}</button>)}</div>
-    <div className="grid items-start gap-6 lg:grid-cols-[.85fr_1.15fr]">
-      <div className="rounded-xl border border-[#dce2ed] bg-white p-5 sm:p-6"><fieldset><legend className="mb-3 text-lg font-semibold">Los datos de una unidad</legend><p className="mb-6 text-sm leading-6 text-[#505b70]">Costo y venta <strong>sin IVA</strong>, en la misma moneda y unidad.</p>
-        <div className="space-y-6">{([
-          ["margin-cost", "Costo neto por unidad", cost, setCost, metrics.ok === false && metrics.costInvalid],
-          ["margin-price", "Precio de venta neto por unidad", price, setPrice, metrics.ok === false && metrics.priceInvalid],
-        ] as const).map(([id, label, value, setter, invalid]) => <div key={id}><label htmlFor={id} className="text-sm font-medium">{label}</label><input id={id} type="text" inputMode="decimal" autoComplete="off" value={value} onChange={event => setter(event.target.value)} onBlur={() => setTouched(true)} className={control} aria-invalid={touched && invalid} aria-describedby={touched && invalid ? `${id}-hint` : "margin-input-help"} />{touched && invalid && <p id={`${id}-hint`} className="mt-2 text-xs leading-5 text-red-700">{hint}</p>}</div>)}</div>
-        <p id="margin-input-help" className="mt-4 text-xs leading-5 text-[#60687a]">Escribe sin separadores de miles; puedes usar coma o punto decimal. No mezcles un costo por caja con una venta por unidad.</p>
-        <Link to="/herramientas/costo-unitario" className={`${resourceLinkClass} mt-6 text-sm`}>Primero calcular mi costo unitario <ArrowUpRight size={16} aria-hidden="true" /></Link>
-      </fieldset></div>
-      <section aria-label="Resultado del margen y markup" className="rounded-xl border border-[#cdd3f4] bg-[#f0f2ff] p-5 sm:p-7"><div role="status" aria-live="polite" aria-atomic="true">
-        {metrics.ok ? <><p className="text-sm font-medium text-[#424ec0]">Mismo importe. Dos porcentajes distintos.</p><dl className="mt-6 grid gap-6 sm:grid-cols-2"><div><dt className="text-sm">Margen sobre venta</dt><dd className="mt-2 break-all text-5xl font-semibold tracking-tight tabular-nums">{number(metrics.margin)}<span className="text-2xl">%</span></dd><dd className="mt-3 text-sm leading-6 text-[#505b70]">{metrics.margin < 0 ? `Por cada 100 vendidos, pierdes ${number(Math.abs(metrics.margin))} frente al costo ingresado.` : `De cada 100 vendidos, ${number(metrics.margin)} quedan después del costo ingresado.`}</dd></div><div className="border-t border-[#ccd2ef] pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0"><dt className="text-sm">Markup sobre costo</dt><dd className="mt-2 break-all text-4xl font-semibold tracking-tight tabular-nums">{number(metrics.markup)}<span className="text-2xl">%</span></dd><dd className="mt-3 text-sm leading-6 text-[#505b70]">El precio está {number(Math.abs(metrics.markup))}% {metrics.markup < 0 ? "por debajo" : "por encima"} del costo.</dd></div></dl><div className="mt-7 border-t border-[#ccd2ef] pt-5"><p className="text-sm">Venta menos costo por unidad</p><p className="mt-2 break-all text-2xl font-semibold tabular-nums">{number(metrics.contribution)}</p><p className="mt-2 text-sm leading-6 text-[#505b70]">{metrics.contribution < 0 ? "Estás vendiendo por debajo del costo ingresado. " : ""}No es utilidad neta: faltan los gastos e impuestos que no hayas incluido.</p></div></> : <p className="py-8 leading-7">Ingresa un costo y un precio válidos. No mostramos un porcentaje con una base cero o incompleta.</p>}
-      </div>{metrics.ok && metrics.margin >= 0 && <figure className="mt-6 border-t border-[#e1e5ec] pt-5"><figcaption className="mb-3 text-sm font-medium">Así se reparte tu precio de venta</figcaption><div aria-hidden="true" className="flex h-4 overflow-hidden rounded-full bg-[#eef0ff]"><div className="h-full bg-[#8790a3]" style={{ width: `${100 - metrics.margin}%` }} /><div className="h-full bg-primary" style={{ width: `${metrics.margin}%` }} /></div><div className="mt-3 flex flex-wrap justify-between gap-2 text-xs tabular-nums text-[#505b70]"><span>Costo · {number(100 - metrics.margin)}%</span><span className="font-semibold text-[#424ec0]">Margen · {number(metrics.margin)}%</span></div></figure>}</section>
-    </div>
-    <section className="mt-8 grid gap-7 rounded-xl bg-[#f7f8fc] p-5 sm:p-7 md:grid-cols-2"><div><p className="text-sm font-medium text-[#424ec0]">De un porcentaje a un precio</p><h2 className="mt-3 text-2xl font-semibold tracking-tight">¿Qué precio necesito para mi margen?</h2><p className="mt-3 max-w-lg leading-7 text-[#505b70]">Usamos el mismo costo anterior. Este es un cálculo orientativo, no una recomendación de precio: revisa demanda, merma, comisiones y otros gastos.</p>{metrics.ok && <p className="mt-5 text-sm tabular-nums">Costo neto que estamos usando: <strong>{number(metrics.cost)}</strong></p>}</div><div><label htmlFor="target-margin" className="font-medium">Margen objetivo sobre venta (%)</label><input id="target-margin" onBlur={() => setTargetTouched(true)} aria-invalid={targetTouched && targetPrice === null} value={target} onChange={e => setTarget(e.target.value)} type="text" inputMode="decimal" className={control} aria-describedby="target-margin-hint" /><div className="mt-2 flex flex-wrap gap-2" aria-label="Márgenes de referencia">{[20, 30, 40, 50].map(value => <button key={value} type="button" onClick={() => setTarget(String(value))} aria-pressed={target === String(value)} className="min-h-11 min-w-14 rounded-md px-3 text-sm font-medium text-[#424ec0] hover:bg-white focus-visible:ring-2 focus-visible:ring-primary aria-pressed:bg-white aria-pressed:shadow-sm">{value}%</button>)}</div><p id="target-margin-hint" className="mt-2 text-xs leading-5 text-[#60687a]">Desde 0 y menor que 100. Un margen de 100% no tiene precio finito con costo positivo.</p><p role="status" className="mt-5 break-words text-xl font-semibold">{targetPrice === null ? "Revisa el costo y el margen objetivo." : `Precio neto orientativo: ${number(targetPrice)}`}</p>{targetPrice !== null && <p className="mt-3 flex items-start gap-2 text-sm leading-6 text-[#505b70]"><ArrowRight size={16} aria-hidden="true" className="mt-1 shrink-0" />Precio = costo ÷ (1 − margen objetivo / 100). Los botones son referencias para explorar, no márgenes recomendados.</p>}</div></section>
-    <ResourceNextStep path={marginPath} />
-    <section className="mt-10 grid gap-8 lg:grid-cols-2"><div><h2 className="text-2xl font-semibold">Las fórmulas, a la vista.</h2><dl className="mt-5 space-y-5 leading-7"><div><dt className="font-semibold">Margen (%)</dt><dd>(Precio − costo) ÷ precio × 100</dd></div><div><dt className="font-semibold">Markup (%)</dt><dd>(Precio − costo) ÷ costo × 100</dd></div><div><dt className="font-semibold">Precio con margen objetivo</dt><dd>Costo ÷ (1 − margen ÷ 100)</dd></div></dl></div><div><h2 className="text-2xl font-semibold">Un ejemplo que evita confusiones.</h2><p className="mt-5 leading-7 text-[#505b70]">Con costo 6.000 y venta 10.000, quedan 4.000: margen 40% y markup 66,67%. Si solo sumas 40% al costo, vendes a 8.400 y el margen baja a 28,57%.</p><p className="mt-4 leading-7 text-[#505b70]">Para un plato, incluye cantidades y rendimientos consistentes. Esta calculadora no construye una receta ni convierte peso en volumen. Los resultados se redondean solo al mostrarlos.</p><Link to="/productos/panel-control" className={`${resourceLinkClass} mt-5`}>Mantener costos y márgenes en Ruka <ArrowUpRight size={18} aria-hidden="true" /></Link></div></section>
-    <ToolQuestions faqs={marginFaqs} />
-  </ResourceLayout>;
+  const examples = [
+    { label: "40% de margen", cost: "6000", price: "10000" },
+    { label: "40% de recargo", cost: "6000", price: "8400" },
+    { label: "Venta bajo costo", cost: "6000", price: "5000" },
+  ];
+  function reset() {
+    setCost("6000");
+    setPrice("10000");
+    setTarget("40");
+    setTargetTouched(false);
+    setVisited({});
+    setPriceBeforeTarget(null);
+    setNotice("");
+    setExportError("");
+  }
+  return (
+    <ResourceLayout
+      compact
+      showContact={false}
+      path={marginPath}
+      faqs={marginFaqs}
+      title={marginTitle}
+      description={marginDescription}
+      heading="Un margen de 40% no es sumar 40%."
+      eyebrow="Calculadora de margen y markup"
+      lead="La diferencia está en la base: el margen se calcula sobre la venta; el markup, sobre el costo. Cambia el ejemplo y mira ambos."
+    >
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3 text-sm">
+        <ToolPrivacy />
+        <button onClick={reset} className={resourceLinkClass}>
+          <RotateCcw size={16} aria-hidden="true" /> Restablecer ejemplo
+        </button>
+      </div>
+      <div
+        className="mb-6 flex flex-wrap items-center gap-3 rounded-lg bg-[#f6f7fc] px-5 py-4"
+        aria-label="Ejemplos de margen"
+      >
+        <p className="mr-2 text-sm font-semibold">
+          Mismo costo, distinta venta
+        </p>
+        <select
+          aria-label="Cargar un ejemplo de margen"
+          value={examples.findIndex(
+            (example) => example.cost === cost && example.price === price,
+          )}
+          onChange={(event) => {
+            const example = examples[Number(event.target.value)];
+            setCost(example.cost);
+            setPrice(example.price);
+            setVisited({});
+            setNotice("");
+            setPriceBeforeTarget(null);
+            setExportError("");
+          }}
+          className="min-h-11 w-full rounded-lg border border-[#808ca2] bg-white px-3 text-base focus-visible:outline-primary md:hidden"
+        >
+          <option value={-1} disabled>
+            Tus propios datos
+          </option>
+          {examples.map((example, index) => (
+            <option key={example.label} value={index}>
+              {example.label}
+            </option>
+          ))}
+        </select>
+        {examples.map((example) => (
+          <button
+            type="button"
+            key={example.label}
+            aria-pressed={cost === example.cost && price === example.price}
+            onClick={() => {
+              setCost(example.cost);
+              setPrice(example.price);
+              setVisited({});
+              setNotice("");
+              setPriceBeforeTarget(null);
+              setExportError("");
+            }}
+            className={`hidden min-h-11 rounded-md md:inline-flex md:items-center border px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${cost === example.cost && price === example.price ? "border-[#424ec0] bg-white text-[#343fad]" : "border-transparent text-[#505b70] hover:bg-white"}`}
+          >
+            {example.label}
+          </button>
+        ))}
+      </div>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <WorkingState
+          example={examples.some((e) => e.cost === cost && e.price === price)}
+        />
+        <a href="#target-workspace" className={resourceLinkClass + " text-sm"}>
+          Calcular un precio objetivo{" "}
+          <ArrowRight size={16} aria-hidden="true" />
+        </a>
+      </div>
+      <div className="grid items-start gap-6 lg:grid-cols-[.85fr_1.15fr]">
+        <div className="rounded-xl border border-[#dce2ed] bg-white p-5 sm:p-6">
+          <fieldset>
+            <legend className="mb-3 text-lg font-semibold">
+              Los datos de una unidad
+            </legend>
+            <p className="mb-6 text-sm leading-6 text-[#505b70]">
+              Costo y venta <strong>sin IVA</strong>, en la misma moneda y
+              unidad.
+            </p>
+            <div className="space-y-6">
+              {(
+                [
+                  [
+                    "margin-cost",
+                    "Costo neto por unidad",
+                    cost,
+                    setCost,
+                    metrics.ok === false && metrics.costInvalid,
+                  ],
+                  [
+                    "margin-price",
+                    "Precio de venta neto por unidad",
+                    price,
+                    setPrice,
+                    metrics.ok === false && metrics.priceInvalid,
+                  ],
+                ] as const
+              ).map(([id, label, value, setter, invalid]) => (
+                <div key={id}>
+                  <label htmlFor={id} className="text-sm font-medium">
+                    {label}
+                  </label>
+                  <input
+                    id={id}
+                    type="text"
+                    inputMode="decimal"
+                    autoComplete="off"
+                    value={value}
+                    onChange={(event) => {
+                      setter(event.target.value);
+                      setNotice("");
+                      setPriceBeforeTarget(null);
+                    }}
+                    onBlur={() => setVisited((v) => ({ ...v, [id]: true }))}
+                    className={control}
+                    aria-invalid={!!visited[id] && invalid}
+                    aria-describedby={
+                      visited[id] && invalid
+                        ? `${id}-hint`
+                        : "margin-input-help"
+                    }
+                  />
+                  {visited[id] && invalid && (
+                    <p
+                      id={`${id}-hint`}
+                      className="mt-2 text-xs leading-5 text-red-700"
+                    >
+                      {hint}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+            <p
+              id="margin-input-help"
+              className="mt-4 text-xs leading-5 text-[#60687a]"
+            >
+              Escribe sin separadores de miles; puedes usar coma o punto
+              decimal. No mezcles un costo por caja con una venta por unidad.
+            </p>
+            <Link
+              to="/herramientas/costo-unitario"
+              className={`${resourceLinkClass} mt-6 text-sm`}
+            >
+              Primero calcular mi costo unitario{" "}
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
+          </fieldset>
+        </div>
+        <section
+          aria-label="Resultado del margen y markup"
+          className="overflow-hidden rounded-xl border border-[#cdd3f4] bg-white p-5 shadow-[0_12px_40px_-28px_#17182750] sm:p-7"
+        >
+          <div className="-mx-5 -mt-5 mb-6 flex max-w-none items-center justify-between gap-3 bg-[#171827] px-5 py-4 text-white sm:-mx-7 sm:-mt-7 sm:px-7">
+            <p className="text-sm font-medium">Tu precio, explicado</p>
+            <span className="text-[11px] text-[#c7ceff]">RESULTADO</span>
+          </div>
+          <div>
+            {metrics.ok ? (
+              <>
+                <p className="text-sm font-medium text-[#424ec0]">
+                  Mismo importe. Dos porcentajes distintos.
+                </p>
+                <dl className="mt-6 grid gap-6 sm:grid-cols-2">
+                  <div>
+                    <dt className="text-sm">Margen sobre venta</dt>
+                    <dd className="mt-2 break-all text-5xl font-semibold tracking-tight tabular-nums">
+                      {number(metrics.margin)}
+                      <span className="text-2xl">%</span>
+                    </dd>
+                    <dd className="mt-3 text-sm leading-6 text-[#505b70]">
+                      {metrics.margin < 0
+                        ? `Por cada 100 vendidos, pierdes ${number(Math.abs(metrics.margin))} frente al costo ingresado.`
+                        : `De cada 100 vendidos, ${number(metrics.margin)} quedan después del costo ingresado.`}
+                    </dd>
+                  </div>
+                  <div className="border-t border-[#ccd2ef] pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+                    <dt className="text-sm">Markup sobre costo</dt>
+                    <dd className="mt-2 break-all text-4xl font-semibold tracking-tight tabular-nums">
+                      {number(metrics.markup)}
+                      <span className="text-2xl">%</span>
+                    </dd>
+                    <dd className="mt-3 text-sm leading-6 text-[#505b70]">
+                      El precio está {number(Math.abs(metrics.markup))}%{" "}
+                      {metrics.markup < 0 ? "por debajo" : "por encima"} del
+                      costo.
+                    </dd>
+                  </div>
+                </dl>
+                <div className="mt-7 border-t border-[#ccd2ef] pt-5">
+                  <p className="text-sm">Venta menos costo por unidad</p>
+                  <p className="mt-2 break-all text-2xl font-semibold tabular-nums">
+                    {number(metrics.contribution)}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-[#505b70]">
+                    {metrics.contribution < 0
+                      ? "Estás vendiendo por debajo del costo ingresado. "
+                      : ""}
+                    No es utilidad neta: faltan los gastos e impuestos que no
+                    hayas incluido.
+                  </p>
+                </div>
+              </>
+            ) : (
+              <p className="py-8 leading-7">
+                Ingresa un costo y un precio válidos. No mostramos un porcentaje
+                con una base cero o incompleta.
+              </p>
+            )}
+          </div>
+          {metrics.ok && metrics.margin >= 0 && (
+            <figure className="mt-6 border-t border-[#e1e5ec] pt-5">
+              <figcaption className="mb-3 text-sm font-medium">
+                Así se reparte tu precio de venta
+              </figcaption>
+              <div
+                aria-hidden="true"
+                className="flex h-4 overflow-hidden rounded-full bg-[#eef0ff]"
+              >
+                <div
+                  className="h-full bg-[#8790a3]"
+                  style={{ width: `${100 - metrics.margin}%` }}
+                />
+                <div
+                  className="h-full bg-primary"
+                  style={{ width: `${metrics.margin}%` }}
+                />
+              </div>
+              <div className="mt-3 flex flex-wrap justify-between gap-2 text-xs tabular-nums text-[#505b70]">
+                <span>Costo · {number(100 - metrics.margin)}%</span>
+                <span className="font-semibold text-[#424ec0]">
+                  Margen · {number(metrics.margin)}%
+                </span>
+              </div>
+            </figure>
+          )}
+          <div className="mt-6 grid gap-2 sm:grid-cols-2">
+            <ResultAnnouncement
+              text={summary || "Completa los datos para calcular."}
+            />
+            <CopyResult text={summary} disabled={!metrics.ok} />
+            <button
+              type="button"
+              disabled={!metrics.ok}
+              onClick={download}
+              className={toolButton}
+            >
+              <Download size={16} aria-hidden="true" /> Descargar CSV
+            </button>
+          </div>
+          {exportError && (
+            <p role="alert" className="mt-3 text-sm text-red-700">
+              {exportError}
+            </p>
+          )}
+          <p role="status" className="mt-3 text-xs leading-5 text-[#24573c]">
+            {notice}
+          </p>
+        </section>
+      </div>
+      <section
+        id="target-workspace"
+        className="mt-8 grid scroll-mt-28 gap-7 rounded-xl border border-[#dce2ed] bg-[#f7f8fc] p-5 sm:p-7 md:grid-cols-2"
+      >
+        <div>
+          <p className="text-sm font-medium text-[#424ec0]">
+            De un porcentaje a un precio
+          </p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+            ¿Qué precio necesito para mi margen?
+          </h2>
+          <p className="mt-3 max-w-lg leading-7 text-[#505b70]">
+            Usamos el mismo costo anterior. Este es un cálculo orientativo, no
+            una recomendación de precio: revisa demanda, merma, comisiones y
+            otros gastos.
+          </p>
+          {metrics.ok && (
+            <p className="mt-5 text-sm tabular-nums">
+              Costo neto que estamos usando:{" "}
+              <strong>{number(metrics.cost)}</strong>
+            </p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="target-margin" className="font-medium">
+            Margen objetivo sobre venta (%)
+          </label>
+          <input
+            id="target-margin"
+            onBlur={() => setTargetTouched(true)}
+            aria-invalid={targetTouched && targetPrice === null}
+            value={target}
+            onChange={(e) => setTarget(e.target.value)}
+            type="text"
+            inputMode="decimal"
+            className={control}
+            aria-describedby="target-margin-hint"
+          />
+          <div
+            className="mt-2 flex flex-wrap gap-2"
+            aria-label="Márgenes de referencia"
+          >
+            {[20, 30, 40, 50].map((value) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setTarget(String(value))}
+                aria-pressed={target === String(value)}
+                className="min-h-11 min-w-14 rounded-md px-3 text-sm font-medium text-[#424ec0] hover:bg-white focus-visible:ring-2 focus-visible:ring-primary aria-pressed:bg-white aria-pressed:shadow-sm"
+              >
+                {value}%
+              </button>
+            ))}
+          </div>
+          <p
+            id="target-margin-hint"
+            className="mt-2 text-xs leading-5 text-[#60687a]"
+          >
+            Desde 0 y menor que 100. Un margen de 100% no tiene precio finito
+            con costo positivo.
+          </p>
+          <p role="status" className="mt-5 break-words text-xl font-semibold">
+            {targetPrice === null
+              ? "Revisa el costo y el margen objetivo."
+              : `Precio neto orientativo: ${number(targetPrice)}`}
+          </p>
+          {targetPrice !== null && (
+            <div className="mt-4">
+              <button
+                type="button"
+                onClick={applyTarget}
+                disabled={targetPrice > 1e12}
+                className={toolButton}
+              >
+                Aplicar a mi precio de venta
+              </button>
+              {priceBeforeTarget !== null && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPrice(priceBeforeTarget);
+                    setPriceBeforeTarget(null);
+                    setNotice("Precio anterior recuperado.");
+                  }}
+                  className={toolButton + " ml-2 mt-2"}
+                >
+                  Deshacer
+                </button>
+              )}
+              {targetPrice > 1e12 && (
+                <p className="mt-2 text-xs text-red-700">
+                  Este precio supera el límite de la calculadora.
+                </p>
+              )}
+              {metrics.ok && (
+                <p className="mt-3 text-sm leading-6 text-[#505b70]">
+                  Frente a tu venta actual:{" "}
+                  <strong>
+                    {targetPrice - metrics.price >= 0 ? "+" : ""}
+                    {number(targetPrice - metrics.price)}
+                  </strong>{" "}
+                  por unidad.
+                </p>
+              )}
+            </div>
+          )}
+          {targetPrice !== null && (
+            <p className="mt-3 flex items-start gap-2 text-sm leading-6 text-[#505b70]">
+              <ArrowRight
+                size={16}
+                aria-hidden="true"
+                className="mt-1 shrink-0"
+              />
+              Precio = costo ÷ (1 − margen objetivo / 100). Los botones son
+              referencias para explorar, no márgenes recomendados.
+            </p>
+          )}
+        </div>
+      </section>
+      <ToolDecision kind="margin" />
+      <ResourceNextStep path={marginPath} />
+      <section className="mt-10 grid gap-8 lg:grid-cols-2">
+        <div>
+          <h2 className="text-2xl font-semibold">Las fórmulas, a la vista.</h2>
+          <dl className="mt-5 space-y-5 leading-7">
+            <div>
+              <dt className="font-semibold">Margen (%)</dt>
+              <dd>(Precio − costo) ÷ precio × 100</dd>
+            </div>
+            <div>
+              <dt className="font-semibold">Markup (%)</dt>
+              <dd>(Precio − costo) ÷ costo × 100</dd>
+            </div>
+            <div>
+              <dt className="font-semibold">Precio con margen objetivo</dt>
+              <dd>Costo ÷ (1 − margen ÷ 100)</dd>
+            </div>
+          </dl>
+        </div>
+        <div>
+          <h2 className="text-2xl font-semibold">
+            Un ejemplo que evita confusiones.
+          </h2>
+          <p className="mt-5 leading-7 text-[#505b70]">
+            Con costo 6.000 y venta 10.000, quedan 4.000: margen 40% y markup
+            66,67%. Si solo sumas 40% al costo, vendes a 8.400 y el margen baja
+            a 28,57%.
+          </p>
+          <p className="mt-4 leading-7 text-[#505b70]">
+            Para un plato, incluye cantidades y rendimientos consistentes. Esta
+            calculadora no construye una receta ni convierte peso en volumen.
+            Los resultados se redondean solo al mostrarlos.
+          </p>
+          <Link
+            to="/productos/panel-control"
+            className={`${resourceLinkClass} mt-5`}
+          >
+            Mantener costos y márgenes en Ruka{" "}
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
+      <ToolQuestions
+        faqs={marginFaqs}
+        title="Dos porcentajes. Ninguna confusión."
+      />
+    </ResourceLayout>
+  );
 }

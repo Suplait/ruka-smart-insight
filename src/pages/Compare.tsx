@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, ChevronDown, Copy, Search, X, Maximize2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Search, X, Maximize2 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -10,6 +10,9 @@ import NotFound from "@/pages/NotFound";
 import comparisons from "@/content/comparisons.json";
 import { comparisonExperience } from "@/content/comparisonExperience";
 import { ComparisonTasks } from "@/components/resources/ComparisonTasks";
+import { ComparisonFit, ComparisonInspect, ComparisonSnapshot } from "@/components/resources/ComparisonDecision";
+import { ComparisonReadiness } from "@/components/resources/ComparisonReadiness";
+import { ComparisonQuestions } from "@/components/resources/ComparisonQuestions";
 
 type Guide = typeof comparisons[number];
 const focus = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4";
@@ -82,31 +85,28 @@ function ProductProof({ guide }: { guide: Guide }) {
     ? { src: "/blog/2026-10/recepcion-cantidades-demo.jpg", width: 850, height: 558, alt: "Recepción en Ruka: 14 kg recibidos de 16 kg esperados, con una incidencia marcada." }
     : { src: "/blog/2026-10/registro-lineas-demo.jpg", width: 1015, height: 397, alt: "Detalle de una compra en Ruka: productos del proveedor, cantidades, unidades, costo e insumo maestro relacionado." };
   return <section id="ruka-en-operacion" className="mt-20 scroll-mt-28">
-    <div className={`grid gap-8 ${receipt ? "lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-12" : ""}`}>
-      <div className="max-w-3xl"><p className="text-sm font-semibold text-[#424ec0]">Así se trabaja en Ruka</p><h2 className="mt-3 text-balance text-3xl font-semibold leading-tight tracking-[-0.035em] sm:text-4xl">{experience.proofTitle}</h2><p className={`mt-5 text-lg leading-8 ${muted}`}>{experience.proofLead}</p></div>
-      <figure className="min-w-0 rounded-xl border border-[#dce2ed] bg-[#f8f9fc] p-3 sm:p-5">
-        <Dialog><DialogTrigger asChild><button type="button" aria-label={receipt ? "Ampliar recepción en Ruka" : "Ampliar detalle de compra en Ruka"} className={`block w-full rounded-lg bg-white text-left ${focus}`}><img {...image} loading="lazy" className="h-auto w-full rounded-lg" /><span className="flex min-h-11 items-center justify-end gap-2 px-4 text-sm font-semibold text-[#424ec0]"><Maximize2 size={16} aria-hidden="true" /> Ampliar captura</span></button></DialogTrigger><DialogContent className="motion-reduce:!animate-none max-h-[90dvh] w-[96vw] max-w-6xl overflow-auto [&>button]:right-1 [&>button]:top-1 [&>button]:flex [&>button]:min-h-11 [&>button]:min-w-11 [&>button]:items-center [&>button]:justify-center"><DialogTitle className="pr-8">{receipt ? "Recepción en Ruka" : "Detalle de compra en Ruka"}</DialogTitle><DialogDescription>Captura de la demo con datos de ejemplo. Desliza horizontalmente para revisar el detalle en un teléfono.</DialogDescription><div className="overflow-x-auto"><img {...image} className="min-w-[850px]" /></div></DialogContent></Dialog>
-        <figcaption className={`mt-3 text-xs leading-5 ${muted}`}>Captura real de la demo de Ruka. Datos de ejemplo, no resultados de un cliente.</figcaption>
+    <div className="grid gap-8">
+      <div className="max-w-3xl"><h2 className="text-balance text-3xl font-semibold leading-tight tracking-[-0.035em] sm:text-4xl">{experience.proofTitle}</h2><p className={`mt-5 text-lg leading-8 ${muted}`}>{experience.proofLead}</p></div>
+      <figure className={`min-w-0 overflow-hidden rounded-xl border border-[#dce2ed] ${receipt ? "max-w-4xl" : ""}`}>
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#dce2ed] bg-[#fafbfe] px-4 py-3 text-xs text-[#505b70]"><span>Ruka / {receipt ? "Recepción de compras" : "Detalle de compra"}</span><span>Demo · Datos de ejemplo</span></div>
+        <Dialog><DialogTrigger asChild><button type="button" aria-label={receipt ? "Ampliar recepción en Ruka" : "Ampliar detalle de compra en Ruka"} className={`block w-full bg-white text-left ${focus}`}><img {...image} loading="lazy" className="h-auto w-full" /><span className="flex min-h-12 items-center justify-between gap-3 border-t border-[#dce2ed] px-4 text-sm font-semibold text-[#424ec0]"><span>Explorar el detalle</span><span className="flex items-center gap-2"><Maximize2 size={16} aria-hidden="true" /> Ampliar captura</span></span></button></DialogTrigger><DialogContent className="motion-reduce:!animate-none max-h-[90dvh] w-[96vw] max-w-6xl overflow-auto [&>button]:right-1 [&>button]:top-1 [&>button]:flex [&>button]:min-h-11 [&>button]:min-w-11 [&>button]:items-center [&>button]:justify-center"><DialogTitle className="pr-8">{receipt ? "Recepción en Ruka" : "Detalle de compra en Ruka"}</DialogTitle><DialogDescription>Captura de la demo con datos de ejemplo. Desliza horizontalmente para revisar el detalle en un teléfono.</DialogDescription><div tabIndex={0} role="region" aria-label="Captura ampliada, desplazable horizontalmente" className={`overflow-x-auto rounded ${focus}`}><img {...image} className="h-auto min-w-[850px] max-w-none" /></div></DialogContent></Dialog>
+        <figcaption className={`border-t border-[#dce2ed] px-4 py-3 text-xs leading-5 ${muted}`}>Captura real de la demo de Ruka. Datos de ejemplo, no resultados de un cliente.</figcaption>
       </figure>
     </div>
+    <ComparisonInspect guide={guide} />
     <Link to="/productos/registro-de-compras" className={`${resourceLinkClass} mt-6`}>Ver el registro de compras de Ruka <ArrowRight size={18} aria-hidden="true" /></Link>
   </section>;
-}
-
-function Readiness({ guide }: { guide: Guide }) {
-  const [copied, setCopied] = useState(false);
-  const [error, setError] = useState(false);
-  async function copy() {
-    try { await navigator.clipboard.writeText(`Ruka vs. ${guide.brand}: antes de decidir\n\n${guide.migration.map((text, index) => `${index + 1}. ${text}`).join("\n")}\n\nhttps://www.ruka.ai/comparar/${guide.slug}`); setCopied(true); setError(false); }
-    catch { setCopied(false); setError(true); }
-  }
-  return <section id="antes-de-cambiar" className="mt-16 scroll-mt-28 rounded-xl border border-[#dce2ed] p-6 sm:p-9"><div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><h2 className="text-2xl font-semibold tracking-tight">Antes de cambiar o sumar una herramienta</h2><button type="button" onClick={copy} className={`${resourceLinkClass} shrink-0 text-sm`}>{copied ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}{copied ? "Lista copiada" : "Copiar lista"}</button></div><ol className="mt-5 grid gap-4">{guide.migration.map((text, i) => <li key={text} className="flex gap-4"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#eef0ff] text-sm font-semibold text-[#424ec0]">{i + 1}</span><p className={`leading-7 ${muted}`}>{text}</p></li>)}</ol><p role="status" className="mt-3 text-sm text-[#505b70]">{error ? "No se pudo copiar. Puedes seleccionar el texto de la lista directamente." : copied ? "Puedes pegarla y compartirla con tu equipo." : ""}</p></section>;
 }
 
 export default function Comparison({ comparison: supplied }: { comparison?: Guide }) {
   const { slug } = useParams();
   const guide = supplied ?? comparisons.find(item => item.slug === slug);
   if (!guide) return <NotFound />;
+  return <ComparisonDetail key={guide.slug} guide={guide} />;
+}
+
+function ComparisonDetail({ guide }: { guide: Guide }) {
+  const [priorities, setPriorities] = useState<string[]>([]);
   const experience = comparisonExperience[guide.brand];
   const path = `/comparar/${guide.slug}`;
   const date = new Intl.DateTimeFormat("es-CL", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${guide.reviewedAt}T12:00:00Z`));
@@ -114,37 +114,22 @@ export default function Comparison({ comparison: supplied }: { comparison?: Guid
   return <Frame>
     <MarketingSeo path={path} title={guide.title} description={guide.description} name={`Ruka vs. ${guide.brand}`} faqs={guide.faqs} primaryEntity={{ "@type": "Article", "@id": `https://www.ruka.ai${path}#guide`, headline: `Ruka vs. ${guide.brand}`, description: guide.description, datePublished: guide.reviewedAt, dateModified: guide.reviewedAt, inLanguage: "es-CL", isAccessibleForFree: true, articleSection: guide.category, citation: guide.sources.map(source => ({ "@type": "CreativeWork", name: source.label, url: source.url })), author: { "@type": "Person", name: "Camilo Silva", jobTitle: "CEO y Founder de Ruka", url: "https://www.ruka.ai/about" }, publisher: { "@id": "https://www.ruka.ai/#organization" }, mainEntityOfPage: { "@id": `https://www.ruka.ai${path}#webpage` } }} />
     <Link to="/comparar" className={`${resourceLinkClass} mb-7 text-sm`}><ArrowLeft size={16} aria-hidden="true" /> Todas las comparativas</Link>
-    <header className="grid gap-9 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-16">
+    <header className="grid gap-9 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:gap-16">
       <div>
-        <p className="mb-5 text-sm font-semibold text-[#424ec0]">{guide.category} · Guía para decidir</p>
-        <h1 className="text-[clamp(2.5rem,5.3vw,4.4rem)] font-semibold leading-[1.07] tracking-[-0.045em]"><span className="text-[#4f5beb]">Ruka</span>{" "}<span className="text-[0.6em] font-normal text-[#747c8c]">vs.</span>{" "}{guide.brand}</h1>
+        <p className="mb-5 text-sm font-semibold text-[#424ec0]">{guide.category}</p>
+        <h1 className="text-balance text-[clamp(2.5rem,5.3vw,4.4rem)] font-semibold leading-[1.07] tracking-[-0.04em]"><span className="text-[#4f5beb]">Ruka</span>{" "}<span className="text-[0.6em] font-normal text-[#747c8c]">vs.</span>{" "}{guide.brand}</h1>
         <p className="mt-6 max-w-2xl text-balance text-2xl font-medium leading-[1.3] tracking-[-0.025em] sm:text-3xl">{guide.headline}</p>
         <p className={`mt-5 max-w-xl text-base leading-7 ${muted}`}>{guide.intro}</p>
-        <a href="#comparacion" className={`${resourceLinkClass} mt-5`}>Comparar por tarea <ArrowRight size={18} aria-hidden="true" /></a>
+        <div className="mt-7 flex flex-wrap gap-3"><a href="#comparacion" className={primary}>Comparar por tarea <ArrowRight size={18} aria-hidden="true" /></a><a href="#antes-de-cambiar" className={`${resourceLinkClass} px-2 text-sm`}>Preparar mi decisión</a></div>
+        <p className="mt-4 text-xs leading-6 text-[#60687a]">6 tareas · Fuentes oficiales · Una pauta para tu equipo</p>
       </div>
-      <aside aria-label="La diferencia principal" className="rounded-2xl bg-[#171b32] p-7 text-white sm:p-9">
-        <h2 className="max-w-md text-balance text-2xl font-medium leading-[1.35] tracking-tight">{experience.question}</h2>
-        <dl className="mt-7 divide-y divide-white/20">
-          <div className="pb-5"><dt className="flex items-center justify-between gap-4 text-base font-semibold text-[#bcc2ff]">Ruka <span className="text-xs font-normal text-[#c2c7d9]">Trabajo operativo</span></dt><dd className="mt-2 text-base leading-7 text-[#eceef6]">{experience.ruka}</dd></div>
-          <div className="pt-5"><dt className="text-base font-semibold text-white">{guide.brand}</dt><dd className="mt-2 text-base leading-7 text-[#d1d6e4]">{experience.alternative}</dd></div>
-        </dl>
-        <a href="#encaje" className={`mt-6 inline-flex min-h-11 items-center gap-3 rounded text-sm font-medium text-white underline underline-offset-4 ${focus}`}>Ver cuál encaja con tu operación <ArrowRight size={16} aria-hidden="true" /></a>
-      </aside>
+      <ComparisonSnapshot guide={guide} />
     </header>
     <div className={`mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs leading-6 ${muted}`}><Link to="/about" className={`rounded underline underline-offset-4 ${focus}`}>Camilo Silva, CEO y Founder de Ruka</Link><span>Revisado el <time dateTime={guide.reviewedAt}>{date}</time></span><a href="#fuentes" className={`rounded underline underline-offset-4 ${focus}`}>Fuentes y criterio editorial</a></div>
-    <nav aria-label="En esta comparativa" className="mt-7 flex flex-wrap gap-x-7 gap-y-1 border-y border-[#dce2ed] py-3 text-sm font-medium">{[["#encaje", "Cuándo elegir"], ["#ruka-en-operacion", "El valor de Ruka"], ["#comparacion", "Tarea por tarea"], ["#caso", "Un caso concreto"], ["#preguntas", "Preguntas frecuentes"]].map(([href, label]) => <a key={href} href={href} className={`inline-flex min-h-11 items-center rounded text-[#505b70] hover:text-[#424ec0] ${focus}`}>{label}</a>)}</nav>
-    <section id="encaje" className="mt-16 scroll-mt-28 sm:mt-20">
-      <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-        <div><p className="text-sm font-semibold text-[#424ec0]">La decisión de fondo</p><h2 className="mt-3 text-balance text-3xl font-semibold leading-tight tracking-[-0.035em] sm:text-4xl">{experience.distinction.title}</h2></div>
-        <p className="max-w-2xl text-lg leading-8 text-[#30394b]">{experience.distinction.text}</p>
-      </div>
-      <div className="mt-9 grid overflow-hidden rounded-xl border border-[#dce2ed] md:grid-cols-2">
-        <article className="bg-[#f3f4ff] p-6 sm:p-8"><h3 className="text-xl font-semibold text-[#424ec0]">Cuándo aporta Ruka</h3><p className={`mt-4 leading-8 ${muted}`}>{guide.rukaFit}</p><a href="#ruka-en-operacion" className={`${resourceLinkClass} mt-3 text-sm`}>Verlo en Ruka <ArrowRight size={16} aria-hidden="true" /></a></article>
-        <article className="border-t border-[#dce2ed] p-6 sm:p-8 md:border-l md:border-t-0"><h3 className="text-xl font-semibold">Cuándo evaluar {guide.brand}</h3><p className={`mt-4 leading-8 ${muted}`}>{guide.otherFit}</p><a href="#fuentes" className={`${resourceLinkClass} mt-3 text-sm`}>Consultar sus fuentes oficiales <ArrowRight size={16} aria-hidden="true" /></a></article>
-      </div>
-    </section>
+    <nav aria-label="En esta comparativa" className="mt-7 grid grid-cols-2 gap-x-5 gap-y-1 border-y border-[#dce2ed] py-3 text-sm font-medium sm:flex sm:flex-wrap sm:gap-x-7">{[["#encaje", "Dónde encaja"], ["#ruka-en-operacion", "Ruka en acción"], ["#comparacion", "Tarea por tarea"], ["#caso", "Un caso concreto"], ["#antes-de-cambiar", "Mi pauta"], ["#preguntas", "Preguntas"], ["#fuentes", "Fuentes"]].map(([href, label], i) => <a key={href} href={href} className={`inline-flex min-h-11 items-center gap-2 rounded text-[#505b70] hover:text-[#424ec0] ${focus}`}><span className="font-mono text-xs text-[#747c8c]">0{i + 1}</span>{label}</a>)}</nav>
+    <ComparisonFit key={`fit-${guide.slug}`} guide={guide} />
     <ProductProof guide={guide} />
-    <ComparisonTasks key={`tasks-${guide.slug}`} guide={guide} />
+    <ComparisonTasks key={`tasks-${guide.slug}`} guide={guide} priorities={priorities} onPrioritiesChange={setPriorities} />
     <section id="caso" className="mt-20 scroll-mt-28 rounded-2xl bg-[#f5f6fb] p-6 sm:p-10">
       <div className={experience.costExample ? "grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12" : "grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16"}>
         <div>
@@ -158,11 +143,10 @@ export default function Comparison({ comparison: supplied }: { comparison?: Guid
       </div>
       {experience.costExample && <div className="mt-8 border-t border-[#dce2ed] pt-7"><h3 className="text-lg font-semibold">Qué debería quedar claro</h3><ul className="mt-4 grid gap-5 md:grid-cols-3">{guide.scenario.evidence.map(text => <li key={text} className="flex gap-3"><Check size={18} className="mt-1 shrink-0 text-[#424ec0]" aria-hidden="true" /><span className="text-sm leading-7 text-[#505b70]">{text}</span></li>)}</ul></div>}
     </section>
-    <section className="mt-16 max-w-3xl"><h2 className="text-3xl font-semibold tracking-[-0.03em]">Qué conservar. Qué conectar. Qué cambiar.</h2><p className={`mt-5 leading-8 ${muted}`}>{guide.coexist}</p><Link to="/one" className={`${resourceLinkClass} mt-4`}>Conocer los procesos a medida de Ruka One <ArrowRight size={18} aria-hidden="true" /></Link></section>
-    <Readiness key={`readiness-${guide.slug}`} guide={guide} />
-    <section id="preguntas" className="mt-16 scroll-mt-28"><h2 className="mb-7 text-3xl font-semibold tracking-tight">Preguntas sobre Ruka y {guide.brand}</h2><div className="border-t border-[#dce2ed]">{guide.faqs.map(faq => <details key={faq.question} className="group border-b border-[#dce2ed]"><summary className={`flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 rounded py-5 text-lg font-semibold [&::-webkit-details-marker]:hidden ${focus}`}>{faq.question}<ChevronDown size={20} aria-hidden="true" className="shrink-0 transition-transform group-open:rotate-180 motion-reduce:transition-none" /></summary><p className={`max-w-3xl pb-6 leading-8 ${muted}`}>{faq.answer}</p></details>)}</div></section>
+    <ComparisonReadiness key={`readiness-${guide.slug}`} guide={guide} priorities={priorities} />
+    <ComparisonQuestions key={`questions-${guide.slug}`} guide={guide} />
     <section id="fuentes" className="mt-14 scroll-mt-28 rounded-xl bg-[#f8f9fc] p-6 sm:p-8"><h2 className="text-xl font-semibold">Fuentes y criterio editorial</h2><p className={`mt-4 max-w-3xl text-sm leading-7 ${muted}`}>Esta comparación está escrita por Ruka. Describimos {guide.brand} a partir de sus fuentes oficiales, no de una prueba de su servicio. Las recomendaciones son nuestro criterio editorial. Una función no documentada no se considera inexistente; disponibilidad e implementación se confirman con cada proveedor.</p><ol className="mt-5 grid gap-x-10 gap-y-3 md:grid-cols-2">{guide.sources.map((source, i) => <li id={`fuente-${i + 1}`} key={source.url} className="scroll-mt-28"><a href={source.url} target="_blank" rel="noopener noreferrer" className={`${resourceLinkClass} text-sm`}><span className="text-[#60687a]">[{i + 1}]</span>{source.label}<ArrowUpRight size={15} className="shrink-0" aria-hidden="true" /><span className="sr-only"> (abre en otra pestaña)</span></a></li>)}</ol><div className="mt-5 border-t border-[#dce2ed] pt-4"><p className={`text-sm ${muted}`}>Alcance de Ruka:</p><div className="mt-1 flex flex-wrap gap-x-5"><Link to="/productos/registro-de-compras" className={`${resourceLinkClass} text-sm`}>Registro de compras</Link><Link to="/productos/facturacion-electronica" className={`${resourceLinkClass} text-sm`}>RukaFactura</Link><Link to="/desarrolladores" className={`${resourceLinkClass} text-sm`}>API de compras</Link></div></div></section>
     <NextStep />
-    <section className="mt-14"><h2 className="text-xl font-semibold">Otras comparativas que pueden servirte</h2><div className="mt-4 flex flex-wrap gap-x-7 gap-y-2">{related.map(item => <Link key={item.slug} to={`/comparar/${item.slug}`} className={resourceLinkClass}>Ruka vs. {item.brand}<ArrowRight size={16} aria-hidden="true" /></Link>)}</div></section>
+    <section className="mt-16"><h2 className="text-2xl font-semibold tracking-tight">¿Estás mirando otra alternativa?</h2><p className="mt-3 text-sm leading-7 text-[#505b70]">Sigue comparando por el trabajo que necesitas resolver.</p><div className="mt-5 divide-y divide-[#dce2ed] border-y border-[#dce2ed]">{related.map(item => <Link key={item.slug} to={`/comparar/${item.slug}`} className={`group grid min-h-20 items-center gap-3 rounded py-5 transition-colors hover:bg-[#fafbfe] motion-reduce:transition-none sm:grid-cols-[1fr_2fr_auto] ${focus}`}><span className="text-lg font-semibold">Ruka vs. {item.brand}</span><span className="max-w-2xl text-sm leading-6 text-[#505b70]">{item.headline}</span><ArrowRight size={18} aria-hidden="true" className="text-[#424ec0]" /></Link>)}</div></section>
   </Frame>;
 }

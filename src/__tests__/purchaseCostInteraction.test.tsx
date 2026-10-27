@@ -22,7 +22,7 @@ describe("purchase comparison workspace", () => {
     const price = within(current).getByLabelText("Total de la compra");
     await user.clear(price); await user.tab();
     expect(price.getAttribute("aria-invalid")).toBe("true");
-    expect(output.textContent).toContain("Completa los datos");
+    expect(output.textContent).toContain("Aquí aparecerá tu resultado");
     expect(fetch).not.toHaveBeenCalled();
   });
 });

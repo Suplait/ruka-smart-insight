@@ -70,15 +70,15 @@ describe("calculator interaction and privacy", () => {
     const storage = vi.spyOn(Storage.prototype, "setItem");
     const user = userEvent.setup();
     render(<MemoryRouter><PurchaseCostTool /></MemoryRouter>);
-    expect(screen.getByRole("status").textContent).toContain("CLP $3.000");
+    expect(screen.getByRole("region", { name: "Resultado del cálculo" }).textContent).toContain("CLP $3.000");
     const price = screen.getByLabelText("Total de la compra");
     await user.clear(price); await user.tab();
     expect(price.getAttribute("aria-invalid")).toBe("true");
-    expect(screen.getByRole("status").textContent).toContain("Completa");
+    expect(screen.getByRole("region", { name: "Resultado del cálculo" }).textContent).toContain("Completa");
     await user.type(price, "21420");
     await user.click(screen.getByText("Descuento e IVA"));
     await user.click(screen.getByLabelText("El precio ingresado incluye IVA"));
-    expect(screen.getByRole("status").textContent).toContain("CLP $3.000");
+    expect(screen.getByRole("region", { name: "Resultado del cálculo" }).textContent).toContain("CLP $3.000");
     await user.click(screen.getByRole("button", { name: "Restablecer ejemplo" }));
     expect((price as HTMLInputElement).value).toBe("18000");
     expect(screen.queryByLabelText("IVA incluido (%)")).toBeNull();
@@ -87,12 +87,12 @@ describe("calculator interaction and privacy", () => {
   it("explains non-comparable purchases rather than showing a misleading percentage", async () => {
     const user = userEvent.setup();
     render(<MemoryRouter><PurchaseCostTool comparison /></MemoryRouter>);
-    expect(screen.getByRole("status").textContent).toContain("+6,67%");
+    expect(screen.getByRole("region", { name: "Resultado del cálculo" }).textContent).toContain("+6,67%");
     const current = within(screen.getByRole("group", { name: "Compra actual" }));
-    await user.selectOptions(current.getByLabelText("Unidad"), "l");
-    expect(screen.getByRole("status").textContent).toContain("No convertimos kilos en litros");
-    await user.selectOptions(current.getByLabelText("Unidad"), "kg");
+    await user.selectOptions(current.getByLabelText("Unidad del contenido"), "l");
+    expect(screen.getByRole("region", { name: "Resultado del cálculo" }).textContent).toContain("No convertimos kilos en litros");
+    await user.selectOptions(current.getByLabelText("Unidad del contenido"), "kg");
     await user.selectOptions(current.getByLabelText("Moneda"), "USD");
-    expect(screen.getByRole("status").textContent).toContain("misma moneda");
+    expect(screen.getByRole("region", { name: "Resultado del cálculo" }).textContent).toContain("misma moneda");
   });
 });
