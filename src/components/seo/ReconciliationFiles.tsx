@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
-import { ArrowRight, Download, FileSpreadsheet, LockKeyhole, RotateCcw } from "lucide-react";
+import { ArrowRight, Check, Download, FileSpreadsheet, LockKeyhole, RotateCcw } from "lucide-react";
 import { CSV_LIMITS, documentLabels, fieldLabels, mapDocument, parseCsv, reconcileDocuments, resultsCsv, sampleCsv, suggestMapping, type ColumnMapping, type CsvResult, type CsvTable, type DocumentKind, type NumberStyle } from "@/utils/reconciliationCsv";
 
 type LoadedDocument = { name: string; table: CsvTable; mapping: ColumnMapping; style: NumberStyle; sample: boolean };
 const kinds: DocumentKind[] = ["order", "invoice", "receipt"];
-const control = "min-h-11 w-full rounded-lg border border-[#b6bfd1] bg-white px-3 text-base text-[#171827] outline-none focus:border-primary focus:ring-2 focus:ring-primary/25 sm:text-sm";
+const control = "min-h-11 w-full rounded-lg border border-[#808ca2] bg-white px-3 text-base text-[#171827] outline-none focus:border-primary focus:ring-2 focus:ring-primary/25 sm:text-sm";
 const secondary = "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-sm font-semibold text-[#424ec0] hover:bg-[#eef0ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 const displayNumber = (value: number | null | undefined) => value == null ? "No válido" : new Intl.NumberFormat("es-CL", { maximumFractionDigits: 2 }).format(value / 100);
 
@@ -26,6 +26,7 @@ export function ReconciliationFiles() {
   const [tolerance, setTolerance] = useState(0);
   const [onlyReviews, setOnlyReviews] = useState(false);
   const [page, setPage] = useState(0);
+  const [downloadError, setDownloadError] = useState("");
   const versions = useRef<Record<DocumentKind, number>>({ order: 0, invoice: 0, receipt: 0 });
   const output = useRef<HTMLHeadingElement>(null);
   const loaded = kinds.map(kind => documents[kind]).filter(Boolean);
@@ -34,7 +35,12 @@ export function ReconciliationFiles() {
   const reviewCount = result?.filter(line => line.status === "review").length || 0;
   const filtered = result?.filter(line => !onlyReviews || line.status === "review") || [];
   const pages = Math.max(1, Math.ceil(filtered.length / 25));
-  function invalidate() { setResult(null); setError(""); setPage(0); }
+  function invalidate() { setResult(null); setError(""); setDownloadError(""); setPage(0); }
+  function safeDownload(name: string, content: string) {
+    setDownloadError("");
+    try { download(name, content); }
+    catch { setDownloadError("No pudimos preparar la descarga. Los datos siguen aquí; vuelve a intentarlo en este navegador."); }
+  }
   function edit(kind: DocumentKind, next: Partial<LoadedDocument>) {
     invalidate(); setDocuments(current => ({ ...current, [kind]: { ...current[kind]!, ...next } }));
   }
@@ -73,13 +79,14 @@ export function ReconciliationFiles() {
       requestAnimationFrame(() => output.current?.focus({ preventScroll: false }));
     } catch (cause) { setError(cause instanceof Error ? cause.message : "Revisa los archivos y las columnas elegidas."); }
   }
-  return <section id="conciliar-archivos" className="mx-auto mt-10 max-w-6xl scroll-mt-24" aria-labelledby="file-comparison-title">
+  return <section id="conciliar-archivos" className="mx-auto mt-6 max-w-6xl scroll-mt-24" aria-labelledby="file-comparison-title">
+    {!loaded.length && <details className="group mb-5 rounded-lg border border-[#dce2ed] px-5"><summary className="cursor-pointer py-4 text-sm font-semibold text-[#424ec0] focus-visible:outline-primary">Qué preparar antes de cargar tus CSV</summary><div className="grid gap-6 border-t border-[#dce2ed] py-6 md:grid-cols-[.85fr_1.15fr]"><div><h2 className="text-lg font-semibold">Antes de elegir archivos</h2><p className="mt-3 text-sm leading-6 text-[#505b70]">Necesitas una exportación de la orden, otra de la factura y otra de lo recibido. Guarda cada una como <strong>CSV UTF-8</strong>. Para probar sin preparar nada, carga el caso de ejemplo.</p></div><div><p className="mb-3 text-sm font-semibold">Así sabemos qué filas comparar</p><div className="overflow-x-auto rounded-lg border border-[#dce2ed]"><table className="w-full min-w-[330px] text-left text-xs"><caption className="sr-only">Ejemplo de clave compartida entre los tres documentos</caption><thead className="bg-[#f6f7fc] text-[#505b70]"><tr>{["Documento", "Referencia", "Código", "Unidad"].map(label => <th key={label} className="px-3 py-3 font-medium">{label}</th>)}</tr></thead><tbody>{["Orden", "Factura", "Recepción"].map(label => <tr key={label} className="border-t border-[#dce2ed]"><th scope="row" className="px-3 py-3 font-medium">{label}</th><td className="px-3 py-3 font-semibold text-[#343fad]">OC-102</td><td className="px-3 py-3">TOM-01</td><td className="px-3 py-3">kg</td></tr>)}</tbody></table></div><p className="mt-2 text-xs leading-5 text-[#505b70]">Ejemplo ficticio. La referencia de compra, el código y la unidad deben coincidir; los folios de los documentos pueden ser distintos.</p></div></div></details>}
     <div className="rounded-xl border border-[#d6ddec] bg-white">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[#d6ddec] p-5 sm:p-7">
-        <div><h2 id="file-comparison-title" className="text-2xl font-semibold tracking-[-0.02em]">Compara tus archivos.</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-[#505b70]">Carga una exportación por documento. Revisa las columnas y descarga las diferencias.</p></div>
+        <div><h2 id="file-comparison-title" className="text-2xl font-semibold tracking-[-0.02em]">Compara tus archivos.</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-[#505b70]">{loaded.length} de 3 archivos cargados. Revisa las columnas antes de comparar.</p></div>
         <button onClick={() => reset()} className={secondary}><RotateCcw size={16} /> Borrar archivos</button>
       </div>
-      <div className="flex items-start gap-3 bg-[#edf4ef] px-5 py-4 text-sm leading-6 text-[#24573c] sm:px-7"><LockKeyhole className="mt-1 shrink-0" size={17} /><p><strong>Tus archivos se quedan en este navegador.</strong> No se envían a Ruka ni se guardan. Se eliminan de esta herramienta al recargar o al pulsar «Borrar archivos».</p></div>
+      <div className="flex items-start gap-3 bg-[#f6f7fc] px-5 py-4 text-sm leading-6 text-[#505b70] sm:px-7"><LockKeyhole className="mt-1 shrink-0" size={17} aria-hidden="true" /><p><strong className="text-[#171827]">Tus archivos se quedan en este navegador.</strong> No se envían a Ruka ni se guardan. Se eliminan de esta herramienta al recargar o al pulsar «Borrar archivos».</p></div>
       <div className="px-5 pt-6 sm:px-7">
         <p className="max-w-3xl text-sm leading-6 text-[#505b70]">Los tres archivos deben compartir una <strong className="text-[#171827]">referencia de compra, código y unidad</strong>. Usa un lote de un solo proveedor y moneda. No cruces los folios distintos de factura y recepción como si fueran la misma referencia.</p>
         <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2"><button onClick={() => reset(true)} className={secondary}>Cargar un caso de ejemplo <ArrowRight size={16} /></button><a href="#limites-csv" className="inline-flex min-h-11 items-center text-sm text-[#505b70] underline underline-offset-4">Ver alcance y límites</a></div>
@@ -89,13 +96,13 @@ export function ReconciliationFiles() {
           const item = documents[kind];
           const fields = (Object.keys(fieldLabels) as (keyof ColumnMapping)[]).filter(field => kind !== "receipt" || field !== "price");
           return <div key={kind} className="min-w-0 py-6 lg:px-5 lg:first:pl-0 lg:last:pr-0">
-            <h3 className="flex items-center gap-3 text-base font-semibold"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#eef0ff] text-sm text-[#424ec0]">{index + 1}</span>{documentLabels[kind]}</h3>
-            <label className={`relative mt-5 flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-[#a9b4cb] bg-[#f7f8fc] px-3 text-center hover:bg-[#eff1fa] focus-within:ring-2 focus-within:ring-primary ${item ? "min-h-11 py-2" : "min-h-24 flex-col py-4"}`}>
+            <h3 className="flex items-center gap-3 text-base font-semibold"><span aria-hidden="true" className={`flex h-7 w-7 items-center justify-center rounded-full text-sm ${item ? "bg-[#eaf5ef] text-[#24573c]" : "bg-[#eef0ff] text-[#424ec0]"}`}>{item ? <Check size={15} /> : index + 1}</span>{documentLabels[kind]}</h3>
+            <label className={`relative mt-5 flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-[#808ca2] bg-[#f7f8fc] px-3 text-center hover:bg-[#eff1fa] focus-within:ring-2 focus-within:ring-primary ${item ? "min-h-11 py-2" : "min-h-24 flex-col py-4"}`}>
               <FileSpreadsheet size={22} className="text-[#424ec0]" /><span className="max-w-full break-all text-sm font-semibold">{loading[kind] ? "Leyendo archivo…" : item ? "Reemplazar archivo" : "Elegir CSV"}</span>
               <input type="file" accept=".csv,.tsv,text/csv,text/tab-separated-values" aria-label={`Elegir CSV: ${documentLabels[kind]}`} aria-invalid={Boolean(errors[kind])} aria-describedby={`csv-help-${kind}${errors[kind] ? ` csv-error-${kind}` : ""}`} onChange={event => { const file = event.target.files?.[0]; if (file) void load(kind, file); event.target.value = ""; }} className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
             </label>
             <p id={`csv-help-${kind}`} className="mt-2 text-xs leading-5 text-[#505b70]">CSV UTF-8 · Hasta 2 MB y 5.000 filas</p>
-            <button onClick={() => download(`ruka-${kind}-ejemplo.csv`, "\uFEFF" + sampleCsv[kind])} className={`${secondary} mt-1 px-0`}><Download size={14} /> Descargar ejemplo</button>
+            <button onClick={() => safeDownload(`ruka-${kind}-ejemplo.csv`, "\uFEFF" + sampleCsv[kind])} className={`${secondary} mt-1 px-0`}><Download size={14} /> Descargar ejemplo</button>
             {errors[kind] && <p id={`csv-error-${kind}`} role="alert" className="mt-3 rounded-lg bg-[#fff0ee] p-3 text-sm leading-6 text-[#97372c]">{errors[kind]}</p>}
             {item && <div className="mt-4">
               <p className="break-all text-sm font-semibold">{item.name}</p><p className="mt-1 text-xs text-[#505b70]">{item.table.rows.length} filas de datos{item.sample ? " · Datos ficticios" : ""}</p>
@@ -114,7 +121,8 @@ export function ReconciliationFiles() {
       </div>
     </div>
     {result && <section className="mt-8 overflow-hidden rounded-xl border border-[#d6ddec] bg-white" aria-labelledby="csv-result-title">
-      <div className="flex flex-wrap items-center justify-between gap-5 bg-[#171827] p-5 text-white sm:p-7"><div><h2 id="csv-result-title" ref={output} tabIndex={-1} className="scroll-mt-28 text-2xl font-semibold outline-none">{reviewCount ? `${reviewCount} de ${result.length} cruces requieren revisión.` : `${result.length} cruces coinciden bajo estas reglas.`}</h2><p className="mt-2 text-sm leading-6 text-[#d0d5e5]">Se compararon cantidades y precios. Este resultado no autoriza pagos.</p></div><button onClick={() => download("ruka-resultado-conciliacion.csv", resultsCsv(result, tolerance))} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-[#171827] hover:bg-[#e7eaff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><Download size={17} /> Descargar resultado completo</button></div>
+      <div className="flex flex-wrap items-center justify-between gap-5 bg-[#171827] p-5 text-white sm:p-7"><div><h2 id="csv-result-title" ref={output} tabIndex={-1} className="scroll-mt-28 text-2xl font-semibold outline-none">{reviewCount ? `${reviewCount} de ${result.length} cruces requieren revisión.` : `${result.length} cruces coinciden bajo estas reglas.`}</h2><p className="mt-2 text-sm leading-6 text-[#d0d5e5]">Se compararon cantidades y precios. Este resultado no autoriza pagos.</p></div><button onClick={() => safeDownload("ruka-resultado-conciliacion.csv", resultsCsv(result, tolerance))} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-white px-5 text-sm font-semibold text-[#171827] hover:bg-[#e7eaff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><Download size={17} /> Descargar resultado completo</button></div>
+      <dl className="grid grid-cols-3 divide-x divide-[#dce2ed] border-b border-[#dce2ed] bg-[#fafbff] py-5">{[{ label: "Cruces", value: result.length }, { label: "Coinciden", value: result.length - reviewCount }, { label: "Por revisar", value: reviewCount }].map(item => <div key={item.label} className="px-4 sm:px-7"><dt className="text-xs text-[#505b70]">{item.label}</dt><dd className="mt-2 text-2xl font-semibold tabular-nums">{item.value}</dd></div>)}</dl>
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#d6ddec] px-5 py-4 sm:px-7"><label className="flex min-h-11 cursor-pointer items-center gap-2 text-sm"><input className="h-4 w-4 accent-[#505ee8]" type="checkbox" checked={onlyReviews} onChange={event => { setOnlyReviews(event.target.checked); setPage(0); }} /> Solo los que requieren revisión</label><p role="status" className="text-sm text-[#505b70]">{filtered.length} cruces · Página {page + 1} de {pages}</p></div>
       {!filtered.length && <p className="p-7 text-sm text-[#505b70]">No hay diferencias con estas reglas. El resultado completo sigue disponible para descargar.</p>}
       <div className="divide-y divide-[#d6ddec]">{filtered.slice(page * 25, (page + 1) * 25).map((line, index) => <article key={`${page}-${index}`} className="px-5 py-5 sm:px-7">
@@ -125,6 +133,7 @@ export function ReconciliationFiles() {
       </article>)}</div>
       {pages > 1 && <nav aria-label="Páginas de resultados" className="flex justify-between border-t border-[#d6ddec] p-5"><button className={`${secondary} disabled:opacity-40`} disabled={!page} onClick={() => setPage(page - 1)}>Anterior</button><button className={`${secondary} disabled:opacity-40`} disabled={page + 1 >= pages} onClick={() => setPage(page + 1)}>Siguiente</button></nav>}
     </section>}
+    {downloadError && <p role="alert" className="mt-4 rounded-lg bg-[#fff0ee] p-4 text-sm leading-6 text-[#97372c]">{downloadError}</p>}
     <details id="limites-csv" className="mt-6 scroll-mt-28 rounded-xl border border-[#d6ddec] p-5 text-sm leading-7 text-[#505b70]"><summary className="cursor-pointer font-semibold text-[#171827]">Qué revisa este cruce y qué queda fuera</summary><p className="mt-4">Compara cantidad pedida, facturada y recibida; precio neto facturado frente al de la orden. La referencia debe identificar una misma compra de un solo proveedor. Código y unidad deben ser exactamente iguales, salvo espacios al comienzo o final. No convierte unidades ni homologa nombres.</p><p className="mt-3">No suma duplicados ni recepciones parciales repetidas: los marca para revisión. No valida impuestos, descuentos, notas de crédito, moneda, identidad del proveedor, legitimidad de documentos, aprobaciones ni datos bancarios. Hasta dos decimales. Una coincidencia no significa que el pago esté autorizado.</p><p className="mt-3">El resultado identifica filas de datos, sin contar el encabezado ni líneas vacías. Si varios documentos usan folios distintos, añade primero una columna con la referencia de compra compartida. No incluyas datos personales que no sean necesarios.</p></details>
   </section>;
 }

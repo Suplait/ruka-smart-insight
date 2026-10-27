@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowUpRight, Calculator, FileCheck2, BookOpen, Cable, Search, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ResourceLayout, resourceLinkClass } from "@/components/resources/ResourceLayout";
+import { ToolDirectory } from "@/components/resources/ToolDirectory";
 
 const groups = [
   { id: "calcular", icon: Calculator, title: "Ponle números a una compra.", lead: "Herramientas gratuitas. Tus datos se quedan en el navegador.", items: [
@@ -36,22 +37,17 @@ export default function Resources() {
   const terms = normalize(query).trim().split(/\s+/).filter(Boolean);
   const filtered = groups.map(group => ({ ...group, items: group.items.filter(item => terms.every(term => normalize(`${item.title} ${item.text} ${item.label} ${group.id}`).includes(term))) }));
   const count = filtered.reduce((total, group) => total + group.items.length, 0);
-  const examples = [
-    { expression: "$18.000 ÷ 6 kg", result: "$3.000 / kg", label: "Un mismo costo para comparar formatos." },
-    { expression: "$3.000 → $3.200 / kg", result: "+6,67%", label: "La variación, sin confundir tamaños." },
-    { expression: "Costo $6.000 · Venta $10.000", result: "40% de margen", label: "No es lo mismo que sumar 40% al costo." },
-  ];
   return <ResourceLayout catalog path="/recursos" title="Recursos para compras, costos y automatización | Ruka" heading="Resuelve una tarea. Sigue con tu operación." description="Calculadoras, guías y ejemplos para entender tus costos, revisar compras y conectar los sistemas que ya usas." eyebrow="Recursos de Ruka">
     <div className="mb-10 grid gap-4 border-y border-[#dce2ed] py-4 lg:grid-cols-[1fr_420px] lg:items-center">
       <nav aria-label="Tareas" className="flex flex-wrap gap-x-6 gap-y-1">{groups.map(group => <a href={`#${group.id}`} key={group.id} onClick={() => setQuery("")} className={`${resourceLinkClass} text-sm`}>{group.id[0].toUpperCase() + group.id.slice(1)}</a>)}</nav>
-      <div><label htmlFor="resource-search" className="sr-only">Buscar un recurso</label><div className="relative"><Search size={18} aria-hidden="true" className="pointer-events-none absolute left-3 top-3.5 text-[#60687a]" /><input id="resource-search" type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Busca una tarea: costos, API, recepción…" className="min-h-11 w-full rounded-lg border border-[#cbd2df] bg-[#f8f9fc] pl-10 pr-12 text-base outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 [&::-webkit-search-cancel-button]:appearance-none" />{query && <button type="button" onClick={() => setQuery("")} aria-label="Limpiar búsqueda" className="absolute right-0 top-0 grid h-11 w-11 place-items-center rounded-lg focus-visible:outline-primary"><X size={17} aria-hidden="true" /></button>}</div></div>
+      <div><label htmlFor="resource-search" className="sr-only">Buscar un recurso</label><div className="relative"><Search size={18} aria-hidden="true" className="pointer-events-none absolute left-3 top-3.5 text-[#60687a]" /><input id="resource-search" type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Busca una tarea: costos, API, recepción…" className="min-h-11 w-full rounded-lg border border-[#808ca2] bg-[#f8f9fc] pl-10 pr-12 text-base outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 [&::-webkit-search-cancel-button]:appearance-none" />{query && <button type="button" onClick={() => setQuery("")} aria-label="Limpiar búsqueda" className="absolute right-0 top-0 grid h-11 w-11 place-items-center rounded-lg focus-visible:outline-primary"><X size={17} aria-hidden="true" /></button>}</div></div>
     </div>
     {query && <p role="status" className="mb-6 text-sm text-[#505b70]">{count} {count === 1 ? "recurso encontrado" : "recursos encontrados"}</p>}
     {count === 0 && <section className="rounded-xl bg-[#f8f9fc] p-8"><h2 className="text-xl font-semibold">No encontramos esa tarea.</h2><p className="mt-3 leading-7 text-[#505b70]">Prueba con compras, costos o facturación, o vuelve a explorar todas las categorías.</p><button type="button" onClick={() => setQuery("")} className={`${resourceLinkClass} mt-4`}>Ver todos los recursos</button></section>}
-    <div className="space-y-16">{filtered.filter(group => group.items.length > 0).map(({ id, icon: Icon, title, lead, items }) => <section key={id} id={id} className="scroll-mt-28">
+    <ToolDirectory paths={filtered.flatMap(group => group.items.map(item => item.href))} />
+    <div className="space-y-16">{filtered.map(group => ({ ...group, items: group.items.filter(item => !item.href.startsWith("/herramientas/")) })).filter(group => group.items.length > 0).map(({ id, icon: Icon, title, lead, items }) => <section key={id} id={id} className="scroll-mt-28">
       <header className="mb-6 flex items-start gap-3"><Icon size={22} aria-hidden="true" className="mt-1 shrink-0 text-[#424ec0]" /><div><h2 className="text-2xl font-semibold leading-tight tracking-tight">{title}</h2><p className="mt-2 leading-7 text-[#505b70]">{lead}</p></div></header>
       <div className={`grid gap-4 ${id === "calcular" ? "lg:grid-cols-3" : "md:grid-cols-2"}`}>{items.map(item => <Link key={item.href} to={item.href} className="group flex min-w-0 flex-col overflow-hidden rounded-xl border border-[#dce2ed] bg-white transition-[border-color,box-shadow] duration-150 hover:border-[#a9b1ef] hover:shadow-[0_4px_18px_-8px_rgba(23,24,39,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
-        {id === "calcular" && <div className="border-b border-[#e1e5ec] bg-[#f6f7fc] px-6 py-7"><p className="text-sm tabular-nums text-[#60687a]">{examples[groups[0].items.findIndex(original => original.href === item.href)].expression}</p><p className="mt-3 text-3xl font-semibold tracking-tight tabular-nums text-[#424ec0]">{examples[groups[0].items.findIndex(original => original.href === item.href)].result}</p><p className="mt-3 text-xs leading-5 text-[#60687a]">Ejemplo · {examples[groups[0].items.findIndex(original => original.href === item.href)].label}</p></div>}
         <div className="flex flex-1 flex-col p-6"><h3 className="text-xl font-semibold leading-7 tracking-tight">{item.title}</h3><p className="mb-5 mt-3 max-w-xl text-sm leading-6 text-[#505b70]">{item.text}</p><span className="mt-auto flex min-h-8 items-center justify-between gap-4 text-sm font-semibold text-[#424ec0]">{item.label}<ArrowUpRight size={18} aria-hidden="true" className="shrink-0 transition-transform duration-150 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transform-none" /></span></div>
       </Link>)}</div>
     </section>)}</div>

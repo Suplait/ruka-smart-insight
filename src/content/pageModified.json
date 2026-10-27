@@ -54,7 +54,7 @@
   "/integraciones/nubox": "2026-10-26",
   "/integraciones/chipax": "2026-10-26",
   "/integraciones/idtecloud": "2026-10-26",
-  "/herramientas/conciliar-factura-orden-recepcion": "2026-10-19",
+  "/herramientas/conciliar-factura-orden-recepcion": "2026-10-26",
   "/guias/compras": "2026-10-26",
   "/guias/compras/recepcion-revision-acuse-sii": "2026-10-26",
   "/guias/compras/factura-no-corresponde-reclamo": "2026-10-26",
@@ -73,5 +73,13 @@
   "/ayuda/comenzar-rukafactura": "2026-10-26",
   "/ayuda/preparar-cierre-contable": "2026-10-26",
   "/seguridad": "2026-10-26",
-  "/contadores": "2026-10-26"
+  "/contadores": "2026-10-26",
+  "/comparar/ruka-vs-emisso": "2026-10-26",
+  "/comparar/ruka-vs-wasabil": "2026-10-26",
+  "/comparar/ruka-vs-nubox": "2026-10-26",
+  "/comparar/ruka-vs-defontana": "2026-10-26",
+  "/comparar/ruka-vs-chipax": "2026-10-26",
+  "/comparar/ruka-vs-kame": "2026-10-26",
+  "/comparar/ruka-vs-bsale": "2026-10-26",
+  "/comparar/ruka-vs-clay": "2026-10-26"
 }

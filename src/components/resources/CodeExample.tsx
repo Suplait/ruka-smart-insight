@@ -12,8 +12,8 @@ function CodeExampleContent({ code, label }: { code: string; label: string }) {
     catch { setStatus("failed"); }
   }
   return <div className="min-w-0 overflow-hidden rounded-xl bg-[#171827] text-[#f7f8fc]">
-    <div className="flex items-center justify-between gap-4 border-b border-white/15 px-5 py-2">
-      <span className="text-xs leading-5 text-[#c4c9de]">{label}</span>
+    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-white/15 px-5 py-2">
+      <span className="min-w-0 text-xs leading-5 text-[#c4c9de] [overflow-wrap:anywhere]">{label}</span>
       <button type="button" onClick={copy} className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded px-2 text-xs font-semibold hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a7afff]">{status === "copied" ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />} {status === "copied" ? "Copiado" : "Copiar código"}</button>
     </div>
     <pre tabIndex={0} aria-label={`Código: ${label}`} className="overflow-x-auto p-5 text-[13px] leading-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#a7afff] sm:p-6"><code>{code}</code></pre>
