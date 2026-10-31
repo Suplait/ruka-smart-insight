@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 import { oneContent } from "@/content/oneContent";
 import type { FieldSceneName } from "@/components/one/field/fieldScenes";
@@ -29,18 +29,35 @@ function bandFor(index: number): CSSProperties {
 export function OneHow({ scene }: { scene: FieldSceneName }) {
   const content = oneContent.how;
   const [live, setLive] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     // Pinning relies on :has() to undo the global overflow reset (see one.css).
     const canPin = typeof CSS !== "undefined" && typeof CSS.supports === "function" && CSS.supports("selector(:has(*))");
-    setLive(canPin && !window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setLive(canPin && !reducedMotion.matches);
+    update();
+    reducedMotion.addEventListener("change", update);
+    return () => {
+      reducedMotion.removeEventListener("change", update);
+    };
   }, []);
 
   const current = stages.findIndex((stage) => stage.scene === scene);
   const active = current >= 0 ? current : before.includes(scene) ? 0 : stages.length - 1;
 
+  const goToStage = (index: number) => {
+    const section = sectionRef.current;
+    const stage = section?.querySelector<HTMLElement>(".one-how__stage");
+    if (!live || !section || !stage) return;
+    // Land inside the band, away from the observer's boundary, in either direction.
+    const offset = (index + 0.5) * BEAT * stage.getBoundingClientRect().height / 100;
+    window.scrollTo({ top: window.scrollY + section.getBoundingClientRect().top + offset, behavior: "smooth" });
+  };
+
   return (
     <section
+      ref={sectionRef}
       id={content.id}
       aria-labelledby="one-how-title"
       className={cn("one-how relative scroll-mt-20", live && "is-live")}
@@ -72,9 +89,11 @@ export function OneHow({ scene }: { scene: FieldSceneName }) {
           </div>
 
           <div className="one-how__rail">
-            <div aria-hidden="true" className="one-how__ticks">
+            <div className="one-how__ticks" role="group" aria-label="Elegir paso">
               {stages.map((stage, index) => (
-                <span key={stage.scene} className={cn("one-how__mark", `one-how__mark--${index}`, index === active && "is-active", index < active && "is-past")} />
+                <button key={stage.scene} type="button" className="one-how__tick" onClick={() => goToStage(index)} aria-label={`Paso ${index + 1}: ${stage.label}`} aria-current={live && index === active ? "step" : undefined}>
+                  <span aria-hidden="true" className={cn("one-how__mark", `one-how__mark--${index}`, index === active && "is-active", index < active && "is-past")} />
+                </button>
               ))}
             </div>
             <ol className="one-how__list">
@@ -85,8 +104,14 @@ export function OneHow({ scene }: { scene: FieldSceneName }) {
                     <span aria-hidden="true" className={cn("one-how__mark", `one-how__mark--${index}`)} />
                     <div>
                       <h3 className="one-how__label">
-                        <span className="one-how__num">0{index + 1}</span>
-                        {stage.label}
+                        {live ? (
+                          <button type="button" className="one-how__step-button" onClick={() => goToStage(index)}>
+                            <span className="one-how__num">0{index + 1}</span>
+                            {stage.label}
+                          </button>
+                        ) : (
+                          <><span className="one-how__num">0{index + 1}</span>{stage.label}</>
+                        )}
                       </h3>
                       <div className="one-how__reveal">
                         <p className="one-how__text">{stage.text}</p>
