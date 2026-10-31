@@ -34,7 +34,7 @@ describe("Ruka One landing", () => {
     const lead = screen.getByText(oneContent.hero.lead);
     expect(lead.textContent).toMatch(/agentes de IA/);
     expect(lead.textContent).toMatch(/automatización/);
-    expect(lead.textContent).toMatch(/medimos su impacto/);
+    expect(lead.textContent).toMatch(/supervisión humana/);
     const ctas = Array.from(document.querySelectorAll<HTMLAnchorElement>("a.one-cta"));
     expect(ctas.length).toBeGreaterThanOrEqual(3);
     for (const cta of ctas) expect(cta.getAttribute("href")).toBe("/one/contacto");

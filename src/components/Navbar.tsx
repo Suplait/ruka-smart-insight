@@ -24,7 +24,7 @@ const productLinks = [
   {
     label: "Ruka One",
     href: "/one",
-    description: "Para un proceso propio de tu empresa",
+    description: "IA y automatización a medida",
     featured: true,
   },
 ] as const;
@@ -133,12 +133,12 @@ export default function Navbar({
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[340px] max-w-[92vw] border-l-[#dfe3ec] bg-white px-5 sm:w-[350px]">
+              <SheetContent side="right" className="w-[340px] max-w-[92vw] overflow-y-auto border-l-[#dfe3ec] bg-white px-5 sm:w-[350px]">
                 <SheetTitle className="sr-only">Navegación principal</SheetTitle>
                 <SheetDescription className="sr-only">
                   Accede al producto, industrias y la información de Ruka.
                 </SheetDescription>
-                <div className="flex h-full flex-col pt-7">
+                <div className="flex min-h-full flex-col pt-7">
                   <Accordion type="single" collapsible className="w-full">
                     <MobileNavGroup value="product" label="Producto" links={productLinks} onLinkClick={handleLinkClick} />
                     <MobileNavGroup value="industries" label="Industrias" links={industryLinks} onLinkClick={handleLinkClick} />
@@ -192,6 +192,35 @@ export default function Navbar({
 
 const desktopLinkClass = "inline-flex h-10 items-center rounded-lg px-3.5 text-sm font-medium text-gray-600 transition-colors hover:bg-[#f4f6fb] hover:text-[#171827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2";
 const mobileDirectLinkClass = "flex min-h-11 items-center rounded-lg px-2 text-base font-semibold text-[#303241] transition-colors hover:bg-[#f4f6fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
+const oneNavLinkClass = "group relative isolate block overflow-hidden rounded-xl bg-[#03040a] p-4 text-[#f1f3fa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2";
+
+type NavLink = { label: string; href: string; description?: string; featured?: boolean };
+
+function NavLinkContent({ link }: { link: NavLink }) {
+  if (link.featured) {
+    return (
+      <>
+        <img
+          src="/one/field-poster.webp"
+          alt=""
+          aria-hidden="true"
+          width={1600}
+          height={1000}
+          loading="lazy"
+          className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-right opacity-70 motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out motion-safe:group-hover:scale-105 motion-safe:group-focus-visible:scale-105"
+        />
+        <span aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(3,4,10,0.96)_0%,rgba(3,4,10,0.86)_50%,rgba(3,4,10,0.25)_100%)]" />
+        <span className="flex items-center justify-between gap-3">
+          <span className="text-sm font-semibold tracking-[-0.01em]">{link.label}</span>
+          <ArrowRight className="h-4 w-4 shrink-0 text-[#a5b3fb] motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:translate-x-0.5 motion-safe:group-focus-visible:translate-x-0.5" aria-hidden="true" />
+        </span>
+        <span className="mt-1.5 block max-w-[170px] text-xs font-normal leading-[18px] text-[#c3c8d8]">{link.description}</span>
+      </>
+    );
+  }
+
+  return <span className="block text-sm font-semibold">{link.label}</span>;
+}
 
 function NavDropdown({
   value,
@@ -202,7 +231,7 @@ function NavDropdown({
 }: {
   value: string;
   label: string;
-  links: readonly { label: string; href: string; description?: string; featured?: boolean }[];
+  links: readonly NavLink[];
   onLinkClick: (event: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
   onToggle: React.Dispatch<React.SetStateAction<string>>;
 }) {
@@ -230,14 +259,10 @@ function NavDropdown({
                   to={link.href}
                   onClick={(event) => onLinkClick(event, link.href)}
                   className={link.featured
-                    ? "group flex items-center justify-between gap-3 rounded-lg bg-[#f1f3ff] px-3.5 py-3 text-[#171827] transition-colors hover:bg-[#e8ecff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    ? oneNavLinkClass
                     : "block rounded-lg px-3.5 py-3 text-sm font-medium text-[#414654] transition-colors hover:bg-[#f3f5fa] hover:text-[#171827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"}
                 >
-                  <span>
-                    <span className="block text-sm font-semibold">{link.label}</span>
-                    {link.description ? <span className="mt-0.5 block text-xs font-normal leading-4 text-[#62697a]">{link.description}</span> : null}
-                  </span>
-                  {link.featured ? <ArrowRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true" /> : null}
+                  <NavLinkContent link={link} />
                 </Link>
               </NavigationMenuLink>
             </li>
@@ -256,7 +281,7 @@ function MobileNavGroup({
 }: {
   value: string;
   label: string;
-  links: readonly { label: string; href: string; description?: string; featured?: boolean }[];
+  links: readonly NavLink[];
   onLinkClick: (event: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
 }) {
   return (
@@ -272,14 +297,10 @@ function MobileNavGroup({
               to={link.href}
               onClick={(event) => onLinkClick(event, link.href)}
               className={link.featured
-                ? "group mt-2 flex min-h-14 items-center justify-between gap-3 border-t border-[#d9deea] px-3 pt-2 text-[#171827] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                ? `${oneNavLinkClass} mt-3`
                 : "flex min-h-10 items-center rounded-lg px-3 text-sm font-medium text-[#62697a] transition-colors hover:bg-[#f4f6fb] hover:text-[#171827] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"}
             >
-              <span>
-                <span className="block text-sm font-semibold">{link.label}</span>
-                {link.description ? <span className="mt-0.5 block text-xs font-normal leading-4 text-[#62697a]">{link.description}</span> : null}
-              </span>
-              {link.featured ? <ArrowRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true" /> : null}
+              <NavLinkContent link={link} />
             </Link>
           ))}
         </div>

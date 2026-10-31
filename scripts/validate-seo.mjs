@@ -12,7 +12,7 @@ const suppliers = JSON.parse(await readFile(path.join(projectRoot, "config/suppl
 const oneTitle = "Agentes de IA a medida para empresas | Ruka One";
 const oneDescription = "Procesos que funcionan en ventas, atención, operaciones, finanzas y back office: agentes de IA y automatización a medida, implementados y medidos por Ruka One.";
 const oneServiceDescription = "Ruka One es un servicio en el que Ruka toma un problema u oportunidad concreta de una empresa, en ventas, marketing, atención, operaciones, finanzas o back office, diseña e implementa la solución con agentes de IA, automatizaciones e integraciones sobre sus sistemas, la acompaña en operación y la mejora contra indicadores acordados.";
-const oneH1 = "Lo pendiente, resuelto.";
+const oneH1 = "Nos hacemos cargo del trabajo que hoy le quita tiempo a tu equipo.";
 
 const routes = [
   { path: "/herramientas/margen-markup", title: "Calculadora de margen y markup: no son lo mismo | Ruka", h1: "Un margen de 40% no es sumar 40%.", canonical: `${siteOrigin}/herramientas/margen-markup`, schema: ["Organization", "WebSite", "WebApplication", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" },
@@ -493,7 +493,7 @@ assert(getTagAttribute(oneHtml, "property", "og:title", "content") === oneTitle,
 assert(getTagAttribute(oneHtml, "property", "og:description", "content") === oneDescription, "/one: og:description inesperada");
 assert(getTagAttribute(oneHtml, "property", "og:locale", "content") === "es_CL", "/one: og:locale debe ser es_CL");
 for (const [kind, alt] of [["og", getTagAttribute(oneHtml, "property", "og:image:alt", "content")], ["twitter", getTagAttribute(oneHtml, "name", "twitter:image:alt", "content")]]) {
-  assert(alt?.includes("Ruka One") && alt.includes(oneH1) && !/decisi[oó]n/i.test(alt ?? ""), `/one: ${kind}:image:alt debe describir la imagen real (titular vigente) y no «una decisión»`);
+  assert(alt?.includes("Ruka One") && alt.includes("un campo de miles de tareas") && alt.includes("un resultado") && !/decisi[oó]n/i.test(alt ?? ""), `/one: ${kind}:image:alt debe describir el campo y el resultado de la imagen real`);
 }
 // Back office stays a relevant secondary intent, not the whole category.
 assert(oneDescription.includes("back office") && !oneTitle.toLowerCase().includes("back office"), "/one: back office debe quedar como intención secundaria");
@@ -501,7 +501,7 @@ assert(getTagAttribute(oneHtml, "property", "og:site_name", "content") === "Ruka
 assert(getTagAttribute(oneHtml, "name", "googlebot", "content")?.includes("max-image-preview:large"), "/one: falta directiva Googlebot de preview grande");
 for (const requiredText of [
   oneH1,
-  "Hacemos funcionar los procesos que hoy frenan ventas, atención, operaciones o finanzas.",
+  "Ruka One asume procesos completos de tu empresa.",
   "El trabajo que nadie ve",
   "Menos herramientas que administrar. Más trabajo hecho.",
   "Que el proceso funcione",
