@@ -6,7 +6,7 @@ import OneContact from "@/pages/OneContact";
 const backend = vi.hoisted(() => ({ invoke: vi.fn() }));
 vi.mock("@/integrations/supabase/client", () => ({ supabase: { functions: { invoke: backend.invoke } } }));
 vi.mock("@/components/one/OneSeo", () => ({ OneContactSeo: () => null }));
-vi.mock("@/components/one/visual/OneFlock", () => ({ OneFlock: () => null }));
+vi.mock("@/components/one/field/OneField", () => ({ OneField: () => null }));
 vi.mock("@/components/one/OneSuccess", () => ({ OneSuccess: () => <p>Agenda recibida</p> }));
 vi.mock("@/components/one/OneContactForm", () => ({ OneContactForm: ({ onContinue }: { onContinue: (lead: unknown) => void }) => <button onClick={() => onContinue({ name: "QA One", company: "Example", email: "qa@example.invalid", whatsapp: "900000000" })}>Continuar prueba</button> }));
 vi.mock("@/components/one/OneCalendly", () => ({ OneCalendly: ({ onScheduled }: { onScheduled: (uri: string) => void }) => <button onClick={() => onScheduled("https://api.calendly.com/scheduled_events/example")}>Confirmar prueba</button> }));

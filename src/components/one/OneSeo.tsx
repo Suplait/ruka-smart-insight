@@ -19,7 +19,7 @@ const oneSchema = {
       url: oneContent.seo.canonical,
       description: oneContent.seo.serviceDescription,
       provider: { "@id": organizationId },
-      serviceType: "Automatización de procesos empresariales",
+      serviceType: oneContent.seo.serviceType,
       areaServed: {
         "@type": "Country",
         name: "Chile",
@@ -46,7 +46,7 @@ const oneSchema = {
         contentUrl: oneContent.seo.image,
         width: 1200,
         height: 630,
-        caption: `${ONE_NAME}: un proceso empresarial operando sobre los sistemas existentes`,
+        caption: oneContent.seo.imageAlt,
       },
     },
     {
@@ -102,12 +102,12 @@ export function OneSeo() {
       <meta property="og:image:type" content="image/png" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content={`${ONE_NAME}: un proceso empresarial operando sobre los sistemas existentes`} />
+      <meta property="og:image:alt" content={oneContent.seo.imageAlt} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={oneContent.seo.title} />
       <meta name="twitter:description" content={oneContent.seo.description} />
       <meta name="twitter:image" content={oneContent.seo.image} />
-      <meta name="twitter:image:alt" content={`${ONE_NAME}: un proceso empresarial operando sobre los sistemas existentes`} />
+      <meta name="twitter:image:alt" content={oneContent.seo.imageAlt} />
       <script type="application/ld+json">{JSON.stringify(oneSchema)}</script>
     </Helmet>
   );
@@ -115,10 +115,11 @@ export function OneSeo() {
 
 export function OneContactSeo() {
   const canonical = `${oneContent.seo.canonical}/contacto`;
+  const { seoTitle, seoDescription } = oneContent.contact;
   return (
     <Helmet htmlAttributes={{ lang: "es-CL" }}>
-      <title>Cuéntanos tu proceso | {ONE_NAME}</title>
-      <meta name="description" content="Cuéntanos qué proceso operativo quieres dejar de ejecutar manualmente y revisémoslo con el equipo de Ruka." />
+      <title>{seoTitle}</title>
+      <meta name="description" content={seoDescription} />
       <meta name="robots" content="noindex, follow" />
       <meta name="googlebot" content="noindex, follow" />
       <link rel="canonical" href={canonical} />
@@ -126,8 +127,8 @@ export function OneContactSeo() {
       <meta property="og:site_name" content="Ruka.ai" />
       <meta property="og:locale" content="es_CL" />
       <meta property="og:url" content={canonical} />
-      <meta property="og:title" content={`Cuéntanos tu proceso | ${ONE_NAME}`} />
-      <meta property="og:description" content="Cuéntanos qué proceso operativo quieres dejar de ejecutar manualmente y revisémoslo con el equipo de Ruka." />
+      <meta property="og:title" content={seoTitle} />
+      <meta property="og:description" content={seoDescription} />
     </Helmet>
   );
 }

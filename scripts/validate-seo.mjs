@@ -9,8 +9,10 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "
 const siteOrigin = "https://www.ruka.ai";
 const pageModified = JSON.parse(await readFile(path.join(projectRoot, "src/content/pageModified.json"), "utf8"));
 const suppliers = JSON.parse(await readFile(path.join(projectRoot, "config/supplier-profiles.json"), "utf8"));
-const oneDescription = "Con Ruka One llevamos procesos propios de tu empresa a operar sobre tus sistemas, reglas y datos actuales, sin reemplazar el software que ya usas.";
-const oneServiceDescription = "Ruka One es la forma de trabajar con Ruka sobre procesos específicos de una empresa, llevándolos a operar sobre sus sistemas, reglas y datos actuales.";
+const oneTitle = "Agentes de IA a medida para empresas | Ruka One";
+const oneDescription = "Procesos que funcionan en ventas, atención, operaciones, finanzas y back office: agentes de IA y automatización a medida, implementados y medidos por Ruka One.";
+const oneServiceDescription = "Ruka One es un servicio en el que Ruka toma un problema u oportunidad concreta de una empresa, en ventas, marketing, atención, operaciones, finanzas o back office, diseña e implementa la solución con agentes de IA, automatizaciones e integraciones sobre sus sistemas, la acompaña en operación y la mejora contra indicadores acordados.";
+const oneH1 = "Nos hacemos cargo del trabajo que hoy le quita tiempo a tu equipo.";
 
 const routes = [
   { path: "/herramientas/margen-markup", title: "Calculadora de margen y markup: no son lo mismo | Ruka", h1: "Un margen de 40% no es sumar 40%.", canonical: `${siteOrigin}/herramientas/margen-markup`, schema: ["Organization", "WebSite", "WebApplication", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" },
@@ -115,9 +117,9 @@ const routes = [
   },
   {
     path: "/one",
-    title: "Automatización de procesos empresariales | Ruka One",
+    title: oneTitle,
     canonical: `${siteOrigin}/one`,
-    h1: "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
+    h1: oneH1,
     schema: ["Organization", "WebSite", "Service", "WebPage", "BreadcrumbList", "FAQPage"],
     ogImage: `${siteOrigin}/ruka-one-og.png`,
   },
@@ -195,7 +197,7 @@ const noIndexRoutes = [
     path: "/one/contacto",
     title: "Cuéntanos tu proceso | Ruka One",
     canonical: `${siteOrigin}/one/contacto`,
-    h1: "¿Qué parte de tu operación sigue siendo manual?",
+    h1: "¿Qué proceso quieres que funcione mejor?",
   },
 ];
 
@@ -487,27 +489,79 @@ const oneVisibleText = textContent(oneHtml);
 assert(!oneHtml.includes("Ruka Works"), "/one: todavía contiene la marca pública Ruka Works");
 assert(!oneHtml.includes(`${siteOrigin}/works`), "/one: todavía referencia la URL legacy /works");
 assert(/<html\b[^>]*lang="es-CL"/i.test(oneHtml), "/one: html lang debe ser es-CL");
-assert(getTagAttribute(oneHtml, "property", "og:title", "content") === "Automatización de procesos empresariales | Ruka One", "/one: og:title inesperado");
+assert(getTagAttribute(oneHtml, "property", "og:title", "content") === oneTitle, "/one: og:title inesperado");
 assert(getTagAttribute(oneHtml, "property", "og:description", "content") === oneDescription, "/one: og:description inesperada");
 assert(getTagAttribute(oneHtml, "property", "og:locale", "content") === "es_CL", "/one: og:locale debe ser es_CL");
+for (const [kind, alt] of [["og", getTagAttribute(oneHtml, "property", "og:image:alt", "content")], ["twitter", getTagAttribute(oneHtml, "name", "twitter:image:alt", "content")]]) {
+  assert(alt?.includes("Ruka One") && alt.includes("un campo de miles de tareas") && alt.includes("un resultado") && !/decisi[oó]n/i.test(alt ?? ""), `/one: ${kind}:image:alt debe describir el campo y el resultado de la imagen real`);
+}
+// Back office stays a relevant secondary intent, not the whole category.
+assert(oneDescription.includes("back office") && !oneTitle.toLowerCase().includes("back office"), "/one: back office debe quedar como intención secundaria");
 assert(getTagAttribute(oneHtml, "property", "og:site_name", "content") === "Ruka.ai", "/one: og:site_name debe ser Ruka.ai");
 assert(getTagAttribute(oneHtml, "name", "googlebot", "content")?.includes("max-image-preview:large"), "/one: falta directiva Googlebot de preview grande");
 for (const requiredText of [
-  "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
-  "Ruka parte de procesos que ya estandarizamos. Ruka One parte del tuyo.",
-  "Ruka One usa la misma base tecnológica que hoy procesa millones de registros operativos para cientos de empresas.",
+  oneH1,
+  "Ruka One asume procesos completos de tu empresa.",
+  "El trabajo que nadie ve",
+  "Menos herramientas que administrar. Más trabajo hecho.",
+  "Que el proceso funcione",
+  "Tener herramientas no es lo mismo que tener el trabajo hecho.",
+  "Así tu proceso empieza a funcionar.",
+  "Cada caso empieza con un compromiso por escrito.",
+  "Cada área tiene algo que hoy se queda pendiente.",
+  "Ejemplo ilustrativo",
+  "La IA es el medio. El trabajo hecho y su impacto son el producto.",
+  "Que la inversión se justifique.",
+  "ROI = (beneficio atribuible − costo total) ÷ costo total",
+  "Ruka One se construye sobre la misma base tecnológica con la que Ruka procesa millones de registros operativos para cientos de empresas.",
   "¿Qué es Ruka One?",
   "¿Cuál es la diferencia entre Ruka y Ruka One?",
-  "¿Qué tipo de procesos trabajamos con Ruka One?",
+  "¿Necesito saber qué tecnología usar?",
 ]) {
   assert(oneVisibleText.includes(requiredText), `/one: falta contenido esencial prerenderizado (${requiredText})`);
 }
+// Value leads the H1; search intent lives in title, meta, lead, FAQ and schema, without stuffing.
+assert(oneH1 !== oneTitle && !/agente/i.test(oneH1), "/one: el H1 debe hablar del valor y no repetir el title SEO");
+for (const term of ["agentes de IA", "automatización", "a medida", "ventas", "atención", "operaciones", "finanzas", "back office"]) {
+  assert(oneVisibleText.toLowerCase().includes(term.toLowerCase()), `/one: falta vocabulario de búsqueda en contenido indexable (${term})`);
+}
+const oneReadableText = textContent(oneHtml.replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<style[\s\S]*?<\/style>/gi, " "));
+const oneAgentMentions = (oneReadableText.match(/\bagentes?\b/gi) ?? []).length;
+assert(oneAgentMentions >= 2 && oneAgentMentions <= 6, `/one: «agentes» aparece ${oneAgentMentions} veces en el contenido visible; debe estar presente sin protagonizar cada bloque`);
+// "Cómo ocurre" is a visual chapter: four beats and no paragraph-length steps.
+const howMatch = oneHtml.match(/<section[^>]*id="como-funciona"[\s\S]*?<\/section>/);
+const howBody = textContent((howMatch?.[0] ?? "").replace(/<h2[\s\S]*?<\/h2>/, "").replace(/<p class="one-eyebrow[\s\S]*?<\/p>/, ""));
+const howWords = howBody.split(/\s+/).filter((word) => /[\p{L}]/u.test(word)).length;
+assert(howMatch && howWords > 0 && howWords <= 60, `/one: «Cómo ocurre» debe resolverse con ≤ 60 palabras visibles y tiene ${howWords}`);
 for (const forbiddenText of [
   "Vemos contigo si Ruka puede ayudar.",
   "vemos si Ruka puede ayudar",
   "si tiene sentido que Ruka",
   "Ruka los convierte",
   "Ruka One convierte",
+  "Solicitud recibida",
+  "Aplicando regla",
+  "Hay procesos que no viven en ningún sistema.",
+  // The previous thesis: human decisions as the value proposition and back office as the whole category.
+  "operado por Ruka",
+  "Back office operado",
+  "La última palabra",
+  "La última fila no cambia",
+  "¿Quién decide?",
+  "Las decisiones siguen siendo tuyas",
+  "Tu equipo sigue decidiendo",
+  "seguiría decidiendo tu equipo",
+  "Una decisión. El resto lo operamos.",
+  "Lo que decides tú",
+  "No prometemos que nada falle",
+  // The mechanism as the headline: agents are the means, not what the buyer gets.
+  "Agentes de IA que hacen el trabajo.",
+  "Ahí ponemos agentes a trabajar.",
+  "Poner agentes a trabajar",
+  "Lo que hacen los agentes",
+  "De un problema concreto a trabajo en ejecución.",
+  "De la primera respuesta a un cliente al cierre de mes.",
+  "Usamos IA donde aporta y reglas, APIs o personas donde son más confiables. Y no es un desarrollo",
 ]) {
   assert(!oneVisibleText.includes(forbiddenText), `/one: conserva copy de posicionamiento débil (${forbiddenText})`);
 }
@@ -519,8 +573,8 @@ assert(
 const oneSchemaValues = parseSchema(oneHtml, "/one").values.flatMap((schema) => schema["@graph"] ?? [schema]);
 const oneService = oneSchemaValues.find((schema) => schema?.["@type"] === "Service");
 assert(
-  oneService?.serviceType === "Automatización de procesos empresariales",
-  "/one: serviceType no representa automatización de procesos empresariales",
+  oneService?.serviceType === "Implementación de agentes de IA y automatización de procesos empresariales",
+  "/one: serviceType no representa la implementación de agentes de IA y automatización de procesos",
 );
 assert(oneService?.name === "Ruka One", "/one: Service schema no usa el nombre Ruka One");
 assert(oneService?.url === `${siteOrigin}/one`, "/one: Service schema tiene URL incorrecta");
@@ -529,7 +583,7 @@ assert(oneService?.provider?.["@id"] === `${siteOrigin}/#organization`, "/one: S
 assert(oneService?.areaServed?.identifier === "CL", "/one: Service schema no declara Chile/CL");
 
 const oneFaqSchema = oneSchemaValues.find((schema) => schema?.["@type"] === "FAQPage");
-assert(oneFaqSchema?.mainEntity?.length === 7, `/one: FAQPage debe contener 7 preguntas y contiene ${oneFaqSchema?.mainEntity?.length ?? 0}`);
+assert(oneFaqSchema?.mainEntity?.length === 9, `/one: FAQPage debe contener 9 preguntas y contiene ${oneFaqSchema?.mainEntity?.length ?? 0}`);
 for (const question of oneFaqSchema?.mainEntity ?? []) {
   assert(oneVisibleText.includes(question.name), `/one: pregunta FAQ ausente del HTML visible: ${question.name}`);
   assert(oneVisibleText.includes(question.acceptedAnswer?.text), `/one: respuesta FAQ ausente del HTML visible: ${question.name}`);
@@ -544,17 +598,17 @@ assert(oneBreadcrumb?.itemListElement?.[1]?.item === `${siteOrigin}/one`, "/one:
 const oneContactHtml = await readFile(routeFile("/one/contacto"), "utf8");
 const oneContactVisibleText = textContent(oneContactHtml);
 assert(
-  oneContactVisibleText.includes("Elige una hora y cuéntanos cómo funciona hoy. Vemos contigo cómo llevar ese proceso a operar sobre Ruka."),
+  oneContactVisibleText.includes("Elige una hora y cuéntanos el problema o la oportunidad y qué resultado esperas. No necesitas saber qué tecnología hace falta: eso lo vemos juntos."),
   "/one/contacto: falta el posicionamiento final del formulario",
 );
-for (const forbiddenText of ["si Ruka puede ayudar", "si podemos ayudarte", "si tiene sentido", "evaluamos si"]) {
+for (const forbiddenText of ["si Ruka puede ayudar", "si podemos ayudarte", "si tiene sentido", "evaluamos si", "seguiría decidiendo", "dejar de administrar"]) {
   assert(!oneContactVisibleText.toLowerCase().includes(forbiddenText.toLowerCase()), `/one/contacto: conserva lenguaje condicional débil (${forbiddenText})`);
 }
 
 const oneContentSource = await readFile(path.join(projectRoot, "src", "content", "oneContent.ts"), "utf8");
 for (const requiredText of [
-  "Nos cuentas cómo funciona hoy y vemos juntos cómo llevarlo a operar sobre Ruka.",
-  "Partimos por tu proceso tal como funciona hoy.",
+  "Una conversación exploratoria de 30 minutos: nos cuentas el problema o la oportunidad y exploramos cómo resolverlo.",
+  "Llega con el proceso, el problema o la oportunidad tal como está hoy. Nosotros llegamos con preguntas.",
 ]) {
   assert(oneContentSource.includes(requiredText), `oneContent.ts: falta copy final del funnel (${requiredText})`);
 }

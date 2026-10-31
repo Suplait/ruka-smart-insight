@@ -1,0 +1,854 @@
+/*
+ * Ruka One — "El campo".
+ * Everything here is scoped to .one-root so no other route is affected.
+ * Brand anchors: hsl(var(--primary)) for every primary action, the corporate
+ * sans stack inherited from the site, and the Ruka logo.
+ */
+
+.one-root {
+  --one-void: #03040a;
+  --one-night: #070a16;
+  --one-deep: #0b0f22;
+  --one-graphite: #10131f;
+  --one-hair: rgba(214, 222, 255, 0.1);
+  --one-hair-strong: rgba(214, 222, 255, 0.2);
+  --one-text: #f1f3fa;
+  --one-soft: #c3c8d8;
+  --one-muted: #959cb2;
+  --one-accent: hsl(231 92% 80%);
+  --one-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --one-ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  background: var(--one-void);
+  color: var(--one-text);
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.one-root ::selection {
+  background: hsl(var(--primary) / 0.55);
+  color: #fff;
+}
+
+.one-root :focus-visible {
+  outline: 2px solid var(--one-accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- The field ---------- */
+
+.one-field {
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+}
+
+.one-field__sky {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(90% 55% at 64% 34%, rgba(46, 62, 160, 0.22) 0%, rgba(20, 26, 70, 0.12) 38%, transparent 70%),
+    radial-gradient(140% 70% at 50% 110%, rgba(18, 24, 60, 0.6) 0%, transparent 60%),
+    linear-gradient(180deg, #02030700 0%, #050817 42%, #03040a 100%),
+    var(--one-void);
+}
+
+.one-field__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 900ms var(--one-ease);
+}
+
+.one-field.is-ready .one-field__canvas {
+  opacity: 1;
+}
+
+/* WebGL unavailable: a real render of the field, captured from the engine. */
+.one-field.is-failed .one-field__sky {
+  background:
+    linear-gradient(180deg, rgba(3, 4, 10, 0.2), rgba(3, 4, 10, 0.55)),
+    url("/one/field-poster.webp") center 70% / cover no-repeat,
+    var(--one-void);
+}
+
+.one-field__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(3, 4, 10, 0.85) 0%, rgba(3, 4, 10, 0) 18%),
+    radial-gradient(140% 100% at 50% 50%, transparent 55%, rgba(3, 4, 10, 0.7) 100%);
+}
+
+.one-field__beacon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: opacity 500ms var(--one-ease);
+  will-change: transform, opacity;
+}
+
+.one-field__beacon-inner {
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  transform: translateX(calc(-50% + var(--beacon-dx, 0px)));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  width: max-content;
+  padding: 10px 14px 0;
+  background: radial-gradient(60% 70% at 50% 40%, rgba(3, 4, 10, 0.85), rgba(3, 4, 10, 0) 100%);
+}
+
+.one-field__beacon-inner,
+.one-field__beacon-inner * {
+  max-width: none;
+}
+
+.one-field__beacon-inner::after {
+  content: "";
+  transform: translateX(calc(-1 * var(--beacon-dx, 0px)));
+  width: 1px;
+  height: 26px;
+  background: linear-gradient(180deg, rgba(241, 243, 250, 0.7), rgba(241, 243, 250, 0));
+}
+
+/* ---------- Hero typography ---------- */
+
+.one-display {
+  font-weight: 650;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+  font-feature-settings: "ss01" 1, "cv11" 1;
+}
+
+.one-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.one-line > span {
+  display: block;
+  animation: one-rise 1100ms var(--one-ease) both;
+  animation-delay: calc(140ms + var(--i, 0) * 110ms);
+}
+
+.one-fade {
+  animation: one-fade 900ms var(--one-ease) both;
+  animation-delay: calc(420ms + var(--i, 0) * 90ms);
+}
+
+@keyframes one-rise {
+  from {
+    transform: translate3d(0, 0.62em, 0);
+    opacity: 0.001;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes one-fade {
+  from {
+    opacity: 0.001;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Primary action ---------- */
+
+.one-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 0 22px 0 18px;
+  border-radius: 14px;
+  background: hsl(var(--primary));
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  transition: transform 450ms var(--one-ease), box-shadow 450ms var(--one-ease);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14) inset, 0 18px 40px -18px hsl(var(--primary) / 0.9);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.one-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2) inset, 0 22px 50px -16px hsl(var(--primary) / 1);
+}
+
+.one-cta:active {
+  transform: translateY(0) scale(0.985);
+  transition-duration: 120ms;
+}
+
+.one-cta:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.one-cta[disabled] {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* The tile inside every primary action: the same unit of work as the field. */
+.one-cta__tile {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+
+.one-cta__tile::before,
+.one-cta__tile::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  transition: transform 550ms var(--one-ease), opacity 550ms var(--one-ease);
+}
+
+.one-cta__tile::before {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(3px) scaleY(0.6);
+}
+
+.one-cta__tile::after {
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+.one-cta:hover .one-cta__tile::after,
+.one-cta:focus-visible .one-cta__tile::after {
+  transform: translateY(-6px) rotate(-8deg);
+}
+
+.one-cta:hover .one-cta__tile::before,
+.one-cta:focus-visible .one-cta__tile::before {
+  transform: translateY(5px) scaleY(0.45);
+  opacity: 0.6;
+}
+
+.one-cta--lg {
+  min-height: 64px;
+  padding: 0 28px 0 22px;
+  font-size: 17px;
+  border-radius: 18px;
+}
+
+.one-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 6px;
+  color: var(--one-soft);
+  font-weight: 500;
+  font-size: 15px;
+  transition: color 300ms var(--one-ease);
+}
+
+.one-ghost:hover {
+  color: #fff;
+}
+
+.one-ghost svg {
+  transition: transform 450ms var(--one-ease);
+}
+
+.one-ghost:hover svg {
+  transform: translateY(3px);
+}
+
+/* ---------- Chapters ---------- */
+
+.one-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--one-accent);
+}
+
+.one-eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 2.5px;
+  background: hsl(var(--primary));
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.22);
+}
+
+.one-shade-left {
+  background: linear-gradient(90deg, rgba(3, 4, 10, 0.94) 0%, rgba(3, 4, 10, 0.8) 40%, rgba(3, 4, 10, 0) 80%);
+}
+
+.one-shade-center {
+  background: radial-gradient(70% 60% at 50% 50%, rgba(3, 4, 10, 0.86) 0%, rgba(3, 4, 10, 0.5) 60%, rgba(3, 4, 10, 0) 100%);
+}
+
+.one-shade-left,
+.one-shade-center,
+.one-shade-mask {
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+}
+
+/* Elements only start hidden once JS has confirmed motion is welcome. */
+[data-one-motion="on"] [data-reveal] {
+  opacity: 0.001;
+  transform: translate3d(0, 24px, 0);
+  transition: opacity 1000ms var(--one-ease), transform 1100ms var(--one-ease);
+  transition-delay: calc(var(--d, 0) * 90ms);
+}
+
+[data-one-motion="on"] [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Fragments of work between systems: brightest at the reading line. */
+.one-fragment {
+  transition: color 600ms var(--one-ease), opacity 600ms var(--one-ease), transform 800ms var(--one-ease);
+}
+
+[data-one-motion="on"] .one-fragment {
+  color: rgba(241, 243, 250, 0.2);
+  transform: translateX(0);
+}
+
+[data-one-motion="on"] .one-fragment.is-active {
+  color: var(--one-text);
+  transform: translateX(12px);
+}
+
+/* Difference ledger */
+.one-ledger-row {
+  border-top: 1px solid var(--one-hair);
+}
+
+.one-ledger-cell-one {
+  position: relative;
+  transition: color 700ms var(--one-ease);
+}
+
+.one-ledger-cell-one::before {
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: -4.5px;
+  border-radius: 3px;
+  background: hsl(var(--primary));
+  transform: scale(0);
+  transition: transform 700ms var(--one-ease);
+  transition-delay: inherit;
+}
+
+.is-in .one-ledger-cell-one::before {
+  transform: scale(1);
+}
+
+.one-ledger-row--outcome .one-ledger-cell-one::before {
+  background: #fff;
+  box-shadow: 0 6px 14px -4px rgba(160, 175, 255, 0.9);
+}
+
+/* ---------- Cómo ocurre: the field explains, the DOM names each beat ---------- */
+/*
+ * The global mobile reset sets overflow-x: hidden on html and body, which turns body into a
+ * scroll container and breaks position: sticky. clip keeps horizontal overflow hidden without
+ * creating one. Scoped to pages that render this chapter.
+ */
+html:has(.one-how),
+html:has(.one-how) body {
+  overflow-x: clip;
+}
+
+.one-how__beats {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.one-how__beat {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.one-how__stage {
+  position: relative;
+  padding: 7rem 0;
+}
+
+.one-how__shade-top {
+  background: linear-gradient(180deg, rgba(3, 4, 10, 0.94) 0%, rgba(3, 4, 10, 0.72) 58%, rgba(3, 4, 10, 0) 100%);
+}
+
+.one-how__shade-bottom {
+  background: linear-gradient(0deg, rgba(3, 4, 10, 0.95) 0%, rgba(3, 4, 10, 0.78) 50%, rgba(3, 4, 10, 0) 100%);
+}
+
+.one-how:not(.is-live) .one-how__shade-top {
+  height: 100%;
+  background: rgba(3, 4, 10, 0.72);
+}
+
+.one-how:not(.is-live) .one-how__shade-bottom {
+  display: none;
+}
+
+.one-how__rail {
+  max-width: 30rem;
+  margin-top: 2.75rem;
+}
+
+.one-how__ticks {
+  display: none;
+}
+
+.one-how__list {
+  display: grid;
+}
+
+.one-how__item {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  column-gap: 14px;
+  padding: 16px 0;
+  border-top: 1px solid var(--one-hair);
+}
+
+.one-how__item > .one-how__mark {
+  margin-top: 10px;
+}
+
+.one-how__label {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: clamp(1.35rem, 2.1vw, 1.8rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.032em;
+  color: var(--one-text);
+  transition: color 600ms var(--one-ease);
+}
+
+.one-how__num {
+  flex: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  font-variant-numeric: tabular-nums;
+  color: var(--one-accent);
+}
+
+.one-how__reveal {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 700ms var(--one-ease), opacity 600ms var(--one-ease);
+}
+
+.one-how__text {
+  min-height: 0;
+  overflow: hidden;
+  max-width: 26rem;
+  padding-top: 6px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--one-soft);
+  text-wrap: pretty;
+}
+
+/* Markers: the same tile at each beat — loose, designed, running, risen. */
+.one-how__mark {
+  display: block;
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  transition: transform 700ms var(--one-ease), opacity 500ms var(--one-ease), box-shadow 700ms var(--one-ease);
+}
+
+.one-how__mark--0 {
+  background: #4a5175;
+  transform: translate(-2px, 2px) rotate(28deg);
+}
+
+.one-how__mark--1 {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px hsl(var(--primary));
+}
+
+.one-how__mark--2 {
+  background: hsl(var(--primary));
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.22);
+}
+
+.one-how__mark--3 {
+  width: 11px;
+  height: 11px;
+  background: #fff;
+  box-shadow: 0 6px 14px -4px rgba(160, 175, 255, 0.9);
+  transform: translateY(-3px);
+}
+
+/* Live: the stage pins while the field plays each beat; native scroll, nothing is captured. */
+.one-how.is-live {
+  height: calc(100svh + var(--how-pin));
+  /* Expanding a caption must not make the browser compensate the scroll position. */
+  overflow-anchor: none;
+}
+
+.one-how__step-button {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  margin: -6px 0;
+  text-align: left;
+  color: inherit;
+}
+
+.one-how__step-button:hover {
+  color: var(--one-text);
+}
+
+.one-how.is-live .one-how__stage {
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: 100svh;
+  padding: 0;
+  overflow: hidden;
+}
+
+.one-how.is-live .one-how__frame {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 92px;
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+}
+
+.one-how.is-live .one-how__item[data-state="past"] .one-how__label {
+  color: #b9bfd0;
+}
+
+.one-how.is-live .one-how__item[data-state="next"] .one-how__label {
+  color: var(--one-muted);
+}
+
+.one-how.is-live .one-how__item:not([data-state="active"]) .one-how__reveal {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+.one-how.is-live .one-how__item:not([data-state="active"]) > .one-how__mark {
+  opacity: 0.45;
+}
+
+@media (min-width: 1024px) {
+  .one-how__stage {
+    padding: 10rem 0;
+  }
+
+  .one-how.is-live .one-how__frame {
+    justify-content: center;
+    padding-top: 68px;
+    padding-bottom: 0;
+  }
+
+  .one-how.is-live .one-how__rail {
+    /* Keep the title stationary while descriptions of different lengths crossfade. */
+    height: 22rem;
+    flex: none;
+  }
+}
+
+/* Keep all four steps reachable on short desktop windows without stopping the field. */
+@media (min-width: 1024px) and (max-height: 759px) {
+  .one-how.is-live .one-how__frame {
+    padding-top: 76px;
+    padding-bottom: 16px;
+  }
+
+  .one-how.is-live #one-how-title {
+    margin-top: 16px;
+    font-size: clamp(2rem, 6vh, 2.8rem);
+  }
+
+  .one-how.is-live .one-how__rail {
+    margin-top: 24px;
+    height: 18rem;
+  }
+
+  .one-how.is-live .one-how__item {
+    padding: 10px 0;
+  }
+
+  .one-how.is-live .one-how__label {
+    font-size: 1.4rem;
+  }
+
+  .one-how.is-live .one-how__text {
+    font-size: 15px;
+  }
+}
+
+/* Portrait: title above, the region in the middle, one caption below. */
+@media (max-width: 1023px) {
+  .one-how.is-live .one-how__ticks {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 176px;
+    margin-left: -17px;
+    margin-bottom: 1px;
+  }
+
+  .one-how.is-live .one-how__ticks::before {
+    content: "";
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    top: 50%;
+    height: 1px;
+    background: var(--one-hair-strong);
+  }
+
+  .one-how.is-live .one-how__ticks .one-how__mark {
+    position: relative;
+    opacity: 0.4;
+  }
+
+  .one-how__tick {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+  }
+
+  .one-how.is-live .one-how__ticks .one-how__mark.is-past {
+    opacity: 0.75;
+  }
+
+  .one-how.is-live .one-how__ticks .one-how__mark.is-active {
+    opacity: 1;
+    scale: 1.35;
+  }
+
+  .one-how.is-live .one-how__item {
+    grid-area: 1 / 1;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0;
+    border-top: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, 10px, 0);
+    transition: opacity 500ms var(--one-ease), transform 700ms var(--one-ease);
+  }
+
+  .one-how.is-live .one-how__item > .one-how__mark {
+    display: none;
+  }
+
+  .one-how.is-live .one-how__item[data-state="active"] {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .one-how.is-live .one-how__item .one-how__reveal {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .one-how.is-live .one-how__item .one-how__label {
+    color: var(--one-text);
+    font-size: 1.65rem;
+  }
+}
+
+/* Scope frame */
+.one-frame-rect {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+[data-one-motion="on"] .one-frame-rect {
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1800ms var(--one-ease-io);
+}
+
+[data-one-motion="on"] .is-in .one-frame-rect {
+  stroke-dashoffset: 0;
+}
+
+/* Words that resolve as you read */
+.one-word {
+  transition: color 400ms linear;
+}
+
+/* Areas */
+.one-area-tab {
+  position: relative;
+  transition: color 400ms var(--one-ease);
+}
+
+.one-area-tab::before {
+  content: "";
+  position: absolute;
+  left: -22px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  border-radius: 3px;
+  background: hsl(var(--primary));
+  opacity: 0;
+  transform: translateX(-6px) scale(0.6);
+  transition: opacity 400ms var(--one-ease), transform 500ms var(--one-ease);
+}
+
+.one-area-tab[aria-selected="true"]::before {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 1023px) {
+  .one-area-tab::before {
+    display: none;
+  }
+}
+
+.one-panel-enter {
+  animation: one-fade 600ms var(--one-ease) both;
+}
+
+/* FAQ */
+.one-faq summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.one-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.one-faq .one-faq-icon {
+  transition: transform 450ms var(--one-ease);
+}
+
+.one-faq[open] .one-faq-icon {
+  transform: rotate(45deg);
+}
+
+/* Form (contact) */
+.one-input {
+  height: 56px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(214, 222, 255, 0.16);
+  background: rgba(8, 11, 24, 0.9);
+  padding: 0 16px;
+  font-size: 16px;
+  color: var(--one-text);
+  transition: border-color 250ms var(--one-ease), box-shadow 250ms var(--one-ease), background-color 250ms var(--one-ease);
+}
+
+.one-input::placeholder {
+  color: #7d849b;
+}
+
+.one-input:hover {
+  border-color: rgba(214, 222, 255, 0.28);
+}
+
+.one-input:focus,
+.one-input:focus-visible {
+  outline: none;
+  border-color: hsl(var(--primary));
+  background: rgba(10, 14, 32, 1);
+  box-shadow: 0 0 0 4px hsl(var(--primary) / 0.22);
+}
+
+.one-input[aria-invalid="true"] {
+  border-color: #f08a9c;
+}
+
+.one-progress-tile {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: rgba(214, 222, 255, 0.14);
+  transition: background-color 500ms var(--one-ease), transform 500ms var(--one-ease);
+}
+
+.one-progress-tile.is-done {
+  background: hsl(var(--primary));
+  transform: translateY(-3px);
+}
+
+.one-success-tile {
+  animation: one-success 1400ms var(--one-ease) both;
+}
+
+@keyframes one-success {
+  0% {
+    transform: translateY(18px) scale(0.6);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .one-root *,
+  .one-root *::before,
+  .one-root *::after {
+    animation: none !important;
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .one-field__canvas {
+    opacity: 1;
+  }
+}

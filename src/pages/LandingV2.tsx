@@ -741,22 +741,32 @@ function PricingSection() {
           </ul>
         </div>
 
-        <motion.div className="mt-12 overflow-hidden rounded-2xl bg-[#171a29] text-white" initial={reduceMotion ? false : { opacity: 0.85, y: 18 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ duration: 0.5, ease: easeOut }}>
+        <motion.div className="relative isolate mt-12 overflow-hidden rounded-2xl bg-[#03040a] text-[#f1f3fa]" initial={reduceMotion ? false : { opacity: 0.85, y: 18 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ duration: 0.5, ease: easeOut }}>
+          <img
+            src="/one/field-poster.webp"
+            alt=""
+            aria-hidden="true"
+            width={1600}
+            height={1000}
+            loading="lazy"
+            className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-right opacity-80"
+          />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(3,4,10,0.95)_0%,rgba(3,4,10,0.8)_55%,rgba(3,4,10,0.3)_100%)] lg:bg-[linear-gradient(90deg,rgba(3,4,10,0.98)_0%,rgba(3,4,10,0.9)_45%,rgba(3,4,10,0.1)_100%)]" />
           <div className="grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:p-12">
             <div>
-              <p className="text-sm font-semibold text-[#9ba9ff]">¿Necesitas algo distinto?</p>
+              <p className="text-sm font-semibold text-[#a5b3fb]">Ruka One</p>
               <h3 className="mt-3 max-w-3xl text-balance text-3xl font-semibold leading-tight tracking-[-0.03em] sm:text-4xl">
-                Si tu proceso no cabe acá, lo armamos contigo.
+                ¿Necesitas algo más personalizado?
               </h3>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-white/[0.72]">
-                Más volumen, otra integración o un flujo propio de tu empresa.
+              <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-[#c3c8d8]">
+                Con Ruka One, hacemos funcionar los procesos que hoy frenan tu empresa. Los implementamos sobre tus sistemas, acompañamos su operación y medimos su impacto.
               </p>
             </div>
             <div className="flex flex-col items-start lg:items-end">
-              <Button asChild className="group h-12 w-full rounded-full bg-white px-6 font-semibold text-[#171827] shadow-none transition-transform duration-150 hover:-translate-y-0.5 hover:bg-[#f1f3ff] active:scale-[0.98] sm:w-fit">
-                <Link to="/register">
-                  Cuéntanos tu proceso
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+              <Button asChild className="group h-[52px] w-full rounded-xl bg-primary px-6 font-semibold text-white shadow-none hover:bg-primary/90 focus-visible:ring-[#a5b3fb] focus-visible:ring-offset-[#03040a] motion-safe:transition-transform motion-safe:duration-200 motion-safe:hover:-translate-y-0.5 motion-safe:active:scale-[0.98] sm:w-fit">
+                <Link to="/one">
+                  Conocer Ruka One
+                  <ArrowRight className="ml-2 h-4 w-4 motion-safe:transition-transform motion-safe:duration-200 motion-safe:group-hover:translate-x-1" aria-hidden="true" />
                 </Link>
               </Button>
             </div>
