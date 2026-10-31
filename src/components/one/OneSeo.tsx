@@ -115,10 +115,11 @@ export function OneSeo() {
 
 export function OneContactSeo() {
   const canonical = `${oneContent.seo.canonical}/contacto`;
+  const { seoTitle, seoDescription } = oneContent.contact;
   return (
     <Helmet htmlAttributes={{ lang: "es-CL" }}>
-      <title>Cuéntanos tu proceso | {ONE_NAME}</title>
-      <meta name="description" content="Cuéntanos qué proceso operativo quieres dejar de ejecutar manualmente y revisémoslo con el equipo de Ruka." />
+      <title>{seoTitle}</title>
+      <meta name="description" content={seoDescription} />
       <meta name="robots" content="noindex, follow" />
       <meta name="googlebot" content="noindex, follow" />
       <link rel="canonical" href={canonical} />
@@ -126,8 +127,8 @@ export function OneContactSeo() {
       <meta property="og:site_name" content="Ruka.ai" />
       <meta property="og:locale" content="es_CL" />
       <meta property="og:url" content={canonical} />
-      <meta property="og:title" content={`Cuéntanos tu proceso | ${ONE_NAME}`} />
-      <meta property="og:description" content="Cuéntanos qué proceso operativo quieres dejar de ejecutar manualmente y revisémoslo con el equipo de Ruka." />
+      <meta property="og:title" content={seoTitle} />
+      <meta property="og:description" content={seoDescription} />
     </Helmet>
   );
 }

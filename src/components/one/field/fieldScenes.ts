@@ -16,9 +16,9 @@ export type FieldScene = {
   chaos: number;
   /** Intensity of the work fronts that execute tiles. */
   flow: number;
-  /** How far the agreed decisions rise out of the field. */
+  /** How far finished outputs rise out of the field as work fronts complete them. */
   rise: number;
-  /** The single decision tile that rises in the hero. */
+  /** The single result tile that rises in the hero: thousands of tasks, one outcome. */
   beacon: number;
   /** Fraction of the field that rests as "done". */
   calm: number;
@@ -32,10 +32,10 @@ export type FieldSceneName =
   | "hero"
   | "friction"
   | "shift"
-  | "decide"
+  | "execute"
   | "scope"
   | "areas"
-  | "trust"
+  | "impact"
   | "rest"
   | "close"
   | "contact"
@@ -62,10 +62,10 @@ const scenes: Record<FieldSceneName, Partial<FieldScene>> = {
   hero: { beacon: 1, rise: 0.12 },
   friction: { eye: [-6, 11, 16], target: [2, -2, -16], chaos: 1, flow: 0.08, rise: 0, dim: 0.1 },
   shift: { eye: [4, 4.2, 9], target: [-2, -1.4, -14], flow: 1.1, rise: 0.08 },
-  decide: { eye: [0, 7, 17], target: [0, 0.8, -12], rise: 1, flow: 0.6, beacon: 0 },
+  execute: { eye: [0, 7, 17], target: [0, 0.8, -12], rise: 1, flow: 0.85, beacon: 0 },
   scope: { eye: [0, 40, -8], target: [0, 0, -15], fov: 42, scope: [-9, -24, 9, -10], scopeOn: 1, flow: 1.1, rise: 0 },
   areas: { eye: [0, 22, 8], target: [0, 0, -14], fov: 46, scope: [-14, -24, -2, -12], scopeOn: 1, flow: 1, rise: 0.2 },
-  trust: { eye: [0, 7, 20], target: [0, -0.5, -20], fov: 46, calm: 0.45, flow: 0.8, rise: 0.25 },
+  impact: { eye: [0, 7, 20], target: [0, -0.5, -20], fov: 46, calm: 0.45, flow: 0.8, rise: 0.25 },
   rest: { eye: [0, 9, 22], target: [0, -0.5, -22], fov: 46, calm: 0.3, flow: 0.45, dim: 0.62, rise: 0.1 },
   close: { eye: [0, 15, 30], target: [0, -3, -26], fov: 48, calm: 0.75, flow: 0.9, rise: 0.15 },
   contact: { eye: [0, 14, 12], target: [0, 0, -12], fov: 46, flow: 0.75, rise: 0, calm: 0.15, scope: [-8, -18, 8, -6], scopeOn: 0.35 },
@@ -73,7 +73,11 @@ const scenes: Record<FieldSceneName, Partial<FieldScene>> = {
   "contact-valid": { eye: [0, 12, 9], target: [0, 0, -12], fov: 44, flow: 1.25, rise: 0.4, calm: 0.75, scope: [-8, -18, 8, -6], scopeOn: 0.35 },
 };
 
-/** Areas of the transversal chapter each own a different region of the field. */
+/**
+ * Each example tab owns a region of the field, in the same order as `oneContent.areas.items`:
+ * ventas, marketing, customer success, atención, operaciones, finanzas and, last, "¿Y tu proceso?",
+ * which lights the whole field.
+ */
 export const areaScopes: [number, number, number, number][] = [
   [-16, -26, -4, -14],
   [-2, -30, 12, -18],
@@ -81,7 +85,6 @@ export const areaScopes: [number, number, number, number][] = [
   [-20, -14, -8, -4],
   [-6, -14, 4, -6],
   [10, -32, 22, -22],
-  [-12, -36, 0, -26],
   [-22, -34, 22, -4],
 ];
 
@@ -95,10 +98,10 @@ export function resolveScene(name: FieldSceneName, layout: "wide" | "narrow", ar
       hero: -0.42,
       friction: -0.3,
       shift: 0,
-      decide: -0.36,
+      execute: -0.36,
       scope: 0,
       areas: -0.5,
-      trust: 0,
+      impact: 0,
       close: 0,
       contact: 0,
       "contact-focus": 0,
@@ -114,7 +117,7 @@ export function resolveScene(name: FieldSceneName, layout: "wide" | "narrow", ar
       scene.eye = [7, 15, 21];
       scene.target = [4, -2.5, -4];
       scene.fov = 56;
-      scene.lift = 0.84;
+      scene.lift = 0.92;
     }
   }
   return scene;

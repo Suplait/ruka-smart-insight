@@ -17,21 +17,22 @@ export function OneDifference() {
           </p>
         </div>
 
-        <div className="mt-16 lg:mt-24" role="table" aria-label="Software frente a Ruka One">
+        <div className="mt-16 lg:mt-24" role="table" aria-label={content.label}>
           <div role="row" className="hidden grid-cols-12 gap-6 pb-5 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--one-muted)] md:grid">
             <span role="columnheader" className="col-span-6"><span className="sr-only">Pregunta</span></span>
             <span role="columnheader" className="col-span-3">{content.columns[0]}</span>
             <span role="columnheader" className="col-span-3 text-[var(--one-accent)]">{content.columns[1]}</span>
           </div>
           {content.rows.map((row, index) => {
-            const same = index === content.rows.length - 1;
+            // The last row is the outcome: its marker rises like a finished tile.
+            const outcome = index === content.rows.length - 1;
             return (
               <div
                 key={row.question}
                 role="row"
                 data-reveal
                 style={{ ["--d" as string]: index }}
-                className={cn("one-ledger-row grid grid-cols-2 gap-x-6 gap-y-3 py-6 md:grid-cols-12 md:items-baseline md:py-8", same && "one-ledger-row--same")}
+                className={cn("one-ledger-row grid grid-cols-2 gap-x-6 gap-y-3 py-6 md:grid-cols-12 md:items-baseline md:py-8", outcome && "one-ledger-row--outcome")}
               >
                 <span role="rowheader" className="col-span-2 text-[clamp(1.25rem,2.4vw,2rem)] font-medium leading-tight tracking-[-0.03em] md:col-span-6">
                   {row.question}
@@ -47,7 +48,7 @@ export function OneDifference() {
               </div>
             );
           })}
-          <p data-reveal className="border-t border-[var(--one-hair)] pt-6 text-sm text-[var(--one-muted)]">{content.note}</p>
+          <p data-reveal className="border-t border-[var(--one-hair)] pt-8 text-balance text-[clamp(1.35rem,2.6vw,2.1rem)] font-semibold leading-[1.15] tracking-[-0.035em] text-white md:pt-10">{content.note}</p>
         </div>
       </div>
     </section>

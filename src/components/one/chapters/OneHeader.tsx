@@ -5,9 +5,9 @@ import { oneContent } from "@/content/oneContent";
 import { OneCta } from "./OneCta";
 
 const links = [
-  { href: `#${oneContent.difference.id}`, label: "Cómo funciona" },
-  { href: `#${oneContent.scope.id}`, label: "Alcance" },
-  { href: `#${oneContent.areas.id}`, label: "Áreas" },
+  { href: `#${oneContent.how.id}`, label: "Cómo funciona" },
+  { href: `#${oneContent.areas.id}`, label: "Ejemplos" },
+  { href: `#${oneContent.impact.id}`, label: "Impacto" },
   { href: `#${oneContent.faq.id}`, label: "Preguntas" },
 ];
 

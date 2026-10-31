@@ -1,9 +1,10 @@
 import type { FieldScene, Vec3 } from "./fieldScenes";
 
 /**
- * "El campo": every tile is one unit of work. Fronts of execution sweep the field,
- * tiles light up and settle as done, and only the agreed decisions rise toward the
- * client. Everything is computed on the GPU from a single instanced draw call.
+ * "El campo": every tile is one task. Agents sweep the field as fronts of execution,
+ * tiles light up and settle as done, and finished outputs rise out of the work that
+ * produced them. In the hero a single tile rises: thousands of tasks, one result.
+ * Everything is computed on the GPU from a single instanced draw call.
  */
 
 const VERTEX = `#version 300 es
@@ -105,22 +106,22 @@ void main() {
   // Pointer light.
   float pd = distance(pos, uPointer.xy);
   float lamp = exp(-pd * pd / 18.0) * uPointer.z;
-  // The risen decision casts light on the field it came from.
+  // The risen result casts light on the field of work that produced it.
   vec2 beaconPos = uOrigin + uBeaconCell * uSpacing;
   float bd = distance(pos, beaconPos);
   float pool = exp(-bd * bd / 22.0) * uBeacon;
 
-  // Decisions that belong to the client.
-  float isDecision = step(s2, 0.0045) * (1.0 - uChaos);
+  // Finished outputs: a sparse set of tiles that rise higher right after a front completes them.
+  float isOutput = step(s2, 0.0045) * (1.0 - uChaos) * mix(0.55, 1.0, done);
   float isGhost = step(s1, -0.5);
   float isBeacon = step(distance(cell, uBeaconCell), 0.1) * (1.0 - isGhost);
-  float riseAmt = max(isDecision * uRise, isBeacon * uBeacon);
+  float riseAmt = max(isOutput * uRise, isBeacon * uBeacon);
   float bob = sin(uTime * 0.9 + s1 * 40.0) * 0.08;
   float y = riseAmt * (isBeacon > 0.5 ? 3.1 : 1.1 + s1 * 2.2) + bob * riseAmt;
   y += lamp * 0.42 + act * 0.07;
   y += (s2 - 0.5) * 0.9 * uChaos * (1.0 - pulled) + s1 * s1 * 2.6 * uChaos * pulled * smoothstep(5.0, 0.0, distance(pos, jam));
 
-  float size = uSpacing * 0.235 * (1.0 + act * 0.12 + isBeacon * uBeacon * 1.5 + isDecision * uRise * 0.7 + lamp * 0.1);
+  float size = uSpacing * 0.235 * (1.0 + act * 0.12 + isBeacon * uBeacon * 1.5 + isOutput * uRise * 0.7 + lamp * 0.1);
   float glow = clamp(riseAmt * 1.0 + act * 0.25, 0.0, 1.2);
   float grow = 1.0 + glow * 1.6;
   vec2 c = aCorner * grow;
@@ -201,7 +202,7 @@ export type FieldEngineOptions = {
 
 type Mutable = FieldScene & { lean: number };
 
-/** World position (x, z) of the decision tile that rises in the hero. */
+/** World position (x, z) of the result tile that rises in the hero. */
 const BEACON: [number, number] = [5, -2];
 
 const SIZE: Record<FieldQuality, [number, number, number]> = {
@@ -346,7 +347,7 @@ export class FieldEngine {
         cells.push(x, z, s1, isBeacon ? 0.5 : s2);
       }
     }
-    // The empty slot the decision rose from.
+    // The empty slot the result rose from.
     cells.push(bx, bz, -1, 0.5);
     this.beaconCell = [bx, bz];
     const inst = new Float32Array(cells);

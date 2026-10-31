@@ -7,8 +7,8 @@ import { OneDifference } from "@/components/one/chapters/OneDifference";
 import { OneHeader } from "@/components/one/chapters/OneHeader";
 import { OneBeaconLabel, OneHero } from "@/components/one/chapters/OneHero";
 import { OneScope } from "@/components/one/chapters/OneScope";
-import { OneSplit } from "@/components/one/chapters/OneSplit";
-import { OneTrust } from "@/components/one/chapters/OneTrust";
+import { OneHow } from "@/components/one/chapters/OneHow";
+import { OneImpact } from "@/components/one/chapters/OneImpact";
 import { useActiveScene, useOneMotion } from "@/components/one/chapters/useOneMotion";
 import { OneField } from "@/components/one/field/OneField";
 import { OneSeo } from "@/components/one/OneSeo";
@@ -47,10 +47,10 @@ export default function One() {
         <OneHero />
         <OneBetween />
         <OneDifference />
-        <OneSplit />
+        <OneHow />
         <OneScope />
         <OneAreas active={area} onActiveChange={setArea} />
-        <OneTrust />
+        <OneImpact />
         <OneFaq />
         <OneFinal />
       </main>

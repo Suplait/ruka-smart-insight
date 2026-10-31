@@ -23,7 +23,8 @@ describe("Ruka One landing", () => {
     renderOne();
     const h1 = screen.getAllByRole("heading", { level: 1 });
     expect(h1).toHaveLength(1);
-    expect(h1[0].textContent?.replace(/\s+/g, " ").trim()).toBe("Tu back office, operado por Ruka.");
+    expect(h1[0].textContent?.replace(/\s+/g, " ").trim()).toBe(oneContent.hero.title);
+    expect(oneContent.hero.title).toMatch(/agentes de IA/i);
     const ctas = Array.from(document.querySelectorAll<HTMLAnchorElement>("a.one-cta"));
     expect(ctas.length).toBeGreaterThanOrEqual(3);
     for (const cta of ctas) expect(cta.getAttribute("href")).toBe("/one/contacto");
@@ -31,7 +32,7 @@ describe("Ruka One landing", () => {
 
   it("keeps the whole narrative and every FAQ answer in the HTML without JS-driven state", () => {
     renderOne();
-    for (const text of [oneContent.difference.title, oneContent.split.title, oneContent.scope.title, oneContent.trust.title, oneContent.trust.platform]) {
+    for (const text of [oneContent.between.eyebrow, oneContent.difference.title, oneContent.difference.note, oneContent.how.title, oneContent.scope.title, oneContent.impact.title, oneContent.impact.roi.copy, oneContent.impact.platform]) {
       expect(document.body.textContent).toContain(text);
     }
     for (const item of oneContent.faq.items) {
@@ -44,7 +45,7 @@ describe("Ruka One landing", () => {
 
   it("lets keyboard users move through the areas as tabs", () => {
     renderOne();
-    const tablist = screen.getByRole("tablist", { name: "Áreas de ejemplo" });
+    const tablist = screen.getByRole("tablist", { name: "Ejemplos por área" });
     const tabs = within(tablist).getAllByRole("tab");
     expect(tabs[0].getAttribute("aria-selected")).toBe("true");
     act(() => { tabs[0].focus(); });
@@ -53,9 +54,25 @@ describe("Ruka One landing", () => {
     expect(document.activeElement).toBe(tabs[1]);
     const panel = document.getElementById("one-area-panel-1")!;
     expect(panel.hidden).toBe(false);
-    expect(panel.textContent).toContain(oneContent.areas.items[1].yours);
+    expect(panel.textContent).toContain(oneContent.areas.items[1].work);
+    expect(panel.textContent).toContain(oneContent.areas.items[1].result);
     fireEvent.keyDown(tablist, { key: "End" });
     expect(tabs[tabs.length - 1].getAttribute("aria-selected")).toBe("true");
+  });
+
+  it("tells the agents-and-impact story, not the old «decision» thesis", () => {
+    renderOne();
+    const text = document.body.textContent ?? "";
+    for (const stale of ["operado por Ruka", "¿Quién decide?", "La última palabra", "Lo que decides tú", "Las decisiones siguen siendo tuyas", "No prometemos que nada falle"]) {
+      expect(text).not.toContain(stale);
+    }
+    // The comparison never answers "Ruka" in its cells; the last row is the outcome.
+    for (const row of oneContent.difference.rows) expect(row.one).not.toMatch(/^Ruka/);
+    const rows = document.querySelectorAll(".one-ledger-row");
+    expect(rows).toHaveLength(oneContent.difference.rows.length);
+    expect(rows[rows.length - 1].classList.contains("one-ledger-row--outcome")).toBe(true);
+    // "¿Y tu proceso?" closes the examples.
+    expect(oneContent.areas.items[oneContent.areas.items.length - 1].name).toBe("¿Y tu proceso?");
   });
 
   it("tracks one_page_view once", () => {
@@ -82,5 +99,19 @@ describe("Ruka One contact form", () => {
     expect(screen.getByText("4 de 4")).toBeTruthy();
     await act(async () => { fireEvent.submit(document.getElementById("one-contact-form")!); });
     expect(onContinue).toHaveBeenCalledWith(value);
+  });
+});
+
+describe("Ruka One field scenes", () => {
+  it("gives every example tab its own region and keeps chapter scenes in sync with the page", async () => {
+    const { areaScopes, resolveScene } = await import("@/components/one/field/fieldScenes");
+    expect(areaScopes).toHaveLength(oneContent.areas.items.length);
+    expect(resolveScene("areas", "wide", 2).scope).toEqual(areaScopes[2]);
+    // Finished outputs rise while the "how it happens" chapter is on screen; the hero lifts the single result tile.
+    expect(resolveScene("execute", "wide").rise).toBe(1);
+    expect(resolveScene("hero", "wide").beacon).toBe(1);
+    renderOne();
+    const scenes = Array.from(document.querySelectorAll("[data-scene]")).map((node) => node.getAttribute("data-scene"));
+    expect(scenes).toEqual(["hero", "friction", "shift", "execute", "scope", "areas", "impact", "rest", "close"]);
   });
 });

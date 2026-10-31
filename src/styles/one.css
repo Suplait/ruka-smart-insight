@@ -374,8 +374,33 @@
   transform: scale(1);
 }
 
-.one-ledger-row--same .one-ledger-cell-one::before {
+.one-ledger-row--outcome .one-ledger-cell-one::before {
   background: #fff;
+  box-shadow: 0 6px 14px -4px rgba(160, 175, 255, 0.9);
+}
+
+/* How it happens: each step's tile sits a little higher; the last one is a finished output. */
+.one-step__tile {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  background: hsl(var(--primary));
+  transform: translateY(calc(var(--lift, 0) * -1.5px));
+  transition: transform 900ms var(--one-ease), box-shadow 900ms var(--one-ease);
+  transition-delay: inherit;
+}
+
+.one-step__tile--outcome {
+  width: 11px;
+  height: 11px;
+  background: #fff;
+  box-shadow: 0 6px 14px -4px rgba(160, 175, 255, 0.9);
+}
+
+[data-one-motion="on"] .one-step:not(.is-in) .one-step__tile {
+  transform: none;
+  box-shadow: none;
 }
 
 /* Scope frame */

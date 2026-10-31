@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { ArrowLeft, CalendarDays, Check, Clock3 } from "lucide-react";
-import { ONE_NAME, type OneLeadData } from "@/content/oneContent";
+import { ONE_NAME, oneContent, type OneLeadData } from "@/content/oneContent";
 
 import { useCalendlyObservation } from "@/hooks/useCalendlyObservation";
 
@@ -65,7 +65,7 @@ function DebugCalendar({ lead, onScheduled, onBack }: OneCalendlyProps) {
         <div className="border-b border-[var(--one-hair)] p-6 lg:border-b-0 lg:border-r lg:p-8">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[hsl(var(--primary)/0.18)] text-[var(--one-accent)]"><CalendarDays className="h-5 w-5" /></div>
           <p className="mt-6 text-xs font-semibold tracking-[0.15em] text-[var(--one-accent)]">RUKA ONE</p>
-          <h3 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-white">Revisión de caso</h3>
+          <h3 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-white">{oneContent.contact.calendarEventTitle}</h3>
           <div className="mt-4 flex items-center gap-2 text-sm text-[var(--one-muted)]"><Clock3 className="h-4 w-4" /> 30 min</div>
           <div className="mt-8 border-t border-[var(--one-hair)] pt-6">
             <p className="text-xs font-semibold text-[var(--one-soft)]">Datos precargados</p>
