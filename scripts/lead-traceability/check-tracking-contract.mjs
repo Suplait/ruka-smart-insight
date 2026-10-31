@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import ts from "typescript";
 
 // A static complement to the runtime guardrail tests. No browser/network activity.
@@ -25,7 +25,8 @@ let total = 0;
 let failed = false;
 for (const file of files) {
   const old = contracts(execFileSync("git", ["show", `${base}:${file}`], { encoding: "utf8" }), file);
-  const current = contracts(readFileSync(file, "utf8"), file);
+  // A removed file is only acceptable when it carried no tracking calls.
+  const current = existsSync(file) ? contracts(readFileSync(file, "utf8"), file) : [];
   total += old.length;
   if (JSON.stringify(old) !== JSON.stringify(current)) { console.error(`Tracking call contract changed: ${file}`); failed = true; }
 }

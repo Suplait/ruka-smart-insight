@@ -1,12 +1,12 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import { ArrowLeft, Clock3, Handshake } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowLeft } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { OneCalendly } from "@/components/one/OneCalendly";
 import { OneContactForm } from "@/components/one/OneContactForm";
 import { OneReviewBanner } from "@/components/one/OneReviewBanner";
 import { OneContactSeo } from "@/components/one/OneSeo";
 import { OneSuccess } from "@/components/one/OneSuccess";
-import type { OneContactVisualState, OneFlockState } from "@/components/one/visual/oneFlockTypes";
+import { OneWordmark } from "@/components/one/landing/OneHeader";
 import { notifyOneCalendlyScheduled, notifyOneLead } from "@/services/oneSlack";
 import {
   emptyOneLead,
@@ -19,11 +19,7 @@ import {
 import { captureOneAttribution, type OneAttribution } from "@/utils/oneAttribution";
 import { getOneDebugStage, isOneDebugEnabled, type OneDebugStage } from "@/utils/oneDebug";
 import { trackOneEvent } from "@/utils/oneTracking";
-
-const OneFlock = lazy(async () => {
-  const module = await import("@/components/one/visual/OneFlock");
-  return { default: module.OneFlock };
-});
+import "@/styles/one.css";
 
 const emptyAttribution: OneAttribution = {
   utm_source: null,
@@ -51,7 +47,6 @@ export default function OneContact() {
   const queryStage = getOneDebugStage(location.search);
   const [stage, setStage] = useState<OneDebugStage>(() => (isDebug ? queryStage : "form"));
   const [lead, setLead] = useState<OneLeadData>(() => (isDebug ? oneDebugLead : emptyOneLead));
-  const [visualState, setVisualState] = useState<OneContactVisualState>(() => isDebug ? "valid" : "idle");
   const attributionRef = useRef<OneAttribution>(emptyAttribution);
   const submissionIdRef = useRef<string | null>(null);
   const slackThreadTsRef = useRef<string | null>(null);
@@ -134,63 +129,52 @@ export default function OneContact() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const flockState: OneFlockState = visualState === "idle" || visualState === "valid"
-    ? visualState
-    : "focus";
-
   return (
-    <div className="min-h-[100dvh] bg-[#fbfcff] text-[#171827]">
+    <div className="one-world min-h-[100dvh]">
       <OneContactSeo />
       {isDebug ? <OneReviewBanner stage={stage} onStageChange={goToStage} /> : null}
-      <header className="border-b border-[#e3e6ed] bg-white/90 px-5 py-4 backdrop-blur-xl sm:px-8">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-6">
-          <Link to="/" aria-label="Ir al inicio de Ruka"><img src="/logo.png" alt="Ruka.ai" className="h-8" /></Link>
-          <Link to={ONE_PATH} className="inline-flex items-center gap-2 text-sm font-semibold text-[#62697b] transition hover:text-[#5369eb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5369eb] focus-visible:ring-offset-4"><ArrowLeft className="h-4 w-4" /> Volver a {ONE_NAME}</Link>
+      <header className="border-b border-[var(--one-rule)] px-4 sm:px-8 lg:px-10">
+        <div className="mx-auto flex h-16 max-w-[84rem] items-center justify-between gap-6 sm:h-[4.5rem]">
+          <OneWordmark />
+          <Link to={ONE_PATH} className="inline-flex items-center gap-2 text-[0.9375rem] text-[var(--one-ink-2)] transition-colors hover:text-[var(--one-ink)]"><ArrowLeft className="h-4 w-4" aria-hidden="true" /> <span className="hidden sm:inline">Volver a {ONE_NAME}</span><span className="sm:hidden">Volver</span></Link>
         </div>
       </header>
 
-      <main className="px-5 py-8 sm:px-8 sm:py-10 lg:py-0">
-        <div className="mx-auto max-w-7xl">
+      <main className="px-4 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
+        <div className="mx-auto max-w-[84rem]">
           {stage === "form" ? (
-            <div className="grid gap-7 lg:min-h-[calc(100dvh-65px)] lg:grid-cols-[minmax(0,1.23fr)_minmax(410px,0.77fr)] lg:items-center lg:gap-8 xl:gap-12">
-              <section
-                data-one-flock-surface
-                className="relative min-h-[390px] overflow-hidden sm:min-h-[430px] lg:min-h-[calc(100dvh-65px)]"
-              >
-                <div className="absolute inset-0">
-                  <Suspense fallback={<EnvironmentLoadFallback />}>
-                    <OneFlock state={flockState} paused={false} />
-                  </Suspense>
-                </div>
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(251,252,255,0.95)_0%,rgba(251,252,255,0.76)_35%,rgba(251,252,255,0.12)_72%,transparent_100%),linear-gradient(180deg,transparent_0%,rgba(251,252,255,0.12)_45%,#fbfcff_91%)] lg:bg-[linear-gradient(90deg,rgba(251,252,255,0.92)_0%,rgba(251,252,255,0.66)_36%,rgba(251,252,255,0.06)_68%,transparent_100%),linear-gradient(180deg,transparent_0%,rgba(251,252,255,0.08)_64%,#fbfcff_100%)]"
-                />
-
-                <div className="relative z-[1] flex min-h-[390px] flex-col justify-center py-12 sm:min-h-[430px] lg:min-h-[calc(100dvh-65px)] lg:max-w-[39rem] lg:py-16">
-                  <p className="text-[11px] font-semibold tracking-[0.18em] text-[#5369eb]">{oneContent.contact.eyebrow}</p>
-                  <h1 className="mt-4 max-w-xl text-balance text-[clamp(2.5rem,4.8vw,4.45rem)] font-semibold leading-[0.96] tracking-[-0.04em] text-[#171827]">{oneContent.contact.title}</h1>
-                  <p className="mt-5 max-w-lg text-pretty text-base leading-7 text-[#5e6678] sm:text-lg sm:leading-8">{oneContent.contact.lead}</p>
-                  <ContactBenefits className="mt-7 hidden lg:grid" />
-                </div>
+            <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
+              <section aria-labelledby="one-contact-title" className="lg:col-span-6">
+                <p className="one-eyebrow flex items-center gap-3 text-[var(--one-ink-2)]">
+                  <span aria-hidden="true" className="inline-block h-[2px] w-8 bg-[var(--one-primary)]" />
+                  {oneContent.contact.eyebrow}
+                </p>
+                <h1 id="one-contact-title" className="one-display mt-6 text-[clamp(2.75rem,5.6vw,5.25rem)]">{oneContent.contact.title}</h1>
+                <p className="one-pretty mt-8 max-w-xl text-[1.1875rem] leading-[1.6] text-[var(--one-ink-2)] sm:text-[1.3125rem]">{oneContent.contact.lead}</p>
+                <ul className="mt-10 grid gap-3 border-t border-[var(--one-rule)] pt-6 text-[1.0625rem] text-[var(--one-ink-2)] sm:grid-cols-3 lg:grid-cols-1">
+                  {oneContent.contact.benefits.map((benefit) => (
+                    <li key={benefit} className="flex items-center gap-3"><span aria-hidden="true" className="h-[2px] w-4 bg-[var(--one-primary)]" />{benefit}</li>
+                  ))}
+                </ul>
               </section>
 
-              <div className="lg:py-10">
+              <div className="lg:col-span-5 lg:col-start-8">
                 <OneContactForm
                   value={lead}
                   onChange={setLead}
                   onContinue={handleContinue}
-                  onVisualStateChange={setVisualState}
                 />
-                <ContactBenefits className="mt-6 grid lg:hidden" />
               </div>
             </div>
           ) : stage === "calendar" ? (
             <div>
-              <p className="text-[11px] font-semibold tracking-[0.18em] text-[#5369eb]">RUKA ONE</p>
-              <h1 className="mt-4 max-w-4xl text-balance text-[clamp(2.5rem,4.8vw,4.7rem)] font-semibold leading-[0.96] tracking-[-0.055em] text-[#171827]">{oneContent.contact.calendarTitle}</h1>
-              <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-[#676e80] sm:text-lg sm:leading-8">{oneContent.contact.calendarLead}</p>
-              <div className="mt-7">
+              <p className="one-eyebrow flex items-center gap-3 text-[var(--one-ink-2)]">
+                <span aria-hidden="true" className="inline-block h-[2px] w-8 bg-[var(--one-primary)]" />
+                {oneContent.contact.eyebrow}
+              </p>
+              <h1 className="one-display mt-6 text-[clamp(2.75rem,5.6vw,5.25rem)]">{oneContent.contact.calendarTitle}</h1>
+              <p className="one-pretty mt-6 max-w-2xl text-[1.1875rem] leading-[1.6] text-[var(--one-ink-2)]">{oneContent.contact.calendarLead}</p>
+              <div className="mt-10">
                 <OneCalendly submissionId={submissionIdRef.current ?? undefined} lead={lead} isDebug={isDebug} onScheduled={handleScheduled} onBack={isDebug ? () => goToStage("form") : undefined} />
               </div>
             </div>
@@ -200,26 +184,5 @@ export default function OneContact() {
         </div>
       </main>
     </div>
-  );
-}
-
-function ContactBenefits({ className }: { className: string }) {
-  return (
-    <div className={`${className} gap-3 border-t border-[#dfe3eb] pt-6 text-sm text-[#596072] sm:grid-cols-3 lg:grid-cols-1`}>
-      <p className="flex items-center gap-3"><Clock3 className="h-4 w-4 text-[#5369eb]" /> 30 minutos</p>
-      <p className="flex items-center gap-3"><Handshake className="h-4 w-4 text-[#5369eb]" /> Sin compromiso</p>
-    </div>
-  );
-}
-
-function EnvironmentLoadFallback() {
-  return (
-    <div
-      aria-hidden="true"
-      className="h-full w-full bg-[#fbfcff]"
-      style={{
-        background: "radial-gradient(ellipse at 62% 32%, rgba(83,105,235,0.12), rgba(251,252,255,0) 58%)",
-      }}
-    />
   );
 }

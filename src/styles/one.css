@@ -1,0 +1,482 @@
+/*
+ * Ruka One — identidad aislada de /one y /one/contacto.
+ * Todo vive bajo .one-world. El único valor heredado del design system de Ruka
+ * es el color primary de los CTA: hsl(var(--primary)) definido en src/index.css.
+ */
+
+@font-face {
+  font-family: "One Serif";
+  src: url("/fonts/one/instrument-serif-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "One Serif";
+  src: url("/fonts/one/instrument-serif-italic-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "One Sans";
+  src: url("/fonts/one/geist-latin.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Fallbacks con métricas cercanas para contener el CLS mientras cargan las fuentes. */
+@font-face {
+  font-family: "One Serif Fallback";
+  src: local("Georgia"), local("Times New Roman");
+  size-adjust: 92%;
+  ascent-override: 96%;
+}
+
+@font-face {
+  font-family: "One Sans Fallback";
+  src: local("Arial"), local("Helvetica");
+  size-adjust: 100%;
+}
+
+.one-world {
+  --one-paper: #f3f1ec;
+  --one-paper-2: #ebe8e1;
+  --one-ink: #121211;
+  --one-ink-2: #45433f;
+  --one-ink-3: #66635c;
+  --one-rule: #d6d2c8;
+  --one-night: #0e0f13;
+  --one-night-2: #17181d;
+  --one-bone: #eeece6;
+  --one-bone-2: #a9a69f;
+  --one-night-rule: #2b2c33;
+  --one-primary: hsl(var(--primary));
+  --one-primary-press: hsl(231 64% 52%);
+  --one-primary-soft: hsl(231 78% 61% / 0.12);
+  --one-primary-on-night: hsl(231 92% 78%);
+  --one-serif: "One Serif", "One Serif Fallback", Georgia, serif;
+  --one-sans: "One Sans", "One Sans Fallback", ui-sans-serif, system-ui, sans-serif;
+  --one-ease: cubic-bezier(0.7, 0, 0.2, 1);
+  --one-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  background: var(--one-paper);
+  color: var(--one-ink);
+  font-family: var(--one-sans);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.one-world ::selection {
+  background: var(--one-primary);
+  color: #fff;
+}
+
+.one-serif {
+  font-family: var(--one-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.one-display {
+  font-family: var(--one-serif);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.one-eyebrow {
+  font-family: var(--one-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.one-pretty {
+  text-wrap: pretty;
+}
+
+.one-night {
+  background: var(--one-night);
+  color: var(--one-bone);
+}
+
+.one-world :focus-visible {
+  outline: 2px solid var(--one-ink);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.one-night :focus-visible {
+  outline-color: var(--one-bone);
+}
+
+/* Enlaces de texto */
+.one-link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 400ms var(--one-ease-out);
+}
+
+.one-link:hover {
+  background-size: 0% 1px;
+  background-position: 100% 100%;
+}
+
+/* ------------------------------------------------------------------ */
+/* CTA: el primary vigente de Ruka, reinventado. La flecha cruza la línea. */
+/* ------------------------------------------------------------------ */
+.one-cta {
+  --cta-h: 4rem;
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  min-height: var(--cta-h);
+  background: var(--one-primary);
+  color: #fff;
+  font-family: var(--one-sans);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  overflow: hidden;
+  isolation: isolate;
+  transition: background-color 250ms ease, transform 200ms var(--one-ease-out);
+}
+
+.one-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--one-primary-press);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 500ms var(--one-ease);
+  z-index: -1;
+}
+
+.one-cta__label {
+  display: flex;
+  align-items: center;
+  padding: 0 1.75rem;
+  white-space: nowrap;
+}
+
+.one-cta__arrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cta-h);
+  border-left: 1px solid rgb(255 255 255 / 0.35);
+  overflow: hidden;
+}
+
+.one-cta__arrow svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 450ms var(--one-ease);
+}
+
+.one-cta__arrow svg + svg {
+  position: absolute;
+  transform: translateX(-260%);
+}
+
+.one-cta:hover::before {
+  transform: scaleX(1);
+}
+
+.one-cta:hover .one-cta__arrow svg:first-child {
+  transform: translateX(260%);
+}
+
+.one-cta:hover .one-cta__arrow svg + svg {
+  transform: translateX(0);
+}
+
+.one-cta:active {
+  transform: scale(0.985);
+}
+
+.one-cta:focus-visible {
+  outline: 2px solid var(--one-ink);
+  outline-offset: 4px;
+}
+
+.one-night .one-cta:focus-visible {
+  outline-color: var(--one-bone);
+}
+
+.one-cta[aria-disabled="true"],
+.one-cta:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.one-cta--compact {
+  --cta-h: 2.75rem;
+  font-size: 0.9375rem;
+}
+
+.one-cta--compact .one-cta__label {
+  padding: 0 1.1rem;
+}
+
+.one-cta--compact .one-cta__arrow svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+@media (max-width: 639px) {
+  .one-cta--compact .one-cta__arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 639px) {
+  .one-cta--block {
+    display: flex;
+    width: 100%;
+  }
+
+  .one-cta--block .one-cta__label {
+    flex: 1;
+    padding: 0 1.25rem;
+    white-space: normal;
+    line-height: 1.25;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* La línea del hero                                                    */
+/* ------------------------------------------------------------------ */
+.one-line {
+  --gap: clamp(0.75rem, 2.2vw, 1.75rem);
+  position: relative;
+}
+
+.one-line__rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--one-primary);
+  transform-origin: top;
+  animation: one-draw-y 900ms var(--one-ease) 150ms backwards;
+}
+
+.one-line__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: 2.6rem;
+}
+
+.one-line__word {
+  grid-column: 2;
+  justify-self: start;
+  margin-left: var(--gap);
+  font-size: clamp(0.875rem, 1.25vw, 1.0625rem);
+  color: var(--one-ink-2);
+  white-space: nowrap;
+  animation: one-cross 1100ms var(--one-ease) backwards;
+  animation-delay: calc(900ms + var(--i) * 170ms);
+}
+
+.one-line__word::before {
+  content: "";
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-right: 0.6rem;
+  border-radius: 999px;
+  background: var(--one-primary);
+  vertical-align: 0.12em;
+  animation: one-fade-in 400ms ease backwards;
+  animation-delay: calc(1900ms + var(--i) * 170ms);
+}
+
+.one-line__keep {
+  grid-column: 1;
+  justify-self: end;
+  margin-right: var(--gap);
+  font-family: var(--one-serif);
+  font-style: italic;
+  font-size: clamp(1.45rem, 2.3vw, 2rem);
+  line-height: 1;
+  color: var(--one-ink);
+  animation: one-settle 900ms var(--one-ease-out) backwards;
+  animation-delay: calc(1300ms + var(--i) * 170ms);
+}
+
+@keyframes one-draw-y {
+  from { transform: scaleY(0); }
+}
+
+@keyframes one-cross {
+  0% { transform: translateX(calc(-100% - 2 * var(--gap) - 2px)); color: var(--one-ink); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes one-settle {
+  0% { opacity: 0.25; transform: translateY(0.25rem); }
+}
+
+@keyframes one-fade-in {
+  from { opacity: 0; }
+}
+
+/* ------------------------------------------------------------------ */
+/* El trabajo entre sistemas: la línea tacha lo que deja de ser tuyo.   */
+/* ------------------------------------------------------------------ */
+.one-strike {
+  background-image: linear-gradient(var(--one-primary), var(--one-primary));
+  background-repeat: no-repeat;
+  background-position: 0 58%;
+  background-size: 0% 2px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size 900ms var(--one-ease), color 900ms ease;
+}
+
+.is-struck .one-strike {
+  background-size: 100% 2px;
+  color: var(--one-ink-3);
+}
+
+/* ------------------------------------------------------------------ */
+/* Transferencia                                                        */
+/* ------------------------------------------------------------------ */
+.one-split {
+  --split: 88%;
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--split) 1fr;
+  transition: grid-template-columns 900ms var(--one-ease);
+}
+
+.one-split__team {
+  background: repeating-linear-gradient(135deg, transparent 0 7px, rgb(18 18 17 / 0.07) 7px 8px);
+}
+
+.one-split__one {
+  background: var(--one-primary-soft);
+  border-left: 2px solid var(--one-primary);
+}
+
+.one-step {
+  transition: opacity 600ms ease;
+}
+
+/* Inactive steps recede without dropping below AA contrast. */
+.one-step h3 {
+  transition: color 600ms ease;
+}
+
+@media (min-width: 1024px) {
+  .one-steps[data-enhanced="true"] .one-step:not([data-active="true"]) {
+    border-top-color: var(--one-rule);
+  }
+
+  .one-steps[data-enhanced="true"] .one-step:not([data-active="true"]) h3 {
+    color: var(--one-ink-3);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Revelado general                                                     */
+/* ------------------------------------------------------------------ */
+.one-reveal[data-enhanced="true"]:not(.is-visible) {
+  opacity: 0;
+  transform: translateY(1.5rem);
+}
+
+.one-reveal {
+  transition: opacity 900ms var(--one-ease-out), transform 900ms var(--one-ease-out);
+}
+
+/* Logos de clientes de Ruka */
+.one-logo {
+  filter: grayscale(1) contrast(1.05);
+  mix-blend-mode: multiply;
+  opacity: 0.72;
+  transition: opacity 300ms ease, filter 300ms ease;
+}
+
+.one-logo:hover {
+  opacity: 1;
+  filter: none;
+}
+
+/* FAQ */
+.one-faq summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.one-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.one-faq__mark {
+  transition: transform 400ms var(--one-ease);
+}
+
+.one-faq details[open] .one-faq__mark {
+  transform: rotate(45deg);
+}
+
+/* Formularios de contacto */
+.one-field {
+  width: 100%;
+  height: 3.5rem;
+  border: 0;
+  border-bottom: 1px solid var(--one-ink-3);
+  background: transparent;
+  padding: 0;
+  font-family: var(--one-sans);
+  font-size: 1.125rem;
+  color: var(--one-ink);
+  border-radius: 0;
+  transition: border-color 250ms ease, box-shadow 250ms ease;
+}
+
+.one-field::placeholder {
+  color: #716d66;
+}
+
+.one-field:focus {
+  outline: none;
+  border-bottom-color: var(--one-primary);
+  box-shadow: 0 2px 0 0 var(--one-primary);
+}
+
+.one-field[aria-invalid="true"] {
+  border-bottom-color: #a3283c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .one-world *,
+  .one-world *::before,
+  .one-world *::after {
+    animation: none !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .one-reveal[data-enhanced="true"]:not(.is-visible) {
+    opacity: 1;
+    transform: none;
+  }
+}

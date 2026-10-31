@@ -9,8 +9,9 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "
 const siteOrigin = "https://www.ruka.ai";
 const pageModified = JSON.parse(await readFile(path.join(projectRoot, "src/content/pageModified.json"), "utf8"));
 const suppliers = JSON.parse(await readFile(path.join(projectRoot, "config/supplier-profiles.json"), "utf8"));
-const oneDescription = "Con Ruka One llevamos procesos propios de tu empresa a operar sobre tus sistemas, reglas y datos actuales, sin reemplazar el software que ya usas.";
-const oneServiceDescription = "Ruka One es la forma de trabajar con Ruka sobre procesos específicos de una empresa, llevándolos a operar sobre sus sistemas, reglas y datos actuales.";
+const oneDescription = "Ruka One asume procesos completos de tu back office con agentes IA, integraciones y supervisión humana. Respondemos por resultados acordados; tú decides.";
+const oneServiceDescription = "Ruka One es un servicio de operación delegada de back office: Ruka asume procesos completos de una empresa con agentes IA, integraciones y supervisión humana, y responde por los resultados acordados.";
+const oneTitle = "Back office con IA, operado por nosotros | Ruka One";
 
 const routes = [
   { path: "/herramientas/margen-markup", title: "Calculadora de margen y markup: no son lo mismo | Ruka", h1: "Un margen de 40% no es sumar 40%.", canonical: `${siteOrigin}/herramientas/margen-markup`, schema: ["Organization", "WebSite", "WebApplication", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" },
@@ -115,9 +116,9 @@ const routes = [
   },
   {
     path: "/one",
-    title: "Automatización de procesos empresariales | Ruka One",
+    title: oneTitle,
     canonical: `${siteOrigin}/one`,
-    h1: "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
+    h1: "Tu equipo decide. Del resto nos hacemos cargo.",
     schema: ["Organization", "WebSite", "Service", "WebPage", "BreadcrumbList", "FAQPage"],
     ogImage: `${siteOrigin}/ruka-one-og.png`,
   },
@@ -195,7 +196,7 @@ const noIndexRoutes = [
     path: "/one/contacto",
     title: "Cuéntanos tu proceso | Ruka One",
     canonical: `${siteOrigin}/one/contacto`,
-    h1: "¿Qué parte de tu operación sigue siendo manual?",
+    h1: "Cuéntanos qué operación quieres delegar.",
   },
 ];
 
@@ -487,18 +488,22 @@ const oneVisibleText = textContent(oneHtml);
 assert(!oneHtml.includes("Ruka Works"), "/one: todavía contiene la marca pública Ruka Works");
 assert(!oneHtml.includes(`${siteOrigin}/works`), "/one: todavía referencia la URL legacy /works");
 assert(/<html\b[^>]*lang="es-CL"/i.test(oneHtml), "/one: html lang debe ser es-CL");
-assert(getTagAttribute(oneHtml, "property", "og:title", "content") === "Automatización de procesos empresariales | Ruka One", "/one: og:title inesperado");
+assert(getTagAttribute(oneHtml, "property", "og:title", "content") === oneTitle, "/one: og:title inesperado");
 assert(getTagAttribute(oneHtml, "property", "og:description", "content") === oneDescription, "/one: og:description inesperada");
 assert(getTagAttribute(oneHtml, "property", "og:locale", "content") === "es_CL", "/one: og:locale debe ser es_CL");
 assert(getTagAttribute(oneHtml, "property", "og:site_name", "content") === "Ruka.ai", "/one: og:site_name debe ser Ruka.ai");
 assert(getTagAttribute(oneHtml, "name", "googlebot", "content")?.includes("max-image-preview:large"), "/one: falta directiva Googlebot de preview grande");
 for (const requiredText of [
-  "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
-  "Ruka parte de procesos que ya estandarizamos. Ruka One parte del tuyo.",
-  "Ruka One usa la misma base tecnológica que hoy procesa millones de registros operativos para cientos de empresas.",
+  "Tu equipo decide.",
+  "Del resto nos hacemos cargo.",
+  "Una nueva forma de contratar trabajo operacional.",
+  "Responsabilidad, por escrito.",
+  "Lo que no prometemos",
+  "Ejemplos ilustrativos, no casos de clientes.",
+  "Son clientes de los productos estandarizados de Ruka, no casos de Ruka One.",
   "¿Qué es Ruka One?",
-  "¿Cuál es la diferencia entre Ruka y Ruka One?",
-  "¿Qué tipo de procesos trabajamos con Ruka One?",
+  "¿Es lo mismo que externalizar procesos o contratar un BPO?",
+  "¿Quién responde si algo sale mal?",
 ]) {
   assert(oneVisibleText.includes(requiredText), `/one: falta contenido esencial prerenderizado (${requiredText})`);
 }
@@ -508,6 +513,12 @@ for (const forbiddenText of [
   "si tiene sentido que Ruka",
   "Ruka los convierte",
   "Ruka One convierte",
+  // Ruka One no se presenta como log técnico ni demo de ERP.
+  "Solicitud recibida",
+  "Consultando sistema de origen",
+  "Contexto encontrado",
+  "Aplicando regla",
+  "Sistema actualizado",
 ]) {
   assert(!oneVisibleText.includes(forbiddenText), `/one: conserva copy de posicionamiento débil (${forbiddenText})`);
 }
@@ -519,8 +530,8 @@ assert(
 const oneSchemaValues = parseSchema(oneHtml, "/one").values.flatMap((schema) => schema["@graph"] ?? [schema]);
 const oneService = oneSchemaValues.find((schema) => schema?.["@type"] === "Service");
 assert(
-  oneService?.serviceType === "Automatización de procesos empresariales",
-  "/one: serviceType no representa automatización de procesos empresariales",
+  oneService?.serviceType === "Operación de back office con IA",
+  "/one: serviceType no representa la operación de back office con IA",
 );
 assert(oneService?.name === "Ruka One", "/one: Service schema no usa el nombre Ruka One");
 assert(oneService?.url === `${siteOrigin}/one`, "/one: Service schema tiene URL incorrecta");
@@ -529,7 +540,7 @@ assert(oneService?.provider?.["@id"] === `${siteOrigin}/#organization`, "/one: S
 assert(oneService?.areaServed?.identifier === "CL", "/one: Service schema no declara Chile/CL");
 
 const oneFaqSchema = oneSchemaValues.find((schema) => schema?.["@type"] === "FAQPage");
-assert(oneFaqSchema?.mainEntity?.length === 7, `/one: FAQPage debe contener 7 preguntas y contiene ${oneFaqSchema?.mainEntity?.length ?? 0}`);
+assert(oneFaqSchema?.mainEntity?.length === 8, `/one: FAQPage debe contener 8 preguntas y contiene ${oneFaqSchema?.mainEntity?.length ?? 0}`);
 for (const question of oneFaqSchema?.mainEntity ?? []) {
   assert(oneVisibleText.includes(question.name), `/one: pregunta FAQ ausente del HTML visible: ${question.name}`);
   assert(oneVisibleText.includes(question.acceptedAnswer?.text), `/one: respuesta FAQ ausente del HTML visible: ${question.name}`);
@@ -544,7 +555,7 @@ assert(oneBreadcrumb?.itemListElement?.[1]?.item === `${siteOrigin}/one`, "/one:
 const oneContactHtml = await readFile(routeFile("/one/contacto"), "utf8");
 const oneContactVisibleText = textContent(oneContactHtml);
 assert(
-  oneContactVisibleText.includes("Elige una hora y cuéntanos cómo funciona hoy. Vemos contigo cómo llevar ese proceso a operar sobre Ruka."),
+  oneContactVisibleText.includes("Déjanos tus datos y elige una hora. En 30 minutos entendemos cómo funciona hoy y te decimos con claridad qué parte podemos asumir."),
   "/one/contacto: falta el posicionamiento final del formulario",
 );
 for (const forbiddenText of ["si Ruka puede ayudar", "si podemos ayudarte", "si tiene sentido", "evaluamos si"]) {
@@ -553,8 +564,8 @@ for (const forbiddenText of ["si Ruka puede ayudar", "si podemos ayudarte", "si 
 
 const oneContentSource = await readFile(path.join(projectRoot, "src", "content", "oneContent.ts"), "utf8");
 for (const requiredText of [
-  "Nos cuentas cómo funciona hoy y vemos juntos cómo llevarlo a operar sobre Ruka.",
-  "Partimos por tu proceso tal como funciona hoy.",
+  "Trae la operación tal como funciona hoy. No necesitas llegar con la solución.",
+  "Revisa tu correo: ahí está la invitación.",
 ]) {
   assert(oneContentSource.includes(requiredText), `oneContent.ts: falta copy final del funnel (${requiredText})`);
 }
@@ -562,7 +573,7 @@ for (const requiredText of [
 const oneOgSvg = await readFile(path.join(projectRoot, "public", "ruka-one-og.svg"), "utf8");
 assert(oneOgSvg.includes("RUKA ONE"), "ruka-one-og.svg: falta branding RUKA ONE");
 assert(!oneOgSvg.includes("RUKA WORKS"), "ruka-one-og.svg: todavía contiene RUKA WORKS");
-assert(oneOgSvg.includes("Partimos de tu proceso y trabajamos contigo"), "ruka-one-og.svg: conserva el posicionamiento anterior");
+assert(oneOgSvg.includes("Del resto nos") && oneOgSvg.includes("hacemos cargo."), "ruka-one-og.svg: no refleja el posicionamiento de Ruka One");
 const oneOgPng = await readFile(path.join(projectRoot, "public", "ruka-one-og.png"));
 assert(oneOgPng.subarray(1, 4).toString("ascii") === "PNG", "ruka-one-og.png: no es un PNG válido");
 assert(oneOgPng.readUInt32BE(16) === 1200, `ruka-one-og.png: ancho inesperado (${oneOgPng.readUInt32BE(16)})`);

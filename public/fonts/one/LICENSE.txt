@@ -1,0 +1,6 @@
+Fonts used only by Ruka One (/one, /one/contacto). Latin subsets, self-hosted.
+
+- Instrument Serif (regular, italic) — Copyright 2022 The Instrument Serif Project Authors (https://github.com/Instrument/instrument-serif)
+- Geist (variable 300–700) — Copyright 2024 The Geist Project Authors (https://github.com/vercel/geist-font)
+
+Both are licensed under the SIL Open Font License, Version 1.1: https://openfontlicense.org
