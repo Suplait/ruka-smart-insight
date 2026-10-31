@@ -21,9 +21,10 @@ function getCalendarUrl() {
     const url = new URL(rawCalendarUrl);
     url.searchParams.set("hide_event_type_details", "1");
     url.searchParams.set("hide_gdpr_banner", "1");
-    url.searchParams.set("background_color", "ffffff");
-    url.searchParams.set("text_color", "171827");
-    url.searchParams.set("primary_color", "5369eb");
+    url.searchParams.set("background_color", "f3f1ec");
+    url.searchParams.set("text_color", "121211");
+    // Ruka primary (--primary: 231 78% 61% in src/index.css).
+    url.searchParams.set("primary_color", "4e65e9");
     return url.toString();
   } catch {
     return rawCalendarUrl;
@@ -37,8 +38,8 @@ function DebugCalendar({ lead, onScheduled, onBack }: OneCalendlyProps) {
     <div id="one-debug-calendar" className="overflow-hidden rounded-2xl border border-[#dfe3eb] bg-white">
       <div className="grid min-h-[610px] lg:grid-cols-[0.72fr_1.28fr]">
         <div className="border-b border-[#e3e6ed] bg-[#f8f9fc] p-6 lg:border-b-0 lg:border-r lg:p-8">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef1ff] text-[#5369eb]"><CalendarDays className="h-5 w-5" /></div>
-          <p className="mt-6 text-xs font-semibold tracking-[0.15em] text-[#5369eb]">RUKA ONE</p>
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef1ff] text-[var(--one-primary)]"><CalendarDays className="h-5 w-5" /></div>
+          <p className="mt-6 text-xs font-semibold tracking-[0.15em] text-[var(--one-primary)]">RUKA ONE</p>
           <h3 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-[#202231]">Revisión de caso</h3>
           <div className="mt-4 flex items-center gap-2 text-sm text-[#6e7485]"><Clock3 className="h-4 w-4" /> 30 min</div>
           <div className="mt-8 border-t border-[#dfe3eb] pt-6">
@@ -52,14 +53,14 @@ function DebugCalendar({ lead, onScheduled, onBack }: OneCalendlyProps) {
           <div className="mt-6 grid grid-cols-7 gap-1.5 text-center text-[11px] text-[#8b91a1]">
             {["L", "M", "M", "J", "V", "S", "D"].map((day, index) => <span key={`${day}-${index}`} className="py-2">{day}</span>)}
             {Array.from({ length: 35 }, (_, index) => (
-              <span key={index} className={`flex aspect-square items-center justify-center rounded-full text-xs ${index === 17 ? "bg-[#5369eb] font-semibold text-white" : index > 2 && index < 31 ? "text-[#3f4352]" : "text-[#c2c6d0]"}`}>{index < 3 ? 29 + index : index - 2}</span>
+              <span key={index} className={`flex aspect-square items-center justify-center rounded-full text-xs ${index === 17 ? "bg-[var(--one-primary)] font-semibold text-white" : index > 2 && index < 31 ? "text-[#3f4352]" : "text-[#c2c6d0]"}`}>{index < 3 ? 29 + index : index - 2}</span>
             ))}
           </div>
           <div className="mt-7 grid grid-cols-2 gap-2 sm:grid-cols-3">
-            {["09:30", "11:00", "12:30", "15:00", "16:30", "17:30"].map((time, index) => <button key={time} type="button" className={`rounded-lg border px-3 py-2.5 text-xs font-semibold ${index === 1 ? "border-[#5369eb] bg-[#f1f3ff] text-[#5369eb]" : "border-[#dfe3eb] text-[#555b6d]"}`}>{time}</button>)}
+            {["09:30", "11:00", "12:30", "15:00", "16:30", "17:30"].map((time, index) => <button key={time} type="button" className={`rounded-lg border px-3 py-2.5 text-xs font-semibold ${index === 1 ? "border-[var(--one-primary)] bg-[#f1f3ff] text-[var(--one-primary)]" : "border-[#dfe3eb] text-[#555b6d]"}`}>{time}</button>)}
           </div>
           <div className="mt-8 flex flex-wrap gap-3">
-            <button type="button" onClick={() => onScheduled("debug://one-booking")} className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#5369eb] px-5 text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5369eb] focus-visible:ring-offset-4"><Check className="h-4 w-4" /> Simular agendamiento</button>
+            <button type="button" onClick={() => onScheduled("debug://one-booking")} className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[var(--one-primary)] px-5 text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--one-primary)] focus-visible:ring-offset-4"><Check className="h-4 w-4" /> Simular agendamiento</button>
             {onBack ? <button type="button" onClick={onBack} className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-[#d9dde7] bg-white px-5 text-sm font-semibold text-[#474b5b]"><ArrowLeft className="h-4 w-4" /> Volver al formulario</button> : null}
           </div>
         </div>
@@ -124,8 +125,8 @@ export function OneCalendly(props: OneCalendlyProps) {
 
   if (!calendarUrl) {
     return (
-      <div className="rounded-2xl border border-[#dfe3eb] bg-white p-8 text-center sm:p-14">
-        <CalendarDays className="mx-auto h-9 w-9 text-[#5369eb]" />
+      <div className="border-t border-[var(--one-ink)] p-8 text-center sm:p-14">
+        <CalendarDays className="mx-auto h-9 w-9 text-[var(--one-primary)]" />
         <h3 className="mt-5 text-xl font-semibold text-[#252736]">Calendario pendiente de configuración</h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#6c7283]">Tus datos ya fueron enviados al equipo. Falta configurar el calendario independiente de {ONE_NAME}.</p>
       </div>
@@ -136,7 +137,7 @@ export function OneCalendly(props: OneCalendlyProps) {
     <div
       ref={mountRef}
       id="one-calendly-embed"
-      className="h-[720px] w-full min-w-0 overflow-hidden rounded-2xl border border-[#dfe3eb] bg-white sm:h-[760px] [&_iframe]:!h-full [&_iframe]:!min-h-full [&_iframe]:!w-full"
+      className="h-[720px] w-full min-w-0 overflow-hidden border-t border-[var(--one-ink)] bg-[var(--one-paper)] sm:h-[760px] [&_iframe]:!h-full [&_iframe]:!min-h-full [&_iframe]:!w-full"
     />
   );
 }

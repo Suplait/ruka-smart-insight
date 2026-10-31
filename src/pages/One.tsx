@@ -1,21 +1,22 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
-import { BeforeAfter } from "@/components/one/BeforeAfter";
-import { FamiliarPatterns } from "@/components/one/FamiliarPatterns";
-import { OneFaq } from "@/components/one/OneFaq";
-import { OneFinalCta } from "@/components/one/OneFinalCta";
-import { OneHero } from "@/components/one/OneHero";
-import { OneMethod } from "@/components/one/OneMethod";
+import { OneAgreement } from "@/components/one/landing/OneAgreement";
+import { OneBetween } from "@/components/one/landing/OneBetween";
+import { OneClosing } from "@/components/one/landing/OneClosing";
+import { OneDefinition } from "@/components/one/landing/OneDefinition";
+import { OneExamples } from "@/components/one/landing/OneExamples";
+import { OneFaq } from "@/components/one/landing/OneFaq";
+import { OneFooter } from "@/components/one/landing/OneFooter";
+import { OneHeader } from "@/components/one/landing/OneHeader";
+import { OneHero } from "@/components/one/landing/OneHero";
+import { OneOrigin } from "@/components/one/landing/OneOrigin";
+import { OneIntelligence, OneOutcomes } from "@/components/one/landing/OneOutcomes";
+import { OneTransfer } from "@/components/one/landing/OneTransfer";
 import { OneSeo } from "@/components/one/OneSeo";
-import { OneSocialProof } from "@/components/one/OneSocialProof";
-import { OneStartingPoint } from "@/components/one/OneStartingPoint";
-import { OneTestimonial } from "@/components/one/OneTestimonial";
 import { captureOneAttribution } from "@/utils/oneAttribution";
 import { isOneDebugEnabled } from "@/utils/oneDebug";
 import { trackOneEvent } from "@/utils/oneTracking";
-import { ONE_CONTACT_PATH } from "@/content/oneContent";
+import "@/styles/one.css";
 
 export default function One() {
   const location = useLocation();
@@ -30,23 +31,26 @@ export default function One() {
   }, [location.pathname, location.search]);
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-[#fbfcff] text-[#171827]">
+    <div className="one-world min-h-screen overflow-x-clip">
       <OneSeo />
-      <Navbar
-        primaryAction={{ label: "Conversemos", path: ONE_CONTACT_PATH }}
-      />
-      <main>
+      <a href="#contenido" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-[var(--one-ink)] focus:px-4 focus:py-2 focus:text-[var(--one-paper)]">
+        Saltar al contenido
+      </a>
+      <OneHeader />
+      <main id="contenido">
         <OneHero />
-        <OneSocialProof />
-        <OneStartingPoint />
-        <FamiliarPatterns />
-        <BeforeAfter />
-        <OneMethod />
-        <OneTestimonial />
+        <OneDefinition />
+        <OneBetween />
+        <OneTransfer />
+        <OneAgreement />
+        <OneOutcomes />
+        <OneIntelligence />
+        <OneExamples />
+        <OneOrigin />
         <OneFaq />
-        <OneFinalCta />
+        <OneClosing />
       </main>
-      <Footer />
+      <OneFooter />
     </div>
   );
 }

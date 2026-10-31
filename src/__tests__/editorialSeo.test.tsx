@@ -44,7 +44,7 @@ describe("editorial identity and discovery", () => {
       expect(date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(Number.isNaN(Date.parse(date))).toBe(false);
     }
-    expect(pageModified["/one"]).toBe("2026-10-08");
+    expect(pageModified["/one"]).toBe("2026-10-31");
   });
 });
 
