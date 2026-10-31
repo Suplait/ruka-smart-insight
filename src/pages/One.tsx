@@ -47,7 +47,7 @@ export default function One() {
         <OneHero />
         <OneBetween />
         <OneDifference />
-        <OneHow />
+        <OneHow scene={scene} />
         <OneScope />
         <OneAreas active={area} onActiveChange={setArea} />
         <OneImpact />

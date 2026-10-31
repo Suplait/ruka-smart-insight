@@ -33,20 +33,28 @@ export function OneImpact() {
           <div className="lg:col-span-6">
             <p data-reveal className="max-w-[40rem] text-pretty text-lg leading-[1.6] text-[var(--one-soft)] lg:text-xl">{content.lead}</p>
             <h3 data-reveal style={{ ["--d" as string]: 1 }} className="mt-10 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--one-accent)]">{content.metricsLabel}</h3>
-            <ul data-reveal style={{ ["--d" as string]: 2 }} className="mt-4 flex flex-wrap gap-2">
-              {content.metrics.map((metric) => (
-                <li key={metric} className="one-metric inline-flex min-h-[36px] items-center gap-2.5 rounded-full border border-[var(--one-hair-strong)] bg-[rgba(5,7,16,0.7)] px-3.5 text-[14.5px] text-white">
-                  <span aria-hidden="true" className="h-[7px] w-[7px] flex-none rounded-[2px] bg-[hsl(var(--primary))]" />
-                  {metric}
-                </li>
+            <dl data-reveal style={{ ["--d" as string]: 2 }} className="mt-5 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+              {content.metricGroups.map((group) => (
+                <div key={group.name} className="border-t border-[var(--one-hair)] pt-4">
+                  <dt className="text-[13px] font-semibold tracking-[0.02em] text-white">{group.name}</dt>
+                  <dd className="mt-2.5 flex flex-wrap gap-2">
+                    {group.items.map((metric) => (
+                      <span key={metric} className="one-metric inline-flex min-h-[34px] items-center gap-2.5 rounded-full border border-[var(--one-hair-strong)] bg-[rgba(5,7,16,0.7)] px-3.5 text-[14.5px] text-[var(--one-soft)]">
+                        <span aria-hidden="true" className="h-[7px] w-[7px] flex-none rounded-[2px] bg-[hsl(var(--primary))]" />
+                        {metric}
+                      </span>
+                    ))}
+                  </dd>
+                </div>
               ))}
-            </ul>
+            </dl>
             <p data-reveal style={{ ["--d" as string]: 3 }} className="mt-4 text-sm leading-6 text-[var(--one-muted)]">{content.metricsNote}</p>
           </div>
           <div data-reveal style={{ ["--d" as string]: 2 }} className="lg:col-span-5 lg:col-start-8">
             <div className="rounded-3xl border border-[var(--one-hair-strong)] bg-[rgba(5,7,16,0.9)] p-7 lg:p-9">
               <span aria-hidden="true" className="block h-[11px] w-[11px] rounded-[3px] bg-white shadow-[0_6px_14px_-4px_rgba(160,175,255,0.9)]" />
               <h3 className="mt-7 text-[clamp(1.5rem,2.6vw,2.2rem)] font-semibold leading-tight tracking-[-0.035em]">{content.roi.title}</h3>
+              <p className="mt-6 rounded-xl border border-[var(--one-hair)] bg-[rgba(10,14,32,0.8)] px-4 py-3 font-mono text-[13.5px] leading-[1.5] text-white">{content.roi.formula}</p>
               <p className="mt-4 text-pretty text-[16.5px] leading-[1.6] text-[var(--one-soft)]">{content.roi.copy}</p>
             </div>
           </div>

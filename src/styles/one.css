@@ -379,28 +379,261 @@
   box-shadow: 0 6px 14px -4px rgba(160, 175, 255, 0.9);
 }
 
-/* How it happens: each step's tile sits a little higher; the last one is a finished output. */
-.one-step__tile {
-  flex: none;
-  width: 9px;
-  height: 9px;
-  border-radius: 3px;
-  background: hsl(var(--primary));
-  transform: translateY(calc(var(--lift, 0) * -1.5px));
-  transition: transform 900ms var(--one-ease), box-shadow 900ms var(--one-ease);
-  transition-delay: inherit;
+/* ---------- Cómo ocurre: the field explains, the DOM names each beat ---------- */
+/*
+ * The global mobile reset sets overflow-x: hidden on html and body, which turns body into a
+ * scroll container and breaks position: sticky. clip keeps horizontal overflow hidden without
+ * creating one. Scoped to pages that render this chapter.
+ */
+html:has(.one-how),
+html:has(.one-how) body {
+  overflow-x: clip;
 }
 
-.one-step__tile--outcome {
+.one-how__beats {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.one-how__beat {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.one-how__stage {
+  position: relative;
+  padding: 7rem 0;
+}
+
+.one-how__shade-top {
+  background: linear-gradient(180deg, rgba(3, 4, 10, 0.94) 0%, rgba(3, 4, 10, 0.72) 58%, rgba(3, 4, 10, 0) 100%);
+}
+
+.one-how__shade-bottom {
+  background: linear-gradient(0deg, rgba(3, 4, 10, 0.95) 0%, rgba(3, 4, 10, 0.78) 50%, rgba(3, 4, 10, 0) 100%);
+}
+
+.one-how:not(.is-live) .one-how__shade-top {
+  height: 100%;
+  background: rgba(3, 4, 10, 0.72);
+}
+
+.one-how:not(.is-live) .one-how__shade-bottom {
+  display: none;
+}
+
+.one-how__rail {
+  max-width: 30rem;
+  margin-top: 2.75rem;
+}
+
+.one-how__ticks {
+  display: none;
+}
+
+.one-how__list {
+  display: grid;
+}
+
+.one-how__item {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  column-gap: 14px;
+  padding: 16px 0;
+  border-top: 1px solid var(--one-hair);
+}
+
+.one-how__item > .one-how__mark {
+  margin-top: 10px;
+}
+
+.one-how__label {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: clamp(1.35rem, 2.1vw, 1.8rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.032em;
+  color: var(--one-text);
+  transition: color 600ms var(--one-ease);
+}
+
+.one-how__num {
+  flex: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  font-variant-numeric: tabular-nums;
+  color: var(--one-accent);
+}
+
+.one-how__reveal {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 700ms var(--one-ease), opacity 600ms var(--one-ease);
+}
+
+.one-how__text {
+  min-height: 0;
+  overflow: hidden;
+  max-width: 26rem;
+  padding-top: 6px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--one-soft);
+  text-wrap: pretty;
+}
+
+/* Markers: the same tile at each beat — loose, designed, running, risen. */
+.one-how__mark {
+  display: block;
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  transition: transform 700ms var(--one-ease), opacity 500ms var(--one-ease), box-shadow 700ms var(--one-ease);
+}
+
+.one-how__mark--0 {
+  background: #4a5175;
+  transform: translate(-2px, 2px) rotate(28deg);
+}
+
+.one-how__mark--1 {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px hsl(var(--primary));
+}
+
+.one-how__mark--2 {
+  background: hsl(var(--primary));
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.22);
+}
+
+.one-how__mark--3 {
   width: 11px;
   height: 11px;
   background: #fff;
   box-shadow: 0 6px 14px -4px rgba(160, 175, 255, 0.9);
+  transform: translateY(-3px);
 }
 
-[data-one-motion="on"] .one-step:not(.is-in) .one-step__tile {
-  transform: none;
-  box-shadow: none;
+/* Live: the stage pins while the field plays each beat; native scroll, nothing is captured. */
+.one-how.is-live {
+  height: calc(100svh + var(--how-pin));
+}
+
+.one-how.is-live .one-how__stage {
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: 100svh;
+  padding: 0;
+  overflow: hidden;
+}
+
+.one-how.is-live .one-how__frame {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 92px;
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+}
+
+.one-how.is-live .one-how__item[data-state="past"] .one-how__label {
+  color: #b9bfd0;
+}
+
+.one-how.is-live .one-how__item[data-state="next"] .one-how__label {
+  color: var(--one-muted);
+}
+
+.one-how.is-live .one-how__item:not([data-state="active"]) .one-how__reveal {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+.one-how.is-live .one-how__item:not([data-state="active"]) > .one-how__mark {
+  opacity: 0.45;
+}
+
+@media (min-width: 1024px) {
+  .one-how__stage {
+    padding: 10rem 0;
+  }
+
+  .one-how.is-live .one-how__frame {
+    justify-content: center;
+    padding-top: 68px;
+    padding-bottom: 0;
+  }
+}
+
+/* Portrait: title above, the region in the middle, one caption below. */
+@media (max-width: 1023px) {
+  .one-how.is-live .one-how__ticks {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 148px;
+    margin-bottom: 18px;
+  }
+
+  .one-how.is-live .one-how__ticks::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    top: 50%;
+    height: 1px;
+    background: var(--one-hair-strong);
+  }
+
+  .one-how.is-live .one-how__ticks .one-how__mark {
+    position: relative;
+    opacity: 0.4;
+  }
+
+  .one-how.is-live .one-how__ticks .one-how__mark.is-past {
+    opacity: 0.75;
+  }
+
+  .one-how.is-live .one-how__ticks .one-how__mark.is-active {
+    opacity: 1;
+    scale: 1.35;
+  }
+
+  .one-how.is-live .one-how__item {
+    grid-area: 1 / 1;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0;
+    border-top: 0;
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+    transition: opacity 500ms var(--one-ease), transform 700ms var(--one-ease);
+  }
+
+  .one-how.is-live .one-how__item > .one-how__mark {
+    display: none;
+  }
+
+  .one-how.is-live .one-how__item[data-state="active"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .one-how.is-live .one-how__item .one-how__reveal {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .one-how.is-live .one-how__item .one-how__label {
+    color: var(--one-text);
+    font-size: 1.65rem;
+  }
 }
 
 /* Scope frame */

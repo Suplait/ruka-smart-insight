@@ -29,6 +29,9 @@ uniform vec3 uPointer;
 uniform vec4 uRipples[4];
 uniform vec2 uBeaconCell;
 uniform vec2 uFog;
+uniform vec4 uFocus;
+uniform float uHow;
+uniform float uHowOn;
 out vec2 vUv;
 out vec3 vColor;
 out float vAlpha;
@@ -54,6 +57,28 @@ void main() {
   vec2 loose = home + (jitter * 0.95 + drift) * uChaos;
   vec2 pos = mix(loose, heap + drift * 0.4, uChaos * pulled * 0.92);
   float ang = (s1 - 0.5) * 2.4 * uChaos;
+
+  // "Cómo ocurre": one region of the field carries the whole arc.
+  vec2 fSize = uFocus.zw - uFocus.xy;
+  vec2 fu = (home - uFocus.xy) / fSize;
+  float fEdge = min(min(fu.x, 1.0 - fu.x) * fSize.x, min(fu.y, 1.0 - fu.y) * fSize.y);
+  float inFocus = smoothstep(-0.4, 0.4, fEdge);
+  float howW = uHowOn * inFocus;
+  // Need → solution: the scattered work snaps into place in a wave that crosses the region.
+  float wave = clamp(fu.x * 0.6 + (1.0 - fu.y) * 0.22 + abs(s1) * 0.18, 0.0, 1.0);
+  float order = smoothstep(0.0, 1.0, clamp((uHow - 0.05) * 1.8 - wave * 0.62, 0.0, 1.0));
+  float scatter = (1.0 - order) * howW;
+  vec2 sj = (vec2(h1(s1 * 91.7 + 3.0), h1(s2 * 53.3 + 7.0)) - 0.5) * 2.0;
+  pos += (sj * vec2(2.8, 2.3) + drift * 2.2) * scatter;
+  ang += (s2 - 0.5) * 3.0 * scatter;
+  // Solution → running: a front keeps sweeping the ordered region and leaves work settled behind it.
+  float runIn = smoothstep(1.05, 1.85, uHow);
+  float sx = fract(uTime / 3.4) * 1.5 - 0.25;
+  float sd = fu.x + (s1 - 0.5) * 0.08 - sx;
+  float sweep = exp(-sd * sd / 0.006) * runIn * (1.0 - 0.7 * smoothstep(2.3, 2.9, uHow)) * howW;
+  float settledHow = clamp((uHow - 1.15) * 1.5 - wave * 0.5, 0.0, 1.0) * howW;
+  // Running → result: the region rests as one finished block and the result rises from its centre.
+  float resultIn = smoothstep(2.1, 2.95, uHow) * howW;
 
   // Fronts of execution: each cycle starts somewhere new on the field.
   float act = 0.0;
@@ -102,6 +127,8 @@ void main() {
 
   act *= uFlow * scopeGate;
   done = clamp(done * min(uFlow, 1.0) * scopeGate + uCalm * (0.55 + 0.45 * s2) * mix(1.0, inside, uScopeOn), 0.0, 1.0);
+  act += sweep * 1.3;
+  done = max(done, settledHow);
 
   // Pointer light.
   float pd = distance(pos, uPointer.xy);
@@ -120,6 +147,7 @@ void main() {
   float y = riseAmt * (isBeacon > 0.5 ? 3.1 : 1.1 + s1 * 2.2) + bob * riseAmt;
   y += lamp * 0.42 + act * 0.07;
   y += (s2 - 0.5) * 0.9 * uChaos * (1.0 - pulled) + s1 * s1 * 2.6 * uChaos * pulled * smoothstep(5.0, 0.0, distance(pos, jam));
+  y += (0.2 + abs(s1) * 1.1) * scatter + sin(uTime * 0.7 + s2 * 30.0) * 0.12 * scatter + resultIn * 0.16 + sweep * 0.12;
 
   float size = uSpacing * 0.235 * (1.0 + act * 0.12 + isBeacon * uBeacon * 1.5 + isOutput * uRise * 0.7 + lamp * 0.1);
   float glow = clamp(riseAmt * 1.0 + act * 0.25, 0.0, 1.2);
@@ -146,6 +174,13 @@ void main() {
   col += vec3(0.32, 0.4, 0.95) * pool * 0.75;
   col = mix(col, col * 0.2, uScopeOn * (1.0 - inside));
   col += primary * border * uScopeOn * 0.9;
+  // The region is the subject: loose work reads brighter, the designed perimeter is drawn, the rest steps back.
+  float fBorder = inFocus * (1.0 - smoothstep(0.15, 1.0, fEdge));
+  col += vec3(0.16, 0.19, 0.36) * scatter;
+  col += vec3(0.04, 0.05, 0.11) * order * howW;
+  col += primary * fBorder * uHowOn * smoothstep(0.35, 1.0, uHow) * (1.0 - 0.55 * smoothstep(2.2, 2.9, uHow)) * 1.1;
+  col += settled * 0.3 * resultIn;
+  col *= 1.0 - 0.74 * uHowOn * (1.0 - inFocus);
   col *= (1.0 - uDim * 0.8);
 
   col = mix(col, primary * 1.25, isGhost);
@@ -155,6 +190,7 @@ void main() {
   // Keep the foreground quiet so copy can sit over it; the story happens mid-field.
   float near = mix(0.2, 1.0, smoothstep(12.0, 32.0, depth));
   near = max(near, clamp(riseAmt + act * 0.6 + pool, 0.0, 1.0));
+  near = max(near, howW);
   vColor = col;
   vAlpha = fog * reveal * near * mix(1.0, uBeacon, isGhost);
   vGlow = glow * (1.0 - isGhost);
@@ -361,11 +397,11 @@ export class FieldEngine {
     gl.bindVertexArray(null);
     this.buffers.push(quad, instBuffer);
 
-    for (const name of ["uViewProj", "uEye", "uTime", "uIntro", "uSpacing", "uOrigin", "uChaos", "uFlow", "uRise", "uBeacon", "uCalm", "uDim", "uScope", "uScopeOn", "uPointer", "uRipples", "uBeaconCell", "uFog"]) {
+    for (const name of ["uViewProj", "uEye", "uTime", "uIntro", "uSpacing", "uOrigin", "uChaos", "uFlow", "uRise", "uBeacon", "uCalm", "uDim", "uScope", "uScopeOn", "uPointer", "uRipples", "uBeaconCell", "uFog", "uFocus", "uHow", "uHowOn"]) {
       this.uniforms.set(name, gl.getUniformLocation(program, name));
     }
 
-    this.current = { ...initial, eye: [...initial.eye], target: [...initial.target], scope: [...initial.scope], lean: 0 };
+    this.current = { ...initial, eye: [...initial.eye], target: [...initial.target], scope: [...initial.scope], focus: [...initial.focus], lean: 0 };
     this.target = initial;
     canvas.addEventListener("webglcontextlost", this.handleLost, false);
     this.resize();
@@ -397,7 +433,7 @@ export class FieldEngine {
   setScene(scene: FieldScene, immediate = false) {
     this.target = scene;
     if (immediate || this.options.reducedMotion) {
-      this.current = { ...scene, eye: [...scene.eye], target: [...scene.target], scope: [...scene.scope], lean: 0 };
+      this.current = { ...scene, eye: [...scene.eye], target: [...scene.target], scope: [...scene.scope], focus: [...scene.focus], lean: 0 };
       if (!this.running) this.draw();
     }
   }
@@ -538,6 +574,10 @@ export class FieldEngine {
     c.calm += (t.calm - c.calm) * k;
     c.scopeOn += (t.scopeOn - c.scopeOn) * k;
     c.dim += (t.dim - c.dim) * k;
+    c.howOn += (t.howOn - c.howOn) * k;
+    // The arc only advances while its chapter is on screen; elsewhere it holds its last beat.
+    if (t.howOn > 0) c.how += (t.how - c.how) * (1 - Math.exp(-dt / 0.9));
+    for (let i = 0; i < 4; i++) c.focus[i] += (t.focus[i] - c.focus[i]) * k;
     // Spring for the scroll lean: quick to respond, slow to settle.
     c.lean += (this.leanTarget - c.lean) * (1 - Math.exp(-dt / 0.35));
     this.leanTarget *= Math.exp(-dt / 0.25);
@@ -596,6 +636,9 @@ export class FieldEngine {
     gl.uniform4fv(u("uRipples"), rp);
     gl.uniform2f(u("uBeaconCell"), this.beaconCell[0], this.beaconCell[1]);
     gl.uniform2f(u("uFog"), 26, 88);
+    gl.uniform4f(u("uFocus"), c.focus[0], c.focus[1], c.focus[2], c.focus[3]);
+    gl.uniform1f(u("uHow"), c.how);
+    gl.uniform1f(u("uHowOn"), c.howOn);
 
     gl.bindVertexArray(this.vao);
     gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, this.count);

@@ -1,46 +1,103 @@
+import { useEffect, useState, type CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 import { oneContent } from "@/content/oneContent";
+import type { FieldSceneName } from "@/components/one/field/fieldScenes";
 
-/** "Cómo ocurre": from a concrete problem to work running. The field lifts finished outputs meanwhile. */
-export function OneHow() {
+const stages = oneContent.how.stages;
+const before: FieldSceneName[] = ["hero", "friction", "shift"];
+
+/**
+ * Scroll band (in svh) that each beat owns while the stage is pinned. The stage
+ * is pinned for `stages.length * BEAT` and the first band also covers the entry.
+ */
+const BEAT = 60;
+/** Extra pinned scroll for the last beat, so the result can be seen before the chapter leaves. */
+const HOLD = 40;
+
+function bandFor(index: number): CSSProperties {
+  const starts = stages.map((_, i) => (i === 0 ? 0 : 50 + i * BEAT));
+  const top = starts[index];
+  const end = index === stages.length - 1 ? 100 + stages.length * BEAT + HOLD : starts[index + 1];
+  return { top: `${top}svh`, height: `${end - top}svh` };
+}
+
+/**
+ * "Cómo ocurre": the field is the explanation. One region goes from scattered need to an
+ * ordered solution, runs, and lifts a result. The DOM only names each beat.
+ * Without JS or with reduced motion it renders as a short static chapter on the final beat.
+ */
+export function OneHow({ scene }: { scene: FieldSceneName }) {
   const content = oneContent.how;
-  const last = content.steps.length - 1;
+  const [live, setLive] = useState(false);
+
+  useEffect(() => {
+    // Pinning relies on :has() to undo the global overflow reset (see one.css).
+    const canPin = typeof CSS !== "undefined" && typeof CSS.supports === "function" && CSS.supports("selector(:has(*))");
+    setLive(canPin && !window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
+
+  const current = stages.findIndex((stage) => stage.scene === scene);
+  const active = current >= 0 ? current : before.includes(scene) ? 0 : stages.length - 1;
+
   return (
-    <section id={content.id} data-scene="execute" aria-labelledby="one-how-title" className="relative scroll-mt-20 py-28 sm:py-36 lg:py-48">
-      <div aria-hidden="true" className="one-shade-left pointer-events-none absolute inset-0 hidden lg:block" />
-      <div aria-hidden="true" className="one-shade-mask pointer-events-none absolute inset-0 bg-[rgba(3,4,10,0.72)] lg:hidden" />
-      <div className="relative mx-auto max-w-[1360px] px-5 sm:px-8 lg:px-12">
-        <div className="max-w-[44rem]">
-          <p className="one-eyebrow" data-reveal>{content.eyebrow}</p>
-          <h2 id="one-how-title" data-reveal style={{ ["--d" as string]: 1 }} className="mt-6 text-balance text-[clamp(2.3rem,5vw,4.5rem)] font-semibold leading-[0.97] tracking-[-0.048em]">
-            {content.title}
-          </h2>
+    <section
+      id={content.id}
+      aria-labelledby="one-how-title"
+      className={cn("one-how relative scroll-mt-20", live && "is-live")}
+      style={{ ["--how-pin" as string]: `${stages.length * BEAT + HOLD}svh` }}
+    >
+      {/* Scroll bands: each one drives a beat of the field. Static mode holds the last beat. */}
+      <div aria-hidden="true" className="one-how__beats">
+        {stages.map((stage, index) => (
+          <div
+            key={stage.scene}
+            data-scene={live ? stage.scene : "how-result"}
+            className="one-how__beat"
+            style={live ? bandFor(index) : { top: `${index * 25}%`, height: "25%" }}
+          />
+        ))}
+      </div>
+
+      <div className="one-how__stage">
+        <div aria-hidden="true" className="one-shade-left pointer-events-none absolute inset-y-0 left-0 hidden w-[62%] lg:block" />
+        <div aria-hidden="true" className="one-how__shade-top pointer-events-none absolute inset-x-0 top-0 h-[42%] lg:hidden" />
+        <div aria-hidden="true" className="one-how__shade-bottom pointer-events-none absolute inset-x-0 bottom-0 h-[40%] lg:hidden" />
+
+        <div className="one-how__frame relative mx-auto w-full max-w-[1360px] px-5 sm:px-8 lg:px-12">
+          <div className="max-w-[34rem]">
+            <p className="one-eyebrow" data-reveal>{content.eyebrow}</p>
+            <h2 id="one-how-title" data-reveal style={{ ["--d" as string]: 1 }} className="mt-5 text-balance text-[clamp(2.1rem,8.6vw,2.8rem)] font-semibold leading-[0.98] tracking-[-0.046em] sm:text-[clamp(2.6rem,5vw,4.3rem)] lg:mt-6">
+              {content.title}
+            </h2>
+          </div>
+
+          <div className="one-how__rail">
+            <div aria-hidden="true" className="one-how__ticks">
+              {stages.map((stage, index) => (
+                <span key={stage.scene} className={cn("one-how__mark", `one-how__mark--${index}`, index === active && "is-active", index < active && "is-past")} />
+              ))}
+            </div>
+            <ol className="one-how__list">
+              {stages.map((stage, index) => {
+                const state = index === active ? "active" : index < active ? "past" : "next";
+                return (
+                  <li key={stage.scene} className="one-how__item" data-state={state} aria-current={live && index === active ? "step" : undefined}>
+                    <span aria-hidden="true" className={cn("one-how__mark", `one-how__mark--${index}`)} />
+                    <div>
+                      <h3 className="one-how__label">
+                        <span className="one-how__num">0{index + 1}</span>
+                        {stage.label}
+                      </h3>
+                      <div className="one-how__reveal">
+                        <p className="one-how__text">{stage.text}</p>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
         </div>
-
-        <ol className="mt-16 grid gap-x-10 lg:mt-20 lg:max-w-[45rem] lg:grid-cols-2">
-          {content.steps.map((step, index) => {
-            const outcome = index === last;
-            return (
-              <li
-                key={step.label}
-                data-reveal
-                style={{ ["--d" as string]: index }}
-                className={cn("one-step border-t py-6 lg:py-7", outcome ? "border-[var(--one-hair-strong)]" : "border-[var(--one-hair)]")}
-              >
-                <div className="flex items-center gap-4">
-                  <span aria-hidden="true" className={cn("one-step__tile", outcome && "one-step__tile--outcome")} style={{ ["--lift" as string]: index }} />
-                  <span className="text-xs font-semibold tabular-nums tracking-[0.16em] text-[var(--one-accent)]">0{index + 1}</span>
-                  <h3 className="text-xl font-semibold tracking-[-0.025em] text-white lg:text-2xl">{step.label}</h3>
-                </div>
-                <p className="mt-3 text-pretty text-[17px] leading-[1.55] text-[var(--one-soft)]">{step.text}</p>
-              </li>
-            );
-          })}
-        </ol>
-
-        <p data-reveal className="mt-12 max-w-[44rem] text-pretty border-l-2 border-[hsl(var(--primary))] pl-5 text-lg leading-[1.6] text-[var(--one-soft)] lg:mt-14">
-          {content.note}
-        </p>
       </div>
     </section>
   );

@@ -59,7 +59,8 @@ export function OneField({ scene, areaIndex = 0, mode, className, interactive = 
           onBeacon: ({ x, y, visible, strength }) => {
             const label = labelRef.current;
             if (!label) return;
-            const show = visible && strength > 0.5;
+            // The caption belongs to the hero; elsewhere the risen tile speaks for itself.
+            const show = visible && strength > 0.5 && sceneRef.current.scene === "hero";
             label.style.opacity = show ? String(Math.min(1, (strength - 0.5) * 2.4)) : "0";
             label.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
             // Keep the caption on screen; the leader line stays on the tile.

@@ -26,13 +26,25 @@ export type FieldScene = {
   scope: [number, number, number, number];
   scopeOn: number;
   dim: number;
+  /**
+   * "Cómo ocurre": a single region of the field tells the whole arc.
+   * 0 = scattered need, 1 = ordered solution, 2 = running, 3 = result risen.
+   */
+  how: number;
+  /** Strength of that choreography (the rest of the field steps back). */
+  howOn: number;
+  /** The region (x0, z0, x1, z1) that becomes the process. Centred on the result tile. */
+  focus: [number, number, number, number];
 };
 
 export type FieldSceneName =
   | "hero"
   | "friction"
   | "shift"
-  | "execute"
+  | "how-need"
+  | "how-build"
+  | "how-run"
+  | "how-result"
   | "scope"
   | "areas"
   | "impact"
@@ -56,13 +68,20 @@ const base: FieldScene = {
   scope: [-200, -200, 200, 200],
   scopeOn: 0,
   dim: 0,
+  how: 0,
+  howOn: 0,
+  focus: [-2, -9, 12, 5],
 };
 
 const scenes: Record<FieldSceneName, Partial<FieldScene>> = {
   hero: { beacon: 1, rise: 0.12 },
   friction: { eye: [-6, 11, 16], target: [2, -2, -16], chaos: 1, flow: 0.08, rise: 0, dim: 0.1 },
   shift: { eye: [4, 4.2, 9], target: [-2, -1.4, -14], flow: 1.1, rise: 0.08 },
-  execute: { eye: [0, 7, 17], target: [0, 0.8, -12], rise: 1, flow: 0.85, beacon: 0 },
+  // One region carries the arc: need → solution → running → result. The camera eases closer at each beat.
+  "how-need": { eye: [19, 15, 21], target: [5, -0.6, -2], fov: 40, how: 0, howOn: 1, flow: 0.18, rise: 0 },
+  "how-build": { eye: [13, 21, 16], target: [5, -0.8, -2], fov: 40, how: 1, howOn: 1, flow: 0.12, rise: 0 },
+  "how-run": { eye: [9, 14, 19], target: [5, -0.2, -2], fov: 40, how: 2, howOn: 1, flow: 0.15, rise: 0 },
+  "how-result": { eye: [4, 9.5, 19], target: [5, 1, -2], fov: 40, how: 3, howOn: 1, flow: 0.12, rise: 0, beacon: 1 },
   scope: { eye: [0, 40, -8], target: [0, 0, -15], fov: 42, scope: [-9, -24, 9, -10], scopeOn: 1, flow: 1.1, rise: 0 },
   areas: { eye: [0, 22, 8], target: [0, 0, -14], fov: 46, scope: [-14, -24, -2, -12], scopeOn: 1, flow: 1, rise: 0.2 },
   impact: { eye: [0, 7, 20], target: [0, -0.5, -20], fov: 46, calm: 0.45, flow: 0.8, rise: 0.25 },
@@ -98,7 +117,10 @@ export function resolveScene(name: FieldSceneName, layout: "wide" | "narrow", ar
       hero: -0.42,
       friction: -0.3,
       shift: 0,
-      execute: -0.36,
+      "how-need": -0.4,
+      "how-build": -0.4,
+      "how-run": -0.4,
+      "how-result": -0.4,
       scope: 0,
       areas: -0.5,
       impact: 0,
@@ -118,6 +140,13 @@ export function resolveScene(name: FieldSceneName, layout: "wide" | "narrow", ar
       scene.target = [4, -2.5, -4];
       scene.fov = 56;
       scene.lift = 0.92;
+    }
+    if (name.startsWith("how-")) {
+      // Portrait: the region sits between the title and the stage caption, a little closer.
+      const base = scenes[name];
+      scene.eye = [(base.eye?.[0] ?? 0) * 0.55 + 2, (base.eye?.[1] ?? 0) + 4, (base.eye?.[2] ?? 0) + 6];
+      scene.fov = 50;
+      scene.lift = 0.06;
     }
   }
   return scene;
