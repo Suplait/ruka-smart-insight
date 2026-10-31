@@ -1,25 +1,31 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
-import { BeforeAfter } from "@/components/one/BeforeAfter";
-import { FamiliarPatterns } from "@/components/one/FamiliarPatterns";
-import { OneFaq } from "@/components/one/OneFaq";
-import { OneFinalCta } from "@/components/one/OneFinalCta";
-import { OneHero } from "@/components/one/OneHero";
-import { OneMethod } from "@/components/one/OneMethod";
+import { OneAreas } from "@/components/one/chapters/OneAreas";
+import { OneBetween } from "@/components/one/chapters/OneBetween";
+import { OneFaq, OneFinal, OneFooter } from "@/components/one/chapters/OneClosing";
+import { OneDifference } from "@/components/one/chapters/OneDifference";
+import { OneHeader } from "@/components/one/chapters/OneHeader";
+import { OneBeaconLabel, OneHero } from "@/components/one/chapters/OneHero";
+import { OneScope } from "@/components/one/chapters/OneScope";
+import { OneSplit } from "@/components/one/chapters/OneSplit";
+import { OneTrust } from "@/components/one/chapters/OneTrust";
+import { useActiveScene, useOneMotion } from "@/components/one/chapters/useOneMotion";
+import { OneField } from "@/components/one/field/OneField";
 import { OneSeo } from "@/components/one/OneSeo";
-import { OneSocialProof } from "@/components/one/OneSocialProof";
-import { OneStartingPoint } from "@/components/one/OneStartingPoint";
-import { OneTestimonial } from "@/components/one/OneTestimonial";
 import { captureOneAttribution } from "@/utils/oneAttribution";
 import { isOneDebugEnabled } from "@/utils/oneDebug";
 import { trackOneEvent } from "@/utils/oneTracking";
-import { ONE_CONTACT_PATH } from "@/content/oneContent";
+import "@/styles/one.css";
+
+const scopeLink = { scene: "scope", selector: "[data-one-perimeter]" } as const;
 
 export default function One() {
   const location = useLocation();
   const tracked = useRef(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [area, setArea] = useState(0);
+  const scene = useActiveScene(rootRef, "hero");
+  useOneMotion(rootRef);
 
   useEffect(() => {
     captureOneAttribution(location.search);
@@ -30,23 +36,25 @@ export default function One() {
   }, [location.pathname, location.search]);
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-[#fbfcff] text-[#171827]">
+    <div ref={rootRef} className="one-root relative min-h-screen overflow-x-clip font-sans">
       <OneSeo />
-      <Navbar
-        primaryAction={{ label: "Conversemos", path: ONE_CONTACT_PATH }}
-      />
-      <main>
+      <a href="#one-main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-black">
+        Saltar al contenido
+      </a>
+      <OneField mode="page" scene={scene} areaIndex={area} beaconLabel={<OneBeaconLabel />} scopeLink={scopeLink} />
+      <OneHeader />
+      <main id="one-main" className="relative z-10">
         <OneHero />
-        <OneSocialProof />
-        <OneStartingPoint />
-        <FamiliarPatterns />
-        <BeforeAfter />
-        <OneMethod />
-        <OneTestimonial />
+        <OneBetween />
+        <OneDifference />
+        <OneSplit />
+        <OneScope />
+        <OneAreas active={area} onActiveChange={setArea} />
+        <OneTrust />
         <OneFaq />
-        <OneFinalCta />
+        <OneFinal />
       </main>
-      <Footer />
+      <OneFooter />
     </div>
   );
 }

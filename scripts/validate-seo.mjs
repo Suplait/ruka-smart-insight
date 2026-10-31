@@ -9,8 +9,9 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "
 const siteOrigin = "https://www.ruka.ai";
 const pageModified = JSON.parse(await readFile(path.join(projectRoot, "src/content/pageModified.json"), "utf8"));
 const suppliers = JSON.parse(await readFile(path.join(projectRoot, "config/supplier-profiles.json"), "utf8"));
-const oneDescription = "Con Ruka One llevamos procesos propios de tu empresa a operar sobre tus sistemas, reglas y datos actuales, sin reemplazar el software que ya usas.";
-const oneServiceDescription = "Ruka One es la forma de trabajar con Ruka sobre procesos específicos de una empresa, llevándolos a operar sobre sus sistemas, reglas y datos actuales.";
+const oneTitle = "Back office operado por Ruka, con IA | Ruka One";
+const oneDescription = "Ruka One se hace cargo de procesos completos de back office —finanzas, compras, cobranza y más— con IA y supervisión humana. Tu equipo decide.";
+const oneServiceDescription = "Ruka One es un servicio en el que Ruka opera procesos completos de back office de una empresa con IA, integraciones y supervisión humana, bajo un alcance acordado; el cliente conserva las decisiones.";
 
 const routes = [
   { path: "/herramientas/margen-markup", title: "Calculadora de margen y markup: no son lo mismo | Ruka", h1: "Un margen de 40% no es sumar 40%.", canonical: `${siteOrigin}/herramientas/margen-markup`, schema: ["Organization", "WebSite", "WebApplication", "WebPage", "BreadcrumbList"], lastmod: "2026-10-26" },
@@ -115,9 +116,9 @@ const routes = [
   },
   {
     path: "/one",
-    title: "Automatización de procesos empresariales | Ruka One",
+    title: oneTitle,
     canonical: `${siteOrigin}/one`,
-    h1: "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
+    h1: "Tu back office, operado por Ruka.",
     schema: ["Organization", "WebSite", "Service", "WebPage", "BreadcrumbList", "FAQPage"],
     ogImage: `${siteOrigin}/ruka-one-og.png`,
   },
@@ -195,7 +196,7 @@ const noIndexRoutes = [
     path: "/one/contacto",
     title: "Cuéntanos tu proceso | Ruka One",
     canonical: `${siteOrigin}/one/contacto`,
-    h1: "¿Qué parte de tu operación sigue siendo manual?",
+    h1: "¿Qué trabajo quieres dejar de administrar?",
   },
 ];
 
@@ -487,14 +488,18 @@ const oneVisibleText = textContent(oneHtml);
 assert(!oneHtml.includes("Ruka Works"), "/one: todavía contiene la marca pública Ruka Works");
 assert(!oneHtml.includes(`${siteOrigin}/works`), "/one: todavía referencia la URL legacy /works");
 assert(/<html\b[^>]*lang="es-CL"/i.test(oneHtml), "/one: html lang debe ser es-CL");
-assert(getTagAttribute(oneHtml, "property", "og:title", "content") === "Automatización de procesos empresariales | Ruka One", "/one: og:title inesperado");
+assert(getTagAttribute(oneHtml, "property", "og:title", "content") === oneTitle, "/one: og:title inesperado");
 assert(getTagAttribute(oneHtml, "property", "og:description", "content") === oneDescription, "/one: og:description inesperada");
 assert(getTagAttribute(oneHtml, "property", "og:locale", "content") === "es_CL", "/one: og:locale debe ser es_CL");
 assert(getTagAttribute(oneHtml, "property", "og:site_name", "content") === "Ruka.ai", "/one: og:site_name debe ser Ruka.ai");
 assert(getTagAttribute(oneHtml, "name", "googlebot", "content")?.includes("max-image-preview:large"), "/one: falta directiva Googlebot de preview grande");
 for (const requiredText of [
-  "Hay procesos que no viven en ningún sistema. Viven en tu equipo.",
-  "Ruka parte de procesos que ya estandarizamos. Ruka One parte del tuyo.",
+  "Tu back office, operado por Ruka.",
+  "No te vendemos una herramienta. Nos hacemos cargo del trabajo.",
+  "Lo operamos de punta a punta. Las decisiones siguen siendo tuyas.",
+  "Antes de operar, trazamos el perímetro.",
+  "Ejemplos ilustrativos",
+  "No prometemos que nada falle. Prometemos hacernos cargo cuando falla.",
   "Ruka One usa la misma base tecnológica que hoy procesa millones de registros operativos para cientos de empresas.",
   "¿Qué es Ruka One?",
   "¿Cuál es la diferencia entre Ruka y Ruka One?",
@@ -508,6 +513,9 @@ for (const forbiddenText of [
   "si tiene sentido que Ruka",
   "Ruka los convierte",
   "Ruka One convierte",
+  "Solicitud recibida",
+  "Aplicando regla",
+  "Hay procesos que no viven en ningún sistema.",
 ]) {
   assert(!oneVisibleText.includes(forbiddenText), `/one: conserva copy de posicionamiento débil (${forbiddenText})`);
 }
@@ -519,8 +527,8 @@ assert(
 const oneSchemaValues = parseSchema(oneHtml, "/one").values.flatMap((schema) => schema["@graph"] ?? [schema]);
 const oneService = oneSchemaValues.find((schema) => schema?.["@type"] === "Service");
 assert(
-  oneService?.serviceType === "Automatización de procesos empresariales",
-  "/one: serviceType no representa automatización de procesos empresariales",
+  oneService?.serviceType === "Operación de procesos de back office",
+  "/one: serviceType no representa la operación de procesos de back office",
 );
 assert(oneService?.name === "Ruka One", "/one: Service schema no usa el nombre Ruka One");
 assert(oneService?.url === `${siteOrigin}/one`, "/one: Service schema tiene URL incorrecta");
@@ -544,7 +552,7 @@ assert(oneBreadcrumb?.itemListElement?.[1]?.item === `${siteOrigin}/one`, "/one:
 const oneContactHtml = await readFile(routeFile("/one/contacto"), "utf8");
 const oneContactVisibleText = textContent(oneContactHtml);
 assert(
-  oneContactVisibleText.includes("Elige una hora y cuéntanos cómo funciona hoy. Vemos contigo cómo llevar ese proceso a operar sobre Ruka."),
+  oneContactVisibleText.includes("Elige una hora y cuéntanos cómo funciona hoy. Salimos con un primer alcance: qué tomaría Ruka One y qué seguiría decidiendo tu equipo."),
   "/one/contacto: falta el posicionamiento final del formulario",
 );
 for (const forbiddenText of ["si Ruka puede ayudar", "si podemos ayudarte", "si tiene sentido", "evaluamos si"]) {
@@ -553,8 +561,8 @@ for (const forbiddenText of ["si Ruka puede ayudar", "si podemos ayudarte", "si 
 
 const oneContentSource = await readFile(path.join(projectRoot, "src", "content", "oneContent.ts"), "utf8");
 for (const requiredText of [
-  "Nos cuentas cómo funciona hoy y vemos juntos cómo llevarlo a operar sobre Ruka.",
-  "Partimos por tu proceso tal como funciona hoy.",
+  "Nos cuentas cómo funciona hoy y conversamos qué parte de ese trabajo tomaría Ruka One.",
+  "Llega con el proceso tal como funciona hoy. Del resto nos hacemos cargo.",
 ]) {
   assert(oneContentSource.includes(requiredText), `oneContent.ts: falta copy final del funnel (${requiredText})`);
 }

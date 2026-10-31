@@ -4,11 +4,15 @@ import { oneContent, ONE_PATH } from "@/content/oneContent";
 
 export function OneSuccess() {
   return (
-    <section id="one-success" className="rounded-2xl border border-[#d9def7] bg-white p-7 sm:p-10">
-      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#5369eb] text-white"><Check className="h-5 w-5" /></span>
-      <h1 className="mt-7 max-w-2xl text-balance text-[clamp(2.4rem,5vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-[#171827]">{oneContent.contact.successTitle}</h1>
-      <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-[#676e80] sm:text-lg sm:leading-8">{oneContent.contact.successCopy}</p>
-      <Link to={ONE_PATH} className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#5369eb] transition hover:text-[#4056d5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5369eb] focus-visible:ring-offset-4"><ArrowLeft className="h-4 w-4" /> Volver a Ruka One</Link>
+    <section id="one-success" className="relative py-10 text-center sm:py-16">
+      <span aria-hidden="true" className="one-success-tile mx-auto flex h-16 w-16 items-center justify-center rounded-[18px] bg-[hsl(var(--primary))] text-white shadow-[0_24px_60px_-18px_hsl(var(--primary))]">
+        <Check className="h-7 w-7" />
+      </span>
+      <h1 className="one-display mx-auto mt-10 max-w-[12ch] text-balance text-[clamp(2.8rem,7vw,6rem)]">{oneContent.contact.successTitle}</h1>
+      <p className="mx-auto mt-6 max-w-[34rem] text-pretty text-lg leading-[1.6] text-[var(--one-soft)]">{oneContent.contact.successCopy}</p>
+      <Link to={ONE_PATH} className="one-ghost mt-8 justify-center">
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Volver a Ruka One
+      </Link>
     </section>
   );
 }
