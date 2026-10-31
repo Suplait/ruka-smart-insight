@@ -419,9 +419,15 @@ export class FieldEngine {
     if (!this.running) this.draw();
   }
 
+  /** Single static frame (reduced motion keeps the field in sync with layout, without animating). */
+  redraw() {
+    if (!this.running) this.draw();
+  }
+
   /** A DOM rectangle whose footprint on the field becomes the agreed perimeter, live. */
   setScopeElement(element: Element | null) {
     this.scopeElement = element;
+    if (!this.running) this.draw();
   }
 
   private syncScopeElement() {

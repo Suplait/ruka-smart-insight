@@ -75,7 +75,6 @@ export function OneField({ scene, areaIndex = 0, mode, className, interactive = 
         return;
       }
       engineRef.current = engine;
-      if (import.meta.env.DEV) (window as unknown as { __oneField?: FieldEngine }).__oneField = engine;
       setStatus("ready");
 
       const resize = () => {
@@ -152,6 +151,15 @@ export function OneField({ scene, areaIndex = 0, mode, className, interactive = 
           document.documentElement.removeEventListener("pointerleave", leave);
           window.removeEventListener("pointerdown", down);
         });
+      }
+
+      if (mode === "page" && reduced.matches) {
+        let pending = 0;
+        const onScroll = () => {
+          if (!pending) pending = requestAnimationFrame(() => { pending = 0; engine?.redraw(); });
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        cleanups.push(() => { cancelAnimationFrame(pending); window.removeEventListener("scroll", onScroll); });
       }
 
       if (mode === "page" && !reduced.matches) {
